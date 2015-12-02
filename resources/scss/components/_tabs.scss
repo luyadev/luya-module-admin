@@ -1,0 +1,30 @@
+.tabs {
+	background-color: transparent;
+	display: inline-block;
+
+	ul {
+		margin-top: 15px;
+	}
+}
+
+.tabs__item {
+    float: left;
+}
+
+.tabs__anchor {
+    color:black; 
+    padding: 15px 15px 10px 15px;
+    cursor: pointer;
+    user-select: none;
+	background-color: transparent;
+	transition: 0.5s ease background-color;
+
+	.tabs__item--active & {
+		background-color: #fff;
+		box-shadow: 0 7px 0 0 rgba(255,255,255,1), -1px 0 5px 0 rgba(0,0,0,0.16);
+	}
+}
+.tabs__icon {
+    position: relative;
+    top: 6px;
+}

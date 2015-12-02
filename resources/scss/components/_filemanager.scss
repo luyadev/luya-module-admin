@@ -1,0 +1,352 @@
+.filemanager {
+	display: block;
+	position: relative;
+}
+
+.filemanager__files td span,
+.filemanager__files td img,
+.filemanager__files td i,
+.filemanager__files td label{
+	vertical-align: middle;
+}
+
+.filemanager__tree,
+.filemanager__files {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/**
+ * #TREE
+ */
+.filemanager__tree {
+	width: $filemanager__tree--width;
+	
+	padding-right: 20px;
+}
+.filemanager__toolbar {
+	display: block;
+	width: 100%;
+	
+	button {
+		margin-left: 5px;
+	}
+	&.filemanager__toolbar--top {
+		margin-bottom: 15px;
+	}
+	&.filemanager__toolbar--bottom {
+		margin-top: 15px;
+	}
+	@include clearfix;
+}
+.filemanager__files {
+	border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.filemanager__folders {
+	margin: 0;
+	display: block;
+    position: relative;
+    overflow: hidden;
+}
+.folder-root {
+	.filemanager__folder-name {
+		max-width: 200px !important;
+	}
+}
+.filemanager__folder--active > .filemanager__folder-button {
+	color: color("shades", "white");
+    border-radius: 2px;
+	background-color: color($filemanager--base-color, "darken-2");
+}
+.filemanager__file-move-icon {
+	vertical-align: text-bottom;
+   	margin-left: 10px;
+	&:hover {
+	 	background-color: color("green", "base");
+		color: color("shades", "white");
+		border-radius: 2px;
+	}
+}
+.filemanager__detail-wrapper {
+	position: relative;
+	padding-top: 48px;
+
+	tbody {
+		border-top: 1px solid #d0d0d0;
+	}
+}
+.filemanager__main-folder {
+	word-break: break-all;
+	position: relative;
+	padding: 8px 0 8px 25px;
+	cursor: pointer;
+	display: block;
+
+	> i {
+		position: absolute;
+		left: 0;
+	}
+
+	& > .filemanager__folders {
+		margin-top: 8px;
+	}
+}
+.filemanager__folder {
+	word-break: break-all;
+	position: relative;
+	display: block;
+
+	.filemanager__folders .filemanager__folders & {
+		&:before {
+			content: "";
+			position: absolute;
+			top: -5px;
+			left: -12px;
+			background-color: color($filemanager--base-color, "darken-2");
+			height: 100%;
+			width: 1px;
+			z-index: 1;
+		}
+		&:after {
+			content: "";
+			position: absolute;
+			top: 15px;
+			left: -12px;
+			background-color: color($filemanager--base-color, "darken-2");
+			width: 16px;
+			height: 1px;
+			z-index: 1;
+		}
+
+		&:last-of-type:before {
+			height: 20px;
+		}
+	}
+
+	&:last-of-type {
+		border-bottom: 0;
+	}
+
+	& > .filemanager__folders {
+		padding-left: 25px;
+	}
+}
+.filemanager__folder-button {
+	padding: 0px 0 0px 2px;
+	cursor: pointer;
+	position: relative;
+	.filemanager__folder-name {
+	    max-width: 115px;
+	    white-space: nowrap;
+	    display: inline-block;
+	    margin-bottom: -4px;
+	}
+	//Font-color for the hovering folder-names
+	&:hover >  span {		
+		color: color($filemanager--base-color, "darken-2");		
+	}
+	&:hover > .filemanager__folder-name {
+		overflow: hidden;
+	}
+	//Font-color of the active selected folder-name
+	.filemanager__folder.filemanager__folder--active > & > span {
+		color: color("shades", "white");
+	}
+	//Default-state all folder-icons
+	.filemanager__folder-icon {
+		position: relative;
+		left: 0;
+		top: 3px;
+		color: color($filemanager--base-color, "darken-2");		
+	}
+	//Hide the active-folder-icon at default-state
+	.filemanager__folder-icon--active {
+		display: none;
+	}
+	//Hover to display the active-folder-icon
+	&:hover > .filemanager__folder-icon--active {
+		display: inline;
+		z-index: 5;
+		color: color($filemanager--base-color, "darken-2");
+	}
+
+	.filemanager__folder.filemanager__folder--active > & > .filemanager__folder-icon--active {
+		display: inline;
+		z-index: 5;
+		color: color("shades", "white");
+	}
+	&:hover > .filemanager__folder-icon--default,
+	.filemanager__folder.filemanager__folder--active > & > .filemanager__folder-icon--default {
+		display: none;		
+	}
+	.filmanager__thumb {
+		max-width: 80px;
+	}
+	
+	.filemanager__cancel-btn {
+		background-color: color("red", "base");
+	}
+	.filemanager__file-dialog {
+		position: relative;
+	    padding-top: 8px;
+		span {
+			margin-right: 4px;
+			color: color("shades", "white");
+		}
+		.btn-floating {
+			background-color: color("light-blue", "accent-1");
+		}
+	}
+	.filemanager__file-dialog__input {
+		padding-left: 9px;
+	    border: none;
+		width: calc(100% - 110px);
+		outline: none;
+		padding-top: 4px;
+		color: color("shades", "black");
+
+	    &:focus:not([readonly]) {
+	    	border-bottom: none;
+    	    box-shadow: none;
+	    }
+	}
+
+	.filemanager__file-dialog__icon {
+		position: relative;
+		color: color("green", "darken-1");
+	}
+
+    .filemanager__cancel-icon {
+        transform: rotate(45deg);
+        font-size: 32px;
+        color: color("red", "base");
+    }
+	&:hover > .filemanager__edit-icon,
+    &:hover > .filemanager__delete-icon {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+.filemanager__edit-icon,
+.filemanager__delete-icon {
+    float: right;
+    padding: 0 8px;
+	top: 4px;
+	position: relative;
+	right: 0;
+	opacity: 0;
+	pointer-events: none;
+	transition: 0.25s ease opacity;
+    font-size: 22px;
+    vertical-align: middle;
+}
+
+.modal-content {
+	.filemanager__folder-name {
+		margin-bottom: 0px;
+		max-width: 200px;
+	}
+	.filemanager__edit-icon,
+	.filemanager__delete-icon {
+		display: none;
+	}
+	.filemanager__folder-icon {
+		top:1px;
+		font-size: 23px;
+	}
+	.filemanager__folders .filemanager__folders .filemanager__folder:after {
+		top: 12px;
+	}
+	.filemanager__folders .filemanager__folders .filemanager__folder:last-of-type:before {
+		height: 18px;
+	}
+}
+/**
+ * #FILES
+ */
+.filemanager__files {
+	padding-left: 20px;
+	width: calc(100% - #{$filemanager__tree--width});
+}
+
+.filemanager__file {
+	cursor: pointer;
+}
+
+.filemanager__checkox-column {
+	width: 50px;
+
+	& i {
+		font-size: 1.7rem;
+	}
+	& label {
+		margin-top: -4px;
+		margin-left: 3px;
+		padding-left: 22px;
+		height: 19px;
+	}
+}
+
+.filemanager__icon-column {
+	text-align: center;
+	width: 150px;
+}
+
+.filemanager__upload-overlay {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: rgba(0,0,0,0.8);
+	  z-index: 1000;
+}
+
+.filemanager__upload-content {
+	position: absolute;
+	top: 20%;
+	width: 100%;
+	text-align: center;
+}
+
+.filemanager__upload-title {
+	text-align: center;
+ 	line-height: 1.4;
+	color: #fff;
+}
+.filemanager__upload-loader {
+	margin-top: 100px;
+}
+
+.file__progress {
+	transition: 0.5s ease width;
+	will-change: width;
+}
+.file__icon {
+	float: right;
+	transition: 0.5s ease margin-right;
+	will-change: margin-right;
+	margin-right: -200px;
+	color: color("teal", "base");
+	font-size: 2rem;
+}
+.file--completed {
+	@include clearfix;
+	
+	.file__progress {
+		float: left;
+		width: calc(100% - 50px);
+	}
+	.file__icon {
+		margin-top: -4px;
+		margin-right: 5px;
+	}
+}
+
+.filemanager .filemanager__upload-modal {
+	position: absolute !important;
+	top: -20px !important;
+	left: -20px !important;
+	min-height: calc(100% + 40px) !important;
+	min-width: calc(100% + 40px) !important;
+}

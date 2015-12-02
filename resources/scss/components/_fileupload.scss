@@ -1,0 +1,30 @@
+.fileupload {
+	display: block;
+	position: relative;
+}
+
+.fileupload__btn,
+.fileupload__path {
+	display: inline-block;
+	position: relative;
+}
+
+.fileupload__btn {
+	width: 165px;
+	box-sizing: content-box;
+	vertical-align: top;
+
+	// Width with padding : 225px
+}
+
+.fileupload__path {
+
+	// Overwrite default materializecss styles
+
+	width: calc(100% - 245px) !important; // 100% - (width + padding of fileupload__btn)
+	height: 36px !important;
+	margin-left: 15px !important;
+	color: color("grey", "lighten-1") !important;
+	border: none;
+	padding-top: 10px;
+}

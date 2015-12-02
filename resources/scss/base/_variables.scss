@@ -1,0 +1,43 @@
+/**
+ * #LUYA-CONTAINER
+ * Variable for the sidebar width
+ */
+$luya-container__sidebar--width: 300px;
+
+/**
+ * #SEARCH
+ * Variables for the global search (navbar)
+ */
+$navbar__search--position: "left";
+$navbar__search--width: 80%;
+$navbar__search--width-mobile: 100%;
+
+/**
+ * #FILEMANAGER
+ * Different variables to modify the filemanager
+ */
+$filemanager--base-color: "grey";
+$filemanager__tree--width: 400px;
+
+/**
+ * #SIDEBAR
+ */
+$sidebar--padding: 5px;
+
+/**
+ * #FLAGS (Language nav)
+ */
+$flag-icon-css-path: '../img/flags' !default;
+$flag-icon-rect-path: '/4x3' !default;
+$flag-icon-square-path: '/1x1' !default;
+
+// Key = language shortcode
+// Value = flag shortcode
+// Example:
+// "lang_shortcode": "flag_shortcode"
+$enabled-flags: (
+	"de": "de",
+	"en": "gb",
+	"fr": "fr",
+	"it": "it"
+);

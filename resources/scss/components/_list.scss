@@ -1,0 +1,54 @@
+.list {
+	margin-bottom: 20px;
+}
+
+.list__item {
+	display: block;
+	position: relative;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.list__left,
+.list__right {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.list__left {
+	width: calc(100% - 40px);
+
+	input {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 0;
+		margin-top: -8px;
+		height: auto;
+		padding-top: 10px;
+		padding-bottom: 5px;
+	}
+}
+
+.list__right {
+	width: 30px;
+	margin-left: 10px;
+}
+
+.list__delete-button {
+	width: 2rem;
+	height: 2rem;
+
+	i {
+		font-size: 1.4rem;
+		line-height: 2rem;
+	}
+}
+
+.list__add-button {
+	margin-top: 5px;
+}
+
+.list__no-entry {
+    margin: 1px 0 20px 0 !important;
+    font-style: italic;
+}

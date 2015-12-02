@@ -1,0 +1,24 @@
+.langswitch {
+    @include clearfix;
+}
+
+.langswitch__item {
+    display: inline-block;
+    float: left;
+    border-radius: 0;
+
+	color: color("shades", "black");
+	background-color: color("grey", "lighten-2");
+
+	&.langswitch__item--active,
+	&:hover {
+		background-color: color("blue", "lighten-1");
+	}
+
+    &:first-child {   
+        border-radius: 4px 0 0 4px;
+    }
+    &:last-child {
+        border-radius: 0 4px 4px 0;
+    }
+}
