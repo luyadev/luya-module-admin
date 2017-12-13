@@ -13,7 +13,7 @@
 
 Administration Interface based on [AngularJs](https://angularjs.org/), [Bootstrap 4](https://getbootstrap.com) and [Yii 2 Framework](http://www.yiiframework.com/) (which is wrapped in the LUYA CORE).
 
-![LUYA Admin Interface](https://raw.githubusercontent.com/luyadev/luya-module-admin/master/luya_admin.png)
+![LUYA Admin Interface](https://raw.githubusercontent.com/luyadev/luya-module-admin/master/1.0.0-crud.png)
 
 + CRUD (based on RESTful and Angular)
 + Scaffolding CRUDs
@@ -21,6 +21,8 @@ Administration Interface based on [AngularJs](https://angularjs.org/), [Bootstra
 + Storage System for Files and Images, also known as File Manager.
 + Permission System with Users and Groups.
 + Searching trough all Modules and Models.
+
+![LUYA Admin Globalsearch](https://raw.githubusercontent.com/luyadev/luya-module-admin/master/1.0.0-globalsearch.png)
 
 ## Installation
 
