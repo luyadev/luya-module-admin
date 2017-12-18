@@ -17,6 +17,7 @@ use luya\traits\CacheableTrait;
 use luya\web\Request;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
+use yii\helpers\VarDumper;
 
 /**
  * Storage Container for reading, saving and holding files.
@@ -406,21 +407,21 @@ abstract class BaseFileSystemStorage extends Component
         $extensionByMimeType = FileHelper::getExtensionsByMimeType($mimeType);
          
         if (empty($extensionByMimeType)) {
-            throw new Exception("Unable to find extension for type $mimeType or it contains insecure data.");
+            throw new Exception("Unable to find extension for given mimeType \"{$mimeType}\" or it contains insecure data.");
         }
-         
+
         if (!in_array($fileInfo->extension, $extensionByMimeType)) {
-            throw new Exception("The given file extension {$fileInfo->extension} is not matching its mime type.");
+            throw new Exception("The given file extension \"{$fileInfo->extension}\" for file with mimeType \"{$mimeType}\" is not matching any valid extension: ".VarDumper::dumpAsString($extensionByMimeType).".");
         }
          
         foreach ($extensionByMimeType as $extension) {
             if (in_array($extension, $this->dangerousExtensions)) {
-                throw new Exception("This file extension seems to be dangerous and can not be stored.");
+                throw new Exception("The file extension seems to be dangerous and can not be stored.");
             }
         }
 
         if (in_array($mimeType, $this->dangerousMimeTypes)) {
-            throw new Exception("This file type seems to be dangerous and can not be stored.");
+            throw new Exception("The file mimeType seems to be dangerous and can not be stored.");
         }
 
         return [
