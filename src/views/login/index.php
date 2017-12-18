@@ -27,7 +27,7 @@ $spinner = Svg::widget([
                 <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>
             </div>
             <div class="login-form-field form-group">
-                <input id="login-user-password" class="login-input" id="password" name="login[password]" type="password" tabindex="2" required />
+                <input class="login-input" id="password" name="login[password]" type="password" tabindex="2" required />
                 <label for="password" class="login-input-label"><?= Module::t('login_password'); ?></label>
             </div>
             <div class="login-status alert alert-danger" id="errorsContainer" style="display: none"></div>
