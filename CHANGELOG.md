@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 1.0.1 (in progress)
 ### Fixed
 
+[#5](https://github.com/luyadev/luya-module-admin/issues/7) Fixed issue where modal body listenere could have negativ values and therefore the modal still exists on element which has been closed by esc key.
 [#7](https://github.com/luyadev/luya-module-admin/issues/7) Repair login input label click function
 
 ## 1.0.0 (12, December 2017)
