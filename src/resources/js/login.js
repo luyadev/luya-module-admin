@@ -117,5 +117,3 @@ $(window).on('load', function () {
     $('.login-form').addClass('login-form-loaded');
     checkInputLabels();
 });
-
-
