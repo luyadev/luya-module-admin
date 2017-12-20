@@ -103,7 +103,7 @@ var checkInputLabels = function () {
         }
     };
 
-    $loginInput.on('keyup', function() {
+    $loginInput.on('keyup paste change click', function() {
         check($(this));
     });
 
@@ -117,5 +117,3 @@ $(window).on('load', function () {
     $('.login-form').addClass('login-form-loaded');
     checkInputLabels();
 });
-
-
