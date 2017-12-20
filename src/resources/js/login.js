@@ -103,7 +103,7 @@ var checkInputLabels = function () {
         }
     };
 
-    $loginInput.on('keyup paste propertychange change click input paste', function() {
+    $loginInput.on('keyup paste change click', function() {
         check($(this));
     });
 
