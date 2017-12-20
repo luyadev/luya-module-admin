@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
 ## 1.0.1 (in progress)
+
 ### Fixed
 
 [#5](https://github.com/luyadev/luya-module-admin/issues/7) Fixed issue where modal body listenere could have negativ values and therefore the modal still exists on element which has been closed by esc key.
