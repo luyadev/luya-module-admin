@@ -225,7 +225,11 @@ function typeCastValue(value) {
         };
         
         service.modalStackRemove = function() {
-        	service.stack -= 1;
+        	if (service.stack <= 1) {
+        		service.stack = 0; 
+        	} else {
+        		service.stack -= 1;
+        	}
         };
         
         service.modalStackRemoveAll = function() {
