@@ -12,10 +12,10 @@ use luya\admin\Module;
                 <div class="card-body">
                 	<h2>Personalien</h2>
                     <form ng-submit="changePersonData(profile)">
-                        <zaa-select model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
-                        <zaa-text label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
-                        <zaa-text label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
-                        <zaa-text label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
+                        <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
+                        <zaa-text fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
+                        <zaa-text fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
+                        <zaa-text fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                     </form>
                 </div>
@@ -26,10 +26,10 @@ use luya\admin\Module;
                 <div class="card-body">
                     <h2><?= Module::t('mode_user_password'); ?></h2>
                     <form ng-submit="changePassword(pass)">
-                            <zaa-password label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
-                            <zaa-password label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
-                            <zaa-password label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
-                           <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
+                        <zaa-password fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
+                        <zaa-password fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
+                        <zaa-password fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
+                        <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                     </form>
                 </div>
             </div>
@@ -40,10 +40,10 @@ use luya\admin\Module;
                     <h2>General</h2>
                     <div class="form-group form-side-by-side">
                         <div class="form-side form-side-label">
-                            <label for="layout-changer"><?= Module::t('layout_rightbar_languagelabel')?></label>
+                            <label for="lang-changer"><?= Module::t('layout_rightbar_languagelabel')?></label>
                         </div>
                         <div class="form-side">
-                            <select id="layout-changer" class="form-control" ng-model="settings.luyadminlanguage">
+                            <select id="lang-changer" class="form-control" ng-model="settings.luyadminlanguage">
                                 <?php foreach ($this->context->module->interfaceLanguageDropdown as $key => $lang): ?>
                                     <option value="<?= $key; ?>"><?= $lang;?></option>
                                 <?php endforeach; ?>
@@ -52,7 +52,7 @@ use luya\admin\Module;
                     </div>
                     <div class="form-group form-side-by-side">
                         <div class="form-side form-side-label">
-                            <label for="layout-changer">Developer Mode</label>
+                            <label for="userSettings.isDeveloper">Developer Mode</label>
                         </div>
                         <div class="form-side">
                             <input type="checkbox" ng-model="settings.isDeveloper" id="userSettings.isDeveloper" />
