@@ -71,6 +71,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'vi' => 'Việt Nam',
         'pt' => 'Português',
         'fa' => 'فارسی',
+        'cn' => '中文简体',
     ];
     
     /**
