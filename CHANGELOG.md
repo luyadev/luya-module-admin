@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.0.1 (in progress)
 
+### Support
+- Support The Chinese Language
+
 ### Fixed
 
 [#30](https://github.com/luyadev/luya-module-admin/issues/30) Fixed non-unique input fields in account overview.
