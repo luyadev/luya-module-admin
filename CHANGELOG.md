@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.0.1 (in progress)
 
-### Support
-- Support The Chinese Language
+### Added
+
++ [#34](https://github.com/luyadev/luya-module-admin/pull/34) Added chinese translations.
 
 ### Fixed
 
