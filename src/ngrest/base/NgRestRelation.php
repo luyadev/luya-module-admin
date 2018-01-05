@@ -5,6 +5,7 @@ namespace luya\admin\ngrest\base;
 use yii\base\BaseObject;
 use yii\db\QueryInterface;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * NgRest Relation Defintion.
@@ -71,7 +72,8 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         if ($this->_relationLink === null) {
             // determine relation link from dataProvider
-            if ($this->getDataProvider() instanceof ActiveDataProvider) {
+            // using $this->hasMany returns an ActiveQuery object.
+            if ($this->getDataProvider() instanceof ActiveQuery) {
                 $this->_relationLink = $this->getDataProvider()->link;
             }
         }

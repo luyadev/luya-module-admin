@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#36](https://github.com/luyadev/luya-module-admin/issues/36) Fixed bug in NgRestRelation ActiveQuery link source identification.
 + [#30](https://github.com/luyadev/luya-module-admin/issues/30) Fixed non-unique input fields in account overview.
 + [#5](https://github.com/luyadev/luya-module-admin/issues/5) Fixed issue where modal body listenere could have negativ values and therefore the modal still exists on element which has been closed by esc key.
 + [#7](https://github.com/luyadev/luya-module-admin/issues/7) Repair login input label click function
