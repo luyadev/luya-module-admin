@@ -10410,7 +10410,7 @@ zaa.factory('HtmlStorage', function() {
     "use strict";
 
     /* GLOBAL DIRECTIVES */
-    
+
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
@@ -10835,7 +10835,7 @@ zaa.factory('HtmlStorage', function() {
 
     /**
      * Focus a given input field if the statement is true.
-     * 
+     *
      * ```
      * <input type="text" focus-me="searchInputOpen" />
      * ```
@@ -10926,7 +10926,7 @@ zaa.factory('HtmlStorage', function() {
             }
         }
     }]);
-    
+
 
     /**
      * Example usage of luya admin modal:
@@ -10938,9 +10938,9 @@ zaa.factory('HtmlStorage', function() {
      *     <p>Hello world!</p>
      * </modal>
      * ```
-     * 
+     *
      * If you want to hidden use ng-if with modals, you have to use ng-if inside the modal like:
-     * 
+     *
      * ```js
      * <modal is-modal-hidden="modalState">
      *    <div ng-if="!modalState">
@@ -10948,10 +10948,10 @@ zaa.factory('HtmlStorage', function() {
      *    </div>
      * </modal>
      * ```
-     * 
+     *
      * > Using the ng-if outside of the modal wont work as it does not trigger the modalState due to child scope creation each time
      * > the ng-if is visible.
-     * 
+     *
      */
     zaa.directive("modal", function ($timeout) {
         return {
@@ -10973,7 +10973,7 @@ zaa.factory('HtmlStorage', function() {
                 		}
             		}
             	});
-            	
+
             	/* ESC Key will close ALL modals, therefore we ensure the correct spaces */
             	$scope.escModal = function() {
             		$scope.isModalHidden = true;
@@ -10988,12 +10988,12 @@ zaa.factory('HtmlStorage', function() {
             }
         }
     });
-    
+
     /* CRUD, FORMS & FILE MANAGER */
-    
+
     /**
      * If modelSelection and modelSetter is enabled, you can select a given row based in its primary key which will triggered the ngrest of the parent CRUD form.
-     * 
+     *
      * ```
      * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
      * ```
@@ -11026,13 +11026,13 @@ zaa.factory('HtmlStorage', function() {
     					$scope.input.showWindow = true;
     				}
     			};
-    			
+
     			$scope.$watch('input.showWindow', function(n, o) {
     				if (n !== o && n == 1) {
     					$scope.$parent.loadService();
     				}
     			});
-    			
+
     			/**
     			 * @param integer $value contains the primary key
     			 * @param array $row contains the full row from the crud loader model in order to display data.
@@ -11047,7 +11047,7 @@ zaa.factory('HtmlStorage', function() {
     		}
     	}
     });
-    
+
     zaa.directive("crudRelationLoader", function($http, $sce) {
     	return {
     		restrict: "E",
@@ -11073,9 +11073,9 @@ zaa.factory('HtmlStorage', function() {
 
     /**
      * Generate form input types based on ZAA Directives.
-     * 
+     *
      * Usage inside another Angular Template:
-     * 
+     *
      * ```php
      * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="mymodel"></zaa-injector>
      * ```
@@ -11258,18 +11258,18 @@ zaa.factory('HtmlStorage', function() {
             		$scope.model = false;
             		$scope.data.model = null;
             	};
-            	
+
             	$scope.data = {
             		modalState: 1,
             		model: null
             	};
-            	
+
             	$scope.$watch('model', function(n, o) {
             		if (n) {
             			$scope.data.model = n;
             		}
             	}, true);
-            	
+
             	$scope.$watch('data.model', function(n, o) {
             		if (n) {
             			$scope.model = n;
@@ -11285,7 +11285,7 @@ zaa.factory('HtmlStorage', function() {
                                     '<i class="material-icons left">insert_link</i>' +
                                     '<span>' + i18n['js_link_set_value'] + '</span>' +
                                 '</div>' +
-                                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' + 
+                                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
                             '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
                         '</div>' +
                     '</div>' +
@@ -11331,7 +11331,7 @@ zaa.factory('HtmlStorage', function() {
     		}
     	}
     });
-    
+
     zaa.directive("zaaColor", function() {
     	return {
             restrict: "E",
@@ -11395,7 +11395,7 @@ zaa.factory('HtmlStorage', function() {
             }
         }
     });
-    
+
     zaa.directive("zaaWysiwyg", function() {
         return {
             restrict: "E",
@@ -11489,7 +11489,7 @@ zaa.factory('HtmlStorage', function() {
             }
         }
     });
-    
+
     /**
      * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
      */
@@ -11520,7 +11520,7 @@ zaa.factory('HtmlStorage', function() {
             			}
             		});
             	});
-            	
+
             	$scope.resetValue = function() {
             		$scope.model = 0;
             		$scope.value = null;
@@ -11601,25 +11601,25 @@ zaa.factory('HtmlStorage', function() {
 	    	}
     	};
     });
-    
+
     /**
-     * 
+     *
      * Usage Example:
-     * 
+     *
      * ```js
      * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules" />
      * ```
-     * 
+     *
      * If an initvalue is provided, you can not reset the model to null.
-     * 
+     *
      * Options value defintion:
-     * 
+     *
      * ```js
      * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
      * ```
-     * 
+     *
      * In order to change the value and label keys which should be used to take the value and label keys within the given array use:
-     * 
+     *
      * ```js
      * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id" />
      * ```
@@ -11638,31 +11638,31 @@ zaa.factory('HtmlStorage', function() {
                 "initvalue": "@initvalue"
             },
             controller: function($scope) {
-            	
+
             	/* default scope values */
-            	
+
             	$scope.isOpen = 0;
-            	
+
             	if ($scope.optionsvalue == undefined) {
             		$scope.optionsvalue = 'value';
             	}
-            	
+
             	if ($scope.optionslabel == undefined) {
             		$scope.optionslabel = 'label';
             	}
-            	
+
 		        if (jQuery.isNumeric($scope.model)){
 		            $scope.model = typeCastValue($scope.model);
 		        }
-            	
+
 		        /* listeners */
-		        
+
             	$scope.$on('closeAllSelects', function() {
             		if ($scope.isOpen) {
             			$scope.closeSelect();
             		}
             	});
-            	
+
                 $timeout(function(){
                     $scope.$watch(function() { return $scope.model }, function(n, o) {
                         if (n == undefined || n == null || n == '') {
@@ -11670,16 +11670,16 @@ zaa.factory('HtmlStorage', function() {
                                 $scope.initvalue = typeCastValue($scope.initvalue);
                             }
                             var exists = $scope.valueExistsInOptions(n);
-                            
+
                             if (!exists) {
                             	$scope.model = $scope.initvalue;
                             }
                         }
                     });
                 });
-            	
+
                 /* methods */
-                
+
                 $scope.valueExistsInOptions = function(value) {
                 	var exists = false;
                 	angular.forEach($scope.options, function(item) {
@@ -11689,23 +11689,23 @@ zaa.factory('HtmlStorage', function() {
                 	});
                 	return exists;
                 };
-                
+
             	$scope.toggleIsOpen = function() {
             		if (!$scope.isOpen) {
             			$rootScope.$broadcast('closeAllSelects');
             		}
             		$scope.isOpen = !$scope.isOpen;
             	};
-            		
+
             	$scope.closeSelect = function() {
             		$scope.isOpen = 0;
             	};
-                
+
                 $scope.setModelValue = function(option) {
                 	$scope.model = option[$scope.optionsvalue];
                 	$scope.closeSelect();
                 };
-                
+
                 $scope.getSelectedLabel = function() {
                 	var defaultLabel = i18n['ngrest_select_no_selection'];
                 	angular.forEach($scope.options, function(item) {
@@ -11713,17 +11713,17 @@ zaa.factory('HtmlStorage', function() {
                 			defaultLabel = item[$scope.optionslabel];
                 		}
                 	});
-                	
+
                 	return defaultLabel;
                 };
-                
+
                 $scope.hasSelectedValue = function() {
                 	var modelValue = $scope.model;
-                	
+
                 	if ($scope.valueExistsInOptions(modelValue) && modelValue != $scope.initvalue) {
                 		return true;
                 	}
-                	
+
                 	return false;
                 };
             },
@@ -11897,7 +11897,7 @@ zaa.factory('HtmlStorage', function() {
      * http://jsfiddle.net/bateast/Q6py9/1/ - Date Parse
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date - Date Objects
      * https://docs.angularjs.org/api/ng/filter/date - Angular Date Filter
-     * 
+     *
      * resetable: 1/0, This will enable or disable the ability to press the reset (set to null) button. use integer value
      */
     zaa.directive("zaaDatetime", function() {
@@ -11916,7 +11916,7 @@ zaa.factory('HtmlStorage', function() {
             	$scope.isNumeric = function(num) {
             	    return !isNaN(num)
             	}
-            	
+
             	$scope.$watch(function() { return $scope.model }, function(n, o) {
             		if (n != null && n != undefined) {
             			var datep = new Date(n*1000);
@@ -11934,11 +11934,11 @@ zaa.factory('HtmlStorage', function() {
             		if (!$scope.isNumeric($scope.hour) || $scope.hour == '') {
 						$scope.hour = "0";
 					}
-					
+
 					if (!$scope.isNumeric($scope.min)  || $scope.min == '') {
 						$scope.min = "0";
 					}
-            		
+
             		if (n == 'Invalid Date' || n == "" || n == 'NaN') {
         				$scope.date = null;
         				$scope.model = null;
@@ -11990,16 +11990,16 @@ zaa.factory('HtmlStorage', function() {
             	$scope.hour = "0";
 
             	$scope.min = "0";
-            	
+
             	$scope.reset = function() {
             		$scope.model = null;
             	};
-            	
+
             	$scope.getIsResetable = function() {
             		if ($scope.resetable) {
             			return parseInt($scope.resetable);
             		}
-            		
+
             		return true;
             	};
             },
@@ -12052,7 +12052,7 @@ zaa.factory('HtmlStorage', function() {
         	controller: function($scope, $filter) {
 
             	$scope.$watch(function() { return $scope.model }, function(n, o) {
-            		
+
             		if (n != null && n != undefined) {
             			var datep = new Date(n*1000);
             			$scope.pickerPreselect = datep;
@@ -12102,16 +12102,16 @@ zaa.factory('HtmlStorage', function() {
                 $scope.closeDatePicker = function() {
                     $scope.datePickerToggler = false;
                 };
-                
+
                 $scope.reset = function() {
             		$scope.model = null;
             	};
-            	
+
             	$scope.getIsResetable = function() {
             		if ($scope.resetable) {
             			return parseInt($scope.resetable);
             		}
-            		
+
             		return true;
             	};
             },
@@ -12379,7 +12379,7 @@ zaa.factory('HtmlStorage', function() {
             },
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                            '<div class="form-side form-side-label">' +
+                            '<div class="form-control no-border">' +
                                 '<label>{{label}}</label>' +
                             '</div>' +
                             '<div class="form-side">' +
@@ -12475,7 +12475,7 @@ zaa.factory('HtmlStorage', function() {
                                     '<div ng-repeat="(key,file) in model track by key" class="list-item">' +
                                     	'<div class="list-section" ng-if="file.hiddenStorageUploadSource">' +
                                     		'<a ng-href="{{file.hiddenStorageUploadSource}}" target="_blank" class="btn btn-primary">{{file.hiddenStorageUploadName}}</a>'+
-                                    	'</div>' + 
+                                    	'</div>' +
                                         '<div class="list-section" ng-if="!file.hiddenStorageUploadSource">' +
                                             '<div class="list-left">' +
                                                 '<storage-file-upload ng-model="file.fileId"></storage-file-upload>' +
@@ -12505,7 +12505,7 @@ zaa.factory('HtmlStorage', function() {
 
     /**
      * Generates an array where each array element can contain another directive from zaa types.
-     * 
+     *
      * @retunr array
      */
     zaa.directive("zaaMultipleInputs", function() {
@@ -12714,9 +12714,9 @@ zaa.factory('HtmlStorage', function() {
                 // controller logic
 
             	$scope.modal = {state: 1};
-            	
+
             	$scope.modalContainer = false;
-            	
+
             	$scope.fileinfo = null;
 
             	$scope.select = function(fileId) {
@@ -13026,24 +13026,24 @@ zaa.factory('HtmlStorage', function() {
                 $scope.foldersDirecotryIdReload = function() {
                 	return ServiceFoldersDirecotryId.load(true);
                 }
-                
+
                 // file replace logic
 
                 $scope.folderCountMessage = function(folder) {
                 	return i18nParam('js_filemanager_count_files_overlay', {count: folder.filesCount});
                 }
-                
+
                 $scope.errorMsg = null;
-                
+
                 $scope.replaceFile = function(file, errorFiles) {
                 	$scope.replaceFiled = file;
-                	
+
                 	if (!file) {
                 		return;
                 	}
-                	
+
                 	LuyaLoading.start();
-                	
+
                 	Upload.upload({
                 		url: 'admin/api-admin-storage/file-replace',
                         data: {file: file, fileId: $scope.fileDetail.id}
@@ -13093,10 +13093,10 @@ zaa.factory('HtmlStorage', function() {
                 })
 
                 $scope.pasteUpload = function(e) {
-                	
+
                     for (var i = 0 ; i < e.originalEvent.clipboardData.items.length ; i++) {
                         var item = e.originalEvent.clipboardData.items[i];
-                        
+
                         if (item.kind == 'file') {
                         	LuyaLoading.start(i18n['js_dir_upload_wait']);
 	                        Upload.upload({
@@ -13113,12 +13113,12 @@ zaa.factory('HtmlStorage', function() {
                         			AdminToastService.error(response.data.message);
                         			LuyaLoading.stop();
                         		}
-	                        	
+
 	                        })
                         }
                     }
                 }
-                
+
                 $scope.uploadUsingUpload = function(file) {
                 	file.upload = Upload.upload({
                         url: 'admin/api-admin-storage/files-upload',
@@ -13261,7 +13261,7 @@ zaa.factory('HtmlStorage', function() {
                         $scope.folderDeleteConfirmForm = false;
                     }
                 };
-                
+
                 */
 
                 $scope.updateFolder = function(folder) {
@@ -13368,16 +13368,16 @@ zaa.factory('HtmlStorage', function() {
                     	AdminToastService.success('Captions has been updated');
                     });
                 }
-               
+
                 $scope.selectedFileFromParent = null;
-                
+
                 $scope.init = function() {
                 	if ($scope.$parent.fileinfo) {
                 		$scope.selectedFileFromParent = $scope.$parent.fileinfo;
                 		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folderId, true);
                 	}
                 }
-                
+
                 $scope.init();
 
             },
