@@ -2,7 +2,64 @@
     "use strict";
 
     /* GLOBAL DIRECTIVES */
-
+    zaa.directive('line', function() {
+    return {
+        scope: {
+            id: "@",
+            legend: "=",
+            item: "=",
+            data: "="
+        },
+        restrict: 'E',
+        template: '<div style="min-height:300px;height:auto;width:100%;"></div>',
+        replace: true,
+        link: function($scope, element, attrs, controller) {
+            var myChart = echarts.init(document.getElementById($scope.id),'macarons');
+            var option = {
+                // 提示框，鼠标悬浮交互时的信息提示
+                tooltip: {
+                    show: true,
+                    trigger: 'item'
+                },
+                // 图例
+                legend: {
+                    data: []
+                },
+                // 横轴坐标轴
+                xAxis: [{
+                    type: 'category',
+                    data: [],
+                    boundaryGap : false
+                }],
+                // 纵轴坐标轴
+                yAxis: [{
+                    type: 'value'
+                }],
+                // 数据内容数组
+                series: function(){
+                    var serie=[];
+                    return serie;
+                }()
+            };
+            myChart.setOption(option);
+            var option = $scope.$eval('data');
+            console.log($scope.data);
+            $scope.$watch('data', function() {
+                var option = $scope.$eval('data');
+                console.log(option);
+                if (option!=undefined) {
+                     myChart.setOption(angular.fromJson(option));
+                }
+            }, true);
+            var w = angular.element(window);
+            w.bind('resize', function(){
+                console.log('abcde++'+w.width());
+                // resize echarts图表
+                myChart.resize();
+            });
+        }
+    };
+});
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>

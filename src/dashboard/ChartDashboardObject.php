@@ -27,10 +27,7 @@ class ChartDashboardObject extends BaseDashboardObject {
     public $options = '';
 
     public function getOuterTemplate(){
-        $uniqid = md5(uniqid(microtime(true), true));
-        return \yii\helpers\Html::decode(Yii::$app->controller->renderFile('@admin/views/template/dashboard/chart.php',
-            ['options' => $this->options,
-             'uniqid' => $uniqid]));
+        return '<line id="charts" legend="legend" item="item" data="data"></line>';
     }
 
 
