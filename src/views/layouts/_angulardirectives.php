@@ -126,9 +126,7 @@ use luya\admin\helpers\Angular;
                     <?= Admin::t('layout_select_file'); ?>
                 </span>
             </div>
-            <span class="link-selector-reset" ng-click="reset()" ng-show="fileinfo!=null">
-                <i class="material-icons">remove_circle</i>
-            </span>
+            <button type="button" class="btn btn-danger" ng-click="reset()" ng-show="fileinfo!=null" ><?= Admin::t('aws_groupauth_th_remove');?></button>
         </div>
         <modal is-modal-hidden="modal.state" modal-title="<?= Admin::t('layout_select_file'); ?>">
 			<div ng-if="!modal.state">
@@ -147,16 +145,24 @@ use luya\admin\helpers\Angular;
         <div class="imageupload-preview" ng-show="imageinfo != null">
             <div class="imageupload-preview-sizer"></div>
             <img ng-src="{{thumb.source}}" ng-show="imageinfo != null" class="imageupload-preview-image" />
-            <div class="imageupload-infos">
-                <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolutionWidth }} x {{ imageinfo.resolutionHeight }}</div>
+
+            <div class="row">
+              <div class="col-md-8 form-group">
+                <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null">
+                    <select name="filterId" ng-model="filterId" class="form-control" convert-to-number><option value="0"><?= Admin::t('layout_no_filter'); ?></option><option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option></select>
+                </div>
+              </div>
+              <div class="col-md-4 form-group">
+                <div class="imageupload-infos">
+                  <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolutionWidth }} x {{ imageinfo.resolutionHeight }}</div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="imageupload-upload">
             <storage-file-upload ng-model="fileId"></storage-file-upload>
         </div>
-        <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null">
-            <select name="filterId" ng-model="filterId" convert-to-number><option value="0"><?= Admin::t('layout_no_filter'); ?></option><option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option></select>
-        </div>
+
 
     </div>
 </script>
@@ -279,53 +285,53 @@ use luya\admin\helpers\Angular;
                             </th>
                             <th></th><!-- image thumbnail / file icon -->
                             <th>
-                                <span ng-if="sortField!='name' && sortField!='-name'" ng-click="changeSortField('-name')"><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                <span ng-if="sortField!='name' && sortField!='-name'" ng-click="changeSortField('-name')"><?= Admin::t('layout_filemanager_col_name'); ?></span>
                                 <div class="table-sorter-wrapper is-active">
                                     <div ng-if="sortField=='name'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-name')">
-                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
                                     <div ng-if="sortField=='-name'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('name')">
-                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
                                 </div>
                             </th>
                             <th>
-                                <span ng-if="sortField!='extension' && sortField!='-extension'" ng-click="changeSortField('-extension')"><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                <span ng-if="sortField!='extension' && sortField!='-extension'" ng-click="changeSortField('-extension')"><?= Admin::t('layout_filemanager_col_type'); ?></span>
                                 <div class="table-sorter-wrapper is-active">
                                     <div ng-if="sortField=='extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-extension')">
-                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
                                     <div ng-if="sortField=='-extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('extension')">
-                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
                                 </div>
                             </th>
                             <th>
-                                <span ng-if="sortField!='uploadTimestamp' && sortField!='-uploadTimestamp'" ng-click="changeSortField('-uploadTimestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                <span ng-if="sortField!='uploadTimestamp' && sortField!='-uploadTimestamp'" ng-click="changeSortField('-uploadTimestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>
                                 <div class="table-sorter-wrapper is-active">
                                     <div ng-if="sortField=='uploadTimestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-uploadTimestamp')">
-                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
                                     <div ng-if="sortField=='-uploadTimestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('uploadTimestamp')">
-                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
                                 </div>
                             </th>
                             <th>
-                                <span ng-if="sortField!='size' && sortField!='-size'" ng-click="changeSortField('-size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                <span ng-if="sortField!='size' && sortField!='-size'" ng-click="changeSortField('-size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>
                                 <div class="table-sorter-wrapper is-active">
                                     <div ng-if="sortField=='size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-size')">
-                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
                                     <div ng-if="sortField=='-size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('size')">
-                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
                                 </div>

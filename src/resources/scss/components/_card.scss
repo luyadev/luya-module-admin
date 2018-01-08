@@ -28,3 +28,86 @@
 .card > .card-body + .list-group > .list-group-item:first-of-type {
     border-top: 1px solid $list-group-border-color;
 }
+
+.card {
+    background-color: white;
+    box-shadow: 0px 5px 10px #AAA;
+}
+
+.card .card-header {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+.card .card-header h3{
+    color: #fff;
+    font-weight: 400;
+}
+.card a {
+    color: #333;
+    text-decoration: none;
+}
+
+.card:hover .card-image img {
+    width: 110%;
+    filter: grayscale(0);
+}
+
+.card-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: grayscale(0.2);
+    transition-property: filter width;
+    transition-duration: .3s;
+}
+
+.card-body {
+    /*text-align: center;*/
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
+.card-date {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.card-title,
+.card-exceprt {
+    font-family: 'Playfair Display', serif;
+}
+
+.card-date,
+.card-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.card-date,
+.card-exceprt,
+#case-title {
+    color: #777;
+}
+
+#case-title {
+    position: absolute;
+    font: 18px 'Microsoft YaHei';
+    top: 10px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
