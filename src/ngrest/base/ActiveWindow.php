@@ -341,7 +341,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
      */
     public function getIsCompositeItem()
     {
-        return count($this->_itemId) > 1 ? true : false;
+        return count($this->getItemIds()) > 1 ? true : false;
     }
     
     /**
