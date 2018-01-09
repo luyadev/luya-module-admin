@@ -80,6 +80,7 @@ module.exports = {
                 "vendorlibs/ng-colorwheel/ng-colorwheel.js",
                 "../../vendor/bower-asset/bowser/src/useragent.js",
                 "../../vendor/bower-asset/bowser/src/bowser.js",
+                "../../vendor/bower-asset/echarts/dist/echarts.min.js",
                 "js/dnd.js",
                 "js/zaa.js",
                 "js/services.js",

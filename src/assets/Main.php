@@ -27,7 +27,6 @@ class Main extends \luya\web\Asset
      */
     public $js = [
         'dist/js/main.js',
-        'dist/js/echarts.min.js',
     ];
 
     /**
