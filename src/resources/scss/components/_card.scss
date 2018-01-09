@@ -31,7 +31,6 @@
 
 .card {
     background-color: white;
-    box-shadow: 0px 5px 10px #AAA;
 }
 
 .card .card-header {
@@ -69,45 +68,4 @@
     filter: grayscale(0.2);
     transition-property: filter width;
     transition-duration: .3s;
-}
-
-.card-body {
-    /*text-align: center;*/
-    padding: 15px 20px;
-    box-sizing: border-box;
-}
-
-.card-date {
-    font-family: 'Source Sans Pro', sans-serif;
-}
-
-.card-title,
-.card-exceprt {
-    font-family: 'Playfair Display', serif;
-}
-
-.card-date,
-.card-title {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.card-date,
-.card-exceprt,
-#case-title {
-    color: #777;
-}
-
-#case-title {
-    position: absolute;
-    font: 18px 'Microsoft YaHei';
-    top: 10px;
-    left: 0px;
-    right: 0px;
-    margin: auto;
-    display: block;
-    text-align: center;
-    text-decoration: none;
 }

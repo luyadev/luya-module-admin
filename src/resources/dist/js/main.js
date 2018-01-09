@@ -10433,16 +10433,6 @@ zaa.factory('HtmlStorage', function() {
                 legend: {
                     data: []
                 },
-                // 横轴坐标轴
-                xAxis: [{
-                    type: 'category',
-                    data: [],
-                    boundaryGap : false
-                }],
-                // 纵轴坐标轴
-                yAxis: [{
-                    type: 'value'
-                }],
                 // 数据内容数组
                 series: function(){
                     var serie=[];
@@ -12432,7 +12422,7 @@ zaa.factory('HtmlStorage', function() {
             },
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                            '<div class="form-control no-border">' +
+                            '<div class="form-control border-0">' +
                                 '<label>{{label}}</label>' +
                             '</div>' +
                             '<div class="form-side">' +
