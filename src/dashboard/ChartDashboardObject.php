@@ -28,7 +28,7 @@ class ChartDashboardObject extends BaseDashboardObject {
 
     public function getOuterTemplate(){
         $uniqid = md5(uniqid(microtime(true),true));
-        return '<div class="card-header"><h4>{{title}}<h4></div><line id="charts_'.$uniqid.'" legend="legend" item="item" data="data"></line>';
+        return '<div class="card-header"><h4>{{title}}<h4></div><echarts id="charts_'.$uniqid.'" legend="legend" item="item" data="data"></echarts>';
     }
 
 
