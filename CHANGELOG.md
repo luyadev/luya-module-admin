@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 1.0.2 (in progress)
 
 ### Added
+- [#40](https://github.com/luyadev/luya-module-admin/pull/40) Added the ChartDashboardObject whit echarts.js
 
 ### Fixed
 
