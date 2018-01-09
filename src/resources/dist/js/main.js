@@ -9460,9 +9460,9 @@ function typeCastValue(value) {
     "use strict";
 
     /* CONFIG */
-
+    
     zaa.config(function ($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
-
+    	
         $httpProvider.interceptors.push("authInterceptor");
 
         zaa.bootstrap = $controllerProvider;
@@ -9505,7 +9505,7 @@ function typeCastValue(value) {
     });
 
     /* PROVIDERS */
-
+    
     /**
      * attach custom callback function to the custom state resolve. Use the resolverProvider in
      * your configuration part:
@@ -9534,7 +9534,7 @@ function typeCastValue(value) {
     });
 
     /* FACTORIES */
-
+    
     /**
      * LUYA LOADING
      */
@@ -9570,22 +9570,22 @@ function typeCastValue(value) {
             }
         }
     });
-
+    
     /**
      * Inside your Directive or Controller:
-     *
+     * 
      * ```js
      * AdminClassService.setClassSpace('modalBody', 'modal-open')
      * ```
-     *
+     * 
      * Inside your HTML layout file:
-     *
+     * 
      * ```html
      * <div class="{{AdminClassService.getClassSpace('modalBody')}}" />
      * ```
-     *
+     * 
      * In order to clear the class space afterwards:
-     *
+     * 
      * ```js
      * AdminClassService.clearSpace('modalBody');
      * ```
@@ -9606,20 +9606,20 @@ function typeCastValue(value) {
         	 if (service.vars.hasOwnProperty(spaceName)) {
         		 return true;
         	 }
-
+        	 
         	 return false;
         };
-
+        
         service.setClassSpace = function (spaceName, className) {
             service.vars[spaceName] = className;
         };
-
+        
         service.clearSpace = function(spaceName) {
         	if (service.vars.hasOwnProperty(spaceName)) {
         		service.vars[spaceName] = null;
         	}
         };
-
+        
         service.removeSpace = function(spaceName) {
         	if (service.hasClassSpace(spaceName)) {
         		delete service.vars[spaceName];
@@ -9627,34 +9627,34 @@ function typeCastValue(value) {
         };
 
         service.stack = 0;
-
+        
         service.modalStackPush = function() {
         	service.stack += 1;
         };
-
+        
         service.modalStackRemove = function() {
         	if (service.stack <= 1) {
-        		service.stack = 0;
+        		service.stack = 0; 
         	} else {
         		service.stack -= 1;
         	}
         };
-
+        
         service.modalStackRemoveAll = function() {
         	service.stack = 0;
         };
-
+        
         service.modalStackIsEmpty = function() {
         	if (service.stack == 0) {
         		return true;
         	}
-
+        	
         	return false;
         };
-
+        
         return service;
     });
-
+    
     zaa.factory('CacheReloadService', function ($http, $window) {
 
         var service = [];
@@ -9667,7 +9667,7 @@ function typeCastValue(value) {
 
         return service;
     });
-
+    
     zaa.factory("authInterceptor", function ($rootScope, $q, AdminToastService, AdminDebugBar) {
         return {
             request: function (config) {
@@ -9677,14 +9677,14 @@ function typeCastValue(value) {
                 config.headers = config.headers || {};
                 config.headers.Authorization = "Bearer " + $rootScope.luyacfg.authToken;
                 config.headers['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr("content");
-
+                
                 return config || $q.when(config);
             },
             response: function(config) {
             	if (!config.hasOwnProperty('ignoreLoadingBar')) {
             		AdminDebugBar.pushResponse(config);
             	}
-
+            	
             	return config || $q.when(config);
             },
             responseError: function (data) {
@@ -9697,16 +9697,15 @@ function typeCastValue(value) {
                 	} else {
                 		AdminToastService.error("Response Error: " + data.status + " " + data.statusText, 10000);
                 	}
-
+                    
                 }
-
+                
                 return $q.reject(data);
             }
         };
     });
 
 })();
-
 // service resolver
 function adminServiceResolver(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
@@ -10411,7 +10410,7 @@ zaa.factory('HtmlStorage', function() {
     "use strict";
 
     /* GLOBAL DIRECTIVES */
-    zaa.directive('line', function() {
+    zaa.directive('echarts', function() {
     return {
         scope: {
             id: "@",
@@ -10451,18 +10450,14 @@ zaa.factory('HtmlStorage', function() {
                 }()
             };
             myChart.setOption(option);
-            var option = $scope.$eval('data');
-            console.log($scope.data);
             $scope.$watch('data', function() {
                 var option = $scope.$eval('data');
-                console.log(option);
                 if (option!=undefined) {
                      myChart.setOption(angular.fromJson(option));
                 }
             }, true);
             var w = angular.element(window);
             w.bind('resize', function(){
-                console.log('abcde++'+w.width());
                 // resize echarts图表
                 myChart.resize();
             });

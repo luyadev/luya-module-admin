@@ -2,7 +2,7 @@
     "use strict";
 
     /* GLOBAL DIRECTIVES */
-    zaa.directive('line', function() {
+    zaa.directive('echarts', function() {
     return {
         scope: {
             id: "@",
@@ -42,18 +42,14 @@
                 }()
             };
             myChart.setOption(option);
-            var option = $scope.$eval('data');
-            console.log($scope.data);
             $scope.$watch('data', function() {
                 var option = $scope.$eval('data');
-                console.log(option);
                 if (option!=undefined) {
                      myChart.setOption(angular.fromJson(option));
                 }
             }, true);
             var w = angular.element(window);
             w.bind('resize', function(){
-                console.log('abcde++'+w.width());
                 // resize echarts图表
                 myChart.resize();
             });
