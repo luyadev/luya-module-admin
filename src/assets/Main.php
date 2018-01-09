@@ -27,6 +27,7 @@ class Main extends \luya\web\Asset
      */
     public $js = [
         'dist/js/main.js',
+        'https://cdn.bootcss.com/echarts/3.8.5/echarts-en.min.js',        
     ];
 
     /**
@@ -35,7 +36,7 @@ class Main extends \luya\web\Asset
     public $depends = [
         'luya\admin\assets\Jquery',
     ];
-    
+
     /**
      * @inheritdoc
      */

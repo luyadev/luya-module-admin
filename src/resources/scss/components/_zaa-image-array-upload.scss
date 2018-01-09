@@ -13,3 +13,27 @@ zaa-image-array-upload {
         margin-right: 0;
     }
 }
+
+.no-border{
+  border: none;
+}
+/*custom the zaaStyle*/
+.imageupload-preview{
+  margin-bottom: 10px;
+}
+.imageupload-preview-image{
+  top: 46%;
+}
+.imageupload-size {
+    background-color:transparent;// #E50060;
+    bottom:auto;// -30px;
+    color:#000;// #fff;
+    right: auto;
+    text-align: center;
+}
+.imageupload-filter{
+  margin-top: auto;
+}
+.zaa-file-array-upload-description {
+    min-height: 200px;
+}
