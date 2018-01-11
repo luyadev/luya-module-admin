@@ -33,7 +33,7 @@
 		"bower-asset/twigjs-bower": "~0.10.5",
 		"bower-asset/angular-filter" : "~0.5.15",
 		"bower-asset/bowser": "~1.7.3",
-		"bower-asset/echarts": "*"
+		"bower-asset/echarts": "~3.8.5"
 	},
 	"autoload" : {
 		"psr-4" : {
