@@ -939,13 +939,14 @@
 		/* PROFIL SETTINS */
 
 		$scope.profile = {};
-
 		$scope.settings = {};
-
+		$scope.packages = [];
+		
 		$scope.getProfileAndSettings = function() {
 			$http.get('admin/api-admin-user/session').then(function(success) {
 				$scope.profile = success.data.user;
-				$scope.settings  = success.data.settings;
+				$scope.settings = success.data.settings;
+				$scope.packages = success.data.packages;
 			});
 		};
 

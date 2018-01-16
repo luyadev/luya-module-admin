@@ -32,7 +32,8 @@ class UserController extends Api
     
     public function actionSession()
     {
-        return [
+        $session = [
+            'packages' => [],
             'user' => Yii::$app->adminuser->identity->toArray(['title', 'firstname', 'lastname', 'email', 'id']),
             'settings' => Yii::$app->adminuser->identity->setting->getArray([
                 User::USER_SETTING_ISDEVELOPER,
@@ -41,6 +42,13 @@ class UserController extends Api
                 User::USER_SETTING_UILANGUAGE => $this->module->interfaceLanguage,
             ]),
         ];
+        
+        // if developer option is enabled provide package infos
+        if ($session['settings'][User::USER_SETTING_ISDEVELOPER]) {
+            $session['packages'] = Yii::$app->getPackageInstaller()->getConfigs();
+        }
+        
+        return $session;
     }
 
     public function actionSessionUpdate()

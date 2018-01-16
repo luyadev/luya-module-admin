@@ -50,6 +50,8 @@ class RemoteController extends Controller
             'app_transfer_exceptions' => (int) Yii::$app->errorHandler->transferException,
             'admin_online_count' => UserOnline::getCount(),
             'app_elapsed_time' => Yii::getLogger()->getElapsedTime(),
+            'packages' => Yii::$app->getPackageInstaller()->getConfigs(),
+            'packages_update_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
         ];
     }
 }
