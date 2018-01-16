@@ -116,16 +116,16 @@ $this->beginPage()
                                 <span class="mainnav-tooltip-big">
                                     <ul class="mainnav-tooltip-big-menu">
                                         <li class="mainnav-tooltip-big-menu-item" ui-sref-active="mainnav-tooltip-big-menu-item-active" ui-sref="custom({templateId:'admin/account/dashboard'})" ng-click="isOpen=0">
-                                            <a class="mainnav-tooltip-big-menu-link">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">face</i>
                                                  <?= Admin::t('layout_btn_user_settings'); ?>
-                                            </a>
+                                            </span>
                                         </li>
-                                        <li class="mainnav-tooltip-big-menu-item" >
-                                            <a href="<?= Url::toRoute(['/admin/default/logout']); ?>">
+                                        <li class="mainnav-tooltip-big-menu-item" onclick="location.href='<?= Url::toRoute(['/admin/default/logout']); ?>'">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">exit_to_app</i>
                                                 <?= Admin::t('layout_btn_logout'); ?>
-                                            </a>
+                                            </span>
                                         </li>
                                     </ul>
                                 </span>

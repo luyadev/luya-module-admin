@@ -87,7 +87,7 @@ function typeCastValue(value) {
                     adminServiceResolver: adminServiceResolver,
                     resolver: function (resolver) {
                         return resolver.then;
-                    },
+                    }
                 }
             })
             .state("home", {

@@ -365,6 +365,8 @@
              border-radius: $border-radius;
              padding: 5px 10px 5px 30px;
              margin-bottom: 5px;
+             line-height: 23px;
+             transition: background-color .25s ease-in-out;
 
 
             i {
@@ -376,25 +378,28 @@
             }
             a, &-link {
                 color: map-get($grays, 400);
-                line-height: 24px;
-                transition: color .25s ease-in-out;
+                line-height: 23px;
+                transition: color .15s ease-in-out;
 
                 &:hover, &-active {
-                     text-decoration: none;
+                    text-decoration: none;
+
                  }
             }
 
-            &:hover, &-active {
+            &:hover {
                 @include label-background;
 
-                i {
-                    color: map-get($theme-colors, primary);
-                }
-
-                a {
-                    color: $white !important;
+                span {
+                    color: $white;
                 }
             }
+
+             &-active
+
+             i {
+                 color: map-get($theme-colors, primary);
+             }
         }
     }
 }
