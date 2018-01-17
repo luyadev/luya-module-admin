@@ -8,7 +8,7 @@ use Yii;
  * Base Image Property.
  *
  * This property overrides the default implementation of a property in order to simplify the integration of image property. The
- * response of the method `getValue()` is the **source** to the file. If no image is provided or it can not be loaded the
+ * response of the method `getValue()` is the **sourceAbsolute** to the image. If no image is provided or it can not be loaded the
  * response is false.
  *
  * Usage Example
@@ -63,7 +63,7 @@ abstract class ImageProperty extends Property
     }
     
     /**
-     * Get the source of the image, if not available the method returns false.
+     * Get the absolute image source of the image, if not available the method returns false.
      *
      * @return string|boolean Returns the path to the file, otherwise false.
      * @see \luya\admin\base\Property::getValue()
@@ -77,10 +77,27 @@ abstract class ImageProperty extends Property
             /* @var $image \luya\admin\image\Item */
             if ($image) {
                 if ($this->filterName()) {
-                    return $image->applyFilter($this->filterName())->source;
+                    return $image->applyFilter($this->filterName())->sourceAbsolute;
                 }
                 return $image->source;
             }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Get the image property from the property value.
+     * 
+     * @return \luya\admin\image\Item|boolean
+     * @since 1.0.2
+     */
+    public function getImage()
+    {
+        $value = parent::getValue();
+        
+        if ($value) {
+            return Yii::$app->storage->getImage($value);
         }
         
         return false;
