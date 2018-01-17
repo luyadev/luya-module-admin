@@ -25,7 +25,7 @@ use luya\admin\ngrest\base\ActiveWindow;
 /**
  * Mein Test Active Window.
  *
- * File has been created with `aw/create` command on LUYA version 1.0.0. 
+ * File has been created with `aw/create` command. 
  */
 class MeinTestActiveWindow extends ActiveWindow
 {
