@@ -2,7 +2,53 @@
     "use strict";
 
     /* GLOBAL DIRECTIVES */
-    
+
+    /**
+     * Controller Default
+     * echarts.js component
+     */
+    zaa.directive('echarts', function() {
+       return {
+           scope: {
+               id: "@",
+               legend: "=",
+               item: "=",
+               data: "="
+           },
+           restrict: 'E',
+           template: '<div style="min-height:300px;height:auto;width:100%;"></div>',
+           replace: true,
+           link: function($scope, element, attrs, controller) {
+               var myChart = echarts.init(document.getElementById($scope.id),'macarons');
+               var option = {
+                   tooltip: {
+                       show: true,
+                       trigger: 'item'
+                   },
+                   legend: {
+                       data: []
+                   },
+               };
+               /**
+                * init the echart
+                */
+               myChart.setOption(option);
+               $scope.$watch('data', function() {
+                   var option = $scope.$eval('data');
+                   if (option!=undefined) {
+                        myChart.setOption(angular.fromJson(option));
+                   }
+               }, true);
+               var w = angular.element(window);
+               w.bind('resize', function(){
+                   /**
+                    * resize echarts when window zoom
+                    */
+                   myChart.resize();
+               });
+           }
+       };
+    });
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
@@ -427,7 +473,7 @@
 
     /**
      * Focus a given input field if the statement is true.
-     * 
+     *
      * ```
      * <input type="text" focus-me="searchInputOpen" />
      * ```
@@ -518,7 +564,7 @@
             }
         }
     }]);
-    
+
 
     /**
      * Example usage of luya admin modal:
@@ -530,9 +576,9 @@
      *     <p>Hello world!</p>
      * </modal>
      * ```
-     * 
+     *
      * If you want to hidden use ng-if with modals, you have to use ng-if inside the modal like:
-     * 
+     *
      * ```js
      * <modal is-modal-hidden="modalState">
      *    <div ng-if="!modalState">
@@ -540,10 +586,10 @@
      *    </div>
      * </modal>
      * ```
-     * 
+     *
      * > Using the ng-if outside of the modal wont work as it does not trigger the modalState due to child scope creation each time
      * > the ng-if is visible.
-     * 
+     *
      */
     zaa.directive("modal", function ($timeout) {
         return {
@@ -565,7 +611,7 @@
                 		}
             		}
             	});
-            	
+
             	/* ESC Key will close ALL modals, therefore we ensure the correct spaces */
             	$scope.escModal = function() {
             		$scope.isModalHidden = true;
@@ -580,12 +626,12 @@
             }
         }
     });
-    
+
     /* CRUD, FORMS & FILE MANAGER */
-    
+
     /**
      * If modelSelection and modelSetter is enabled, you can select a given row based in its primary key which will triggered the ngrest of the parent CRUD form.
-     * 
+     *
      * ```
      * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
      * ```
@@ -618,13 +664,13 @@
     					$scope.input.showWindow = true;
     				}
     			};
-    			
+
     			$scope.$watch('input.showWindow', function(n, o) {
     				if (n !== o && n == 1) {
     					$scope.$parent.loadService();
     				}
     			});
-    			
+
     			/**
     			 * @param integer $value contains the primary key
     			 * @param array $row contains the full row from the crud loader model in order to display data.
@@ -639,7 +685,7 @@
     		}
     	}
     });
-    
+
     zaa.directive("crudRelationLoader", function($http, $sce) {
     	return {
     		restrict: "E",
@@ -665,9 +711,9 @@
 
     /**
      * Generate form input types based on ZAA Directives.
-     * 
+     *
      * Usage inside another Angular Template:
-     * 
+     *
      * ```php
      * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="mymodel"></zaa-injector>
      * ```
@@ -850,18 +896,18 @@
             		$scope.model = false;
             		$scope.data.model = null;
             	};
-            	
+
             	$scope.data = {
             		modalState: 1,
             		model: null
             	};
-            	
+
             	$scope.$watch('model', function(n, o) {
             		if (n) {
             			$scope.data.model = n;
             		}
             	}, true);
-            	
+
             	$scope.$watch('data.model', function(n, o) {
             		if (n) {
             			$scope.model = n;
@@ -877,7 +923,7 @@
                                     '<i class="material-icons left">insert_link</i>' +
                                     '<span>' + i18n['js_link_set_value'] + '</span>' +
                                 '</div>' +
-                                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' + 
+                                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
                             '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
                         '</div>' +
                     '</div>' +
@@ -923,7 +969,7 @@
     		}
     	}
     });
-    
+
     zaa.directive("zaaColor", function() {
     	return {
             restrict: "E",
@@ -987,7 +1033,7 @@
             }
         }
     });
-    
+
     zaa.directive("zaaWysiwyg", function() {
         return {
             restrict: "E",
@@ -1081,7 +1127,7 @@
             }
         }
     });
-    
+
     /**
      * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
      */
@@ -1112,7 +1158,7 @@
             			}
             		});
             	});
-            	
+
             	$scope.resetValue = function() {
             		$scope.model = 0;
             		$scope.value = null;
@@ -1193,25 +1239,25 @@
 	    	}
     	};
     });
-    
+
     /**
-     * 
+     *
      * Usage Example:
-     * 
+     *
      * ```js
      * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules" />
      * ```
-     * 
+     *
      * If an initvalue is provided, you can not reset the model to null.
-     * 
+     *
      * Options value defintion:
-     * 
+     *
      * ```js
      * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
      * ```
-     * 
+     *
      * In order to change the value and label keys which should be used to take the value and label keys within the given array use:
-     * 
+     *
      * ```js
      * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id" />
      * ```
@@ -1230,31 +1276,31 @@
                 "initvalue": "@initvalue"
             },
             controller: function($scope) {
-            	
+
             	/* default scope values */
-            	
+
             	$scope.isOpen = 0;
-            	
+
             	if ($scope.optionsvalue == undefined) {
             		$scope.optionsvalue = 'value';
             	}
-            	
+
             	if ($scope.optionslabel == undefined) {
             		$scope.optionslabel = 'label';
             	}
-            	
+
 		        if (jQuery.isNumeric($scope.model)){
 		            $scope.model = typeCastValue($scope.model);
 		        }
-            	
+
 		        /* listeners */
-		        
+
             	$scope.$on('closeAllSelects', function() {
             		if ($scope.isOpen) {
             			$scope.closeSelect();
             		}
             	});
-            	
+
                 $timeout(function(){
                     $scope.$watch(function() { return $scope.model }, function(n, o) {
                         if (n == undefined || n == null || n == '') {
@@ -1262,16 +1308,16 @@
                                 $scope.initvalue = typeCastValue($scope.initvalue);
                             }
                             var exists = $scope.valueExistsInOptions(n);
-                            
+
                             if (!exists) {
                             	$scope.model = $scope.initvalue;
                             }
                         }
                     });
                 });
-            	
+
                 /* methods */
-                
+
                 $scope.valueExistsInOptions = function(value) {
                 	var exists = false;
                 	angular.forEach($scope.options, function(item) {
@@ -1281,23 +1327,23 @@
                 	});
                 	return exists;
                 };
-                
+
             	$scope.toggleIsOpen = function() {
             		if (!$scope.isOpen) {
             			$rootScope.$broadcast('closeAllSelects');
             		}
             		$scope.isOpen = !$scope.isOpen;
             	};
-            		
+
             	$scope.closeSelect = function() {
             		$scope.isOpen = 0;
             	};
-                
+
                 $scope.setModelValue = function(option) {
                 	$scope.model = option[$scope.optionsvalue];
                 	$scope.closeSelect();
                 };
-                
+
                 $scope.getSelectedLabel = function() {
                 	var defaultLabel = i18n['ngrest_select_no_selection'];
                 	angular.forEach($scope.options, function(item) {
@@ -1305,17 +1351,17 @@
                 			defaultLabel = item[$scope.optionslabel];
                 		}
                 	});
-                	
+
                 	return defaultLabel;
                 };
-                
+
                 $scope.hasSelectedValue = function() {
                 	var modelValue = $scope.model;
-                	
+
                 	if ($scope.valueExistsInOptions(modelValue) && modelValue != $scope.initvalue) {
                 		return true;
                 	}
-                	
+
                 	return false;
                 };
             },
@@ -1489,7 +1535,7 @@
      * http://jsfiddle.net/bateast/Q6py9/1/ - Date Parse
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date - Date Objects
      * https://docs.angularjs.org/api/ng/filter/date - Angular Date Filter
-     * 
+     *
      * resetable: 1/0, This will enable or disable the ability to press the reset (set to null) button. use integer value
      */
     zaa.directive("zaaDatetime", function() {
@@ -1508,7 +1554,7 @@
             	$scope.isNumeric = function(num) {
             	    return !isNaN(num)
             	}
-            	
+
             	$scope.$watch(function() { return $scope.model }, function(n, o) {
             		if (n != null && n != undefined) {
             			var datep = new Date(n*1000);
@@ -1526,11 +1572,11 @@
             		if (!$scope.isNumeric($scope.hour) || $scope.hour == '') {
 						$scope.hour = "0";
 					}
-					
+
 					if (!$scope.isNumeric($scope.min)  || $scope.min == '') {
 						$scope.min = "0";
 					}
-            		
+
             		if (n == 'Invalid Date' || n == "" || n == 'NaN') {
         				$scope.date = null;
         				$scope.model = null;
@@ -1582,16 +1628,16 @@
             	$scope.hour = "0";
 
             	$scope.min = "0";
-            	
+
             	$scope.reset = function() {
             		$scope.model = null;
             	};
-            	
+
             	$scope.getIsResetable = function() {
             		if ($scope.resetable) {
             			return parseInt($scope.resetable);
             		}
-            		
+
             		return true;
             	};
             },
@@ -1644,7 +1690,7 @@
         	controller: function($scope, $filter) {
 
             	$scope.$watch(function() { return $scope.model }, function(n, o) {
-            		
+
             		if (n != null && n != undefined) {
             			var datep = new Date(n*1000);
             			$scope.pickerPreselect = datep;
@@ -1694,16 +1740,16 @@
                 $scope.closeDatePicker = function() {
                     $scope.datePickerToggler = false;
                 };
-                
+
                 $scope.reset = function() {
             		$scope.model = null;
             	};
-            	
+
             	$scope.getIsResetable = function() {
             		if ($scope.resetable) {
             			return parseInt($scope.resetable);
             		}
-            		
+
             		return true;
             	};
             },
@@ -2067,7 +2113,7 @@
                                     '<div ng-repeat="(key,file) in model track by key" class="list-item">' +
                                     	'<div class="list-section" ng-if="file.hiddenStorageUploadSource">' +
                                     		'<a ng-href="{{file.hiddenStorageUploadSource}}" target="_blank" class="btn btn-primary">{{file.hiddenStorageUploadName}}</a>'+
-                                    	'</div>' + 
+                                    	'</div>' +
                                         '<div class="list-section" ng-if="!file.hiddenStorageUploadSource">' +
                                             '<div class="list-left">' +
                                                 '<storage-file-upload ng-model="file.fileId"></storage-file-upload>' +
@@ -2097,7 +2143,7 @@
 
     /**
      * Generates an array where each array element can contain another directive from zaa types.
-     * 
+     *
      * @retunr array
      */
     zaa.directive("zaaMultipleInputs", function() {
@@ -2306,9 +2352,9 @@
                 // controller logic
 
             	$scope.modal = {state: 1};
-            	
+
             	$scope.modalContainer = false;
-            	
+
             	$scope.fileinfo = null;
 
             	$scope.select = function(fileId) {
@@ -2618,24 +2664,24 @@
                 $scope.foldersDirecotryIdReload = function() {
                 	return ServiceFoldersDirecotryId.load(true);
                 }
-                
+
                 // file replace logic
 
                 $scope.folderCountMessage = function(folder) {
                 	return i18nParam('js_filemanager_count_files_overlay', {count: folder.filesCount});
                 }
-                
+
                 $scope.errorMsg = null;
-                
+
                 $scope.replaceFile = function(file, errorFiles) {
                 	$scope.replaceFiled = file;
-                	
+
                 	if (!file) {
                 		return;
                 	}
-                	
+
                 	LuyaLoading.start();
-                	
+
                 	Upload.upload({
                 		url: 'admin/api-admin-storage/file-replace',
                         data: {file: file, fileId: $scope.fileDetail.id}
@@ -2685,10 +2731,10 @@
                 })
 
                 $scope.pasteUpload = function(e) {
-                	
+
                     for (var i = 0 ; i < e.originalEvent.clipboardData.items.length ; i++) {
                         var item = e.originalEvent.clipboardData.items[i];
-                        
+
                         if (item.kind == 'file') {
                         	LuyaLoading.start(i18n['js_dir_upload_wait']);
 	                        Upload.upload({
@@ -2705,12 +2751,12 @@
                         			AdminToastService.error(response.data.message);
                         			LuyaLoading.stop();
                         		}
-	                        	
+
 	                        })
                         }
                     }
                 }
-                
+
                 $scope.uploadUsingUpload = function(file) {
                 	file.upload = Upload.upload({
                         url: 'admin/api-admin-storage/files-upload',
@@ -2853,7 +2899,7 @@
                         $scope.folderDeleteConfirmForm = false;
                     }
                 };
-                
+
                 */
 
                 $scope.updateFolder = function(folder) {
@@ -2960,16 +3006,16 @@
                     	AdminToastService.success('Captions has been updated');
                     });
                 }
-               
+
                 $scope.selectedFileFromParent = null;
-                
+
                 $scope.init = function() {
                 	if ($scope.$parent.fileinfo) {
                 		$scope.selectedFileFromParent = $scope.$parent.fileinfo;
                 		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folderId, true);
                 	}
                 }
-                
+
                 $scope.init();
 
             },

@@ -35,7 +35,7 @@ class Main extends \luya\web\Asset
     public $depends = [
         'luya\admin\assets\Jquery',
     ];
-    
+
     /**
      * @inheritdoc
      */
