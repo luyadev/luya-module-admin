@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2b32f36e9ba0ba903f777bad27072ba",
+    "content-hash": "3e714e5379ee3e94785ee0cfb1898437",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -600,6 +600,22 @@
             ]
         },
         {
+            "name": "bower-asset/echarts",
+            "version": "3.8.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ecomfe/echarts.git",
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "shasum": null
+            },
+            "type": "bower-asset"
+        },
+        {
             "name": "bower-asset/flow.js",
             "version": "v2.13.0",
             "source": {
@@ -1068,24 +1084,22 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "05824321005df10a366cd47f24a83f50c789314d"
+                "reference": "3a0795269f7af8fdfd82856aaa8e4f3efeed23aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/05824321005df10a366cd47f24a83f50c789314d",
-                "reference": "05824321005df10a366cd47f24a83f50c789314d",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/3a0795269f7af8fdfd82856aaa8e4f3efeed23aa",
+                "reference": "3a0795269f7af8fdfd82856aaa8e4f3efeed23aa",
                 "shasum": ""
             },
             "require-dev": {
-                "luyadev/luya": "^1.0@dev",
-                "luyadev/luya-module-admin": "^1.0@dev",
+                "luyadev/luya-testsuite": "~1.0.0",
                 "php-coveralls/php-coveralls": "^1.0",
-                "phpunit/phpunit": "~5.0",
-                "twig/twig": "^1.0"
+                "twbs/bootstrap": "v4.0.0-beta"
             },
             "type": "luya-core",
             "extra": {
@@ -1130,7 +1144,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2017-12-12T11:29:15+00:00"
+            "time": "2018-01-17T10:02:41+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
