@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.0.2 (in progress)
+## 1.0.2 (20. January 2018)
 
 ### Added
 
@@ -13,8 +13,6 @@ All notable changes to this project will be documented in this file. This projec
 
 + [#38](https://github.com/luyadev/luya-module-admin/issues/38) Fixed ActiveWindow render composition keys problem with PHP 7.2.
 + [#42](https://github.com/luyadev/luya-module-admin/issues/42) Fixed logout item click behaviour in mainnav tooltip.
-
-### Changed
 
 ## 1.0.1 (5. January 2018)
 
