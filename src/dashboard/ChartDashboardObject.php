@@ -115,7 +115,7 @@ class ChartDashboardObject extends BaseDashboardObject
      */
     public function getOuterTemplate()
     {
-        return '<div class="card-header"><h4>{{title}}<h4></div><echarts id="charts_'.$this->generateUniqueId().'" legend="legend" item="item" data="data"></echarts>';
+        return '<div class="card-header">{{title}}</div><div class="card-body"><echarts id="charts_'.$this->generateUniqueId().'" legend="legend" item="item" data="data"></echarts></div>';
     }
 
     /**
