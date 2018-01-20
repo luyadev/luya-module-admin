@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file. This projec
 ## 1.0.2 (in progress)
 
 ### Added
-- [#40](https://github.com/luyadev/luya-module-admin/pull/40) Added the ChartDashboardObject whit echarts.js
 
++ [#40](https://github.com/luyadev/luya-module-admin/pull/40) Added the ChartDashboardObject whit echarts.js
 + [#44](https://github.com/luyadev/luya-module-admin/issues/44) Provide packages from LUYA composer plugin (installer.php) for developer toolbar and remote admin endpoint.
 
 ### Fixed
