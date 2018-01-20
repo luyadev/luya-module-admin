@@ -2,14 +2,13 @@
 
 namespace luya\admin\dashboard;
 
-use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 /**
-* Fast generated Dashboard Objects.
+* ECharts library dashboard object.
 *
-* The default object is the default class for all {{luya\admin\base\Module::$dashboardObjects}} items without a class defintion.
+* The see all possible configuration options visit: https://ecomfe.github.io/echarts-examples/public/index.html
 *
 * Example usage:
 *
@@ -23,67 +22,59 @@ use yii\helpers\ArrayHelper;
 * ];
 * ```
 *
-* The demo of echarts :http://echarts.baidu.com/demo.html#pie-doughnut
-* the admin/api-addressbook-contact/sale return array or json string;
+* doughnut echarts (http://echarts.baidu.com/demo.html#pie-doughnut) example response:
 *
 * ```php
 * public function actionSale()
 * {
-*     $option = [];
+*     return [
+*    	'tooltip' => ['trigger' => 'item', 'formatter' => '{b}: {c} million ({d}%)'],
+*    	'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => ['Asia', 'Africa', 'America', 'Europe', 'Oceania']],
+*    	'series' => [
+*    		[
+*    			'name' => "Continent",
+*    			'type' => 'pie',
+*    			'radius' => ['50%', '70%'],
+*    			'avoidLabelOverlap' => false,
+*    			'labelLine' => ['normal' => ['show' => false]],
+*    			'label' => [
+*    				'normal' => ['show' => false, 'position' => 'center'],
+*    				'emphasis' => [
+*    					'show' => true,
+*    					'textStyle' => [
+*    						'fontSize' => '30',
+*    						'fontWeight' => 'bold'
+*    					]
+*    				]
+*    			],
+*    			'data' => [
+*    				['value' => 4437, 'name' => 'Asia'],
+*    				['value' => 1203, 'name' => 'Africa'],
+*    				['value' => 997, 'name' => 'America'],
+*   				['value' => 740, 'name' => 'Europe'],
+*    				['value' => 40, 'name' => 'Oceania'],
+*    			]
+*    		]
+*    	]
+*    ];
+* }
+* ```
+* 
+* A api response example for a line diagram:
+* 
+* ```php
+* return [
+*    'xAxis' => ['type' => 'category', 'boundaryGap' => false, 'data' => ['Jan', 'Feb', 'March']],
+*    'yAxis' => ['type' => 'value'],
+*    'series' => [
+*        'data' => [100,200,125],
+*    	 'type' => 'line',
+*     ]
+* ];
+* ```
 *
-*     $option['tooltip'] = [
-*         'trigger' => 'item',
-*         'formatter' => "{a} <br/>{b}: {c} ({d}%)"
-*     ];
-*     $option['legend'] = [
-*         'orient' => "vertical",
-*         'x' => 'left',
-*         'data' => ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-*     ];
-*
-*     $option['series'] = [
-*         [
-*             'name' => "Pie Chart",
-*             'type' => 'pie',
-*             'radius' => ['50%', '70%'],
-*             'avoidLabelOverlap' => false,
-*             'labelLine' => [
-*                 'normal' => [
-*                     'show' => false
-*                 ]
-*             ],
-*             'label' => [
-*                 'normal' => [
-*                     'show' => false,
-*                     'position' => 'center'
-*                 ],
-*                 'emphasis' => [
-*                     'show' => true,
-*                     'textStyle' => [
-*                         'fontSize' => '30',
-*                         'fontWeight' => 'bold'
-*                     ]
-*                 ]
-*             ],
-*             'data' => [
-*                 ['value' => 335, 'name' => '直接访问'],
-*                 ['value' => 310, 'name' => '邮件营销'],
-*                 ['value' => 234, 'name' => '联盟广告'],
-*                 ['value' => 135, 'name' => '视频广告'],
-*                 ['value' => 1234, 'name' => '搜索引擎'],
-*             ]
-*
-*         ]
-*     ];
-*
-*     return $option;
-*
-*}
-*
-*```
 * @author Oom <baqianxin@163.com>
 * @since 1.0.2
-*
 */
 class ChartDashboardObject extends BaseDashboardObject
 {
@@ -91,7 +82,7 @@ class ChartDashboardObject extends BaseDashboardObject
   /**
    * @var array Options to generate the wrapper element. Generates a tag like:
    *
-   * ```
+   * ```php
    * <div class="card-panel" ng-controller="DefaultDashboardObjectController" ng-init="loadData(\'{{dataApiUrl}}\');">
    *     <!-- content from: $outerTemplate -->
    * </div>
@@ -105,9 +96,9 @@ class ChartDashboardObject extends BaseDashboardObject
     ];
 
     /**
-     * @return string
+     * Get outer Template for echarts
      *
-     * ```
+     * ```php
      * <div class="card-header"><h4>{{title}}<h4></div>
      * <echarts id="charts_'.$uniqid.'" legend="legend" item="item" data="data"></echarts>
      * ```
@@ -118,13 +109,14 @@ class ChartDashboardObject extends BaseDashboardObject
      * + {{dataApiUrl}}
      *
      * Will be automatically parsed to its original input while rendering.
+     * 
+     * @return string
      */
     public function getOuterTemplate()
     {
         $uniqid = md5(uniqid(microtime(true),true));
         return '<div class="card-header"><h4>{{title}}<h4></div><echarts id="charts_'.$uniqid.'" legend="legend" item="item" data="data"></echarts>';
     }
-
 
     /**
      * @inheritdoc
