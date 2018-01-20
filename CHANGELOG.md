@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.0.3 (in progress)
 
+### Fixed
+
++ [#40](https://github.com/luyadev/luya-module-admin/pull/40) Apply chart dashboard styling according to cards element. 
+
 ## 1.0.2 (20. January 2018)
 
 ### Added
