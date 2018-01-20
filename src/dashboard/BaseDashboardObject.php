@@ -28,6 +28,11 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     
     private $_template;
     
+    /**
+     * Setter method for template.
+     * 
+     * @param string $template
+     */
     public function setTemplate($template)
     {
         $this->_template = $template;
@@ -41,6 +46,12 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
         return $this->contentParser($this->getOuterTemplateContent());
     }
 
+    /**
+     * Parse the content will replace {{dataApiUrl}}, {{title}}, {{template}} with the content from the object.
+     * 
+     * @param string $content The content to parse.
+     * @return string
+     */
     public function contentParser($content)
     {
         return str_replace(['{{dataApiUrl}}', '{{title}}', '{{template}}'], [$this->getDataApiUrl(), $this->getTitle(), $this->_template], $content);
@@ -48,6 +59,11 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     
     private $_dataApiUrl;
     
+    /**
+     * Setter methdo for dataApiUrl.
+     * 
+     * @param string $dataApiUrl
+     */
     public function setDataApiUrl($dataApiUrl)
     {
         $this->_dataApiUrl = $dataApiUrl;
