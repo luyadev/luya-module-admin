@@ -72,6 +72,8 @@ use yii\helpers\ArrayHelper;
 *     ]
 * ];
 * ```
+* 
+* Read more about echarts: https://github.com/ecomfe/echarts
 *
 * @author Oom <baqianxin@163.com>
 * @since 1.0.2
