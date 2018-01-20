@@ -59,9 +59,9 @@ use yii\helpers\ArrayHelper;
 *    ];
 * }
 * ```
-* 
+*
 * A api response example for a line diagram:
-* 
+*
 * ```php
 * return [
 *    'xAxis' => ['type' => 'category', 'boundaryGap' => false, 'data' => ['Jan', 'Feb', 'March']],
@@ -78,18 +78,17 @@ use yii\helpers\ArrayHelper;
 */
 class ChartDashboardObject extends BaseDashboardObject
 {
-
-  /**
-   * @var array Options to generate the wrapper element. Generates a tag like:
-   *
-   * ```php
-   * <div class="card-panel" ng-controller="DefaultDashboardObjectController" ng-init="loadData(\'{{dataApiUrl}}\');">
-   *     <!-- content from: $outerTemplate -->
-   * </div>
-   * ```
-   *
-   * The tag element `<div>` can be changed by overriding the key `tag`.
-   */
+    /**
+     * @var array Options to generate the wrapper element. Generates a tag like:
+     *
+     * ```php
+     * <div class="card-panel" ng-controller="DefaultDashboardObjectController" ng-init="loadData(\'{{dataApiUrl}}\');">
+     *     <!-- content from: $outerTemplate -->
+     * </div>
+     * ```
+     *
+     * The tag element `<div>` can be changed by overriding the key `tag`.
+     */
     public $wrapperOptions = [
         'class' => 'card',
         'tag' => 'div'
@@ -109,13 +108,12 @@ class ChartDashboardObject extends BaseDashboardObject
      * + {{dataApiUrl}}
      *
      * Will be automatically parsed to its original input while rendering.
-     * 
+     *
      * @return string
      */
     public function getOuterTemplate()
     {
-        $uniqid = md5(uniqid(microtime(true),true));
-        return '<div class="card-header"><h4>{{title}}<h4></div><echarts id="charts_'.$uniqid.'" legend="legend" item="item" data="data"></echarts>';
+        return '<div class="card-header"><h4>{{title}}<h4></div><echarts id="charts_'.$this->generateUniqueId().'" legend="legend" item="item" data="data"></echarts>';
     }
 
     /**
@@ -128,5 +126,13 @@ class ChartDashboardObject extends BaseDashboardObject
             'ng-init' => 'loadData(\'{{dataApiUrl}}\')'], $this->wrapperOptions);
 
         return Html::tag(ArrayHelper::remove($this->wrapperOptions, 'tag', 'div'), $this->getOuterTemplate(), $options);
+    }
+    
+    /**
+     * @return string An unique string.
+     */
+    protected function generateUniqueId()
+    {
+    	return md5(get_class($this) . $this->getTitle() . uniqid());
     }
 }
