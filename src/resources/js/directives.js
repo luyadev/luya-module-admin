@@ -4,8 +4,9 @@
     /* GLOBAL DIRECTIVES */
 
     /**
-     * Controller Default
-     * echarts.js component
+     * Directive to generate e chart diagrams.
+     *
+     * uses echarts.js component.
      */
     zaa.directive('echarts', function() {
        return {
@@ -49,6 +50,7 @@
            }
        };
     });
+
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
