@@ -34,6 +34,6 @@ All notable changes to this project will be documented in this file. This projec
 + [#7](https://github.com/luyadev/luya-module-admin/issues/7) Repair login input label click function
 + [#1](https://github.com/luyadev/luya-module-admin/issues/1) Improve event listener for floating labels at login input
 
-## 1.0.0 (12, December 2017)
+## 1.0.0 (12. December 2017)
 
 - First stable release.
