@@ -72,7 +72,7 @@ use yii\helpers\ArrayHelper;
 *     ]
 * ];
 * ```
-* 
+*
 * Read more about echarts: https://github.com/ecomfe/echarts
 *
 * @author Oom <baqianxin@163.com>
@@ -135,6 +135,6 @@ class ChartDashboardObject extends BaseDashboardObject
      */
     protected function generateUniqueId()
     {
-    	return md5(get_class($this) . $this->getTitle() . uniqid());
+        return md5(get_class($this) . $this->getTitle() . uniqid());
     }
 }

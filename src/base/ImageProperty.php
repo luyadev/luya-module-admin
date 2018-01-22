@@ -88,7 +88,7 @@ abstract class ImageProperty extends Property
 
     /**
      * Get the image property from the property value.
-     * 
+     *
      * @return \luya\admin\image\Item|boolean
      * @since 1.0.2
      */

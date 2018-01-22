@@ -30,7 +30,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     
     /**
      * Setter method for template.
-     * 
+     *
      * @param string $template
      */
     public function setTemplate($template)
@@ -48,7 +48,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
 
     /**
      * Parse the content will replace {{dataApiUrl}}, {{title}}, {{template}} with the content from the object.
-     * 
+     *
      * @param string $content The content to parse.
      * @return string
      */
@@ -61,7 +61,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     
     /**
      * Setter methdo for dataApiUrl.
-     * 
+     *
      * @param string $dataApiUrl
      */
     public function setDataApiUrl($dataApiUrl)
