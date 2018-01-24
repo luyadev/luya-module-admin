@@ -4,6 +4,7 @@ namespace luya\admin\base;
 
 use luya\admin\helpers\I18n;
 use yii\base\Component;
+use luya\helpers\Json;
 
 /**
  * Abstract Page Property Class.
@@ -38,6 +39,12 @@ abstract class Property extends Component implements TypesInterface
      * automatically unserialize the correctly value.
      */
     public $i18n = false;
+    
+    /**
+     * @var boolean Whether a json object value should be auto decoded when retrieving data via getValue() and getAdminValue(). This is used when storing json data like link type.
+     * @since 1.0.3
+     */
+    public $autoDecodeJson = true;
 
     /**
      * The internal variable name for this property.
@@ -161,6 +168,8 @@ abstract class Property extends Component implements TypesInterface
     {
         if ($this->i18n) {
             $this->value = I18n::decode($this->value);
+        } elseif ($this->autoDecodeJson && Json::isJson($this->value)) {
+            $this->value = Json::decode($this->value);
         }
         
         return $this->value;
@@ -189,6 +198,8 @@ abstract class Property extends Component implements TypesInterface
     {
         if ($this->i18n) {
             $this->value = I18n::decode($this->value);
+        } elseif ($this->autoDecodeJson && Json::isJson($this->value)) {
+            $this->value = Json::decode($this->value);
         }
         
         return $this->value;

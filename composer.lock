@@ -724,29 +724,12 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
                 "reference": "425d39571c91121e504dea4984b873306a60361f",
-                "shasum": ""
+                "shasum": null
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "twig/twig.min.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "BSD-2-Clause"
-            ],
-            "description": "A version of Twig JS for use with Bower",
-            "keywords": [
-                "bower",
-                "js",
-                "twig"
-            ],
-            "time": "2017-06-13T09:34:37+00:00"
+            ]
         },
         {
             "name": "bower-asset/ui-router",
@@ -1027,16 +1010,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "73f5670cf9c927f2a490182130329d8af827967c"
+                "reference": "37ea89210a361d2ce380eaf2e5f3a348d61d887d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/73f5670cf9c927f2a490182130329d8af827967c",
-                "reference": "73f5670cf9c927f2a490182130329d8af827967c",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/37ea89210a361d2ce380eaf2e5f3a348d61d887d",
+                "reference": "37ea89210a361d2ce380eaf2e5f3a348d61d887d",
                 "shasum": ""
             },
             "require": {
@@ -1080,7 +1063,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-01-17T09:34:13+00:00"
+            "time": "2018-01-24T14:54:58+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",

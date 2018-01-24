@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#47](https://github.com/luyadev/luya-module-admin/issues/47) Fixed issue with decoding json page property values.
 + [#40](https://github.com/luyadev/luya-module-admin/pull/40) Apply chart dashboard styling according to cards element. 
 
 ## 1.0.2 (20. January 2018)
