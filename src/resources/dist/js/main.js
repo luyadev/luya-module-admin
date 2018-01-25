@@ -9679,7 +9679,8 @@ function typeCastValue(value) {
             	}
                 config.headers = config.headers || {};
                 config.headers.Authorization = "Bearer " + $rootScope.luyacfg.authToken;
-                config.headers['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr("content");
+                var csrfToken = document.head.querySelector("[name=csrf-token]").content;
+                config.headers['X-CSRF-Token'] = csrfToken;
                 
                 return config || $q.when(config);
             },
@@ -10415,8 +10416,9 @@ zaa.factory('HtmlStorage', function() {
     /* GLOBAL DIRECTIVES */
 
     /**
-     * Controller Default
-     * echarts.js component
+     * Directive to generate e chart diagrams.
+     *
+     * uses echarts.js component.
      */
     zaa.directive('echarts', function() {
        return {
@@ -10460,6 +10462,7 @@ zaa.factory('HtmlStorage', function() {
            }
        };
     });
+
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
@@ -10485,9 +10488,9 @@ zaa.factory('HtmlStorage', function() {
      * <div zaa-esc="methodClosesThisDiv()" />
      * ```
      */
-    zaa.directive("zaaEsc", function () {
+    zaa.directive("zaaEsc", function ($document) {
         return function (scope, element, attrs) {
-            $(document).on("keyup", function (e) {
+            $document.on("keyup", function (e) {
                 if (e.keyCode == 27) {
                     scope.$apply(function () {
                         scope.$eval(attrs.zaaEsc);
@@ -10709,13 +10712,13 @@ zaa.factory('HtmlStorage', function() {
     });
 
     /**
-     * Directive to trigger fixed table head
+     * Directive to trigger fixed table head.
+     * 
+     * not used in new admin ui
      */
+    /*
     zaa.directive("fixedTableHead", function ($window) {
         return function (scope, element, attrs) {
-            /**
-             * Calculate the offset of the "thead" and apply it as transform
-             */
             var onScroll = function () {
                 var table = angular.element(element.find('table'));
                 var thead = angular.element(table.find('thead'));
@@ -10742,7 +10745,9 @@ zaa.factory('HtmlStorage', function() {
             });
         };
     });
-
+	
+    */
+    
     /**
      * Apply auto generated height for textareas based on input values
      */
@@ -11700,7 +11705,7 @@ zaa.factory('HtmlStorage', function() {
             		$scope.optionslabel = 'label';
             	}
 
-		        if (jQuery.isNumeric($scope.model)){
+		        if (angular.isNumber($scope.model)){
 		            $scope.model = typeCastValue($scope.model);
 		        }
 
@@ -11715,7 +11720,7 @@ zaa.factory('HtmlStorage', function() {
                 $timeout(function(){
                     $scope.$watch(function() { return $scope.model }, function(n, o) {
                         if (n == undefined || n == null || n == '') {
-                            if (jQuery.isNumeric($scope.initvalue)) {
+                            if (angular.isNumber($scope.initvalue)) {
                                 $scope.initvalue = typeCastValue($scope.initvalue);
                             }
                             var exists = $scope.valueExistsInOptions(n);

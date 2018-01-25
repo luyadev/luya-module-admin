@@ -268,7 +268,8 @@ function typeCastValue(value) {
             	}
                 config.headers = config.headers || {};
                 config.headers.Authorization = "Bearer " + $rootScope.luyacfg.authToken;
-                config.headers['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr("content");
+                var csrfToken = document.head.querySelector("[name=csrf-token]").content;
+                config.headers['X-CSRF-Token'] = csrfToken;
                 
                 return config || $q.when(config);
             },

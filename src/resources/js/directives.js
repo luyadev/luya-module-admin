@@ -76,9 +76,9 @@
      * <div zaa-esc="methodClosesThisDiv()" />
      * ```
      */
-    zaa.directive("zaaEsc", function () {
+    zaa.directive("zaaEsc", function ($document) {
         return function (scope, element, attrs) {
-            $(document).on("keyup", function (e) {
+            $document.on("keyup", function (e) {
                 if (e.keyCode == 27) {
                     scope.$apply(function () {
                         scope.$eval(attrs.zaaEsc);
@@ -300,13 +300,13 @@
     });
 
     /**
-     * Directive to trigger fixed table head
+     * Directive to trigger fixed table head.
+     * 
+     * not used in new admin ui
      */
+    /*
     zaa.directive("fixedTableHead", function ($window) {
         return function (scope, element, attrs) {
-            /**
-             * Calculate the offset of the "thead" and apply it as transform
-             */
             var onScroll = function () {
                 var table = angular.element(element.find('table'));
                 var thead = angular.element(table.find('thead'));
@@ -333,7 +333,9 @@
             });
         };
     });
-
+	
+    */
+    
     /**
      * Apply auto generated height for textareas based on input values
      */
@@ -1291,7 +1293,7 @@
             		$scope.optionslabel = 'label';
             	}
 
-		        if (jQuery.isNumeric($scope.model)){
+		        if (angular.isNumber($scope.model)){
 		            $scope.model = typeCastValue($scope.model);
 		        }
 
@@ -1306,7 +1308,7 @@
                 $timeout(function(){
                     $scope.$watch(function() { return $scope.model }, function(n, o) {
                         if (n == undefined || n == null || n == '') {
-                            if (jQuery.isNumeric($scope.initvalue)) {
+                            if (angular.isNumber($scope.initvalue)) {
                                 $scope.initvalue = typeCastValue($scope.initvalue);
                             }
                             var exists = $scope.valueExistsInOptions(n);
