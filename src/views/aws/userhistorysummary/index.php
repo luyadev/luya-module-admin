@@ -42,18 +42,47 @@ use yii\helpers\VarDumper;
 		  	<?php foreach ($ngrestLogs as $log): ?>
 		    <li class="list-group-item d-flex justify-content-between align-items-center">
 		    <span>
-		    	<b><?= $log->table_name?></b>
-		    <table class="table table-bordered">
-		    	<?php foreach ($log->getDiffArray() as $k => $v): ?>
-		    	<tr>
-			    	<td><?= $k; ?></td>
-			    	<td><?= $v; ?></td>	
-			    </tr>
-		    	<?php endforeach ?>
-		    </table>
+		    	<?= strftime("%x, %X", $log->timestamp_create); ?>
+		    	<?php if ($log->is_insert): ?>
+		    		Added ID <?= $log->pk_value; ?> to <?= $log->table_name; ?>
+		    	<?php elseif ($log->is_update): ?>
+		    		Updated ID <?= $log->pk_value; ?> in <?= $log->table_name; ?>
+		    	<?php else: ?>
+		    		Unknown ID <?= $log->pk_value; ?> in <?= $log->table_name; ?>
+		    	<?php endif; ?>
 		    </span>
-		    <span class="badge badge-primary badge-pill"><?= strftime("%x, %X", $log->timestamp_create); ?></span>
-		    <?php ?>
+		    <span class="badge badge-primary badge-pill" ng-click="hiddenElement<?= $log->id; ?>=!hiddenElement<?= $log->id; ?>">Details</span>
+		    </li>
+		    <li class="list-group-item" ng-show="hiddenElement<?= $log->id; ?>">
+				<div class="table-responsive-wrapper">
+		    	<table class="table table-bordered">
+		    		<thead>
+		    			<tr>
+		    				<th class="w-25">Attribute</th>
+		    				<th class="w-25">Original Value</th>
+		    				<th class="w-50">New Value</th>
+		    			</tr>
+		    		</thead>
+		    	<?php if ($log->is_insert): ?>
+		    		<?php foreach ($log->getAttributesJsonArray() as $key => $value): ?>
+		    		<tr>
+		    			<td><?= $key; ?></td>
+		    			<td>-</td>
+		    			<td><?= $value; ?></td>
+		    		</tr>
+		    		<?php endforeach; ?>
+			    <?php elseif ($log->is_update): ?>
+			    	<?php foreach ($log->getAttributesJsonArray() as $key => $value): ?>
+		    		<tr>
+		    			<td><?= $key; ?></td>
+		    			<td><?= $log->getAttributeFromJsonDiffArray($key); ?></td>
+		    			<td><?= $value; ?></td>
+		    		</tr>
+		    		<?php endforeach; ?>
+			    	<?php else: ?>
+			    	<?php endif; ?>
+		    	</table>
+		    	</div>
 		    </li>
 		    <?php endforeach; ?>
 		  </ul>

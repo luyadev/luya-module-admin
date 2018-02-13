@@ -55,10 +55,25 @@ class NgrestLog extends \yii\db\ActiveRecord
 		];
 	}
 	
-	public function getDiffArray()
+	public function getAttributesJsonArray()
 	{
-		if (Json::isJson($this->attributes_diff_json)) {
-			return Json::decode($this->attributes_diff_json);
+		return $this->convertValueToJson($this->attributes_json);
+	}
+	
+	public function getAttributesJsonDiffArray()
+	{
+		return $this->convertValueToJson($this->attributes_diff_json);
+	}
+	
+	public function getAttributeFromJsonDiffArray($attribute)
+	{
+		return isset($this->getAttributesJsonDiffArray()[$attribute]) ? $this->getAttributesJsonDiffArray()[$attribute] : '';
+	}
+	
+	protected function convertValueToJson($value)
+	{
+		if (Json::isJson($value)) {
+			return Json::decode($value);
 		}
 		
 		return [];
