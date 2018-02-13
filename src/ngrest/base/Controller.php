@@ -108,7 +108,7 @@ class Controller extends \luya\admin\base\Controller
     
     /**
      * Render the ngrest default index template.
-     * 
+     *
      * @param string $inline
      * @param string $relation
      * @param string $arrayIndex
@@ -145,7 +145,7 @@ class Controller extends \luya\admin\base\Controller
     
     /**
      * Get the file content response for a given key.
-     * 
+     *
      * @param string $key
      * @throws ForbiddenHttpException
      * @return \yii\web\Response

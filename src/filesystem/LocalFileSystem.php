@@ -10,10 +10,10 @@ use luya\Exception;
 
 /**
  * Local File System uses the storage folder inside @webroot.
- * 
+ *
  * This is the default file system which is used for LUYA. The LocalFileSystem class uses
  * the storage folder inside the @webroot directory in order to store and read files and images.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -114,7 +114,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     
     /**
      * Setter method for serverPath.
-     * 
+     *
      * @param string $path
      */
     public function setServerPath($path)

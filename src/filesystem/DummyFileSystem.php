@@ -7,17 +7,17 @@ use luya\admin\storage\BaseFileSystemStorage;
 
 /**
  * Dummy File System for Testing.
- * 
+ *
  * This file system is used for unit testing, or in situations where there is no storage system required but any componets are depending on this.
- * 
+ *
  * Configuration example
- * 
+ *
  * ```php
  * 'components' => [
  *     'storage' => 'luya\admin\filesystem\DumyFileSystem',
  * ],
  * ```
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.3
  */
