@@ -43,6 +43,19 @@ final class UserLogin extends ActiveRecord
         return 'admin_user_login';
     }
     
+    /**
+     * @inheritdoc
+     */
+    public static function find()
+    {
+    	return parent::find()->orderBy(['timestamp_create' => SORT_DESC]);
+    }
+    
+    /**
+     * Get user relation.
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);

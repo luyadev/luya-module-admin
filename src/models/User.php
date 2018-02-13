@@ -11,6 +11,8 @@ use luya\admin\traits\SoftDeleteTrait;
 use yii\helpers\Json;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ChangePasswordActiveWindow;
+use luya\admin\aws\UserHistorySummaryActiveWindow;
+use luya\admin\models\NgrestLog;
 
 /**
  * User Model represents all Administration Users.
@@ -142,6 +144,7 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
     public function ngRestActiveWindows()
     {
         return [
+        	['class' => UserHistorySummaryActiveWindow::class],
             ['class' => ChangePasswordActiveWindow::class],
         ];
     }
@@ -374,6 +377,16 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
     public function getUserLogins()
     {
         return $this->hasMany(UserLogin::class, ['user_id' => 'id']);
+    }
+    
+    /**
+     * Get all ngrest log entries for this user.
+     * 
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNgrestLogs()
+    {
+    	return $this->hasMany(NgrestLog::class, ['user_id' => 'id']);
     }
 
     // IdentityInterface
