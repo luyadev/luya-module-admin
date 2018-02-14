@@ -276,8 +276,8 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
                 foreach ($this->getActiveWindows() as $hash => $config) {
                     $buttons[] = [
                         'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
-                        'icon' => $config['icon'],
-                        'label' => $config['label'],
+                        'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
+                        'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
                     ];
                 }
             }

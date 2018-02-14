@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.0.4 (in progress)
 
+### Fixed
+
++ If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
+
 ## 1.0.3 (13. February 2018)
 
 ### Fixed
