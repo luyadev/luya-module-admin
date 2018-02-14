@@ -13,13 +13,13 @@ use luya\admin\Module;
 <script>
 zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootScope, $controller) {
 
+	$scope.pie = false;
+	
     $scope.loadPieCharts = function() {
         $scope.$parent.sendActiveWindowCallback('pie').then(function(response) {
             $scope.pie = response.data;
         });
-    };
-
-    $scope.pie = false;
+    };    
     
     $scope.loadPieCharts();
 });
@@ -67,23 +67,21 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 			<div class="card-header">
 				<?= Module::t('aw_userhistorysummary_customsettings'); ?>
 			</div>
-			<div class="card-body">
-				<div class="table-responsive-wrapper">
-					<table class="table table-sm table-bordered">
-						<thead>
-							<tr>
-								<th><?= Module::t('aw_userhistorysummary_customsettings_key'); ?></th>
-								<th><?= Module::t('aw_userhistorysummary_customsettings_value'); ?></th>
-							</tr>
-						</thead>
-						<?php foreach ($model->setting->data as $key => $value): ?>
+			<div class="table-responsive-wrapper p-2">
+				<table class="table table-sm pb-0 mb-0">
+					<thead>
 						<tr>
-							<td><small><?= $key; ?></small></td>
-							<td><?= VarDumper::dumpAsString($value, 100, false); ?></td>
+							<th><?= Module::t('aw_userhistorysummary_customsettings_key'); ?></th>
+							<th><?= Module::t('aw_userhistorysummary_customsettings_value'); ?></th>
 						</tr>
-						<?php endforeach; ?>
-					</table>
-				</div>
+					</thead>
+					<?php foreach ($model->setting->data as $key => $value): ?>
+					<tr>
+						<td><small><?= $key; ?></small></td>
+						<td><?= VarDumper::dumpAsString($value, 100, false); ?></td>
+					</tr>
+					<?php endforeach; ?>
+				</table>
 			</div>
 		</div>
 	</div>
