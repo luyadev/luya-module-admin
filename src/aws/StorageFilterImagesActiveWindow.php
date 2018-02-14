@@ -36,7 +36,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'Images';
+        return 'Image Filters';
     }
     
     /**

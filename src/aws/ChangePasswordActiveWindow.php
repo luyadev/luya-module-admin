@@ -46,6 +46,11 @@ class ChangePasswordActiveWindow extends ActiveWindow
         return 'vpn_key';
     }
     
+    public function defaultLabel()
+    {
+    	return Module::t('aw_changepassword_defaultlabel');
+    }
+    
     /**
      * The method which is going to change the password on the current model.
      *

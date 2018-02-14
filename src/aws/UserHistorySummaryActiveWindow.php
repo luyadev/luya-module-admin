@@ -27,6 +27,11 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
         return 'pie_chart';    
     }
 
+    public function defaultLabel()
+    {
+    	return Module::t('aw_userhistorysummary_defaultlabel');
+    }
+    
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      * 

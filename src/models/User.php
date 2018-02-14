@@ -157,8 +157,8 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
     public function ngRestActiveWindows()
     {
         return [
-        	['class' => UserHistorySummaryActiveWindow::class],
-            ['class' => ChangePasswordActiveWindow::class],
+        	['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+            ['class' => ChangePasswordActiveWindow::class, 'label' => false],
         ];
     }
 
