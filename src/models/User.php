@@ -4,11 +4,10 @@ namespace luya\admin\models;
 
 use Yii;
 use yii\web\IdentityInterface;
-
+use yii\helpers\Json;
 use luya\admin\aws\ChangePasswordInterface;
 use luya\admin\Module;
 use luya\admin\traits\SoftDeleteTrait;
-use yii\helpers\Json;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
@@ -55,31 +54,39 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
     
     private $_setting;
     
+    /**
+     * Get user settings objects.
+     * 
+     * @return \luya\admin\models\UserSetting
+     */
     public function getSetting()
     {
         if ($this->_setting === null) {
             $settingsArray = (empty($this->settings)) ? [] : Json::decode($this->settings);
-            $this->_setting = Yii::createObject(['class' => UserSetting::className(), 'sender' => $this, 'data' => $settingsArray]);
+            $this->_setting = Yii::createObject(['class' => UserSetting::class, 'sender' => $this, 'data' => $settingsArray]);
         }
         
         return $this->_setting;
     }
     
-    public function getLastloginTimestamp()
-    {
-        $item = UserLogin::find()->select(['timestamp_create'])->where(['user_id' => $this->id])->orderBy('id DESC')->asArray()->one();
-    
-        if ($item) {
-            return $item['timestamp_create'];
-        }
-    }
-    
+	/**
+	 * Setter method for user settings which encodes the json.
+	 * 
+	 * @param array $data
+	 */
     public function updateSettings(array $data)
     {
-        $this->updateAttributes([
-            'settings' => Json::encode($data),
-        ]);
+    	return $this->updateAttributes(['settings' => Json::encode($data)]);
     }
+    
+    /**
+     * Get the last login Timestamp
+     */
+    public function getLastloginTimestamp()
+    {
+    	return $this->getUserLogins()->select(['timestamp_create'])->scalar();
+    }
+    
     
     /**
      * @inheritdoc
@@ -131,6 +138,9 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function ngRestScopes()
     {
         return [
@@ -141,6 +151,9 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function ngRestActiveWindows()
     {
         return [

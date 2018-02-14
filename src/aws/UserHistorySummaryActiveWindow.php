@@ -39,4 +39,36 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
         	'ngrestLogs' => $this->model->getNgrestLogs()->limit(25)->all(),
         ]);
     }
+
+    public function callbackPie()
+    {
+    	return [
+    	'tooltip' => ['trigger' => 'item', 'formatter' => '{b}: {c} entries'],
+    	'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => ['Additions', 'Updates', 'Unknown']],
+    	'series' => [
+    		[
+    			'name' => "Hits",
+    			'type' => 'pie',
+    			'radius' => ['50%', '70%'],
+    			'avoidLabelOverlap' => false,
+    			'labelLine' => ['normal' => ['show' => false]],
+    			'label' => [
+    				'normal' => ['show' => false, 'position' => 'center'],
+    				'emphasis' => [
+    					'show' => true,
+    					'textStyle' => [
+    						'fontSize' => '30',
+    						'fontWeight' => 'bold'
+    					]
+    				]
+    			],
+    			'data' => [
+    				['value' => $this->model->getNgrestLogs()->where(['is_insert' => true])->count(), 'name' => 'Additions'],
+    				['value' => $this->model->getNgrestLogs()->where(['is_update' => true])->count(), 'name' => 'Updates'],
+    				['value' => $this->model->getNgrestLogs()->where(['is_update' => false, 'is_insert' => false])->count(), 'name' => 'Unknown'],
+    			]
+    		]
+    	]
+    ];
+    }
 }
