@@ -347,7 +347,7 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
      */
     public function getGroups()
     {
-        return $this->hasMany(Group::className(), ['id' => 'group_id'])->viaTable('admin_user_group', ['user_id' => 'id']);
+        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('admin_user_group', ['user_id' => 'id']);
     }
 
     /**

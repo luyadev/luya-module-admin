@@ -3,6 +3,7 @@
 namespace luya\admin\aws;
 
 use luya\admin\ngrest\base\ActiveWindow;
+use luya\admin\Module;
 
 /**
  * User History Summary Active Window.
@@ -33,18 +34,23 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
      */
     public function index()
     {
+    	$groups = [];
+    	foreach ($this->model->groups as $group) {
+    		$groups[] = $group->name;
+    	}
         return $this->render('index', [
             'model' => $this->model,
         	'userLogins' => $this->model->getUserLogins()->limit(25)->all(),
         	'ngrestLogs' => $this->model->getNgrestLogs()->limit(25)->all(),
+        	'groups' => $groups,
         ]);
     }
 
     public function callbackPie()
     {
     	return [
-    	'tooltip' => ['trigger' => 'item', 'formatter' => '{b}: {c} entries'],
-    	'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => ['Additions', 'Updates', 'Unknown']],
+    	'tooltip' => ['trigger' => 'item', 'formatter' => '{c} {b}'],
+    	'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => [Module::t('aw_userhistorysummary_contribcount_inserts'), Module::t('aw_userhistorysummary_contribcount_updates')]],
     	'series' => [
     		[
     			'name' => "Hits",
@@ -63,9 +69,8 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
     				]
     			],
     			'data' => [
-    				['value' => $this->model->getNgrestLogs()->where(['is_insert' => true])->count(), 'name' => 'Additions'],
-    				['value' => $this->model->getNgrestLogs()->where(['is_update' => true])->count(), 'name' => 'Updates'],
-    				['value' => $this->model->getNgrestLogs()->where(['is_update' => false, 'is_insert' => false])->count(), 'name' => 'Unknown'],
+    				['value' => $this->model->getNgrestLogs()->where(['is_insert' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_inserts')],
+    				['value' => $this->model->getNgrestLogs()->where(['is_update' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_updates')],
     			]
     		]
     	]
