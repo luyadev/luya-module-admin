@@ -50,7 +50,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_groups'); ?></td>
-							<td><?= implode(",", $groups); ?></td>
+							<td><?= implode(", ", $groups); ?></td>
 						</tr>
 					</table>
 				</div>

@@ -263,5 +263,28 @@ return [
     'model_config_atr_name_hint' => 'Unique identifier for this variable. You can access system config with Config::get(identifier) in your application.',
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
-    'menu_system_item_config' => 'Config variables'
+    'menu_system_item_config' => 'Config variables',
+		
+// 1.0.4
+	
+	'model_user_is_deleted' => 'Removed',
+	'model_user_name' => 'Name',
+	'model_user_groups' => 'Groups',
+	'aw_userhistorysummary_userdata' => 'Profile details',
+	'aw_userhistorysummary_contribcount' => 'Total contributions',
+	'aw_userhistorysummary_contribcount_inserts' => 'Inserts',
+	'aw_userhistorysummary_contribcount_updates' => 'Updates',
+	'aw_userhistorysummary_customsettings' => 'Custom settings',
+	'aw_userhistorysummary_lastsessions' => 'Lastest sessions',
+	'aw_userhistorysummary_ngrestlogs' => 'Change history',
+	'aw_userhistorysummary_customsettings_key' => 'Identifier',
+	'aw_userhistorysummary_customsettings_value' => 'Content',
+	'aw_userhistorysummary_lastsessions_destroyed' => 'destroyed',
+	'aw_userhistorysummary_lastsessions_active' => 'active',
+	'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Diff',
+	'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribute',
+	'aw_userhistorysummary_ngrestlogs_detailold' => 'Old',
+	'aw_userhistorysummary_ngrestlogs_detailnew' => 'New',
+	'aw_userhistorysummary_defaultlabel' => 'History',
+	'aw_changepassword_defaultlabel' => 'Change password',
 ];

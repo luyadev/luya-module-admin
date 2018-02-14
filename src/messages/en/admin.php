@@ -296,7 +296,7 @@ return [
 	'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribute',
 	'aw_userhistorysummary_ngrestlogs_detailold' => 'Old',
 	'aw_userhistorysummary_ngrestlogs_detailnew' => 'New',
-	'aw_userhistorysummary_defaultlabel' => 'User History',
+	'aw_userhistorysummary_defaultlabel' => 'History',
 	'aw_changepassword_defaultlabel' => 'Change password',
 		
 ];

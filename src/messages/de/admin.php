@@ -275,5 +275,28 @@ return [
     'model_config_atr_name_hint' => 'Eindeutige Bezeichnung für diese Variable. Die Systemkonfiguration kann über Config::get(identifier) in der Applikation abgefragt werden.',
     'model_config_atr_value' => 'Wert',
     'model_config_atr_is_system' => 'System-Attribut',
-    'menu_system_item_config' => 'Konfigurationsvariablen'
+    'menu_system_item_config' => 'Konfigurationsvariablen',
+		
+// 1.0.4
+
+	'model_user_is_deleted' => 'Gelöscht',
+	'model_user_name' => 'Name',
+	'model_user_groups' => 'Gruppen',
+	'aw_userhistorysummary_userdata' => 'Personalien',
+	'aw_userhistorysummary_contribcount' => 'Beiträge',
+	'aw_userhistorysummary_contribcount_inserts' => 'Hinzugefügt',
+	'aw_userhistorysummary_contribcount_updates' => 'Geändert',
+	'aw_userhistorysummary_customsettings' => 'Individuelle einstellungen',
+	'aw_userhistorysummary_lastsessions' => 'Neuste Sitzungen',
+	'aw_userhistorysummary_ngrestlogs' => 'Protokoll',
+	'aw_userhistorysummary_customsettings_key' => 'Identifier',
+	'aw_userhistorysummary_customsettings_value' => 'Inhalt',
+	'aw_userhistorysummary_lastsessions_destroyed' => 'zerstört',
+	'aw_userhistorysummary_lastsessions_active' => 'aktiv',
+	'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Änderungen',
+	'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Feld',
+	'aw_userhistorysummary_ngrestlogs_detailold' => 'Alt',
+	'aw_userhistorysummary_ngrestlogs_detailnew' => 'Neu',
+	'aw_userhistorysummary_defaultlabel' => 'Aktivitäten',
+	'aw_changepassword_defaultlabel' => 'Passwort ändern',
 ];
