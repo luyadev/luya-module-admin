@@ -123,6 +123,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-timestamp' => 'luya\admin\apis\TimestampController',
         'api-admin-search' => 'luya\admin\apis\SearchController',
         'api-admin-user' => 'luya\admin\apis\UserController',
+    	'api-admin-apiuser' => 'luya\admin\apis\ApiUserController',
         'api-admin-group' => 'luya\admin\apis\GroupController',
         'api-admin-lang' => 'luya\admin\apis\LangController',
         'api-admin-effect' => 'luya\admin\apis\EffectController',
@@ -261,6 +262,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_access')
                     ->itemApi('menu_access_item_user', 'admin/user/index', 'person', 'api-admin-user')
                     ->itemApi('menu_access_item_group', 'admin/group/index', 'group', 'api-admin-group')
+                    ->itemApi('Api user', 'admin/api-user/index', 'person', 'api-admin-apiuser')
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')

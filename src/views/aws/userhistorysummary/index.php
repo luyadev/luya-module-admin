@@ -52,6 +52,10 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 							<td><?= Module::t('model_user_groups'); ?></td>
 							<td><?= implode(", ", $groups); ?></td>
 						</tr>
+						<tr>
+							<td>Api activity</td>
+							<td><?= strftime("%x %X", $model->api_last_activity); ?></td>
+						</tr>
 					</table>
 				</div>
 		</div>
@@ -60,7 +64,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 				<?= Module::t('aw_userhistorysummary_contribcount'); ?>
 		 	 </div>
 		  	<div class="card-body" ng-if="pie">
-			  	<echarts id="userEchart" legend="legend" item="item" data="pie"></echarts>
+			  	<echarts id="userEchart" data="pie"></echarts>
 		 	 </div>
 		</div>
 		<div class="card">
@@ -118,15 +122,19 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 			    <li class="list-group-item d-flex justify-content-between align-items-center">
 			    <span>
 			    	<?php if ($log->is_insert): ?>
-			    		<i class="material-icons">note_add</i> 
+			    		<i class="material-icons" alt="Added">note_add</i> 
 			    	<?php elseif ($log->is_update): ?>
-			    		<i class="material-icons">create</i>
+			    		<i class="material-icons" alt="Updated">create</i>
+		    		<?php elseif ($log->is_delete): ?>
+			    		<i class="material-icons" alt="Deleted">delete</i>
 			    	<?php endif; ?>
 			    	<span class="badge badge-secondary"><?= $log->table_name; ?></span>
 			    	<span class="badge badge-info">ID #<?= $log->pk_value; ?></span>
 			    	<?= Yii::$app->formatter->asRelativeTime($log->timestamp_create); ?>
 			    </span>
+			    <?php if (!$log->is_delete): ?>
 			    <span class="badge badge-primary badge-pill" ng-click="hiddenElement<?= $log->id; ?>=!hiddenElement<?= $log->id; ?>"><?= Module::t('aw_userhistorysummary_ngrestlogs_detailbtn'); ?></span>
+			    <?php endif; ?>
 			    </li>
 			    <li class="list-group-item p-2" style="background-color:#f1f1f1" ng-show="hiddenElement<?= $log->id; ?>">
 					<div class="table-responsive-wrapper">

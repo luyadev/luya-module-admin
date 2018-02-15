@@ -30,6 +30,10 @@ use luya\admin\models\NgrestLog;
  * @property integer $force_reload
  * @property string $settings
  * @property \luya\admin\models\UserSetting $setting Setting object to store data.
+ * @property integer $is_api_user
+ * @property integer $api_rate_limit
+ * @property string $api_allowed_ips
+ * @property integer $api_last_activity
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -278,12 +282,10 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
         if ($this->encodePassword()) {
             if ($this->save()) {
                 return true;
-            } else {
-                $this->addError('newpass', 'Fehler beim Speichern des Passworts aufgetreten. (Datenbankfehler)');
             }
         }
 
-        return $this->addError('newpass', 'Fehler beim Verschlüsseln des Passworts aufgetreten!');
+        return $this->addError('newpass', 'Error while saving new password.');
     }
     
     /**
@@ -362,13 +364,15 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
 
     /**
      * Finds a current user for a given email.
+     * 
+     * This is used for the login form, and can therefore not be used for api users (since 1.0.4)
      *
      * @param string $email The email address to find the user from.
      * @return \yii\db\ActiveRecord|null
      */
     public static function findByEmail($email)
     {
-        return self::find()->where(['email' => $email, 'is_deleted' => false])->one();
+        return self::find()->where(['email' => $email, 'is_deleted' => false, 'is_api_user' => false])->one();
     }
 
     /**
@@ -409,7 +413,7 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
      */
     public static function findIdentity($id)
     {
-        return static::find()->joinWith(['userLogins ul'])->andWhere(['admin_user.id' => $id, 'is_destroyed' => false, 'ip' => Yii::$app->request->userIP])->one();
+        return static::find()->joinWith(['userLogins ul'])->andWhere(['admin_user.id' => $id, 'is_destroyed' => false, 'is_api_user' => false, 'ip' => Yii::$app->request->userIP])->one();
     }
 
     /**
@@ -417,7 +421,13 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['auth_token' => $token]);
+        $user = static::findOne(['auth_token' => $token]);
+        // if the given user can be found, udpate the api last activity timestamp.
+        if ($user) {
+        	$user->updateAttributes(['api_last_activity' => time()]);
+        }
+        
+        return $user;
     }
 
     /**
