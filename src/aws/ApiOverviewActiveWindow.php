@@ -24,7 +24,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'Api Overview Active Window';
+        return 'API Overview';
     }
 
     /**
@@ -34,7 +34,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function defaultIcon()
     {
-        return 'extension';    
+        return 'call_merge';    
     }
 
     /**
@@ -46,6 +46,15 @@ class ApiOverviewActiveWindow extends ActiveWindow
     {
         return $this->render('index', [
             'model' => $this->model,
+        ]);
+    }
+    
+    public function callbackReplaceToken()
+    {
+        $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->model->password_salt);
+        
+        $this->model->updateAttributes([
+            'auth_token' => $randomToken,
         ]);
     }
 }

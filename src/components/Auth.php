@@ -46,16 +46,9 @@ class Auth extends \yii\base\Component
      * @param integer $userId The user id to retrieve the data for.
      * @return array
      */
-    private function getPermissionTable($userId)
+    public function getPermissionTable($userId)
     {
         if ($this->_permissionTable === null) {
-            
-            /* OLD CODE IN ORDER TO ENSURE ISSUES:
-        	 * $this->_permissionTable = Yii::$app->db->createCommand('SELECT * FROM admin_user_group AS t1 LEFT JOIN(admin_group_auth as t2 LEFT JOIN (admin_auth as t3) ON (t2.auth_id = t3.id)) ON (t1.group_id=t2.group_id) WHERE t1.user_id=:user_id')
-             * ->bindValue('user_id', $userId)
-             * ->queryAll();
-        	 */
-            
             $this->_permissionTable = (new Query())
                 ->select("*")
                 ->from('admin_user_group')
@@ -66,6 +59,19 @@ class Auth extends \yii\base\Component
         }
         
         return $this->_permissionTable;
+    }
+    
+    /**
+     * Get the permission table for a user without doublicated entries.
+     * 
+     * As its possible to have multiple groups with the same permissions.
+     * 
+     * @param integer $userId
+     * @return array
+     */
+    public function getPermissionTableDistinct($userId)
+    {
+        return ArrayHelper::index($this->getPermissionTable($userId), 'id');
     }
     
     /**

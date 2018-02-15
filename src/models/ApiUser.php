@@ -42,9 +42,15 @@ final class ApiUser extends NgRestModel
 	{
 		parent::init();
 		
-		$this->on(self::EVENT_AFTER_VALIDATE, function($e) {
+		// allow only is_api_user flagged edit and adds
+		$this->on(self::EVENT_AFTER_VALIDATE, function() {
 			$this->is_api_user = true;
 		});
+		
+		// ensure a password salt will be create while generating the user in order to hash access tokens.
+        $this->on(self::EVENT_BEFORE_INSERT, function() {
+            $this->password_salt = Yii::$app->getSecurity()->generateRandomString();
+        });
 	}
 	
 	public static function ngRestApiEndpoint()
