@@ -53,7 +53,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 							<td><?= implode(", ", $groups); ?></td>
 						</tr>
 						<tr>
-							<td>Api activity</td>
+							<td><?= Module::t('model_user_api_last_activity'); ?></td>
 							<td><?= strftime("%x %X", $model->api_last_activity); ?></td>
 						</tr>
 					</table>

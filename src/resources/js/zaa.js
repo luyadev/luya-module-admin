@@ -266,8 +266,15 @@ function typeCastValue(value) {
             	if (!config.hasOwnProperty('ignoreLoadingBar')) {
             		config.debugId = AdminDebugBar.pushRequest(config);
             	}
+            	
+            	if (config.hasOwnProperty('authToken')) {
+            		var authToken = config.authToken;
+            	} else {
+            		var authToken = $rootScope.luyacfg.authToken;
+            	}
+            	
                 config.headers = config.headers || {};
-                config.headers.Authorization = "Bearer " + $rootScope.luyacfg.authToken;
+                config.headers.Authorization = "Bearer " + authToken;
                 var csrfToken = document.head.querySelector("[name=csrf-token]").content;
                 config.headers['X-CSRF-Token'] = csrfToken;
                 
@@ -282,7 +289,9 @@ function typeCastValue(value) {
             },
             responseError: function (data) {
                 if (data.status == 401 || data.status == 403 || data.status == 405) {
-                    window.location = "admin/default/logout";
+                	if (!data.config.hasOwnProperty('authToken')) {
+                		window.location = "admin/default/logout";
+                	}
                 } else if (data.status != 422) {
                 	var message = data.data.hasOwnProperty('message');
                 	if (message) {

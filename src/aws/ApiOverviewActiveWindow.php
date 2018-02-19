@@ -4,6 +4,7 @@ namespace luya\admin\aws;
 
 use Yii;
 use luya\admin\ngrest\base\ActiveWindow;
+use luya\admin\Module;
 
 /**
  * Api Overview Active Window.
@@ -24,7 +25,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'API Overview';
+        return Module::t('aw_apioverview_label');
     }
 
     /**
@@ -34,7 +35,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function defaultIcon()
     {
-        return 'call_merge';    
+        return 'device_hub';    
     }
 
     /**

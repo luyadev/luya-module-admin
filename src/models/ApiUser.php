@@ -5,6 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ApiOverviewActiveWindow;
+use luya\admin\aws\UserHistorySummaryActiveWindow;
 
 /**
  * User Model represents all Administration Users.
@@ -31,7 +32,7 @@ use luya\admin\aws\ApiOverviewActiveWindow;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-final class ApiUser extends NgRestModel
+final class ApiUser extends User
 {
 	public static function tableName()
 	{
@@ -83,14 +84,16 @@ final class ApiUser extends NgRestModel
 	public function ngRestScopes()
 	{
 		return [
-			[['list', 'create', 'update'], ['firstname', 'lastname', 'email']]	
+			[['list', 'create', 'update'], ['firstname', 'lastname', 'email']],
+			[['delete'], true],
 		];
 	}
 	
 	public function ngRestActiveWindows()
 	{
 		return [
-			['class' => ApiOverviewActiveWindow::class],
+			['class' => ApiOverviewActiveWindow::class, 'label' => false],
+			['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
 		];
 	}
 }

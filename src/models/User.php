@@ -38,7 +38,7 @@ use luya\admin\models\NgrestLog;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-final class User extends NgRestModel implements IdentityInterface, ChangePasswordInterface
+class User extends NgRestModel implements IdentityInterface, ChangePasswordInterface
 {
     const USER_SETTING_ISDEVELOPER = 'isDeveloper';
     
@@ -211,6 +211,7 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
             'email' => Module::t('mode_user_email'),
             'password' => Module::t('mode_user_password'),
             'lastloginTimestamp' => Module::t('model_user_lastlogintimestamp'),
+        	'api_last_activity' => Module::t('model_user_api_last_activity'),
         ];
     }
 
@@ -314,7 +315,7 @@ final class User extends NgRestModel implements IdentityInterface, ChangePasswor
      */
     public function getTitleNamed()
     {
-        return self::getTitles()[$this->title];
+        return !isset(self::getTitles()[$this->title]) ?: self::getTitles()[$this->title];
     }
 
     /**
