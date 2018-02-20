@@ -60,7 +60,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     
     /**
      * Get user settings objects.
-     * 
+     *
      * @return \luya\admin\models\UserSetting
      */
     public function getSetting()
@@ -73,14 +73,14 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return $this->_setting;
     }
     
-	/**
-	 * Setter method for user settings which encodes the json.
-	 * 
-	 * @param array $data
-	 */
+    /**
+     * Setter method for user settings which encodes the json.
+     *
+     * @param array $data
+     */
     public function updateSettings(array $data)
     {
-    	return $this->updateAttributes(['settings' => Json::encode($data)]);
+        return $this->updateAttributes(['settings' => Json::encode($data)]);
     }
     
     /**
@@ -88,7 +88,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function getLastloginTimestamp()
     {
-    	return $this->getUserLogins()->select(['timestamp_create'])->scalar();
+        return $this->getUserLogins()->select(['timestamp_create'])->scalar();
     }
     
     
@@ -161,7 +161,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestActiveWindows()
     {
         return [
-        	['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
             ['class' => ChangePasswordActiveWindow::class, 'label' => false],
         ];
     }
@@ -211,7 +211,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'email' => Module::t('mode_user_email'),
             'password' => Module::t('mode_user_password'),
             'lastloginTimestamp' => Module::t('model_user_lastlogintimestamp'),
-        	'api_last_activity' => Module::t('model_user_api_last_activity'),
+            'api_last_activity' => Module::t('model_user_api_last_activity'),
         ];
     }
 
@@ -365,7 +365,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
     /**
      * Finds a current user for a given email.
-     * 
+     *
      * This is used for the login form, and can therefore not be used for api users (since 1.0.4)
      *
      * @param string $email The email address to find the user from.
@@ -399,12 +399,12 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     
     /**
      * Get all ngrest log entries for this user.
-     * 
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getNgrestLogs()
     {
-    	return $this->hasMany(NgrestLog::class, ['user_id' => 'id']);
+        return $this->hasMany(NgrestLog::class, ['user_id' => 'id']);
     }
 
     // IdentityInterface
@@ -425,7 +425,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $user = static::findOne(['auth_token' => $token]);
         // if the given user can be found, udpate the api last activity timestamp.
         if ($user) {
-        	$user->updateAttributes(['api_last_activity' => time()]);
+            $user->updateAttributes(['api_last_activity' => time()]);
         }
         
         return $user;

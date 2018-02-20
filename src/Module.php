@@ -123,7 +123,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-timestamp' => 'luya\admin\apis\TimestampController',
         'api-admin-search' => 'luya\admin\apis\SearchController',
         'api-admin-user' => 'luya\admin\apis\UserController',
-    	'api-admin-apiuser' => 'luya\admin\apis\ApiUserController',
+        'api-admin-apiuser' => 'luya\admin\apis\ApiUserController',
         'api-admin-group' => 'luya\admin\apis\GroupController',
         'api-admin-lang' => 'luya\admin\apis\LangController',
         'api-admin-effect' => 'luya\admin\apis\EffectController',

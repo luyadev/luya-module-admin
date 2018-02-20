@@ -9,8 +9,8 @@ use luya\admin\Module;
 /**
  * Api Overview Active Window.
  *
- * File has been created with `aw/create` command. 
- * 
+ * File has been created with `aw/create` command.
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.4
  */
@@ -38,12 +38,12 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function defaultIcon()
     {
-        return 'device_hub';    
+        return 'device_hub';
     }
 
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
-     * 
+     *
      * @return string The response string, render and displayed trough the angular ajax request.
      */
     public function index()

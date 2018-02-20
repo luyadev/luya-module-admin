@@ -28,7 +28,7 @@ class LogBehavior extends Behavior
         return [
             ActiveRecord::EVENT_AFTER_INSERT => 'eventAfterInsert',
             ActiveRecord::EVENT_AFTER_UPDATE => 'eventAfterUpdate',
-        	ActiveRecord::EVENT_AFTER_DELETE => 'eventAfterDelete',
+            ActiveRecord::EVENT_AFTER_DELETE => 'eventAfterDelete',
         ];
     }
     
@@ -46,24 +46,24 @@ class LogBehavior extends Behavior
     
     /**
      * After delete event.
-     * 
+     *
      * @param \yii\base\Event $event
      */
     public function eventAfterDelete($event)
     {
-    	if (Yii::$app instanceof Application) {
-    		Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-    			'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
-    			'timestamp_create' => time(),
-    			'route' => $this->route,
-    			'api' => $this->api,
-    			'is_insert' => false,
-    			'is_update' => false,
-    			'is_delete' => true,
-    			'table_name' => $event->sender->tableName(),
-    			'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
-    		])->execute();
-    	}
+        if (Yii::$app instanceof Application) {
+            Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
+                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'timestamp_create' => time(),
+                'route' => $this->route,
+                'api' => $this->api,
+                'is_insert' => false,
+                'is_update' => false,
+                'is_delete' => true,
+                'table_name' => $event->sender->tableName(),
+                'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
+            ])->execute();
+        }
     }
 
     /**

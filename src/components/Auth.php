@@ -63,9 +63,9 @@ class Auth extends \yii\base\Component
     
     /**
      * Get the permission table for a user without doublicated entries.
-     * 
+     *
      * As its possible to have multiple groups with the same permissions.
-     * 
+     *
      * @param integer $userId
      * @return array
      */

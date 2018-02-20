@@ -34,66 +34,66 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
  */
 final class ApiUser extends User
 {
-	public static function tableName()
-	{
-		return 'admin_user';
-	}
-	
-	public function init()
-	{
-		parent::init();
-		
-		// allow only is_api_user flagged edit and adds
-		$this->on(self::EVENT_AFTER_VALIDATE, function() {
-			$this->is_api_user = true;
-		});
-		
-		// ensure a password salt will be create while generating the user in order to hash access tokens.
-        $this->on(self::EVENT_BEFORE_INSERT, function() {
+    public static function tableName()
+    {
+        return 'admin_user';
+    }
+    
+    public function init()
+    {
+        parent::init();
+        
+        // allow only is_api_user flagged edit and adds
+        $this->on(self::EVENT_AFTER_VALIDATE, function () {
+            $this->is_api_user = true;
+        });
+        
+        // ensure a password salt will be create while generating the user in order to hash access tokens.
+        $this->on(self::EVENT_BEFORE_INSERT, function () {
             $this->password_salt = Yii::$app->getSecurity()->generateRandomString();
         });
-	}
-	
-	public static function ngRestApiEndpoint()
-	{
-		return 'api-admin-apiuser';
-	}
+    }
+    
+    public static function ngRestApiEndpoint()
+    {
+        return 'api-admin-apiuser';
+    }
 
-	public static function ngRestFind()
-	{
-		return self::find()->where(['is_api_user' => true]);
-	}
-	
-	public function rules()
-	{
-		return [
-			[['firstname', 'lastname', 'email'], 'required'],
-			[['email'], 'unique'],
-		];
-	}
-	
-	public function ngRestAttributeTypes()
-	{
-		return [
-			'firstname' => 'text',
-			'lastname' => 'text',
-			'email' => 'text',
-		];
-	}
-	
-	public function ngRestScopes()
-	{
-		return [
-			[['list', 'create', 'update'], ['firstname', 'lastname', 'email']],
-			[['delete'], true],
-		];
-	}
-	
-	public function ngRestActiveWindows()
-	{
-		return [
-			['class' => ApiOverviewActiveWindow::class, 'label' => false],
-			['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
-		];
-	}
+    public static function ngRestFind()
+    {
+        return self::find()->where(['is_api_user' => true]);
+    }
+    
+    public function rules()
+    {
+        return [
+            [['firstname', 'lastname', 'email'], 'required'],
+            [['email'], 'unique'],
+        ];
+    }
+    
+    public function ngRestAttributeTypes()
+    {
+        return [
+            'firstname' => 'text',
+            'lastname' => 'text',
+            'email' => 'text',
+        ];
+    }
+    
+    public function ngRestScopes()
+    {
+        return [
+            [['list', 'create', 'update'], ['firstname', 'lastname', 'email']],
+            [['delete'], true],
+        ];
+    }
+    
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => ApiOverviewActiveWindow::class, 'label' => false],
+            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+        ];
+    }
 }

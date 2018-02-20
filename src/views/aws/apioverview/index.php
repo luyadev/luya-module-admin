@@ -61,7 +61,9 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
             			<th></th>
             		</tr>
             	</thead>
-            	<?php foreach (Yii::$app->auth->getPermissionTableDistinct($model->id) as $data): if (empty($data['api'])) { continue; }?>
+            	<?php foreach (Yii::$app->auth->getPermissionTableDistinct($model->id) as $data): if (empty($data['api'])) {
+    continue;
+}?>
             	<tr>
             		<td><small><code>admin/<?= $data['api']; ?></code></small></td>
             		<td><?php if ($data['crud_create']): ?><i class="material-icons text-success">check</i><?php else: ?><i class="material-icons text-danger">clear</i><?php endif; ?></td>

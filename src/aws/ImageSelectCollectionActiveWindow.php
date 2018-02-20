@@ -105,7 +105,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
 
     public function defaultLabel()
     {
-    	return 'Images';
+        return 'Images';
     }
     
     /**
