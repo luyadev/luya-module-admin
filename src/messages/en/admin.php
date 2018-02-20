@@ -286,7 +286,7 @@ return [
     'aw_userhistorysummary_contribcount_inserts' => 'Inserts',
     'aw_userhistorysummary_contribcount_updates' => 'Updates',
     'aw_userhistorysummary_customsettings' => 'Custom settings',
-    'aw_userhistorysummary_lastsessions' => 'Lastest sessions',
+    'aw_userhistorysummary_lastsessions' => 'Latest sessions',
     'aw_userhistorysummary_ngrestlogs' => 'Change history',
     'aw_userhistorysummary_customsettings_key' => 'Identifier',
     'aw_userhistorysummary_customsettings_value' => 'Content',
