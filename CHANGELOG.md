@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
-+ If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
++ [#1571](https://github.com/luyadev/luya/issues/1571) If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
 
 ## 1.0.3 (13. February 2018)
 
