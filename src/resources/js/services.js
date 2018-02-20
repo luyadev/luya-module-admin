@@ -442,7 +442,7 @@ AdminToastService.confirm('Hello i am a callback and wait for your', 'Das lösch
 
 you can also close this dialog by sourself in the callback
 
-AdminToastService.confirm('Message', function() {
+AdminToastService.confirm('Are you sure?', 'Dialog Title', function() {
 	// do something
 	this.close();
 });

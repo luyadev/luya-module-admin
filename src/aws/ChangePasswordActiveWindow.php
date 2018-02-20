@@ -48,7 +48,7 @@ class ChangePasswordActiveWindow extends ActiveWindow
     
     public function defaultLabel()
     {
-    	return Module::t('aw_changepassword_defaultlabel');
+        return Module::t('aw_changepassword_defaultlabel');
     }
     
     /**

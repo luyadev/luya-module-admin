@@ -123,6 +123,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-timestamp' => 'luya\admin\apis\TimestampController',
         'api-admin-search' => 'luya\admin\apis\SearchController',
         'api-admin-user' => 'luya\admin\apis\UserController',
+        'api-admin-apiuser' => 'luya\admin\apis\ApiUserController',
         'api-admin-group' => 'luya\admin\apis\GroupController',
         'api-admin-lang' => 'luya\admin\apis\LangController',
         'api-admin-effect' => 'luya\admin\apis\EffectController',
@@ -260,6 +261,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ->node('menu_node_system', 'settings_applications')
                 ->group('menu_group_access')
                     ->itemApi('menu_access_item_user', 'admin/user/index', 'person', 'api-admin-user')
+                    ->itemApi('menu_access_item_apiuser', 'admin/api-user/index', 'device_hub', 'api-admin-apiuser')
                     ->itemApi('menu_access_item_group', 'admin/group/index', 'group', 'api-admin-group')
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
@@ -269,9 +271,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_images')
                     ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
                     ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
-                ->group('Content Proxy')
-                    ->itemApi('Machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
-                    ->itemApi('Builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
+                ->group('menu_group_contentproxy')
+                    ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
+                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
     }
 
     /**

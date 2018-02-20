@@ -8,7 +8,8 @@ use luya\admin\Module;
 /**
  * User History Summary Active Window.
  *
- * File has been created with `aw/create` command. 
+ * @author Basil Suter <basil@nadar.io>
+ * @since 1.0.4
  */
 class UserHistorySummaryActiveWindow extends ActiveWindow
 {
@@ -24,61 +25,61 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
      */
     public function defaultIcon()
     {
-        return 'pie_chart';    
+        return 'pie_chart';
     }
 
     public function defaultLabel()
     {
-    	return Module::t('aw_userhistorysummary_defaultlabel');
+        return Module::t('aw_userhistorysummary_defaultlabel');
     }
     
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
-     * 
+     *
      * @return string The response string, render and displayed trough the angular ajax request.
      */
     public function index()
     {
-    	$groups = [];
-    	foreach ($this->model->groups as $group) {
-    		$groups[] = $group->name;
-    	}
+        $groups = [];
+        foreach ($this->model->groups as $group) {
+            $groups[] = $group->name;
+        }
         return $this->render('index', [
             'model' => $this->model,
-        	'userLogins' => $this->model->getUserLogins()->limit(25)->all(),
-        	'ngrestLogs' => $this->model->getNgrestLogs()->limit(25)->all(),
-        	'groups' => $groups,
+            'userLogins' => $this->model->getUserLogins()->limit(25)->all(),
+            'ngrestLogs' => $this->model->getNgrestLogs()->limit(25)->all(),
+            'groups' => $groups,
         ]);
     }
 
     public function callbackPie()
     {
-    	return [
-    	'tooltip' => ['trigger' => 'item', 'formatter' => '{c} {b}'],
-    	'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => [Module::t('aw_userhistorysummary_contribcount_inserts'), Module::t('aw_userhistorysummary_contribcount_updates')]],
-    	'series' => [
-    		[
-    			'name' => "Hits",
-    			'type' => 'pie',
-    			'radius' => ['50%', '70%'],
-    			'avoidLabelOverlap' => false,
-    			'labelLine' => ['normal' => ['show' => false]],
-    			'label' => [
-    				'normal' => ['show' => false, 'position' => 'center'],
-    				'emphasis' => [
-    					'show' => true,
-    					'textStyle' => [
-    						'fontSize' => '30',
-    						'fontWeight' => 'bold'
-    					]
-    				]
-    			],
-    			'data' => [
-    				['value' => $this->model->getNgrestLogs()->where(['is_insert' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_inserts')],
-    				['value' => $this->model->getNgrestLogs()->where(['is_update' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_updates')],
-    			]
-    		]
-    	]
+        return [
+        'tooltip' => ['trigger' => 'item', 'formatter' => '{c} {b}'],
+        'legend' => ['orient' => 'vertical', 'x' => 'left', 'data' => [Module::t('aw_userhistorysummary_contribcount_inserts'), Module::t('aw_userhistorysummary_contribcount_updates')]],
+        'series' => [
+            [
+                'name' => "Hits",
+                'type' => 'pie',
+                'radius' => ['50%', '70%'],
+                'avoidLabelOverlap' => false,
+                'labelLine' => ['normal' => ['show' => false]],
+                'label' => [
+                    'normal' => ['show' => false, 'position' => 'center'],
+                    'emphasis' => [
+                        'show' => true,
+                        'textStyle' => [
+                            'fontSize' => '30',
+                            'fontWeight' => 'bold'
+                        ]
+                    ]
+                ],
+                'data' => [
+                    ['value' => $this->model->getNgrestLogs()->where(['is_insert' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_inserts')],
+                    ['value' => $this->model->getNgrestLogs()->where(['is_update' => true])->count(), 'name' => Module::t('aw_userhistorysummary_contribcount_updates')],
+                ]
+            ]
+        ]
     ];
     }
 }

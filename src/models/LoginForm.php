@@ -132,9 +132,9 @@ final class LoginForm extends Model
             // refresh user online list
             UserOnline::refreshUser($user->id, 'login');
             return $user;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     /**
