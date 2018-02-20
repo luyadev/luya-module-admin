@@ -8,7 +8,8 @@ use luya\admin\Module;
 /**
  * User History Summary Active Window.
  *
- * File has been created with `aw/create` command. 
+ * @author Basil Suter <basil@nadar.io>
+ * @since 1.0.4
  */
 class UserHistorySummaryActiveWindow extends ActiveWindow
 {

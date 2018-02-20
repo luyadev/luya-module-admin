@@ -10,6 +10,9 @@ use luya\admin\Module;
  * Api Overview Active Window.
  *
  * File has been created with `aw/create` command. 
+ * 
+ * @author Basil Suter <basil@nadar.io>
+ * @since 1.0.4
  */
 class ApiOverviewActiveWindow extends ActiveWindow
 {

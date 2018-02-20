@@ -8,7 +8,7 @@ use luya\admin\ngrest\base\Api;
  * User API, provides ability to manager and list all administration users.
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.0
+ * @since 1.0.4
  */
 class ApiUserController extends Api
 {
