@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 + [#59](https://github.com/luyadev/luya-module-admin/issues/59) NgRest log events are now tracked by the log behavior.
++ [#56](https://github.com/luyadev/luya-module-admin/issues/56) User summary active window with diff view, sessions and user infos.
 
 ### Fixed
 
