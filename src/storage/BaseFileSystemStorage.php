@@ -216,12 +216,12 @@ abstract class BaseFileSystemStorage extends Component
     public $secureFileUpload = true;
     
     /**
-     * @var array The mime types inside this array are whitelistet, if the extensions against the list of extension based on the mime type
-     * check fails. For example if mime type 'text/plain' is given for a 'csv' extension the valid extensions would be 'txt' or 'log', this would
-     * throw an exception, therefore you can whitelist the 'text/plain' mime type.
+     * @var array The mime types inside this array are whitelistet and will be stored whether validation failes or not. For example if mime
+     * type 'text/plain' is given for a 'csv' extension, the valid extensions would be 'txt' or 'log', this would throw an exception, therefore
+     *  you can whitelist he 'text/plain' mime type. This can be usefull when uploading csv files.
      * @since 1.0.4
      */
-    public $mimeTypeWhitelist = [];
+    public $whitelistMimeTypes = [];
 
     /**
      * @var \luya\web\Request Request object resolved by the Dependency Injector.
@@ -390,23 +390,24 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function ensureFileUpload($fileSource, $fileName)
     {
-    	// throw exception if source or name is empty
+        // throw exception if source or name is empty
         if (empty($fileSource) || empty($fileName)) {
             throw new Exception("Filename and source can not be empty.");
         }
         // if filename is blob, its a paste event from the browser, therefore generate the filename from the file source.
+        // @TODO: move out of ensureFileUpload
         if ($fileName == 'blob') {
             $ext = FileHelper::getExtensionsByMimeType(FileHelper::getMimeType($fileSource));
             $fileName = 'paste-'.date("Y-m-d-H-i").'.'.$ext[0];
         }
-		// get file informations from the name
+        // get file informations from the name
         $fileInfo = FileHelper::getFileInfo($fileName);
         // get the mimeType from the fileSource, if $secureFileUpload is disabled, the mime type will be extracted from the file extensions
         // instead of using the fileinfo extension, therefore this is not recommend.
         $mimeType = FileHelper::getMimeType($fileSource, null, !$this->secureFileUpload);
-		// empty mime type indicates a wrong file upload.
+        // empty mime type indicates a wrong file upload.
         if (empty($mimeType)) {
-        	throw new Exception("Unable to find mimeType for the given file, make sure the php extension 'fileinfo' is installed.");
+            throw new Exception("Unable to find mimeType for the given file, make sure the php extension 'fileinfo' is installed.");
         }
 
         $extensionByMimeType = FileHelper::getExtensionsByMimeType($mimeType);
@@ -416,7 +417,7 @@ abstract class BaseFileSystemStorage extends Component
         }
 
         // check if the file extension is matching the entries from FileHelper::getExtensionsByMimeType array.
-        if (!in_array($fileInfo->extension, $extensionByMimeType) && !in_array($mimeType, $this->mimeTypeWhitelist)) {
+        if (!in_array($fileInfo->extension, $extensionByMimeType) && !in_array($mimeType, $this->whitelistMimeTypes)) {
             throw new Exception("The given file extension \"{$fileInfo->extension}\" for file with mimeType \"{$mimeType}\" is not matching any valid extension: ".VarDumper::dumpAsString($extensionByMimeType).".");
         }
          
@@ -426,8 +427,8 @@ abstract class BaseFileSystemStorage extends Component
             }
         }
 
-        // check whether a mimetype is in the dangerousMimeTypes list and not whitelisted in mimeTypeWhitelist.
-        if (in_array($mimeType, $this->dangerousMimeTypes) && !in_array($mimeType, $this->mimeTypeWhitelist)) {
+        // check whether a mimetype is in the dangerousMimeTypes list and not whitelisted in whitelistMimeTypes.
+        if (in_array($mimeType, $this->dangerousMimeTypes) && !in_array($mimeType, $this->whitelistMimeTypes)) {
             throw new Exception("The file mimeType '{$mimeType}' seems to be dangerous and can not be stored.");
         }
 
