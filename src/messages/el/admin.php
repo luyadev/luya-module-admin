@@ -265,7 +265,7 @@ return [
     'model_config_atr_is_system' => 'Is system',
     'menu_system_item_config' => 'Config variables',
         
-// 1.0.4
+// 1.1.0
     
     'model_user_is_deleted' => 'Removed',
     'model_user_name' => 'Name',

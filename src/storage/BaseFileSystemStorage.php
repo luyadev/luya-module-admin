@@ -219,7 +219,7 @@ abstract class BaseFileSystemStorage extends Component
      * @var array The mime types inside this array are whitelistet and will be stored whether validation failes or not. For example if mime
      * type 'text/plain' is given for a 'csv' extension, the valid extensions would be 'txt' or 'log', this would throw an exception, therefore
      *  you can whitelist he 'text/plain' mime type. This can be usefull when uploading csv files.
-     * @since 1.0.4
+     * @since 1.1.0
      */
     public $whitelistMimeTypes = [];
 

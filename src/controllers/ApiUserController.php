@@ -8,7 +8,7 @@ use luya\admin\ngrest\base\Controller;
  * NgRest User Controller.
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.4
+ * @since 1.1.0
  */
 class ApiUserController extends Controller
 {

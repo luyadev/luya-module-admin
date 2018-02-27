@@ -30,7 +30,7 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
  * @property integer $api_last_activity
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.4
+ * @since 1.1.0
  */
 final class ApiUser extends User
 {

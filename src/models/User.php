@@ -366,7 +366,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * Finds a current user for a given email.
      *
-     * This is used for the login form, and can therefore not be used for api users (since 1.0.4)
+     * This is used for the login form, and can therefore not be used for api users (since 1.1.0)
      *
      * @param string $email The email address to find the user from.
      * @return \yii\db\ActiveRecord|null

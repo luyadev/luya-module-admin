@@ -277,7 +277,7 @@ return [
     'model_config_atr_is_system' => 'System-Attribut',
     'menu_system_item_config' => 'Konfigurationsvariablen',
         
-// 1.0.4
+// 1.1.0
 
     'model_user_is_deleted' => 'Gelöscht',
     'model_user_name' => 'Benutzername',

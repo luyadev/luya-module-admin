@@ -9,7 +9,7 @@ use luya\admin\Module;
  * User History Summary Active Window.
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.4
+ * @since 1.1.0
  */
 class UserHistorySummaryActiveWindow extends ActiveWindow
 {
