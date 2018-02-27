@@ -12,6 +12,7 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\models\NgrestLog;
+use luya\admin\base\RestActiveController;
 
 /**
  * User Model represents all Administration Users.
@@ -52,8 +53,12 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function init()
     {
         parent::init();
-        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'beforeCreate']);
-        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'eventBeforeValidate']);
+        
+        $this->on(self::EVENT_AFTER_VALIDATE, function() {
+        	if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
+        		$this->encodePassword();
+        	}
+        });
     }
     
     private $_setting;
@@ -228,25 +233,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'securelayer' => ['secure_token'],
             'default' => ['title', 'firstname', 'lastname', 'email', 'password', 'force_reload', 'settings'],
         ];
-    }
-
-    /**
-     * Method which is called ON_BFORE_CREATE event.
-     */
-    public function beforeCreate()
-    {
-        $this->auth_token = '';
-        $this->is_deleted = false;
-    }
-
-    /**
-     * Method which is called ON_BEFORE_VALIDATE
-     */
-    public function eventBeforeValidate()
-    {
-        if ($this->scenario == 'restcreate') {
-            $this->encodePassword();
-        }
     }
 
     /**

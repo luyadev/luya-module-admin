@@ -3,7 +3,6 @@
 namespace luya\admin\models;
 
 use Yii;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ApiOverviewActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 
@@ -34,36 +33,50 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
  */
 final class ApiUser extends User
 {
+	/**
+	 * @inheritdoc
+	 */
     public static function tableName()
     {
         return 'admin_user';
     }
     
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
         
         // allow only is_api_user flagged edit and adds
-        $this->on(self::EVENT_AFTER_VALIDATE, function () {
+        $this->on(self::EVENT_BEFORE_VALIDATE, function () {
             $this->is_api_user = true;
-        });
-        
-        // ensure a password salt will be create while generating the user in order to hash access tokens.
-        $this->on(self::EVENT_BEFORE_INSERT, function () {
-            $this->password_salt = Yii::$app->getSecurity()->generateRandomString();
+            if ($this->isNewRecord) {
+            	$this->password = Yii::$app->security->generateRandomString();
+            	$this->password_salt = Yii::$app->security->generateRandomString();
+            }
         });
     }
     
+    /**
+     * @inheritdoc
+     */
     public static function ngRestApiEndpoint()
     {
         return 'api-admin-apiuser';
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function ngRestFind()
     {
         return self::find()->where(['is_api_user' => true]);
     }
     
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -72,6 +85,9 @@ final class ApiUser extends User
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function ngRestAttributeTypes()
     {
         return [
@@ -81,14 +97,20 @@ final class ApiUser extends User
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function ngRestScopes()
     {
         return [
-            [['list', 'create', 'update'], ['firstname', 'lastname', 'email']],
+            [['list', 'update', 'create'], ['firstname', 'lastname', 'email']],
             [['delete'], true],
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function ngRestActiveWindows()
     {
         return [
