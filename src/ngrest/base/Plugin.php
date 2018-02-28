@@ -237,6 +237,8 @@ abstract class Plugin extends Component
             if ($ngRestModelSelectMode) {
                 $options['model-setter'] = $ngRestModelSelectMode;
                 $options['model-selection'] = 1;
+            } else {
+                $options['model-selection'] = 0;
             }
             
             return $this->createTag('crud-loader', null, array_merge(['api' => $menu['route'], 'alias' => $menu['alias']], $options));

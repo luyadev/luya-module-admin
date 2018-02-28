@@ -659,7 +659,12 @@
 
     			$scope.toggleWindow = function() {
     				if ($scope.input.showWindow) {
-    					$http.get($scope.api+'/?inline=1&modelSelection=' + $scope.modelSetter).then(function(response) {
+    					var url = $scope.api+'/?inline=1';
+    					var modelSelection = parseInt($scope.modelSelection);
+    					if (modelSelection) {
+    						url = url + '&modelSelection=' + $scope.modelSetter;
+    					}
+    					$http.get(url).then(function(response) {
     						$scope.content = $sce.trustAsHtml(response.data);
     						$scope.input.showWindow = false;
     					});

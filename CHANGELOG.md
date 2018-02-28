@@ -15,6 +15,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#67](https://github.com/luyadev/luya-module-admin/issues/67) Fixed issue where crud loader (relation button) can not edit items.
 + [#1571](https://github.com/luyadev/luya/issues/1571) If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
 
 ## 1.0.3 (13. February 2018)
