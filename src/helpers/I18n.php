@@ -8,6 +8,12 @@ use yii\base\InvalidParamException;
 
 /**
  * I18n Encode/Decode helper method
+ * 
+ * General infos about the provided methods:
+ * 
+ * + `decode`: Means the input must be raw json code which will be decoded.
+ * + `array` suffix: Input must be an array of values and output will be an array of values.
+ * + `findActive`: The value for a given language is returned, if no language is provided the admin ui language is used.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -68,7 +74,7 @@ class I18n
     }
 
     /**
-     * Decode an arry with i18n values.
+     * Decode an array with i18n values.
      *
      * In order to decode an arry with json values you can use this function istead of iterator trough
      * the array items by yourself and calling {{luya\admin\helpers\I18n::decode}}.
@@ -78,10 +84,10 @@ class I18n
      *
      * $decoded = I18n::decodeArray($array);
      *
-     * print_r($decoded); // Dumps: [0 => ['de' => 'Hallo', 'en' => 'Hello'], 1 => ['de' => 'Ja', 'en' => 'Yes']]; if default language is English.
+     * print_r($decoded); // dump: array(['de' => 'Hallo', 'en' => 'Hello'], ['de' => 'Ja', 'en' => 'Yes']);
      * ```
      *
-     * @param array $array The array to iterator trough and call the {{luya\admin\helpers\I18n::decode}} on its value.
+     * @param array $array The array to iterate trough and call the {{luya\admin\helpers\I18n::decode}} for each value.
      * @param string $onEmptyValue If the decoded value is not existing or empty, this default value will be used instead of null.
      * @return array
      */
@@ -96,40 +102,24 @@ class I18n
     }
     
     /**
-     * Find the corresponding element inside an array for the current active language.
+     * Decodes a json string and returns the current active language item.
      *
      * ```php
      * // assume the default language is `en`
-     * $output = I18n::findActive(['de' => 'Hallo', 'en' => 'Hello']);
+     * $output = I18n::decodeActive('{"de":"Hallo","en":"Hello"}');
+     *
      * echo $output; // output is "Hello"
      * ```
      *
-     * @param array $fieldValues The array you want to to find the current
-     * @param mixed $onEmptyValue The value you can set when the language could not be found
-     * @return mixed
+     * @param string $input The json string
+     * @param string $onEmptyValue If element is not found, this value is returned instead.
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
+     * @return string The value from the json for the current active language or if not found the value from onEmptyValue.
+     * @deprecated Deprecate in version 1.2.0 use decodeFindActive() instead.
      */
-    public static function findActive(array $fieldValues, $onEmptyValue = '')
+    public static function decodeActive($input, $onEmptyValue = '', $lang = null)
     {
-        $langShortCode = Yii::$app->adminLanguage->getActiveShortCode();
-    
-        return (array_key_exists($langShortCode, $fieldValues)) ? $fieldValues[$langShortCode] : $onEmptyValue;
-    }
-
-    /**
-     * Find the corresponding element inside an array for the current active language
-     *
-     * @param array $fieldValues The array you want to to find the current
-     * @param mixed $onEmptyValue The value you can set when the language could not be found
-     * @return array
-     */
-    public static function findActiveArray(array $array, $onEmptyValue = '')
-    {
-        $output = [];
-        foreach ($array as $key => $value) {
-            $output[$key] = static::findActive($value, $onEmptyValue);
-        }
-        
-        return $output;
+        return static::decodeFindActive($input, $onEmptyValue, $lang);
     }
     
     /**
@@ -137,28 +127,109 @@ class I18n
      *
      * ```php
      * // assume the default language is `en`
-     * $output = I18n::decodeActive('{"de":"Hallo","en":"Hello"}');
+     * $output = I18n::decodeFindActive('{"de":"Hallo","en":"Hello"}');
+     *
      * echo $output; // output is "Hello"
      * ```
      *
      * @param string $input The json string
      * @param string $onEmptyValue If element is not found, this value is returned instead.
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
      * @return string The value from the json for the current active language or if not found the value from onEmptyValue.
      */
-    public static function decodeActive($input, $onEmptyValue = '')
+    public static function decodeFindActive($input, $onEmptyValue = '', $lang = null)
     {
-        return static::findActive(static::decode($input, $onEmptyValue));
+        return static::findActive(static::decode($input, $onEmptyValue), $lang);
     }
     
     /**
      * Decodes an array with json strings and returns the current active language item for each entry.
      *
+     * ```php
+     * // assume the default language is `en`
+     * $output = I18n::decodeActiveArray(['{"de":"Hallo","en":"Hello"}'], ['{"de":"Katze","en":"Cat"}']);
+     *
+     * var_dump($output); // dump: array('Hello', 'Cat')
+     * ```
+     *
      * @param array $input
-     * @param mixed $onEmptyValue
+     * @param mixed $onEmptyValue The value to use when the requested language could not be found.
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
+     * @return array
+     * @deprecated Deprecate in version 1.2.0 use decodeFindActiveArray() instead.
+     */
+    public static function decodeActiveArray(array $input, $onEmptyValue = '', $lang = null)
+    {
+        return static::decodeFindActiveArray($input, $onEmptyValue, $lang);
+    }
+    
+    /**
+     * Decodes an array with json strings and returns the current active language item for each entry.
+     *
+     * ```php
+     * // assume the default language is `en`
+     * $output = I18n::decodeFindActiveArray(['{"de":"Hallo","en":"Hello"}'], ['{"de":"Katze","en":"Cat"}']);
+     *
+     * var_dump($output); // dump: array('Hello', 'Cat')
+     * ```
+     *
+     * @param array $input
+     * @param mixed $onEmptyValue The value to use when the requested language could not be found.
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
      * @return array
      */
-    public static function decodeActiveArray(array $input, $onEmptyValue = '')
+    public static function decodeFindActiveArray(array $input, $onEmptyValue = '', $lang = null)
     {
-        return static::findActiveArray(static::decodeArray($input, $onEmptyValue));
+        return static::findActiveArray(static::decodeArray($input, $onEmptyValue), $onEmptyValue, $lang);
+    }
+    
+    /**
+     * Find the corresponding element inside an array for the current active language.
+     *
+     * ```php
+     * // assume the default language is `en`
+     * $output = I18n::findActive(['de' => 'Hallo', 'en' => 'Hello']);
+     * 
+     * echo $output; // output is "Hello"
+     * ```
+     *
+     * @param array $fieldValues The array you want to to find the current
+     * @param mixed $onEmptyValue The value you can set when the language could not be found
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
+     * @return mixed
+     */
+    public static function findActive(array $fieldValues, $onEmptyValue = '', $lang = null)
+    {
+        $langShortCode = $lang ? $lang : Yii::$app->adminLanguage->getActiveShortCode();
+    
+        return array_key_exists($langShortCode, $fieldValues) ? $fieldValues[$langShortCode] : $onEmptyValue;
+    }
+
+    /**
+     * Find the corresponding element inside an array for the current active language
+     *
+     * ```php
+     * // assume the default language is `en`
+     * $output = I18n::findActiveArray([
+     *     ['de' => 'Hallo', 'en' => 'Hello'],
+     *     ['de' => 'Katze', 'en' => 'Cat'],
+     * ]);
+     * 
+     * var_dump($output); // dump: array('Hello', 'Cat')
+     * ```
+     *
+     * @param array $fieldValues The array you want to to find the current
+     * @param mixed $onEmptyValue The value you can set when the language could not be found.
+     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
+     * @return array
+     */
+    public static function findActiveArray(array $array, $onEmptyValue = '', $lang = null)
+    {
+        $output = [];
+        foreach ($array as $key => $value) {
+            $output[$key] = static::findActive($value, $onEmptyValue, $lang);
+        }
+        
+        return $output;
     }
 }
