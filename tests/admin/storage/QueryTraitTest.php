@@ -66,7 +66,7 @@ class FixtureIterator extends IteratorAbstract
     /**
      * Iterator get current element, generates a new object for the current item on access.
      *
-     * @return \cms\menu\Item
+     * @return \luya\admin\storage\Item
      */
     public function current()
     {
@@ -85,7 +85,7 @@ class QueryTraitTest extends AdminTestCase
         $this->assertEquals(false, (new FixtureQueryTrait())->where(['id' => 0])->one());
         $this->assertEquals(0, count((new FixtureQueryTrait())->where(['id' => 0])->all()));
         $this->assertEquals(3, count((new FixtureQueryTrait())->all()));
-        $this->assertEquals(1, count((new FixtureQueryTrait())->one()));
+        $this->assertTrue(is_object((new FixtureQueryTrait())->one()));
         $this->assertEquals(1, (new FixtureQueryTrait())->findOne(1)->id);
         $this->assertEquals(3, (new FixtureQueryTrait())->findOne(3)->id);
         $this->assertEquals(1, count((new FixtureQueryTrait())->findOne(1)));
@@ -100,7 +100,7 @@ class QueryTraitTest extends AdminTestCase
         $this->assertEquals(1, (new FixtureQueryTrait())->where(['id' => 1, 'name' => 'Item 1'])->count());
         $this->assertEquals(2, (new FixtureQueryTrait())->where(['group' => 'A'])->count());
         $this->assertEquals(2, count((new FixtureQueryTrait())->where(['group' => 'A'])->all()));
-        $this->assertEquals(1, count((new FixtureQueryTrait())->where(['group' => 'A'])->one()));
+        $this->assertTrue(is_object((new FixtureQueryTrait())->where(['group' => 'A'])->one()));
     }
     
     public function testWhereOperatorConditions()
