@@ -88,7 +88,7 @@ class QueryTraitTest extends AdminTestCase
         $this->assertTrue(is_object((new FixtureQueryTrait())->one()));
         $this->assertEquals(1, (new FixtureQueryTrait())->findOne(1)->id);
         $this->assertEquals(3, (new FixtureQueryTrait())->findOne(3)->id);
-        $this->assertEquals(1, count((new FixtureQueryTrait())->findOne(1)));
+        $this->assertTrue(is_object((new FixtureQueryTrait())->findOne(1)));
         $this->assertEquals(false, (new FixtureQueryTrait())->findOne(0));
         $this->assertEquals(1, (new FixtureQueryTrait())->where(['id' => 1])->count());
         $this->assertEquals(1, count((new FixtureQueryTrait())->where(['id' => 1])->all()));
