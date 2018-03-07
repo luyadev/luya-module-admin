@@ -30,7 +30,7 @@ class CrudControllerTest extends AdminTestCase
         
         $this->assertNotNull($testShema);
         
-        $this->assertSame(7, count($ctrl->generateRules($testShema)));
+        $this->assertSame(8, count($ctrl->generateRules($testShema)));
         $this->assertSame(14, count($ctrl->generateLabels($testShema)));
         
         $tpl = <<<'EOT'
@@ -96,10 +96,10 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property string $password
  * @property string $password_salt
  * @property string $auth_token
- * @property smallint $is_deleted
+ * @property tinyint $is_deleted
  * @property string $secure_token
  * @property integer $secure_token_timestamp
- * @property smallint $force_reload
+ * @property tinyint $force_reload
  * @property text $settings
  * @property string $cookie_token
  */
@@ -155,11 +155,12 @@ class TestModel extends NgRestModel
     public function rules()
     {
         return [
-            [['title', 'is_deleted', 'secure_token_timestamp', 'force_reload'], 'integer'],
+            [['title', 'secure_token_timestamp'], 'integer'],
             [['email'], 'required'],
             [['settings'], 'string'],
             [['firstname', 'lastname', 'password', 'password_salt', 'auth_token', 'cookie_token'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 120],
+            [['is_deleted', 'force_reload'], 'string', 'max' => 1],
             [['secure_token'], 'string', 'max' => 40],
             [['email'], 'unique'],
         ];
@@ -261,8 +262,8 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property integer $id
  * @property string $name
  * @property string $short_code
- * @property smallint $is_default
- * @property smallint $is_deleted
+ * @property tinyint $is_default
+ * @property tinyint $is_deleted
  */
 class TestModel extends NgRestModel
 {
@@ -302,9 +303,9 @@ class TestModel extends NgRestModel
     public function rules()
     {
         return [
-            [['is_default', 'is_deleted'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['short_code'], 'string', 'max' => 15],
+            [['is_default', 'is_deleted'], 'string', 'max' => 1],
         ];
     }
 
