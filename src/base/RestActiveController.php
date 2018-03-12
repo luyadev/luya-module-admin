@@ -59,14 +59,14 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 $type = Auth::CAN_DELETE;
                 break;
             default:
-                throw new ForbiddenHttpException("Invalid RESPI Api action call.");
+                throw new ForbiddenHttpException("Invalid REST API action call.");
                 break;
         }
 
         UserOnline::refreshUser($this->userAuthClass()->getIdentity()->id, $this->id);
         
         if (!Yii::$app->auth->matchApi($this->userAuthClass()->getIdentity()->id, $this->id, $type)) {
-            throw new ForbiddenHttpException('you are unable to access this controller due to access restrictions.');
+            throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
         }
     }
 }
