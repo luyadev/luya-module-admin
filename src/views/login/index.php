@@ -22,7 +22,7 @@ $spinner = Svg::widget([
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field form-group">
-                <input class="login-input" id="email" name="login[email]" type="email" autocomplete="username" tabindex="1" required />
+                <input class="login-input" id="email" name="login[email]" type="email" autocomplete="email" tabindex="1" required />
                 <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>
             </div>
             <div class="login-form-field form-group">
