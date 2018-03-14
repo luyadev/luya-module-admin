@@ -277,7 +277,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     }
 
     /**
-     * Registering applicat components on application bootstraping proccess.
+     * Registering application components on bootstraping proccess.
      *
      * @return array An array where the key is the application component name and value the configuration.
      */
