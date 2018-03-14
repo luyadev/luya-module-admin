@@ -18,6 +18,12 @@ use yii;
 class UrlRule extends \yii\rest\UrlRule
 {
     /**
+     * @var boolean This is used for ensure the url rule caching since 2.0.14
+     * @see https://github.com/luyadev/luya-module-admin/issues/68
+     */
+    public $cacheFlag;
+    
+    /**
      * @inheritdoc
      */
     public $pluralize = false;

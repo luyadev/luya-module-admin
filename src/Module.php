@@ -137,16 +137,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     ];
 
     /**
-     * @var array Url rules used by the administration application.
-     */
-    public $urlRules = [
-        ['class' => 'luya\admin\components\UrlRule'],
-        ['pattern' => 'file/<id:\d+>/<hash:\w+>/<fileName:(.*?)+>', 'route' => 'admin/file/download'],
-        ['pattern' => 'admin', 'route' => 'admin/default/index'],
-        ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
-    ];
-
-    /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
      */
     public $assets = [];
@@ -161,6 +151,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         self::registerTranslation('admin*', '@admin/messages', [
             'admin' => 'admin.php',
         ]);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getUrlRules()
+    {
+        return [
+            ['class' => 'luya\admin\components\UrlRule', 'cacheFlag' => Yii::$app->request->isAdmin],
+            ['pattern' => 'file/<id:\d+>/<hash:\w+>/<fileName:(.*?)+>', 'route' => 'admin/file/download'],
+            ['pattern' => 'admin', 'route' => 'admin/default/index'],
+            ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
+        ];
     }
     
     /**
