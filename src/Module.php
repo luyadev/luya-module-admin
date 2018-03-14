@@ -307,7 +307,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * Setup the admin importer classes.
      *
-     * @param \uya\console\interfaces\ImportControllerInterface $import The import controller interface.
+     * @param \luya\console\interfaces\ImportControllerInterface $import The import controller interface.
      * @return array An array with all importer classes registered for this module.
      */
     public function import(ImportControllerInterface $import)
