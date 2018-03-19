@@ -31,10 +31,6 @@ use luya\admin\base\RestActiveController;
  * @property integer $force_reload
  * @property string $settings
  * @property \luya\admin\models\UserSetting $setting Setting object to store data.
- * @property integer $is_api_user
- * @property integer $api_rate_limit
- * @property string $api_allowed_ips
- * @property integer $api_last_activity
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -216,7 +212,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'email' => Module::t('mode_user_email'),
             'password' => Module::t('mode_user_password'),
             'lastloginTimestamp' => Module::t('model_user_lastlogintimestamp'),
-            'api_last_activity' => Module::t('model_user_api_last_activity'),
         ];
     }
 
@@ -359,7 +354,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findByEmail($email)
     {
-        return self::find()->where(['email' => $email, 'is_deleted' => false, 'is_api_user' => false])->one();
+        return self::find()->where(['email' => $email, 'is_deleted' => false])->one();
     }
 
     /**
@@ -400,7 +395,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findIdentity($id)
     {
-        return static::find()->joinWith(['userLogins ul'])->andWhere(['admin_user.id' => $id, 'is_destroyed' => false, 'is_api_user' => false, 'ip' => Yii::$app->request->userIP])->one();
+        return static::find()->joinWith(['userLogins ul'])->andWhere(['admin_user.id' => $id, 'is_destroyed' => false, 'ip' => Yii::$app->request->userIP])->one();
     }
 
     /**
@@ -408,13 +403,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $user = static::findOne(['auth_token' => $token]);
-        // if the given user can be found, udpate the api last activity timestamp.
-        if ($user) {
-            $user->updateAttributes(['api_last_activity' => time()]);
-        }
-        
-        return $user;
+        return static::findOne(['auth_token' => $token]);
     }
 
     /**

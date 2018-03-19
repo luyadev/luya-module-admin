@@ -59,7 +59,6 @@ class LogBehavior extends Behavior
                 'api' => $this->api,
                 'is_insert' => false,
                 'is_update' => false,
-                'is_delete' => true,
                 'table_name' => $event->sender->tableName(),
                 'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
             ])->execute();

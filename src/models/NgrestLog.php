@@ -15,7 +15,6 @@ use luya\helpers\Json;
  * @property string $api
  * @property int $is_update
  * @property int $is_insert
- * @property int $is_delete
  * @property string $attributes_json
  * @property string $attributes_diff_json
  * @property string $pk_value
@@ -49,7 +48,7 @@ class NgrestLog extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'timestamp_create', 'route', 'api', 'attributes_json'], 'required'],
-            [['user_id', 'timestamp_create', 'is_update', 'is_insert', 'is_delete'], 'integer'],
+            [['user_id', 'timestamp_create', 'is_update', 'is_insert'], 'integer'],
             [['attributes_json', 'attributes_diff_json'], 'string'],
             [['route', 'api'], 'string', 'max' => 80],
             [['pk_value', 'table_name'], 'string', 'max' => 255],
@@ -115,7 +114,6 @@ class NgrestLog extends \yii\db\ActiveRecord
             'api' => 'Api',
             'is_update' => 'Is Update',
             'is_insert' => 'Is Insert',
-            'is_delete' => 'Is Delete',
             'attributes_json' => 'Attributes Json',
             'attributes_diff_json' => 'Attributes Diff Json',
             'pk_value' => 'Pk Value',
