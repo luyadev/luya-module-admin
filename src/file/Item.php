@@ -304,19 +304,6 @@ class Item extends ItemAbstract implements LinkInterface
     }
     
     /**
-     * @deprecated Deprecated in 1.0.1
-     *
-     * @param boolean $scheme
-     * @return string
-     */
-    public function getHttpSource($scheme = false)
-    {
-        trigger_error('deprecated, use getSource() instead of getHttpSource().', E_USER_DEPRECATED);
-        
-        return $this->getSource($scheme);
-    }
-    
-    /**
      * Path to the source with sheme includes, means including server location.
      *
      * @return string The absolute source url to the file inside the storage folder with nice Urls.

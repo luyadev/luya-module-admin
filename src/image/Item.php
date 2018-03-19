@@ -121,22 +121,6 @@ class Item extends ItemAbstract
     }
     
     /**
-     * Get the absolute source path to the image location on the webserver.
-     *
-     *
-     * @deprecated Deprecated in 1.0.1 - REMOVE from fields() array!
-     *
-     * @param boolean $scheme Whether the source path should be absolute or not.
-     * @return string|boolean
-     */
-    public function getHttpSource($scheme = false)
-    {
-        trigger_error('deprecated, use getSource() instead of getHttpSource().', E_USER_DEPRECATED);
-        
-        return $this->getSource($scheme);
-    }
-    
-    /**
      * The source to the image internal used on the Server.
      *
      * @return string|boolean
