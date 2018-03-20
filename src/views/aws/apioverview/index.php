@@ -61,16 +61,29 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
             			<th></th>
             		</tr>
             	</thead>
-            	<?php foreach (Yii::$app->auth->getPermissionTableDistinct($model->id) as $data): if (empty($data['api'])) {
-    continue;
-}?>
-            	<tr>
+            	<?php foreach ($endpoints as $data): ?>
+            	<tr ng-init="actions['<?= $data['api']; ?>'] = false">
             		<td><small><code>admin/<?= $data['api']; ?></code></small></td>
+                    <?php if ($data['permission']): ?>
             		<td><?php if ($data['crud_create']): ?><i class="material-icons text-success">check</i><?php else: ?><i class="material-icons text-danger">clear</i><?php endif; ?></td>
             		<td><?php if ($data['crud_update']): ?><i class="material-icons text-success">check</i><?php else: ?><i class="material-icons text-danger">clear</i><?php endif; ?></td>
             		<td><?php if ($data['crud_delete']): ?><i class="material-icons text-success">check</i><?php else: ?><i class="material-icons text-danger">clear</i><?php endif; ?></td>
             		<td><button type="button" class="btn btn-sm py-0 btn-secondary float-right" ng-click="testUrl('<?= Url::base(true); ?>/admin/<?= $data['api']; ?>')"><i class="material-icons">play_circle_filled</i></button></td>
+                    <?php else: ?>
+                    <td colspan="3">&nbsp;</td>
+                    <td><button type="button" class="btn btn-sm py-0 btn-secondary float-right" ng-click="actions['<?= $data['api']; ?>'] = !actions['<?= $data['api']; ?>']">
+                        <i class="material-icons" ng-show="!actions['<?= $data['api']; ?>']">keyboard_arrow_left</i>
+                        <i class="material-icons" ng-show="actions['<?= $data['api']; ?>']">keyboard_arrow_down</i>
+                    </button></td>
+                    <?php endif; ?>
             	</tr>
+                <?php foreach ($data['actions'] as $name): ?>
+                <tr ng-show="actions['<?= $data['api']; ?>']" class="bg-light">
+                    <td><small><code>admin/<?= $data['api']; ?>/<?= $name; ?></code></small></td>
+                    <td colspan="3"></td>
+                    <td><button type="button" class="btn btn-sm py-0 btn-secondary float-right" ng-click="testUrl('<?= Url::base(true); ?>/admin/<?= $data['api']; ?>/<?= $name; ?>')"><i class="material-icons">play_circle_filled</i></button></td>
+                </tr>
+                <?php endforeach; ?>
             	<?php endforeach; ?>
             </table>
         </div>
