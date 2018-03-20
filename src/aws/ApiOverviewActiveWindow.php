@@ -52,6 +52,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
         return $this->render('index', [
             'model' => $this->model,
             'endpoints' => $this->getAvailableApiEndpoints(),
+            'groupsCount' => $this->model->getGroups()->count(),
         ]);
     }
     

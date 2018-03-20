@@ -42,7 +42,7 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
         <div class="card">
             <div class="card-header"><?= Module::t('aw_apioverview_accesstokentitle'); ?></div>
             <div class="card-body">
-                <p class="card-text"><small><?= empty($model->auth_token) ? '<i>-</i>' : '<kbd>' . $model->auth_token . '</kbd>'; ?></small></p>
+                <p class="card-text"><small><?= empty($model->auth_token) ? '' : '<kbd>' . $model->auth_token . '</kbd>'; ?></small></p>
                 <p class="card-text"><?= Module::t('aw_apioverview_accesstokeninfo'); ?></p>
                 <a ng-click="generateNewToken()" class="btn btn-danger"><?= Module::t('aw_apioverview_accesstokenbtnlabel'); ?></a>
             </div>
@@ -51,6 +51,12 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
     <div class="col-md-5">
         <div class="card">
             <div class="card-header"><?= Module::t('aw_apioverview_endpointstitle'); ?></div>
+
+            <?php if (empty($groupsCount)): ?>
+            <div class="alert alert-danger m-3">The API user must have assigned at least one permission group.</div>
+            <?php elseif (empty($model->auth_token)): ?>
+            <div class="alert alert-danger m-3">The API user must have an access token in order to access the API.</div>
+            <?php else: ?>
             <table class="table table-hover">
             	<thead>
             		<tr>
@@ -86,6 +92,7 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
                 <?php endforeach; ?>
             	<?php endforeach; ?>
             </table>
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-md-5">
