@@ -145,7 +145,7 @@ class StorageController extends RestController
         $captionsText = Yii::$app->request->post('captionsText', false);
     
         if ($fileId && $captionsText) {
-            $model = StorageFile::findOne($fileId);
+            $model = StorageFile::findOne((int) $fileId);
             if ($model) {
                 $model->updateAttributes([
                     'caption' => I18n::encode($captionsText),
@@ -214,7 +214,7 @@ class StorageController extends RestController
                     }
                     
                     // calculate new file files based on new file
-                    $model = StorageFile::findOne($fileId);
+                    $model = StorageFile::findOne((int) $fileId);
                     $fileHash = FileHelper::md5sum($serverSource);
                     $fileSize = @filesize($serverSource);
                     $model->updateAttributes([

@@ -243,7 +243,7 @@ class Api extends RestActiveController
     public function actionRelationCall($arrayIndex, $id, $modelClass)
     {
         $modelClass = base64_decode($modelClass);
-        $model = $modelClass::findOne($id);
+        $model = $modelClass::findOne((int) $id);
         
         if (!$model) {
             throw new InvalidCallException("unable to resolve relation call model.");
