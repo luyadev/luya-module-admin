@@ -53,9 +53,9 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
             <div class="card-header"><?= Module::t('aw_apioverview_endpointstitle'); ?></div>
 
             <?php if (empty($groupsCount)): ?>
-            <div class="alert alert-danger m-3">The API user must have assigned at least one permission group.</div>
+            <div class="alert alert-danger m-3"><?= Module::t('aw_apioverview_no_perm_groups'); ?></div>
             <?php elseif (empty($model->auth_token)): ?>
-            <div class="alert alert-danger m-3">The API user must have an access token in order to access the API.</div>
+            <div class="alert alert-danger m-3"><?= Module::t('aw_apioverview_no_access_token'); ?></div>
             <?php else: ?>
             <table class="table table-hover">
             	<thead>
