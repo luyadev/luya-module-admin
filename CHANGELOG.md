@@ -8,6 +8,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#64](https://github.com/luyadev/luya-module-admin/issues/64) Added migration for content disposition.
 + [#66](https://github.com/luyadev/luya-module-admin/issues/66) Provide option to whitelist mimetypes for admin file upload.
 + [#58](https://github.com/luyadev/luya-module-admin/issues/58) New api user level to make system api calls. Provide basic endpoint overview and tester.
 + [#59](https://github.com/luyadev/luya-module-admin/issues/59) NgRest log events are now tracked by the log behavior.
