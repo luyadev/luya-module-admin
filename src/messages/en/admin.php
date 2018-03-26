@@ -317,7 +317,7 @@ return [
     'menu_group_contentproxy' => 'Content Proxy',
     'menu_group_contentproxy_machines' => 'Machines',
     'menu_group_contentproxy_builds' => 'Builds',
-    'tag_file_readme' => 'Generat a link to a provided file. For Example `file[1]` will generate a link to the file with the filename. If you want to have an alternative text use `file[1](My Text)` instead. The file will open in a new window',
+    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
 ];
