@@ -81,7 +81,8 @@ final class ApiUser extends User
     {
         return [
             [['firstname', 'lastname', 'email'], 'required'],
-            [['email'], 'unique'],
+            [['email'], 'email'],
+            [['email', 'auth_token'], 'unique'],
         ];
     }
     

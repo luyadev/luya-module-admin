@@ -176,7 +176,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     /**
      * Returns the primary key from the config.
      *
-     * @return unknown
+     * @return string
      */
     public function getPrimaryKey()
     {
@@ -218,7 +218,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     
     /**
      *
-     * @param unknown $modelPrefix In common case its `item`.
+     * @param string $modelPrefix In common case its `item`.
      */
     public function getCompositionKeysForButtonActions($modelPrefix)
     {
@@ -246,7 +246,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
      *     ['ngClick' => 'toggle(...)', 'icon' => 'fa fa-fw fa-edit', 'label' => 'Button Label']
      * ];
      * ```
-     * @return returns array with all buttons for this crud
+     * @return array An array with all buttons for this crud
      * @throws InvalidConfigException
      */
     public function getButtons()
@@ -422,7 +422,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     /**
      * Create element for given element and config pointer context.
      *
-     * @param unknown_type $element
+     * @param array $element
      * @param string $configContext list,create,update
      * @return array
      */

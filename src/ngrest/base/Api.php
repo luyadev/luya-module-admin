@@ -117,7 +117,7 @@ class Api extends RestActiveController
     public function findModel($id)
     {
         $class = $this->modelClass;
-        $model = $class::findOne($id);
+        $model = $class::findOne((int) $id);
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the Model for the given ID");
@@ -141,6 +141,8 @@ class Api extends RestActiveController
      */
     public function actionServices()
     {
+        $this->checkAccess('services');
+        
         $settings = [];
         $apiEndpoint = $this->model->ngRestApiEndpoint();
         $userSortSettings = Yii::$app->adminuser->identity->setting->get('ngrestorder.admin/'.$apiEndpoint, false);
@@ -177,11 +179,13 @@ class Api extends RestActiveController
      *
      * This action is mainly used by  {{luya\admin\apis\SearchController}}.
      *
-     * @param unknown $query
-     * @return unknown
+     * @param string $query
+     * @return string
      */
     public function actionSearch($query)
     {
+        $this->checkAccess('search');
+        
         return $this->model->genericSearch($query);
     }
 
@@ -197,6 +201,8 @@ class Api extends RestActiveController
      */
     public function actionSearchProvider()
     {
+        $this->checkAccess('search-provider');
+        
         return $this->model->genericSearchStateProvider();
     }
     
@@ -209,6 +215,8 @@ class Api extends RestActiveController
      */
     public function actionSearchHiddenFields()
     {
+        $this->checkAccess('search-hidden-fields');
+        
         return $this->model->genericSearchHiddenFields();
     }
     
@@ -221,6 +229,8 @@ class Api extends RestActiveController
      */
     public function actionFullResponse()
     {
+        $this->checkAccess('full-response');
+        
         $query = Yii::$app->request->post('query');
         
         $find = $this->model->ngRestFullQuerySearch($query);
@@ -242,6 +252,8 @@ class Api extends RestActiveController
      */
     public function actionRelationCall($arrayIndex, $id, $modelClass)
     {
+        $this->checkAccess('relation-call');
+        
         $modelClass = base64_decode($modelClass);
         $model = $modelClass::findOne((int) $id);
         
@@ -277,6 +289,8 @@ class Api extends RestActiveController
      */
     public function actionFilter($filterName)
     {
+        $this->checkAccess('filter');
+        
         $model = $this->model;
         
         $filterName = Html::encode($filterName);
@@ -298,6 +312,8 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowCallback()
     {
+        $this->checkAccess('active-window-callback');
+        
         $config = $this->model->getNgRestConfig();
         $render = new RenderActiveWindowCallback();
         $ngrest = new NgRest($config);
@@ -312,6 +328,8 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowRender()
     {
+        $this->checkAccess('active-window-render');
+        
         // generate ngrest active window
         $render = new RenderActiveWindow();
         $render->setItemId(Yii::$app->request->post('itemId', false));
@@ -336,6 +354,8 @@ class Api extends RestActiveController
      */
     public function actionExport()
     {
+        $this->checkAccess('export');
+        
         $tempData = ExportHelper::csv($this->model->find());
         
         $key = uniqid('ngre', true);

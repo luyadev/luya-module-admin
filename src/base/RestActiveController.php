@@ -6,7 +6,6 @@ use Yii;
 use luya\admin\components\Auth;
 use luya\admin\models\UserOnline;
 use luya\rest\UserBehaviorInterface;
-use luya\traits\RestBehaviorsTrait;
 use yii\web\ForbiddenHttpException;
 use luya\rest\ActiveController;
 
@@ -47,11 +46,21 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
         switch ($action) {
             case 'index':
             case 'view':
+            case 'services':
+            case 'search':
+            case 'search-provider':
+            case 'search-hidden-fields':
+            case 'full-response':
+            case 'relation-call':
+            case 'filter':
+            case 'export':
                 $type = false;
                 break;
             case 'create':
                 $type = Auth::CAN_CREATE;
                 break;
+            case 'active-window-render';
+            case 'active-window-callback':
             case 'update':
                 $type = Auth::CAN_UPDATE;
                 break;

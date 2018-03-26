@@ -92,7 +92,6 @@ class ApiOverviewActiveWindow extends ActiveWindow
                     'crud_delete' => false,
                     'permission' => false,
                     'actions' => $this->getActions($ctrl),
-                    
                 ];
             }
         }
@@ -104,7 +103,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
     
     /**
      * Returns all available actions of the specified controller.
-     * @param Controller $controller the controller instance
+     * @param \yii\base\Controller $controller the controller instance
      * @return array all available action IDs.
      */
     public function getActions($controller)

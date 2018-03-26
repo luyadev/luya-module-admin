@@ -200,6 +200,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['title', 'firstname', 'lastname', 'email', 'password'], 'required', 'on' => 'default'],
             [['email'], 'email'],
             [['email'], 'unique', 'on' => ['restcreate', 'restupdate']],
+            [['auth_token'], 'unique'],
             [['settings'], 'string'],
         ];
     }
