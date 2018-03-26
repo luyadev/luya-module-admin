@@ -4,15 +4,16 @@ namespace luya\admin\components;
 
 use Yii;
 use yii\web\User;
-use luya\admin\models\UserOnline;
 use yii\web\UserEvent;
-use luya\web\Application;
+use luya\admin\models\UserOnline;
 use luya\admin\models\UserLogin;
 
 /**
  * AdminUser Component.
  *
  * The administration user Identity extends from {{yii\web\User}} in order to configure customized behaviors.
+ *
+ * @property \luya\admin\models\User $identity The user identitity object.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

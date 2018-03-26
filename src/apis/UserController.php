@@ -20,16 +20,11 @@ class UserController extends Api
      */
     public $modelClass = 'luya\admin\models\User';
     
-    public function actionChangePassword()
-    {
-        $model = new UserChangePassword();
-        $model->setUser(Yii::$app->adminuser->identity);
-        $model->attributes = Yii::$app->request->bodyParams;
-        $model->validate();
-        
-        return $model;
-    }
-    
+    /**
+     * Dump the current data from your user session.
+     *
+     * @return array
+     */
     public function actionSession()
     {
         $session = [
@@ -50,7 +45,27 @@ class UserController extends Api
         
         return $session;
     }
-
+    
+    /**
+     * Action to change the password for the given User.
+     * 
+     * @return \luya\admin\models\UserChangePassword
+     */
+    public function actionChangePassword()
+    {
+        $model = new UserChangePassword();
+        $model->setUser(Yii::$app->adminuser->identity);
+        $model->attributes = Yii::$app->request->bodyParams;
+        $model->validate();
+        
+        return $model;
+    }
+    
+    /**
+     * Update data for the current session user.
+     * 
+     * @return array
+     */
     public function actionSessionUpdate()
     {
         $user = Yii::$app->adminuser->identity;
@@ -60,6 +75,11 @@ class UserController extends Api
         return $user;
     }
     
+    /**
+     * Change user settings.
+     * 
+     * @return boolean
+     */
     public function actionChangeSettings()
     {
         $params = Yii::$app->request->bodyParams;

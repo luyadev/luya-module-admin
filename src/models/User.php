@@ -13,6 +13,8 @@ use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\models\NgrestLog;
 use luya\admin\base\RestActiveController;
+use yii\web\ForbiddenHttpException;
+use yii\base\InvalidArgumentException;
 
 /**
  * User Model represents all Administration Users.
@@ -409,6 +411,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+        if (empty($token) || !is_scalar($token)) {
+            throw new InvalidArgumentException("The provided access token is invalid.");    
+        }
+        
         $user = static::findOne(['auth_token' => $token]);
         // if the given user can be found, udpate the api last activity timestamp.
         if ($user) {

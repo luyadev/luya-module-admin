@@ -30,6 +30,11 @@ use yii\web\BadRequestHttpException;
 class StorageController extends RestController
 {
     use CacheableTrait;
+
+    /**
+     * @var string The route which is used in the permission system
+     */
+    const PERMISSION_ROUTE = 'admin/storage/index';
     
     /**
      * Flush the storage caching data.
@@ -141,11 +146,13 @@ class StorageController extends RestController
      */
     public function actionFilemanagerUpdateCaption()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         $fileId = Yii::$app->request->post('id', false);
         $captionsText = Yii::$app->request->post('captionsText', false);
     
-        if ($fileId && $captionsText) {
-            $model = StorageFile::findOne((int) $fileId);
+        if ($fileId && is_scalar($fileId) && $captionsText) {
+            $model = StorageFile::findOne($fileId);
             if ($model) {
                 $model->updateAttributes([
                     'caption' => I18n::encode($captionsText),
@@ -167,6 +174,8 @@ class StorageController extends RestController
      */
     public function actionImageUpload()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         try {
             $create = Yii::$app->storage->addImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {
@@ -194,6 +203,8 @@ class StorageController extends RestController
      */
     public function actionFileReplace()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         $fileId = Yii::$app->request->post('fileId', false);
         $raw = $_FILES['file'];
         /** @var $file \luya\admin\file\Item */
@@ -240,6 +251,8 @@ class StorageController extends RestController
     */
     public function actionFilesUpload()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error'])];
@@ -267,6 +280,8 @@ class StorageController extends RestController
      */
     public function actionFilemanagerMoveFiles()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         $toFolderId = Yii::$app->request->post('toFolderId', 0);
         $fileIds = Yii::$app->request->post('fileIds', []);
         
@@ -283,6 +298,8 @@ class StorageController extends RestController
      */
     public function actionFilemanagerRemoveFiles()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         foreach (Yii::$app->request->post('ids', []) as $id) {
             if (!Storage::removeFile($id)) {
                 return false;
@@ -321,6 +338,8 @@ class StorageController extends RestController
      */
     public function actionFolderDelete($folderId)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         // find all subfolders
         $matchingChildFolders = StorageFolder::find()->where(['parent_id' => $folderId])->asArray()->all();
         foreach ($matchingChildFolders as $matchingChildFolder) {
@@ -353,6 +372,8 @@ class StorageController extends RestController
      */
     public function actionFolderUpdate($folderId)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         $model = StorageFolder::findOne($folderId);
         if (!$model) {
             return false;
@@ -371,10 +392,13 @@ class StorageController extends RestController
      */
     public function actionFolderCreate()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+        
         $folderName = Yii::$app->request->post('folderName', null);
         $parentFolderId = Yii::$app->request->post('parentFolderId', 0);
         $response = Yii::$app->storage->addFolder($folderName, $parentFolderId);
         $this->flushApiCache();
+        
         return $response;
     }
 }

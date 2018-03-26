@@ -31,7 +31,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     }
     
     /**
-     * @inheritdoc
+     * Get the current user auth object.
+     * 
+     * @return \luya\admin\components\AdminUser
      */
     public function userAuthClass()
     {
@@ -72,9 +74,24 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 break;
         }
 
-        UserOnline::refreshUser($this->userAuthClass()->getIdentity()->id, $this->id);
+        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
         
-        if (!Yii::$app->auth->matchApi($this->userAuthClass()->getIdentity()->id, $this->id, $type)) {
+        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type)) {
+            throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
+        }
+    }
+
+    /**
+     * Checks if the current api endpoint exists in the list of accessables APIs.
+     * 
+     * @throws ForbiddenHttpException
+     * @since 1.1.0
+     */
+    public function checkEndpointAccess()
+    {
+        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
+        
+        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, false)) {
             throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
         }
     }
