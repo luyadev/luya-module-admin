@@ -318,7 +318,7 @@ return [
     'menu_group_contentproxy' => 'Inhalt-Proxy',
     'menu_group_contentproxy_machines' => 'Gerät',
     'menu_group_contentproxy_builds' => 'Builds',
-    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
-    'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
-    'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+    'tag_file_readme' => 'Generiert einen Link zu der angegebenen Datei. Beispiel: `file[1]` generiert einen Link zur Datei mit der Id 1 und nutzt den Dateinamen als Label. Um ein anderes Label zu definieren, gibt man `file[1](Mein Label-Text)` an. Die Datei wird immer in einem neuen Fenster geöffnet.',
+    'aw_apioverview_no_perm_groups' => 'Der API Benutzer mus mindestens einer Berechtigungsgruppe zugewiesen sein.',
+    'aw_apioverview_no_access_token' => 'Der API Benutzer muss einen Zugangstoken angeben, um die API nutzen zu können.',
 ];
