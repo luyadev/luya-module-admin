@@ -13,7 +13,6 @@ use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\models\NgrestLog;
 use luya\admin\base\RestActiveController;
-use yii\web\ForbiddenHttpException;
 use yii\base\InvalidArgumentException;
 
 /**
@@ -59,6 +58,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $this->on(self::EVENT_AFTER_VALIDATE, function() {
         	if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
         		$this->encodePassword();
+        		
+        		if ($this->isNewRecord) {
+        		    $this->auth_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->password_salt);
+        		}
         	}
         });
     }
