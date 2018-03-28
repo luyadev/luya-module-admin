@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 1.1.1 (in progress)
+
+### Fixed
+
++ [#76](https://github.com/luyadev/luya-module-admin/issues/76) Create random access token when creating new user in order to prevent unique column exception.
+
 ## 1.1.0 (26. March 2018)
 
 This release contains new migrations and requires to run the `migrate` command after updating.
