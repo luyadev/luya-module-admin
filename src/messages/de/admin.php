@@ -316,7 +316,7 @@ return [
     'aw_apioverview_responsetestertitle' => 'Testkonsole',
     'menu_access_item_apiuser' => 'API-Benutzer',
     'menu_group_contentproxy' => 'Inhalt-Proxy',
-    'menu_group_contentproxy_machines' => 'Gerät',
+    'menu_group_contentproxy_machines' => 'Geräte',
     'menu_group_contentproxy_builds' => 'Builds',
     'tag_file_readme' => 'Generiert einen Link zu der angegebenen Datei. Beispiel: `file[1]` generiert einen Link zur Datei mit der Id 1 und nutzt den Dateinamen als Label. Um ein anderes Label zu definieren, gibt man `file[1](Mein Label-Text)` an. Die Datei wird immer in einem neuen Fenster geöffnet.',
     'aw_apioverview_no_perm_groups' => 'Der API Benutzer mus mindestens einer Berechtigungsgruppe zugewiesen sein.',
