@@ -176,7 +176,7 @@ abstract class Plugin extends Component
      * See {{luya\admin\helpers\I18n::findActive}}
      *
      * @param array $fieldValues
-     * @return string|unknown
+     * @return string
      */
     public function i18nDecodedGetActive(array $fieldValues)
     {
