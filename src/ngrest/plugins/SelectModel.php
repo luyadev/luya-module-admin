@@ -128,7 +128,7 @@ class SelectModel extends Select
     /**
      *
      * @param ActiveRecordInterface $model
-     * @return mixed|unknown
+     * @return string
      */
     private function generateLabelField(ActiveRecordInterface $model)
     {

@@ -85,8 +85,8 @@ class ConfigBuilder implements ConfigBuilderInterface
      * $this->addPlugin('textarea', ['placeholder' => 'example']);
      * ```
      *
-     * @param unknown $name
-     * @param unknown $args
+     * @param string $name
+     * @param array $args
      * @return ConfigBuilder
      * @throws Exception
      */
@@ -104,7 +104,7 @@ class ConfigBuilder implements ConfigBuilderInterface
     /**
      * Use the admin ngrest plugin base namespace as default
      *
-     * @param unknown $name
+     * @param string $name
      * @return string
      * @since 1.0.0
      */

@@ -3,10 +3,8 @@
 namespace luya\admin\ngrest\plugins;
 
 use Yii;
-use luya\admin\ngrest\base\Plugin;
 use yii\db\ActiveQuery;
 use yii\base\InvalidConfigException;
-use luya\admin\ngrest\NgRest;
 
 /**
  * Checkbox Realtion based on an ActiveRelation.
