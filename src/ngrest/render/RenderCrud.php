@@ -11,7 +11,6 @@ use yii\base\InvalidConfigException;
 use yii\base\ViewContextInterface;
 use luya\helpers\Html;
 use luya\helpers\ArrayHelper;
-use yii\helpers\Json;
 
 /**
  * Render the Crud view.
@@ -21,7 +20,7 @@ use yii\helpers\Json;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-class RenderCrud extends Render implements RenderInterface, ViewContextInterface, RenderCrudInterface
+class RenderCrud extends Render implements ViewContextInterface, RenderCrudInterface
 {
     const TYPE_LIST = 'list';
 
@@ -71,6 +70,30 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     }
 
     // RenderCrudInterface
+    
+    /**
+     * @inheritdoc
+     */
+    public function canCreate()
+    {
+        return $this->can(Auth::CAN_CREATE);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function canUpdate()
+    {
+        return $this->can(Auth::CAN_UPDATE);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function canDelete()
+    {
+        return $this->can(Auth::CAN_DELETE);
+    }
     
     private $_relationCall = false;
     
@@ -475,7 +498,9 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     
     private function renderElementPlugins($configContext, $typeConfig, $elmnId, $elmnName, $elmnModel, $elmnAlias, $elmni18n)
     {
-        $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $typeConfig['args']);
+        $args = $typeConfig['args'];
+        $args['renderContext'] = $this;
+        $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $args);
         $method = 'render'.ucfirst($configContext);
         $html = $obj->$method($elmnId, $elmnModel);
 

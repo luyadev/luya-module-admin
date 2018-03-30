@@ -52,6 +52,15 @@ abstract class Plugin extends Component
     public $i18nEmptyValue = '';
     
     /**
+     * @var \luya\admin\ngrest\render\RenderCrudInterface The render context object when rendering
+     * + {{Plugin::renderList()}}
+     * + {{Plugin::renderCreate()}}
+     * + {{Plugin::renderUpdate()}}
+     * @since 1.1.1
+     */
+    public $renderContext;
+    
+    /**
      * Renders the element for the CRUD LIST overview for a specific type.
      *
      * @param string $id The ID of the element in the current context
@@ -138,7 +147,7 @@ abstract class Plugin extends Component
      */
     public function jsonDecode($value)
     {
-        return (empty($value)) ? [] : Json::decode($value);
+        return empty($value) ? [] : Json::decode($value);
     }
     
     // I18N HELPERS
