@@ -154,7 +154,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 			    		<tr>
 			    			<td><?= $key; ?></td>
 			    			<td>-</td>
-			    			<td><small><?= Html::encode($value)Html::encode(; /* format data with formatter based on variable type */ ?></small></td>
+			    			<td><small><?= Html::encode($value); /* format data with formatter based on variable type */ ?></small></td>
 			    		</tr>
 			    		<?php endforeach; ?>
 				    <?php elseif ($log->is_update): ?>
