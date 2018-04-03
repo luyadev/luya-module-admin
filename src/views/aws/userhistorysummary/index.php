@@ -1,5 +1,6 @@
 <?php
 
+use luya\helpers\Html;
 use yii\helpers\VarDumper;
 use luya\admin\Module;
 
@@ -34,15 +35,15 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 					<table class="table table-sm pb-0 mb-0">
 						<tr>
 							<td><?= Module::t('mode_user_title'); ?></td>
-							<td><?= $model->getTitleNamed(); ?></td>
+							<td><?= Html::encode($model->getTitleNamed()); ?></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_name'); ?></td>
-							<td><?= $model->firstname; ?> <?= $model->lastname; ?></td>
+							<td><?= Html::encode($model->firstname); ?> <?= Html::encode($model->lastname); ?></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('mode_user_email'); ?></td>
-							<td><a href="mailto:<?= $model->email; ?>"><?= $model->email; ?></a></td>
+							<td><a href="mailto:<?= Html::encode($model->email); ?>"><?= Html::encode($model->email); ?></a></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_is_deleted'); ?></td>
@@ -153,7 +154,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 			    		<tr>
 			    			<td><?= $key; ?></td>
 			    			<td>-</td>
-			    			<td><small><?= $value; /* format data with formatter based on variable type */ ?></small></td>
+			    			<td><small><?= Html::encode($value)Html::encode(; /* format data with formatter based on variable type */ ?></small></td>
 			    		</tr>
 			    		<?php endforeach; ?>
 				    <?php elseif ($log->is_update): ?>
@@ -162,8 +163,8 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 }?>
 			    		<tr>
 			    			<td><?= $key; ?></td>
-			    			<td><small><?= $oldValue; ?></small></td>
-			    			<td><small><?= $value; ?></small></td>
+			    			<td><small><?= Html::encode($oldValue); ?></small></td>
+			    			<td><small><?= Html::encode($value); ?></small></td>
 			    		</tr>
 			    		<?php endforeach; ?>
 				    	<?php else: ?>
