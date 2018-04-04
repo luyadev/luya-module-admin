@@ -100,6 +100,9 @@ abstract class Plugin extends Component
         }
         
         $this->addEvent(NgRestModel::EVENT_BEFORE_VALIDATE, 'onSave');
+        $this->addEvent(NgRestModel::EVENT_AFTER_INSERT, 'onAssign');
+        $this->addEvent(NgRestModel::EVENT_AFTER_UPDATE, 'onAssign');
+        $this->addEvent(NgRestModel::EVENT_AFTER_REFRESH, 'onAssign');
         $this->addEvent(NgRestModel::EVENT_AFTER_FIND, 'onFind');
         $this->addEvent(NgRestModel::EVENT_AFTER_NGREST_FIND, 'onListFind');
         $this->addEvent(NgRestModel::EVENT_AFTER_NGREST_UPDATE_FIND, 'onExpandFind');
@@ -322,7 +325,7 @@ abstract class Plugin extends Component
     *
     * If the beforeSave method returns true and i18n is enabled, the value will be json encoded.
     *
-    * @param \yii\db\AfterSaveEvent $event AfterSaveEvent represents the information available in yii\db\ActiveRecord::EVENT_AFTER_INSERT and yii\db\ActiveRecord::EVENT_AFTER_UPDATE.
+    * @param \yii\base\ModelEvent $event ModelEvent represents the information available in yii\db\ActiveRecord::EVENT_BEFORE_VALIDATE.
     * @return void
     */
     public function onSave($event)
@@ -332,6 +335,27 @@ abstract class Plugin extends Component
                 $event->sender->setAttribute($this->name, $this->i18nFieldEncode($event->sender->getAttribute($this->name)));
             }
         }
+    }
+    
+    // ON ASSIGN
+    
+    /**
+     * After attribute value assignment.
+     * 
+     * This event will trigger on:
+     * 
+     * + AfterInsert
+     * + AfterUpdate
+     * + AfterRefresh
+     * 
+     * The main purpose is to ensure html encoding when the model is not populated with after find from the database.
+     * 
+     * @param \yii\base\ModelEvent $event When the database entry after insert, after update, after refresh.
+     * @since 1.1.1
+     */
+    public function onAssign($event)
+    {
+        
     }
     
     // ON LIST FIND

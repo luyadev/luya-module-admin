@@ -304,16 +304,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.14.1",
+            "version": "2.0.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "d99969394c66dc3606134af092b8ec561ea5d7c6"
+                "reference": "ed3a9e1c4abe206e1c3ce48a6b3624119b79850d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/d99969394c66dc3606134af092b8ec561ea5d7c6",
-                "reference": "d99969394c66dc3606134af092b8ec561ea5d7c6",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ed3a9e1c4abe206e1c3ce48a6b3624119b79850d",
+                "reference": "ed3a9e1c4abe206e1c3ce48a6b3624119b79850d",
                 "shasum": ""
             },
             "require": {
@@ -400,20 +400,20 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2018-02-24T20:23:06+00:00"
+            "time": "2018-03-21T18:36:53+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2"
+                "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2",
-                "reference": "3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/163419f1f197e02f015713b0d4f85598d8f8aa80",
+                "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80",
                 "shasum": ""
             },
             "require": {
@@ -442,6 +442,10 @@
                 {
                     "name": "Qiang Xue",
                     "email": "qiang.xue@gmail.com"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
                 }
             ],
             "description": "The composer plugin for Yii extension installer",
@@ -450,7 +454,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2016-12-20T13:26:02+00:00"
+            "time": "2018-03-21T16:15:55+00:00"
         },
         {
             "name": "yiisoft/yii2-imagine",
@@ -586,12 +590,12 @@
             "version": "1.7.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lancedikson/bowser.git",
+                "url": "git@github.com:ded/bowser.git",
                 "reference": "64f1ac148f6d652f7ce993646387cfe096756351"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lancedikson/bowser/zipball/64f1ac148f6d652f7ce993646387cfe096756351",
+                "url": "https://api.github.com/repos/ded/bowser/zipball/64f1ac148f6d652f7ce993646387cfe096756351",
                 "reference": "64f1ac148f6d652f7ce993646387cfe096756351",
                 "shasum": null
             },
@@ -621,7 +625,7 @@
             "version": "v2.13.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:flowjs/flow.js.git",
+                "url": "https://github.com/flowjs/flow.js.git",
                 "reference": "172e3d1b05d4089a735b24c394c0983a7d0e29c5"
             },
             "dist": {
@@ -656,16 +660,16 @@
         },
         {
             "name": "bower-asset/ng-flow",
-            "version": "v2.7.7",
+            "version": "v2.7.8",
             "source": {
                 "type": "git",
-                "url": "git@github.com:flowjs/ng-flow.git",
-                "reference": "a15c09ea7d36f36dee8d2b4bb27e61396267d997"
+                "url": "https://github.com/flowjs/ng-flow.git",
+                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flowjs/ng-flow/zipball/a15c09ea7d36f36dee8d2b4bb27e61396267d997",
-                "reference": "a15c09ea7d36f36dee8d2b4bb27e61396267d997",
+                "url": "https://api.github.com/repos/flowjs/ng-flow/zipball/fbf246e1839ee2c4586a82e9132651c498946ed2",
+                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2",
                 "shasum": null
             },
             "require": {
@@ -1011,23 +1015,23 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "d727662a3100d292658d26b96ce5e34895b7cffd"
+                "reference": "6b42a8eb7a434c379d2345c217368cc4b67f0603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/d727662a3100d292658d26b96ce5e34895b7cffd",
-                "reference": "d727662a3100d292658d26b96ce5e34895b7cffd",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/6b42a8eb7a434c379d2345c217368cc4b67f0603",
+                "reference": "6b42a8eb7a434c379d2345c217368cc4b67f0603",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "~1.0",
                 "luyadev/luya-composer": "~1.0.0",
                 "phpmailer/phpmailer": "^6.0",
-                "yiisoft/yii2": "~2.0.14.1"
+                "yiisoft/yii2": "~2.0.15"
             },
             "bin": [
                 "bin/luya"
@@ -1064,20 +1068,20 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-02-28T10:26:28+00:00"
+            "time": "2018-03-26T15:55:52+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "3a0795269f7af8fdfd82856aaa8e4f3efeed23aa"
+                "reference": "37dd0951ffd60fe213f537ee2659a818721a3925"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/3a0795269f7af8fdfd82856aaa8e4f3efeed23aa",
-                "reference": "3a0795269f7af8fdfd82856aaa8e4f3efeed23aa",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/37dd0951ffd60fe213f537ee2659a818721a3925",
+                "reference": "37dd0951ffd60fe213f537ee2659a818721a3925",
                 "shasum": ""
             },
             "require-dev": {
@@ -1115,7 +1119,7 @@
                     "homepage": "https://github.com/nadar"
                 }
             ],
-            "description": "Frontend module to display CMS content",
+            "description": "The LUYA CMS module provides a full functional Content Management System for adding contents based on blocks.",
             "homepage": "http://luya.io",
             "keywords": [
                 "cms",
@@ -1128,7 +1132,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-01-17T10:02:41+00:00"
+            "time": "2018-03-26T17:04:29+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
@@ -1443,16 +1447,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.3",
+            "version": "v6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "44d49bab5ab1fef721d3ee07e75dc0865ddf4cc6"
+                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/44d49bab5ab1fef721d3ee07e75dc0865ddf4cc6",
-                "reference": "44d49bab5ab1fef721d3ee07e75dc0865ddf4cc6",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/cb3ea134d4d3729e7857737d5f320cce9caf4d32",
+                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32",
                 "shasum": ""
             },
             "require": {
@@ -1505,7 +1509,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2018-01-05T13:19:58+00:00"
+            "time": "2018-03-27T13:49:45+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -2756,7 +2760,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.36",
+            "version": "v2.8.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3119,16 +3123,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.35.2",
+            "version": "v1.35.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601"
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9c24f2cd39dc1906b76879e099970b7e53724601",
-                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
                 "shasum": ""
             },
             "require": {
@@ -3136,8 +3140,8 @@
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.3@dev"
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.3"
             },
             "type": "library",
             "extra": {
@@ -3180,7 +3184,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-03T16:21:29+00:00"
+            "time": "2018-03-20T04:25:58+00:00"
         },
         {
             "name": "webmozart/assert",
