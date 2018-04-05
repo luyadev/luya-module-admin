@@ -122,7 +122,7 @@ $this->beginBody();
                     <span><?= Module::t('ngrest_crud_btn_add'); ?></span>
             </button>
             <?php endif; ?>
-            <small class="crud-counter">{{data.listArray.length}} of {{totalRows}}</small>
+            <small class="crud-counter"><?= Module::t('{{data.listArray.length}} of {{totalRows}}'); ?></small>
             <div class="table-responsive-wrapper">
                 <table class="table table-hover table-align-middle table-striped mt-0">
                     <thead class="thead-default">
