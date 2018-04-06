@@ -275,7 +275,7 @@ return [
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
     'menu_system_item_config' => '系统变量',
-        
+
 // 1.1.0
 
     'model_user_is_deleted' => 'Removed',
@@ -320,4 +320,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

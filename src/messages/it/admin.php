@@ -223,10 +223,10 @@ return [
     'js_link_change_value' => 'Cambia link',
     'js_link_set_value' => 'Imposta link',
     'callback_button_file_download_widget_success' => 'Il file è stato preparato. Puoi scaricarlo ora.',
-    
-    
+
+
 // rc4
-    
+
     'api_storage_file_upload_folder_error' => 'Errore nel salvataggio del file nella cartella. Potrebbe essere un errore di permessi. Assicurati che la cartella di salvataggio sia scrivibile.',
     'model_user_oldpassword' => 'Password precedente (vecchia)',
     'js_account_update_profile_success' => 'I dati del profilo sono stati aggiornati con successo.',
@@ -237,9 +237,9 @@ return [
     'locked_info' => 'Qualcuno sta già modificando.',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Nessun link selezionato',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Cancella',
     'js_dir_manager_rm_file_confirm_title' => 'Elimina file',
     'js_dir_manager_rm_folder_confirm_title' => 'Rimuovi cartella',
@@ -264,7 +264,7 @@ return [
     'model_config_atr_value' => 'Valore',
     'model_config_atr_is_system' => 'Di sistema',
     'menu_system_item_config' => 'Variabili di configurazione',
-        
+
 // 1.1.0
 
     'model_user_is_deleted' => 'Removed',
@@ -309,4 +309,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

@@ -194,7 +194,7 @@ return [
     'layout_rightbar_savebtn' => 'Save',
     'aws_changepassword_notequal' => 'The new password and the password repetition are not equal.',
     'aws_changeapssword_minchar' => 'The new password must have a minimum length of {min} characters.',
-    
+
 // rc3
 
     'model_pk_id' => 'ID',
@@ -235,7 +235,7 @@ return [
     'js_link_change_value' => 'Change Link',
     'js_link_set_value' => 'Set Link',
     'callback_button_file_download_widget_success' => 'The file has been prepared. You can download it now.',
-    
+
 // rc4
 
     'api_storage_file_upload_folder_error' => 'Error while saveing the file in the storage folder. A permission error could cause this problem. Make sure the storage folder is writeable.',
@@ -248,7 +248,7 @@ return [
     'locked_info' => 'Someone already editing',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'No Link selected',
-        
+
 // 1.0.0
 
     'ngrest_button_delete' => 'Delete',
@@ -275,7 +275,7 @@ return [
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
     'menu_system_item_config' => 'Config variables',
-        
+
 // 1.1.0
 
     'model_user_is_deleted' => 'Removed',
@@ -320,4 +320,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

@@ -194,7 +194,7 @@ return [
     'layout_rightbar_savebtn' => 'Зберегти',
     'aws_changepassword_notequal' => 'Новий пароль і повтор пароля не однакові.',
     'aws_changeapssword_minchar' => 'Новий пароль мае бути не менш ніж {min} символів.',
-    
+
 // rc3
 
     'model_pk_id' => 'ID',
@@ -235,10 +235,10 @@ return [
     'js_link_change_value' => 'Змінити посилання',
     'js_link_set_value' => 'Встановити посилання',
     'callback_button_file_download_widget_success' => 'Файл підготовлений. Ви можете завантажити його зараз.',
-    
-    
+
+
  // rc4
-    
+
     'api_storage_file_upload_folder_error' => 'Помилка при збереженні файлу в папці зберігання. Ця помилка може бути через помилку дозволу. Переконайтеся, що папка зберігання дозволена для запису файлів.',
     'model_user_oldpassword' => 'Попередній (старий) пароль',
     'js_account_update_profile_success' => 'Дані профилю успішно оновлені.',
@@ -249,9 +249,9 @@ return [
     'locked_info' => 'Хтось вже редагує цей елемент',
     'menu_dashboard' => 'Панель управління',
     'js_link_not_set' => 'Невибрано жодного посилання',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Видалити',
     'js_dir_manager_rm_file_confirm_title' => 'Видалити файл',
     'js_dir_manager_rm_folder_confirm_title' => 'Видалити теку',
@@ -276,9 +276,9 @@ return [
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
     'menu_system_item_config' => 'Config variables',
-        
+
 // 1.1.0
-    
+
     'model_user_is_deleted' => 'Removed',
     'model_user_name' => 'Name',
     'model_user_groups' => 'Groups',
@@ -321,4 +321,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

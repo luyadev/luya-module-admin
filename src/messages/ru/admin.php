@@ -132,7 +132,7 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Вы действительно хотите удалить этот файл?',
     'js_dir_manager_rm_file_ok' => 'Файл был успешно удален.',
     'js_zaa_server_proccess' => 'Сервер обрабатывает данные. Пожалуйста подождите',
-    
+
 // added translation in 1.0.0-beta4:
 
     'ngrest_crud_empty_row' => 'Данные пока не добавлены в таблицу',
@@ -145,7 +145,7 @@ return [
     'layout_useronline_name' => 'Имя',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Неактивный с',
-    
+
 // added translations in 1.0.0-beta6
 
     'layout_debug_caching' => 'Кеширование',
@@ -168,7 +168,7 @@ return [
     'mode_user_lastname' => 'Фамилия',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Пароль',
-    
+
 // added translations in 1.0.0-beta8
     'aws_tag_new' => 'Добавить новую запись',
     'aws_tag_add' => 'Добавить',
@@ -196,9 +196,9 @@ return [
     'layout_rightbar_savebtn' => 'Сохранить',
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
     'aws_changeapssword_minchar' => 'Пароль должен иметь минимум {min} символа.',
-        
+
 // rc3
-    
+
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Название',
     'model_lang_short_code' => 'Код',
@@ -237,10 +237,10 @@ return [
     'js_link_change_value' => 'Изменить ссылку',
     'js_link_set_value' => 'Установить ссылку',
     'callback_button_file_download_widget_success' => 'Файл подготовлен. Вы можете скачать его.',
-    
-    
+
+
 // rc4
-    
+
     'api_storage_file_upload_folder_error' => 'Ошибка при сохранении файла в папку хранилища. Ошибка разрешения может вызвать эту проблему. Убедитесь, что папка хранения доступна для записи.',
     'model_user_oldpassword' => 'Прошлый (старый) пароль',
     'js_account_update_profile_success' => 'Данные профиля успешно обновлены.',
@@ -251,9 +251,9 @@ return [
     'locked_info' => 'Кто-то уже редактирует',
     'menu_dashboard' => 'Панель',
     'js_link_not_set' => 'Нет ссылки',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Удалить',
     'js_dir_manager_rm_file_confirm_title' => 'Удалить файл',
     'js_dir_manager_rm_folder_confirm_title' => 'Удалить папку',
@@ -278,9 +278,9 @@ return [
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
     'menu_system_item_config' => 'Config variables',
-        
+
 // 1.1.0
-    
+
     'model_user_is_deleted' => 'Removed',
     'model_user_name' => 'Name',
     'model_user_groups' => 'Groups',
@@ -323,4 +323,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} из {{totalRows}}',
 ];
