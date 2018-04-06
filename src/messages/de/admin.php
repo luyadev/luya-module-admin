@@ -131,11 +131,11 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Möchten Sie diese Datei wirklich entfernen?',
     'js_dir_manager_rm_file_ok' => 'Datei wurde erfolgreich gelöscht.',
     'js_zaa_server_proccess' => 'Der Server verarbeitet deine Daten. Bitte warte einen Augenblick.',
-    
+
 // added translation in 1.0.0-beta4:
 
     'ngrest_crud_empty_row' => 'Es wurden keine Datensätze gefunden.',
-    
+
 // added translation in 1.0.0-beta5:
 
     'aws_gallery_empty' => 'Du hast noch keine Bilder für diese Album ausgewählt. Klicke im Dateimanager (links) auf die gewünschten Bilder, welche in das Album hinzufügt werden sollen.',
@@ -143,13 +143,13 @@ return [
     'layout_useronline_name' => 'Name',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Inaktiv seit',
-    
+
 // added translations in 1.0.0-beta6
 
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'An',
     'debug_state_off' => 'Aus',
-    
+
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'LUYA Sicherheitscode',
@@ -166,7 +166,7 @@ return [
     'mode_user_lastname' => 'Nachname',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Passwort',
-    
+
 // added translations in 1.0.0-beta8
     'aws_tag_new' => 'Neuen Eintrag erfassen',
     'aws_tag_add' => 'Hinzufügen',
@@ -174,7 +174,7 @@ return [
     'aws_tag_list' => 'Liste aller Einträge',
     'dashboard_log_message_add' => 'Einen Datensatz zu <b>{container}</b> hinzugefügt.',
     'dashboard_log_message_edit' => 'Einen Datensatz in <b>{container}</b> bearbeitet.',
-    
+
 // rc1
 
     'layout_btn_help' => 'Hilfe',
@@ -194,7 +194,7 @@ return [
     'layout_rightbar_savebtn' => 'Speichern',
     'aws_changepassword_notequal' => 'Das neue Passwort muss mit der Wiederholung übereinstimmen.',
     'aws_changeapssword_minchar' => 'Das neue Passwort muss mindestens {min} Zeichen enthalten.',
-        
+
 // rc3
 
     'model_pk_id' => 'ID',
@@ -235,8 +235,8 @@ return [
     'js_link_change_value' => 'Link ändern',
     'js_link_set_value' => 'Link setzen',
     'callback_button_file_download_widget_success' => 'Die Datei wurde vorbereitet. Sie können die Datei jetzt herunterladen.',
-    
-    
+
+
 // rc4
 
     'api_storage_file_upload_folder_error' => 'Es ist ein Fehler beim Speichern der Datei im Storage Ordner aufgetreten. Eine ungenügende Berechtigungsvergabe könnte der Grund dafür sein. Stelle sicher, dass der Storage-Ordner Schreibrechte besitzt.',
@@ -249,9 +249,9 @@ return [
     'locked_info' => 'Wird gerade bearbeitet',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Kein Link gesetzt',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Löschen',
     'js_dir_manager_rm_file_confirm_title' => 'Datei löschen',
     'js_dir_manager_rm_folder_confirm_title' => 'Verzeichnis löschen',
@@ -276,7 +276,7 @@ return [
     'model_config_atr_value' => 'Wert',
     'model_config_atr_is_system' => 'System-Attribut',
     'menu_system_item_config' => 'Konfigurationsvariablen',
-        
+
 // 1.1.0
 
     'model_user_is_deleted' => 'Gelöscht',
@@ -321,4 +321,8 @@ return [
     'tag_file_readme' => 'Generiert einen Link zu der angegebenen Datei. Beispiel: `file[1]` generiert einen Link zur Datei mit der Id 1 und nutzt den Dateinamen als Label. Um ein anderes Label zu definieren, gibt man `file[1](Mein Label-Text)` an. Die Datei wird immer in einem neuen Fenster geöffnet.',
     'aw_apioverview_no_perm_groups' => 'Der API Benutzer mus mindestens einer Berechtigungsgruppe zugewiesen sein.',
     'aw_apioverview_no_access_token' => 'Der API Benutzer muss einen Zugangstoken angeben, um die API nutzen zu können.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

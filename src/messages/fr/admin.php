@@ -179,7 +179,7 @@ return [
     'right_panel_support_tags_title' => 'Etiquettes',
     'right_panel_support_support_title' => 'Support',
     'right_panel_support_support_text' => 'Pour toute question, contacter le Webmaster ou consulter la page <a target="_blank" href="https://luya.io">luya.io</a>',
-    
+
     /* rc2 */
     'ngrest_crud_group_prompt' => 'Groupe par champ',
     'ngrest_crud_filter_prompt' => 'Sélectionner un filtre',
@@ -190,14 +190,14 @@ return [
     'layout_rightbar_savebtn' => 'Enregistrer',
     'aws_changepassword_notequal' => 'Le nouveau mot de passe et la répétition du mot de passe ne correspond pas',
     'aws_changeapssword_minchar' => 'Le nouveau mot de passe doit contenir au moins {min} caractères',
-        
+
     /* rc3 */
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Langue',
     'model_lang_short_code' => 'Code',
     'model_lang_is_default' => 'Par défaut',
     'model_lang_delete_error_is_default' => 'Impossible de supprimer la langue par défaut du système',
-    
+
     'model_logger_time' => 'Heure',
     'model_logger_message' => 'Message',
     'model_logger_type' => 'Type',
@@ -212,20 +212,20 @@ return [
     'model_logger_server' => 'Serveur',
     'model_logger_group_identifier' => 'Groupe de requêtes',
     'model_logger_group_identifier_index' => 'Position',
-    
+
     'model_storageeffect_identifier' => 'Identifiant',
     'model_storageeffect_name' => 'Nom',
     'model_storageeffect_imagine_name' => 'Nom de l\'effet',
     'model_storageeffect_imagine_json_params' => 'Configuration de l\'effet JSON',
     'model_storagefilter_identifier' => 'Identifiant du filtre',
     'model_storagefilter_name' => 'Nom du filtre',
-    
+
     'model_tag_name' => 'Identifiant de l\'étiquette',
-    
+
     'model_user_lastlogintimestamp' => 'Dernière connexion',
     'model_user_title_mr' => 'M.',
     'model_user_title_mrs' => 'Mme.',
-    
+
     'js_ngrest_toggler_success' => '%field% mis à jour avec succès',
     'layout_image_filter_selection' => 'Sélectionner le filtre de l\'image:',
     'lock_admin_edit_crud_item' => 'En cours de modification {module} "{table}" (ID: {id})',
@@ -235,7 +235,7 @@ return [
     'js_link_change_value' => 'Changer le lien',
     'js_link_set_value' => 'Définir le lien',
     'callback_button_file_download_widget_success' => 'Le fichier a été préparé. Vous pouvez le télécharger maintenant.',
-    
+
 // rc4
 
     'api_storage_file_upload_folder_error' => 'Erreur lors de l\'enregistrement du fichier. Une erreur d\'autorisation pourrait être la cause de ce problème. Assurez-vous que le dossier de stockage est accessible en écriture !',
@@ -248,9 +248,9 @@ return [
     'locked_info' => 'Someone already editing',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'No Link selected',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Supprimer',
     'js_dir_manager_rm_file_confirm_title' => 'Supprimer le fichier',
     'js_dir_manager_rm_folder_confirm_title' => 'Supprimer le dossier',
@@ -275,9 +275,9 @@ return [
     'model_config_atr_value' => 'Valeur',
     'model_config_atr_is_system' => 'Est système',
     'menu_system_item_config' => 'Variables de configuration',
-        
+
 // 1.1.0
-    
+
     'model_user_is_deleted' => 'Supprimer',
     'model_user_name' => 'Nom d\'utilisateur',
     'model_user_groups' => 'Groupes',
@@ -320,4 +320,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];

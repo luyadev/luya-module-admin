@@ -178,7 +178,7 @@ return [
     'layout_rightbar_savebtn' => 'ذخیره',
     'aws_changepassword_notequal' => 'رمزعبور و تکرار آن یکی نمی باشند.',
     'aws_changeapssword_minchar' => 'رمز عبور جدید باید حداقل  {min} حرف داشته باشد.',
-    
+
 // rc3
     'model_pk_id' => 'ردیف',
     'model_lang_name' => 'نام',
@@ -218,7 +218,7 @@ return [
     'js_link_change_value' => 'تغییر لینک',
     'js_link_set_value' => 'مشاهده لینک',
     'callback_button_file_download_widget_success' => 'فایل با موفقیت آماده شد. حال می توانید آن را دانلود نمایید',
-    
+
 // rc4
     'api_storage_file_upload_folder_error' => 'خطایی در هنگام ذخیره اطلاعات به وجود آمده است سطح دسترسی ها را کنترل کنید.',
     'model_user_oldpassword' => 'رمز عبور قبلی',
@@ -230,7 +230,7 @@ return [
     'locked_info' => 'قبلا ویرایش شده است',
     'menu_dashboard' => 'داشبورد',
     'js_link_not_set' => 'هیچ لینکی انتخاب نشده است',
-        
+
 // 1.0.0
     'ngrest_button_delete' => 'حذف',
     'js_dir_manager_rm_file_confirm_title' => 'حذف فایل',
@@ -256,9 +256,9 @@ return [
     'model_config_atr_value' => 'مقدار',
     'model_config_atr_is_system' => 'سیستم هست؟',
     'menu_system_item_config' => 'تنظیمات کلی',
-        
+
 // 1.1.0
-    
+
     'model_user_is_deleted' => 'پاک شده',
     'model_user_name' => 'نام',
     'model_user_groups' => 'گروه ها',
@@ -301,4 +301,8 @@ return [
     'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
     'aw_apioverview_no_perm_groups' => 'کاربران API باید دارای حداقل یک گروه مجوز باشند.',
     'aw_apioverview_no_access_token' => 'کاربران API باید یک توکن برای دسترسی داشته باشند.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
 ];
