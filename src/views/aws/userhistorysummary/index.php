@@ -35,15 +35,15 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
 					<table class="table table-sm pb-0 mb-0">
 						<tr>
 							<td><?= Module::t('mode_user_title'); ?></td>
-							<td><?= Html::encode($model->getTitleNamed()); ?></td>
+							<td><?= $model->getTitleNamed(); ?></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_name'); ?></td>
-							<td><?= Html::encode($model->firstname); ?> <?= Html::encode($model->lastname); ?></td>
+							<td><?= $model->firstname; ?> <?= $model->lastname; ?></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('mode_user_email'); ?></td>
-							<td><a href="mailto:<?= Html::encode($model->email); ?>"><?= Html::encode($model->email); ?></a></td>
+							<td><a href="mailto:<?= $model->email; ?>"><?= $model->email; ?></a></td>
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_is_deleted'); ?></td>

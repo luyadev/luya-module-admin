@@ -324,5 +324,5 @@ return [
 
 // 1.1.1
 
-    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    'ngrest_crud_total_count' => '{{data.listArray.length}} von {{totalRows}}',
 ];
