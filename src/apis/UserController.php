@@ -56,7 +56,9 @@ class UserController extends Api
         $model = new UserChangePassword();
         $model->setUser(Yii::$app->adminuser->identity);
         $model->attributes = Yii::$app->request->bodyParams;
-        $model->validate();
+        if ($model->validate()) {
+            $model->checkAndStore();
+        }
         
         return $model;
     }

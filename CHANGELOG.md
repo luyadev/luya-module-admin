@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#87](https://github.com/luyadev/luya-module-admin/issues/87) Fixed bug when change the password.
 + [#83](https://github.com/luyadev/luya-module-admin/issues/83) Provide after assign event for ngrest plugins.
 + [#77](https://github.com/luyadev/luya-module-admin/issues/77) Ensure if user has edit permissions in order to trigger the interactive toggleStatus plugin.
 + [#76](https://github.com/luyadev/luya-module-admin/issues/76) Create random access token when creating new user in order to prevent unique column exception.
