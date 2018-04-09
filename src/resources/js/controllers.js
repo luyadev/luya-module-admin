@@ -1145,11 +1145,16 @@
 	});
 
 	zaa.controller("AccountController", function($scope, $http, $window, AdminToastService) {
-		$scope.changePassword = function(pass) {
-			$http.post('admin/api-admin-user/change-password', pass).then(function(response) {
+		
+		$scope.pass = {};
+		
+		$scope.changePassword = function() {
+			$http.post('admin/api-admin-user/change-password', $scope.pass).then(function(response) {
 				AdminToastService.success(i18n['aws_changepassword_succes']);
+				$scope.pass = {};
 			}, function(error) {
 				AdminToastService.errorArray(error.data);
+				$scope.pass = {};
 			});
 		};
 

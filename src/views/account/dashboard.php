@@ -25,7 +25,7 @@ use luya\admin\Module;
             <div class="card">
                 <div class="card-body">
                     <h2><?= Module::t('mode_user_password'); ?></h2>
-                    <form ng-submit="changePassword(pass)">
+                    <form ng-submit="changePassword()">
                         <zaa-password fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
                         <zaa-password fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
                         <zaa-password fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
