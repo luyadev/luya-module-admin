@@ -114,9 +114,6 @@ class ImageArrayTest extends AdminTestCase
         $this->assertTrue(is_array($user->id));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testImageIteratorCaptionDirectInputAccess()
     {
         
