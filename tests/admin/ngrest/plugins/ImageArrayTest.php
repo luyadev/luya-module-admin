@@ -4,9 +4,11 @@ namespace admintests\admin\ngrest\plugins;
 
 use admintests\AdminTestCase;
 
+use Yii;
 use yii\base\Event;
 use admintests\data\fixtures\UserFixture;
 use luya\admin\ngrest\plugins\ImageArray;
+use luya\admin\filesystem\DummyFileSystem;
 
 class ImageArrayTest extends AdminTestCase
 {
@@ -110,5 +112,41 @@ class ImageArrayTest extends AdminTestCase
         $plugin->onFind($event);
     
         $this->assertTrue(is_array($user->id));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testImageIteratorCaptionDirectInputAccess()
+    {
+        
+        Yii::$app->storage->addDummyFile(['id' => 1, 'name_new' => 'foo.jpg', 'caption' => '{"en":"foobar"}']);
+        Yii::$app->storage->insertDummyFiles();
+        
+        Yii::$app->storage->addDummyImage(['file_id' => 1, 'id' => 1]);
+        Yii::$app->storage->insertDummyImages();
+        
+        
+        $event = new Event();
+        $model = new UserFixture();
+        $model->load();
+        $user = $model->getModel('user1');
+        $user->id = '[{"imageId":"1","caption":"bazfoo"}]';
+        $event->sender = $user;
+        $plugin = new ImageArray([
+            'alias' => 'id',
+            'name' => 'id',
+            'i18n' => false,
+            'imageIterator' => true,
+        ]);
+        
+        $plugin->onFind($event);
+        
+        $this->assertSame('foobar', Yii::$app->storage->getFile(1)->caption);
+        
+        
+        foreach($user->id as $k => $obj) {
+            $this->assertSame('bazfoo', $obj->caption);
+        }
     }
 }

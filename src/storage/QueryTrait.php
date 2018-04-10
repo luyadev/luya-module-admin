@@ -62,12 +62,6 @@ use luya\Exception;
  */
 trait QueryTrait
 {
-    private $_where = [];
-    
-    private $_offset;
-    
-    private $_limit;
-    
     private $_whereOperators = ['<', '<=', '>', '>=', '=', '==', 'in'];
     
     /**
@@ -89,7 +83,7 @@ trait QueryTrait
      * Create an item object which implements {{\luya\admin\storage\ItemTrait}}.
      *
      * @param array $itemArray
-     * @return \luya\admin\storage\ItemTrait The item object implementing the ItemTrait.
+     * @return \luya\admin\storage\ItemAbstract The item object implementing the ItemTrait.
      */
     abstract public function createItem(array $itemArray);
     
@@ -103,8 +97,8 @@ trait QueryTrait
     /**
      * Process items against where filters
      *
-     * @param unknown $value
-     * @param unknown $field
+     * @param string $value
+     * @param string $field
      * @return boolean
      */
     private function arrayFilter($value, $field)
@@ -164,9 +158,19 @@ trait QueryTrait
         if ($this->_limit !== null) {
             $data = array_slice($data, 0, $this->_limit, true);
         }
+        
+        if ($this->_binds) {
+            foreach ($this->_binds as $id => $values) {
+                if (isset($data[$id])) {
+                    $data[$id] = array_merge($data[$id], $values);
+                }
+            }
+        }
 
         return $data;
     }
+    
+    private $_limit;
     
     /**
      * Set a limition for the amount of results.
@@ -182,6 +186,8 @@ trait QueryTrait
     
         return $this;
     }
+    
+    private $_offset;
     
     /**
      * Define offset start for the rows, if you defined offset to be 5 and you have 11 rows, the
@@ -200,6 +206,8 @@ trait QueryTrait
         return $this;
     }
 
+    private $_where = [];
+    
     /**
      * Query where similar behavior of filtering items.
      *
@@ -279,6 +287,28 @@ trait QueryTrait
     public function andWhere(array $args)
     {
         return $this->where($args);
+    }
+    
+    private $_binds;
+    
+    /**
+     * Bind given values into the objects for a given id.
+     * 
+     * ```php
+     * (new Query())->find()->where(['in', 'id', [1,2,3])->bind([1 => ['caption' => 'barfoo'])->all();
+     * ```
+     * 
+     * @param array $values
+     * @return \luya\admin\storage\QueryTrait
+     * @since 1.1.1
+     */
+    public function bind(array $values)
+    {
+        if (!empty($values)) {
+            $this->_binds = $values;
+        }
+        
+        return $this;
     }
     
     /**

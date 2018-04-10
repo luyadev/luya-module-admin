@@ -66,7 +66,7 @@ class FixtureIterator extends IteratorAbstract
     /**
      * Iterator get current element, generates a new object for the current item on access.
      *
-     * @return \luya\admin\storage\Item
+     * @return \luya\admin\storage\ItemAbstract
      */
     public function current()
     {

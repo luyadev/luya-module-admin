@@ -20,7 +20,7 @@ use luya\admin\storage\ItemAbstract;
  * @property boolean $fileExists Return boolean whether the file server source exsits on the server or not.
  * @property integer $resolutionWidth Get the image resolution width.
  * @property integer $resolutionHeight Get the image resolution height.
- * @property \admin\file\Item $file The file object where the image was created from.
+ * @property \luya\admin\file\Item $file The file object where the image was created from.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -43,7 +43,9 @@ class Item extends ItemAbstract
     }
     
     /**
-     * Return the caption text for this image, if not defined or none give its null
+     * Return the caption text for this image, if not defined or none give its null.
+     * 
+     * If no image caption is defined from bind it will try to retrieve the caption from the file (set by filemanager).
      *
      * @return string The caption text for this image
      * @since 1.0.0
@@ -51,7 +53,11 @@ class Item extends ItemAbstract
     public function getCaption()
     {
         if ($this->_caption === null) {
-            $this->_caption = $this->file->caption;
+            if ($this->getKey('caption', false)) {
+                $this->_caption = $this->getKey('caption');
+            } else {
+                $this->_caption = $this->file->caption;
+            }
         }
         
         return $this->_caption;
