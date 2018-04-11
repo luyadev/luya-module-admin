@@ -247,7 +247,7 @@ use luya\admin\helpers\Angular;
             <div class="filemanager-file-actions">
                 <div class="filemanager-file-actions-left" ng-class="{'filemanager-file-actions-left-spacing': selectedFiles.length > 0}">
 
-                    <div class="btn btn-icon btn-upload filemanager-upload-file"  ngf-enable-firefox-paste="true" ngf-drag-over-class="'dragover'" ngf-drop ngf-select ngf-multiple="true" ng-model="uploadingfiles">
+                    <div spellcheck="false" class="btn btn-icon btn-upload filemanager-upload-file" ngf-enable-firefox-paste="true" ngf-drag-over-class="'dragover'" ngf-drop ngf-select ngf-multiple="true" ng-model="uploadingfiles">
                         <?= Admin::t('layout_filemanager_upload_files'); ?>
                     </div>
 
