@@ -79,6 +79,8 @@ class ChangePasswordActiveWindow extends ActiveWindow
             return $this->sendSuccess(Module::t('aws_changepassword_succes'));
         }
         
-        return $this->sendError(current($this->model->getFirstError()));
+        $error = current($this->model->getFirstErrors());
+        
+        return $this->sendError($error);
     }
 }

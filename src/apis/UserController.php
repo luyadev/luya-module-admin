@@ -6,6 +6,7 @@ use Yii;
 use luya\admin\ngrest\base\Api;
 use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
+use luya\validators\StrengthValidator;
 
 /**
  * User API, provides ability to manager and list all administration users.
@@ -56,6 +57,11 @@ class UserController extends Api
         $model = new UserChangePassword();
         $model->setUser(Yii::$app->adminuser->identity);
         $model->attributes = Yii::$app->request->bodyParams;
+        
+        if ($this->module->strongPasswordPolicy) {
+            $model->validators->append(StrengthValidator::createValidator(StrengthValidator::class, $model, ['newpass']));
+        }
+        
         if ($model->validate()) {
             $model->checkAndStore();
         }

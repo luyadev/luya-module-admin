@@ -95,6 +95,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $secureLogin = false;
     
     /**
+     * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
+     * @since 1.1.1
+     */
+    public $strongPasswordPolicy = false;
+    
+    /**
      * @var integer The number of rows which should be transferd for each request.
      */
     public $proxyRowsPerRequest = 100;

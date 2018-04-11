@@ -729,29 +729,12 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
                 "reference": "425d39571c91121e504dea4984b873306a60361f",
-                "shasum": ""
+                "shasum": null
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "twig/twig.min.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "BSD-2-Clause"
-            ],
-            "description": "A version of Twig JS for use with Bower",
-            "keywords": [
-                "bower",
-                "js",
-                "twig"
-            ],
-            "time": "2017-06-13T09:34:37+00:00"
+            ]
         },
         {
             "name": "bower-asset/ui-router",
@@ -1032,16 +1015,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "6b42a8eb7a434c379d2345c217368cc4b67f0603"
+                "reference": "1a6b6449632549b87797d9b4d637b9e4f4c10152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/6b42a8eb7a434c379d2345c217368cc4b67f0603",
-                "reference": "6b42a8eb7a434c379d2345c217368cc4b67f0603",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/1a6b6449632549b87797d9b4d637b9e4f4c10152",
+                "reference": "1a6b6449632549b87797d9b4d637b9e4f4c10152",
                 "shasum": ""
             },
             "require": {
@@ -1085,7 +1068,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-03-26T15:55:52+00:00"
+            "time": "2018-04-11T10:02:05+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -2777,16 +2760,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.37",
+            "version": "v2.8.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c"
+                "reference": "9b69aad7d4c086dc94ebade2d5eb9145da5dac8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
-                "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9b69aad7d4c086dc94ebade2d5eb9145da5dac8c",
+                "reference": "9b69aad7d4c086dc94ebade2d5eb9145da5dac8c",
                 "shasum": ""
             },
             "require": {
@@ -2833,7 +2816,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-02-11T16:53:59+00:00"
+            "time": "2018-04-06T07:35:03+00:00"
         },
         {
             "name": "symfony/filesystem",

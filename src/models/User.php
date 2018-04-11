@@ -14,6 +14,7 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\models\NgrestLog;
 use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
+use luya\validators\StrengthValidator;
 
 /**
  * User Model represents all Administration Users.
@@ -207,6 +208,9 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email'], 'unique', 'on' => ['restcreate', 'restupdate']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
+            [['password'], StrengthValidator::class, 'when' => function() {
+                return Module::getInstance()->strongPasswordPolicy;
+            }, 'on' => ['restcreate', 'restupdate', 'default']],
         ];
     }
 
@@ -287,11 +291,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function encodePassword()
     {
-        if (empty($this->password) || strlen($this->password) < 8) {
-            $this->addError('password', 'The password must be at least 8 chars.');
-
+        if (!$this->validate(['password'])) {
             return false;
         }
+        
         // create random string for password salting
         $this->password_salt = Yii::$app->getSecurity()->generateRandomString();
         // store the password
