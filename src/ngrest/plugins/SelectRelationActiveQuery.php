@@ -8,7 +8,7 @@ use yii\db\ActiveQuery;
 use yii\helpers\Json;
 
 /**
- * Performance Optimised Select Releation Plugin.
+ * Performance optimised select relation plugin.
  *
  * This plugin is for CRUD tables with large amount of tables, there for you can not access the the ActiveRecord object.
  *
