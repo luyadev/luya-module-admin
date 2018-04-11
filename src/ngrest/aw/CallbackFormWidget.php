@@ -49,7 +49,7 @@ class CallbackFormWidget extends Widget
      * - closeOnSuccess: boolean, if enabled, the active window will close after successfully sendSuccess() response from callback.
      * - reloadListOnSuccess: boolean, if enabled, the active window will reload the ngrest crud list after success response from callback via sendSuccess().
      * - reloadWindowOnSuccess: boolean, if enabled the active window will reload itself after success (when successResponse is returned ).
-     * - clearData
+     * - clearOnError: boolean, if enabled all form values will be reseted when an error happens. This is used for forms with passwords.
      */
     public $options = [];
     
@@ -153,12 +153,13 @@ class CallbackFormWidget extends Widget
             'callbackName' => $this->callbackConvert($this->callback),
             'callbackArgumentsJson' => Json::encode($params),
             'buttonNameValue' => $this->buttonValue,
-            'closeOnSuccess' => (isset($this->options['closeOnSuccess'])) ? '$scope.crud.closeActiveWindow();' : null,
-            'reloadListOnSuccess' => (isset($this->options['reloadListOnSuccess'])) ? '$scope.crud.loadList();' : null,
-            'reloadWindowOnSuccess' => (isset($this->options['reloadWindowOnSuccess'])) ? '$scope.$parent.reloadActiveWindow();' : null,
+            'closeOnSuccess' => isset($this->options['closeOnSuccess']) ? '$scope.crud.closeActiveWindow();' : null,
+            'reloadListOnSuccess' => isset($this->options['reloadListOnSuccess']) ? '$scope.crud.loadList();' : null,
+            'reloadWindowOnSuccess' => isset($this->options['reloadWindowOnSuccess']) ? '$scope.$parent.reloadActiveWindow();' : null,
             'form' => $content,
             'angularCallbackFunction' => $this->angularCallbackFunction,
-            'buttonClass' => (isset($options['buttonClass'])) ? $options['buttonClass'] : 'btn btn-save btn-icon',
+            'buttonClass' => isset($options['buttonClass']) ? $options['buttonClass'] : 'btn btn-save btn-icon',
+            'clearOnError' => (int) ArrayHelper::getValue($this->options, 'clearOnError', false),
         ]);
     }
 }

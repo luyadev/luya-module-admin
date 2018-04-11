@@ -14,6 +14,7 @@ use luya\admin\ngrest\aw\CallbackFormWidget;
         'buttonValue' => Module::t('button_save'),
         'options' => [
             'closeOnSuccess' => true,
+            'clearOnError' => true,
         ],
     ]); ?>
     <?= $form->field('newpass', Module::t('aws_changepassword_new_pass'))->passwordInput(); ?>
