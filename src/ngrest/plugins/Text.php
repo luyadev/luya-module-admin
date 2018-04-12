@@ -67,7 +67,7 @@ class Text extends Plugin
      */
     public function onAssign($event)
     {
-        if (!$this->i18n && $this->encoding) {
+        if (!$this->i18n && $this->encoding && $this->isAttributeWriteable($event)) {
             $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
         }
     }

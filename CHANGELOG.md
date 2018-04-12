@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.1.2 (in progress)
 
+## 1.1.1.1 (12. April 2018)
+
++ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writeable attributes on assign.
+
 ## 1.1.1 (11. April 2018)
 
 ### Added
