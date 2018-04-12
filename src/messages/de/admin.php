@@ -108,7 +108,7 @@ return [
 
     'model_loginform_email_label' => 'E-Mail',
     'model_loginform_password_label' => 'Passwort',
-    'model_loginform_wrong_user_or_password' => 'Falsche E-Mail-Adresse oder Passwort.',
+    'model_loginform_wrong_user_or_password' => 'Falsche E-Mail-Adresse oder Passwort. Versuch #{attempt} von {allowedAttempts}.',
     'ngrest_select_no_selection' => 'Keine Auswahl',
     'js_ngrest_error' => 'Während des Ladens ist ein Fehler aufgetreten.',
     'js_ngrest_rm_page' => 'Soll dieser Eintrage wirklich entfernt werden? Diese Aktion kann nicht rückgängig gemacht werden.',
@@ -154,7 +154,7 @@ return [
 
     'login_securetoken_mail_subject' => 'LUYA Sicherheitscode',
     'login_securetoken_mail' => '<h1>LUYA Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
-    'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch',
+    'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch oder abgelaufen.',
     'login_async_token_globalerror' => 'Ein Globaler-Fehler ist aufgetreten. Bitte kontaktiere den Seitenbetreiber.',
     'ngrest_crud_csv_export_btn' => 'CSV generieren',
     'ngrest_crud_csv_export_btn_dl' => 'CSV herunterladen',

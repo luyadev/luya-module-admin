@@ -108,7 +108,7 @@ return [
 
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Password',
-    'model_loginform_wrong_user_or_password' => 'Wrong email or password.',
+    'model_loginform_wrong_user_or_password' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
     'ngrest_select_no_selection' => 'Nothing selected',
     'js_ngrest_error' => 'An error occurred while loading.',
     'js_ngrest_rm_page' => 'Do you really want to delete this entry? This can not be undone.',
@@ -154,7 +154,7 @@ return [
 
     'login_securetoken_mail_subject' => 'LUYA Security code',
     'login_securetoken_mail' => '<h1>LUYA Security code</h1><p>Use the following security code to log into your administration at {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
-    'login_async_token_error' => 'The provided security code is invalid.',
+    'login_async_token_error' => 'The provided security code is invalid or expired.',
     'login_async_token_globalerror' => 'A Server error occurred, please contact your site administrator.',
     'ngrest_crud_csv_export_btn' => 'Generate CSV',
     'ngrest_crud_csv_export_btn_dl' => 'Download CSV',
@@ -324,4 +324,9 @@ return [
 // 1.1.1
 
     'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'Max form submissions reached try again {time}.',
+    'model_loginform_max_user_attempts' => 'Max login attempts for the user reached try again {time}.'
 ];

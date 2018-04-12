@@ -10,10 +10,12 @@ use luya\admin\Module;
 use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
-use yii\web\BadRequestHttpException;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
+ * 
+ * 1. If session based {{luya\admin\Module::$loginSessionAttemptCount}} is exceeded a lockout ban will make login unavailable. Any async request is evaluated as attempt.
+ * 2. If the email adresse is correctly retrieved from the database $loginUserAttemptCount exceed check starts. If the count is exceeded the lockout time is stored for the user inside the database. 
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -35,7 +37,7 @@ class LoginController extends Controller
             [
                 'allow' => true,
                 'actions' => ['index', 'async', 'async-token'],
-                'roles' => ['?'],
+                'roles' => ['?', '@'],
             ],
         ];
     }
@@ -59,9 +61,7 @@ class LoginController extends Controller
        
         $this->registerAsset(Login::class);
         
-        $this->view->registerJs("
-        	$('#email').focus(); 
-        	checkInputLabels();
+        $this->view->registerJs("$('#email').focus(); checkInputLabels();
         	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."');
         ");
     
@@ -82,11 +82,14 @@ class LoginController extends Controller
     public function actionAsync()
     {
         if (($lockout = $this->sessionBruteForceLock())) {
-            return $this->sendArray(false, ['Login attempt limit reached try again in ' . Yii::$app->formatter->asRelativeTime($lockout)]);
+            return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
         
         // get the login form model
         $model = new LoginForm();
+        $model->allowedAttempts = $this->module->loginUserAttemptCount;
+        $model->lockoutTime = $this->module->loginUserAttemptLockoutTime;
+        
         $loginData = Yii::$app->request->post('login');
         Yii::$app->session->remove('secureId');
         // see if values are sent via post
@@ -121,12 +124,14 @@ class LoginController extends Controller
     public function actionAsyncToken()
     {
         if (($lockout = $this->sessionBruteForceLock())) {
-            return $this->sendArray(false, ['Login attempt limit reached try again in ' . Yii::$app->formatter->asRelativeTime($lockout)]);
+            return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
         
         $secureToken = Yii::$app->request->post('secure_token', false);
         
         $model = new LoginForm();
+        $model->secureTokenExpirationTime = $this->module->secureTokenExpirationTime;
+        
         if ($secureToken) {
             $user = $model->validateSecureToken($secureToken, Yii::$app->session->get('secureId'));
 

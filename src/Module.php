@@ -105,13 +105,31 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * will allow next 15 attempts. But if an user email is known the attempt will swap to a user based attempt lockout.
      * @since 1.2.0
      */
-    public $loginSessionAttemptCount = 10;
+    public $loginSessionAttemptCount = 20;
     
     /**
      * @var integer
      * @since 1.2.0
      */
-    public $loginSessionAttemptLockoutTime = (60*15);
+    public $loginSessionAttemptLockoutTime = (60*30);
+    
+    /**
+     * @var integer
+     * @since 1.2.0
+     */
+    public $loginUserAttemptCount = 7;
+    
+    /**
+     * @var integer
+     * @since 1.2.0
+     */
+    public $loginUserAttemptLockoutTime = (60 * 30);
+    
+    /**
+     * @var integer
+     * @since 1.2.0
+     */
+    public $secureTokenExpirationTime = (60 * 10);
     
     /**
      * @var integer The number of rows which should be transferd for each request.

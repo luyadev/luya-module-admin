@@ -23,6 +23,14 @@ final class LoginForm extends Model
     
     public $password;
 
+    public $attempts;
+    
+    public $allowedAttempts = 10;
+    
+    public $lockoutTime = (60 * 60);
+    
+    public $secureTokenExpirationTime = (60 * 7);
+    
     /**
      * @inheritdoc
      */
@@ -55,15 +63,41 @@ final class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password'));
+            
+            if ($this->userAttemptBruteForceLock($user)) {
+                return $this->addError($attribute, Module::t('model_loginform_max_user_attempts', ['time' => Yii::$app->formatter->asRelativeTime($user->login_attempt_lock_expiration)]));
             }
             
-            // if at least the user has been found update the attempt counter
-            if ($user) {
-                $user->updateAttributes(['login_attempt' => $user->login_attempt + 1]);
+            if (!$user || !$user->validatePassword($this->password)) {
+                $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
             }
         }
+    }
+    
+    private function userAttemptBruteForceLock(User $user)
+    {
+        if ($this->userAttemptBruteForceLockHasExceeded($user)) {
+            return true;
+        }
+        
+        $this->attempts = $user->login_attempt + 1;
+        
+        if ($this->attempts >= $this->allowedAttempts) {
+            $user->updateAttributes(['login_attempt_lock_expiration' => time() + $this->lockoutTime]);
+        }
+        
+        $user->updateAttributes(['login_attempt' => $this->attempts]);
+    }
+    
+    private function userAttemptBruteForceLockHasExceeded(User $user)
+    {
+        if ($user->login_attempt_lock_expiration > time()) {
+            $user->updateAttributes(['login_attempt' => 0]);
+            
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -99,7 +133,11 @@ final class LoginForm extends Model
             return false;
         }
         
-        if ($user->secure_token == sha1($token)) {
+        if ($this->userAttemptBruteForceLockHasExceeded($user)) {
+            return false;
+        }
+        
+        if ($user->secure_token == sha1($token) && $user->secure_token_timestamp >= (time() - $this->secureTokenExpirationTime)) {
             return $user;
         }
 
