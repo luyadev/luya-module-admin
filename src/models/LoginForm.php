@@ -58,6 +58,11 @@ final class LoginForm extends Model
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password'));
             }
+            
+            // if at least the user has been found update the attempt counter
+            if ($user) {
+                $user->updateAttributes(['login_attempt' => $user->login_attempt + 1]);
+            }
         }
     }
 
@@ -115,6 +120,8 @@ final class LoginForm extends Model
             // update user model
             $user->updateAttributes([
                 'force_reload' => false,
+                'login_attempt' => 0,
+                'login_attempt_lock_expiration' => null,
                 'auth_token' => Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $user->password_salt),
             ]);
             

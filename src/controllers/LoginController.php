@@ -9,6 +9,8 @@ use luya\admin\models\LoginForm;
 use luya\admin\Module;
 use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
+use luya\admin\assets\Login;
+use yii\web\BadRequestHttpException;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
@@ -18,6 +20,9 @@ use luya\admin\models\UserOnline;
  */
 class LoginController extends Controller
 {
+    /**
+     * @var string Switch to nosession layout instead of admin default template.
+     */
     public $layout = '@admin/views/layouts/nosession';
 
     /**
@@ -30,13 +35,18 @@ class LoginController extends Controller
             [
                 'allow' => true,
                 'actions' => ['index', 'async', 'async-token'],
-                'roles' => ['?', '@'],
+                'roles' => ['?'],
             ],
         ];
     }
 
     /**
-     * Show Login Form.
+     * Login Form.
+     * 
+     * This action renders and display the login form.
+     * 
+     * + Single sign in runs {{luya\admin\controllers\LoginController::actionAsync()}}.
+     * + 2FA calls {{luya\admin\controllers\LoginController::actionAsyncToken()}} afterwards.
      *
      * @return \yii\web\Response|string
      */
@@ -47,7 +57,7 @@ class LoginController extends Controller
             return $this->redirect(['/admin/default/index']);
         }
        
-        $this->registerAsset('\luya\admin\assets\Login');
+        $this->registerAsset(Login::class);
         
         $this->view->registerJs("
         	$('#email').focus(); 
@@ -61,62 +71,117 @@ class LoginController extends Controller
     }
     
     /**
+     * Async single sign in action.
+     * 
+     * This action is triggered by the async request from the login form.
+     * 
+     * If successfull and 2FA is enabled, a token will be stored and sent to the user's email.
+     *
+     * @return array
+     */
+    public function actionAsync()
+    {
+        if (($lockout = $this->sessionBruteForceLock())) {
+            return $this->sendArray(false, ['Login attempt limit reached try again in ' . Yii::$app->formatter->asRelativeTime($lockout)]);
+        }
+        
+        // get the login form model
+        $model = new LoginForm();
+        $loginData = Yii::$app->request->post('login');
+        Yii::$app->session->remove('secureId');
+        // see if values are sent via post
+        if ($loginData) {
+            $model->attributes = $loginData;
+            if (($userObject = $model->login()) !== false) {
+                // see if secure login is enabled or not
+                if ($this->module->secureLogin) {
+                    // try to send the secure token to the given user email store the token in the session.
+                    if ($model->sendSecureLogin()) {
+                        Yii::$app->session->set('secureId', $model->getUser()->id);
+                        return $this->sendArray(false, [], true);
+                    }
+                    
+                    return $this->sendArray(false, ['Unable to send and store secure token.']);
+                }
+                
+                if (Yii::$app->adminuser->login($userObject)) {
+                    return $this->sendArray(true);
+                }
+            }
+        }
+
+        return $this->sendArray(false, $model->getErrors(), false);
+    }
+    
+    /**
      * Async Secure Token Login.
      *
      * @return array
      */
     public function actionAsyncToken()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
+        if (($lockout = $this->sessionBruteForceLock())) {
+            return $this->sendArray(false, ['Login attempt limit reached try again in ' . Yii::$app->formatter->asRelativeTime($lockout)]);
+        }
+        
+        $secureToken = Yii::$app->request->post('secure_token', false);
+        
         $model = new LoginForm();
-        // see if values are sent via post
-        if (Yii::$app->request->post('secure_token', false)) {
-            $user = $model->validateSecureToken(Yii::$app->request->post('secure_token'), Yii::$app->session->get('secureId'));
+        if ($secureToken) {
+            $user = $model->validateSecureToken($secureToken, Yii::$app->session->get('secureId'));
 
-            if ($user) {
-                if (Yii::$app->adminuser->login($user)) {
-                    Yii::$app->session->remove('secureId');
-                    return ['refresh' => true, 'message' => null];
-                }
-            } else {
-                return ['errors' => Module::t('login_async_token_error'), 'refresh' => false];
+            if ($user && Yii::$app->adminuser->login($user)) {
+                Yii::$app->session->remove('secureId');
+                return $this->sendArray(true);
             }
+            
+            return $this->sendArray(false, [Module::t('login_async_token_error')]);
         }
 
-        return ['errors' => Module::t('login_async_token_globalerror'), 'refresh' => false];
+        return $this->sendArray(false, [Module::t('login_async_token_globalerror')]);
     }
-
+    
     /**
-     * Async Login Form.
-     *
+     * Change the response format to json and return the array.
+     * 
+     * @param boolean $refresh
+     * @param array $errors
+     * @param boolean $enterSecureToken
+     * @param string $message
      * @return array
      */
-    public function actionAsync()
+    private function sendArray($refresh, array $errors = [], $enterSecureToken = false, $message = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        // get the login form model
-        $model = new LoginForm();
-        Yii::$app->session->remove('secureId');
-        // see if values are sent via post
-        if (Yii::$app->request->post('login')) {
-            $model->attributes = Yii::$app->request->post('login');
-            if (($userObject = $model->login()) !== false) {
-                if ($this->module->secureLogin) {
-                    if ($model->sendSecureLogin()) {
-                        Yii::$app->session->set('secureId', $model->getUser()->id);
-                        return ['refresh' => false, 'errors' => false, 'enterSecureToken' => true];
-                    } else {
-                        return ['refresh' => false, 'errors' => ['Unable to send and store secure token.'], 'enterSecureToken' => false];
-                    }
-                } else {
-                    if (Yii::$app->adminuser->login($userObject)) {
-                        return ['refresh' => true, 'errors' => false, 'enterSecureToken' => false];
-                    }
-                }
-            }
-        }
+        
+        return [
+            'refresh' => $refresh,
+            'message' => $message,
+            'errors' => $errors,
+            'enterSecureToken' => $enterSecureToken,
+            'time' => time(),
+        ];
+    }
 
-        return ['refresh' => false, 'errors' => $model->getErrors(), 'enterSecureToken' => false];
+    private function sessionBruteForceLock()
+    {
+        $attempt = Yii::$app->session->get('__attempt_count', 0);
+        
+        $counter = $attempt + 1;
+        
+        Yii::$app->session->set('__attempt_count', $counter);
+        
+        $lockout = Yii::$app->session->get('__attempt_lockout');
+        
+        if ($lockout && $lockout > time()) {
+            Yii::$app->session->set('__attempt_count', 0);
+            return $lockout;
+        }
+        
+        if ($counter >= $this->module->loginSessionAttemptCount) {
+            Yii::$app->session->set('__attempt_lockout', time() + $this->module->loginSessionAttemptLockoutTime);
+        }
+        
+        return false;
     }
 }

@@ -37,6 +37,10 @@ use luya\validators\StrengthValidator;
  * @property integer $api_rate_limit
  * @property string $api_allowed_ips
  * @property integer $api_last_activity
+ * @property string $email_verification_token
+ * @property integer $email_verification_token_expiration
+ * @property integer $login_attempt
+ * @property integer $login_attempt_lock_expiration
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -208,6 +212,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email'], 'unique', 'on' => ['restcreate', 'restupdate']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
+            [['email_verification_token_expiration', 'login_attempt', 'login_attempt_lock_expiration'], 'integer'],
+            [['email_verification_token'], 'string', 'length' => 12],
             [['password'], StrengthValidator::class, 'when' => function() {
                 return Module::getInstance()->strongPasswordPolicy;
             }, 'on' => ['restcreate', 'restupdate', 'default']],

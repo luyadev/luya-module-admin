@@ -99,6 +99,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.1.1
      */
     public $strongPasswordPolicy = false;
+
+    /**
+     * @var integer|boolean The number of attempts a user can make without knowing the login email. Clearing the session cookie
+     * will allow next 15 attempts. But if an user email is known the attempt will swap to a user based attempt lockout.
+     * @since 1.2.0
+     */
+    public $loginSessionAttemptCount = 10;
+    
+    /**
+     * @var integer
+     * @since 1.2.0
+     */
+    public $loginSessionAttemptLockoutTime = (60*15);
     
     /**
      * @var integer The number of rows which should be transferd for each request.
