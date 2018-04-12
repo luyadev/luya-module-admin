@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 1.1.1.1 (12. April 2018)
+
++ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writeable attributes on assign.
+
 ## 1.1.1 (11. April 2018)
 
 ### Added
