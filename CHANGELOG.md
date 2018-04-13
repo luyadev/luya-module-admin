@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
 + [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spellcheck for filemanager upload button.
 + [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in ngrest plugin.
 + [#88](https://github.com/luyadev/luya-module-admin/issues/88) Clean up change password fields after validation error or success.
