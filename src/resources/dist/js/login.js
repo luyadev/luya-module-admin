@@ -26,6 +26,8 @@ var observeLogin = function (form, url, secureUrl) {
                 if (errors) {
                     $('#errorsContainer').html(errorHtml);
                     $('#errorsContainer').show();
+                    $('#password').val('');
+                    $('#email').focus();
                 }
 
                 if (enterSecureToken) {
