@@ -108,7 +108,7 @@ return [
 
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Password',
-    'model_loginform_wrong_user_or_password' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_loginform_wrong_user_or_password' => 'Wrong email or password.',
     'ngrest_select_no_selection' => 'Nothing selected',
     'js_ngrest_error' => 'An error occurred while loading.',
     'js_ngrest_rm_page' => 'Do you really want to delete this entry? This can not be undone.',
@@ -327,6 +327,7 @@ return [
     
 // 1.2.0
     
-    'login_async_submission_limit_reached' => 'Max form submissions reached try again {time}.',
-    'model_loginform_max_user_attempts' => 'Max login attempts for the user reached try again {time}.'
+    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
+    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
 ];

@@ -23,7 +23,7 @@ final class LoginForm extends Model
     
     public $password;
 
-    public $attempts;
+    public $attempts = 0;
     
     public $allowedAttempts = 10;
     
@@ -64,12 +64,16 @@ final class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             
-            if ($this->userAttemptBruteForceLock($user)) {
+            if ($user && $this->userAttemptBruteForceLock($user)) {
                 return $this->addError($attribute, Module::t('model_loginform_max_user_attempts', ['time' => Yii::$app->formatter->asRelativeTime($user->login_attempt_lock_expiration)]));
             }
             
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
+                if ($this->attempts) {
+                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password_attempts', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
+                } else {
+                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password'));
+                }
             }
         }
     }

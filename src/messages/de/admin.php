@@ -108,7 +108,7 @@ return [
 
     'model_loginform_email_label' => 'E-Mail',
     'model_loginform_password_label' => 'Passwort',
-    'model_loginform_wrong_user_or_password' => 'Falsche E-Mail-Adresse oder Passwort. Versuch #{attempt} von {allowedAttempts}.',
+    'model_loginform_wrong_user_or_password' => 'Falsche E-Mail-Adresse oder Passwort.',
     'ngrest_select_no_selection' => 'Keine Auswahl',
     'js_ngrest_error' => 'Während des Ladens ist ein Fehler aufgetreten.',
     'js_ngrest_rm_page' => 'Soll dieser Eintrage wirklich entfernt werden? Diese Aktion kann nicht rückgängig gemacht werden.',
@@ -325,4 +325,10 @@ return [
 // 1.1.1
 
     'ngrest_crud_total_count' => '{{data.listArray.length}} von {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
+    'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
 ];
