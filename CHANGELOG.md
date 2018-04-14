@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.1.2 (in progress)
 
++ [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibilty to brufe force any login credentials. The 2FA security token lifetime can be configured. When the loggin password is false, the login fields are cleared out.
+
 ## 1.1.1.1 (12. April 2018)
 
 + [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writeable attributes on assign.
