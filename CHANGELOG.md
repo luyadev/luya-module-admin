@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.1.2 (in progress)
 
+### Added
+
 + [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibilty to brufe force any login credentials. The 2FA security token lifetime can be configured. When the loggin password is false, the login fields are cleared out.
+
+### Fixed
+
++ [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
 
 ## 1.1.1.1 (12. April 2018)
 
@@ -18,7 +24,6 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
-+ [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
 + [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spellcheck for filemanager upload button.
 + [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in ngrest plugin.
 + [#88](https://github.com/luyadev/luya-module-admin/issues/88) Clean up change password fields after validation error or success.
