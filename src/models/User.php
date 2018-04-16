@@ -11,7 +11,6 @@ use luya\admin\traits\SoftDeleteTrait;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
-use luya\admin\models\NgrestLog;
 use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
@@ -38,7 +37,7 @@ use luya\validators\StrengthValidator;
  * @property string $api_allowed_ips
  * @property integer $api_last_activity
  * @property string $email_verification_token
- * @property integer $email_verification_token_expiration
+ * @property integer $email_verification_token_timestamp
  * @property integer $login_attempt
  * @property integer $login_attempt_lock_expiration
  *
@@ -50,6 +49,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     const USER_SETTING_ISDEVELOPER = 'isDeveloper';
     
     const USER_SETTING_UILANGUAGE = 'luyadminlanguage';
+    
+    const USER_SETTING_NEWUSEREMAIL = 'newUserEmail';
     
     use SoftDeleteTrait;
     
@@ -210,11 +211,11 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['secure_token'], 'required', 'on' => 'securelayer'],
             [['title', 'firstname', 'lastname', 'email', 'password'], 'required', 'on' => 'default'],
             [['email'], 'email'],
-            [['email'], 'unique', 'on' => ['restcreate', 'restupdate']],
+            [['email'], 'unique', 'except' => ['login']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
-            [['email_verification_token_expiration', 'login_attempt', 'login_attempt_lock_expiration'], 'integer'],
-            [['email_verification_token'], 'string', 'length' => 12],
+            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration'], 'integer'],
+            [['email_verification_token'], 'string', 'length' => 40],
             [['password'], StrengthValidator::class, 'when' => function() {
                 return Module::getInstance()->strongPasswordPolicy;
             }, 'on' => ['restcreate', 'restupdate', 'default']],
@@ -253,6 +254,13 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         ];
     }
 
+    private function generateToken($length = 6)
+    {
+        $token = Yii::$app->security->generateRandomString($length);
+        $replace = array_rand(range(2,9));
+        return str_replace(['-', '_', 'l', 1], $replace, strtolower($token));
+    }
+    
     /**
      * Generate, store and return the secure Login token.
      *
@@ -260,8 +268,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function getAndStoreToken()
     {
-        $token = Yii::$app->security->generateRandomString(6);
-        $token = strtolower(str_replace(['-', '_'], 'a', $token));
+        $token = $this->generateToken(6);
+        
         $this->setAttribute('secure_token', sha1($token));
         $this->setAttribute('secure_token_timestamp', time());
         $this->update(false);
@@ -343,7 +351,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function fields()
     {
         $fields = parent::fields();
-        unset($fields['password'], $fields['password_salt'], $fields['auth_token'], $fields['is_deleted']);
+        unset($fields['password'], $fields['password_salt'], $fields['auth_token'], $fields['is_deleted'], $fields['email_verification_token']);
         return $fields;
     }
 
@@ -408,6 +416,28 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function getNgrestLogs()
     {
         return $this->hasMany(NgrestLog::class, ['user_id' => 'id']);
+    }
+    
+    // Change e-mail
+    
+    public function getAndStoreEmailVerificationToken()
+    {
+        $token = $this->generateToken(6);
+        
+        $this->updateAttributes([
+            'email_verification_token' => sha1($token),
+            'email_verification_token_timestamp' => time(),
+        ]);
+        
+        return $token;
+    }
+    
+    public function resetEmailVerification()
+    {
+        $this->updateAttributes([
+            'email_verification_token' => null,
+            'email_verification_token_timestamp' => null,
+        ]);
     }
 
     // IdentityInterface

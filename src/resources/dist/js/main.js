@@ -14711,17 +14711,31 @@ zaa.factory('HtmlStorage', function() {
 
 		$scope.profile = {};
 		$scope.settings = {};
+		$scope.activities = {};
+		
+		$scope.email = {};
 
 		$scope.getProfile = function() {
 			$http.get('admin/api-admin-user/session').then(function(success) {
 				$scope.profile = success.data.user;
-				$scope.settings  = success.data.settings;
+				$scope.settings = success.data.settings;
+				$scope.activities = success.data.activities;
 			});
 		};
 
 		$scope.changePersonData = function(data) {
 			$http.put('admin/api-admin-user/session-update', data).then(function(success) {
 				AdminToastService.success(i18n['js_account_update_profile_success']);
+				$scope.getProfile();
+			}, function(error) {
+				AdminToastService.errorArray(error.data);
+			});
+		};
+		
+		$scope.changeEmail = function() {
+			$http.put('admin/api-admin-user/change-email', {token: $scope.email.token}).then(function(success) {
+				AdminToastService.success(i18n['js_account_update_profile_success']);
+				$scope.getProfile();
 			}, function(error) {
 				AdminToastService.errorArray(error.data);
 			});

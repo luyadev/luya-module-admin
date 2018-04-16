@@ -86,12 +86,17 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     ];
     
     /**
-     * @var boolean Enables a two-way factor auth system before logging into the admin
-     * panel. If the system is not able to send mails (No configuration or missconfiguration)
-     * then you are not able to login anymore. You should test the mail system before enabling
-     * secureLogin. To test your smtp connection you can use `./vendor/bin/luya health/mailer`
+     * @var boolean Enables a 2FA system before logging into the admin panel sending a token to the given email adress of the user. If the system is not able to send
+     * mails (No configuration or missconfiguration) then you are not able to login. You should test the mail system before enabling secureLogin. To test your smtp 
+     * connection you can use `./vendor/bin/luya health/mailer` command.
      */
     public $secureLogin = false;
+    
+    /**
+     * @var boolean If enabled an user can only change the email adresse by entering the secure code which is sent to the users given (current) email adresse.
+     * @since 1.2.0
+     */
+    public $emailVerification = false;
     
     /**
      * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.

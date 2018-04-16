@@ -28,12 +28,13 @@ class UserController extends Api
      */
     public function actionSession()
     {
+        $user = Yii::$app->adminuser->identity;
         $session = [
             'packages' => [],
-            'user' => Yii::$app->adminuser->identity->toArray(['title', 'firstname', 'lastname', 'email', 'id']),
+            'user' => $user->toArray(['title', 'firstname', 'lastname', 'email', 'id', 'email_verification_token_timestamp']),
+            'activities' => ['open_email_validation' => $this->hasOpenEmailValidation($user)],
             'settings' => Yii::$app->adminuser->identity->setting->getArray([
-                User::USER_SETTING_ISDEVELOPER,
-                User::USER_SETTING_UILANGUAGE,
+                User::USER_SETTING_ISDEVELOPER, User::USER_SETTING_UILANGUAGE, User::USER_SETTING_NEWUSEREMAIL
             ], [
                 User::USER_SETTING_UILANGUAGE => $this->module->interfaceLanguage,
             ]),
@@ -45,6 +46,17 @@ class UserController extends Api
         }
         
         return $session;
+    }
+    
+    private function hasOpenEmailValidation(User $user)
+    {
+        $lifetime = (15 * 60); // 15min
+        $ts = $user->email_verification_token_timestamp;
+        if (!empty($ts) && (time() - $lifetime) <= $ts) {
+            return true;
+        }
+        
+        return false;
     }
     
     /**
@@ -69,6 +81,27 @@ class UserController extends Api
         return $model;
     }
     
+    public function actionChangeEmail()
+    {
+        $token = Yii::$app->request->getBodyParam('token');
+        $user = Yii::$app->adminuser->identity;
+        
+        if (!empty($token) && sha1($token) == $user->email_verification_token) {
+            
+            $newEmail = $user->setting->get(User::USER_SETTING_NEWUSEREMAIL);
+            
+            $user->email = $newEmail;
+            if ($user->update(true, ['email'])) {
+                $user->resetEmailVerification();
+                return ['success' => true];
+            } else {
+                return $this->sendModelError($user);
+            }
+        }
+        
+        return $this->sendArrayError(['email' => 'Empty or Invalid verification token']);
+    }
+    
     /**
      * Update data for the current session user.
      * 
@@ -76,11 +109,36 @@ class UserController extends Api
      */
     public function actionSessionUpdate()
     {
-        $user = Yii::$app->adminuser->identity;
+        $identity = Yii::$app->adminuser->identity;
+        $user = clone Yii::$app->adminuser->identity;
         $user->attributes = Yii::$app->request->bodyParams;
-        $user->update(true, ['title', 'firstname', 'lastname', 'email', 'id']);
+        $verify = ['title', 'firstname', 'lastname', 'id'];
         
-        return $user;
+        // check if email has changed, if yes send secure token and temp store new value in user settings table.
+        if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
+            $token = $user->getAndStoreEmailVerificationToken();
+            
+            $mail = Yii::$app->mail->compose('E-Mail verification', 'Someone requests to change the email. Please enter the following code to change the email. Token: ' . $token)
+            ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
+            ->send();
+            
+            if ($mail) {
+                $identity->setting->set(User::USER_SETTING_NEWUSEREMAIL, $user->email);
+            } else {
+                $user->addError('email', 'Could not send verification token to current email. Make sure mail component is configured.');
+                $identity->resetEmailVerification();
+            }
+        }
+        
+        if (!$this->module->emailVerification) {
+            $verify[] = 'email';
+        }
+        
+        if (!$user->hasErrors() && $user->update(true, $verify) !== false) {
+            return $user;
+        }
+        
+        return $this->sendModelError($user);
     }
     
     /**

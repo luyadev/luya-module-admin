@@ -17,7 +17,17 @@ use luya\admin\Module;
                         <zaa-text fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
                         <zaa-text fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
+                        
                     </form>
+                    <div ng-show="activities.open_email_validation" class="mt-3">
+                        <div class="alert alert-warning">
+                            <p class="mb-0">Please enter the secure token sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.</p>
+                        </div>
+                        <form ng-submit="changeEmail()">
+                            <zaa-text fieldid="mode_email_token" label="E-Mail verification Code" model="email.token" />
+                            <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
