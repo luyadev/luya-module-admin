@@ -38,7 +38,8 @@ class LocalFileSystem extends BaseFileSystemStorage
      * ```php
      * 'storage' => [
      *     'class' => 'luya\admin\filesystem\LocalFileSystem',
-     *     'httpPath' => 'http://prod.example.com/storage',
+     *     'httpPath' => 'mystorage/files',
+     *     'absoluteHttpPath' => 'https://mywebsite.com/mystorage/files',
      * ]
      * ```
      *
@@ -74,8 +75,9 @@ class LocalFileSystem extends BaseFileSystemStorage
      *
      * ```php
      * 'storage' => [
-     *     'class' => 'admin\storage\BaseFileSystemStorage',
-     *     'absoluteHttpPath' => 'http://prod.example.com/storage',
+     *     'class' => 'luya\admin\filesystem\LocalFileSystem',
+     *     'httpPath' => 'mystorage/files',
+     *     'absoluteHttpPath' => 'https://mywebsite.com/mystorage/files',
      * ]
      * ```
      *
