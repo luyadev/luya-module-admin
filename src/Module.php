@@ -143,6 +143,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $secureTokenExpirationTime = (60 * 10);
     
     /**
+     * @var integer The number of seconds inactivity until the user is logged out.
+     * @since 1.2.0
+     */
+    public $userIdleTimeout = (60 * 30);
+    
+    /**
      * @var integer The number of rows which should be transferd for each request.
      */
     public $proxyRowsPerRequest = 100;

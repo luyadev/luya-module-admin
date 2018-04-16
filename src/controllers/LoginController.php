@@ -65,7 +65,7 @@ class LoginController extends Controller
         	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."');
         ");
     
-        UserOnline::clearList();
+        UserOnline::clearList($this->module->userIdleTimeout);
         
         return $this->render('index');
     }

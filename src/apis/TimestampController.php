@@ -23,7 +23,7 @@ class TimestampController extends RestController
     public function actionIndex()
     {
         // clear user online list
-        UserOnline::clearList();
+        UserOnline::clearList($this->module->userIdleTimeout);
         
         if (!UserOnline::findOne(['user_id' => Yii::$app->adminuser->id])) {
             Yii::$app->response->statusCode = 401;
