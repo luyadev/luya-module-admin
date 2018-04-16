@@ -3,7 +3,6 @@
 namespace luya\admin;
 
 use Yii;
-
 use luya\console\interfaces\ImportControllerInterface;
 use luya\base\CoreModuleInterface;
 use luya\admin\components\AdminLanguage;
@@ -101,32 +100,33 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $strongPasswordPolicy = false;
 
     /**
-     * @var integer|boolean The number of attempts a user can make without knowing the login email. Clearing the session cookie
-     * will allow next 15 attempts. But if an user email is known the attempt will swap to a user based attempt lockout.
+     * @var integer The number of attempts a user can make without knowing the login email. Clearing the session cookie
+     * will allow next 20 attempts. But if an user email is known the attempt will swap to a user based attempt lockout handled by {{luya\admin\Module::$loginUserAttemptCount}}.
      * @since 1.2.0
      */
     public $loginSessionAttemptCount = 20;
     
     /**
-     * @var integer
+     * @var integer If the session based {{luya\admin\Module::$loginSessionAttemptCount}} expire the user is locked out for this given time in seconds, defaults to 30min.
      * @since 1.2.0
      */
     public $loginSessionAttemptLockoutTime = (60*30);
     
     /**
-     * @var integer
+     * @var integer When the username is identified correctly this property limit number of attempts for the given user and lock out the user for a given time defined in {{luya\admin\Module::$loginUserAttemptLockoutTime}}.
+     * The {{luya\admin\Module::$loginUserAttemptCount}} stores the login attempts in the database. Keep in mind that the {{luya\admin\Module::$loginSessionAttemptCount}} can lock out the user before or while entering a wrong password.
      * @since 1.2.0
      */
     public $loginUserAttemptCount = 7;
     
     /**
-     * @var integer
+     * @var integer When the {{luya\admin\Module::$loginUserAttemptCount}} exceeded the number of seconds where the user is locked out, defaults to 30 min.
      * @since 1.2.0
      */
     public $loginUserAttemptLockoutTime = (60 * 30);
     
     /**
-     * @var integer
+     * @var integer When {{luya\admin\Module::$secureLogin}} is enabled a secure token is sent to the users email, the expiration time is defined in seconds and defaults to 10 min.
      * @since 1.2.0
      */
     public $secureTokenExpirationTime = (60 * 10);

@@ -331,4 +331,5 @@ return [
     'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login Sperrzeit',
 ];

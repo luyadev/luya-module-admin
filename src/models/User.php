@@ -134,6 +134,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'lastname' => 'text',
             'email' => 'text',
             'password' => 'password',
+            'login_attempt_lock_expiration' => 'datetime',
         ];
     }
     
@@ -165,7 +166,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return [
             ['list', ['firstname', 'lastname', 'email', 'lastloginTimestamp']],
             ['create', ['title', 'firstname', 'lastname', 'email', 'password']],
-            ['update', ['title', 'firstname', 'lastname', 'email']],
+            ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration']],
             ['delete', true],
         ];
     }
@@ -233,6 +234,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'password' => Module::t('mode_user_password'),
             'lastloginTimestamp' => Module::t('model_user_lastlogintimestamp'),
             'api_last_activity' => Module::t('model_user_api_last_activity'),
+            'login_attempt_lock_expiration' => Module::t('model_user_login_attempt_lock_expiration'),
         ];
     }
 
@@ -243,7 +245,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return [
             'restcreate' => ['title', 'firstname', 'lastname', 'email', 'password'],
-            'restupdate' => ['title', 'firstname', 'lastname', 'email'],
+            'restupdate' => ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration'],
             'changepassword' => ['password', 'password_salt'],
             'login' => ['email', 'password', 'force_reload'],
             'securelayer' => ['secure_token'],

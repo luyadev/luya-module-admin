@@ -333,4 +333,5 @@ return [
     'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
 ];
