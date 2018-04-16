@@ -48,11 +48,16 @@ class UserController extends Api
         return $session;
     }
     
+    /**
+     * Ensure whether the current user has an active email verification token or not.
+     * 
+     * @param User $user The user object to evaluate.
+     * @return boolean
+     */
     private function hasOpenEmailValidation(User $user)
     {
-        $lifetime = (15 * 60); // 15min
         $ts = $user->email_verification_token_timestamp;
-        if (!empty($ts) && (time() - $lifetime) <= $ts) {
+        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
             return true;
         }
         
@@ -81,6 +86,12 @@ class UserController extends Api
         return $model;
     }
     
+    /**
+     * Action to change the email based on token input.
+     * 
+     * @return boolean
+     * @since 1.2.0
+     */
     public function actionChangeEmail()
     {
         $token = Yii::$app->request->getBodyParam('token');
@@ -99,7 +110,7 @@ class UserController extends Api
             }
         }
         
-        return $this->sendArrayError(['email' => 'Empty or Invalid verification token']);
+        return $this->sendArrayError(['email' => 'Empty or Invalid verification token.']);
     }
     
     /**

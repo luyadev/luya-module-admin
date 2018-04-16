@@ -99,6 +99,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $emailVerification = false;
     
     /**
+     * @var integer If {{luya\admin\Module::$emailVerification}} is enabled this property defines the number seconds until the validation token expires.
+     * @since 1.2.0
+     */
+    public $emailVerificationTokenExpirationTime = (60 * 10);
+    
+    /**
      * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
      * @since 1.1.1
      */
