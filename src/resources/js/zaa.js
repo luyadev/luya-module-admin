@@ -45,7 +45,7 @@ function i18nParam(varName, params) {
  * @returns
  */
 function typeCastValue(value) {
-    return $.isNumeric(value) ? parseInt(value) : value;
+    return angular.isNumber(value) ? parseInt(value) : value;
 }
 
 (function () {
@@ -53,7 +53,7 @@ function typeCastValue(value) {
 
     /* CONFIG */
     
-    zaa.config(function ($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
+    zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
     	
         $httpProvider.interceptors.push("authInterceptor");
 
@@ -94,7 +94,7 @@ function typeCastValue(value) {
                 url: "",
                 templateUrl: "admin/default/dashboard"
             });
-    });
+    }]);
 
     /* PROVIDERS */
     
@@ -130,7 +130,7 @@ function typeCastValue(value) {
     /**
      * LUYA LOADING
      */
-    zaa.factory("LuyaLoading", function ($timeout) {
+    zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
 
         var state = false;
         var stateMessage = null;
@@ -161,7 +161,7 @@ function typeCastValue(value) {
                 return state;
             }
         }
-    });
+    }]);
     
     /**
      * Inside your Directive or Controller:
@@ -247,7 +247,7 @@ function typeCastValue(value) {
         return service;
     });
     
-    zaa.factory('CacheReloadService', function ($http, $window) {
+    zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
 
         var service = [];
 
@@ -258,9 +258,9 @@ function typeCastValue(value) {
         }
 
         return service;
-    });
+    }]);
     
-    zaa.factory("authInterceptor", function ($rootScope, $q, AdminToastService, AdminDebugBar) {
+    zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
         return {
             request: function (config) {
             	if (!config.hasOwnProperty('ignoreLoadingBar')) {
@@ -305,6 +305,6 @@ function typeCastValue(value) {
                 return $q.reject(data);
             }
         };
-    });
+    }]);
 
 })();

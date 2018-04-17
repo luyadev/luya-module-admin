@@ -1,13 +1,13 @@
 (function() {
 	"use strict";
 
-	zaa.config(['$dataProvider', '$resolverProvider', function($stateProvider, resolverProvider) {
-		$stateProvider
-		.state("default.route.detail", {
+	zaa.config(['$stateProvider', 'resolverProvider', function($stateProvider, resolverProvider) {
+		
+		$stateProvider.state("default.route.detail", {
 			url: "/:id",
 			parent: 'default.route',
 			template: '<ui-view/>',
-			controller:function($scope, $stateParams) {
+			controller: ['$scope', '$stateParams', function($scope, $stateParams) {
 
 				$scope.crud = $scope.$parent;
 
@@ -20,8 +20,9 @@
 				}
 
 				$scope.init();
-			}
+			}]
 		});
+		
 	}]);
 
 	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {

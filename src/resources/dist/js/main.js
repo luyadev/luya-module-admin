@@ -9209,7 +9209,7 @@ angular.module('dnd', [])
  * 
  * Parts of the scripts are inspired by: https://github.com/marceljuenemann/angular-drag-and-drop-lists
  */
-.directive('dnd', function(dndFactory, AdminClassService) {
+.directive('dnd',['dndFactory', 'AdminClassService', function(dndFactory, AdminClassService) {
 	return {
 		restrict : 'A',
 		transclude: false,
@@ -9408,7 +9408,7 @@ angular.module('dnd', [])
     		}
 		}
 	};
-});
+}]);
 var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
 
 /**
@@ -9456,7 +9456,7 @@ function i18nParam(varName, params) {
  * @returns
  */
 function typeCastValue(value) {
-    return $.isNumeric(value) ? parseInt(value) : value;
+    return angular.isNumber(value) ? parseInt(value) : value;
 }
 
 (function () {
@@ -9464,7 +9464,7 @@ function typeCastValue(value) {
 
     /* CONFIG */
     
-    zaa.config(function ($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
+    zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
     	
         $httpProvider.interceptors.push("authInterceptor");
 
@@ -9505,7 +9505,7 @@ function typeCastValue(value) {
                 url: "",
                 templateUrl: "admin/default/dashboard"
             });
-    });
+    }]);
 
     /* PROVIDERS */
     
@@ -9541,7 +9541,7 @@ function typeCastValue(value) {
     /**
      * LUYA LOADING
      */
-    zaa.factory("LuyaLoading", function ($timeout) {
+    zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
 
         var state = false;
         var stateMessage = null;
@@ -9572,7 +9572,7 @@ function typeCastValue(value) {
                 return state;
             }
         }
-    });
+    }]);
     
     /**
      * Inside your Directive or Controller:
@@ -9658,7 +9658,7 @@ function typeCastValue(value) {
         return service;
     });
     
-    zaa.factory('CacheReloadService', function ($http, $window) {
+    zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
 
         var service = [];
 
@@ -9669,9 +9669,9 @@ function typeCastValue(value) {
         }
 
         return service;
-    });
+    }]);
     
-    zaa.factory("authInterceptor", function ($rootScope, $q, AdminToastService, AdminDebugBar) {
+    zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
         return {
             request: function (config) {
             	if (!config.hasOwnProperty('ignoreLoadingBar')) {
@@ -9716,11 +9716,11 @@ function typeCastValue(value) {
                 return $q.reject(data);
             }
         };
-    });
+    }]);
 
 })();
 // service resolver
-function adminServiceResolver(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
+adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFilesData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
 	ServiceImagesData.load();
@@ -9729,7 +9729,7 @@ function adminServiceResolver(ServiceFoldersData, ServiceImagesData, ServiceFile
 	ServicePropertiesData.load();
 	AdminLangService.load();
 	ServiceFoldersDirecotryId.load();
-};
+}];
 
 /**
  * all global admin services
@@ -9772,7 +9772,7 @@ $scope.foldersDataReload = function() {
 }
 
 */
-zaa.factory("ServiceFoldersData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFoldersData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	
 	var service = [];
 	
@@ -9793,7 +9793,7 @@ zaa.factory("ServiceFoldersData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9808,7 +9808,7 @@ $scope.foldersDirecotryIdReload = function() {
 }
 
 */
-zaa.factory("ServiceFoldersDirecotryId", function($http, $q, $rootScope) {
+zaa.factory("ServiceFoldersDirecotryId", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	
 	var service = [];
 	
@@ -9829,7 +9829,7 @@ zaa.factory("ServiceFoldersDirecotryId", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9844,7 +9844,7 @@ $scope.imagesDataReload = function() {
 }
 
 */
-zaa.factory("ServiceImagesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -9864,7 +9864,7 @@ zaa.factory("ServiceImagesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9879,7 +9879,7 @@ $scope.filesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFilesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -9899,7 +9899,7 @@ zaa.factory("ServiceFilesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9914,7 +9914,7 @@ $scope.filtersDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFiltersData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFiltersData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -9934,7 +9934,7 @@ zaa.factory("ServiceFiltersData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9949,7 +9949,7 @@ $scope.languagesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceLanguagesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceLanguagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = [];
@@ -9969,7 +9969,7 @@ zaa.factory("ServiceLanguagesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -9984,7 +9984,7 @@ $scope.propertiesDataReload = function() {
 }
 				
 */
-zaa.factory("ServicePropertiesData", function($http, $q, $rootScope) {
+zaa.factory("ServicePropertiesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -10004,7 +10004,7 @@ zaa.factory("ServicePropertiesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 zaa.factory("CrudTabService", function() {
 	
@@ -10046,7 +10046,7 @@ zaa.factory("CrudTabService", function() {
  language service with selections
  
 */
-zaa.factory("AdminLangService", function(ServiceLanguagesData, $rootScope) {
+zaa.factory("AdminLangService", ['ServiceLanguagesData', '$rootScope', function(ServiceLanguagesData, $rootScope) {
 	
 	var service = [];
 	
@@ -10103,7 +10103,7 @@ zaa.factory("AdminLangService", function(ServiceLanguagesData, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
  * Admin Debug Bar provides an array with debug information from the last request in order to find bugs without the developer tools of the browser 
@@ -10175,7 +10175,7 @@ function($toast) {
 }
 
 */
-zaa.factory("AdminToastService", function($q, $timeout, $injector) {
+zaa.factory("AdminToastService", ['$q', '$timeout', '$injector', function($q, $timeout, $injector) {
 	var service = [];
 	
 	service.notify = function(message, timeout, type) {
@@ -10239,7 +10239,7 @@ zaa.factory("AdminToastService", function($q, $timeout, $injector) {
 	service.queue = {};
 	
 	return service;
-});
+}]);
 
 /*
  * 
@@ -10476,7 +10476,7 @@ zaa.factory('HtmlStorage', function() {
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
      * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
      */
-    zaa.directive("compileHtml", function ($compile, $parse) {
+    zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) {
         return {
             restrict: "A",
             link: function (scope, element, attr) {
@@ -10488,7 +10488,7 @@ zaa.factory('HtmlStorage', function() {
                 });
             }
         };
-    });
+    }]);
 
     /**
      * Usage:
@@ -10497,7 +10497,7 @@ zaa.factory('HtmlStorage', function() {
      * <div zaa-esc="methodClosesThisDiv()" />
      * ```
      */
-    zaa.directive("zaaEsc", function ($document) {
+    zaa.directive("zaaEsc", ['$document', function ($document) {
         return function (scope, element, attrs) {
             $document.on("keyup", function (e) {
                 if (e.keyCode == 27) {
@@ -10507,7 +10507,7 @@ zaa.factory('HtmlStorage', function() {
                 }
             });
         };
-    });
+    }]);
 
     zaa.directive("linkObjectToString", function () {
         return {
@@ -10570,7 +10570,7 @@ zaa.factory('HtmlStorage', function() {
      * <span tooltip tooltip-text="Tooltip" tooltip-disabled="variableMightBeTrueMightBeFalseMightChange">Span Text</span>
      * ```
      */
-    zaa.directive("tooltip", function ($document) {
+    zaa.directive("tooltip", ['$document', function ($document) {
         return {
             restrict: 'A',
             scope: {
@@ -10697,7 +10697,7 @@ zaa.factory('HtmlStorage', function() {
                 });
             }
         }
-    });
+    }]);
 
     /**
      * Convert a string to number value, usefull in selects.
@@ -10819,8 +10819,7 @@ zaa.factory('HtmlStorage', function() {
         }
     });
 
-    zaa.directive('resizer', function ($document) {
-
+    zaa.directive('resizer', ['$document', function ($document) {
         return {
             scope: {
                 trigger: '@'
@@ -10873,7 +10872,7 @@ zaa.factory('HtmlStorage', function() {
                 }
             }
         }
-    });
+    }]);
 
     /**
      * Readded ng-confirm-click in order to provide quick ability to implement confirm boxes.
@@ -10914,12 +10913,6 @@ zaa.factory('HtmlStorage', function() {
                         });
                     }
                 });
-                // on blur event:
-                /*
-                element.bind('blur', function () {
-                    scope.$apply(model.assign(scope, false));
-                });
-                */
             }
         };
     }]);
@@ -11016,7 +11009,7 @@ zaa.factory('HtmlStorage', function() {
      * > the ng-if is visible.
      *
      */
-    zaa.directive("modal", function ($timeout) {
+    zaa.directive("modal", ['$timeout', function($timeout) {
         return {
             restrict: "E",
             scope: {
@@ -11026,7 +11019,7 @@ zaa.factory('HtmlStorage', function() {
             replace: true,
             transclude: true,
             templateUrl: "modal",
-            controller : function($scope, AdminClassService) {
+            controller : ['$scope', 'AdminClassService', function($scope, AdminClassService) {
             	$scope.$watch('isModalHidden', function(n, o) {
             		if (n !== o) {
             			if (n) { // is hidden
@@ -11042,7 +11035,7 @@ zaa.factory('HtmlStorage', function() {
             		$scope.isModalHidden = true;
             		AdminClassService.modalStackRemoveAll();
             	};
-            },
+            }],
             link: function (scope, element) {
             	scope.$on('$destroy', function() {
             		element.remove();
@@ -11050,7 +11043,7 @@ zaa.factory('HtmlStorage', function() {
             	angular.element(document.body).append(element);
             }
         }
-    });
+    }]);
 
     /* CRUD, FORMS & FILE MANAGER */
 
@@ -11061,7 +11054,7 @@ zaa.factory('HtmlStorage', function() {
      * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
      * ```
      */
-    zaa.directive("crudLoader", function($http, $sce) {
+    zaa.directive("crudLoader", ['$http', '$scre', function($http, $sce) {
     	return {
     		restrict: "E",
     		replace: true,
@@ -11072,7 +11065,7 @@ zaa.factory('HtmlStorage', function() {
     			"modelSelection" : "@",
     			"modelSetter": "="
     		},
-    		controller: function($scope) {
+    		controller: ['$scope', function($scope) {
 
     			$scope.input = { showWindow : true};
 
@@ -11109,14 +11102,14 @@ zaa.factory('HtmlStorage', function() {
     				$scope.modelSetter = value;
     				$scope.toggleWindow();
     			};
-    		},
+    		}],
     		template: function() {
     			return '<div class="crud-loader-tag"><button ng-click="toggleWindow()" type="button" class="btn btn-info btn-icon"><i class="material-icons">playlist_add</i></button><modal is-modal-hidden="input.showWindow" modal-title="{{alias}}"><div class="modal-body" compile-html ng-bind-html="content"></modal></div>';
     		}
     	}
-    });
+    }]);
 
-    zaa.directive("crudRelationLoader", function($http, $sce) {
+    zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
     	return {
     		restrict: "E",
     		replace: true,
@@ -11127,17 +11120,17 @@ zaa.factory('HtmlStorage', function() {
     			"modelClass" : "@modelClass",
     			"id": "@id"
     		},
-    		controller: function($scope) {
+    		controller: ['$scope', function($scope) {
     			$scope.content = null;
     			$http.get($scope.api+'/?inline=1&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
 					$scope.content = $sce.trustAsHtml(response.data);
     			});
-    		},
+    		}],
     		template: function() {
     			return '<div compile-html ng-bind-html="content"></div>';
     		}
     	}
-    });
+    }]);
 
     /**
      * Generate form input types based on ZAA Directives.
@@ -11148,7 +11141,7 @@ zaa.factory('HtmlStorage', function() {
      * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="mymodel"></zaa-injector>
      * ```
      */
-    zaa.directive("zaaInjector", function($compile) {
+    zaa.directive("zaaInjector", ['$compile', function($compile) {
         return {
             restrict: "E",
             replace: true,
@@ -11168,7 +11161,7 @@ zaa.factory('HtmlStorage', function() {
                 $element.replaceWith(elmn);
             },
         }
-    });
+    }]);
 
     /**
      * @var object $model Contains existing data for the displaying the existing relations
@@ -11203,7 +11196,7 @@ zaa.factory('HtmlStorage', function() {
     			"i18n": "@i18n",
                 "id": "@fieldid"
     		},
-    		controller: function($scope, $filter) {
+    		controller: ['$scope', '$filter', function($scope, $filter) {
 
     			$scope.searchString;
 
@@ -11275,7 +11268,7 @@ zaa.factory('HtmlStorage', function() {
 
     				return !match;
                 }
-    		},
+    		}],
     		template: function() {
     			return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                     '<div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div>' +
@@ -11321,7 +11314,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid"
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
             	$scope.unset = function() {
             		$scope.model = false;
             		$scope.data.model = null;
@@ -11343,7 +11336,7 @@ zaa.factory('HtmlStorage', function() {
             			$scope.model = n;
             		}
             	}, true);
-            },
+            }],
             template: function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><labelfor="{{id}}">{{label}}</label></div><div class="form-side">' +
                     '<div ng-if="model">' +
@@ -11387,13 +11380,13 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid"
             },
-    		controller: function($scope, $filter) {
+    		controller: ['$scope', '$filter', function($scope, $filter) {
     			$scope.$watch(function() { return $scope.model; }, function(n, o) {
     				if (n!=o) {
     					$scope.model = $filter('slugify')(n);
     				}
     			});
-    		},
+    		}],
     		template:function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" /></div></div>';
     		}
@@ -11410,7 +11403,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid"
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
                 function getTextColor(){
                     if(typeof $scope.model === 'undefined') {
                         return '#000';
@@ -11445,7 +11438,7 @@ zaa.factory('HtmlStorage', function() {
                 $scope.$watch(function() { return $scope.model; }, function(n, o) {
                     $scope.textColor = getTextColor();
                 });
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -11491,7 +11484,8 @@ zaa.factory('HtmlStorage', function() {
                 "id": "@fieldid",
                 "placeholder": "@placeholder",
                 "initvalue" : "@initvalue"
-            }, link: function($scope) {
+            }, 
+            link: function($scope) {
                 $scope.$watch(function() { return $scope.model }, function(n, o) {
                 	if (n == undefined) {
                 		$scope.model = parseInt($scope.initvalue);
@@ -11518,13 +11512,15 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid",
                 "placeholder": "@placeholder"
-            }, controller: function($scope) {
+            }, 
+            controller: ['$scope', function($scope) {
                 if ($scope.options === null) {
                     $scope.steps = 0.01;
                 } else {
                     $scope.steps = $scope.options['steps'];
                 }
-            }, link: function($scope) {
+            }], 
+            link: function($scope) {
                 $scope.$watch(function() { return $scope.model }, function(n, o) {
                     if(angular.isNumber($scope.model)) {
                         $scope.isValid = true;
@@ -11532,7 +11528,8 @@ zaa.factory('HtmlStorage', function() {
                         $scope.isValid = false;
                     }
                 })
-            }, template: function() {
+            },
+            template: function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="number" min="0" step="{{steps}}" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" /></div></div>';
             }
         }
@@ -11572,7 +11569,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid"
             },
-            controller: function($scope, $timeout, $http) {
+            controller: ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
             	$timeout(function() {
             		$scope.$watch('model', function(n, o) {
             			if (n) {
@@ -11593,7 +11590,7 @@ zaa.factory('HtmlStorage', function() {
             		$scope.model = 0;
             		$scope.value = null;
             	};
-            },
+            }],
             template: function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><span ng-bind="value"></span><button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button></div></div>';
             }
@@ -11647,11 +11644,11 @@ zaa.factory('HtmlStorage', function() {
 	            "id": "@fieldid",
 	            "initvalue": "@initvalue"
 	    	},
-	    	controller: function($scope) {
+	    	controller: ['$scope', function($scope) {
 	    		$scope.setModelValue = function(value) {
 	    			$scope.model = value;
 	    		};
-	    	},
+	    	}],
 	    	template: function() {
 	    		return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
 				            '<div class="form-side form-side-label">' +
@@ -11692,7 +11689,7 @@ zaa.factory('HtmlStorage', function() {
      * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id" />
      * ```
      */
-    zaa.directive("zaaSelect", function($timeout, $rootScope) {
+    zaa.directive("zaaSelect", function() {
         return {
             restrict: "E",
             scope: {
@@ -11705,7 +11702,7 @@ zaa.factory('HtmlStorage', function() {
                 "id": "@fieldid",
                 "initvalue": "@initvalue"
             },
-            controller: function($scope) {
+            controller: ['$scope', '$timeout', '$rootScope', function($scope, $timeout, $rootScope) {
 
             	/* default scope values */
 
@@ -11794,7 +11791,7 @@ zaa.factory('HtmlStorage', function() {
 
                 	return false;
                 };
-            },
+            }],
             template: function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -11841,7 +11838,7 @@ zaa.factory('HtmlStorage', function() {
                 "label": "@label",
                 "initvalue": "@initvalue"
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
                 if ($scope.options === null || $scope.options === undefined) {
                     $scope.valueTrue = 1;
                     $scope.valueFalse = 0;
@@ -11858,7 +11855,7 @@ zaa.factory('HtmlStorage', function() {
                 $timeout(function() {
                 	$scope.init();
             	})
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -11890,7 +11887,7 @@ zaa.factory('HtmlStorage', function() {
                 "id": "@fieldid",
                 "label": "@label"
             },
-            controller: function($scope, $filter) {
+            controller: ['$scope', '$filter', function($scope, $filter) {
 
                 if ($scope.model == undefined) {
                     $scope.model = [];
@@ -11930,7 +11927,7 @@ zaa.factory('HtmlStorage', function() {
                     }
                     return false;
                 }
-            },
+            }],
             link: function(scope) {
                 scope.random = Math.random().toString(36).substring(7);
             },
@@ -11979,7 +11976,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "resetable" : "@resetable",
             },
-            controller: function($scope, $filter) {
+            controller: ['$scope', '$filter', function($scope, $filter) {
 
             	$scope.isNumeric = function(num) {
             	    return !isNaN(num)
@@ -12070,7 +12067,7 @@ zaa.factory('HtmlStorage', function() {
 
             		return true;
             	};
-            },
+            }],
             template: function() {
             	return  '<div class="form-group form-side-by-side zaa-datetime" ng-class="{\'input--hide-label\': i18n, \'input--with-time\': model!=null && date!=null}">' +
                             '<div class="form-side form-side-label">' +
@@ -12117,7 +12114,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "resetable" : "@resetable"
             },
-        	controller: function($scope, $filter) {
+        	controller: ['$scope', '$filter', function($scope, $filter) {
 
             	$scope.$watch(function() { return $scope.model }, function(n, o) {
 
@@ -12182,7 +12179,7 @@ zaa.factory('HtmlStorage', function() {
 
             		return true;
             	};
-            },
+            }],
             template: function() {
             	return  '<div class="form-group form-side-by-side zaa-date" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12213,7 +12210,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid",
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
 
                 if ($scope.model == undefined) {
                     $scope.model = [{0:''}];
@@ -12299,7 +12296,7 @@ zaa.factory('HtmlStorage', function() {
                     }
                     return false;
                 }
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12343,7 +12340,7 @@ zaa.factory('HtmlStorage', function() {
         }
     });
 
-    zaa.directive("zaaFileUpload", function($compile){
+    zaa.directive("zaaFileUpload", function(){
         return {
             restrict: "E",
             scope: {
@@ -12366,7 +12363,7 @@ zaa.factory('HtmlStorage', function() {
         }
     });
 
-    zaa.directive("zaaImageUpload", function($compile){
+    zaa.directive("zaaImageUpload", function(){
         return {
             restrict: "E",
             scope: {
@@ -12408,7 +12405,7 @@ zaa.factory('HtmlStorage', function() {
                     }
                 }, true);
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
                 if ($scope.model == undefined) {
                     $scope.model = [];
                 }
@@ -12444,7 +12441,7 @@ zaa.factory('HtmlStorage', function() {
                     }
                     return false;
                 };
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12494,7 +12491,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid",
             },
-            controller: function($scope, $element, $timeout) {
+            controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
 
                 if ($scope.model == undefined) {
                     $scope.model = [];
@@ -12531,7 +12528,7 @@ zaa.factory('HtmlStorage', function() {
                     }
                     return false;
                 };
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12586,7 +12583,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid",
             },
-            controller: function ($scope, $timeout) {
+            controller: ['$scope', '$timeout', function ($scope, $timeout) {
                 $scope.init = function() {
                     if ($scope.model == undefined || $scope.model == null) {
                         $scope.model = [];
@@ -12634,7 +12631,7 @@ zaa.factory('HtmlStorage', function() {
                 $timeout(function() {
                 	$scope.init();
                 });
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12671,7 +12668,7 @@ zaa.factory('HtmlStorage', function() {
                 "i18n": "@i18n",
                 "id": "@fieldid",
             },
-            controller: function($scope, $element, $timeout) {
+            controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
 
                 $scope.init = function() {
                 	if ($scope.model == undefined || $scope.model == null) {
@@ -12732,7 +12729,7 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.init();
 
-            },
+            }],
             template: function() {
                 return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                             '<div class="form-side form-side-label">' +
@@ -12760,16 +12757,13 @@ zaa.factory('HtmlStorage', function() {
     });
     // storage.js
 
-    zaa.directive('storageFileUpload', function($http, ServiceFilesData, $filter) {
+    zaa.directive('storageFileUpload', function() {
         return {
             restrict : 'E',
             scope : {
                 ngModel : '='
             },
-            link : function(scope) {
-            },
-            controller: function($scope) {
-
+            controller: ['$scope', '$filter', '$ServiceFilesData', function($scope, $filter, ServiceFilesData) {
 
                 // ServiceFilesData inhertiance
 
@@ -12815,18 +12809,18 @@ zaa.factory('HtmlStorage', function() {
                     	$scope.reset();
                     }
                 });
-            },
+            }],
             templateUrl : 'storageFileUpload'
         }
     });
 
-    zaa.directive('storageFileDisplay', function(ServiceFilesData) {
+    zaa.directive('storageFileDisplay', function() {
     	return {
     		restrict: 'E',
     		scope: {
     			fileId: '@fileId'
     		},
-    		controller: function($scope, $filter) {
+    		controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
 
     			// ServiceFilesData inheritance
 
@@ -12848,20 +12842,20 @@ zaa.factory('HtmlStorage', function() {
                         }
                     }
                 });
-    		},
+    		}],
     		template: function() {
                 return '<div ng-show="fileinfo!==null">{{ fileinfo.name }}</div>';
             }
     	}
     });
 
-    zaa.directive('storageImageThumbnailDisplay', function(ServiceImagesData, ServiceFilesData) {
+    zaa.directive('storageImageThumbnailDisplay', function() {
         return {
             restrict: 'E',
             scope: {
                 imageId: '@imageId'
             },
-            controller: function($scope, $filter) {
+            controller: ['$scope', '$filter', 'ServiceImagesData', 'ServiceFilesData', function($scope, $filter, ServiceImagesData, ServiceFilesData) {
 
                 // ServiceFilesData inheritance
 
@@ -12895,153 +12889,153 @@ zaa.factory('HtmlStorage', function() {
                 });
 
                 $scope.imageSrc = null;
-            },
+            }],
             template: function() {
                 return '<div ng-show="imageSrc!==false"><img ng-src="{{imageSrc}}" /></div>';
             }
         }
     });
 
-    zaa.directive('storageImageUpload', function($http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService) {
+    zaa.directive('storageImageUpload', function() {
         return {
             restrict : 'E',
             scope : {
                 ngModel : '=',
                 options : '=',
             },
-            link : function(scope) {
+            controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService) {
 
                 // ServiceImagesData inheritance
 
-                scope.imagesData = ServiceImagesData.data;
+                $scope.imagesData = ServiceImagesData.data;
 
-                scope.$on('service:ImagesData', function(event, data) {
-                    scope.imagesData = data;
+                $scope.$on('service:ImagesData', function(event, data) {
+                    $scope.imagesData = data;
                 });
 
-                scope.imagesDataReload = function() {
+                $scope.imagesDataReload = function() {
                     return ServiceImagesData.load(true);
                 }
 
                 // ServiceFiltesrData inheritance
 
-                scope.filtersData = ServiceFiltersData.data;
+                $scope.filtersData = ServiceFiltersData.data;
 
-                scope.$on('service:FiltersData', function(event, data) {
-                    scope.filtersData = data;
+                $scope.$on('service:FiltersData', function(event, data) {
+                    $scope.filtersData = data;
                 });
 
                 // controller logic
 
-                scope.noFilters = function() {
-                    if (scope.options) {
-                        return scope.options.no_filter;
+                $scope.noFilters = function() {
+                    if ($scope.options) {
+                        return $scope.options.no_filter;
                     }
                 }
 
-                scope.thumbnailfilter = null;
+                $scope.thumbnailfilter = null;
 
-                scope.imageLoading = false;
+                $scope.imageLoading = false;
 
-                scope.fileId = 0;
+                $scope.fileId = 0;
 
-                scope.filterId = 0;
+                $scope.filterId = 0;
 
-                scope.imageinfo = null;
+                $scope.imageinfo = null;
 
-                scope.imageNotFoundError = false;
+                $scope.imageNotFoundError = false;
 
-                scope.filterApply = function() {
-                    var items = $filter('filter')(scope.imagesData, {fileId: scope.fileId, filterId: scope.filterId}, true);
+                $scope.filterApply = function() {
+                    var items = $filter('filter')($scope.imagesData, {fileId: $scope.fileId, filterId: $scope.filterId}, true);
                     if (items && items.length == 0) {
-                        scope.imageLoading = true;
+                        $scope.imageLoading = true;
                         // image does not exists make request.
-                        $http.post('admin/api-admin-storage/image-upload', $.param({ fileId : scope.fileId, filterId : scope.filterId }), {
+                        $http.post('admin/api-admin-storage/image-upload', $.param({ fileId : $scope.fileId, filterId : $scope.filterId }), {
                             headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                         }).then(function(transport) {
                             if (!transport.data.error) {
-                                scope.imagesDataReload().then(function(r) {
-                                    scope.ngModel = transport.data.id;
+                                $scope.imagesDataReload().then(function(r) {
+                                    $scope.ngModel = transport.data.id;
                                     AdminToastService.success(i18n['js_dir_image_upload_ok']);
-                                    scope.imageLoading = false;
+                                    $scope.imageLoading = false;
                                 });
                             }
                         }, function(error) {
                         	AdminToastService.error(i18n['js_dir_image_filter_error']);
-                            scope.imageLoading = false;
+                            $scope.imageLoading = false;
                         });
                     } else {
                         var item = items[0];
-                        scope.ngModel = item.id
-                        scope.imageinfo = item;
+                        $scope.ngModel = item.id
+                        $scope.imageinfo = item;
                     }
                 };
 
-                scope.$watch(function() { return scope.filterId }, function(n, o) {
-                    if (n != null && n !== undefined && scope.fileId !== 0 && n !== o && n != o) {
-                        scope.filterApply();
+                $scope.$watch(function() { return $scope.filterId }, function(n, o) {
+                    if (n != null && n !== undefined && $scope.fileId !== 0 && n !== o && n != o) {
+                        $scope.filterApply();
                     }
                 });
 
-                scope.$watch(function() { return scope.fileId }, function(n, o) {
+                $scope.$watch(function() { return $scope.fileId }, function(n, o) {
                 	if (n !== undefined && n != null && n != o) {
                 		if (n == 0) {
-                            scope.filterId = 0;
-                            scope.imageinfo = null;
-                            scope.ngModel = 0;
+                            $scope.filterId = 0;
+                            $scope.imageinfo = null;
+                            $scope.ngModel = 0;
                         } else {
-                        	scope.filterApply();
+                        	$scope.filterApply();
                         }
                     }
                 });
 
-                scope.$watch(function() { return scope.ngModel }, function(n, o) {
+                $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
-                        var filtering = $filter('findidfilter')(scope.imagesData, n, true);
+                        var filtering = $filter('findidfilter')($scope.imagesData, n, true);
                         if (filtering) {
-                            scope.imageinfo = filtering;
-                            scope.filterId = filtering.filterId;
-                            scope.fileId = filtering.fileId;
+                            $scope.imageinfo = filtering;
+                            $scope.filterId = filtering.filterId;
+                            $scope.fileId = filtering.fileId;
                         } else {
-                        	scope.imageNotFoundError = true;
+                        	$scope.imageNotFoundError = true;
                         }
                     }
                     /* reset image preview directive if an event resets the image model to undefined */
                     if (n == undefined || n == 0) {
-                    	scope.fileId = 0;
-                        scope.filterId = 0;
-                        scope.imageinfo = null;
-                        scope.thumb = false;
+                    	$scope.fileId = 0;
+                        $scope.filterId = 0;
+                        $scope.imageinfo = null;
+                        $scope.thumb = false;
                     }
 
                 });
 
-                scope.thumb = false;
+                $scope.thumb = false;
 
-                scope.getThumbnailFilter = function() {
-                	if (scope.thumbnailfilter === null) {
-                		if ('medium-thumbnail' in scope.filtersData) {
-                			scope.thumbnailfilter = scope.filtersData['medium-thumbnail'];
+                $scope.getThumbnailFilter = function() {
+                	if ($scope.thumbnailfilter === null) {
+                		if ('medium-thumbnail' in $scope.filtersData) {
+                			$scope.thumbnailfilter = $scope.filtersData['medium-thumbnail'];
                 		}
                 	}
-                	return scope.thumbnailfilter;
+                	return $scope.thumbnailfilter;
                 }
 
-                scope.$watch('imageinfo', function(n, o) {
+                $scope.$watch('imageinfo', function(n, o) {
                 	if (n != 0 && n != null && n !== undefined) {
                 		if (n.filterId != 0) {
-                			scope.thumb = n;
+                			$scope.thumb = n;
                 		} else {
-                			var result = $filter('findthumbnail')(scope.imagesData, n.fileId, scope.getThumbnailFilter().id);
+                			var result = $filter('findthumbnail')($scope.imagesData, n.fileId, $scope.getThumbnailFilter().id);
                 			if (!result) {
-                				scope.thumb = n;
+                				$scope.thumb = n;
                 			} else {
-                				scope.thumb = result;
+                				$scope.thumb = result;
                 			}
                 		}
                 	}
                 })
-            },
+            }],
             templateUrl : 'storageImageUpload'
         }
     });
@@ -13049,7 +13043,7 @@ zaa.factory('HtmlStorage', function() {
     /**
      * FILE MANAGER DIR
      */
-    zaa.directive("storageFileManager", function(Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
+    zaa.directive("storageFileManager", function() {
         return {
             restrict : 'E',
             transclude : false,
@@ -13057,7 +13051,7 @@ zaa.factory('HtmlStorage', function() {
                 allowSelection : '@selection',
                 onlyImages : '@onlyImages'
             },
-            controller : function($scope, $http, $filter, $timeout) {
+            controller : ['$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
 
                 // ServiceFoldersData inheritance
 
@@ -13448,12 +13442,12 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.init();
 
-            },
+            }],
             templateUrl : 'storageFileManager'
         }
     });
 
-    zaa.directive("hasEnoughSpace", function($window, $document, $timeout) {
+    zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeout) {
         return {
             restrict: "A",
             scope: {
@@ -13518,7 +13512,7 @@ zaa.factory('HtmlStorage', function() {
 
             }
         }
-    });
+    }]);
 
     zaa.directive('activeClass', function () {
         return {
@@ -13539,20 +13533,17 @@ zaa.factory('HtmlStorage', function() {
             }
         };
     });
-
-
 })();
-
 (function() {
 	"use strict";
 
-	zaa.config(function($stateProvider, resolverProvider) {
-		$stateProvider
-		.state("default.route.detail", {
+	zaa.config(['$stateProvider', 'resolverProvider', function($stateProvider, resolverProvider) {
+		
+		$stateProvider.state("default.route.detail", {
 			url: "/:id",
 			parent: 'default.route',
 			template: '<ui-view/>',
-			controller:function($scope, $stateParams) {
+			controller: ['$scope', '$stateParams', function($scope, $stateParams) {
 
 				$scope.crud = $scope.$parent;
 
@@ -13565,11 +13556,12 @@ zaa.factory('HtmlStorage', function() {
 				}
 
 				$scope.init();
-			}
+			}]
 		});
-	});
+		
+	}]);
 
-	zaa.controller("DefaultDashboardObjectController", function($scope, $http, $sce) {
+	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 		$scope.data;
 
@@ -13578,7 +13570,7 @@ zaa.factory('HtmlStorage', function() {
 				$scope.data = success.data;
 			});
 		};
-	});
+	}]);
 
 	/**
 	 * Base Crud Controller
@@ -13587,7 +13579,7 @@ zaa.factory('HtmlStorage', function() {
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
+	zaa.controller("CrudController", ['$scope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
 
 		$scope.toast = AdminToastService;
 
@@ -14180,11 +14172,11 @@ zaa.factory('HtmlStorage', function() {
 				});
 			})
 		});
-	});
+	}]);
 
 // activeWindowController.js
 
-	zaa.controller("ActiveWindowTagController", function($scope, $http, AdminToastService) {
+	zaa.controller("ActiveWindowTagController", ['$scope', '$htt', 'AdminToastService', function($scope, $http, AdminToastService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
@@ -14240,7 +14232,7 @@ zaa.factory('HtmlStorage', function() {
 
 		$scope.loadTags();
 
-	});
+	}]);
 
 	/**
 	 * ActiveWindow GalleryController
@@ -14250,7 +14242,7 @@ zaa.factory('HtmlStorage', function() {
 	 *
 	 * Changes content when parent crud controller changes value for active aw.itemId.
 	 */
-	zaa.controller("ActiveWindowGalleryController", function($scope, $http, $filter) {
+	zaa.controller("ActiveWindowGalleryController", ['$scope', '$http', '$filter', function($scope, $http, $filter) {
 
 		$scope.crud = $scope.$parent;
 
@@ -14306,9 +14298,9 @@ zaa.factory('HtmlStorage', function() {
 			$scope.loadImages();
 		});
 
-	});
+	}]);
 
-	zaa.controller("ActiveWindowGroupAuth", function($scope, $http, CacheReloadService) {
+	zaa.controller("ActiveWindowGroupAuth", ['$scope', '$http', 'CacheReloadService', function($scope, $http, CacheReloadService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
@@ -14353,11 +14345,11 @@ zaa.factory('HtmlStorage', function() {
 		$scope.$watch(function() { return $scope.data.aw.itemId }, function(n, o) {
 			$scope.getRights();
 		});
-	});
+	}]);
 
 // DefaultController.js.
 
-	zaa.controller("DefaultController", function ($scope, $http, $state, $stateParams, CrudTabService) {
+	zaa.controller("DefaultController", ['$scope', '$http', '$state', '$stateParams', 'CrudTabService', function ($scope, $http, $state, $stateParams, CrudTabService) {
 
 		$scope.moduleId = $state.params.moduleId;
 
@@ -14439,11 +14431,11 @@ zaa.factory('HtmlStorage', function() {
 		});
 
 		$scope.init();
-	});
+	}]);
 
-	zaa.controller("DashboardController", function ($scope) {
+	zaa.controller("DashboardController", ['$scope', function ($scope) {
 		$scope.logItemOpen = false;
-	});
+	}]);
 
 	zaa.filter('lockFilter', function() {
 		return function(data, table, pk) {
@@ -14458,7 +14450,7 @@ zaa.factory('HtmlStorage', function() {
         };
 	});
 
-	zaa.controller("LayoutMenuController", function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
+	zaa.controller("LayoutMenuController", ['$scope', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
 
@@ -14518,24 +14510,6 @@ zaa.factory('HtmlStorage', function() {
 			$scope.debugDetail = debugDetail;
 			$scope.debugDetailKey = key;
 		};
-
-		/*
-		$scope.sidePanelUserMenu = false;
-
-		$scope.sidePanelHelp = false;
-
-		$scope.toggleHelpPanel = function() {
-			$scope.sidePanelHelp = !$scope.sidePanelHelp;
-			$scope.sidePanelUserMenu = false;
-		};
-
-		$scope.toggleUserPanel = function() {
-			$scope.sidePanelUserMenu = !$scope.sidePanelUserMenu;
-			$scope.sidePanelHelp = false;
-		};
-
-	    $scope.userMenuOpen = false;
-	    */
 
 		$scope.notify = null;
 
@@ -14687,9 +14661,9 @@ zaa.factory('HtmlStorage', function() {
 		};
 
 		$scope.get();
-	});
+	}]);
 
-	zaa.controller("AccountController", function($scope, $http, $window, AdminToastService) {
+	zaa.controller("AccountController", ['$scope', '$http', '$window', 'AdminToastService', function($scope, $http, $window, AdminToastService) {
 		
 		$scope.pass = {};
 		
@@ -14742,5 +14716,5 @@ zaa.factory('HtmlStorage', function() {
 		};
 
 		$scope.getProfile();
-	});
+	}]);
 })();
