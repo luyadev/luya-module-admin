@@ -141,6 +141,8 @@ class ClientTable extends BaseObject
     
     public function syncData()
     {
+        Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+
         Yii::$app->db->createCommand()->truncateTable($this->getName())->execute();
         
         $rows = $this->getContentRows();
@@ -150,6 +152,8 @@ class ClientTable extends BaseObject
         foreach ($chunks as $match) {
             Yii::$app->db->createCommand()->batchInsert($this->getName(), $this->cleanUpBatchInsertFields($this->getFields()), $this->cleanUpMatchRow($match))->execute();
         }
+        
+        Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
     }
     
     private function request($offset)
