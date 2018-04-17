@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	zaa.config(function($stateProvider, resolverProvider) {
+	zaa.config(['$dataProvider', '$resolverProvider', function($stateProvider, resolverProvider) {
 		$stateProvider
 		.state("default.route.detail", {
 			url: "/:id",
@@ -22,9 +22,9 @@
 				$scope.init();
 			}
 		});
-	});
+	}]);
 
-	zaa.controller("DefaultDashboardObjectController", function($scope, $http, $sce) {
+	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 		$scope.data;
 
@@ -33,7 +33,7 @@
 				$scope.data = success.data;
 			});
 		};
-	});
+	}]);
 
 	/**
 	 * Base Crud Controller
@@ -42,7 +42,7 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
+	zaa.controller("CrudController", ['$scope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
 
 		$scope.toast = AdminToastService;
 
@@ -635,11 +635,11 @@
 				});
 			})
 		});
-	});
+	}]);
 
 // activeWindowController.js
 
-	zaa.controller("ActiveWindowTagController", function($scope, $http, AdminToastService) {
+	zaa.controller("ActiveWindowTagController", ['$scope', '$htt', 'AdminToastService', function($scope, $http, AdminToastService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
@@ -695,7 +695,7 @@
 
 		$scope.loadTags();
 
-	});
+	}]);
 
 	/**
 	 * ActiveWindow GalleryController
@@ -705,7 +705,7 @@
 	 *
 	 * Changes content when parent crud controller changes value for active aw.itemId.
 	 */
-	zaa.controller("ActiveWindowGalleryController", function($scope, $http, $filter) {
+	zaa.controller("ActiveWindowGalleryController", ['$scope', '$http', '$filter', function($scope, $http, $filter) {
 
 		$scope.crud = $scope.$parent;
 
@@ -761,9 +761,9 @@
 			$scope.loadImages();
 		});
 
-	});
+	}]);
 
-	zaa.controller("ActiveWindowGroupAuth", function($scope, $http, CacheReloadService) {
+	zaa.controller("ActiveWindowGroupAuth", ['$scope', '$http', 'CacheReloadService', function($scope, $http, CacheReloadService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
@@ -808,11 +808,11 @@
 		$scope.$watch(function() { return $scope.data.aw.itemId }, function(n, o) {
 			$scope.getRights();
 		});
-	});
+	}]);
 
 // DefaultController.js.
 
-	zaa.controller("DefaultController", function ($scope, $http, $state, $stateParams, CrudTabService) {
+	zaa.controller("DefaultController", ['$scope', '$http', '$state', '$stateParams', 'CrudTabService', function ($scope, $http, $state, $stateParams, CrudTabService) {
 
 		$scope.moduleId = $state.params.moduleId;
 
@@ -894,11 +894,11 @@
 		});
 
 		$scope.init();
-	});
+	}]);
 
-	zaa.controller("DashboardController", function ($scope) {
+	zaa.controller("DashboardController", ['$scope', function ($scope) {
 		$scope.logItemOpen = false;
-	});
+	}]);
 
 	zaa.filter('lockFilter', function() {
 		return function(data, table, pk) {
@@ -913,7 +913,7 @@
         };
 	});
 
-	zaa.controller("LayoutMenuController", function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
+	zaa.controller("LayoutMenuController", ['$scope', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
 
@@ -973,24 +973,6 @@
 			$scope.debugDetail = debugDetail;
 			$scope.debugDetailKey = key;
 		};
-
-		/*
-		$scope.sidePanelUserMenu = false;
-
-		$scope.sidePanelHelp = false;
-
-		$scope.toggleHelpPanel = function() {
-			$scope.sidePanelHelp = !$scope.sidePanelHelp;
-			$scope.sidePanelUserMenu = false;
-		};
-
-		$scope.toggleUserPanel = function() {
-			$scope.sidePanelUserMenu = !$scope.sidePanelUserMenu;
-			$scope.sidePanelHelp = false;
-		};
-
-	    $scope.userMenuOpen = false;
-	    */
 
 		$scope.notify = null;
 
@@ -1142,9 +1124,9 @@
 		};
 
 		$scope.get();
-	});
+	}]);
 
-	zaa.controller("AccountController", function($scope, $http, $window, AdminToastService) {
+	zaa.controller("AccountController", ['$scope', '$http', '$window', 'AdminToastService', function($scope, $http, $window, AdminToastService) {
 		
 		$scope.pass = {};
 		
@@ -1197,5 +1179,5 @@
 		};
 
 		$scope.getProfile();
-	});
+	}]);
 })();
