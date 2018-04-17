@@ -869,6 +869,7 @@
 		};
 
 		$scope.click = function(item) {
+			console.log(item);
 			$scope.isOpenModulenav = false;
 			$scope.currentItem = item;
 

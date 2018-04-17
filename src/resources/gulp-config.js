@@ -1,53 +1,65 @@
+const imagemin = require("gulp-imagemin");
+const browserlist = ["> 0.5%"];
+
 module.exports = {
-
-    version: "0.0.2",
-
     css: {
         scss: {
             config: {
-                outputStyle: 'compressed' // nested, compact, expanded and compressed are available options
+                outputStyle: "compressed" // nested, compact, expanded and compressed are available options
             }
         },
+
+        sourcemaps: {
+            enabled: "local"
+        },
+
         autoprefixer: {
             enabled: true,
             config: {
-                browsers: ['> 0.1%']
+                browsers: browserlist
             }
         },
-        pxToRem: {
+
+        cleanCss: {
             enabled: true,
             config: {
-                rootValue: 15,
-                propList: ['font', 'font-size', 'line-height', 'letter-spacing'],
-                selectorBlackList: [/^html$/, /^body$/], // Ignore font-size definition on html or body
-                replace: false
-            }
-        },
-        cleanCss: {
-            enabled: "dev, prep, prod",
-            config: {
-                compatibility: 'ie8'
+                compatibility: "ie8"
             }
         }
     },
 
     js: {
+        sourcemaps: {
+            enabled: "local"
+        },
+        browserify: {
+            enabled: false
+        },
+        uglify: {
+            enabled: false
+        },
         babeljs: {
             enabled: false,
             config: {
-                minified: false
+                minified: false,
+                comments: false
             }
         }
+    },
+
+    clean: {
+        enabled: "prod",
+        paths: ["dist/**/*.map"]
     },
 
     images: {
         imagemin: {
             enabled: true,
             config: [
-                imagemin.gifsicle({interlaced: true}),
-                imagemin.jpegtran({progressive: true}),
-                imagemin.optipng({optimizationLevel: 5}),
-                imagemin.svgo({plugins: [{removeViewBox: true}]})
+                imagemin.gifsicle({ interlaced: true }),
+                imagemin.jpegtran({ progressive: true }),
+                imagemin.optipng({ optimizationLevel: 5 }),
+                imagemin.svgo({ plugins: [{ removeViewBox: true }] })
             ]
         }
     },
@@ -55,15 +67,37 @@ module.exports = {
     svg: {
         svgmin: {
             enabled: true,
-            config: {
-            }
+            config: {}
         }
     },
+
+    extraTasks: {
+        jsUglify: {
+            runAsTask: 'js',
+            sourcemaps: {
+                enabled: "local"
+            },
+            browserify: {
+                enabled: false
+            },
+            uglify: {
+                enabled: "prod"
+            },
+            babeljs: {
+                enabled: false,
+                config: {
+                    minified: false,
+                    comments: false
+                }
+            }
+        },
+    },
+
 
     paths: {
         // "DESTINATION" : ['SOURCE']
         css: {
-            "dist/css/": ['scss/**/*.scss']
+            "dist/css/": ["scss/**/*.scss"]
         },
         js: {
             "dist/js/main.js": [
@@ -77,10 +111,14 @@ module.exports = {
                 "../../vendor/bower-asset/ng-wig/dist/ng-wig.min.js",
                 "../../vendor/bower-asset/twigjs-bower/twig/twig.js",
                 "../../vendor/bower-asset/angular-filter/dist/angular-filter.min.js",
-                "vendorlibs/ng-colorwheel/ng-colorwheel.js",
+                "vendorlibs/ng-colorwheel/ng-colorwheel.js", // Don't minify
                 "../../vendor/bower-asset/bowser/src/useragent.js",
                 "../../vendor/bower-asset/bowser/src/bowser.js",
                 "../../vendor/bower-asset/echarts/dist/echarts.min.js",
+            ]
+        },
+        jsUglify: {
+            "dist/js/mainugly.js": [
                 "js/dnd.js",
                 "js/zaa.js",
                 "js/services.js",
@@ -93,21 +131,26 @@ module.exports = {
             ]
         },
         images: {
-            "images/": 'images/**/*'
+            "images/": [
+                "images/**/*.jpeg",
+                "images/**/*.jpg",
+                "images/**/*.png",
+                "images/**/*.gif"
+            ]
         },
-        svg: {}
+        svg: {
+            "svg/": ["svg/**/*.svg"]
+        }
     },
 
     // All tasks above are available (css, js, images and svg)
     combinedTasks: {
-        default: [ 'css', 'js' ],
-        compile: [ 'css', 'js' ],
-        compress: [ 'images', 'svg' ]
+        default: [["dist", "watch"]],
+        dist: ["css", "js", "jsUglify", /*"images", "svg",*/ "clean"]
     },
 
     watchTask: {
-        'css': [ 'css' ],
-        'js': [ 'js' ]
+        css: ["css"],
+        js: ["js"]
     }
-
 };
