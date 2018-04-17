@@ -56,7 +56,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         parent::init();
         
-        $this->on(self::EVENT_AFTER_VALIDATE, function() {
+        $this->on(self::EVENT_BEFORE_INSERT, function() {
         	if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
         		$this->encodePassword();
         		
