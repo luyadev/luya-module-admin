@@ -168,6 +168,12 @@ class LoginController extends Controller
         ];
     }
 
+    /**
+     * Ensure current brute force attempt based on session.
+     * 
+     * @return boolean|integer
+     * @since 1.2.0
+     */
     private function sessionBruteForceLock()
     {
         $attempt = Yii::$app->session->get('__attempt_count', 0);

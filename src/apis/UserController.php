@@ -7,6 +7,8 @@ use luya\admin\ngrest\base\Api;
 use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
 use luya\validators\StrengthValidator;
+use luya\helpers\Url;
+use luya\admin\Module;
 
 /**
  * User API, provides ability to manager and list all administration users.
@@ -97,20 +99,21 @@ class UserController extends Api
         $token = Yii::$app->request->getBodyParam('token');
         $user = Yii::$app->adminuser->identity;
         
-        if (!empty($token) && sha1($token) == $user->email_verification_token) {
+        if (!empty($token) && sha1($token) == $user->email_verification_token && $this->hasOpenEmailValidation($user)) {
             
             $newEmail = $user->setting->get(User::USER_SETTING_NEWUSEREMAIL);
             
             $user->email = $newEmail;
             if ($user->update(true, ['email'])) {
                 $user->resetEmailVerification();
+                $newEmail = $user->setting->remove(User::USER_SETTING_NEWUSEREMAIL);
                 return ['success' => true];
             } else {
                 return $this->sendModelError($user);
             }
         }
         
-        return $this->sendArrayError(['email' => 'Empty or Invalid verification token.']);
+        return $this->sendArrayError(['email' => Module::t('account_changeemail_wrongtokenorempty')]);
     }
     
     /**
@@ -129,14 +132,14 @@ class UserController extends Api
         if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
             $token = $user->getAndStoreEmailVerificationToken();
             
-            $mail = Yii::$app->mail->compose('E-Mail verification', 'Someone requests to change the email. Please enter the following code to change the email. Token: ' . $token)
+            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), Module::t('account_changeemail_body', ['url' => Url::base(true), 'token' => $token]))
             ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
             ->send();
             
             if ($mail) {
                 $identity->setting->set(User::USER_SETTING_NEWUSEREMAIL, $user->email);
             } else {
-                $user->addError('email', 'Could not send verification token to current email. Make sure mail component is configured.');
+                $user->addError('email', Module::t('account_changeemail_tokensenterror', ['email' => $identity->email]));
                 $identity->resetEmailVerification();
             }
         }

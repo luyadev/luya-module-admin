@@ -152,8 +152,8 @@ return [
 
 // added translations in 1.0.0-beta7
 
-    'login_securetoken_mail_subject' => 'LUYA Security code',
-    'login_securetoken_mail' => '<h1>LUYA Security code</h1><p>Use the following security code to log into your administration at {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail_subject' => 'Security code',
+    'login_securetoken_mail' => '<h1>Security code</h1><p>Use the following security code to log into your administration at {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
     'login_async_token_error' => 'The provided security code is invalid or expired.',
     'login_async_token_globalerror' => 'A Server error occurred, please contact your site administrator.',
     'ngrest_crud_csv_export_btn' => 'Generate CSV',
@@ -331,4 +331,10 @@ return [
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'E-Mail verification code',
+    'account_changeemail_body' => '<h1>Security code</h1><p>Enter the following email verification code to change your email adresse for website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification token to {email}. Make sure mail component is configured.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification token.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification token sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'E-Mail verification token',
 ];

@@ -78,6 +78,13 @@ final class LoginForm extends Model
         }
     }
     
+    /**
+     * Check if the given user has a lockout, otherwise upcount the attempts.
+     * 
+     * @param User $user
+     * @return boolean
+     * @since 1.2.0
+     */
     private function userAttemptBruteForceLock(User $user)
     {
         if ($this->userAttemptBruteForceLockHasExceeded($user)) {
@@ -93,6 +100,13 @@ final class LoginForm extends Model
         $user->updateAttributes(['login_attempt' => $this->attempts]);
     }
     
+    /**
+     * Check if lockout has expired or not.
+     * 
+     * @param User $user
+     * @return boolean
+     * @since 1.2.0
+     */
     private function userAttemptBruteForceLockHasExceeded(User $user)
     {
         if ($user->login_attempt_lock_expiration > time()) {

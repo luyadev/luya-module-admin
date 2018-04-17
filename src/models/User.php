@@ -236,6 +236,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'lastloginTimestamp' => Module::t('model_user_lastlogintimestamp'),
             'api_last_activity' => Module::t('model_user_api_last_activity'),
             'login_attempt_lock_expiration' => Module::t('model_user_login_attempt_lock_expiration'),
+            'email_verification_token' => Module::t('model_user_email_verification_token'),
         ];
     }
 

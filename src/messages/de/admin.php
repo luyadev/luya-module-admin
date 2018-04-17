@@ -152,8 +152,8 @@ return [
 
 // added translations in 1.0.0-beta7
 
-    'login_securetoken_mail_subject' => 'LUYA Sicherheitscode',
-    'login_securetoken_mail' => '<h1>LUYA Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail_subject' => 'Sicherheitscode',
+    'login_securetoken_mail' => '<h1>Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
     'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch oder abgelaufen.',
     'login_async_token_globalerror' => 'Ein Globaler-Fehler ist aufgetreten. Bitte kontaktiere den Seitenbetreiber.',
     'ngrest_crud_csv_export_btn' => 'CSV generieren',
