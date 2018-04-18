@@ -5,7 +5,7 @@ use luya\helpers\Url;
 $user = Yii::$app->adminuser->getIdentity();
 $this->beginPage()
 ?><!DOCTYPE html>
-<html ng-app="zaa" ng-controller="LayoutMenuController">
+<html ng-app="zaa" ng-strict-di ng-controller="LayoutMenuController">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">

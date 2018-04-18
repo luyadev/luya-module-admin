@@ -44,10 +44,10 @@ class RenderCrudView extends View
             'relations' => $this->context->getConfig()->getRelations(),
         ];
         
-        $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', function($scope, $controller) {
+        $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {
 			$.extend(this, $controller(\'CrudController\', { $scope : $scope }));
 			$scope.config = '.Json::htmlEncode($config).'
-	    });';
+	    }]);';
         
         $this->registerJs($client, self::POS_BEGIN);
     }

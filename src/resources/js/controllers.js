@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	zaa.config(['$stateProvider', 'resolverProvider', function($stateProvider, resolverProvider) {
+	zaa.config(['$stateProvider', function($stateProvider) {
 		
 		$stateProvider.state("default.route.detail", {
 			url: "/:id",
@@ -869,7 +869,6 @@
 		};
 
 		$scope.click = function(item) {
-			console.log(item);
 			$scope.isOpenModulenav = false;
 			$scope.currentItem = item;
 

@@ -103,10 +103,7 @@ module.exports = {
             "dist/js/main.js": [
                 "../../vendor/bower-asset/angular/angular.js",
                 "vendorlibs/ng-colorwheel/ng-colorwheel.js",
-            ]
-        },
-        jsUglify: {
-            "dist/js/mainugly.js": [
+
                 "../../vendor/bower-asset/angular-loading-bar/build/loading-bar.min.js",
                 "../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.js",
                 "../../vendor/bower-asset/ui-router/release/angular-ui-router.min.js",
@@ -121,12 +118,18 @@ module.exports = {
                 "../../vendor/bower-asset/bowser/src/bowser.js",
                 "../../vendor/bower-asset/echarts/dist/echarts.min.js",
 
-                "js/dnd.js",
+                
+                
+            ]
+        },
+        jsUglify: {
+            "dist/js/mainugly.js": [
+            	"js/dnd.js",
                 "js/zaa.js",
                 "js/services.js",
                 "js/filters.js",
                 "js/directives.js",
-                "js/controllers.js"
+                "js/controllers.js",
             ],
             "dist/js/login.js": [
                 "js/login.js"
@@ -153,6 +156,7 @@ module.exports = {
 
     watchTask: {
         css: ["css"],
-        js: ["js"]
+        js: ["js"],
+        jsUglify: ["jsUglify"]
     }
 };

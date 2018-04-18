@@ -9,7 +9,7 @@
  */
 ?>
 <script>
-zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', function($scope, $controller, $injector) {
+zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', ['$scope', '$controller', '$injector', function($scope, $controller, $injector) {
     $scope.crud = $scope.$parent;
     $scope.linkHref = null;
     $scope.linkHrefHidden = true;
@@ -39,7 +39,7 @@ zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', function($scope, $c
         	$scope.crud.toast.error(error.data.message, 8000);
         });
     };
-});
+}]);
 </script>
 <div ng-controller="<?= $angularCrudControllerName; ?>">
     <button ng-show="!buttonHidden" ng-click='sendButton("<?= $callbackName; ?>", <?= $callbackArgumentsJson; ?>)' class="<?= $buttonClass; ?>" type="button"><?= $buttonNameValue; ?></button>
