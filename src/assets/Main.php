@@ -27,7 +27,7 @@ class Main extends \luya\web\Asset
      */
     public $js = [
         'dist/js/main.js',
-        'dist/js/mainugly.js',
+        'dist/js/main.uglified.js',
     ];
 
     /**

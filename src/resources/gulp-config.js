@@ -91,6 +91,11 @@ module.exports = {
                 }
             }
         },
+        purgeDist: {
+            runAsTask: 'clean',
+            enabled: true,
+            paths: ["dist/*"]
+        }
     },
 
 
@@ -101,9 +106,8 @@ module.exports = {
         },
         js: {
             "dist/js/main.js": [
-                "../../vendor/bower-asset/angular/angular.js",
+                "../../vendor/bower-asset/angular/angular.min.js",
                 "vendorlibs/ng-colorwheel/ng-colorwheel.js",
-
                 "../../vendor/bower-asset/angular-loading-bar/build/loading-bar.min.js",
                 "../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.js",
                 "../../vendor/bower-asset/ui-router/release/angular-ui-router.min.js",
@@ -117,13 +121,10 @@ module.exports = {
                 "../../vendor/bower-asset/bowser/src/useragent.js",
                 "../../vendor/bower-asset/bowser/src/bowser.js",
                 "../../vendor/bower-asset/echarts/dist/echarts.min.js",
-
-                
-                
             ]
         },
         jsUglify: {
-            "dist/js/mainugly.js": [
+            "dist/js/main.uglified.js": [
             	"js/dnd.js",
                 "js/zaa.js",
                 "js/services.js",
@@ -151,7 +152,7 @@ module.exports = {
     // All tasks above are available (css, js, images and svg)
     combinedTasks: {
         default: [["dist", "watch"]],
-        dist: ["css", "js", "jsUglify", /*"images", "svg",*/ "clean"]
+        dist: ["purgeDist", "css", "js", "jsUglify", "images", "svg", "clean"]
     },
 
     watchTask: {
