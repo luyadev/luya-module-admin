@@ -256,6 +256,13 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         ];
     }
 
+    /**
+     * Generate an easy readable random token.
+     * 
+     * @param number $length
+     * @return mixed
+     * @since 1.2.0
+     */
     private function generateToken($length = 6)
     {
         $token = Yii::$app->security->generateRandomString($length);
@@ -422,6 +429,12 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     
     // Change e-mail
     
+    /**
+     * Generate and save a email verification token and return the token.
+     * 
+     * @return mixed
+     * @since 1.2.0
+     */
     public function getAndStoreEmailVerificationToken()
     {
         $token = $this->generateToken(6);
@@ -434,6 +447,11 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return $token;
     }
     
+    /**
+     * Reset the user model email verification token and timestamp
+     * 
+     * @since 1.2.0
+     */
     public function resetEmailVerification()
     {
         $this->updateAttributes([
