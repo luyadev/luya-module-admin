@@ -1,5 +1,5 @@
 <script>
-zaa.bootstrap.register('FlowController', function($scope, $rootScope, $controller) {
+zaa.bootstrap.register('FlowController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$watch(function() { return $scope.$flow }, function(n, o) {
         $scope.$flow.opts.target = $scope.$parent.getActiveWindowCallbackUrl('upload');
     });
@@ -33,7 +33,7 @@ zaa.bootstrap.register('FlowController', function($scope, $rootScope, $controlle
     };
     
     $scope.loadList();
-});
+}]);
 </script>
 <div ng-controller="FlowController" flow-init="flowOptions" flow-files-submitted="$flow.upload()" flow-complete="loadList()" flow-file-success="$file.upload = true">
     <div class="row">
