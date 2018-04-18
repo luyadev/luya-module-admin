@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a29db2cab669e48567f2975e234a1518",
+    "content-hash": "d58106f88fdf1e164be3ed4c29f1ce71",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -508,16 +508,16 @@
     "packages-dev": [
         {
             "name": "bower-asset/angular",
-            "version": "v1.6.9",
+            "version": "v1.6.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/angular/bower-angular.git",
-                "reference": "2d507370407cecd2aa5c339ba3140966bce6006b"
+                "reference": "309e7f82ecc9098e1f93870eb33083b84dead289"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/angular/bower-angular/zipball/2d507370407cecd2aa5c339ba3140966bce6006b",
-                "reference": "2d507370407cecd2aa5c339ba3140966bce6006b",
+                "url": "https://api.github.com/repos/angular/bower-angular/zipball/309e7f82ecc9098e1f93870eb33083b84dead289",
+                "reference": "309e7f82ecc9098e1f93870eb33083b84dead289",
                 "shasum": null
             },
             "type": "bower-asset",
@@ -609,12 +609,12 @@
             "version": "3.8.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ecomfe/echarts.git",
+                "url": "https://github.com/apache/incubator-echarts.git",
                 "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
                 "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e",
                 "shasum": null
             },
@@ -625,7 +625,7 @@
             "version": "v2.13.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:flowjs/flow.js.git",
+                "url": "https://github.com/flowjs/flow.js.git",
                 "reference": "172e3d1b05d4089a735b24c394c0983a7d0e29c5"
             },
             "dist": {
@@ -1136,22 +1136,22 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "b4c65c4fbcc7358c40971e0cc99ef1918ca16f04"
+                "reference": "3db8284aa4b8d777d39c03eb9f67b328f9f4440e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/b4c65c4fbcc7358c40971e0cc99ef1918ca16f04",
-                "reference": "b4c65c4fbcc7358c40971e0cc99ef1918ca16f04",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/3db8284aa4b8d777d39c03eb9f67b328f9f4440e",
+                "reference": "3db8284aa4b8d777d39c03eb9f67b328f9f4440e",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "^1.0",
                 "luyadev/luya-core": "~1.0.0",
-                "luyadev/luya-module-admin": "~1.1.0",
+                "luyadev/luya-module-admin": "~1.0",
                 "luyadev/luya-module-cms": "~1.0.0",
                 "phpunit/phpunit": "~6.0.0",
                 "twig/twig": "^1.0"
@@ -1159,7 +1159,7 @@
             "type": "luya-core",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -1185,7 +1185,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-03-26T19:59:46+00:00"
+            "time": "2018-04-18T08:24:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3240,6 +3240,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "luyadev/luya-testsuite": 20,
         "twbs/bootstrap": 10
     },
     "prefer-stable": false,
