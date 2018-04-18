@@ -60,6 +60,7 @@ class LogBehavior extends Behavior
                 'is_insert' => false,
                 'is_update' => false,
                 'is_delete' => true,
+                'attributes_json' => $this->toJson($event->sender->getAttributes()),
                 'table_name' => $event->sender->tableName(),
                 'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
             ])->execute();
