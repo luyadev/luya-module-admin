@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbef086f51ac9806c882870a0f6473f3",
+    "content-hash": "d58106f88fdf1e164be3ed4c29f1ce71",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1135,7 +1135,6 @@
             "time": "2018-03-26T17:04:29+00:00"
         },
         {
-            "name": "luyadev/luya-testsuite",
             "version": "1.0.9",
             "source": {
                 "type": "git",
@@ -1146,6 +1145,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/e73d820fe0ee053028f0ee9b6881ba9c836dfbfd",
                 "reference": "e73d820fe0ee053028f0ee9b6881ba9c836dfbfd",
+
                 "shasum": ""
             },
             "require": {
@@ -1159,7 +1159,7 @@
             "type": "luya-core",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -3240,6 +3240,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "luyadev/luya-testsuite": 20,
         "twbs/bootstrap": 10
     },
     "prefer-stable": false,

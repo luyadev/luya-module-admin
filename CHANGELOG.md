@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#102](https://github.com/luyadev/luya-module-admin/issues/102) Fixed bug with empty attributes_json in ngrest logger for delete actions.
 + [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
 
 ## 1.1.1.1 (12. April 2018)

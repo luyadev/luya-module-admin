@@ -332,4 +332,11 @@ return [
     'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login Sperrzeit',
+    'model_user_login_attempt_lock_expiration' => 'Dauer Login-Lockout',
+    'account_changeemail_subject' => 'Aktualisierung der E-Mail-Adresse bestätigen',
+    'account_changeemail_body' => '<h1>Bestätigungscode</h1><p>Geben Sie den folgenden Bestätigungscode ein, um Ihre E-Mail-Adresse für die Website {url} zu aktualisieren.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Der Bestätigungscode konnte nicht an die E-Mail-Adresse {email} geschickt werden. Stellen Sie sicher, dass die Mail-Komponente korrekt installiert ist.',
+    'account_changeemail_wrongtokenorempty' => 'Leerer, ungültiger oder abgelaufener E-Mail-Bestätigungscode.',
+    'account_changeemail_enterverificationtoken' => 'Bitte geben Sie den Bestätigungscode ein, der an <b>{{profile.email}}</b> geschickt wurde, um die Änderung Ihrer E-Mail-Adresse zu bestätigen <b>{{settings.newUserEmail}}</b>.',
+    'model_user_email_verification_token' => 'E-Mail-Bestätigungscode',
 ];
