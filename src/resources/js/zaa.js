@@ -85,9 +85,9 @@ function typeCastValue(value) {
                 },
                 resolve: {
                     adminServiceResolver: adminServiceResolver,
-                    resolver: function (resolver) {
+                    resolver: ['resolver', function (resolver) {
                         return resolver.then;
-                    }
+                    }]
                 }
             })
             .state("home", {
@@ -109,20 +109,21 @@ function typeCastValue(value) {
 	 *		});
 	 * });
      */
-    zaa.provider("resolver", function () {
+    zaa.provider("resolver", function() {
         var list = [];
 
         this.addCallback = function (callback) {
             list.push(callback);
-        }
+        };
 
-        this.$get = function ($injector, $q, $state) {
-            return $q(function (resolve, reject) {
+        this.$get = ['$injector', '$q', '$state', function ($injector, $q, $state) {
+            return $q(function(resolve, reject) {
                 for (var i in list) {
                     $injector.invoke(list[i]);
                 }
             })
-        }
+        }];
+        
     });
 
     /* FACTORIES */
@@ -256,7 +257,7 @@ function typeCastValue(value) {
                 $window.location.reload();
             });
         }
-
+        
         return service;
     }]);
     

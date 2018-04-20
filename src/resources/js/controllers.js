@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	zaa.config(['$stateProvider', 'resolverProvider', function($stateProvider, resolverProvider) {
+	zaa.config(['$stateProvider', function($stateProvider) {
 		
 		$stateProvider.state("default.route.detail", {
 			url: "/:id",
@@ -318,7 +318,7 @@
 		/****** DELETE, UPDATE, CREATE */
 
 		$scope.deleteItem = function(id, $event) {
-			AdminToastService.confirm(i18n['js_ngrest_rm_page'], i18n['ngrest_button_delete'], function($timeout, $toast) {
+			AdminToastService.confirm(i18n['js_ngrest_rm_page'], i18n['ngrest_button_delete'], ['$toast', function($toast) {
 				$http.delete($scope.config.apiEndpoint + '/'+id).then(function(response) {
 					$scope.loadList();
 					$toast.close();
@@ -326,7 +326,7 @@
 				}, function(data) {
 					$scope.printErrors(data);
 				});
-			});
+			}]);
 		};
 
 		$scope.toggleUpdate = function(id) {
@@ -1025,7 +1025,7 @@
 				$scope.forceReload = response.data.forceReload;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {
 					$scope.visibleAdminReloadDialog = true;
-					AdminToastService.confirm(i18n['js_admin_reload'], i18n['layout_btn_reload'], function($timeout, $toast) {
+					AdminToastService.confirm(i18n['js_admin_reload'], i18n['layout_btn_reload'], function() {
 						$scope.reload();
 						$scope.visibleAdminReloadDialog = false;
 					});

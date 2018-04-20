@@ -65,11 +65,11 @@
         };
     });
     
-    zaa.filter('trustAsUnsafe', function ($sce) {
+    zaa.filter('trustAsUnsafe', ['$sce', function ($sce) {
         return function (val, enabled) {
             return $sce.trustAsHtml(val);
         };
-    });
+    }]);
     
     zaa.filter('srcbox', function () {
         return function (input, search) {
@@ -89,14 +89,14 @@
         }
     });
 
-    zaa.filter('trustAsResourceUrl', function ($sce) {
+    zaa.filter('trustAsResourceUrl', ['$sce', function ($sce) {
         return function (val, enabled) {
             if (!enabled) {
                 return null;
             }
             return $sce.trustAsResourceUrl(val);
         };
-    });
+    }]);
 
     zaa.filter('truncateMiddle', function () {
         return function (val, length, placeholder) {

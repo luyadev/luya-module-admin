@@ -53,7 +53,12 @@
 
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
-     * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
+     * 
+     * Usage:
+     * 
+     * ```
+     * <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
+     * ```
      */
     zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) {
         return {
@@ -88,6 +93,9 @@
         };
     }]);
 
+    /**
+     * Returns the link options as value.
+     */
     zaa.directive("linkObjectToString", function () {
         return {
             restrict: 'E',
@@ -298,43 +306,6 @@
             }
         };
     });
-
-    /**
-     * Directive to trigger fixed table head.
-     * 
-     * not used in new admin ui
-     */
-    /*
-    zaa.directive("fixedTableHead", function ($window) {
-        return function (scope, element, attrs) {
-            var onScroll = function () {
-                var table = angular.element(element.find('table'));
-                var thead = angular.element(table.find('thead'));
-
-                if (table.length > 0 && thead.length > 0) {
-                    thead.css('background-color', '#fff');
-
-                    var tableOffset = table.offset().top - $('.navbar-fixed').height();
-
-                    if (tableOffset <= 0) {
-                        thead.css('transform', 'translateY(' + (-1 - tableOffset) + 'px)');
-                        thead.css('box-shadow', '0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 0 rgba(0, 0, 0, 0.04), 0 3px 1px -2px rgba(0, 0, 0, 0.1)');
-                    } else {
-                        thead.css('transform', 'none');
-                        thead.css('box-shadow', 'none');
-                    }
-                }
-            };
-
-            onScroll();
-
-            angular.element(element).bind("scroll", function () {
-                onScroll();
-            });
-        };
-    });
-	
-    */
     
     /**
      * Apply auto generated height for textareas based on input values
@@ -398,6 +369,9 @@
         }
     });
 
+    /**
+     * Resize the given element
+     */
     zaa.directive('resizer', ['$document', function ($document) {
         return {
             scope: {
@@ -688,6 +662,9 @@
     	}
     }]);
 
+    /**
+     * Directive to load curd relations.
+     */
     zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
     	return {
     		restrict: "E",

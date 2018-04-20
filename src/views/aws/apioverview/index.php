@@ -11,7 +11,7 @@ use luya\admin\Module;
  */
 ?>
 <script>
-zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToastService) {
+zaa.bootstrap.register('ApiOverviewController', ['$scope', '$http', 'AdminToastService', function($scope, $http, AdminToastService) {
     $scope.generateNewToken = function() {
     	AdminToastService.confirm('<?= Module::t('aw_apioverview_resettokenconfirm'); ?>', '<?= Module::t('aw_apioverview_resettokenconfirm_title'); ?>', function() {
     		this.close();
@@ -35,7 +35,7 @@ zaa.bootstrap.register('ApiOverviewController', function($scope, $http, AdminToa
         $scope.requestUrl = url;
         $scope.runRequest();
     };
-});
+}]);
 </script>
 <div class="row" ng-controller="ApiOverviewController">
     <div class="col-md-2">
