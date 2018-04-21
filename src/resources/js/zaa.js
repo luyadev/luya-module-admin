@@ -45,7 +45,7 @@ function i18nParam(varName, params) {
  * @returns
  */
 function typeCastValue(value) {
-    return $.isNumeric(value) ? parseInt(value) : value;
+    return angular.isNumber(value) ? parseInt(value) : value;
 }
 
 (function () {
@@ -53,7 +53,7 @@ function typeCastValue(value) {
 
     /* CONFIG */
     
-    zaa.config(function ($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
+    zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
     	
         $httpProvider.interceptors.push("authInterceptor");
 
@@ -85,16 +85,16 @@ function typeCastValue(value) {
                 },
                 resolve: {
                     adminServiceResolver: adminServiceResolver,
-                    resolver: function (resolver) {
+                    resolver: ['resolver', function (resolver) {
                         return resolver.then;
-                    },
+                    }]
                 }
             })
             .state("home", {
                 url: "",
                 templateUrl: "admin/default/dashboard"
             });
-    });
+    }]);
 
     /* PROVIDERS */
     
@@ -109,20 +109,21 @@ function typeCastValue(value) {
 	 *		});
 	 * });
      */
-    zaa.provider("resolver", function () {
+    zaa.provider("resolver", function() {
         var list = [];
 
         this.addCallback = function (callback) {
             list.push(callback);
-        }
+        };
 
-        this.$get = function ($injector, $q, $state) {
-            return $q(function (resolve, reject) {
+        this.$get = ['$injector', '$q', '$state', function ($injector, $q, $state) {
+            return $q(function(resolve, reject) {
                 for (var i in list) {
                     $injector.invoke(list[i]);
                 }
             })
-        }
+        }];
+        
     });
 
     /* FACTORIES */
@@ -130,7 +131,7 @@ function typeCastValue(value) {
     /**
      * LUYA LOADING
      */
-    zaa.factory("LuyaLoading", function ($timeout) {
+    zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
 
         var state = false;
         var stateMessage = null;
@@ -161,7 +162,7 @@ function typeCastValue(value) {
                 return state;
             }
         }
-    });
+    }]);
     
     /**
      * Inside your Directive or Controller:
@@ -247,7 +248,7 @@ function typeCastValue(value) {
         return service;
     });
     
-    zaa.factory('CacheReloadService', function ($http, $window) {
+    zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
 
         var service = [];
 
@@ -256,19 +257,27 @@ function typeCastValue(value) {
                 $window.location.reload();
             });
         }
-
+        
         return service;
-    });
+    }]);
     
-    zaa.factory("authInterceptor", function ($rootScope, $q, AdminToastService, AdminDebugBar) {
+    zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
         return {
             request: function (config) {
             	if (!config.hasOwnProperty('ignoreLoadingBar')) {
             		config.debugId = AdminDebugBar.pushRequest(config);
             	}
+            	
+            	if (config.hasOwnProperty('authToken')) {
+            		var authToken = config.authToken;
+            	} else {
+            		var authToken = $rootScope.luyacfg.authToken;
+            	}
+            	
                 config.headers = config.headers || {};
-                config.headers.Authorization = "Bearer " + $rootScope.luyacfg.authToken;
-                config.headers['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr("content");
+                config.headers.Authorization = "Bearer " + authToken;
+                var csrfToken = document.head.querySelector("[name=csrf-token]").content;
+                config.headers['X-CSRF-Token'] = csrfToken;
                 
                 return config || $q.when(config);
             },
@@ -281,7 +290,9 @@ function typeCastValue(value) {
             },
             responseError: function (data) {
                 if (data.status == 401 || data.status == 403 || data.status == 405) {
-                    window.location = "admin/default/logout";
+                	if (!data.config.hasOwnProperty('authToken')) {
+                		window.location = "admin/default/logout";
+                	}
                 } else if (data.status != 422) {
                 	var message = data.data.hasOwnProperty('message');
                 	if (message) {
@@ -295,6 +306,6 @@ function typeCastValue(value) {
                 return $q.reject(data);
             }
         };
-    });
+    }]);
 
 })();

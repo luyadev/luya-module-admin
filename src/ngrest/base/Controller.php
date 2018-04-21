@@ -94,6 +94,7 @@ class Controller extends \luya\admin\base\Controller
 
     /**
      * Get Model Object
+     *
      * @return \luya\admin\ngrest\base\NgRestModel
      */
     public function getModel()
@@ -106,6 +107,7 @@ class Controller extends \luya\admin\base\Controller
     }
     
     /**
+     * Render the ngrest default index template.
      *
      * @param string $inline
      * @param string $relation
@@ -141,6 +143,13 @@ class Controller extends \luya\admin\base\Controller
         return $ngrest->render($crud);
     }
     
+    /**
+     * Get the file content response for a given key.
+     *
+     * @param string $key
+     * @throws ForbiddenHttpException
+     * @return \yii\web\Response
+     */
     public function actionExportDownload($key)
     {
         $sessionkey = Yii::$app->session->get('tempNgRestFileKey');

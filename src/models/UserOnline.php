@@ -75,10 +75,10 @@ final class UserOnline extends ActiveRecord
     /**
      * Lock the user for an action.
      *
-     * @param unknown $userId
-     * @param unknown $table
-     * @param unknown $pk
-     * @param unknown $translation
+     * @param integer $userId
+     * @param string $table
+     * @param string $pk
+     * @param string $translation
      * @param array $translationArgs
      */
     public static function lock($userId, $table, $pk, $translation, array $translationArgs = [])
@@ -99,7 +99,7 @@ final class UserOnline extends ActiveRecord
     /**
      * Unlock the user from an action.
      *
-     * @param unknown $userId
+     * @param integer $userId
      */
     public static function unlock($userId)
     {
@@ -149,10 +149,9 @@ final class UserOnline extends ActiveRecord
      *
      * On production its 30 minutes on test system 60 minutes.
      */
-    public static function clearList()
+    public static function clearList($seconds = 1800)
     {
-        $max = YII_ENV_PROD ? 1800 : 3600;
-        self::deleteAll(['<=', 'last_timestamp', time() - $max]);
+        self::deleteAll(['<=', 'last_timestamp', time() - $seconds]);
     }
     
     /**
@@ -180,17 +179,5 @@ final class UserOnline extends ActiveRecord
         }
 
         return $return;
-    }
-
-    /**
-     * Get the number uf online users.
-     *
-     * @return integer
-     */
-    public static function getCount()
-    {
-        static::clearList();
-
-        return self::find()->count();
     }
 }

@@ -3,31 +3,30 @@ use luya\web\Svg;
 use luya\admin\Module;
 
 $spinner = Svg::widget([
-    'folder' => Yii::getAlias("@admin/resources/svg"),
+    'folder' => "@admin/resources/svg",
     'cssClass' => 'svg-spinner',
     'file' => 'login/spinner.svg'
 ]);
 
 ?>
-
 <div class="login-frame">
     <div class="login-logo">
         <?= Svg::widget([
-            'folder' => Yii::getAlias("@admin/resources/svg"),
+            'folder' => "@admin/resources/svg",
             'cssClass' => 'login-logo-svg',
             'file' => 'logo/luya_logo.svg'
         ]) ?>
     </div>
     <!-- normal login form -->
     <form class="login-form" method="post" id="loginForm">
-        <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken; ?>" />
+        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field form-group">
-                <input class="login-input" id="email" name="login[email]" type="email" tabindex="1" required />
+                <input class="login-input" id="email" name="login[email]" type="email" autocomplete="email" tabindex="1" required />
                 <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>
             </div>
             <div class="login-form-field form-group">
-                <input class="login-input" id="password" name="login[password]" type="password" tabindex="2" required />
+                <input class="login-input" id="password" name="login[password]" type="password" autocomplete="current-password" tabindex="2" required />
                 <label for="password" class="login-input-label"><?= Module::t('login_password'); ?></label>
             </div>
             <div class="login-status alert alert-danger" id="errorsContainer" style="display: none"></div>
@@ -41,7 +40,7 @@ $spinner = Svg::widget([
     <!-- end of normal login form -->
     <!-- secure login form -->
     <form class="login-form hidden" method="post" id="secureForm">
-        <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken; ?>" />
+        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field">
                 <label class="input-label login-secure-token-label" for="secure_token"><?= Module::t('login_securetoken_info'); ?></label>

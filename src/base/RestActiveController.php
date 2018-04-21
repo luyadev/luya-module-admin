@@ -6,7 +6,6 @@ use Yii;
 use luya\admin\components\Auth;
 use luya\admin\models\UserOnline;
 use luya\rest\UserBehaviorInterface;
-use luya\traits\RestBehaviorsTrait;
 use yii\web\ForbiddenHttpException;
 use luya\rest\ActiveController;
 
@@ -32,7 +31,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     }
     
     /**
-     * @inheritdoc
+     * Get the current user auth object.
+     * 
+     * @return \luya\admin\components\AdminUser
      */
     public function userAuthClass()
     {
@@ -47,11 +48,21 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
         switch ($action) {
             case 'index':
             case 'view':
+            case 'services':
+            case 'search':
+            case 'search-provider':
+            case 'search-hidden-fields':
+            case 'full-response':
+            case 'relation-call':
+            case 'filter':
+            case 'export':
                 $type = false;
                 break;
             case 'create':
                 $type = Auth::CAN_CREATE;
                 break;
+            case 'active-window-render';
+            case 'active-window-callback':
             case 'update':
                 $type = Auth::CAN_UPDATE;
                 break;
@@ -59,14 +70,29 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 $type = Auth::CAN_DELETE;
                 break;
             default:
-                throw new ForbiddenHttpException("Invalid RESPI Api action call.");
+                throw new ForbiddenHttpException("Invalid REST API action call.");
                 break;
         }
 
-        UserOnline::refreshUser($this->userAuthClass()->getIdentity()->id, $this->id);
+        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
         
-        if (!Yii::$app->auth->matchApi($this->userAuthClass()->getIdentity()->id, $this->id, $type)) {
-            throw new ForbiddenHttpException('you are unable to access this controller due to access restrictions.');
+        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type)) {
+            throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
+        }
+    }
+
+    /**
+     * Checks if the current api endpoint exists in the list of accessables APIs.
+     * 
+     * @throws ForbiddenHttpException
+     * @since 1.1.0
+     */
+    public function checkEndpointAccess()
+    {
+        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
+        
+        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, false)) {
+            throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
         }
     }
 }

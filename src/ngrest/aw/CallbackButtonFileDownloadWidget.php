@@ -16,7 +16,7 @@ use luya\helpers\FileHelper;
  * {
  *     // where content could be a pdf library for example:
  *     $pdf = new \FPDI();
- *	   $pdf->AddPage();
+ *     $pdf->AddPage();
  *     $pdf->writeHTML('<p>Hello world!</p>', true, false, false, false, '');
  *     $content = $pdf->Output("Ticket-Rapport.pdf", "S");
  *
@@ -40,10 +40,10 @@ use luya\helpers\FileHelper;
  *     'callback' => 'createpdf',
  *     'label' => 'Prepare PDF Report,
  *     'options' => [
- *     	    'class' => 'btn btn-download btn-icon'
- *	        'linkLabel' => 'Download Report',
- *			'linkClass' => 'btn btn-info',
- *	   ]
+ *         'class' => 'btn btn-download btn-icon'
+ *         'linkLabel' => 'Download Report',
+ *         'linkClass' => 'btn btn-info',
+ *     ]
  * ]); ?>
  * ```
  *

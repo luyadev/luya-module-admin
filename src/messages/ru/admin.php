@@ -3,17 +3,17 @@
 return [
     'language_name' => 'Русский',
     'button_save' => 'Сохранить',
-    'button_confirm' => 'да',
+    'button_confirm' => 'Да',
     'button_abort' => 'Отмена',
     'button_send' => 'Отправить',
     'login_pre_title' => 'Авторизоваться в {title}',
-    'login_mail' => 'Email',
+    'login_mail' => 'E-mail',
     'login_password' => 'Пароль',
-    'login_btn_login' => 'Вход',
+    'login_btn_login' => 'Войти',
     'login_securetoken' => 'Секретный код',
     'login_securetoken_info' => 'Введите код безопасности, который был отправлен на ваш адрес электронной почты.',
     'menu_node_system' => 'Система',
-    'menu_node_filemanager' => 'Файловый менеджер',
+    'menu_node_filemanager' => 'Файлы',
     'menu_group_access' => 'Доступ',
     'menu_group_system' => 'Система',
     'menu_group_images' => 'Изображения',
@@ -46,9 +46,9 @@ return [
     'layout_filemanager_detail_size' => 'Размер',
     'layout_filemanager_detail_id' => 'Внутренний ID',
     'layout_filemanager_detail_download' => 'Скачать',
-    'layout_btn_reload' => 'перезагрузить',
+    'layout_btn_reload' => 'Обновить',
     'layout_btn_version' => 'Версия',
-    'layout_btn_useronline' => 'Пользователи в сети',
+    'layout_btn_useronline' => 'Онлайн',
     'layout_btn_logout' => 'Выйти',
     'layout_btn_profile' => 'Профиль',
     'layout_debug_luya_version' => 'Версия Luya',
@@ -132,7 +132,7 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Вы действительно хотите удалить этот файл?',
     'js_dir_manager_rm_file_ok' => 'Файл был успешно удален.',
     'js_zaa_server_proccess' => 'Сервер обрабатывает данные. Пожалуйста подождите',
-    
+
 // added translation in 1.0.0-beta4:
 
     'ngrest_crud_empty_row' => 'Данные пока не добавлены в таблицу',
@@ -145,7 +145,7 @@ return [
     'layout_useronline_name' => 'Имя',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Неактивный с',
-    
+
 // added translations in 1.0.0-beta6
 
     'layout_debug_caching' => 'Кеширование',
@@ -168,7 +168,7 @@ return [
     'mode_user_lastname' => 'Фамилия',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Пароль',
-    
+
 // added translations in 1.0.0-beta8
     'aws_tag_new' => 'Добавить новую запись',
     'aws_tag_add' => 'Добавить',
@@ -196,9 +196,9 @@ return [
     'layout_rightbar_savebtn' => 'Сохранить',
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
     'aws_changeapssword_minchar' => 'Пароль должен иметь минимум {min} символа.',
-        
+
 // rc3
-    
+
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Название',
     'model_lang_short_code' => 'Код',
@@ -237,10 +237,10 @@ return [
     'js_link_change_value' => 'Изменить ссылку',
     'js_link_set_value' => 'Установить ссылку',
     'callback_button_file_download_widget_success' => 'Файл подготовлен. Вы можете скачать его.',
-    
-    
+
+
 // rc4
-    
+
     'api_storage_file_upload_folder_error' => 'Ошибка при сохранении файла в папку хранилища. Ошибка разрешения может вызвать эту проблему. Убедитесь, что папка хранения доступна для записи.',
     'model_user_oldpassword' => 'Прошлый (старый) пароль',
     'js_account_update_profile_success' => 'Данные профиля успешно обновлены.',
@@ -251,9 +251,9 @@ return [
     'locked_info' => 'Кто-то уже редактирует',
     'menu_dashboard' => 'Панель',
     'js_link_not_set' => 'Нет ссылки',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Удалить',
     'js_dir_manager_rm_file_confirm_title' => 'Удалить файл',
     'js_dir_manager_rm_folder_confirm_title' => 'Удалить папку',
@@ -277,5 +277,67 @@ return [
     'model_config_atr_name_hint' => 'Unique identifier for this variable. You can access system config with Config::get(identifier) in your application.',
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
-    'menu_system_item_config' => 'Config variables'
+    'menu_system_item_config' => 'Config variables',
+
+// 1.1.0
+
+    'model_user_is_deleted' => 'Removed',
+    'model_user_name' => 'Name',
+    'model_user_groups' => 'Groups',
+    'aw_userhistorysummary_userdata' => 'Profile details',
+    'aw_userhistorysummary_contribcount' => 'Total contributions',
+    'aw_userhistorysummary_contribcount_inserts' => 'Inserts',
+    'aw_userhistorysummary_contribcount_updates' => 'Updates',
+    'aw_userhistorysummary_customsettings' => 'Custom settings',
+    'aw_userhistorysummary_lastsessions' => 'Lastest sessions',
+    'aw_userhistorysummary_ngrestlogs' => 'Change history',
+    'aw_userhistorysummary_customsettings_key' => 'Identifier',
+    'aw_userhistorysummary_customsettings_value' => 'Content',
+    'aw_userhistorysummary_lastsessions_destroyed' => 'destroyed',
+    'aw_userhistorysummary_lastsessions_active' => 'active',
+    'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Diff',
+    'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribute',
+    'aw_userhistorysummary_ngrestlogs_detailold' => 'Old',
+    'aw_userhistorysummary_ngrestlogs_detailnew' => 'New',
+    'aw_userhistorysummary_defaultlabel' => 'History',
+    'aw_changepassword_defaultlabel' => 'Change password',
+    'model_user_api_last_activity' => 'Last API activity',
+    'aw_apioverview_label' => 'API overview',
+    'aw_apioverview_resettokenconfirm' => 'Are you sure you want to replace the current token with a new one? This can not be undone.',
+    'aw_apioverview_resettokenconfirm_title' => 'Confirm token reset',
+    'aw_apioverview_responsetesterresponse' => 'Response',
+    'aw_apioverview_responsetesterrequest' => 'Request',
+    'aw_apioverview_accesstokentitle' => 'Access Token',
+    'aw_apioverview_accesstokeninfo' => 'Before you generate a new access token, ensure that the old token is not used any longer. Otherwise your application will stop to work.',
+    'aw_apioverview_accesstokenbtnlabel' => 'Generate new token',
+    'aw_apioverview_endpointstitle' => 'Available Endpoints',
+    'aw_apioverview_permadd' => 'Allowed to create (post)',
+    'aw_apioverview_permedit' => 'Allowed to update (put)',
+    'aw_apioverview_permdelete' => 'Allowed to delete (delete)',
+    'aw_apioverview_endpoint' => 'Endpoint',
+    'aw_apioverview_responsetestertitle' => 'Test Console',
+    'menu_access_item_apiuser' => 'API Users',
+    'menu_group_contentproxy' => 'Content Proxy',
+    'menu_group_contentproxy_machines' => 'Machines',
+    'menu_group_contentproxy_builds' => 'Builds',
+    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
+    'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
+    'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} из {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
+    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'Verify update of your email address',
+    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'Email verification code',
 ];

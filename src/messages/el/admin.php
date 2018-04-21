@@ -182,7 +182,7 @@ return [
     'layout_rightbar_savebtn' => 'Αποθήκευση',
     'aws_changepassword_notequal' => 'Ο κωδικός και η επανάληψη κωδικού δεν είναι τα ίδια.',
     'aws_changeapssword_minchar' => 'Ο νέος κωδικός πρέπει να έχει τουλάχιστον {min} χαρακτήρες.',
-    
+
 // rc3
 
     'model_pk_id' => 'ID',
@@ -223,10 +223,10 @@ return [
     'js_link_change_value' => 'Change Link',
     'js_link_set_value' => 'Set Link',
     'callback_button_file_download_widget_success' => 'The file has been prepared. You can download it now.',
-    
-    
+
+
 // rc4
-    
+
     'api_storage_file_upload_folder_error' => 'Error while saveing the file in the storage folder. A permission error could cause this problem. Make sure the storage folder is writeable.',
     'model_user_oldpassword' => 'Previous (old) Password',
     'js_account_update_profile_success' => 'The profile data has been successfull updated.',
@@ -237,9 +237,9 @@ return [
     'locked_info' => 'Someone already editing',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'No Link selected',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Delete',
     'js_dir_manager_rm_file_confirm_title' => 'Remove file',
     'js_dir_manager_rm_folder_confirm_title' => 'Remove folder',
@@ -263,5 +263,67 @@ return [
     'model_config_atr_name_hint' => 'Unique identifier for this variable. You can access system config with Config::get(identifier) in your application.',
     'model_config_atr_value' => 'Value',
     'model_config_atr_is_system' => 'Is system',
-    'menu_system_item_config' => 'Config variables'
+    'menu_system_item_config' => 'Config variables',
+
+// 1.1.0
+
+    'model_user_is_deleted' => 'Removed',
+    'model_user_name' => 'Name',
+    'model_user_groups' => 'Groups',
+    'aw_userhistorysummary_userdata' => 'Profile details',
+    'aw_userhistorysummary_contribcount' => 'Total contributions',
+    'aw_userhistorysummary_contribcount_inserts' => 'Inserts',
+    'aw_userhistorysummary_contribcount_updates' => 'Updates',
+    'aw_userhistorysummary_customsettings' => 'Custom settings',
+    'aw_userhistorysummary_lastsessions' => 'Lastest sessions',
+    'aw_userhistorysummary_ngrestlogs' => 'Change history',
+    'aw_userhistorysummary_customsettings_key' => 'Identifier',
+    'aw_userhistorysummary_customsettings_value' => 'Content',
+    'aw_userhistorysummary_lastsessions_destroyed' => 'destroyed',
+    'aw_userhistorysummary_lastsessions_active' => 'active',
+    'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Diff',
+    'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribute',
+    'aw_userhistorysummary_ngrestlogs_detailold' => 'Old',
+    'aw_userhistorysummary_ngrestlogs_detailnew' => 'New',
+    'aw_userhistorysummary_defaultlabel' => 'History',
+    'aw_changepassword_defaultlabel' => 'Change password',
+    'model_user_api_last_activity' => 'Last API activity',
+    'aw_apioverview_label' => 'API overview',
+    'aw_apioverview_resettokenconfirm' => 'Are you sure you want to replace the current token with a new one? This can not be undone.',
+    'aw_apioverview_resettokenconfirm_title' => 'Confirm token reset',
+    'aw_apioverview_responsetesterresponse' => 'Response',
+    'aw_apioverview_responsetesterrequest' => 'Request',
+    'aw_apioverview_accesstokentitle' => 'Access Token',
+    'aw_apioverview_accesstokeninfo' => 'Before you generate a new access token, ensure that the old token is not used any longer. Otherwise your application will stop to work.',
+    'aw_apioverview_accesstokenbtnlabel' => 'Generate new token',
+    'aw_apioverview_endpointstitle' => 'Available Endpoints',
+    'aw_apioverview_permadd' => 'Allowed to create (post)',
+    'aw_apioverview_permedit' => 'Allowed to update (put)',
+    'aw_apioverview_permdelete' => 'Allowed to delete (delete)',
+    'aw_apioverview_endpoint' => 'Endpoint',
+    'aw_apioverview_responsetestertitle' => 'Test Console',
+    'menu_access_item_apiuser' => 'API Users',
+    'menu_group_contentproxy' => 'Content Proxy',
+    'menu_group_contentproxy_machines' => 'Machines',
+    'menu_group_contentproxy_builds' => 'Builds',
+    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
+    'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
+    'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
+    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'Verify update of your email address',
+    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'Email verification code',
 ];

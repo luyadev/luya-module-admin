@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\base;
 
 use luya\admin\ngrest\ConfigInterface;
 use yii\base\BaseObject;
+use luya\admin\ngrest\render\RenderInterface;
 
 /**
  * NgRest base rendere which is used in all ngrest render classes.
@@ -13,7 +14,7 @@ use yii\base\BaseObject;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class Render extends BaseObject
+abstract class Render extends BaseObject implements RenderInterface
 {
     private $_config;
     

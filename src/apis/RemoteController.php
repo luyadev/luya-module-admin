@@ -40,6 +40,8 @@ class RemoteController extends Controller
         if (empty(Yii::$app->remoteToken) || sha1(Yii::$app->remoteToken) !== $token) {
             throw new Exception('The provided remote token is wrong.');
         }
+        
+        UserOnline::clearList($this->module->userIdleTimeout);
 
         return [
             'yii_version' => Yii::getVersion(),
@@ -48,8 +50,10 @@ class RemoteController extends Controller
             'app_debug' => (int) YII_DEBUG,
             'app_env' => YII_ENV,
             'app_transfer_exceptions' => (int) Yii::$app->errorHandler->transferException,
-            'admin_online_count' => UserOnline::getCount(),
+            'admin_online_count' => UserOnline::find()->count(),
             'app_elapsed_time' => Yii::getLogger()->getElapsedTime(),
+            'packages' => Yii::$app->getPackageInstaller()->getConfigs(),
+            'packages_update_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
         ];
     }
 }

@@ -21,23 +21,29 @@ class UserChangePassword extends Model
     
     private $_user;
     
+    /**
+     * Setter method for user.
+     * 
+     * @param User $user
+     */
     public function setUser(User $user)
     {
         $this->_user = $user;
     }
     
+    /**
+     * Getter method for user.
+     * 
+     * @return \luya\admin\models\User
+     */
     public function getUser()
     {
         return $this->_user;
     }
     
-    public function init()
-    {
-        parent::init();
-        
-        $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'checkAndStore']);
-    }
-    
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -47,6 +53,9 @@ class UserChangePassword extends Model
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -56,6 +65,11 @@ class UserChangePassword extends Model
         ];
     }
     
+    /**
+     * Checks if the password is valid and stores the new password.
+     * 
+     * @return boolean
+     */
     public function checkAndStore()
     {
         if (!$this->user->validatePassword($this->oldpass)) {

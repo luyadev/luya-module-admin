@@ -45,12 +45,17 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
      * Returns a value for a given key inside the itemArray.
      *
      * @param string $key The requested key.
-     * @throws Exception If the key is not found inside the array an exception is trhown.
+     * @param boolean $exception Whether getKey should throw an exception if the key is not found or just return false instead.
+     * @throws Exception If the key is not found inside the array an exception is thrown. If $exception is disabled false is returned instead.
      */
-    public function getKey($key)
+    public function getKey($key, $exception = true)
     {
         if (!array_key_exists($key, $this->_itemArray)) {
-            throw new Exception("Unable to find the requested item key '$key' in item " . var_export($this->_itemArray, true));
+            if ($exception) {
+                throw new Exception("Unable to find the requested item key '$key' in item " . var_export($this->_itemArray, true));
+            } else {
+                return false;
+            }
         }
         
         return $this->_itemArray[$key];

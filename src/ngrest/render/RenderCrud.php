@@ -11,7 +11,6 @@ use yii\base\InvalidConfigException;
 use yii\base\ViewContextInterface;
 use luya\helpers\Html;
 use luya\helpers\ArrayHelper;
-use yii\helpers\Json;
 
 /**
  * Render the Crud view.
@@ -21,7 +20,7 @@ use yii\helpers\Json;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-class RenderCrud extends Render implements RenderInterface, ViewContextInterface, RenderCrudInterface
+class RenderCrud extends Render implements ViewContextInterface, RenderCrudInterface
 {
     const TYPE_LIST = 'list';
 
@@ -71,6 +70,30 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     }
 
     // RenderCrudInterface
+    
+    /**
+     * @inheritdoc
+     */
+    public function canCreate()
+    {
+        return $this->can(Auth::CAN_CREATE);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function canUpdate()
+    {
+        return $this->can(Auth::CAN_UPDATE);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function canDelete()
+    {
+        return $this->can(Auth::CAN_DELETE);
+    }
     
     private $_relationCall = false;
     
@@ -176,7 +199,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     /**
      * Returns the primary key from the config.
      *
-     * @return unknown
+     * @return string
      */
     public function getPrimaryKey()
     {
@@ -218,7 +241,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     
     /**
      *
-     * @param unknown $modelPrefix In common case its `item`.
+     * @param string $modelPrefix In common case its `item`.
      */
     public function getCompositionKeysForButtonActions($modelPrefix)
     {
@@ -246,7 +269,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
      *     ['ngClick' => 'toggle(...)', 'icon' => 'fa fa-fw fa-edit', 'label' => 'Button Label']
      * ];
      * ```
-     * @return returns array with all buttons for this crud
+     * @return array An array with all buttons for this crud
      * @throws InvalidConfigException
      */
     public function getButtons()
@@ -276,8 +299,8 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
                 foreach ($this->getActiveWindows() as $hash => $config) {
                     $buttons[] = [
                         'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
-                        'icon' => $config['icon'],
-                        'label' => $config['label'],
+                        'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
+                        'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
                     ];
                 }
             }
@@ -422,7 +445,7 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     /**
      * Create element for given element and config pointer context.
      *
-     * @param unknown_type $element
+     * @param array $element
      * @param string $configContext list,create,update
      * @return array
      */
@@ -475,7 +498,9 @@ class RenderCrud extends Render implements RenderInterface, ViewContextInterface
     
     private function renderElementPlugins($configContext, $typeConfig, $elmnId, $elmnName, $elmnModel, $elmnAlias, $elmni18n)
     {
-        $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $typeConfig['args']);
+        $args = $typeConfig['args'];
+        $args['renderContext'] = $this;
+        $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $args);
         $method = 'render'.ucfirst($configContext);
         $html = $obj->$method($elmnId, $elmnModel);
 

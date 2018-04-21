@@ -151,7 +151,7 @@ class ProxyController extends Command
             $identifier = Config::get(self::CONFIG_VAR_IDENTIFIER);
             
             if (!$identifier) {
-                $identifier = $this->prompt('Please enter the identifier ID:');
+                $identifier = $this->prompt('Please enter the identifier:');
                 Config::set(self::CONFIG_VAR_IDENTIFIER, trim($identifier));
             }
         } else {

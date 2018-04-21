@@ -177,8 +177,8 @@ return [
     'layout_rightbar_languagelabel' => 'زبان رابط',
     'layout_rightbar_savebtn' => 'ذخیره',
     'aws_changepassword_notequal' => 'رمزعبور و تکرار آن یکی نمی باشند.',
-    'aws_changeapssword_minchar' => 'The new password must have a minimum length of {min} characters.',
-    
+    'aws_changeapssword_minchar' => 'رمز عبور جدید باید حداقل  {min} حرف داشته باشد.',
+
 // rc3
     'model_pk_id' => 'ردیف',
     'model_lang_name' => 'نام',
@@ -202,7 +202,7 @@ return [
     'model_storageeffect_identifier' => 'شاخصه',
     'model_storageeffect_name' => 'نام',
     'model_storageeffect_imagine_name' => 'نام افکت',
-    'model_storageeffect_imagine_json_params' => 'Effect JSON Configuration',
+    'model_storageeffect_imagine_json_params' => 'تنظیم پیکربندی JSON',
     'model_storagefilter_identifier' => 'مشخصه فیلتر',
     'model_storagefilter_name' => 'نام فیلتر',
     'model_tag_name' => 'مشخصه تگ',
@@ -212,13 +212,13 @@ return [
     'js_ngrest_toggler_success' => '%field% با موفقیت به روز رسانی شد',
     'layout_image_filter_selection' => 'انتخاب فیلتر برای تصویر:',
     'lock_admin_edit_crud_item' => 'Editing {module} "{table}" (ID: {id}).',
-    'lock_cms_edit_page' => 'Editing page "{title}".',
+    'lock_cms_edit_page' => 'ویرایش صفحه "{title}".',
     'layout_filemanager_col_size' => 'حجم فایل',
     'js_filemanager_count_files_overlay' => '%count% فایل',
     'js_link_change_value' => 'تغییر لینک',
     'js_link_set_value' => 'مشاهده لینک',
     'callback_button_file_download_widget_success' => 'فایل با موفقیت آماده شد. حال می توانید آن را دانلود نمایید',
-    
+
 // rc4
     'api_storage_file_upload_folder_error' => 'خطایی در هنگام ذخیره اطلاعات به وجود آمده است سطح دسترسی ها را کنترل کنید.',
     'model_user_oldpassword' => 'رمز عبور قبلی',
@@ -230,7 +230,7 @@ return [
     'locked_info' => 'قبلا ویرایش شده است',
     'menu_dashboard' => 'داشبورد',
     'js_link_not_set' => 'هیچ لینکی انتخاب نشده است',
-        
+
 // 1.0.0
     'ngrest_button_delete' => 'حذف',
     'js_dir_manager_rm_file_confirm_title' => 'حذف فایل',
@@ -244,9 +244,9 @@ return [
     'menu_button_search' => 'جستجو',
     'layout_btn_user_settings' => 'اولویت ها',
     'upload_err_message_0' => 'هیچ خطایی وجود ندارد و اطلاعات با موفقیت ذخیره شد.',
-    'upload_err_message_1' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-    'upload_err_message_2' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
-    'upload_err_message_3' => 'The uploaded file was only partially uploaded.',
+    'upload_err_message_1' => 'حجم فایل آپلود شده بیشتر از تنطیم upload_max_filesize در php.ini است. ',
+    'upload_err_message_2' => 'حجم فایل آپلود شده بیشتر از مقدار تنظیم شده در MAX_FILE_SIZE در فرم اچ تی ام ای است.',
+    'upload_err_message_3' => 'فایل آپلود شده به صورت ناقص آپلود شده',
     'upload_err_message_4' => 'هیچ فایلی آپلود نشده است.',
     'upload_err_message_6' => 'فولدر تمپ وجود ندارد',
     'upload_err_message_7' => 'امکان نوشتن روی دیسک وجود ندارد',
@@ -255,5 +255,67 @@ return [
     'model_config_atr_name_hint' => 'Unique identifier for this variable. You can access system config with Config::get(identifier) in your application.',
     'model_config_atr_value' => 'مقدار',
     'model_config_atr_is_system' => 'سیستم هست؟',
-    'menu_system_item_config' => 'تنظیمات کلی'
+    'menu_system_item_config' => 'تنظیمات کلی',
+
+// 1.1.0
+
+    'model_user_is_deleted' => 'پاک شده',
+    'model_user_name' => 'نام',
+    'model_user_groups' => 'گروه ها',
+    'aw_userhistorysummary_userdata' => 'جزئیات پروفایل',
+    'aw_userhistorysummary_contribcount' => 'مجموع مشارکت ها',
+    'aw_userhistorysummary_contribcount_inserts' => 'درج ها',
+    'aw_userhistorysummary_contribcount_updates' => 'بر روز رسانی ها',
+    'aw_userhistorysummary_customsettings' => 'تنظیمات اختصاصی',
+    'aw_userhistorysummary_lastsessions' => 'آخرین سشن ها',
+    'aw_userhistorysummary_ngrestlogs' => 'تغییر تاریخچه',
+    'aw_userhistorysummary_customsettings_key' => 'کلید',
+    'aw_userhistorysummary_customsettings_value' => 'مقدار',
+    'aw_userhistorysummary_lastsessions_destroyed' => 'حذف کردن',
+    'aw_userhistorysummary_lastsessions_active' => 'فعال',
+    'aw_userhistorysummary_ngrestlogs_detailbtn' => 'تفاوت',
+    'aw_userhistorysummary_ngrestlogs_detailattribute' => 'نشان',
+    'aw_userhistorysummary_ngrestlogs_detailold' => 'قدیمی',
+    'aw_userhistorysummary_ngrestlogs_detailnew' => 'جدید',
+    'aw_userhistorysummary_defaultlabel' => 'تاریخ',
+    'aw_changepassword_defaultlabel' => 'تغییر کلمه عبور',
+    'model_user_api_last_activity' => 'آخرین فعالیت های API',
+    'aw_apioverview_label' => 'مرور کلی API',
+    'aw_apioverview_resettokenconfirm' => 'آیا مطمئن هستید که می خواهید یک توکن جدید را جایگزین کنید دقت کنید که این کار غیر قابل برگشت است',
+    'aw_apioverview_resettokenconfirm_title' => 'تایید ایجاد محدد توکن',
+    'aw_apioverview_responsetesterresponse' => 'پاسخ',
+    'aw_apioverview_responsetesterrequest' => 'درخواست',
+    'aw_apioverview_accesstokentitle' => 'توکن',
+    'aw_apioverview_accesstokeninfo' => 'قبل از ایجاد توکن جدید مطمئن شوید که هیچ استفاده از توکن قبلی ندارید در غیر این صورت اپلیکشن شما دچار مشکل می شود.',
+    'aw_apioverview_accesstokenbtnlabel' => 'ایجاد یک توکن جدید',
+    'aw_apioverview_endpointstitle' => 'اندپوینت های موجود',
+    'aw_apioverview_permadd' => 'مجاز به ایجاد (post)',
+    'aw_apioverview_permedit' => 'مجاز به بر روز رسانی (put)',
+    'aw_apioverview_permdelete' => 'مجاز به حذف (delete)',
+    'aw_apioverview_endpoint' => 'اندپوینت',
+    'aw_apioverview_responsetestertitle' => 'کنسول تست',
+    'menu_access_item_apiuser' => 'کاربران API',
+    'menu_group_contentproxy' => 'پروکسی محتوا',
+    'menu_group_contentproxy_machines' => 'ماشین ها',
+    'menu_group_contentproxy_builds' => 'ایجاد',
+    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
+    'aw_apioverview_no_perm_groups' => 'کاربران API باید دارای حداقل یک گروه مجوز باشند.',
+    'aw_apioverview_no_access_token' => 'کاربران API باید یک توکن برای دسترسی داشته باشند.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
+    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'Verify update of your email address',
+    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'Email verification code',
 ];

@@ -5,7 +5,8 @@ namespace luya\admin\apis;
 /**
  * Config Controller.
  *
- * File has been created with `crud/create` command on LUYA version 1.0.0.
+ * @author Basil Suter <basil@nadar.io>
+ * @since 1.0.0
  */
 class ConfigController extends \luya\admin\ngrest\base\Api
 {

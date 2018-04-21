@@ -131,11 +131,11 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Möchten Sie diese Datei wirklich entfernen?',
     'js_dir_manager_rm_file_ok' => 'Datei wurde erfolgreich gelöscht.',
     'js_zaa_server_proccess' => 'Der Server verarbeitet deine Daten. Bitte warte einen Augenblick.',
-    
+
 // added translation in 1.0.0-beta4:
 
     'ngrest_crud_empty_row' => 'Es wurden keine Datensätze gefunden.',
-    
+
 // added translation in 1.0.0-beta5:
 
     'aws_gallery_empty' => 'Du hast noch keine Bilder für diese Album ausgewählt. Klicke im Dateimanager (links) auf die gewünschten Bilder, welche in das Album hinzufügt werden sollen.',
@@ -143,18 +143,18 @@ return [
     'layout_useronline_name' => 'Name',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Inaktiv seit',
-    
+
 // added translations in 1.0.0-beta6
 
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'An',
     'debug_state_off' => 'Aus',
-    
+
 // added translations in 1.0.0-beta7
 
-    'login_securetoken_mail_subject' => 'LUYA Sicherheitscode',
-    'login_securetoken_mail' => '<h1>LUYA Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
-    'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch',
+    'login_securetoken_mail_subject' => 'Sicherheitscode',
+    'login_securetoken_mail' => '<h1>Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch oder abgelaufen.',
     'login_async_token_globalerror' => 'Ein Globaler-Fehler ist aufgetreten. Bitte kontaktiere den Seitenbetreiber.',
     'ngrest_crud_csv_export_btn' => 'CSV generieren',
     'ngrest_crud_csv_export_btn_dl' => 'CSV herunterladen',
@@ -166,7 +166,7 @@ return [
     'mode_user_lastname' => 'Nachname',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Passwort',
-    
+
 // added translations in 1.0.0-beta8
     'aws_tag_new' => 'Neuen Eintrag erfassen',
     'aws_tag_add' => 'Hinzufügen',
@@ -174,7 +174,7 @@ return [
     'aws_tag_list' => 'Liste aller Einträge',
     'dashboard_log_message_add' => 'Einen Datensatz zu <b>{container}</b> hinzugefügt.',
     'dashboard_log_message_edit' => 'Einen Datensatz in <b>{container}</b> bearbeitet.',
-    
+
 // rc1
 
     'layout_btn_help' => 'Hilfe',
@@ -194,7 +194,7 @@ return [
     'layout_rightbar_savebtn' => 'Speichern',
     'aws_changepassword_notequal' => 'Das neue Passwort muss mit der Wiederholung übereinstimmen.',
     'aws_changeapssword_minchar' => 'Das neue Passwort muss mindestens {min} Zeichen enthalten.',
-        
+
 // rc3
 
     'model_pk_id' => 'ID',
@@ -235,8 +235,8 @@ return [
     'js_link_change_value' => 'Link ändern',
     'js_link_set_value' => 'Link setzen',
     'callback_button_file_download_widget_success' => 'Die Datei wurde vorbereitet. Sie können die Datei jetzt herunterladen.',
-    
-    
+
+
 // rc4
 
     'api_storage_file_upload_folder_error' => 'Es ist ein Fehler beim Speichern der Datei im Storage Ordner aufgetreten. Eine ungenügende Berechtigungsvergabe könnte der Grund dafür sein. Stelle sicher, dass der Storage-Ordner Schreibrechte besitzt.',
@@ -249,9 +249,9 @@ return [
     'locked_info' => 'Wird gerade bearbeitet',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Kein Link gesetzt',
-        
+
 // 1.0.0
-        
+
     'ngrest_button_delete' => 'Löschen',
     'js_dir_manager_rm_file_confirm_title' => 'Datei löschen',
     'js_dir_manager_rm_folder_confirm_title' => 'Verzeichnis löschen',
@@ -275,5 +275,68 @@ return [
     'model_config_atr_name_hint' => 'Eindeutige Bezeichnung für diese Variable. Die Systemkonfiguration kann über Config::get(identifier) in der Applikation abgefragt werden.',
     'model_config_atr_value' => 'Wert',
     'model_config_atr_is_system' => 'System-Attribut',
-    'menu_system_item_config' => 'Konfigurationsvariablen'
+    'menu_system_item_config' => 'Konfigurationsvariablen',
+
+// 1.1.0
+
+    'model_user_is_deleted' => 'Gelöscht',
+    'model_user_name' => 'Benutzername',
+    'model_user_groups' => 'Benutzergruppe',
+    'aw_userhistorysummary_userdata' => 'Profildetails',
+    'aw_userhistorysummary_contribcount' => 'Anzahl Beiträge',
+    'aw_userhistorysummary_contribcount_inserts' => 'Erstellt',
+    'aw_userhistorysummary_contribcount_updates' => 'Aktualisiert',
+    'aw_userhistorysummary_customsettings' => 'Benutzerdefinierte Einstellungen',
+    'aw_userhistorysummary_lastsessions' => 'Letzte Sitzung',
+    'aw_userhistorysummary_ngrestlogs' => 'Veränderungen',
+    'aw_userhistorysummary_customsettings_key' => 'Bezeichner',
+    'aw_userhistorysummary_customsettings_value' => 'Inhalt',
+    'aw_userhistorysummary_lastsessions_destroyed' => 'aufgelöst',
+    'aw_userhistorysummary_lastsessions_active' => 'aktiv',
+    'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Differenz',
+    'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribute',
+    'aw_userhistorysummary_ngrestlogs_detailold' => 'Alt',
+    'aw_userhistorysummary_ngrestlogs_detailnew' => 'Neu',
+    'aw_userhistorysummary_defaultlabel' => 'Historie',
+    'aw_changepassword_defaultlabel' => 'Passwort ändern',
+    'model_user_api_last_activity' => 'Letzte API-Aktivität',
+    'aw_apioverview_label' => 'API-Übersicht',
+    'aw_apioverview_resettokenconfirm' => 'Soll der aktive Token wirklich mit einem neuen ersetzt werden? Dieser Schritt kann nicht rückgängig gemacht werden.',
+    'aw_apioverview_resettokenconfirm_title' => 'Zurücksetzen des Tokens bestätigen',
+    'aw_apioverview_responsetesterresponse' => 'Antwort',
+    'aw_apioverview_responsetesterrequest' => 'Anfrage',
+    'aw_apioverview_accesstokentitle' => 'Access Token',
+    'aw_apioverview_accesstokeninfo' => 'Bevor ein neuer Zugriffstoken generiert wird, sollte sicher gestellt werden, dass der alte nicht mehr benutzt wird. Ansonsten wird die Applikation nicht mehr funktionieren.',
+    'aw_apioverview_accesstokenbtnlabel' => 'Neuen Token generieren',
+    'aw_apioverview_endpointstitle' => 'Verfügbare Endpunkte',
+    'aw_apioverview_permadd' => 'Erlaubnis für Erstellung (Post)',
+    'aw_apioverview_permedit' => 'Erlaubnis für Aktualisierung (Put)',
+    'aw_apioverview_permdelete' => 'Erlaubnis für Löschen (Delete)',
+    'aw_apioverview_endpoint' => 'Endpunkt',
+    'aw_apioverview_responsetestertitle' => 'Testkonsole',
+    'menu_access_item_apiuser' => 'API-Benutzer',
+    'menu_group_contentproxy' => 'Inhalt-Proxy',
+    'menu_group_contentproxy_machines' => 'Geräte',
+    'menu_group_contentproxy_builds' => 'Builds',
+    'tag_file_readme' => 'Generiert einen Link zu der angegebenen Datei. Beispiel: `file[1]` generiert einen Link zur Datei mit der Id 1 und nutzt den Dateinamen als Label. Um ein anderes Label zu definieren, gibt man `file[1](Mein Label-Text)` an. Die Datei wird immer in einem neuen Fenster geöffnet.',
+    'aw_apioverview_no_perm_groups' => 'Der API Benutzer mus mindestens einer Berechtigungsgruppe zugewiesen sein.',
+    'aw_apioverview_no_access_token' => 'Der API Benutzer muss einen Zugangstoken angeben, um die API nutzen zu können.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} von {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
+    'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login Sperrzeit',
+    'model_user_login_attempt_lock_expiration' => 'Dauer Login-Lockout',
+    'account_changeemail_subject' => 'Aktualisierung der E-Mail-Adresse bestätigen',
+    'account_changeemail_body' => '<h1>Bestätigungscode</h1><p>Geben Sie den folgenden Bestätigungscode ein, um Ihre E-Mail-Adresse für die Website {url} zu aktualisieren.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Der Bestätigungscode konnte nicht an die E-Mail-Adresse {email} geschickt werden. Stellen Sie sicher, dass die Mail-Komponente korrekt installiert ist.',
+    'account_changeemail_wrongtokenorempty' => 'Leerer, ungültiger oder abgelaufener E-Mail-Bestätigungscode.',
+    'account_changeemail_enterverificationtoken' => 'Bitte geben Sie den Bestätigungscode ein, der an <b>{{profile.email}}</b> geschickt wurde, um die Änderung Ihrer E-Mail-Adresse zu bestätigen <b>{{settings.newUserEmail}}</b>.',
+    'model_user_email_verification_token' => 'E-Mail-Bestätigungscode',
 ];

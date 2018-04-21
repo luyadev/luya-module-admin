@@ -103,6 +103,11 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
         return 'photo_library';
     }
 
+    public function defaultLabel()
+    {
+        return 'Images';
+    }
+    
     /**
      * Load all images.
      *

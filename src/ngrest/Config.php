@@ -105,7 +105,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      *
-     * @param unknown $apiEndpoint
+     * @param string $apiEndpoint
      */
     public function setApiEndpoint($apiEndpoint)
     {
@@ -164,7 +164,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      *
-     * @return unknown
+     * @return string
      */
     public function getDefaultOrder()
     {
@@ -193,7 +193,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      *
-     * @param unknown $groupByField
+     * @param string $groupByField
      */
     public function setGroupByField($groupByField)
     {
@@ -224,7 +224,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      *
-     * @param unknown $key
+     * @param string $key
      */
     public function setPrimaryKey($key)
     {
@@ -281,7 +281,7 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
+     * @param string $pointer
      * @return boolean
      */
     public function hasPointer($pointer)
@@ -291,7 +291,7 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
+     * @param string $pointer
      * @param boolean $defaultValue
      * @return string
      */
@@ -302,8 +302,8 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
-     * @param unknown $field
+     * @param string $pointer
+     * @param string $field
      * @return boolean
      */
     public function hasField($pointer, $field)
@@ -313,8 +313,8 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
-     * @param unknown $field
+     * @param string $pointer
+     * @param string $field
      * @return boolean
      */
     public function getField($pointer, $field)
@@ -324,7 +324,7 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
+     * @param string $pointer
      * @param array $fields
      * @return boolean[]
      */
@@ -352,7 +352,7 @@ class Config extends BaseObject implements ConfigInterface
      * $config->getOption('saveCallback');
      * ```
      *
-     * @param unknown $key
+     * @param string $key
      * @return boolean
      */
     public function getOption($key)
@@ -362,8 +362,8 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $pointer
-     * @param unknown $field
+     * @param string $pointer
+     * @param string $field
      * @param array $options
      * @return boolean
      */
@@ -393,9 +393,9 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      *
-     * @param unknown $fieldName
-     * @param unknown $optionKey
-     * @param unknown $optionValue
+     * @param string $fieldName
+     * @param string $optionKey
+     * @param string $optionValue
      */
     public function appendFieldOption($fieldName, $optionKey, $optionValue)
     {

@@ -69,7 +69,7 @@ class ToggleStatus extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        if (!$this->interactive) {
+        if (!$this->interactive || !$this->renderContext->canUpdate()) {
             return [
                 $this->createTag('i', $this->trueIcon, ['ng-if' => "$ngModel == $this->trueValue", 'class' => $this->trueClass]),
                 $this->createTag('i', $this->falseIcon, ['ng-if' => "$ngModel == $this->falseValue", 'class' => $this->falseClass]),

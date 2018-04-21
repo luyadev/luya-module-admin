@@ -17,7 +17,17 @@ use luya\admin\Module;
                         <zaa-text fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
                         <zaa-text fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
+                        
                     </form>
+                    <div ng-show="activities.open_email_validation" class="mt-3">
+                        <div class="alert alert-warning">
+                            <p class="mb-0"><?= Module::t('account_changeemail_enterverificationtoken')?></p>
+                        </div>
+                        <form ng-submit="changeEmail()">
+                            <zaa-text fieldid="mode_email_token" label="<?= Module::t('model_user_email_verification_token')?>" model="email.token" />
+                            <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -25,7 +35,7 @@ use luya\admin\Module;
             <div class="card">
                 <div class="card-body">
                     <h2><?= Module::t('mode_user_password'); ?></h2>
-                    <form ng-submit="changePassword(pass)">
+                    <form ng-submit="changePassword()">
                         <zaa-password fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
                         <zaa-password fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
                         <zaa-password fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />

@@ -131,6 +131,15 @@ class ImageArray extends Plugin
         if (empty($values)) {
             return [];
         }
-        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'imageId')])->all();
+        
+        $binds = [];
+        
+        foreach ($values as $item) {
+            if (!empty($item['caption'])) {
+                $binds[$item['imageId']] = ['caption' => $item['caption']];
+            }
+        }
+        
+        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'imageId')])->bind($binds)->all();
     }
 }

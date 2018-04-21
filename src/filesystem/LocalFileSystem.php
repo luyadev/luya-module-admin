@@ -8,10 +8,22 @@ use luya\helpers\FileHelper;
 use luya\helpers\Url;
 use luya\Exception;
 
+/**
+ * Local File System uses the storage folder inside @webroot.
+ *
+ * This is the default file system which is used for LUYA. The LocalFileSystem class uses
+ * the storage folder inside the @webroot directory in order to store and read files and images.
+ *
+ * @author Basil Suter <basil@nadar.io>
+ * @since 1.0.0
+ */
 class LocalFileSystem extends BaseFileSystemStorage
 {
     private $_httpPath;
     
+    /**
+     * @var string The name of the folder which is used to storage the data inside the @webroot directory.
+     */
     public $folderName = 'storage';
     
     /**
@@ -26,7 +38,8 @@ class LocalFileSystem extends BaseFileSystemStorage
      * ```php
      * 'storage' => [
      *     'class' => 'luya\admin\filesystem\LocalFileSystem',
-     *     'httpPath' => 'http://prod.example.com/storage',
+     *     'httpPath' => 'mystorage/files',
+     *     'absoluteHttpPath' => 'https://mywebsite.com/mystorage/files',
      * ]
      * ```
      *
@@ -62,8 +75,9 @@ class LocalFileSystem extends BaseFileSystemStorage
      *
      * ```php
      * 'storage' => [
-     *     'class' => 'admin\storage\BaseFileSystemStorage',
-     *     'absoluteHttpPath' => 'http://prod.example.com/storage',
+     *     'class' => 'luya\admin\filesystem\LocalFileSystem',
+     *     'httpPath' => 'mystorage/files',
+     *     'absoluteHttpPath' => 'https://mywebsite.com/mystorage/files',
      * ]
      * ```
      *
@@ -100,6 +114,11 @@ class LocalFileSystem extends BaseFileSystemStorage
         return $this->_serverPath;
     }
     
+    /**
+     * Setter method for serverPath.
+     *
+     * @param string $path
+     */
     public function setServerPath($path)
     {
         $this->_serverPath = $path;

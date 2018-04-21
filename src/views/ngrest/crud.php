@@ -1,18 +1,17 @@
 <?php
 use luya\admin\ngrest\render\RenderCrud;
 use luya\admin\Module;
-use luya\helpers\ArrayHelper;
 
-/* @var $config \luya\admin\ngrest\ConfigInterface */
-/* @var $this \luya\admin\ngrest\render\RenderCrudView */
-/* @var $isInline boolean Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
-/* @var $relationCall boolean Whether the current request is a relation call, this means you can switch between tabs. */
+/** @var $config \luya\admin\ngrest\ConfigInterface */
+/** @var $this \luya\admin\ngrest\render\RenderCrudView */
+/** @var $isInline boolean Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
+/** @var $relationCall boolean Whether the current request is a relation call, this means you can switch between tabs. */
+/** @var $modelSelection string|boolean Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
 $this->beginPage();
 $this->beginBody();
 ?>
 <?php $this->registerAngularControllerScript(); ?>
 <div ng-controller="<?= $config->hash; ?>" class="crud">
-
     <!-- This fake ui-view is used to render the detail item, which actuals uses the parent scope in the ui router controller. -->
     <div style="display: none;" ui-view></div>
     <?php if (!$relationCall): ?>
@@ -123,7 +122,7 @@ $this->beginBody();
                     <span><?= Module::t('ngrest_crud_btn_add'); ?></span>
             </button>
             <?php endif; ?>
-            <small class="crud-counter">{{data.listArray.length}} of {{totalRows}}</small>
+            <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
             <div class="table-responsive-wrapper">
                 <table class="table table-hover table-align-middle table-striped mt-0">
                     <thead class="thead-default">
@@ -157,10 +156,10 @@ $this->beginBody();
                                 <i class="material-icons right" ng-show="viewToggler[key]">keyboard_arrow_down</i>
                             </td>
                         </tr>
-                        <tr ng-repeat="(k, item) in items track by k | srcbox:config.searchString" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall): ?>ng-click="parentSelectInline(item)" <?php if ($modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"<?php endif; ?> class="crud-selectable-row"<?php endif; ?>>
+                        <tr ng-repeat="(k, item) in items track by k | srcbox:config.searchString" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): $i++; ?>
                                 <?php foreach ($this->context->createElements($item, RenderCrud::TYPE_LIST) as $element): ?>
-                                     <td class="<?= $i != 1 ?: 'tab-padding-left'; ?>"><?= $element['html']; ?></td>
+                                     <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>"><?= $element['html']; ?></td>
                                  <?php endforeach; ?>
                              <?php endforeach; ?>
                             <td class="crud-buttons-column" ng-hide="isLocked(config.tableName, item[config.pk])">

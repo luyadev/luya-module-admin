@@ -116,16 +116,16 @@ $this->beginPage()
                                 <span class="mainnav-tooltip-big">
                                     <ul class="mainnav-tooltip-big-menu">
                                         <li class="mainnav-tooltip-big-menu-item" ui-sref-active="mainnav-tooltip-big-menu-item-active" ui-sref="custom({templateId:'admin/account/dashboard'})" ng-click="isOpen=0">
-                                            <a class="mainnav-tooltip-big-menu-link">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">face</i>
                                                  <?= Admin::t('layout_btn_user_settings'); ?>
-                                            </a>
+                                            </span>
                                         </li>
-                                        <li class="mainnav-tooltip-big-menu-item" >
-                                            <a href="<?= Url::toRoute(['/admin/default/logout']); ?>">
+                                        <li class="mainnav-tooltip-big-menu-item" onclick="location.href='<?= Url::toRoute(['/admin/default/logout']); ?>'">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">exit_to_app</i>
                                                 <?= Admin::t('layout_btn_logout'); ?>
-                                            </a>
+                                            </span>
                                         </li>
                                     </ul>
                                 </span>
@@ -207,7 +207,6 @@ $this->beginPage()
     </div>
 
     <div class="debug" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
-
         <ul class="nav nav-tabs debug-tabs">
             <li class="nav-item" ng-click="showDebugBar=0">
                 <span class="nav-link">x</span>
@@ -218,10 +217,11 @@ $this->beginPage()
             <li class="nav-item" ng-click="debugTab=2">
                 <span class="nav-link" ng-class="{'active': debugTab==2}">Infos</span>
             </li>
+            <li class="nav-item" ng-click="debugTab=3">
+                <span class="nav-link" ng-class="{'active': debugTab==3}">Packages</span>
+            </li>
         </ul>
-
         <div class="debug-panel debug-panel-network" ng-class="{'debug-panel-network-open': debugDetail}" ng-if="debugTab==1">
-
             <div class="debug-network-items">
             	<button type="button" ng-click="AdminDebugBar.clear()" class="btn btn-icon"><i class="material-icons">clear</i></button>
                 <div class="table-responsive-wrapper">
@@ -243,9 +243,7 @@ $this->beginPage()
                     </table>
                 </div>
             </div>
-
             <div class="debug-network-detail">
-
                 <div class="table-responsive-wrapper">
                     <table class="table table-striped table-bordered">
                         <tr>
@@ -291,10 +289,8 @@ $this->beginPage()
                         </tr>
                     </table>
                 </div>
-
             </div>
         </div>
-
         <div class="debug-panel" ng-if="debugTab==2">
             <div class="table-responsive-wrapper">
                 <table class="table table-striped table-sm table-bordered">
@@ -322,10 +318,36 @@ $this->beginPage()
                 </table>
             </div>
         </div>
-
+        <div class="debug-panel" ng-if="debugTab==3">
+            <div class="table-responsive-wrapper">
+                <div ng-repeat="(packageName, package) in packages" class="mb-3">
+                    <h3>{{ packageName }}</h3>
+                    <table class="table table-striped table-sm table-bordered">
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ package.package.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Pretty Name</td>
+                            <td>{{ package.package.prettyName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Version</td>
+                            <td>{{ package.package.version}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bootstrap</td>
+                            <td>{{ package.bootstrap | json }}</td>
+                        </tr>
+                        <tr>
+                            <td>Blocks</td>
+                            <td>{{ package.blocks | json }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </div>
 <div class="toasts" ng-repeat="item in toastQueue" ng-class="{'toasts--mainnav-small': !isHover}">
     <div class="modal toasts-modal fade show" ng-if="item.type == 'confirm'" zaa-esc="item.close()" style="display: block;">

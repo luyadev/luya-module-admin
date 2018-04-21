@@ -3,7 +3,6 @@
 namespace luya\admin;
 
 use Yii;
-
 use luya\console\interfaces\ImportControllerInterface;
 use luya\base\CoreModuleInterface;
 use luya\admin\components\AdminLanguage;
@@ -87,12 +86,67 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     ];
     
     /**
-     * @var boolean Enables a two-way factor auth system before logging into the admin
-     * panel. If the system is not able to send mails (No configuration or missconfiguration)
-     * then you are not able to login anymore. You should test the mail system before enabling
-     * secureLogin. To test your smtp connection you can use `./vendor/bin/luya health/mailer`
+     * @var boolean Enables a 2FA system before logging into the admin panel sending a token to the given email adress of the user. If the system is not able to send
+     * mails (No configuration or missconfiguration) then you are not able to login. You should test the mail system before enabling secureLogin. To test your smtp 
+     * connection you can use `./vendor/bin/luya health/mailer` command.
      */
     public $secureLogin = false;
+    
+    /**
+     * @var boolean If enabled an user can only change the email adresse by entering the secure code which is sent to the users given (current) email adresse.
+     * @since 1.2.0
+     */
+    public $emailVerification = false;
+    
+    /**
+     * @var integer If {{luya\admin\Module::$emailVerification}} is enabled this property defines the number seconds until the validation token expires.
+     * @since 1.2.0
+     */
+    public $emailVerificationTokenExpirationTime = (60 * 10);
+    
+    /**
+     * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
+     * @since 1.1.1
+     */
+    public $strongPasswordPolicy = false;
+
+    /**
+     * @var integer The number of attempts a user can make without knowing the login email. Clearing the session cookie
+     * will allow next 20 attempts. But if an user email is known the attempt will swap to a user based attempt lockout handled by {{luya\admin\Module::$loginUserAttemptCount}}.
+     * @since 1.2.0
+     */
+    public $loginSessionAttemptCount = 20;
+    
+    /**
+     * @var integer If the session based {{luya\admin\Module::$loginSessionAttemptCount}} expire the user is locked out for this given time in seconds, defaults to 30min.
+     * @since 1.2.0
+     */
+    public $loginSessionAttemptLockoutTime = (60*30);
+    
+    /**
+     * @var integer When the username is identified correctly this property limit number of attempts for the given user and lock out the user for a given time defined in {{luya\admin\Module::$loginUserAttemptLockoutTime}}.
+     * The {{luya\admin\Module::$loginUserAttemptCount}} stores the login attempts in the database. Keep in mind that the {{luya\admin\Module::$loginSessionAttemptCount}} can lock out the user before or while entering a wrong password.
+     * @since 1.2.0
+     */
+    public $loginUserAttemptCount = 7;
+    
+    /**
+     * @var integer When the {{luya\admin\Module::$loginUserAttemptCount}} exceeded the number of seconds where the user is locked out, defaults to 30 min.
+     * @since 1.2.0
+     */
+    public $loginUserAttemptLockoutTime = (60 * 30);
+    
+    /**
+     * @var integer When {{luya\admin\Module::$secureLogin}} is enabled a secure token is sent to the users email, the expiration time is defined in seconds and defaults to 10 min.
+     * @since 1.2.0
+     */
+    public $secureTokenExpirationTime = (60 * 10);
+    
+    /**
+     * @var integer The number of seconds inactivity until the user is logged out.
+     * @since 1.2.0
+     */
+    public $userIdleTimeout = (60 * 30);
     
     /**
      * @var integer The number of rows which should be transferd for each request.
@@ -123,6 +177,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-timestamp' => 'luya\admin\apis\TimestampController',
         'api-admin-search' => 'luya\admin\apis\SearchController',
         'api-admin-user' => 'luya\admin\apis\UserController',
+        'api-admin-apiuser' => 'luya\admin\apis\ApiUserController',
         'api-admin-group' => 'luya\admin\apis\GroupController',
         'api-admin-lang' => 'luya\admin\apis\LangController',
         'api-admin-effect' => 'luya\admin\apis\EffectController',
@@ -133,16 +188,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
         
-    ];
-
-    /**
-     * @var array Url rules used by the administration application.
-     */
-    public $urlRules = [
-        ['class' => 'luya\admin\components\UrlRule'],
-        ['pattern' => 'file/<id:\d+>/<hash:\w+>/<fileName:(.*?)+>', 'route' => 'admin/file/download'],
-        ['pattern' => 'admin', 'route' => 'admin/default/index'],
-        ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
     ];
 
     /**
@@ -160,6 +205,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         self::registerTranslation('admin*', '@admin/messages', [
             'admin' => 'admin.php',
         ]);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getUrlRules()
+    {
+        return [
+            ['class' => 'luya\admin\components\UrlRule', 'cacheFlag' => Yii::$app->request->isAdmin],
+            ['pattern' => 'file/<id:\d+>/<hash:\w+>/<fileName:(.*?)+>', 'route' => 'admin/file/download'],
+            ['pattern' => 'admin', 'route' => 'admin/default/index'],
+            ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
+        ];
     }
     
     /**
@@ -260,6 +318,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ->node('menu_node_system', 'settings_applications')
                 ->group('menu_group_access')
                     ->itemApi('menu_access_item_user', 'admin/user/index', 'person', 'api-admin-user')
+                    ->itemApi('menu_access_item_apiuser', 'admin/api-user/index', 'device_hub', 'api-admin-apiuser')
                     ->itemApi('menu_access_item_group', 'admin/group/index', 'group', 'api-admin-group')
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
@@ -269,13 +328,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_images')
                     ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
                     ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
-                ->group('Content Proxy')
-                    ->itemApi('Machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
-                    ->itemApi('Builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
+                ->group('menu_group_contentproxy')
+                    ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
+                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
     }
 
     /**
-     * Registering applicat components on application bootstraping proccess.
+     * Registering application components on bootstraping proccess.
      *
      * @return array An array where the key is the application component name and value the configuration.
      */
@@ -305,7 +364,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * Setup the admin importer classes.
      *
-     * @param \uya\console\interfaces\ImportControllerInterface $import The import controller interface.
+     * @param \luya\console\interfaces\ImportControllerInterface $import The import controller interface.
      * @return array An array with all importer classes registered for this module.
      */
     public function import(ImportControllerInterface $import)

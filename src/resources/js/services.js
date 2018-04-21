@@ -1,5 +1,5 @@
 // service resolver
-function adminServiceResolver(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
+adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFilesData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
 	ServiceImagesData.load();
@@ -8,7 +8,7 @@ function adminServiceResolver(ServiceFoldersData, ServiceImagesData, ServiceFile
 	ServicePropertiesData.load();
 	AdminLangService.load();
 	ServiceFoldersDirecotryId.load();
-};
+}];
 
 /**
  * all global admin services
@@ -51,7 +51,7 @@ $scope.foldersDataReload = function() {
 }
 
 */
-zaa.factory("ServiceFoldersData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFoldersData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	
 	var service = [];
 	
@@ -72,7 +72,7 @@ zaa.factory("ServiceFoldersData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -87,7 +87,7 @@ $scope.foldersDirecotryIdReload = function() {
 }
 
 */
-zaa.factory("ServiceFoldersDirecotryId", function($http, $q, $rootScope) {
+zaa.factory("ServiceFoldersDirecotryId", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	
 	var service = [];
 	
@@ -108,7 +108,7 @@ zaa.factory("ServiceFoldersDirecotryId", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -123,7 +123,7 @@ $scope.imagesDataReload = function() {
 }
 
 */
-zaa.factory("ServiceImagesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -143,7 +143,7 @@ zaa.factory("ServiceImagesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -158,7 +158,7 @@ $scope.filesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFilesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -178,7 +178,7 @@ zaa.factory("ServiceFilesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -193,7 +193,7 @@ $scope.filtersDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFiltersData", function($http, $q, $rootScope) {
+zaa.factory("ServiceFiltersData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -213,7 +213,7 @@ zaa.factory("ServiceFiltersData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -228,7 +228,7 @@ $scope.languagesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceLanguagesData", function($http, $q, $rootScope) {
+zaa.factory("ServiceLanguagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = [];
@@ -248,7 +248,7 @@ zaa.factory("ServiceLanguagesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
 
@@ -263,7 +263,7 @@ $scope.propertiesDataReload = function() {
 }
 				
 */
-zaa.factory("ServicePropertiesData", function($http, $q, $rootScope) {
+zaa.factory("ServicePropertiesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	var service = [];
 	
 	service.data = null;
@@ -283,7 +283,7 @@ zaa.factory("ServicePropertiesData", function($http, $q, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 zaa.factory("CrudTabService", function() {
 	
@@ -325,7 +325,7 @@ zaa.factory("CrudTabService", function() {
  language service with selections
  
 */
-zaa.factory("AdminLangService", function(ServiceLanguagesData, $rootScope) {
+zaa.factory("AdminLangService", ['ServiceLanguagesData', '$rootScope', function(ServiceLanguagesData, $rootScope) {
 	
 	var service = [];
 	
@@ -382,7 +382,7 @@ zaa.factory("AdminLangService", function(ServiceLanguagesData, $rootScope) {
 	};
 	
 	return service;
-});
+}]);
 
 /*
  * Admin Debug Bar provides an array with debug information from the last request in order to find bugs without the developer tools of the browser 
@@ -431,18 +431,18 @@ Examples
 
 AdminToastService.notify('Hello i am Message and will be dismissed in 2 Seconds');
 
-AdminToastService.confirm('Hello i am a callback and wait for your', 'Das löschen?', function($q, $http) {
+AdminToastService.confirm('Hello i am a callback and wait for your', 'Das löschen?', ['$q', '$http', function($q, $http) {
 	// do some ajax call
 	$http.get().then(function() {
 		promise.resolve();
 	}).error(function() {
 		promise.reject();
 	});
-});
+}]);
 
 you can also close this dialog by sourself in the callback
 
-AdminToastService.confirm('Message', function() {
+AdminToastService.confirm('Are you sure?', 'Dialog Title', function() {
 	// do something
 	this.close();
 });
@@ -454,7 +454,7 @@ function($toast) {
 }
 
 */
-zaa.factory("AdminToastService", function($q, $timeout, $injector) {
+zaa.factory("AdminToastService", ['$q', '$timeout', '$injector', function($q, $timeout, $injector) {
 	var service = [];
 	
 	service.notify = function(message, timeout, type) {
@@ -503,12 +503,12 @@ zaa.factory("AdminToastService", function($q, $timeout, $injector) {
 			var response = $injector.invoke(this.callback, this, { $toast : this });
 			if (response !== undefined) {
 				response.then(function(r) {
-						queue.close();
-					}, function(r) {
-						queue.close();
-					}, function(r) {
-						// call loader later?
-					});
+					queue.close();
+				}, function(r) {
+					queue.close();
+				}, function(r) {
+					/* call or load at later time */
+				});
 			}
 		}, uuid: uuid, callback: callback, type: 'confirm', close: function() {
 			delete service.queue[this.uuid];
@@ -518,7 +518,7 @@ zaa.factory("AdminToastService", function($q, $timeout, $injector) {
 	service.queue = {};
 	
 	return service;
-});
+}]);
 
 /*
  * 

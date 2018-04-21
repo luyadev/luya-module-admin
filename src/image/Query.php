@@ -36,21 +36,44 @@ class Query extends BaseObject
         return $this->_storage;
     }
     
+    /**
+     * Return all images from the storage system.
+     * 
+     * @return array
+     */
     public function getDataProvider()
     {
         return $this->storage->imagesArray;
     }
     
+    /**
+     * Get a specific images from the storage system.
+     * 
+     * @param integer $id
+     * @return boolean|array
+     */
     public function getItemDataProvider($id)
     {
         return $this->storage->getImagesArrayItem($id);
     }
     
+    /**
+     * Create the image object based on the array.
+     * 
+     * @param array $itemArray
+     * @return \luya\admin\image\Item
+     */
     public function createItem(array $itemArray)
     {
         return Item::create($itemArray);
     }
     
+    /**
+     * Create iterator object from a given data array.
+     * 
+     * @param array $data
+     * @return \luya\admin\image\Iterator
+     */
     public function createIteratorObject(array $data)
     {
         return Yii::createObject(['class' => Iterator::className(), 'data' => $data]);

@@ -5,6 +5,7 @@ namespace luya\admin\tags;
 use Yii;
 use luya\tag\BaseTag;
 use yii\helpers\Html;
+use luya\admin\Module;
 
 /**
  * File Tag.
@@ -16,18 +17,25 @@ use yii\helpers\Html;
  */
 class FileTag extends BaseTag
 {
+    /**
+     * @inheritdoc
+     */
     public function example()
     {
-        return 'file[123](Open Me!)';
+        return 'file[123](File XYZ.pdf)';
     }
     
+    /**
+     * @inheritdoc
+     */
     public function readme()
     {
-        return <<<EOT
-Generat a link to a provided file. For Example `file[1]` will generate a link to the file but when you want to the an alternative text `file[1](My Text)` use the example.    
-EOT;
+        return Module::t('tag_file_readme');
     }
     
+    /**
+     * @inheritdoc
+     */
     public function parse($value, $sub)
     {
         $file = Yii::$app->storage->getFile($value);

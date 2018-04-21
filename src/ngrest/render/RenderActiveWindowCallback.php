@@ -14,7 +14,7 @@ use luya\admin\ngrest\base\Render;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-class RenderActiveWindowCallback extends Render implements RenderInterface
+class RenderActiveWindowCallback extends Render
 {
     public function render()
     {

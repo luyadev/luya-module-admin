@@ -10,6 +10,7 @@ use luya\Exception;
 use luya\helpers\Url;
 use luya\helpers\FileHelper;
 use yii\base\BaseObject;
+use yii\base\InvalidCallException;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -349,6 +350,10 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
      */
     public function getItemIds()
     {
+        if (empty($this->_itemId)) {
+            throw new InvalidCallException("Unable to determine the active window item id.");    
+        }
+        
         return explode(",", $this->_itemId);
     }
     

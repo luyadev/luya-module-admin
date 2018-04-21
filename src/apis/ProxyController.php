@@ -137,10 +137,10 @@ class ProxyController extends Controller
     /**
      * Return sql table data.
      *
-     * @param unknown $machine
-     * @param unknown $buildToken
-     * @param unknown $table
-     * @param unknown $offset
+     * @param string $machine
+     * @param string $buildToken
+     * @param string $table
+     * @param integer $offset
      * @return array
      */
     public function actionDataProvider($machine, $buildToken, $table, $offset)
@@ -171,9 +171,9 @@ class ProxyController extends Controller
     /**
      * Return file storage data.
      *
-     * @param unknown $machine
-     * @param unknown $buildToken
-     * @param unknown $fileId
+     * @param string $machine
+     * @param string $buildToken
+     * @param integer $fileId
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -199,9 +199,9 @@ class ProxyController extends Controller
     /**
      * Return image storage data.
      *
-     * @param unknown $machine
-     * @param unknown $buildToken
-     * @param unknown $imageId
+     * @param string $machine
+     * @param string $buildToken
+     * @param integer $imageId
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */

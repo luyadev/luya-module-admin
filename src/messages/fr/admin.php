@@ -179,7 +179,7 @@ return [
     'right_panel_support_tags_title' => 'Etiquettes',
     'right_panel_support_support_title' => 'Support',
     'right_panel_support_support_text' => 'Pour toute question, contacter le Webmaster ou consulter la page <a target="_blank" href="https://luya.io">luya.io</a>',
-    
+
     /* rc2 */
     'ngrest_crud_group_prompt' => 'Groupe par champ',
     'ngrest_crud_filter_prompt' => 'Sélectionner un filtre',
@@ -190,14 +190,14 @@ return [
     'layout_rightbar_savebtn' => 'Enregistrer',
     'aws_changepassword_notequal' => 'Le nouveau mot de passe et la répétition du mot de passe ne correspond pas',
     'aws_changeapssword_minchar' => 'Le nouveau mot de passe doit contenir au moins {min} caractères',
-        
+
     /* rc3 */
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Langue',
     'model_lang_short_code' => 'Code',
     'model_lang_is_default' => 'Par défaut',
     'model_lang_delete_error_is_default' => 'Impossible de supprimer la langue par défaut du système',
-    
+
     'model_logger_time' => 'Heure',
     'model_logger_message' => 'Message',
     'model_logger_type' => 'Type',
@@ -212,20 +212,20 @@ return [
     'model_logger_server' => 'Serveur',
     'model_logger_group_identifier' => 'Groupe de requêtes',
     'model_logger_group_identifier_index' => 'Position',
-    
+
     'model_storageeffect_identifier' => 'Identifiant',
     'model_storageeffect_name' => 'Nom',
     'model_storageeffect_imagine_name' => 'Nom de l\'effet',
     'model_storageeffect_imagine_json_params' => 'Configuration de l\'effet JSON',
     'model_storagefilter_identifier' => 'Identifiant du filtre',
     'model_storagefilter_name' => 'Nom du filtre',
-    
+
     'model_tag_name' => 'Identifiant de l\'étiquette',
-    
+
     'model_user_lastlogintimestamp' => 'Dernière connexion',
     'model_user_title_mr' => 'M.',
     'model_user_title_mrs' => 'Mme.',
-    
+
     'js_ngrest_toggler_success' => '%field% mis à jour avec succès',
     'layout_image_filter_selection' => 'Sélectionner le filtre de l\'image:',
     'lock_admin_edit_crud_item' => 'En cours de modification {module} "{table}" (ID: {id})',
@@ -235,7 +235,7 @@ return [
     'js_link_change_value' => 'Changer le lien',
     'js_link_set_value' => 'Définir le lien',
     'callback_button_file_download_widget_success' => 'Le fichier a été préparé. Vous pouvez le télécharger maintenant.',
-    
+
 // rc4
 
     'api_storage_file_upload_folder_error' => 'Erreur lors de l\'enregistrement du fichier. Une erreur d\'autorisation pourrait être la cause de ce problème. Assurez-vous que le dossier de stockage est accessible en écriture !',
@@ -248,31 +248,93 @@ return [
     'locked_info' => 'Someone already editing',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'No Link selected',
-        
+
 // 1.0.0
-        
-    'ngrest_button_delete' => 'Delete',
-    'js_dir_manager_rm_file_confirm_title' => 'Remove file',
-    'js_dir_manager_rm_folder_confirm_title' => 'Remove folder',
-    'link_dir_target' => 'Link target',
-    'link_dir_target_same' => 'Same window',
-    'link_dir_target_blank' => 'New window',
-    'view_index_redirect_file' => 'file',
-    'view_index_redirect_mail' => 'e-mail address',
-    'view_index_redirect_mail_help' => 'Please enter a valid e-mail address.',
-    'menu_button_search' => 'Search',
+
+    'ngrest_button_delete' => 'Supprimer',
+    'js_dir_manager_rm_file_confirm_title' => 'Supprimer le fichier',
+    'js_dir_manager_rm_folder_confirm_title' => 'Supprimer le dossier',
+    'link_dir_target' => 'Cible',
+    'link_dir_target_same' => 'Même fenêtre',
+    'link_dir_target_blank' => 'Nouvelle fenêtre',
+    'view_index_redirect_file' => 'Fichier',
+    'view_index_redirect_mail' => 'Adresse email',
+    'view_index_redirect_mail_help' => 'Veuillez entrer une adresse email valide',
+    'menu_button_search' => 'Recherche',
     'layout_btn_user_settings' => 'Paramètres',
-    'upload_err_message_0' => 'There is no error, the file uploaded with success.',
-    'upload_err_message_1' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-    'upload_err_message_2' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
-    'upload_err_message_3' => 'The uploaded file was only partially uploaded.',
-    'upload_err_message_4' => 'No file was uploaded.',
-    'upload_err_message_6' => 'Missing a temporary folder.',
-    'upload_err_message_7' => 'Failed to write file to disk.',
-    'upload_err_message_8' => 'A PHP extension stopped the file upload.',
-    'model_config_atr_name' => 'Identifier',
-    'model_config_atr_name_hint' => 'Unique identifier for this variable. You can access system config with Config::get(identifier) in your application.',
-    'model_config_atr_value' => 'Value',
-    'model_config_atr_is_system' => 'Is system',
-    'menu_system_item_config' => 'Config variables'
+    'upload_err_message_0' => 'Fichier téléchargé avec succès.',
+    'upload_err_message_1' => 'Le fichier téléchargé dépasse la configuration upload_max_filesize dans php.ini',
+    'upload_err_message_2' => 'Le fichier téléchargé dépasse la configuration MAX_FILE_SIZE spécifiée dans le formulaire HTML.',
+    'upload_err_message_3' => 'Le fichier téléchargé n\'a été que partiellement téléchargé.',
+    'upload_err_message_4' => 'Aucun fichier n\'a été téléchargé.',
+    'upload_err_message_6' => 'Dossier temporaire manquant',
+    'upload_err_message_7' => 'Impossible d\'écrire sur le disque.',
+    'upload_err_message_8' => 'Une extension PHP a bloqué le téléchargement du fichier.',
+    'model_config_atr_name' => 'Identifiant',
+    'model_config_atr_name_hint' => 'Identifiant unique pour cette variable. Vous pouvez accéder à la configuration du système avec Config::get(identifiant) dans votre application.',
+    'model_config_atr_value' => 'Valeur',
+    'model_config_atr_is_system' => 'Est système',
+    'menu_system_item_config' => 'Variables de configuration',
+
+// 1.1.0
+
+    'model_user_is_deleted' => 'Supprimer',
+    'model_user_name' => 'Nom d\'utilisateur',
+    'model_user_groups' => 'Groupes',
+    'aw_userhistorysummary_userdata' => 'Détails du profil',
+    'aw_userhistorysummary_contribcount' => 'Nombre de contributions',
+    'aw_userhistorysummary_contribcount_inserts' => 'Insertions',
+    'aw_userhistorysummary_contribcount_updates' => 'Modifications',
+    'aw_userhistorysummary_customsettings' => 'Paramètres personnalisés',
+    'aw_userhistorysummary_lastsessions' => 'Sessions récentes',
+    'aw_userhistorysummary_ngrestlogs' => 'Historiques de modifications',
+    'aw_userhistorysummary_customsettings_key' => 'Identifiant',
+    'aw_userhistorysummary_customsettings_value' => 'Valeur',
+    'aw_userhistorysummary_lastsessions_destroyed' => 'Supprimées',
+    'aw_userhistorysummary_lastsessions_active' => 'Active',
+    'aw_userhistorysummary_ngrestlogs_detailbtn' => 'Diff',
+    'aw_userhistorysummary_ngrestlogs_detailattribute' => 'Attribut',
+    'aw_userhistorysummary_ngrestlogs_detailold' => 'Ancien',
+    'aw_userhistorysummary_ngrestlogs_detailnew' => 'Nouveau',
+    'aw_userhistorysummary_defaultlabel' => 'Historique',
+    'aw_changepassword_defaultlabel' => 'Changer le mot de passe',
+    'model_user_api_last_activity' => 'Dernière activité de l\'API',
+    'aw_apioverview_label' => 'Aperçu de l\'API',
+    'aw_apioverview_resettokenconfirm' => 'Êtes-vous sûr de vouloir remplacer le jeton actuel par un nouveau? Cette action ne peut être annulée.',
+    'aw_apioverview_resettokenconfirm_title' => 'Confirmer la réinitialisation du jeton',
+    'aw_apioverview_responsetesterresponse' => 'Réponse',
+    'aw_apioverview_responsetesterrequest' => 'Requête',
+    'aw_apioverview_accesstokentitle' => 'Jeton d\'accès',
+    'aw_apioverview_accesstokeninfo' => 'Avant de générer un nouveau jeton d\'accès, assurez-vous que l\'ancien n\'est plus utilisé. Sinon, votre application cessera de fonctionner.',
+    'aw_apioverview_accesstokenbtnlabel' => 'Générer un nouveau jeton',
+    'aw_apioverview_endpointstitle' => 'Point d\'accès disponibles',
+    'aw_apioverview_permadd' => 'Permission de créer (POST)',
+    'aw_apioverview_permedit' => 'Permission de modifier (PUT)',
+    'aw_apioverview_permdelete' => 'Permission de supprimer (delete)',
+    'aw_apioverview_endpoint' => 'Point d\accès',
+    'aw_apioverview_responsetestertitle' => 'Console de test',
+    'menu_access_item_apiuser' => 'API Utilisateurs',
+    'menu_group_contentproxy' => 'Content Proxy',
+    'menu_group_contentproxy_machines' => 'Machines',
+    'menu_group_contentproxy_builds' => 'Builds',
+    'tag_file_readme' => 'Generate a link to the specified file. As an example, `file[1]` will generate a link to the file with the id 1, using the filename as the file label. To define a different label text, use `file[1](My file label text)`. The file will open in a new window.',
+    'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
+    'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
+
+// 1.1.1
+
+    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    
+// 1.2.0
+    
+    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
+    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'Verify update of your email address',
+    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'Email verification code',
 ];

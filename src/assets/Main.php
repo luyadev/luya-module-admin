@@ -27,6 +27,7 @@ class Main extends \luya\web\Asset
      */
     public $js = [
         'dist/js/main.js',
+        'dist/js/main.uglified.js',
     ];
 
     /**
@@ -35,7 +36,7 @@ class Main extends \luya\web\Asset
     public $depends = [
         'luya\admin\assets\Jquery',
     ];
-    
+
     /**
      * @inheritdoc
      */

@@ -150,7 +150,7 @@ class CommonController extends RestController
     /**
      * Store the open and closed folders from the filemanager tree in the user settings.
      *
-     * @return booelan
+     * @return boolean
      */
     public function actionFilemanagerFoldertreeHistory()
     {

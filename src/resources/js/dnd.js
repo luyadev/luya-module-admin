@@ -63,7 +63,7 @@ angular.module('dnd', [])
  * 
  * Parts of the scripts are inspired by: https://github.com/marceljuenemann/angular-drag-and-drop-lists
  */
-.directive('dnd', function(dndFactory, AdminClassService) {
+.directive('dnd',['dndFactory', 'AdminClassService', function(dndFactory, AdminClassService) {
 	return {
 		restrict : 'A',
 		transclude: false,
@@ -262,4 +262,4 @@ angular.module('dnd', [])
     		}
 		}
 	};
-});
+}]);

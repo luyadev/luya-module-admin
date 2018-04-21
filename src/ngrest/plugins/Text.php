@@ -61,4 +61,14 @@ class Text extends Plugin
             $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
         }
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function onAssign($event)
+    {
+        if (!$this->i18n && $this->encoding && $this->isAttributeWriteable($event)) {
+            $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
+        }
+    }
 }

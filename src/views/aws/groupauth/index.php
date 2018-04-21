@@ -3,21 +3,19 @@ use luya\admin\Module;
 
 ?>
 <div ng-controller="ActiveWindowGroupAuth">
-
     <div class="text-right mb-3">
         <button type="button" ng-click="toggleAll()" class="btn btn-secondary btn-icon"><i class="material-icons">done_all</i> <span><?= Module::t('aws_groupauth_select_all'); ?></span></button>
         <button type="button" ng-click="untoggleAll()" class="btn btn-secondary btn-icon"><i class="material-icons">clear_all</i> <span><?= Module::t('aws_groupauth_deselect_all'); ?></span></button>
     </div>
-
     <form id="updateSubscription">
-        <table class="table table-sm">
+        <table class="table table-hover table-sm">
             <thead>
                 <tr>
                     <th><?= Module::t('aws_groupauth_th_module'); ?></th>
                     <th><?= Module::t('aws_groupauth_th_function'); ?></th>
-                    <th><?= Module::t('aws_groupauth_th_add'); ?></th>
-                    <th><?= Module::t('aws_groupauth_th_edit'); ?></th>
-                    <th><?= Module::t('aws_groupauth_th_remove'); ?></th>
+                    <th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_add'); ?>" tooltip-position="bottom">note_add</i></th>
+            		<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_edit'); ?>" tooltip-position="bottom">create</i></th>
+            		<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_remove'); ?>" tooltip-position="bottom">delete</i></th>
                 </tr>
             </thead>
             <tr ng-repeat="a in auths">
@@ -28,9 +26,8 @@ use luya\admin\Module;
                 <td ng-show="a.is_crud==1"><input id="{{a.id}}_delete" type="checkbox" ng-model="rights[a.id].delete" ng-true-value="1" ng-false-value="0" /><label for="{{a.id}}_delete"></label></td>
             </tr>
         </table>
+        <div class="modal-footer">
+	        <button type="button" ng-click="save(rights)" class="btn btn-save btn-icon"><?= Module::t('button_save'); ?></button>
+	    </div>
     </form>
-
-    <div class="modal-footer">
-        <button type="button" ng-click="save(rights)" class="btn btn-save btn-icon"><?= Module::t('button_save'); ?></button>
-    </div>
 </div>
