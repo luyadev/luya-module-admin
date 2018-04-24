@@ -1,5 +1,4 @@
-(function() {
-    "use strict";
+
     
     zaa.filter("filemanagerdirsfilter", function() {
         return function(input, parentFolderId) {
@@ -117,5 +116,3 @@
             return (val.substring(0, partLength)) + placeholder + val.substring(val.length - partLength, val.length);
         };
     });
-    
-})();

@@ -1,5 +1,4 @@
-(function() {
-    "use strict";
+
 
     /* GLOBAL DIRECTIVES */
 
@@ -3089,4 +3088,3 @@
             }
         };
     });
-})();

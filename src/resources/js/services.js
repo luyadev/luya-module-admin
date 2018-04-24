@@ -35,8 +35,6 @@ adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFiles
  * ```
  * 
  */
-(function() {
-	"use strict";
 	
 /*
 
@@ -574,6 +572,3 @@ zaa.factory('HtmlStorage', function() {
 	
 	return service;
 });
-
-// end of use strict
-})();

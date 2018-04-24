@@ -1,30 +1,5 @@
-(function() {
-	"use strict";
 
-	zaa.config(['$stateProvider', function($stateProvider) {
-		
-		$stateProvider.state("default.route.detail", {
-			url: "/:id",
-			parent: 'default.route',
-			template: '<ui-view/>',
-			controller: ['$scope', '$stateParams', function($scope, $stateParams) {
-
-				$scope.crud = $scope.$parent;
-
-				$scope.init = function() {
-					if (!$scope.crud.config.inline) {
-						if ($scope.crud.data.updateId != $stateParams.id) {
-							$scope.crud.toggleUpdate($stateParams.id);
-						}
-					}
-				}
-
-				$scope.init();
-			}]
-		});
-		
-	}]);
-
+	
 	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 		$scope.data;
@@ -1181,4 +1156,3 @@
 
 		$scope.getProfile();
 	}]);
-})();

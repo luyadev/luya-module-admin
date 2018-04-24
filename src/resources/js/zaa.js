@@ -1,5 +1,3 @@
-var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
-
 /**
  * guid creator
  * @returns {String}
@@ -11,7 +9,6 @@ function guid() {
 
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
-
 /**
  * i18n localisation with params.
  *
@@ -37,7 +34,6 @@ function i18nParam(varName, params) {
 
     return varValue;
 }
-
 /**
  * Type cast numeric values to integer
  *
@@ -48,19 +44,22 @@ function typeCastValue(value) {
     return angular.isNumber(value) ? parseInt(value) : value;
 }
 
-(function () {
-    "use strict";
-
+var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
+    
     /* CONFIG */
     
     zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
     	
         $httpProvider.interceptors.push("authInterceptor");
 
+        // used to bootstrap the angularjs controllers in the view 
         zaa.bootstrap = $controllerProvider;
 
         $urlMatcherFactoryProvider.strictMode(false)
 
+        /**
+         * resolvers: https://github.com/angular-ui/ui-router/wiki#resolve
+         */
         $stateProvider
             .state("default", {
                 url: "/default/:moduleId",
@@ -85,18 +84,40 @@ function typeCastValue(value) {
                 },
                 resolve: {
                     adminServiceResolver: adminServiceResolver,
-                    resolver: ['resolver', function (resolver) {
-                        return resolver.then;
+                    /*
+                    resolverProvider: ['resolverProvider', function (resolverProvider) {
+                        return resolverProvider.then;
                     }]
+                    */
                 }
             })
             .state("home", {
                 url: "",
                 templateUrl: "admin/default/dashboard"
+            })
+            // ngrest crud detail view
+            .state("default.route.detail", {
+				url: "/:id",
+				parent: 'default.route',
+				template: '<ui-view/>',
+				controller: ['$scope', '$stateParams', function($scope, $stateParams) {
+	
+					$scope.crud = $scope.$parent;
+	
+					$scope.init = function() {
+						if (!$scope.crud.config.inline) {
+							if ($scope.crud.data.updateId != $stateParams.id) {
+								$scope.crud.toggleUpdate($stateParams.id);
+							}
+						}
+					}
+	
+					$scope.init();
+				}]
             });
     }]);
-
-    /* PROVIDERS */
+    
+/* PROVIDERS */
     
     /**
      * attach custom callback function to the custom state resolve. Use the resolverProvider in
@@ -108,8 +129,10 @@ function typeCastValue(value) {
 	 *			ServiceBlocksData.load();
 	 *		});
 	 * });
+	 * 
+	 * @see https://github.com/angular-ui/ui-router/wiki#resolve
      */
-    zaa.provider("resolver", function() {
+    zaa.provider("customStateResolverProvider", function() {
         var list = [];
 
         this.addCallback = function (callback) {
@@ -307,5 +330,3 @@ function typeCastValue(value) {
             }
         };
     }]);
-
-})();
