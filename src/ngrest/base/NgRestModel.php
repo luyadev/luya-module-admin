@@ -569,7 +569,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             if ($type == 'create' || $type == 'update') {
                 $scenario = 'rest'.$type;
                 if (!isset($scenarios[$scenario])) {
-                    throw new InvalidConfigException("The scenario '$scenario' does not exists in your scenarios list, have you forgote to defined the '$scenario' in the scenarios() method?");
+                    throw new InvalidConfigException("The scenario '$scenario' does not exists in your scenarios list, have you forgot to defined the '$scenario' in the scenarios() method?");
                 } else {
                     $scenarioFields = $scenarios[$scenario];
                 }
