@@ -75,9 +75,9 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Add a dummy file.
-     * 
+     *
      * Do not forget to call `insertDummyFiles()` afterwards.
-     * 
+     *
      * @param array $config
      * @since 1.1.1
      */
@@ -91,7 +91,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Insert the dummy files from `addDummyFile()`.
-     * 
+     *
      * @since 1.1.1
      */
     public function insertDummyFiles()
@@ -103,9 +103,9 @@ class DummyFileSystem extends BaseFileSystemStorage
 
     /**
      * Add dummy image.
-     * 
+     *
      * Do not forget to call `insertDummyImages()` afterwards.
-     * 
+     *
      * @param array $config
      * @since 1.1.1
      */
@@ -119,7 +119,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Insert the dummy images from `addDummyImage()`.
-     * 
+     *
      * @since 1.1.1
      */
     public function insertDummyImages()

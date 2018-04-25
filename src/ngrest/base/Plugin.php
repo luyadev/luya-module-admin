@@ -341,21 +341,20 @@ abstract class Plugin extends Component
     
     /**
      * After attribute value assignment.
-     * 
+     *
      * This event will trigger on:
-     * 
+     *
      * + AfterInsert
      * + AfterUpdate
      * + AfterRefresh
-     * 
+     *
      * The main purpose is to ensure html encoding when the model is not populated with after find from the database.
-     * 
+     *
      * @param \yii\base\ModelEvent $event When the database entry after insert, after update, after refresh.
      * @since 1.1.1
      */
     public function onAssign($event)
     {
-        
     }
     
     // ON LIST FIND

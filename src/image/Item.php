@@ -44,7 +44,7 @@ class Item extends ItemAbstract
     
     /**
      * Return the caption text for this image, if not defined or none give its null.
-     * 
+     *
      * If no image caption is defined from bind it will try to retrieve the caption from the file (set by filemanager).
      *
      * @return string The caption text for this image

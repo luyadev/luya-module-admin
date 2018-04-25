@@ -41,7 +41,7 @@ class RestController extends Controller implements UserBehaviorInterface
     
     /**
      * Get the current user auth object.
-     * 
+     *
      * @return \luya\admin\components\AdminUser
      */
     public function userAuthClass()

@@ -8,9 +8,9 @@ use yii\base\InvalidParamException;
 
 /**
  * I18n Encode/Decode helper method
- * 
+ *
  * General infos about the provided methods:
- * 
+ *
  * + `decode`: Means the input must be raw json code which will be decoded.
  * + `array` suffix: Input must be an array of values and output will be an array of values.
  * + `findActive`: The value for a given language is returned, if no language is provided the admin ui language is used.
@@ -147,7 +147,7 @@ class I18n
      * ```php
      * // assume the default language is `en`
      * $output = I18n::findActive(['de' => 'Hallo', 'en' => 'Hello']);
-     * 
+     *
      * echo $output; // output is "Hello"
      * ```
      *
@@ -172,7 +172,7 @@ class I18n
      *     ['de' => 'Hallo', 'en' => 'Hello'],
      *     ['de' => 'Katze', 'en' => 'Cat'],
      * ]);
-     * 
+     *
      * var_dump($output); // dump: array('Hello', 'Cat')
      * ```
      *

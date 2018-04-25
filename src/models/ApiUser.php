@@ -33,9 +33,9 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
  */
 final class ApiUser extends User
 {
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'admin_user';
@@ -52,8 +52,8 @@ final class ApiUser extends User
         $this->on(self::EVENT_BEFORE_VALIDATE, function () {
             $this->is_api_user = true;
             if ($this->isNewRecord) {
-            	$this->password = Yii::$app->security->generateRandomString();
-            	$this->password_salt = Yii::$app->security->generateRandomString();
+                $this->password = Yii::$app->security->generateRandomString();
+                $this->password_salt = Yii::$app->security->generateRandomString();
             }
         });
     }

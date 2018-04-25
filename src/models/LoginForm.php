@@ -80,7 +80,7 @@ final class LoginForm extends Model
     
     /**
      * Check if the given user has a lockout, otherwise upcount the attempts.
-     * 
+     *
      * @param User $user
      * @return boolean
      * @since 1.2.0
@@ -102,7 +102,7 @@ final class LoginForm extends Model
     
     /**
      * Check if lockout has expired or not.
-     * 
+     *
      * @param User $user
      * @return boolean
      * @since 1.2.0

@@ -23,7 +23,7 @@ class UserChangePassword extends Model
     
     /**
      * Setter method for user.
-     * 
+     *
      * @param User $user
      */
     public function setUser(User $user)
@@ -33,7 +33,7 @@ class UserChangePassword extends Model
     
     /**
      * Getter method for user.
-     * 
+     *
      * @return \luya\admin\models\User
      */
     public function getUser()
@@ -67,7 +67,7 @@ class UserChangePassword extends Model
     
     /**
      * Checks if the password is valid and stores the new password.
-     * 
+     *
      * @return boolean
      */
     public function checkAndStore()

@@ -34,7 +34,7 @@ class LogBehavior extends Behavior
     
     /**
      * The value to transform to json.
-     * 
+     *
      * @param string|array $array
      * @return string
      */

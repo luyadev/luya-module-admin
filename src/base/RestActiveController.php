@@ -32,7 +32,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     
     /**
      * Get the current user auth object.
-     * 
+     *
      * @return \luya\admin\components\AdminUser
      */
     public function userAuthClass()
@@ -61,7 +61,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             case 'create':
                 $type = Auth::CAN_CREATE;
                 break;
-            case 'active-window-render';
+            case 'active-window-render':
             case 'active-window-callback':
             case 'update':
                 $type = Auth::CAN_UPDATE;
@@ -83,7 +83,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
     /**
      * Checks if the current api endpoint exists in the list of accessables APIs.
-     * 
+     *
      * @throws ForbiddenHttpException
      * @since 1.1.0
      */

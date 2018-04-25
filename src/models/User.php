@@ -61,15 +61,14 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         parent::init();
         
-        $this->on(self::EVENT_BEFORE_INSERT, function() {
-        	if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
-        	    
-        		$this->encodePassword();
-        		
-        		if ($this->isNewRecord) {
-        		    $this->auth_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->password_salt);
-        		}
-        	}
+        $this->on(self::EVENT_BEFORE_INSERT, function () {
+            if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
+                $this->encodePassword();
+                
+                if ($this->isNewRecord) {
+                    $this->auth_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->password_salt);
+                }
+            }
         });
     }
     
@@ -217,7 +216,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['settings'], 'string'],
             [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration'], 'integer'],
             [['email_verification_token'], 'string', 'length' => 40],
-            [['password'], StrengthValidator::class, 'when' => function() {
+            [['password'], StrengthValidator::class, 'when' => function () {
                 return Module::getInstance()->strongPasswordPolicy;
             }, 'on' => ['restcreate', 'restupdate', 'default']],
         ];
@@ -258,7 +257,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
     /**
      * Generate an easy readable random token.
-     * 
+     *
      * @param number $length
      * @return mixed
      * @since 1.2.0
@@ -266,7 +265,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     private function generateToken($length = 6)
     {
         $token = Yii::$app->security->generateRandomString($length);
-        $replace = array_rand(range(2,9));
+        $replace = array_rand(range(2, 9));
         return str_replace(['-', '_', 'l', 1], $replace, strtolower($token));
     }
     
@@ -431,7 +430,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     
     /**
      * Generate and save a email verification token and return the token.
-     * 
+     *
      * @return mixed
      * @since 1.2.0
      */
@@ -449,7 +448,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     
     /**
      * Reset the user model email verification token and timestamp
-     * 
+     *
      * @since 1.2.0
      */
     public function resetEmailVerification()
@@ -476,7 +475,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public static function findIdentityByAccessToken($token, $type = null)
     {
         if (empty($token) || !is_scalar($token)) {
-            throw new InvalidArgumentException("The provided access token is invalid.");    
+            throw new InvalidArgumentException("The provided access token is invalid.");
         }
         
         $user = static::findOne(['auth_token' => $token]);
