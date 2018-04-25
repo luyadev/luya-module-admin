@@ -86,8 +86,8 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
                 },
                 resolve: {
                     adminServiceResolver: adminServiceResolver,
-                    resolverProvider: ['customStateResolver', function (customStateResolver) {
-                        return customStateResolver.then;
+                    resolverProvider: ['resolver', function (resolver) {
+                        return resolver.then;
                     }]
                 }
             })
@@ -120,23 +120,26 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
 /* PROVIDERS */
 
 /**
- * customStateResolverProvider
+ * resolver (or resolverProvider).
  * 
- * > Warning: The config part is known injected customStateResolverProvider event when the provider name is customStateResolver.
+ * > Warning: The config part is known injected `resolverProvider` event when the provider name is `resolver`.
+ * > Info: can not rename this in admin 1.2 release due to usage in cms module old version branch
  * 
  * Attach custom callback function to the custom state resolve. Use the resolverProvider in
  * your configuration part:
  *
+ * ```js
  * zaa.config(function(resolverProvider) {
  *		resolverProvider.addCallback(function(ServiceMenuData, ServiceBlocksData) {
  *			ServiceMenuData.load();
  *			ServiceBlocksData.load();
  *		});
  * });
+ * ```
  * 
  * @see https://github.com/angular-ui/ui-router/wiki#resolve
  */
-zaa.provider("customStateResolver", [function() {
+zaa.provider("resolver", [function() {
     var list = [];
 
     this.addCallback = function (callback) {
