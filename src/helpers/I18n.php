@@ -106,27 +106,6 @@ class I18n
      *
      * ```php
      * // assume the default language is `en`
-     * $output = I18n::decodeActive('{"de":"Hallo","en":"Hello"}');
-     *
-     * echo $output; // output is "Hello"
-     * ```
-     *
-     * @param string $input The json string
-     * @param string $onEmptyValue If element is not found, this value is returned instead.
-     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
-     * @return string The value from the json for the current active language or if not found the value from onEmptyValue.
-     * @deprecated Deprecate in version 1.2.0 use decodeFindActive() instead.
-     */
-    public static function decodeActive($input, $onEmptyValue = '', $lang = null)
-    {
-        return static::decodeFindActive($input, $onEmptyValue, $lang);
-    }
-    
-    /**
-     * Decodes a json string and returns the current active language item.
-     *
-     * ```php
-     * // assume the default language is `en`
      * $output = I18n::decodeFindActive('{"de":"Hallo","en":"Hello"}');
      *
      * echo $output; // output is "Hello"
@@ -140,27 +119,6 @@ class I18n
     public static function decodeFindActive($input, $onEmptyValue = '', $lang = null)
     {
         return static::findActive(static::decode($input, $onEmptyValue), $lang);
-    }
-    
-    /**
-     * Decodes an array with json strings and returns the current active language item for each entry.
-     *
-     * ```php
-     * // assume the default language is `en`
-     * $output = I18n::decodeActiveArray(['{"de":"Hallo","en":"Hello"}'], ['{"de":"Katze","en":"Cat"}']);
-     *
-     * var_dump($output); // dump: array('Hello', 'Cat')
-     * ```
-     *
-     * @param array $input
-     * @param mixed $onEmptyValue The value to use when the requested language could not be found.
-     * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
-     * @return array
-     * @deprecated Deprecate in version 1.2.0 use decodeFindActiveArray() instead.
-     */
-    public static function decodeActiveArray(array $input, $onEmptyValue = '', $lang = null)
-    {
-        return static::decodeFindActiveArray($input, $onEmptyValue, $lang);
     }
     
     /**

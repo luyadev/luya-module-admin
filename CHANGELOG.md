@@ -9,6 +9,7 @@ This release contains new migrations and requires to run the `migrate` command a
 ### Changed
 
 + [#90](https://github.com/luyadev/luya-module-admin/issues/90) Minification and Uglification of angularjs files requires strict di.
++ [#69](https://github.com/luyadev/luya-module-admin/issues/69) Remove deprecated `luya\admin\helpers\I18n` methods.
 
 ### Added
 
