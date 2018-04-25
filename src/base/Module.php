@@ -144,6 +144,13 @@ class Module extends \luya\base\Module implements AdminModuleInterface
     }
 
     /**
+     * @return bool|string Module's menu-id
+     */
+    public function getMenuID(){
+        return false;
+    }
+
+    /**
      * @return array|\luya\admin\components\AdminMenuBuilderInterface
      */
     public function getMenu()
