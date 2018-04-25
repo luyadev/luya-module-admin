@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.0 (in progress)
 
+This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
+
+### Changed
+
++ [#90](https://github.com/luyadev/luya-module-admin/issues/90) Minification and Uglification of angularjs files requires strict di.
+
 ### Added
 
 + [#100](https://github.com/luyadev/luya-module-admin/issues/100) Option to configure the max idle time of an user until logout.
@@ -37,7 +43,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.1.0 (26. March 2018)
 
-This release contains new migrations and requires to run the `migrate` command after updating.
+This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
 ### Added
 
