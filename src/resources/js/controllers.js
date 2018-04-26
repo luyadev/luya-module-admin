@@ -615,7 +615,7 @@
 
 // activeWindowController.js
 
-	zaa.controller("ActiveWindowTagController", ['$scope', '$htt', 'AdminToastService', function($scope, $http, AdminToastService) {
+	zaa.controller("ActiveWindowTagController", ['$scope', '$http', 'AdminToastService', function($scope, $http, AdminToastService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
