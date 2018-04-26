@@ -606,7 +606,7 @@
      * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
      * ```
      */
-    zaa.directive("crudLoader", ['$http', '$scre', function($http, $sce) {
+    zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
     	return {
     		restrict: "E",
     		replace: true,
