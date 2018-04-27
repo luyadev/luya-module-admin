@@ -106,7 +106,7 @@ module.exports = {
         },
         js: {
             "dist/js/main.js": [
-                "../../vendor/bower-asset/angular/angular.js",
+                "../../vendor/bower-asset/angular/angular.min.js",
                 "vendorlibs/ng-colorwheel/ng-colorwheel.js",
                 "../../vendor/bower-asset/angular-loading-bar/build/loading-bar.min.js",
                 "../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.js",

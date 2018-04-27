@@ -1382,7 +1382,7 @@
     /**
      * options = {'true-value' : 1, 'false-value' : 0};
      */
-    zaa.directive("zaaCheckbox", function($timeout) {
+    zaa.directive("zaaCheckbox", function() {
         return {
             restrict: "E",
             scope: {
@@ -1393,7 +1393,7 @@
                 "label": "@label",
                 "initvalue": "@initvalue"
             },
-            controller: ['$scope', function($scope) {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 if ($scope.options === null || $scope.options === undefined) {
                     $scope.valueTrue = 1;
                     $scope.valueFalse = 0;
@@ -2318,7 +2318,7 @@
             scope : {
                 ngModel : '='
             },
-            controller: ['$scope', '$filter', '$ServiceFilesData', function($scope, $filter, ServiceFilesData) {
+            controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
 
                 // ServiceFilesData inhertiance
 
@@ -2606,7 +2606,9 @@
                 allowSelection : '@selection',
                 onlyImages : '@onlyImages'
             },
-            controller : ['$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
+            controller : [
+            	'$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 
+            	function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
 
                 // ServiceFoldersData inheritance
 
@@ -2884,7 +2886,7 @@
                 $scope.updateFolder = function(folder) {
                     $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, $.param({ name : folder.name }), {
                         headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {});
+                    });
                 }
 
                 /*
