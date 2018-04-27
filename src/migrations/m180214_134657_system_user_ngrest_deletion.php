@@ -17,7 +17,8 @@ class m180214_134657_system_user_ngrest_deletion extends Migration
         $this->addColumn('admin_user', 'api_allowed_ips', $this->string()->null());
         $this->addColumn('admin_user', 'api_last_activity', $this->integer()->null());
         $this->addColumn('admin_ngrest_log', 'is_delete', $this->boolean()->defaultValue(false));
-        $this->alterColumn('admin_user', 'auth_token', $this->string()->unique());
+        // max 190 chars to fit the length limit for indexes on MySQL with utf8mb4 encoding
+        $this->alterColumn('admin_user', 'auth_token', $this->string(190)->unique());
     }
 
     /**
