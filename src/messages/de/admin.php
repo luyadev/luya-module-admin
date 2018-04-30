@@ -339,4 +339,9 @@ return [
     'account_changeemail_wrongtokenorempty' => 'Leerer, ungültiger oder abgelaufener E-Mail-Bestätigungscode.',
     'account_changeemail_enterverificationtoken' => 'Bitte geben Sie den Bestätigungscode ein, der an <b>{{profile.email}}</b> geschickt wurde, um die Änderung Ihrer E-Mail-Adresse zu bestätigen <b>{{settings.newUserEmail}}</b>.',
     'model_user_email_verification_token' => 'E-Mail-Bestätigungscode',
+    'layout_filemanager_col_downloads' => 'Downloads',
+    'layout_filemanager_col_upload_user' => 'Uploaded by',
+    'layout_filemanager_col_file_disposition' => 'File delivery',
+    'layout_filemanager_col_file_disposition_download' => 'Download',
+    'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
 ];

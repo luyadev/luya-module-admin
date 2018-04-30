@@ -319,4 +319,9 @@ return [
     'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
     'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
     'model_user_email_verification_token' => 'Email verification code',
+    'layout_filemanager_col_downloads' => 'Downloads',
+    'layout_filemanager_col_upload_user' => 'Uploaded by',
+    'layout_filemanager_col_file_disposition' => 'File delivery',
+    'layout_filemanager_col_file_disposition_download' => 'Download',
+    'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
 ];
