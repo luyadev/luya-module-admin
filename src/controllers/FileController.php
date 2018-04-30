@@ -34,25 +34,15 @@ class FileController extends \luya\web\Controller
                 Yii::$app->trigger(Module::EVENT_BEFORE_FILE_DOWNLOAD, $event);
                 
                 if (!$event->isValid) {
-                    throw new BadRequestHttpException('Unable to performe this request due to access restrictions');
+                    throw new BadRequestHttpException('Unable to performe this request due to access restrictions.');
                 }
                 
                 // update the model count stats
                 $count = $model->passthrough_file_stats + 1;
                 $model->passthrough_file_stats = $count;
                 $model->update(false);
-                // return header informations
-                header('Content-Description: File Transfer');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="'.basename($fileData->name).'"');
-                header('Content-Transfer-Encoding: binary');
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($fileSourcePath));
-                flush();
-                readfile($fileSourcePath);
-                exit;
+                
+                return Yii::$app->response->sendFile($fileSourcePath, $model->name_original, ['inline' => (bool) $model->inline_disposition]);
             }
         }
         

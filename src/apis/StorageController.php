@@ -157,6 +157,32 @@ class StorageController extends RestController
         
         return $model->toArray([], ['user']);
     }
+    
+    /**
+     * 
+     * @param integer $id
+     * @throws NotFoundHttpException
+     * @return array
+     * @since 1.2.0
+     */
+    public function actionFileUpdate($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+        
+        $post = Yii::$app->request->bodyParams;
+        $model->attributes = $post;
+        
+        if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
+            $this->flushApiCache();
+            return $model;
+        }
+        
+        return $this->sendModelError($model);
+    }
 
     /**
      * Update the caption of storage file.

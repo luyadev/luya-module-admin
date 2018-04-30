@@ -348,7 +348,7 @@ use luya\admin\helpers\Angular;
                                 <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.thumbnail.source}}" /></span>
                                 <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                             </td>
-                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 30}}</td>
+                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 40}}</td>
                             <td ng-click="toggleSelection(file)">{{file.extension}}</td>
                             <td ng-click="openFileDetail(file)">{{file.uploadTimestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
@@ -374,7 +374,11 @@ use luya\admin\helpers\Angular;
         <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
     </div>
 
-    <h3 class="mt-4">{{ fileDetail.name }}</h3>
+    <h3 class="mt-4">
+        <span ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</span>
+        <input type="text" ng-show="nameEditMode" ng-model="fileDetailFull.name_original" />
+        <button type="button" class="btn btn-icon btn-edit" ng-click="nameEditMode=!nameEditMode"></button>
+    </h3>
     <div ng-if="fileDetail.isImage" class="mt-3 text-center">
         <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetail.name }}">
             <div class="text-center">
@@ -420,6 +424,8 @@ use luya\admin\helpers\Angular;
         </tr>
         </tbody>
     </table>
+
+    <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
 
     <form class="bg-faded p-2 mt-4">
         <h3 class="mb-3">File caption</h3>

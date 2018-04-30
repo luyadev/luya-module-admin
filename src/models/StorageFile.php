@@ -28,6 +28,7 @@ use luya\helpers\FileHelper;
  * @property string $passthrough_file_password
  * @property integer $passthrough_file_stats
  * @property string $caption
+ * @property string $inline_disposition
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -58,8 +59,9 @@ final class StorageFile extends ActiveRecord
     {
         return [
             [['name_original', 'name_new', 'mime_type', 'name_new_compound', 'extension', 'hash_file', 'hash_name'], 'required'],
-            [['folder_id', 'upload_timestamp', 'file_size', 'upload_user_id', 'upload_timestamp', 'is_deleted'], 'safe'],
+            [['folder_id', 'file_size', 'is_deleted'], 'safe'],
             [['is_hidden'], 'boolean'],
+            [['inline_disposition', 'upload_timestamp', 'upload_user_id'], 'integer'],
             [['caption'], 'string'],
         ];
     }

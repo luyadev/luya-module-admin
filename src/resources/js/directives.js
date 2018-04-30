@@ -2859,49 +2859,13 @@
                 $scope.folderDeleteForm = false;
 
                 $scope.folderDeleteConfirmForm = false;
-
-                /*
-                $scope.toggleFolderMode = function(mode) {
-                    if (mode == 'edit') {
-                        $scope.folderUpdateForm = true;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = false;
-                    } else if (mode == 'remove') {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = true;
-                        $scope.folderDeleteConfirmForm = false;
-                    } else if (mode == 'removeconfirm') {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = true;
-                    } else {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = false;
-                    }
-                };
-
-                */
-
+                
                 $scope.updateFolder = function(folder) {
                     $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, $.param({ name : folder.name }), {
                         headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                     });
-                }
-
-                /*
-                $scope.checkEmptyFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
-                        if (transport.data == true) {
-                            $scope.deleteFolder(folder);
-                        } else {
-                            $scope.toggleFolderMode('removeconfirm');
-                        }
-                    });
                 };
-				*/
+                
                 $scope.deleteFolder = function(folder) {
 
                     // check if folder is empty
@@ -2945,6 +2909,8 @@
                 
                 $scope.fileDetailFull = false;
                 
+                $scope.nameEditMode = false;
+                
                 $scope.openFileDetail = function(file) {
                 	if ($scope.fileDetail.id == file.id) {
                 		$scope.closeFileDetail();
@@ -2957,10 +2923,19 @@
                 		$scope.fileDetail = file;
                 	}
                 };
+                
+                $scope.updateFileData = function() {
+            		$http.put('admin/api-admin-storage/file-update?id='+$scope.fileDetailFull.id, $scope.fileDetailFull).then(function(response) {
+            			var file = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
+            			file.name = response.data.name_original;
+            			$scope.nameEditMode = false;
+            		});
+                };
 
                 $scope.closeFileDetail = function() {
                     $scope.fileDetail = false;
                     $scope.fileDetailFull = false;
+                    $scope.nameEditMode = false;
                 };
                 
                 $scope.removeFile = function(detail) {
