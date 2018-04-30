@@ -390,7 +390,7 @@ use luya\admin\helpers\Angular;
     <table class="table table-striped table-hover table-align-middle mt-3">
         <tbody>
         <tr>
-            <td><small>ID</small></td>
+            <td><small><?= Admin::t('model_pk_id'); ?></small></td>
             <td>{{ fileDetail.id }}</td>
         </tr>
         <tr>
@@ -402,60 +402,43 @@ use luya\admin\helpers\Angular;
             <td>{{ fileDetail.extension }}</td>
         </tr>
         <tr>
-            <td><small>Size</small></td>
+            <td><small><?= Admin::t('layout_filemanager_col_size'); ?></small></td>
             <td>{{ fileDetail.sizeReadable }}</td>
         </tr>
         <tr>
-            <td><small>Downloads</small></td>
+            <td><small><?= Admin::t('layout_filemanager_col_downloads'); ?></small></td>
             <td>{{ fileDetailFull.passthrough_file_stats }}</td>
         </tr>
         <tr>
-            <td><small>Upload by</small></td>
+            <td><small><?= Admin::t('layout_filemanager_col_upload_user'); ?></small></td>
             <td>{{ fileDetailFull.user.firstname}} {{ fileDetailFull.user.lastname}}</td>
         </tr>
         <tr ng-if="fileDetailFull">
-            <td><small>File delivery</small></td>
+            <td><small><?= Admin::t('layout_filemanager_col_file_disposition'); ?></small></td>
             <td>
                 <select ng-model="fileDetailFull.inline_disposition">
-                    <option ng-value="0">Download</option>
-                    <option ng-value="1">Show in browser</option>
+                    <option ng-value="0"><?= Admin::t('layout_filemanager_col_file_disposition_download'); ?></option>
+                    <option ng-value="1"><?= Admin::t('layout_filemanager_col_file_disposition_browser'); ?></option>
                 </select>
             </td>
         </tr>
         </tbody>
     </table>
-
     <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
 
     <form class="bg-faded p-2 mt-4">
-        <h3 class="mb-3">File caption</h3>
+        <h3 class="mb-3"><?= Admin::t('layout_filemanager_file_captions'); ?></h3>
         <div class="form-group" ng-repeat="(key, cap) in fileDetail.captionArray">
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="fileDetail.captionArray[key]">
-
                 <span class="flag flag--{{key}}">
                     <span class="flag-fallback">{{key}}</span>
                 </span>
             </div>
         </div>
-
         <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetail)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
-
     </form>
-
-	<!--
-    <div class="file-detail-view-arrows">
-        <div class="file-detail-view-arrow file-detail-view-arrow-prev disabled">
-            <i class="material-icons">keyboard_arrow_up</i>
-        </div>
-        <div class="file-detail-view-arrow file-detail-view-arrow-next">
-            <i class="material-icons">keyboard_arrow_down</i>
-        </div>
-    </div>
-	-->
-
 </div>
-
 </script>
 
 <!-- /ANGULAR SCRIPTS -->
