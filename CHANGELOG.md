@@ -13,6 +13,8 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#27](https://github.com/luyadev/luya-module-admin/issues/27) Filemanager file detail option to rename the original download file name.
++ [#64](https://github.com/luyadev/luya-module-admin/issues/64) Whether file should be download or display in browser.
 + [#100](https://github.com/luyadev/luya-module-admin/issues/100) Option to configure the max idle time of an user until logout.
 + [#86](https://github.com/luyadev/luya-module-admin/issues/86) When a user changes the email, a token will be sent to the old email which has to be entered in order to change the email.
 + [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibilty to brufe force any login credentials. The 2FA security token lifetime can be configured. When the loggin password is false, the login fields are cleared out.
