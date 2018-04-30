@@ -16,6 +16,8 @@ use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
+use yii\base\InvalidParamException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Filemanager and Storage API.
@@ -138,6 +140,23 @@ class StorageController extends RestController
     }
     
     // ACTIONS
+    
+    /**
+     * Get all storage file informations for a given ID.
+     * 
+     * @param integer $fileId
+     * @since 1.2.0
+     */
+    public function actionFileInfo($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+        
+        return $model->toArray([], ['user']);
+    }
 
     /**
      * Update the caption of storage file.

@@ -95,4 +95,9 @@ final class StorageFile extends ActiveRecord
             }
         }
     }
+    
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'upload_user_id']);
+    }
 }

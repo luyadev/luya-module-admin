@@ -370,35 +370,56 @@ use luya\admin\helpers\Angular;
     <div class="file-detail-view-head">
         <a class="btn btn-icon btn-download" ng-href="{{fileDetail.href}}" target="_blank">Download</a>
         <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
+        <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
         <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
     </div>
-    <table class="table table-striped table-hover table-align-middle mt-4">
+
+    <h3 class="mt-4">{{ fileDetail.name }}</h3>
+    <div ng-if="fileDetail.isImage" class="mt-3 text-center">
+        <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetail.name }}">
+            <div class="text-center">
+                <img class="img-fluid" alt="{{ fileDetail.name }}" ng-src="{{fileDetail.source}}" />
+            </div>
+        </modal>
+        <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetail.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.thumbnailMedium.source}}" />
+    </div>
+    <table class="table table-striped table-hover table-align-middle mt-3">
         <tbody>
         <tr>
-            <th scope="row">Filename</th>
-            <td>{{ fileDetail.name }}</td>
+            <td><small>ID</small></td>
+            <td>{{ fileDetail.id }}</td>
         </tr>
         <tr>
-            <th scope="row">Creation Date</th>
+            <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>
             <td>{{fileDetail.uploadTimestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
         </tr>
         <tr>
-            <th scope="row">File Type</th>
+            <td><small><?= Admin::t('layout_filemanager_col_type'); ?></small></td>
             <td>{{ fileDetail.extension }}</td>
         </tr>
         <tr>
-            <th scope="row">Size</th>
+            <td><small>Size</small></td>
             <td>{{ fileDetail.sizeReadable }}</td>
         </tr>
         <tr>
-            <th scope="row">Internal ID</th>
-            <td>{{ fileDetail.id }}</td>
+            <td><small>Downloads</small></td>
+            <td>{{ fileDetailFull.passthrough_file_stats }}</td>
+        </tr>
+        <tr>
+            <td><small>Upload by</small></td>
+            <td>{{ fileDetailFull.user.firstname}} {{ fileDetailFull.user.lastname}}</td>
+        </tr>
+        <tr ng-if="fileDetailFull">
+            <td><small>File delivery</small></td>
+            <td>
+                <select ng-model="fileDetailFull.inline_disposition">
+                    <option ng-value="0">Download</option>
+                    <option ng-value="1">Show in browser</option>
+                </select>
+            </td>
         </tr>
         </tbody>
     </table>
-    <div ng-if="fileDetail.isImage">
-        <img class="img-fluid" ng-src="{{fileDetail.thumbnailMedium.source}}" />
-    </div>
 
     <form class="bg-faded p-2 mt-4">
         <h3 class="mb-3">File caption</h3>
