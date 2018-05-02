@@ -50,12 +50,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $cors = false;
     
     /**
-     * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
-     * @since 1.2.0
-     */
-    public $jsonCruft = true;
-    
-    /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
      * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pt, fa
      */
@@ -99,6 +93,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $secureLogin = false;
     
     /**
+     * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
+     * @since 1.2.0
+     */
+    public $jsonCruft = true;
+    
+    /**
      * @var boolean If enabled an user can only change the email adresse by entering the secure code which is sent to the users given (current) email adresse.
      * @since 1.2.0
      */
@@ -114,14 +114,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
      * @since 1.1.1
      */
-    public $strongPasswordPolicy = false;
+    public $strongPasswordPolicy = true;
 
     /**
      * @var integer The number of attempts a user can make without knowing the login email. Clearing the session cookie
      * will allow next 20 attempts. But if an user email is known the attempt will swap to a user based attempt lockout handled by {{luya\admin\Module::$loginUserAttemptCount}}.
      * @since 1.2.0
      */
-    public $loginSessionAttemptCount = 20;
+    public $loginSessionAttemptCount = 15;
     
     /**
      * @var integer If the session based {{luya\admin\Module::$loginSessionAttemptCount}} expire the user is locked out for this given time in seconds, defaults to 30min.
