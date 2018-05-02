@@ -17,16 +17,16 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#64](https://github.com/luyadev/luya-module-admin/issues/64) Whether file should be download or display in browser.
 + [#100](https://github.com/luyadev/luya-module-admin/issues/100) Option to configure the max idle time of an user until logout.
 + [#86](https://github.com/luyadev/luya-module-admin/issues/86) When a user changes the email, a token will be sent to the old email which has to be entered in order to change the email.
-+ [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibilty to brufe force any login credentials. The 2FA security token lifetime can be configured. When the loggin password is false, the login fields are cleared out.
++ [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibility to brute force any login credentials. The 2FA security token lifetime can be configured. When the login password is false, the login fields are cleared out.
 
 ### Fixed
 
-+ [#102](https://github.com/luyadev/luya-module-admin/issues/102) Fixed bug with empty attributes_json in ngrest logger for delete actions.
++ [#102](https://github.com/luyadev/luya-module-admin/issues/102) Fixed bug with empty attributes_json in NgRest logger for delete actions.
 + [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
 
 ## 1.1.1.1 (12. April 2018)
 
-+ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writeable attributes on assign.
++ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writable attributes on assign.
 
 ## 1.1.1 (11. April 2018)
 
@@ -36,11 +36,11 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
-+ [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spellcheck for filemanager upload button.
-+ [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in ngrest plugin.
++ [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spell check for filemanager upload button.
++ [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in NgRest plugin.
 + [#88](https://github.com/luyadev/luya-module-admin/issues/88) Clean up change password fields after validation error or success.
 + [#87](https://github.com/luyadev/luya-module-admin/issues/87) Fixed bug when change the password.
-+ [#83](https://github.com/luyadev/luya-module-admin/issues/83) Provide after assign event for ngrest plugins.
++ [#83](https://github.com/luyadev/luya-module-admin/issues/83) Provide after assign event for NgRest plugins.
 + [#77](https://github.com/luyadev/luya-module-admin/issues/77) Ensure if user has edit permissions in order to trigger the interactive toggleStatus plugin.
 + [#76](https://github.com/luyadev/luya-module-admin/issues/76) Create random access token when creating new user in order to prevent unique column exception.
 
@@ -59,7 +59,7 @@ This release contains new migrations and requires to run the `migrate` command a
 ### Fixed
 
 + [#68](https://github.com/luyadev/luya-module-admin/issues/68) Fixed caching problem with Yii verison 2.0.14.
-+ [#67](https://github.com/luyadev/luya-module-admin/issues/67) Fixed issue where crud loader (relation button) can not edit items.
++ [#67](https://github.com/luyadev/luya-module-admin/issues/67) Fixed issue where CRUD loader (relation button) can not edit items.
 + [#1571](https://github.com/luyadev/luya/issues/1571) If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
 + [#69](https://github.com/luyadev/luya-module-admin/issues/69) Fixed i18n helper naming, mark old methods as deprecated, add language option.
 
