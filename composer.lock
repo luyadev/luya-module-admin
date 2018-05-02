@@ -1015,16 +1015,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "1a6b6449632549b87797d9b4d637b9e4f4c10152"
+                "reference": "c1a35ea848f53f5d25437e58b1c70f8991218ed9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/1a6b6449632549b87797d9b4d637b9e4f4c10152",
-                "reference": "1a6b6449632549b87797d9b4d637b9e4f4c10152",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/c1a35ea848f53f5d25437e58b1c70f8991218ed9",
+                "reference": "c1a35ea848f53f5d25437e58b1c70f8991218ed9",
                 "shasum": ""
             },
             "require": {
@@ -1068,7 +1068,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-04-11T10:02:05+00:00"
+            "time": "2018-05-02T13:01:29+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -2760,7 +2760,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.38",
+            "version": "v2.8.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -2869,16 +2869,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b"
+                "reference": "3296adf6a6454a050679cde90f95350ad604b171"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/78be803ce01e55d3491c1397cf1c64beb9c1b63b",
-                "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/3296adf6a6454a050679cde90f95350ad604b171",
+                "reference": "3296adf6a6454a050679cde90f95350ad604b171",
                 "shasum": ""
             },
             "require": {
@@ -2890,7 +2890,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7-dev"
+                    "dev-master": "1.8-dev"
                 }
             },
             "autoload": {
@@ -2924,7 +2924,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-01-30T19:27:44+00:00"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/stopwatch",
