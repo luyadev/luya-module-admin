@@ -8,6 +8,7 @@ use luya\admin\models\UserOnline;
 use luya\rest\UserBehaviorInterface;
 use yii\web\ForbiddenHttpException;
 use luya\rest\ActiveController;
+use luya\admin\Module;
 
 /**
  * Base class for Rest Active Controllers.
@@ -27,7 +28,8 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     {
         parent::init();
     
-        $this->enableCors = Yii::$app->auth->cors;
+        $this->enableCors = Module::getInstance()->cors;
+        $this->jsonCruft = Module::getInstance()->jsonCruft;
     }
     
     /**

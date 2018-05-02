@@ -44,10 +44,16 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
     
     /**
-     * @var boolean Whether CORS filter is enabled or not. By default its disabled, but you can enable this option
-     * when using luya as headless app.
+     * @var boolean Whether CORS filter is enabled or not. By default its disabled but you can enable this option
+     * when using LUYA admin APIs for usage trough direct xhr requests from another Domain.
      */
     public $cors = false;
+    
+    /**
+     * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
+     * @since 1.2.0
+     */
+    public $jsonCruft = true;
     
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
@@ -356,7 +362,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ],
             'auth' => [
                 'class' => Auth::class,
-                'cors' => $this->cors,
             ],
         ];
     }

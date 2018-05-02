@@ -31,12 +31,6 @@ class Auth extends \yii\base\Component
      * @var integer Can delete records.
      */
     const CAN_DELETE = 3;
-
-    /**
-     * @var boolean Whether the CORS filter is enabled or not, if enabled you can make use of LUYA as headless app.
-     * This property is set by the luya admin module {{luya\admin\Module::$cors}} property.
-     */
-    public $cors = false;
     
     private $_permissionTable;
     
