@@ -15,6 +15,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#113](https://github.com/luyadev/luya-module-admin/issues/113) Add option to configure ngrest attribute conditions when to display/hide a given field based on another field.
 + [#64](https://github.com/luyadev/luya-module-admin/issues/64) Add option to configure the file delivery (download or display in browser).
 + [#27](https://github.com/luyadev/luya-module-admin/issues/27) Filemanager file detail option to rename the original download file name.
 + [#64](https://github.com/luyadev/luya-module-admin/issues/64) Whether file should be download or display in browser.

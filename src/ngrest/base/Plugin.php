@@ -7,7 +7,6 @@ use yii\base\Component;
 use yii\helpers\Json;
 use yii\helpers\Html;
 use luya\Exception;
-
 use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
 
@@ -50,6 +49,24 @@ abstract class Plugin extends Component
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
      */
     public $i18nEmptyValue = '';
+    
+    /**
+     * @var string Provide a condition in order to show a given field or not, example for a given value or not empty.
+     * 
+     * ```php
+     * 'myText' => 'text',
+     * 'otherText' => ['text', 'condition' => "{myText}"], // which is equals to `when {myText} is not empt display the `otherText` field.
+     * ```
+     * 
+     * The above example would hide the `otherText` elment until `myText` is not empty. The condition is inside the `ng-show` element and the field
+     * must be declared inside `{}` this will return the field name based on the current context like `data.create.myText` or `data.update.myText`.
+     * 
+     * + display when not empty: `{field}`
+     * + display when empty: `!{field}`
+     * + display when has a given value: `{field}==1` (could be used when field is a select with values).
+     * @since 1.2.0
+     */
+    public $condition;
     
     /**
      * @var \luya\admin\ngrest\render\RenderCrudInterface The render context object when rendering
@@ -209,6 +226,37 @@ abstract class Plugin extends Component
     {
         return Html::tag($name, $content, $options);
     }
+
+    protected function replaceFieldFromNgModelContext($ngModel, $field)
+    {
+        $parts = explode(".", $ngModel);
+
+        end($parts);
+        $key = key($parts);
+        
+        $parts[$key] = $field;
+        
+        return implode(".", $parts);
+    }
+    
+    /**
+     * Get the ng-show condition for a given field.
+     * @param string $ngModel The ngModel to get the context informations from.
+     * @return string
+     * @since 1.2.0
+     */
+    public function getNgShowCondition($ngModel)
+    {
+        preg_match_all('/{(.*?)}/', $this->condition, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1]);
+        }
+        
+        return str_replace($search, $replace, $this->condition);
+    }
     
     /**
      * Helper method to create a form tag based on current object.
@@ -221,7 +269,19 @@ abstract class Plugin extends Component
      */
     public function createFormTag($name, $id, $ngModel, array $options = [])
     {
-        return $this->createTag($name, null, array_merge($options, ['fieldid' => $id, 'model' => $ngModel, 'label' => $this->alias, 'fieldname' => $this->name, 'i18n' => ($this->i18n) ? 1 : '']));
+        $defaultOptions = [
+            'fieldid' => $id,
+            'model' => $ngModel,
+            'label' => $this->alias,
+            'fieldname' => $this->name,
+            'i18n' => $this->i18n ? 1 : '',
+        ];
+        
+        if ($this->condition) {
+            $defaultOptions['ng-show'] = $this->getNgShowCondition($ngModel);
+        }
+        
+        return $this->createTag($name, null, array_merge($options, $defaultOptions));
     }
     
     /**

@@ -26,7 +26,7 @@ use luya\helpers\ArrayHelper;
  * ];
  * ```
  *
- * Now when accessing the `$myimages` variabled defined from above the {{luya\admin\image\Iterator}} will be returned ottherwise false.
+ * Now when accessing the `$myimages` variabled defined from above the {{luya\admin\image\Iterator}} will be returned otherwise false.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
