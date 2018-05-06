@@ -64,6 +64,7 @@ abstract class Plugin extends Component
      * + display when not empty: `{field}`
      * + display when empty: `!{field}`
      * + display when has a given value: `{field}==1` (could be used when field is a select with values).
+     * 
      * @since 1.2.0
      */
     public $condition;
@@ -227,22 +228,34 @@ abstract class Plugin extends Component
         return Html::tag($name, $content, $options);
     }
 
+    /**
+     * Extract the context attribute name from the ngModel and replace with given $field name.
+     * 
+     * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
+     * @param string $field The new field name to replace with the context field name.
+     * @return string Returns the string with the name field name like `data.create.$field`.
+     * @since 1.2.0
+     */
     protected function replaceFieldFromNgModelContext($ngModel, $field)
     {
+        // get all keys
         $parts = explode(".", $ngModel);
-
         end($parts);
         $key = key($parts);
-        
+        // replace the last key with the new fieldname
         $parts[$key] = $field;
         
         return implode(".", $parts);
     }
     
     /**
-     * Get the ng-show condition for a given field.
+     * Get the ng-show condition from a given ngModel context.
+     * 
+     * Evaluates the ng-show condition from a given ngModel context. A condition like
+     * `{field} == true` would return `data.create.field == true`.
+     * 
      * @param string $ngModel The ngModel to get the context informations from.
-     * @return string
+     * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
      * @since 1.2.0
      */
     public function getNgShowCondition($ngModel)
@@ -277,6 +290,7 @@ abstract class Plugin extends Component
             'i18n' => $this->i18n ? 1 : '',
         ];
         
+        // if a condition is available, evalute from given context
         if ($this->condition) {
             $defaultOptions['ng-show'] = $this->getNgShowCondition($ngModel);
         }
