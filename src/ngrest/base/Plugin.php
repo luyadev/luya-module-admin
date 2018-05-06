@@ -43,7 +43,7 @@ abstract class Plugin extends Component
     /**
      * @var boolean Whether the plugin is in i18n context or not.
      */
-    public $i18n;
+    public $i18n = false;
 
     /**
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
@@ -51,11 +51,12 @@ abstract class Plugin extends Component
     public $i18nEmptyValue = '';
     
     /**
-     * @var string Provide a condition in order to show a given field or not, example for a given value or not empty.
+     * @var string Provide a condition in order to show or hide a given field. The condition relies on other fields from the forms. In order
+     * to make sure the right context is used (create, update) put the fieldname into curly brackets `{field1}`.
      * 
      * ```php
      * 'myText' => 'text',
-     * 'otherText' => ['text', 'condition' => "{myText}"], // which is equals to `when {myText} is not empt display the `otherText` field.
+     * 'otherText' => ['text', 'condition' => "{myText}"], // which is equals to when {myText} is not empt display the `otherText` field.
      * ```
      * 
      * The above example would hide the `otherText` elment until `myText` is not empty. The condition is inside the `ng-show` element and the field
