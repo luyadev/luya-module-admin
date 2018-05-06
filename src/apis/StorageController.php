@@ -143,7 +143,7 @@ class StorageController extends RestController
     
     /**
      * Get all storage file informations for a given ID.
-     * 
+     *
      * @param integer $fileId
      * @since 1.2.0
      */
@@ -159,7 +159,7 @@ class StorageController extends RestController
     }
     
     /**
-     * 
+     *
      * @param integer $id
      * @throws NotFoundHttpException
      * @return array

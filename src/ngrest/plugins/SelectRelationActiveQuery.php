@@ -19,16 +19,16 @@ use yii\helpers\Json;
  *     'labelField' => ['client_number', 'firstname', 'lastname']
  * ],
  * ```
- * 
+ *
  * The above definition assumes `getClient()` is defined for example as:
- * 
+ *
  * ```php
  * public function getClient()
  * {
  *     return $this->hasOne(Client::class, ['id' => 'client_id']);
  * }
  * ```
- * 
+ *
  * > Important: Keep in mind that the relation class which is used inside the query defintion for `Client` must be an NgRest CRUD model with controller and API!
  *
  * @property string|array $labelField Provide the sql fields to display.

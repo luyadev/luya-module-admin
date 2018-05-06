@@ -21,5 +21,4 @@ class DummyFileSystemTest extends AdminTestCase
         
         $this->assertSame(1, $storage->getFilesArrayItem(1)['id']);
     }
-    
 }

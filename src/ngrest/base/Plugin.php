@@ -53,19 +53,19 @@ abstract class Plugin extends Component
     /**
      * @var string Provide a condition in order to show or hide a given field. The condition relies on other fields from the forms. In order
      * to make sure the right context is used (create, update) put the fieldname into curly brackets `{field1}`.
-     * 
+     *
      * ```php
      * 'myText' => 'text',
      * 'otherText' => ['text', 'condition' => "{myText}"], // which is equals to when {myText} is not empt display the `otherText` field.
      * ```
-     * 
+     *
      * The above example would hide the `otherText` elment until `myText` is not empty. The condition is inside the `ng-show` element and the field
      * must be declared inside `{}` this will return the field name based on the current context like `data.create.myText` or `data.update.myText`.
-     * 
+     *
      * + display when not empty: `{field}`
      * + display when empty: `!{field}`
      * + display when has a given value: `{field}==1` (could be used when field is a select with values).
-     * 
+     *
      * @since 1.2.0
      */
     public $condition;
@@ -231,7 +231,7 @@ abstract class Plugin extends Component
 
     /**
      * Extract the context attribute name from the ngModel and replace with given $field name.
-     * 
+     *
      * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
      * @param string $field The new field name to replace with the context field name.
      * @return string Returns the string with the name field name like `data.create.$field`.
@@ -251,10 +251,10 @@ abstract class Plugin extends Component
     
     /**
      * Get the ng-show condition from a given ngModel context.
-     * 
+     *
      * Evaluates the ng-show condition from a given ngModel context. A condition like
      * `{field} == true` would return `data.create.field == true`.
-     * 
+     *
      * @param string $ngModel The ngModel to get the context informations from.
      * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
      * @since 1.2.0

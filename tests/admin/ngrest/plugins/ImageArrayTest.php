@@ -116,7 +116,6 @@ class ImageArrayTest extends AdminTestCase
 
     public function testImageIteratorCaptionDirectInputAccess()
     {
-        
         Yii::$app->storage->addDummyFile(['id' => 1, 'name_new' => 'foo.jpg', 'caption' => '{"en":"foobar"}']);
         Yii::$app->storage->insertDummyFiles();
         
@@ -142,7 +141,7 @@ class ImageArrayTest extends AdminTestCase
         $this->assertSame('foobar', Yii::$app->storage->getFile(1)->caption);
         
         
-        foreach($user->id as $k => $obj) {
+        foreach ($user->id as $k => $obj) {
             $this->assertSame('bazfoo', $obj->caption);
         }
     }
