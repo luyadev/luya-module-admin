@@ -374,6 +374,14 @@ $btns: (
 // Custom admin buttons
 // ==================================================
 
+// btn-toolbar is currently being used by the language buttons
+.btn-toolbar {
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    position: relative;
+}
+
 // Label outside of buttons
 .btn-label {
     margin-left: 10px;
