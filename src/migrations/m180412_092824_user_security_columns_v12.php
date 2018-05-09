@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m180412_092824_user_security_columns
  */
-class m180412_092824_user_security_columns extends Migration
+class m180412_092824_user_security_columns_v12 extends Migration
 {
     /**
      * {@inheritdoc}
