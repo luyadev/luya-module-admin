@@ -129,7 +129,7 @@ class StorageController extends RestController
             $images = [];
             foreach (Yii::$app->storage->findImages() as $image) {
                 if (!empty($image->file) && !$image->file->isHidden && !$image->file->isDeleted) {
-                    $images[] = $image->toArray();
+                    $images[] = $image->toArray(['id', 'fileId', 'filterId', 'source', 'resolutionHeight', 'resolutionWidth']);
                 }
             }
             $this->setHasCache('storageApiDataImages', $images, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_image']), 0);
