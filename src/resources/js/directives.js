@@ -2964,6 +2964,7 @@
                                 $toast.close();
                                 AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
                                 $scope.selectedFiles = [];
+                            	$scope.closeFileDetail();
                             });
                         });
                     }]);

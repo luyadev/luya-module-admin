@@ -40,8 +40,18 @@ final class StorageFile extends ActiveRecord
      */
     public function init()
     {
+        // call parent
         parent::init();
-        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'onBeforeInsert']);
+        
+        // ensure upload timestamp and upload_user_id if empty.
+        $this->on(self::EVENT_BEFORE_INSERT, function($event) {
+            $this->upload_timestamp = time();
+            if (empty($this->upload_user_id)) {
+                if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
+                    $this->upload_user_id = Yii::$app->adminuser->getId();
+                }
+            }
+        });
     }
 
     /**
@@ -50,6 +60,14 @@ final class StorageFile extends ActiveRecord
     public static function tableName()
     {
         return 'admin_storage_file';
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public static function find()
+    {
+        return parent::find()->orderBy(['name_original' => 'ASC']);
     }
 
     /**
@@ -66,40 +84,54 @@ final class StorageFile extends ActiveRecord
         ];
     }
     
+    /**
+     * Delete a given file.
+     * 
+     * Override default implementation. Mark as deleted and remove files from file system.
+     * 
+     * Keep file in order to provide all file references.
+     * 
+     * @return boolean
+     */
     public function delete()
     {
         $file = Yii::$app->storage->getFile($this->id);
         
-        if ($file) {
-            if (!Yii::$app->storage->fileSystemDeleteFile($file->serverSource)) {
-                Logger::error("Unable to remove storage file: " . $file->serverSource);
-            }
+        if ($file && !Yii::$app->storage->fileSystemDeleteFile($file->serverSource)) {
+            Logger::error("Unable to remove file from filesystem: " . $file->serverSource);
         }
-        $this->is_deleted = true;
-        $this->update(false);
+        
+        $this->updateAttributes(['is_deleted' => true]);
+        
         return true;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public static function find()
-    {
-        return parent::find()->orderBy(['name_original' => 'ASC']);
-    }
-
-    public function onBeforeInsert()
-    {
-        $this->upload_timestamp = time();
-        if (empty($this->upload_user_id)) {
-            if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
-                $this->upload_user_id = Yii::$app->adminuser->getId();
-            }
-        }
-    }
     
+    /**
+     * Get upload user.
+     * 
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'upload_user_id']);
+    }
+    
+    /**
+     * Get the file for the corresponding model.
+     * 
+     * @return \luya\admin\file\Item|boolean
+     * @since 1.2.0
+     */
+    public function getFile()
+    {
+        return Yii::$app->storage->getFile($this->id);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['user', 'file'];
     }
 }

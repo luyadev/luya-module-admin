@@ -760,16 +760,16 @@
         },
         {
             "name": "curl/curl",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-mod/curl.git",
-                "reference": "16e8489b048ef57ffbf74591a201f7808155b2db"
+                "reference": "d4970cf3451de7688b90af77299548ada72b53dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-mod/curl/zipball/16e8489b048ef57ffbf74591a201f7808155b2db",
-                "reference": "16e8489b048ef57ffbf74591a201f7808155b2db",
+                "url": "https://api.github.com/repos/php-mod/curl/zipball/d4970cf3451de7688b90af77299548ada72b53dd",
+                "reference": "d4970cf3451de7688b90af77299548ada72b53dd",
                 "shasum": ""
             },
             "require": {
@@ -811,7 +811,7 @@
                 "curl",
                 "dot"
             ],
-            "time": "2017-08-12T11:44:08+00:00"
+            "time": "2018-05-02T16:32:35+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1136,16 +1136,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "e73d820fe0ee053028f0ee9b6881ba9c836dfbfd"
+                "reference": "cf085193dfb4e2fc24f97a8edd57b1240bf02e83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/e73d820fe0ee053028f0ee9b6881ba9c836dfbfd",
-                "reference": "e73d820fe0ee053028f0ee9b6881ba9c836dfbfd",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/cf085193dfb4e2fc24f97a8edd57b1240bf02e83",
+                "reference": "cf085193dfb4e2fc24f97a8edd57b1240bf02e83",
                 "shasum": ""
             },
             "require": {
@@ -1185,7 +1185,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-04-20T11:01:30+00:00"
+            "time": "2018-05-09T12:42:53+00:00"
         },
         {
             "name": "myclabs/deep-copy",

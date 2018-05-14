@@ -88,14 +88,14 @@ class StorageController extends RestController
         if ($cache === false) {
             $files = [];
             foreach (Yii::$app->storage->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
-                $data = $file->toArray();
+                $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
                     // add tiny thumbnail
                     $filter = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
                     if ($filter) {
                         $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
                         if ($thumbnail) {
-                            $data['thumbnail'] = $thumbnail->toArray();
+                            $data['thumbnail'] = $thumbnail->toArray(['source']);
                         }
                     }
                     // add meidum thumbnail
@@ -103,7 +103,7 @@ class StorageController extends RestController
                     if ($filter) {
                         $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
                         if ($thumbnail) {
-                            $data['thumbnailMedium'] = $thumbnail->toArray();
+                            $data['thumbnailMedium'] = $thumbnail->toArray(['source']);
                         }
                     }
                 }
@@ -155,7 +155,7 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user']);
+        return $model->toArray([], ['user', 'file']);
     }
     
     /**

@@ -368,7 +368,7 @@ use luya\admin\helpers\Angular;
     <div class="file-detail-view" ng-class="{'open': fileDetail}">
 
         <div class="file-detail-view-head">
-            <a class="btn btn-icon btn-download" ng-href="{{fileDetail.href}}" target="_blank">Download</a>
+            <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}" target="_blank">Download</a>
             <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
@@ -388,9 +388,9 @@ use luya\admin\helpers\Angular;
         </div>
 
         <div ng-if="fileDetail.isImage" class="mt-3 text-center">
-            <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetail.name }}">
+            <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
                 <div class="text-center">
-                    <img class="img-fluid" alt="{{ fileDetail.name }}" ng-src="{{fileDetail.source}}" />
+                    <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}" />
                 </div>
             </modal>
             <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetail.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.thumbnailMedium.source}}" />
@@ -435,16 +435,16 @@ use luya\admin\helpers\Angular;
         <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
 
         <form class="bg-faded mt-4">
-            <h3 class="mb-3"><?= Admin::t('layout_filemanager_file_captions'); ?></h3>
-            <div class="form-group" ng-repeat="(key, cap) in fileDetail.captionArray">
+            <h5 class="mb-3"><?= Admin::t('layout_filemanager_file_captions'); ?></h5>
+            <div class="form-group" ng-repeat="(key, cap) in fileDetailFull.file.captionArray">
                 <div class="input-group">
-                    <input type="text" class="form-control" ng-model="fileDetail.captionArray[key]">
+                    <input type="text" class="form-control" ng-model="fileDetailFull.file.captionArray[key]">
                     <span class="flag flag--{{key}}">
                         <span class="flag-fallback">{{key}}</span>
                     </span>
                 </div>
             </div>
-            <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetail)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
+            <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
         </form>
     </div>
 </script>
