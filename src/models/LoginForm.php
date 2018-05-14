@@ -70,7 +70,8 @@ final class LoginForm extends Model
             
             if (!$user || !$user->validatePassword($this->password)) {
                 if ($this->attempts) {
-                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password_attempts', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
+                    // use `model_loginform_wrong_user_or_password` instead of `model_loginform_wrong_user_or_password_attempts` due to informations about correct email input.
+                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
                 } else {
                     $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password'));
                 }
