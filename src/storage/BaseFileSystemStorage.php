@@ -90,8 +90,6 @@ use yii\helpers\VarDumper;
  * Yii::$app->storage->findImages(['file_id' => 1, 'filter_id' => 0]);
  * ```
  *
- * @property string $httpPath Get the http path to the storage folder.
- * @property string $absoluteHttpPath Get the absolute http path to the storage folder.
  * @property string $serverPath Get the server path (for php) to the storage folder.
  * @property array $filesArray An array containing all files
  * @property array $imagesArray An array containg all images
@@ -110,14 +108,18 @@ abstract class BaseFileSystemStorage extends Component
      *
      * @return string Get the relative http path to the storage folder if nothing is provided by the setter method `setHttpPath()`.
      */
-    abstract public function getHttpPath();
+    //abstract public function getHttpPath();
     
     /**
      * Get the base absolute base path to the storage directory.
      *
      * @return string Get the absolute http path to the storage folder if nothing is provided by the setter method `setAbsoluteHttpPath()`.
      */
-    abstract public function getAbsoluteHttpPath();
+    //abstract public function getAbsoluteHttpPath();
+    
+    abstract public function fileHttpPath($fileName);
+    
+    abstract public function fileAbsoluteHttpPath($fileName);
     
     /**
      * Get the internal server path to the storage folder.
@@ -126,7 +128,18 @@ abstract class BaseFileSystemStorage extends Component
      *
      * @return string Get the path on the server to the storage folder based @webroot alias.
      */
-    abstract public function getServerPath();
+    //abstract public function getServerPath();
+    
+    /**
+     * Returns the path to the file on the server.
+     * 
+     * @param string $fileName File name like `myfile.jpg`. This is also the key inside the database.
+     */
+    abstract public function fileServerPath($fileName);
+    
+    abstract public function fileSystemExists($fileName);
+    
+    abstract public function fileSystemContent($fileName);
     
     /**
      * Save the given file source as a new file with the given fileName on the filesystem.
@@ -594,10 +607,13 @@ abstract class BaseFileSystemStorage extends Component
             }
 
             $fileName = $filterId.'_'.$fileQuery->systemFileName;
-            $fileSavePath = $this->serverPath . '/' . $fileName;
+            $fileSavePath = $this->fileServerPath($fileName);
+            
+            $tempFile = tempnam(sys_get_temp_dir(), 'prefix');
+            $tempFile.= $fileName;
 
             if (empty($filterId)) {
-                $save = @copy($fileQuery->serverSource, $fileSavePath);
+                $save = @copy($fileQuery->serverSource, $tempFile);
             } else {
                 $model = StorageFilter::find()->where(['id' => $filterId])->one();
 
@@ -605,12 +621,15 @@ abstract class BaseFileSystemStorage extends Component
                     throw new Exception("Could not find the provided filter id '$filterId'.");
                 }
 
-                if (!$model->applyFilterChain($fileQuery, $fileSavePath)) {
-                    throw new Exception("Unable to create and save image '".$fileSavePath."'.");
+                if (!$model->applyFilterChain($fileQuery, $tempFile)) {
+                    throw new Exception("Unable to create and save image '".$tempFile."'.");
                 }
             }
 
-            $resolution = Storage::getImageResolution($fileSavePath);
+            $resolution = Storage::getImageResolution($tempFile);
+            // now copy the file to the storage system
+            $this->fileSystemSaveFile($tempFile, $fileName);
+            unlink($tempFile);
 
             // ensure the existing of the model
             $model = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();

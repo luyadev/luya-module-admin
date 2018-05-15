@@ -111,9 +111,9 @@ class Item extends ItemAbstract
             $apply = Yii::$app->storage->addImage($this->getFileId(), $this->getFilterId());
         }
         
-        $httpPath = $scheme ? Yii::$app->storage->absoluteHttpPath : Yii::$app->storage->httpPath;
+        $fileName = $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
         
-        return $this->getFile() ? $httpPath . '/' . $this->getFilterId() . '_' . $this->getFile()->getSystemFileName() : false;
+        return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($fileName) : Yii::$app->storage->fileHttpPath($fileName);
     }
     
     /**
@@ -133,7 +133,7 @@ class Item extends ItemAbstract
      */
     public function getServerSource()
     {
-        return $this->getFile() ? Yii::$app->storage->serverPath . '/' . $this->getFilterId() . '_' . $this->getFile()->getSystemFileName() : false;
+        return $this->getFile() ? Yii::$app->storage->fileServerPath($this->getFilterId() . '_' . $this->getFile()->getSystemFileName()) : false;
     }
     
     /**
@@ -143,7 +143,7 @@ class Item extends ItemAbstract
      */
     public function getFileExists()
     {
-        return (bool) file_exists($this->getServerSource());
+        return Yii::$app->storage->fileSystemExists($this->getFilterId() . '_' . $this->getFile()->getSystemFileName());
     }
     
     /**

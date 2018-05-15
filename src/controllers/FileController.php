@@ -21,14 +21,15 @@ class FileController extends \luya\web\Controller
     {
         // find file in file query
         $fileData = Yii::$app->storage->findFile(['id' => $id, 'hash_name' => $hash, 'is_deleted' => false]);
+        
         // proceed when file exists
-        if ($fileData) {
+        if ($fileData && $fileData->fileExists) {
             // get file source from storage system
             $fileSourcePath = $fileData->serverSource;
             // verify again against database to add counter
             $model = StorageFile::findOne($fileData->id);
             // proceed when model exists
-            if ($model && file_exists($fileSourcePath) && is_readable($fileSourcePath)) {
+            if ($model) {
                 $event = new FileDownloadEvent(['file' => $fileData]);
                 
                 Yii::$app->trigger(Module::EVENT_BEFORE_FILE_DOWNLOAD, $event);
@@ -42,7 +43,7 @@ class FileController extends \luya\web\Controller
                 $model->passthrough_file_stats = $count;
                 $model->update(false);
                 
-                return Yii::$app->response->sendFile($fileSourcePath, $model->name_original, ['inline' => (bool) $model->inline_disposition]);
+                return Yii::$app->response->sendContentAsFile(Yii::$app->storage->fileSystemContent($fileData->systemFileName), $model->name_original, ['inline' => (bool) $model->inline_disposition]);
             }
         }
         

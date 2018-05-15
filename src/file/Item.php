@@ -298,9 +298,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getSource($scheme = false)
     {
-        $httpPath = $scheme ? Yii::$app->storage->absoluteHttpPath : Yii::$app->storage->httpPath;
-        
-        return $httpPath . '/' . $this->getKey('name_new_compound');
+        return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($this->getKey('name_new_compound')) : Yii::$app->storage->fileHttpPath($this->getKey('name_new_compound'));
     }
     
     /**
@@ -369,7 +367,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getServerSource()
     {
-        return Yii::$app->storage->serverPath . '/' . $this->getKey('name_new_compound');
+        return Yii::$app->storage->fileServerPath($this->systemFileName);
     }
     
     /**
@@ -393,7 +391,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getFileExists()
     {
-        return (bool) file_exists($this->getServerSource());
+        return Yii::$app->storage->fileSystemExists($this->systemFileName);
     }
     
     /**
