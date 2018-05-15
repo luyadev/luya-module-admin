@@ -153,11 +153,11 @@ abstract class BaseFileSystemStorage extends Component
     /**
      * Replace an existing file source with a new one on the filesystem.
      *
-     * @param string $oldSource The absolute file source path and filename, like `/tmp/upload/myfile.jpg`.
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @param string $newSource The absolute file source path and filename, like `/tmp/upload/myfile.jpg`.
      * @return boolean Whether the file has replaced stored or not.
      */
-    abstract public function fileSystemReplaceFile($oldSource, $newSource);
+    abstract public function fileSystemReplaceFile($fileName, $newSource);
     
     /**
      * Delete a given file source on the filesystem.

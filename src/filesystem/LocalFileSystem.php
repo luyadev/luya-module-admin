@@ -163,8 +163,9 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemReplaceFile($oldSource, $newSource)
+    public function fileSystemReplaceFile($fileName, $newSource)
     {
+        $oldSource = $this->fileServerPath($fileName);
         $toDelete = $oldSource . uniqid('oldfile') . '.bkl';
         if (rename($oldSource, $toDelete)) {
             if (copy($newSource, $oldSource)) {

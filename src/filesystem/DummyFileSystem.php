@@ -74,7 +74,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemReplaceFile($oldSource, $newSource)
+    public function fileSystemReplaceFile($fileName, $newSource)
     {
         return true;
     }

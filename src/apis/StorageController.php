@@ -254,8 +254,8 @@ class StorageController extends RestController
         $raw = $_FILES['file'];
         /** @var $file \luya\admin\file\Item */
         if ($file = Yii::$app->storage->getFile($fileId)) {
-            $serverSource = $file->getServerSource();
-            if (is_uploaded_file($raw['tmp_name'])) {
+            $newFileSource = $raw['tmp_name'];
+            if (is_uploaded_file($newFileSource)) {
                 
                 // check for same extension / mimeType
                 $fileData = Yii::$app->storage->ensureFileUpload($raw['tmp_name'], $raw['name']);
@@ -264,15 +264,15 @@ class StorageController extends RestController
                     throw new BadRequestHttpException("The type must be the same as the original file in order to replace.");
                 }
                 
-                if (Storage::replaceFile($serverSource, $raw['tmp_name'], $raw['name'])) {
+                if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
                     foreach (Yii::$app->storage->findImages(['file_id' => $file->id]) as $img) {
                         Storage::removeImage($img->id, false);
                     }
                     
                     // calculate new file files based on new file
                     $model = StorageFile::findOne((int) $fileId);
-                    $fileHash = FileHelper::md5sum($serverSource);
-                    $fileSize = @filesize($serverSource);
+                    $fileHash = FileHelper::md5sum($newFileSource);
+                    $fileSize = @filesize($newFileSource);
                     $model->updateAttributes([
                         'hash_file' => $fileHash,
                         'file_size' => $fileSize,
