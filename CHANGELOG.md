@@ -8,6 +8,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Changed
 
++ [#122](https://github.com/luyadev/luya-module-admin/issues/122) Change base file system signature in order to support external file system like amazon S3.
 + [#121](https://github.com/luyadev/luya-module-admin/issues/121) Reduce the xhr response content for admin images and files in order to speedup admin usage.
 + [#118](https://github.com/luyadev/luya-module-admin/issues/118) Updated outline-config default styles; Added btn--active class to force hover status
 + [#33](https://github.com/luyadev/luya-module-admin/issues/33) Updated textarea min-height from 46 to 86px
