@@ -115,6 +115,18 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
+    public function fileServerPath($fileName)
+    {
+        if ($this->_serverPath === null) {
+            $this->_serverPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $this->folderName;
+        }
+    
+        return $this->_serverPath . DIRECTORY_SEPARATOR . $fileName;
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function fileSystemExists($fileName)
     {
         return file_exists($this->fileServerPath($fileName));
@@ -126,18 +138,6 @@ class LocalFileSystem extends BaseFileSystemStorage
     public function fileSystemContent($fileName)
     {
         return file_get_contents($this->fileServerPath($fileName));
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function fileServerPath($fileName)
-    {
-        if ($this->_serverPath === null) {
-            $this->_serverPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $this->folderName;
-        }
-    
-        return $this->_serverPath . DIRECTORY_SEPARATOR . $fileName;
     }
 
     /**
@@ -178,8 +178,8 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemDeleteFile($source)
+    public function fileSystemDeleteFile($fileName)
     {
-        return FileHelper::unlink($source);
+        return FileHelper::unlink($this->fileServerPath($fileName));
     }
 }

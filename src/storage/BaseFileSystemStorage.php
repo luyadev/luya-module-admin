@@ -104,48 +104,48 @@ abstract class BaseFileSystemStorage extends Component
     use CacheableTrait;
     
     /**
-     * Get the base path to the storage directory.
-     *
-     * @return string Get the relative http path to the storage folder if nothing is provided by the setter method `setHttpPath()`.
+     * Return the http path for a given file on the file system.
+     * 
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
+     * @since 1.2.0
      */
-    //abstract public function getHttpPath();
-    
-    /**
-     * Get the base absolute base path to the storage directory.
-     *
-     * @return string Get the absolute http path to the storage folder if nothing is provided by the setter method `setAbsoluteHttpPath()`.
-     */
-    //abstract public function getAbsoluteHttpPath();
-    
     abstract public function fileHttpPath($fileName);
     
-    abstract public function fileAbsoluteHttpPath($fileName);
-    
     /**
-     * Get the internal server path to the storage folder.
-     *
-     * Default path is `@webroot/storage`.
-     *
-     * @return string Get the path on the server to the storage folder based @webroot alias.
-     */
-    //abstract public function getServerPath();
-    
-    /**
-     * Returns the path to the file on the server.
+     * Return the absolute http path for a given file on the file system.
      * 
-     * @param string $fileName File name like `myfile.jpg`. This is also the key inside the database.
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
+     * @since 1.2.0
+     */
+    abstract public function fileAbsoluteHttpPath($fileName);
+    /**
+     * Returns the path internal server path to the given file on the file system.
+     * 
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      */
     abstract public function fileServerPath($fileName);
     
+    /**
+     * Check if the file exists on the given file system.
+     * 
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
+     * @since 1.2.0
+     */
     abstract public function fileSystemExists($fileName);
     
+    /**
+     * Get the content of the file on the given file system.
+     * 
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
+     * @since 1.2.0
+     */
     abstract public function fileSystemContent($fileName);
     
     /**
      * Save the given file source as a new file with the given fileName on the filesystem.
      *
      * @param string $source The absolute file source path and filename, like `/tmp/upload/myfile.jpg`.
-     * @param string $fileName The new of the file on the file system like `MyNewFile.jpg`.
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @return boolean Whether the file has been stored or not.
      */
     abstract public function fileSystemSaveFile($source, $fileName);
@@ -161,10 +161,11 @@ abstract class BaseFileSystemStorage extends Component
     
     /**
      * Delete a given file source on the filesystem.
-     * @param string $source The absolute file source path and filename, like `/tmp/upload/myfile.jpg`.
+     *
+     * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @return boolean Whether the file has been deleted or not.
      */
-    abstract public function fileSystemDeleteFile($source);
+    abstract public function fileSystemDeleteFile($fileName);
     
     /**
      * @var string File cache key.

@@ -21,6 +21,7 @@ use luya\admin\storage\ItemAbstract;
  * @property integer $resolutionWidth Get the image resolution width.
  * @property integer $resolutionHeight Get the image resolution height.
  * @property \luya\admin\file\Item $file The file object where the image was created from.
+ * @property string $systemFileName the system file name.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -133,7 +134,7 @@ class Item extends ItemAbstract
      */
     public function getServerSource()
     {
-        return $this->getFile() ? Yii::$app->storage->fileServerPath($this->getFilterId() . '_' . $this->getFile()->getSystemFileName()) : false;
+        return $this->getFile() ? Yii::$app->storage->fileServerPath($this->systemFileName) : false;
     }
     
     /**
@@ -143,7 +144,17 @@ class Item extends ItemAbstract
      */
     public function getFileExists()
     {
-        return Yii::$app->storage->fileSystemExists($this->getFilterId() . '_' . $this->getFile()->getSystemFileName());
+        return Yii::$app->storage->fileSystemExists($this->systemFileName);
+    }
+    
+    /**
+     * 
+     * @return string
+     * @since 1.2.0
+     */
+    public function getSystemFileName()
+    {
+        return $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
     }
     
     /**

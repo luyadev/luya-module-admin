@@ -37,6 +37,7 @@ use luya\web\LinkTrait;
  * @property boolean $isHidden Whether the file is marked as hidden or not.
  * @property boolean $isDeleted Return whether the file has been removed from the filesytem or not.
  * @property booelan $fileExists Whether the file resource exists in the storage folder or not.
+ * @property string $content Returns the content fo the file.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -81,7 +82,6 @@ class Item extends ItemAbstract implements LinkInterface
      * Set caption for file item, override existings values
      *
      * @param string $text The caption text for this image
-     * @since 1.0.0
      */
     public function setCaption($text)
     {
@@ -92,7 +92,6 @@ class Item extends ItemAbstract implements LinkInterface
      * Return the caption text for this file, if not defined the item array will be collected
      *
      * @return string The caption text for this image
-     * @since 1.0.0
      */
     public function getCaption()
     {
@@ -392,6 +391,17 @@ class Item extends ItemAbstract implements LinkInterface
     public function getFileExists()
     {
         return Yii::$app->storage->fileSystemExists($this->systemFileName);
+    }
+    
+    /**
+     * Get the file content.
+     * 
+     * @return string
+     * @since 1.2.0
+     */
+    public function getContent()
+    {
+        return Yii::$app->storage->fileSystemContent($this->systemFileName);
     }
     
     /**

@@ -97,8 +97,8 @@ final class StorageFile extends ActiveRecord
     {
         $file = Yii::$app->storage->getFile($this->id);
         
-        if ($file && !Yii::$app->storage->fileSystemDeleteFile($file->serverSource)) {
-            Logger::error("Unable to remove file from filesystem: " . $file->serverSource);
+        if ($file && !Yii::$app->storage->fileSystemDeleteFile($file->systemFileName)) {
+            Logger::error("Unable to remove file from filesystem: " . $file->systemFileName);
         }
         
         $this->updateAttributes(['is_deleted' => true]);
