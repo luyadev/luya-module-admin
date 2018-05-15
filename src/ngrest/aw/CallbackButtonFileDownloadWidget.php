@@ -55,7 +55,7 @@ class CallbackButtonFileDownloadWidget extends CallbackButtonWidget
     /**
      * @inheritdoc
      */
-    public $angularCallbackFunction = 'function($response, $scope) { $scope.linkHref = $response.url; $scope.linkHrefHidden = false; $scope.buttonHidden = true; };';
+    public $angularCallbackFunction = '[\'$response\', \'$scope\', function($response, $scope) { $scope.linkHref = $response.url; $scope.linkHrefHidden = false; $scope.buttonHidden = true; }];';
     
     /**
      * @inheritdoc
