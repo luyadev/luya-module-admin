@@ -76,6 +76,16 @@ final class StorageEffect extends NgRestModel
     }
     
     /**
+     * 
+     * @return unknown
+     * @since 1.0.2
+     */
+    public function getImagineEffectName()
+    {
+        return strtolower($this->imagine_name);
+    }
+    
+    /**
      * @inheritdoc
      */
     public function ngRestConfig($config)
