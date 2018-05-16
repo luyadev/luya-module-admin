@@ -11,7 +11,12 @@ use Imagine\Image\ManipulatorInterface;
 
 /**
  * Contains all information about filter effects for a single Chain element (like: thumbnail, 200x200).
- *
+ * 
+ * @property int $id
+ * @property int $sort_index
+ * @property int $filter_id
+ * @property int $effect_id
+ * @property string $effect_json_values
  * @property \luya\admin\models\StorageEffect $effect
  *
  * @author Basil Suter <basil@nadar.io>
@@ -19,6 +24,9 @@ use Imagine\Image\ManipulatorInterface;
  */
 final class StorageFilterChain extends ActiveRecord
 {
+    /**
+     * @var array An array containing all effect definitions with the options and required params.
+     */
     protected $effectDefinitions = [
         'crop' => [
             'required' => ['width', 'height'],
@@ -28,15 +36,9 @@ final class StorageFilterChain extends ActiveRecord
             'required' => ['width', 'height'],
             'options' => ['mode' => ManipulatorInterface::THUMBNAIL_OUTBOUND, 'saveOptions' => []]
         ],
-        'watermark' => [
-            // TODO: provide watermark definition
-        ],
-        'text' => [
-            // TODO: provide text definition
-        ],
-        'frame' => [
-            // TODO: provide frame definition
-        ]
+        'watermark' => [], // TODO: provide watermark definition
+        'text' => [], // TODO: provide text definition
+        'frame' => [], // TODO: provide frame definition
     ];
     
     /**
@@ -64,6 +66,7 @@ final class StorageFilterChain extends ActiveRecord
     {
         return [
             [['filter_id', 'effect_id'], 'required'],
+            [['sort_index', 'filter_id', 'effect_id'], 'integer'],
             [['effect_json_values'], 'safe'],
         ];
     }
@@ -108,7 +111,7 @@ final class StorageFilterChain extends ActiveRecord
         $imagineEffectName = $this->effect->getImagineEffectName();
         
         if (!$this->effectDefinition($imagineEffectName)) {
-            throw new InvalidConfigException('The requested effect mode ' . $this->effect->imagine_name . ' is not supported');
+            throw new InvalidConfigException('The requested effect mode ' . $imagineEffectName . ' is not supported');
         }
         
         if ($this->hasMissingRequiredEffectDefinition($imagineEffectName)) {
@@ -120,18 +123,17 @@ final class StorageFilterChain extends ActiveRecord
             // apply crop effect
             case FilterInterface::EFFECT_CROP:
                 // run imagine crop method
-                $image = Image::crop($loadFromPath, $this->effectChainValue('width'), $this->effectChainValue('height'));
+                $image = Image::crop($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
                 // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue('saveOptions'));
+                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
                 break;
                 
             // apply thumbnail effect
             case FilterInterface::EFFECT_THUMBNAIL:
                 // run imagine thumbnail method
-                $image = Image::thumbnail($loadFromPath, $this->effectChainValue('width'), $this->effectChainValue('height'), $this->effectChainValue('mode'));
+                $image = Image::thumbnail($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
                 // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue('saveOptions'));
-                
+                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
                 break;
         }
     }
@@ -149,7 +151,7 @@ final class StorageFilterChain extends ActiveRecord
             return $definition[$key];
         }
         
-        return $key;
+        return $definition;
     }
     
     public function hasMissingRequiredEffectDefinition($effect)
