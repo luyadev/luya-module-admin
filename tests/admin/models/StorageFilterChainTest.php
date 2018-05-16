@@ -78,5 +78,9 @@ class StorageFilterChainTest extends AdminModelTestCase
         
         // auto encode
         $this->assertSame(['width' => 800, 'height' => 700], $model1->effect_json_values);
+        
+        // destroy and cleanup
+        $effect->cleanup();
+        $fixture->cleanup();
     }
 }

@@ -15,17 +15,17 @@ class BaseFileSystemStorageTest extends AdminTestCase
     
     public function testHttpPath()
     {
-        $this->assertEquals('/luya/envs/dev/public_html/storage/foo.jpg', $this->getStorage()->fileHttpPath('foo.jpg'));
+        $this->assertContains('storage/foo.jpg', $this->getStorage()->fileHttpPath('foo.jpg'));
     }
     
     public function testAbsoluteHttpPath()
     {
-        $this->assertEquals('http://localhost/luya/envs/dev/public_html/storage/foo.jpg', $this->getStorage()->fileAbsoluteHttpPath('foo.jpg'));
+        $this->assertContains('storage/foo.jpg', $this->getStorage()->fileAbsoluteHttpPath('foo.jpg'));
     }
     
     public function testServerPath()
     {
-        $this->assertEquals('/var/www/luya/envs/dev/public_html/storage/foo.jpg', $this->getStorage()->fileServerPath('foo.jpg'));
+        $this->assertContains('storage/foo.jpg', $this->getStorage()->fileServerPath('foo.jpg'));
     }
     
     public function testBaseFileSystemStorage()
