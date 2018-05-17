@@ -138,7 +138,14 @@ final class StorageFilterChain extends ActiveRecord
         }
     }
 
-    
+    /**
+     * Get the definition for a given effect name.
+     * 
+     * @param string $effect
+     * @param string $key
+     * @return mixed
+     * @since 1.2.0
+     */
     public function effectDefinition($effect, $key = null)
     {
         $definition = isset($this->effectDefinitions[$effect]) ? $this->effectDefinitions[$effect] : false;
@@ -154,6 +161,13 @@ final class StorageFilterChain extends ActiveRecord
         return $definition;
     }
     
+    /**
+     * Check if a missing required param is not provided in the chain.
+     * 
+     * @param string $effect
+     * @return boolean
+     * @since 1.2.0
+     */
     public function hasMissingRequiredEffectDefinition($effect)
     {
         foreach ($this->effectDefinition($effect, 'required') as $param) {
@@ -165,6 +179,14 @@ final class StorageFilterChain extends ActiveRecord
         return false;
     }
     
+    /**
+     * Get the value from the effect chain for a given param/option.
+     * 
+     * @param string $effect
+     * @param string $param
+     * @return mixed
+     * @since 1.2.0
+     */
     public function effectChainValue($effect, $param)
     {
         $value = $this->getJsonValue($param);
@@ -178,30 +200,10 @@ final class StorageFilterChain extends ActiveRecord
         return $value;
     }
     
-    /*
-    protected function evalMethod()
-    {
-        return isset($this->effectDefinitions[$this->effect->imagine_name]) ? $this->effectDefinitions[$this->effect->imagine_name] : false;
-    }
-    */
-    
-    /*
-    protected function evalRequiredMethodParams()
-    {
-        foreach ($this->evalMethod()['required'] as $param) {
-            if ($this->getJsonValue($param) === false) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    */
-    
     /**
      * Get the value for a effect json key.
      * 
-     * @param unknown $key
+     * @param string $key
      * @return boolean
      */
     protected function getJsonValue($key)
@@ -217,18 +219,4 @@ final class StorageFilterChain extends ActiveRecord
      * @param string $name
      * @return string|array|number[]|boolean
      */
-    /*
-    protected function getMethodParam($name)
-    {
-        $value = $this->getJsonValue($name);
-        
-        if ($value === false) {
-            if (isset($this->evalMethod()['options'][$name])) {
-                return $this->evalMethod()['options'][$name];
-            }
-        }
-        
-        return $value;
-    }
-    */
 }

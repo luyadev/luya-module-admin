@@ -8,13 +8,14 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Changed
 
-+ [#122](https://github.com/luyadev/luya-module-admin/issues/122) Change base file system signature in order to support external file system like amazon S3.
++ [#122](https://github.com/luyadev/luya-module-admin/issues/122) Change base file system signature in order to support external file systems like amazon S3.
 + [#121](https://github.com/luyadev/luya-module-admin/issues/121) Reduce the xhr response content for admin images and files in order to speedup admin usage.
 + [#118](https://github.com/luyadev/luya-module-admin/issues/118) Updated outline-config default styles; Added btn--active class to force hover status
 + [#33](https://github.com/luyadev/luya-module-admin/issues/33) Updated textarea min-height from 46 to 86px
 + [#93](https://github.com/luyadev/luya-module-admin/issues/93) Unparseable cruft is enabled by default and uses the angular js built in json encoding mechanism to remove the prepend string.
 + [#90](https://github.com/luyadev/luya-module-admin/issues/90) Minification and Uglification of angularjs files requires strict di.
 + [#69](https://github.com/luyadev/luya-module-admin/issues/69) Remove deprecated `luya\admin\helpers\I18n` methods.
++ [#123](https://github.com/luyadev/luya-module-admin/issues/123) Improved storage filter chain model.
 
 ### Added
 
