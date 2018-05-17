@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.1 (in progress)
 
+### Fixed
+
++ [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach behavior for global search response.
+
 ## 1.2.0 (17. May 2018)
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
