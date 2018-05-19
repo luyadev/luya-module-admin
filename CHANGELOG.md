@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.1 (in progress)
 
+### Added
+
++ [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
+
 ### Fixed
 
 + [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach behavior for global search response.
