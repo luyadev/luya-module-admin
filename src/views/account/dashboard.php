@@ -10,7 +10,7 @@ use luya\admin\Module;
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                	<h2>Personalien</h2>
+                	<h2><?= Module::t('mode_user_personal_info') ?></h2>
                     <form ng-submit="changePersonData(profile)">
                         <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
                         <zaa-text fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
@@ -47,7 +47,7 @@ use luya\admin\Module;
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h2>General</h2>
+                    <h2><?= Module::t('settings_general') ?></h2>
                     <div class="form-group form-side-by-side">
                         <div class="form-side form-side-label">
                             <label for="lang-changer"><?= Module::t('layout_rightbar_languagelabel')?></label>
@@ -62,14 +62,14 @@ use luya\admin\Module;
                     </div>
                     <div class="form-group form-side-by-side">
                         <div class="form-side form-side-label">
-                            <label for="userSettings.isDeveloper">Developer Mode</label>
+                            <label for="userSettings.isDeveloper"><?= Module::t('settings_developer_mode') ?></label>
                         </div>
                         <div class="form-side">
                             <input type="checkbox" ng-model="settings.isDeveloper" id="userSettings.isDeveloper" />
                             <label for="userSettings.isDeveloper"></label>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-save btn-icon" ng-click="changeSettings(settings)">Save</button>
+                    <button type="button" class="btn btn-save btn-icon" ng-click="changeSettings(settings)"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                 </div>
             </div>
         </div>
