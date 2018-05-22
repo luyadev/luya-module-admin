@@ -44,7 +44,7 @@ return [
     'layout_filemanager_detail_size' => 'Dimensione',
     'layout_filemanager_detail_id' => 'ID interno',
     'layout_filemanager_detail_download' => 'Download',
-    'layout_btn_reload' => 'ricarica',
+    'layout_btn_reload' => 'Ricarica',
     'layout_btn_version' => 'Versione',
     'layout_btn_useronline' => 'Utenti Online',
     'layout_btn_logout' => 'Esci',
@@ -331,4 +331,10 @@ return [
     'layout_filemanager_col_file_disposition' => 'File delivery',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
+    
+// missing translations in 1.2.0
+    
+    'mode_user_personal_info' => 'Informazioni personali',
+    'settings_general' => 'Generale',
+    'settings_developer_mode' => 'Modalità sviluppatore',
 ];

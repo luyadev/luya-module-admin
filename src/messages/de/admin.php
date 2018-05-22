@@ -344,4 +344,10 @@ return [
     'layout_filemanager_col_file_disposition' => 'Dateiauslieferung',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'In Browser anzeigen',
+    
+// missing translations in 1.2.0
+    
+    'mode_user_personal_info' => 'Personal info',
+    'settings_general' => 'General',
+    'settings_developer_mode' => 'Developer Mode',
 ];
