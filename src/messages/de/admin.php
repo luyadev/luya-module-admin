@@ -345,9 +345,9 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'In Browser anzeigen',
     
-// missing translations in 1.2.0
+// 1.2.1
     
-    'mode_user_personal_info' => 'Personal info',
-    'settings_general' => 'General',
-    'settings_developer_mode' => 'Developer Mode',
+    'mode_user_personal_info' => 'Personalien',
+    'settings_general' => 'Allgemein',
+    'settings_developer_mode' => 'Entwickler Modus',
 ];

@@ -332,7 +332,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
     
-// missing translations in 1.2.0
+// 1.2.1
     
     'mode_user_personal_info' => 'Personal info',
     'settings_general' => 'General',
