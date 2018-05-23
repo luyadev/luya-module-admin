@@ -22,6 +22,7 @@ class TimestampController extends RestController
     public function actionIndex()
     {
         $userId = Yii::$app->adminuser->id;
+        
         // clear user online list
         UserOnline::clearList($this->module->userIdleTimeout);
         $userOnlineModel = UserOnline::findOne(['user_id' => Yii::$app->adminuser->id]);
@@ -30,7 +31,17 @@ class TimestampController extends RestController
             Yii::$app->response->statusCode = 401;
             return Yii::$app->response->send();
         }
-                
+        
+        // update keystrokes
+        $lastKeyStroke = Yii::$app->request->getBodyParam('lastKeyStroke');
+        if (Yii::$app->session->get('__lastKeyStroke') != $lastKeyStroke) {
+            // refresh the user timestamp
+            $userOnlineModel->last_timestamp = time();
+            $userOnlineModel->update(true, ['last_timestamp']);
+        }
+        
+        Yii::$app->session->set('__lastKeyStroke', $lastKeyStroke);
+        
         // if developer is enabled, check if vendor has changed and run the required commands and force reload
         // @TODO: its a concept
         /*
@@ -51,8 +62,11 @@ class TimestampController extends RestController
         $offsetPercent = round((81/100) * $percentage);
         $strokeOffset = 81 - $offsetPercent;
         
+        
+        
         // return users, verify force reload.
         $data = [
+            'lastKeyStroke' => $lastKeyStroke,
             'idleSeconds' => $seconds,
             'idlePercentage' => $percentage,
             'idleStrokeDashoffset' => $strokeOffset,

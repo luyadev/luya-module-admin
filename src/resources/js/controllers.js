@@ -889,7 +889,9 @@
         };
 	});
 
-	zaa.controller("LayoutMenuController", ['$scope', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
+	zaa.controller("LayoutMenuController", [
+		'$scope', '$document', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', 
+		function ($scope, $document, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
 
@@ -995,8 +997,14 @@
 
 		$scope.visibleAdminReloadDialog = false;
 
+		$scope.lastKeyStroke = Date.now();
+		
+		$document.bind('keyup', function (e) {
+			$scope.lastKeyStroke = Date.now();
+		});
+		
 		(function tick(){
-			$http.get('admin/api-admin-timestamp', { ignoreLoadingBar: true }).then(function(response) {
+			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {
 					$scope.visibleAdminReloadDialog = true;
