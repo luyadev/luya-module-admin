@@ -591,4 +591,31 @@ abstract class Plugin extends Component
     {
         return ($event->sender->hasAttribute($this->name) || $event->sender->canSetProperty($this->name));
     }
+    
+    /**
+     * Override an attribute value of a given attribute or property.
+     * 
+     * @param \yii\base\Event $event
+     * @param mixed $value
+     * @since 1.2.1
+     */
+    protected function writeAttribute($event, $value)
+    {
+        $property = $this->name;
+        $event->sender->{$property} = $value;
+    }
+    
+    /**
+     * Get the attribute value from the plugin attribute.
+     * 
+     * @param \yii\base\Event $event
+     * @return mixed
+     * @since 1.2.1
+     */
+    protected function getAttributeValue($event)
+    {
+        $property = $this->name;
+        
+        return $event->sender->{$property};
+    }
 }

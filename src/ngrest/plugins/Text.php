@@ -58,7 +58,7 @@ class Text extends Plugin
     public function onAfterFind($event)
     {
         if ($this->encoding) {
-            $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
         }
     }
     
@@ -68,7 +68,7 @@ class Text extends Plugin
     public function onAssign($event)
     {
         if (!$this->i18n && $this->encoding && $this->isAttributeWriteable($event)) {
-            $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
         }
     }
 }

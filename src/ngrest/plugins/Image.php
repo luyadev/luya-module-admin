@@ -79,7 +79,7 @@ class Image extends Plugin
     public function onAfterFind($event)
     {
         if ($this->imageItem) {
-            $event->sender->setAttribute($this->name, Yii::$app->storage->getImage($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Yii::$app->storage->getImage($event->sender->getAttribute($this->name)));
         }
     }
 }

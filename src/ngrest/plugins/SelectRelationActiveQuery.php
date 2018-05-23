@@ -131,13 +131,13 @@ class SelectRelationActiveQuery extends Plugin
         $value = $event->sender->getAttribute($this->name);
         
         if ($this->emptyListValue && empty($value)) {
-            $event->sender->setAttribute($this->name, $this->emptyListValue);
+            $this->writeAttribute($event, $this->emptyListValue);
         } else {
             $model = $this->_query->modelClass;
             $row = $model::find()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
             
             if (!empty($row)) {
-                $event->sender->setAttribute($this->name, implode(" ", $row));
+                $this->writeAttribute($event, implode(" ", $row));
             }
         }
     }

@@ -78,7 +78,7 @@ class SortRelationModel extends SortRelation
                 $ids[] = $key['value'];
             }
             $class = $this->modelClass;
-            $event->sender->setAttribute($this->name, $class::find()->where(['in', 'id', $ids])->all());
+            $this->writeAttribute($event, $class::find()->where(['in', 'id', $ids])->all());
         }
     }
 }
