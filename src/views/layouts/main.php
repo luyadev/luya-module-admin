@@ -105,9 +105,15 @@ $this->beginPage()
                         </span>
                     </li>
                     <li class="mainnav-entry">
-                        <!-- needs to be fixed -->
-                        <span class="mainnav-parent" active-class="mainnav-parent-active">
-                        <!-- needs to be fixed end -->
+                            <!-- needs to be fixed -->
+                            <span class="mainnav-parent" active-class="mainnav-parent-active">
+                            <!-- needs to be fixed end -->
+                            <div class="mainnav-timeout">
+                                <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="4" transform="translate(15, 15) rotate(-90) translate(-15, -15)" stroke-dashoffset="83px"></circle>
+                                </svg>
+                            </div>
+
                             <i class="mainnav-icon material-icons">account_circle</i>
                             <span class="mainnav-label">
                                 <?= Admin::t('layout_btn_profile'); ?>
@@ -115,6 +121,11 @@ $this->beginPage()
                             <span class="mainnav-tooltip-big-wrapper">
                                 <span class="mainnav-tooltip-big">
                                     <ul class="mainnav-tooltip-big-menu">
+                                        <li class="mainnav-tooltip-big-menu-item-status">
+                                            <span class="mainnav-tooltip-big-menu-item-info">
+                                                <?= Admin::t('layout_btn_user_logout_in'); ?><br />12 <?= Admin::t('layout_btn_user_minutes'); ?>
+                                            </span>
+                                        </li>
                                         <li class="mainnav-tooltip-big-menu-item" ui-sref-active="mainnav-tooltip-big-menu-item-active" ui-sref="custom({templateId:'admin/account/dashboard'})" ng-click="isOpen=0">
                                             <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">face</i>

@@ -1,0 +1,10 @@
+.user-timeout {
+    display: block;
+    overflow: visible;
+}
+
+.user-timeout-timer {
+    stroke-dasharray: 32 * 2.75px; // witdth or height times 2.75 = maximum stroke-dasharray
+    stroke-dashoffset: 32 * 2.75px; // witdth or height times 2.75 = maximum stroke-dashoffste
+    transition: .25s ease-in-out stroke-dashoffset, .25s ease-in-out stroke;
+}

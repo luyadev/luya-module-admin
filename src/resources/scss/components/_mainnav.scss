@@ -39,9 +39,9 @@
 }
 
 .mainnav-toggler-mobile {
-    position: relative;
     cursor: pointer;
     font-size: 30px;
+    position: relative;
     text-align: right;
 
     @media (min-width: $mobile-nav-breakpoint) {
@@ -117,7 +117,7 @@
         }
 
         .mainnav-small &:after {
-           @include label-background;
+            @include label-background;
             border-radius: $border-radius;
             content: "";
             height: 0;
@@ -175,9 +175,9 @@
 
 .mainnav-icon,
 .mainnav-label {
+    color: map-get($grays, 400);
     display: inline-block;
     line-height: 22px;
-    color: map-get($grays, 400);
     z-index: zindex(popover);
 }
 
@@ -204,19 +204,18 @@
 
     + span {
         display: inline-block;
-        vertical-align: middle;
         margin-left: 5px;
+        vertical-align: middle;
     }
 }
 
-
 .mainnav-image-icon {
+    color: map-get($grays, 400);
     height: auto;
     margin-top: -2px;
+    max-width: 25px;
     min-width: 24px;
     width: 100%;
-    max-width: 25px;
-    color: map-get($grays, 400);
 
     &-small {
         margin-top: 0;
@@ -291,11 +290,11 @@
 }
 
 .mainnav-tooltip-big-wrapper {
-    padding-left: 30px;
+    bottom: 0;
     display: none;
     opacity: 0;
+    padding-left: 30px;
     position: absolute;
-    bottom: 0;
 
     @media (min-width: $mobile-nav-breakpoint) {
         padding-left: 22px;
@@ -303,15 +302,16 @@
 }
 
 .mainnav-tooltip-big {
-    max-width: 100%;
-    min-height: 42px;
-    display: inline-block;
-    //background: $tooltip-bg;
     background-color: $tooltip-bg-alt;
     border-radius: $border-radius;
-    padding: 0 10px;
     box-shadow: $tooltip-box-shadow;
+    //background: $tooltip-bg;
+    cursor: default;
+    display: inline-block;
     font-size: 14px;
+    max-width: 100%;
+    min-height: 42px;
+    padding: 0 10px;
 
     &:after {
         border-color: transparent $tooltip-bg-alt transparent transparent;
@@ -337,46 +337,50 @@
         }
 
         th, td {
-            white-space: nowrap;
+            cursor: default;
             padding: 10px 10px 10px 0;
             text-align: left;
-            cursor: default;
+            white-space: nowrap;
 
             &:last-of-type {
-                padding-right: 0;
                 max-width: 37px;
+                padding-right: 0;
             }
         }
 
     }
 
     ul, &-menu {
-        padding-left: 0;
-        padding-bottom: 0;
-        padding-top: 5px;
-        margin-right: -5px;
         margin-left: -5px;
+        margin-right: -5px;
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-top: 5px;
 
-         li, &-item {
-             list-style: none;
-             position: relative;
-             display: block;
-             text-align: left;
-             border-radius: $border-radius;
-             padding: 5px 10px 5px 30px;
-             margin-bottom: 5px;
-             line-height: 23px;
-             transition: background-color .25s ease-in-out;
+        li, &-item {
+            border-radius: $border-radius;
+            display: block;
+            line-height: 23px;
+            list-style: none;
+            margin-bottom: 5px;
+            padding: 5px 10px 5px 30px;
+            position: relative;
+            text-align: left;
+            transition: background-color .25s ease-in-out;
 
+            &.mainnav-tooltip-big-menu-item-status {
+                padding-left: 10px;
+            }
 
             i {
-                position: absolute;
+                font-size: 18px;
                 left: 5px;
+                position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
-                font-size: 18px;
             }
             a, &-link {
+                cursor: pointer;
                 color: map-get($grays, 400);
                 line-height: 23px;
                 transition: color .15s ease-in-out;
@@ -384,10 +388,10 @@
                 &:hover, &-active {
                     text-decoration: none;
 
-                 }
+                }
             }
 
-            &:hover {
+            &:not(.mainnav-tooltip-big-menu-item-status):hover {
                 @include label-background;
 
                 span {
@@ -395,20 +399,31 @@
                 }
             }
 
-             &-active
-
-             i {
-                 color: map-get($theme-colors, primary);
-             }
+            &-active i {
+                color: map-get($theme-colors, primary);
+            }
         }
+    }
+
+    .mainnav-tooltip-big-menu-item-info {
+        white-space: nowrap;
     }
 }
 
 .mainnav-mobile-title {
-    position: absolute;
+    color: map-get($grays, 300);
+    font-size: 14px;
     left: 0;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 14px;
-    color: map-get($grays, 300);
+}
+
+.mainnav-timeout {
+    display: block;
+    height: 30px;
+    left: 5px;
+    position: absolute;
+    top: 5px;
+    width: 30px;
 }
