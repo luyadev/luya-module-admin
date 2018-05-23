@@ -1072,16 +1072,16 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "37dd0951ffd60fe213f537ee2659a818721a3925"
+                "reference": "c8db3138001f300afa5790ea3ade86eb0734ea08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/37dd0951ffd60fe213f537ee2659a818721a3925",
-                "reference": "37dd0951ffd60fe213f537ee2659a818721a3925",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/c8db3138001f300afa5790ea3ade86eb0734ea08",
+                "reference": "c8db3138001f300afa5790ea3ade86eb0734ea08",
                 "shasum": ""
             },
             "require-dev": {
@@ -1132,7 +1132,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-03-26T17:04:29+00:00"
+            "time": "2018-05-17T11:22:10+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
@@ -2760,7 +2760,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.39",
+            "version": "v2.8.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",

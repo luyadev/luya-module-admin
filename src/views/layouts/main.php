@@ -105,9 +105,15 @@ $this->beginPage()
                         </span>
                     </li>
                     <li class="mainnav-entry">
-                        <!-- needs to be fixed -->
-                        <span class="mainnav-parent" active-class="mainnav-parent-active">
-                        <!-- needs to be fixed end -->
+                            <!-- needs to be fixed -->
+                            <span class="mainnav-parent" active-class="mainnav-parent-active">
+                            <!-- needs to be fixed end -->
+                            <div class="mainnav-timeout">
+                                <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" ng-class="{'user-timeout-critical': idleStrokeDashoffset < 10}">
+                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="2" transform="translate(15, 15) rotate(-90) translate(-15, -15)" ng-show="idleStrokeDashoffset < 81" stroke-dashoffset="{{idleStrokeDashoffset||'81'}}px"></circle>
+                                </svg>
+                            </div>
+
                             <i class="mainnav-icon material-icons">account_circle</i>
                             <span class="mainnav-label">
                                 <?= Admin::t('layout_btn_profile'); ?>
@@ -125,6 +131,12 @@ $this->beginPage()
                                             <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">exit_to_app</i>
                                                 <?= Admin::t('layout_btn_logout'); ?>
+                                            </span>
+                                        </li>
+                                        <li class="mainnav-tooltip-big-menu-item-status">
+                                            <span class="mainnav-tooltip-big-menu-item-info">
+                                                <i class="material-icons">restore</i>
+                                                {{idleTimeRelative}} Minuten
                                             </span>
                                         </li>
                                     </ul>
