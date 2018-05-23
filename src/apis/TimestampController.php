@@ -48,8 +48,8 @@ class TimestampController extends RestController
         // stroke-dashoffset="0px" => 100 // which means 100 percent of time has elpased, auto logout will redirect the user
         $seconds = (time() - $userOnlineModel->last_timestamp);
         $percentage = round(($seconds / $this->module->userIdleTimeout) * 100);
-        $offsetPercent = round((82/100) * $percentage);
-        $strokeOffset = 82 - $offsetPercent;
+        $offsetPercent = round((81/100) * $percentage);
+        $strokeOffset = 81 - $offsetPercent;
         
         // return users, verify force reload.
         $data = [
