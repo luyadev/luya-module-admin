@@ -68,6 +68,7 @@ class TimestampController extends RestController
         $data = [
             'lastKeyStroke' => $lastKeyStroke,
             'idleSeconds' => $seconds,
+            'idleTimeRelative' => round(($this->module->userIdleTimeout-$seconds) / 60),
             'idlePercentage' => $percentage,
             'idleStrokeDashoffset' => $strokeOffset,
             'useronline' => UserOnline::getList(),
