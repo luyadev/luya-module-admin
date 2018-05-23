@@ -1017,6 +1017,7 @@
 				$scope.locked = response.data.locked;
 				$scope.notify = response.data.useronline;
 				$scope.idleStrokeDashoffset = response.data.idleStrokeDashoffset;
+				$scope.idleTimeRelative = response.data.idleTimeRelative;
 				$timeout(tick, 20000);
 			})
 		})();
