@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of attribute.
 + [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach behavior for global search response.
 
 ## 1.2.0 (17. May 2018)
