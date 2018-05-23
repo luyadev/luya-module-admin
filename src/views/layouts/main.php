@@ -109,8 +109,8 @@ $this->beginPage()
                             <span class="mainnav-parent" active-class="mainnav-parent-active">
                             <!-- needs to be fixed end -->
                             <div class="mainnav-timeout">
-                                <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="2" transform="translate(15, 15) rotate(-90) translate(-15, -15)" ng-show="idleStrokeDashoffset < 81" stroke-dashoffset="{{idleStrokeDashoffset+'px'||'81px'}}"></circle>
+                                <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" ng-class="{'user-timeout-critical': idleStrokeDashoffset < 10}">
+                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="2" transform="translate(15, 15) rotate(-90) translate(-15, -15)" ng-show="idleStrokeDashoffset < 81" stroke-dashoffset="{{idleStrokeDashoffset||'81'}}px"></circle>
                                 </svg>
                             </div>
 
@@ -121,11 +121,6 @@ $this->beginPage()
                             <span class="mainnav-tooltip-big-wrapper">
                                 <span class="mainnav-tooltip-big">
                                     <ul class="mainnav-tooltip-big-menu">
-                                        <li class="mainnav-tooltip-big-menu-item-status">
-                                            <span class="mainnav-tooltip-big-menu-item-info">
-                                                <?= Admin::t('layout_btn_user_logout_in'); ?><br />12 <?= Admin::t('layout_btn_user_minutes'); ?>
-                                            </span>
-                                        </li>
                                         <li class="mainnav-tooltip-big-menu-item" ui-sref-active="mainnav-tooltip-big-menu-item-active" ui-sref="custom({templateId:'admin/account/dashboard'})" ng-click="isOpen=0">
                                             <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">face</i>
@@ -136,6 +131,12 @@ $this->beginPage()
                                             <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">exit_to_app</i>
                                                 <?= Admin::t('layout_btn_logout'); ?>
+                                            </span>
+                                        </li>
+                                        <li class="mainnav-tooltip-big-menu-item-status">
+                                            <span class="mainnav-tooltip-big-menu-item-info">
+                                                <i class="material-icons">restore</i>
+                                                12 Minuten
                                             </span>
                                         </li>
                                     </ul>

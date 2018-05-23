@@ -6,4 +6,8 @@
 .user-timeout-timer {
     stroke-dasharray: 81px;
     transition: .25s ease-in-out stroke-dashoffset, .25s ease-in-out stroke;
+
+    .user-timeout-critical & {
+        stroke: theme-color(danger);
+    }
 }

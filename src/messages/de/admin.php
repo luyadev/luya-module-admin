@@ -351,7 +351,4 @@ return [
     'settings_general' => 'Allgemein',
     'settings_developer_mode' => 'Entwickler Modus',
 
-    'layout_btn_user_logout_in' => 'Automatisches Logout in:',
-    'layout_btn_user_minutes' => 'Minuten',
-
 ];

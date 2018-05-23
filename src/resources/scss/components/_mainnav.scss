@@ -368,20 +368,15 @@
             text-align: left;
             transition: background-color .25s ease-in-out;
 
-            &.mainnav-tooltip-big-menu-item-status {
-                padding-left: 10px;
-            }
-
             i {
                 font-size: 18px;
                 left: 5px;
                 position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
+                top: 7px;
             }
             a, &-link {
-                cursor: pointer;
                 color: map-get($grays, 400);
+                cursor: pointer;
                 line-height: 23px;
                 transition: color .15s ease-in-out;
 
