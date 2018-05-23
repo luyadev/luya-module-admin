@@ -110,7 +110,7 @@ $this->beginPage()
                             <!-- needs to be fixed end -->
                             <div class="mainnav-timeout">
                                 <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="4" transform="translate(15, 15) rotate(-90) translate(-15, -15)" stroke-dashoffset="83px"></circle>
+                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="2" transform="translate(15, 15) rotate(-90) translate(-15, -15)" stroke-dashoffset="{{idleStrokeDashoffset}}px"></circle>
                                 </svg>
                             </div>
 
