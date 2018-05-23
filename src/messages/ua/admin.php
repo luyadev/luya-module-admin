@@ -349,4 +349,5 @@ return [
     'mode_user_personal_info' => 'Personal info',
     'settings_general' => 'General',
     'settings_developer_mode' => 'Developer Mode',
+    'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
 ];

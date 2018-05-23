@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#128](https://github.com/luyadev/luya-module-admin/issues/128) New indicator display the amount of time left until the user is logged out automaticcaly. Also every keystroke inside any text field will reset the logout timer. No more session timeouts while working!
 + [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
 
 ### Fixed

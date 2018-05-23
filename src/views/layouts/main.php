@@ -136,7 +136,7 @@ $this->beginPage()
                                         <li class="mainnav-tooltip-big-menu-item-status">
                                             <span class="mainnav-tooltip-big-menu-item-info">
                                                 <i class="material-icons">restore</i>
-                                                {{idleTimeRelative}} Minuten
+                                               	<?= Admin::t('layout_logout_minutes'); ?>
                                             </span>
                                         </li>
                                     </ul>
