@@ -4,7 +4,6 @@
 }
 
 .user-timeout-timer {
-    stroke-dasharray: 32 * 2.75px; // witdth or height times 2.75 = maximum stroke-dasharray
-    stroke-dashoffset: 32 * 2.75px; // witdth or height times 2.75 = maximum stroke-dashoffste
+    stroke-dasharray: 82px;
     transition: .25s ease-in-out stroke-dashoffset, .25s ease-in-out stroke;
 }
