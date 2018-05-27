@@ -71,7 +71,7 @@ final class UserLogin extends ActiveRecord
             [['user_id', 'timestamp_create'], 'integer'],
             [['is_destroyed'], 'boolean'],
             [['auth_token'], 'string', 'max' => 120],
-            [['ip'], 'string', 'max' => 15],
+            [['ip'], 'string', 'max' => 45],
         ];
     }
 
