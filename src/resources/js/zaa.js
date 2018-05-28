@@ -122,7 +122,7 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
 /**
  * resolver (or resolverProvider).
  * 
- * > Warning: The config part is known injected `resolverProvider` event when the provider name is `resolver`.
+ * > Warning: The config part is known injected `resolverProvider` even when the provider name is `resolver`.
  * > Info: can not rename this in admin 1.2 release due to usage in cms module old version branch
  * 
  * Attach custom callback function to the custom state resolve. Use the resolverProvider in

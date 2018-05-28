@@ -3,7 +3,7 @@ adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFiles
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
 	ServiceImagesData.load();
-	ServiceFilesData.load();
+	//ServiceFilesData.load();
 	ServiceLanguagesData.load();
 	ServicePropertiesData.load();
 	AdminLangService.load();
@@ -127,6 +127,7 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $
 	service.data = null;
 	
 	service.load = function(forceReload) {
+		/*
 		return $q(function(resolve, reject) {
 			if (service.data !== null && forceReload !== true) {
 				resolve(service.data);
@@ -138,6 +139,7 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $
 				});
 			}
 		});
+		*/
 	};
 	
 	return service;
@@ -156,22 +158,50 @@ $scope.filesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($http, $q, $rootScope, $log) {
 	var service = [];
 	
-	service.data = null;
+	service.data = {};
 	
 	service.load = function(forceReload) {
 		return $q(function(resolve, reject) {
 			if (service.data !== null && forceReload !== true) {
 				resolve(service.data);
 			} else {
+				$log.info('load full list of all files from storage data-files api.');
 				$http.get("admin/api-admin-storage/data-files").then(function(response) {
 					service.data = response.data;
 					$rootScope.$broadcast('service:FilesData', service.data);
 					resolve(service.data);
+					$log.info('files are loaded from storage api and written to data property.');
+					$log.info(service.data);
 				});
 			}
+		});
+	};
+	
+	/**
+	 * Get a given file from the storage system by its id.
+	 * 
+	 * ```js
+	 * ServiceFilesData.getFile(1).then(function(response) {
+	 *     console.log(response);
+	 * });
+	 */
+	service.getFile = function(id, forceAsyncRequest) {
+		return $q(function(resolve, reject) {
+			$log.info('request file id ' + id);
+			
+			if (service.data.hasOwnProperty(id)) {
+				$log.info('file exists in datat array.');
+				return resolve(service.data[id]);
+			}
+			
+			$http.get('admin/api-admin-storage/file-info?id='+id).then(function(response) {
+    			service.data[response.id] = response;
+    			
+    			return resolve(response);
+    		});
 		});
 	};
 	

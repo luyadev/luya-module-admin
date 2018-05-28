@@ -18,6 +18,8 @@ use luya\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
 use yii\base\InvalidParamException;
 use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataProvider;
+use luya\admin\file\Query;
 
 /**
  * Filemanager and Storage API.
@@ -81,13 +83,16 @@ class StorageController extends RestController
      *
      * @return array
      */
-    public function actionDataFiles()
+    public function actionDataFiles($folderId = 0, $page = 0)
     {
-        $cache = $this->getHasCache('storageApiDataFiles');
+        $perPage = 50;
+        $totalCount = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         
-        if ($cache === false) {
+        $files =  $this->getOrSetHasCache(['storageApiDataFiles', $folderId, $page], function() use ($folderId, $page, $perPage) {
             $files = [];
-            foreach (Yii::$app->storage->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
+            $fileQuery = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*50)->limit($perPage)->all();
+            
+            foreach ($fileQuery as $file) {
                 $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
                     // add tiny thumbnail
@@ -107,13 +112,20 @@ class StorageController extends RestController
                         }
                     }
                 }
-                $files[] = $data;
+                
+                $files[$data['id']] = $data;
             }
-            $this->setHasCache('storageApiDataFiles', $files, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_file WHERE is_deleted=false']), 0);
-            return $files;
-        }
+            
+            return $files; 
+        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_file WHERE is_deleted=false']));
         
-        return $cache;
+        return [
+            'perPage' => $perPage,
+            'totalCount' => $totalCount,
+            'count' => count($files),
+            'data' => $files,
+            'page' => (int) $page,
+        ];
     }
     
     /**

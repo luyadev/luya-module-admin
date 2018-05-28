@@ -2391,10 +2391,16 @@
 
                 $scope.$watch('fileId', function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
+                    	
+                    	$scope.ServiceFilesData.getFile(n).then(function(file) {
+                    		$scope.fileinfo = file;
+                    	});
+                    	/*
                     	var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
                         if (filtering && filtering.length == 1) {
                         	$scope.fileinfo = filtering[0];
                         }
+                        */
                     }
                 });
     		}],
@@ -2624,16 +2630,19 @@
 
                 // ServiceFilesData inheritance
 
-                $scope.filesData = ServiceFilesData.data;
-
-                $scope.$on('service:FilesData', function(event, data) {
-                    $scope.filesData = data;
+                $scope.filesData = [];
+                
+                // load files data for a given folder id
+                $scope.$watch('currentFolderId', function(folderId) {
+                	$scope.getFilesForPageAndFolder(folderId, 0);
                 });
 
-                $scope.filesDataReload = function() {
-                    return ServiceFilesData.load(true);
-                }
-
+                $scope.getFilesForPageAndFolder = function(folderId, pageId) {
+                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
+                		$scope.filesData = response.data.data;
+                	});
+                };
+                
                 // ServiceFolderId
 
                 $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
@@ -2916,8 +2925,8 @@
                 		$scope.closeFileDetail();
                 	} else {
                 		
-                		$http.get('admin/api-admin-storage/file-info?id='+file.id).then(function(response) {
-                			$scope.fileDetailFull = response.data;
+                		ServiceFilesData.getFile(file.id).then(function(responseFile) {
+                			$scope.fileDetailFull = responseFile;
                 		});
                 		
                 		$scope.fileDetail = file;
