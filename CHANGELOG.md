@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file. This projec
 + [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of active record attribute.
 + [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach cruft behavior for global search response.
 + [#132](https://github.com/luyadev/luya-module-admin/pull/132) Fixed validation error on single file upload with the StorageUploadValidator.
++ [#101](https://github.com/luyadev/luya-module-admin/pull/101) Proxy command disable now FOREIGN_KEY_CHECKS, UNIQUE_CHECKS and SQL_MODE while data sync.
++ [#20](https://github.com/luyadev/luya-module-admin/issues/20) Proxy command need now less memory and a bit faster.
 
 ## 1.2.0 (17. May 2018)
 
