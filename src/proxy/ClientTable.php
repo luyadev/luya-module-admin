@@ -107,73 +107,108 @@ class ClientTable extends BaseObject
     
     public function isComplet()
     {
-        return $this->getRows() == count($this->getContentRows());
+        return $this->getRows() == $this->_contentRowsCount;
     }
-    
-    private $_contentRows;
     
     public function getContentRows()
     {
-        if ($this->_contentRows === null) {
-            $data = [];
-            
-            Console::startProgress(0, $this->getOffsetTotal(), 'Fetch: ' . $this->getName() . ' ');
-            
-            $progress = 1;
-            for ($i=0; $i<$this->getOffsetTotal(); $i++) {
-                $requestData = $this->request($i);
-                
-                if (!$requestData) {
-                    continue;
-                }
-                
-                $data = array_merge($requestData, $data);
-                gc_collect_cycles();
-                Console::updateProgress($progress++, $this->getOffsetTotal());
-            }
-            
-            Console::endProgress();
-            $this->_contentRows = $data;
-        }
-        
-        return $this->_contentRows;
+	    throw new \ErrorException('Not implemented');
+    }
+
+    private $_contentRowsCount;
+
+    public function getContentRowCount()
+    {
+    	return $this->_contentRowsCount;
     }
     
     public function syncData()
     {
-    	if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-		    Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+	    try {
+		    if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
+			    // Disable foreign
+			    Yii::$app->db->createCommand('SET SESSION FOREIGN_KEY_CHECKS = 0;')->execute();
+			    Yii::$app->db->createCommand('SET SESSION UNIQUE_CHECKS = 0;')->execute();
+
+			    $sqlMode = Yii::$app->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
+			    Yii::$app->db->createCommand('SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
+		    }
+
+		    Yii::$app->db->createCommand()->truncateTable($this->getName())->execute();
+
+
+		    $this->syncDataInternal();
+
+	    }
+	    finally {
+
+		    if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
+			    Yii::$app->db->createCommand('SET SESSION FOREIGN_KEY_CHECKS = 1;')->execute();
+			    Yii::$app->db->createCommand('SET SESSION UNIQUE_CHECKS = 1;')->execute();
+
+			    Yii::$app->db->createCommand('SET SESSION SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
+		    }
 	    }
 
-        Yii::$app->db->createCommand()->truncateTable($this->getName())->execute();
-        
-        $rows = $this->getContentRows();
-
-        $chunks = array_chunk($rows, 25);
-        
-        foreach ($chunks as $match) {
-            Yii::$app->db->createCommand()->batchInsert($this->getName(), $this->cleanUpBatchInsertFields($this->getFields()), $this->cleanUpMatchRow($match))->execute();
-        }
-
-	    if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-		    Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-	    }
     }
-    
-    private function request($offset)
-    {
-        $curl = new Curl();
-        $curl->get($this->build->requestUrl, ['machine' => $this->build->machineIdentifier, 'buildToken' => $this->build->buildToken, 'table' => $this->name, 'offset' => $offset]);
-        
-        if (!$curl->error) {
-            $response = Json::decode($curl->response);
-            $curl->close();
-            unset($curl);
-            return $response;
-        } else {
-            $this->build->command->outputError("Error while collecting data from server: " . $curl->error_message);
-        }
-        
-        return false;
-    }
+
+	private function syncDataInternal(): void
+	{
+		Console::startProgress(0, $this->getOffsetTotal(), 'Fetch: ' . $this->getName() . ' ');
+		$this->_contentRowsCount = 0;
+
+		$dataChunk = [];
+		for ($i = 0; $i < $this->getOffsetTotal(); $i++) {
+			$requestData = $this->request($i);
+
+			if (!$requestData) {
+				continue;
+			}
+
+			if ($i % 10 === 0) {
+				$inserted = $this->insertData($requestData);
+				$this->_contentRowsCount += $inserted;
+				$dataChunk = [];
+			}
+
+			Console::updateProgress($i + 1, $this->getOffsetTotal());
+
+			$dataChunk = array_merge($requestData, $dataChunk);
+			gc_collect_cycles();
+		}
+
+		if (!empty($dataChunk)) {
+			$this->insertData($dataChunk);
+		}
+
+		Console::endProgress();
+	}
+
+	private function request($offset)
+	{
+		$curl = new Curl();
+		$curl->get($this->build->requestUrl, ['machine' => $this->build->machineIdentifier, 'buildToken' => $this->build->buildToken, 'table' => $this->name, 'offset' => $offset]);
+
+		if (!$curl->error) {
+			$response = Json::decode($curl->response);
+			$curl->close();
+			unset($curl);
+			return $response;
+		} else {
+			$this->build->command->outputError("Error while collecting data from server: " . $curl->error_message);
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param $dataChunk
+	 * @throws \yii\db\Exception
+	 */
+	private function insertData($dataChunk): int
+	{
+		$inserted = Yii::$app->db->createCommand()->batchInsert($this->getName(), $this->cleanUpBatchInsertFields($this->getFields()), $this->cleanUpMatchRow($dataChunk))->execute();
+
+		return $inserted;
+	}
 }

@@ -180,7 +180,6 @@ class ProxyController extends Command
             $this->flushHasCache();
             
             $this->verbosePrint($curl->response);
-            
             $response = Json::decode($curl->response);
             $build = new ClientBuild($this, [
                 'optionStrict' => $this->strict,
