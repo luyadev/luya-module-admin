@@ -2,21 +2,55 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.2.0 (in progress)
+## 1.2.1 (in progress)
 
 ### Added
 
-+ [#100](https://github.com/luyadev/luya-module-admin/issues/100) Option to configure the max idle time of an user until logout.
-+ [#86](https://github.com/luyadev/luya-module-admin/issues/86) When a user changes the email, a token will be sent to the old email which has to be entered in order to change the email.
-+ [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibilty to brufe force any login credentials. The 2FA security token lifetime can be configured. When the loggin password is false, the login fields are cleared out.
++ [#128](https://github.com/luyadev/luya-module-admin/issues/128) A new indicator display the amount of time left until the user is logged out automatically. Also every keystroke inside any text field will reset the logout timer to null. No more timeouts while working!
++ [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
 
 ### Fixed
 
-+ [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese
++ [#135](https://github.com/luyadev/luya-module-admin/issues/135) Fixed login problem when connecting with ipv6 address.
++ [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of active record attribute.
++ [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach cruft behavior for global search response.
++ [#132](https://github.com/luyadev/luya-module-admin/pull/132) Fixed validation error on single file upload with the StorageUploadValidator.
+
+## 1.2.0 (17. May 2018)
+
+This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
+
+### Changed
+
++ [#122](https://github.com/luyadev/luya-module-admin/issues/122) Change base file system signature in order to support external file systems like amazon S3.
++ [#121](https://github.com/luyadev/luya-module-admin/issues/121) Reduce the xhr response content for admin images and files in order to speedup admin usage.
++ [#118](https://github.com/luyadev/luya-module-admin/issues/118) Updated outline-config default styles; Added btn--active class to force hover status
++ [#33](https://github.com/luyadev/luya-module-admin/issues/33) Updated textarea min-height from 46 to 86px
++ [#93](https://github.com/luyadev/luya-module-admin/issues/93) Unparseable cruft is enabled by default and uses the angular js built in json encoding mechanism to remove the prepend string.
++ [#90](https://github.com/luyadev/luya-module-admin/issues/90) Minification and Uglification of angularjs files requires strict di.
++ [#69](https://github.com/luyadev/luya-module-admin/issues/69) Remove deprecated `luya\admin\helpers\I18n` methods.
++ [#123](https://github.com/luyadev/luya-module-admin/issues/123) Improved storage filter chain model.
+
+### Added
+
++ [#113](https://github.com/luyadev/luya-module-admin/issues/113) Add option to configure ngrest attribute conditions when to display/hide a given field based on another field.
++ [#64](https://github.com/luyadev/luya-module-admin/issues/64) Add option to configure the file delivery (download or display in browser).
++ [#27](https://github.com/luyadev/luya-module-admin/issues/27) Filemanager file detail option to rename the original download file name.
++ [#64](https://github.com/luyadev/luya-module-admin/issues/64) Whether file should be download or display in browser.
++ [#100](https://github.com/luyadev/luya-module-admin/issues/100) Option to configure the max idle time of an user until logout.
++ [#86](https://github.com/luyadev/luya-module-admin/issues/86) When a user changes the email, a token will be sent to the old email which has to be entered in order to change the email.
++ [#85](https://github.com/luyadev/luya-module-admin/issues/85) Added option to limit login attempts from session and for when the email is detected correctly. This reduce the possibility to brute force any login credentials. The 2FA security token lifetime can be configured. When the login password is false, the login fields are cleared out.
+
+### Fixed
+
++ [#119](https://github.com/luyadev/luya-module-admin/issues/119) Fixed bug with falsely commited migration file in version 1.1.1.3.
++ [#111](https://github.com/luyadev/luya-module-admin/issues/111) Fixed scroll-behavior for file detail view (filemanager).
++ [#102](https://github.com/luyadev/luya-module-admin/issues/102) Fixed bug with empty attributes_json in NgRest logger for delete actions.
++ [#80](https://github.com/luyadev/luya-module-admin/issues/80) Added roboto Latin (+Extended), Cyrillic (+Extended), Greek (+Extended), Vietnamese.
 
 ## 1.1.1.1 (12. April 2018)
 
-+ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writeable attributes on assign.
++ [#23](https://github.com/luyadev/luya-kickstarter/issues/23) Fix issue with not writable attributes on assign.
 
 ## 1.1.1 (11. April 2018)
 
@@ -26,17 +60,17 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
-+ [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spellcheck for filemanager upload button.
-+ [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in ngrest plugin.
++ [#91](https://github.com/luyadev/luya-module-admin/issues/91) Remove spell check for filemanager upload button.
++ [#92](https://github.com/luyadev/luya-module-admin/issues/92) Add option to bind values while storage querys in order to fix imageArray captions in NgRest plugin.
 + [#88](https://github.com/luyadev/luya-module-admin/issues/88) Clean up change password fields after validation error or success.
 + [#87](https://github.com/luyadev/luya-module-admin/issues/87) Fixed bug when change the password.
-+ [#83](https://github.com/luyadev/luya-module-admin/issues/83) Provide after assign event for ngrest plugins.
++ [#83](https://github.com/luyadev/luya-module-admin/issues/83) Provide after assign event for NgRest plugins.
 + [#77](https://github.com/luyadev/luya-module-admin/issues/77) Ensure if user has edit permissions in order to trigger the interactive toggleStatus plugin.
 + [#76](https://github.com/luyadev/luya-module-admin/issues/76) Create random access token when creating new user in order to prevent unique column exception.
 
 ## 1.1.0 (26. March 2018)
 
-This release contains new migrations and requires to run the `migrate` command after updating.
+This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
 ### Added
 
@@ -49,7 +83,7 @@ This release contains new migrations and requires to run the `migrate` command a
 ### Fixed
 
 + [#68](https://github.com/luyadev/luya-module-admin/issues/68) Fixed caching problem with Yii verison 2.0.14.
-+ [#67](https://github.com/luyadev/luya-module-admin/issues/67) Fixed issue where crud loader (relation button) can not edit items.
++ [#67](https://github.com/luyadev/luya-module-admin/issues/67) Fixed issue where CRUD loader (relation button) can not edit items.
 + [#1571](https://github.com/luyadev/luya/issues/1571) If Active Window label/icon from config is given ues this instead of object defaultLabel and defaultIcon.
 + [#69](https://github.com/luyadev/luya-module-admin/issues/69) Fixed i18n helper naming, mark old methods as deprecated, add language option.
 

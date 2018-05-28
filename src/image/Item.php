@@ -21,6 +21,7 @@ use luya\admin\storage\ItemAbstract;
  * @property integer $resolutionWidth Get the image resolution width.
  * @property integer $resolutionHeight Get the image resolution height.
  * @property \luya\admin\file\Item $file The file object where the image was created from.
+ * @property string $systemFileName the system file name.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -44,7 +45,7 @@ class Item extends ItemAbstract
     
     /**
      * Return the caption text for this image, if not defined or none give its null.
-     * 
+     *
      * If no image caption is defined from bind it will try to retrieve the caption from the file (set by filemanager).
      *
      * @return string The caption text for this image
@@ -111,9 +112,9 @@ class Item extends ItemAbstract
             $apply = Yii::$app->storage->addImage($this->getFileId(), $this->getFilterId());
         }
         
-        $httpPath = $scheme ? Yii::$app->storage->absoluteHttpPath : Yii::$app->storage->httpPath;
+        $fileName = $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
         
-        return $this->getFile() ? $httpPath . '/' . $this->getFilterId() . '_' . $this->getFile()->getSystemFileName() : false;
+        return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($fileName) : Yii::$app->storage->fileHttpPath($fileName);
     }
     
     /**
@@ -133,7 +134,7 @@ class Item extends ItemAbstract
      */
     public function getServerSource()
     {
-        return $this->getFile() ? Yii::$app->storage->serverPath . '/' . $this->getFilterId() . '_' . $this->getFile()->getSystemFileName() : false;
+        return $this->getFile() ? Yii::$app->storage->fileServerPath($this->systemFileName) : false;
     }
     
     /**
@@ -143,7 +144,17 @@ class Item extends ItemAbstract
      */
     public function getFileExists()
     {
-        return (bool) file_exists($this->getServerSource());
+        return Yii::$app->storage->fileSystemExists($this->systemFileName);
+    }
+    
+    /**
+     * 
+     * @return string
+     * @since 1.2.0
+     */
+    public function getSystemFileName()
+    {
+        return $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
     }
     
     /**

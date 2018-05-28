@@ -5,7 +5,7 @@ use luya\helpers\Url;
 $user = Yii::$app->adminuser->getIdentity();
 $this->beginPage()
 ?><!DOCTYPE html>
-<html ng-app="zaa" ng-controller="LayoutMenuController">
+<html ng-app="zaa" ng-controller="LayoutMenuController" ng-strict-di>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -38,7 +38,7 @@ $this->beginPage()
 
             <div class="mainnav-static" ng-class="{'mainnav-hidden': !isOpen}">
                 <ul class="mainnav-list">
-                    <li class="mainnav-entry hide-on-mobile" tooltip tooltip-text="Search" tooltip-position="right" tooltip-disabled="isHover">
+                    <li class="mainnav-entry hide-on-mobile" tooltip tooltip-text="<?= Admin::t('menu_button_search'); ?>" tooltip-position="right" tooltip-disabled="isHover">
                         <span class="mainnav-link" ng-click="toggleSearchInput()" ng-class="{'mainnav-link-active' : searchInputOpen }">
                             <i class="mainnav-icon material-icons">search</i>
                             <span class="mainnav-label">
@@ -46,7 +46,7 @@ $this->beginPage()
                             </span>
                         </span>
                     </li>
-                    <li class="mainnav-entry" tooltip tooltip-text="Dashboard" tooltip-position="right" tooltip-disabled="isHover">
+                    <li class="mainnav-entry" tooltip tooltip-text="<?= Admin::t('menu_dashboard');?>" tooltip-position="right" tooltip-disabled="isHover">
                         <span class="mainnav-link" ui-sref="home" ui-sref-active="mainnav-link-active" ng-click="isOpen=0">
                             <i class="mainnav-icon material-icons">home</i>
                             <span class="mainnav-label">
@@ -105,9 +105,15 @@ $this->beginPage()
                         </span>
                     </li>
                     <li class="mainnav-entry">
-                        <!-- needs to be fixed -->
-                        <span class="mainnav-parent" active-class="mainnav-parent-active">
-                        <!-- needs to be fixed end -->
+                            <!-- needs to be fixed -->
+                            <span class="mainnav-parent" active-class="mainnav-parent-active">
+                            <!-- needs to be fixed end -->
+                            <div class="mainnav-timeout">
+                                <svg class="user-timeout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" ng-class="{'user-timeout-critical': idleStrokeDashoffset < 10}">
+                                    <circle class="user-timeout-timer" cx="15" cy="15" r="13" fill="none" stroke="#FFF" stroke-width="2" transform="translate(15, 15) rotate(-90) translate(-15, -15)" ng-show="idleStrokeDashoffset < 81" stroke-dashoffset="{{idleStrokeDashoffset||'81'}}px"></circle>
+                                </svg>
+                            </div>
+
                             <i class="mainnav-icon material-icons">account_circle</i>
                             <span class="mainnav-label">
                                 <?= Admin::t('layout_btn_profile'); ?>
@@ -125,6 +131,12 @@ $this->beginPage()
                                             <span class="mainnav-tooltip-big-menu-item-link">
                                                 <i class="material-icons">exit_to_app</i>
                                                 <?= Admin::t('layout_btn_logout'); ?>
+                                            </span>
+                                        </li>
+                                        <li class="mainnav-tooltip-big-menu-item-status">
+                                            <span class="mainnav-tooltip-big-menu-item-info">
+                                                <i class="material-icons">restore</i>
+                                               	<?= Admin::t('layout_logout_minutes'); ?>
                                             </span>
                                         </li>
                                     </ul>

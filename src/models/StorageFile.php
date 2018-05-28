@@ -28,6 +28,7 @@ use luya\helpers\FileHelper;
  * @property string $passthrough_file_password
  * @property integer $passthrough_file_stats
  * @property string $caption
+ * @property string $inline_disposition
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -39,8 +40,18 @@ final class StorageFile extends ActiveRecord
      */
     public function init()
     {
+        // call parent
         parent::init();
-        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'onBeforeInsert']);
+        
+        // ensure upload timestamp and upload_user_id if empty.
+        $this->on(self::EVENT_BEFORE_INSERT, function($event) {
+            $this->upload_timestamp = time();
+            if (empty($this->upload_user_id)) {
+                if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
+                    $this->upload_user_id = Yii::$app->adminuser->getId();
+                }
+            }
+        });
     }
 
     /**
@@ -50,34 +61,7 @@ final class StorageFile extends ActiveRecord
     {
         return 'admin_storage_file';
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['name_original', 'name_new', 'mime_type', 'name_new_compound', 'extension', 'hash_file', 'hash_name'], 'required'],
-            [['folder_id', 'upload_timestamp', 'file_size', 'upload_user_id', 'upload_timestamp', 'is_deleted'], 'safe'],
-            [['is_hidden'], 'boolean'],
-            [['caption'], 'string'],
-        ];
-    }
     
-    public function delete()
-    {
-        $file = Yii::$app->storage->getFile($this->id);
-        
-        if ($file) {
-            if (!Yii::$app->storage->fileSystemDeleteFile($file->serverSource)) {
-                Logger::error("Unable to remove storage file: " . $file->serverSource);
-            }
-        }
-        $this->is_deleted = true;
-        $this->update(false);
-        return true;
-    }
-
     /**
      * @inheritdoc
      */
@@ -86,13 +70,68 @@ final class StorageFile extends ActiveRecord
         return parent::find()->orderBy(['name_original' => 'ASC']);
     }
 
-    public function onBeforeInsert()
+    /**
+     * @inheritdoc
+     */
+    public function rules()
     {
-        $this->upload_timestamp = time();
-        if (empty($this->upload_user_id)) {
-            if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
-                $this->upload_user_id = Yii::$app->adminuser->getId();
-            }
+        return [
+            [['name_original', 'name_new', 'mime_type', 'name_new_compound', 'extension', 'hash_file', 'hash_name'], 'required'],
+            [['folder_id', 'file_size', 'is_deleted'], 'safe'],
+            [['is_hidden'], 'boolean'],
+            [['inline_disposition', 'upload_timestamp', 'upload_user_id'], 'integer'],
+            [['caption'], 'string'],
+        ];
+    }
+    
+    /**
+     * Delete a given file.
+     * 
+     * Override default implementation. Mark as deleted and remove files from file system.
+     * 
+     * Keep file in order to provide all file references.
+     * 
+     * @return boolean
+     */
+    public function delete()
+    {
+        $file = Yii::$app->storage->getFile($this->id);
+        
+        if ($file && !Yii::$app->storage->fileSystemDeleteFile($file->systemFileName)) {
+            Logger::error("Unable to remove file from filesystem: " . $file->systemFileName);
         }
+        
+        $this->updateAttributes(['is_deleted' => true]);
+        
+        return true;
+    }
+    
+    /**
+     * Get upload user.
+     * 
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'upload_user_id']);
+    }
+    
+    /**
+     * Get the file for the corresponding model.
+     * 
+     * @return \luya\admin\file\Item|boolean
+     * @since 1.2.0
+     */
+    public function getFile()
+    {
+        return Yii::$app->storage->getFile($this->id);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['user', 'file'];
     }
 }

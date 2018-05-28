@@ -210,7 +210,7 @@ class CheckboxRelation extends Plugin
                 
                 foreach ($array as $key => $value) {
                     if ($event->sender->isI18n($key)) {
-                        $array[$key] = I18n::decodeActive($value);
+                        $array[$key] = I18n::decodeFindActive($value);
                     }
                 }
                 

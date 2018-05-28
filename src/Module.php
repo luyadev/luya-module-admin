@@ -44,8 +44,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
     
     /**
-     * @var boolean Whether CORS filter is enabled or not. By default its disabled, but you can enable this option
-     * when using luya as headless app.
+     * @var boolean Whether CORS filter is enabled or not. By default its disabled but you can enable this option
+     * when using LUYA admin APIs for usage trough direct xhr requests from another Domain.
      */
     public $cors = false;
     
@@ -87,10 +87,16 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var boolean Enables a 2FA system before logging into the admin panel sending a token to the given email adress of the user. If the system is not able to send
-     * mails (No configuration or missconfiguration) then you are not able to login. You should test the mail system before enabling secureLogin. To test your smtp 
+     * mails (No configuration or missconfiguration) then you are not able to login. You should test the mail system before enabling secureLogin. To test your smtp
      * connection you can use `./vendor/bin/luya health/mailer` command.
      */
     public $secureLogin = false;
+    
+    /**
+     * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
+     * @since 1.2.0
+     */
+    public $jsonCruft = true;
     
     /**
      * @var boolean If enabled an user can only change the email adresse by entering the secure code which is sent to the users given (current) email adresse.
@@ -102,26 +108,26 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var integer If {{luya\admin\Module::$emailVerification}} is enabled this property defines the number seconds until the validation token expires.
      * @since 1.2.0
      */
-    public $emailVerificationTokenExpirationTime = (60 * 10);
+    public $emailVerificationTokenExpirationTime = 600;
     
     /**
      * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
      * @since 1.1.1
      */
-    public $strongPasswordPolicy = false;
+    public $strongPasswordPolicy = true;
 
     /**
      * @var integer The number of attempts a user can make without knowing the login email. Clearing the session cookie
      * will allow next 20 attempts. But if an user email is known the attempt will swap to a user based attempt lockout handled by {{luya\admin\Module::$loginUserAttemptCount}}.
      * @since 1.2.0
      */
-    public $loginSessionAttemptCount = 20;
+    public $loginSessionAttemptCount = 15;
     
     /**
      * @var integer If the session based {{luya\admin\Module::$loginSessionAttemptCount}} expire the user is locked out for this given time in seconds, defaults to 30min.
      * @since 1.2.0
      */
-    public $loginSessionAttemptLockoutTime = (60*30);
+    public $loginSessionAttemptLockoutTime = 1800;
     
     /**
      * @var integer When the username is identified correctly this property limit number of attempts for the given user and lock out the user for a given time defined in {{luya\admin\Module::$loginUserAttemptLockoutTime}}.
@@ -134,19 +140,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var integer When the {{luya\admin\Module::$loginUserAttemptCount}} exceeded the number of seconds where the user is locked out, defaults to 30 min.
      * @since 1.2.0
      */
-    public $loginUserAttemptLockoutTime = (60 * 30);
+    public $loginUserAttemptLockoutTime = 1800;
     
     /**
      * @var integer When {{luya\admin\Module::$secureLogin}} is enabled a secure token is sent to the users email, the expiration time is defined in seconds and defaults to 10 min.
      * @since 1.2.0
      */
-    public $secureTokenExpirationTime = (60 * 10);
+    public $secureTokenExpirationTime = 600;
     
     /**
      * @var integer The number of seconds inactivity until the user is logged out.
      * @since 1.2.0
      */
-    public $userIdleTimeout = (60 * 30);
+    public $userIdleTimeout = 1800;
     
     /**
      * @var integer The number of rows which should be transferd for each request.
@@ -356,7 +362,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ],
             'auth' => [
                 'class' => Auth::class,
-                'cors' => $this->cors,
             ],
         ];
     }

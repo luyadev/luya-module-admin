@@ -9,7 +9,6 @@ use yii\helpers\Json;
 use luya\admin\base\Controller;
 use luya\TagParser;
 use luya\web\View;
-use luya\helpers\ArrayHelper;
 use yii\helpers\Markdown;
 use luya\admin\models\UserLogin;
 
@@ -58,12 +57,12 @@ class DefaultController extends Controller
         
         $authToken = UserLogin::find()->select(['auth_token'])->where(['user_id' => Yii::$app->adminuser->id, 'ip' => Yii::$app->request->userIP, 'is_destroyed' => false])->scalar();
         
-        $this->view->registerJs('zaa.run(function($rootScope) { $rootScope.luyacfg = ' . Json::encode([
+        $this->view->registerJs('zaa.run([\'$rootScope\', function($rootScope) { $rootScope.luyacfg = ' . Json::encode([
             'authToken' => $authToken,
             'homeUrl' => Url::home(true),
             'i18n' => $this->module->jsTranslations,
             'helptags' => $tags,
-        ]). '; });', View::POS_END);
+        ]). '; }]);', View::POS_END);
         
         return $this->render('index');
     }

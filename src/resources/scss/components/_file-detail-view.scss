@@ -3,6 +3,7 @@
     bottom: 0;
     display: block;
     max-width: 400px;
+    overflow: auto;
     padding: $content-padding-y $content-padding-x;
     position: fixed;
     right: 0;

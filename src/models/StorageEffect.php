@@ -76,6 +76,17 @@ final class StorageEffect extends NgRestModel
     }
     
     /**
+     * Returns the effect name ensured with lowercase.
+     * 
+     * @return string
+     * @since 1.0.2
+     */
+    public function getImagineEffectName()
+    {
+        return strtolower($this->imagine_name);
+    }
+    
+    /**
      * @inheritdoc
      */
     public function ngRestConfig($config)

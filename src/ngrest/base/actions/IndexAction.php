@@ -2,6 +2,8 @@
 
 namespace luya\admin\ngrest\base\actions;
 
+use Yii;
+
 /**
  * IndexAction for REST implementation.
  *
@@ -14,6 +16,10 @@ namespace luya\admin\ngrest\base\actions;
  */
 class IndexAction extends \yii\rest\IndexAction
 {
+    
+    
+    public $prepareActiveDataQuery;
+    
     /**
      * Prepare the data models based on the ngrest find query.
      *
@@ -26,12 +32,18 @@ class IndexAction extends \yii\rest\IndexAction
         if ($this->prepareDataProvider !== null) {
             return call_user_func($this->prepareDataProvider, $this);
         }
-        /* @var $modelClass \yii\db\BaseActiveRecord */
-        $modelClass = $this->modelClass;
+        
         $data = new \yii\data\ActiveDataProvider([
             'pagination' => $this->controller->pagination,
-            'query' => $modelClass::ngRestFind(),
+            'query' => call_user_func($this->prepareActiveDataQuery, $this),
         ]);
+        
+        // caching
+        /*
+        Yii::$app->db->cache(function() use ($dataProvider) {
+            $dataProvider->prepare();
+        }, 3600);
+        */
 
         return $data;
     }

@@ -12,7 +12,7 @@ use luya\admin\Module;
  */
 ?>
 <script>
-zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootScope, $controller) {
+zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scope) {
 
 	$scope.pie = false;
 	
@@ -23,7 +23,7 @@ zaa.bootstrap.register('UserHistorySummaryController', function($scope, $rootSco
     };    
     
     $scope.loadPieCharts();
-});
+}]);
 </script>
 <div class="row" ng-controller="UserHistorySummaryController">
 	<div class="col-lg-3">

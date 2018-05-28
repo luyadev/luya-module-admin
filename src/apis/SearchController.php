@@ -55,6 +55,7 @@ class SearchController extends RestController
         foreach (Yii::$app->adminmenu->getItems() as $api) {
             if ($api['permissionIsApi']) {
                 $ctrl = $module->createController($api['permssionApiEndpoint']);
+                $ctrl[0]->detachBehavior('cruft');
                 $data = $ctrl[0]->runAction('search', ['query' => $query]);
                 if (count($data) > 0) {
                     $stateProvider = $ctrl[0]->runAction('search-provider');

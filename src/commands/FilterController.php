@@ -76,10 +76,10 @@ class FilterController extends Command
     
     /**
      *
-     * @param unknown $identifier
-     * @param unknown $name
+     * @param string $identifier
+     * @param string $name
      * @param array $chain
-     * @param unknown $className
+     * @param string $className
      * @return string
      */
     public function generateClassView($identifier, $name, array $chain, $className)

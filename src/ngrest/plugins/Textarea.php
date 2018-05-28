@@ -79,15 +79,15 @@ class Textarea extends Plugin
     public function onAfterFind($event)
     {
         if ($this->encoding) {
-            $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
         }
         
         if ($this->nl2br) {
-            $event->sender->setAttribute($this->name, nl2br($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, nl2br($event->sender->getAttribute($this->name)));
         }
         
         if ($this->markdown) {
-            $event->sender->setAttribute($this->name, TagParser::convertWithMarkdown($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, TagParser::convertWithMarkdown($event->sender->getAttribute($this->name)));
         }
     }
     
@@ -97,7 +97,7 @@ class Textarea extends Plugin
     public function onAssign($event)
     {
         if (!$this->i18n && $this->encoding && $this->isAttributeWriteable($event)) {
-            $event->sender->setAttribute($this->name, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
         }
     }
 }

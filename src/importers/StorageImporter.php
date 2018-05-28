@@ -22,11 +22,11 @@ class StorageImporter extends Importer
 
     private static function getFindFilesDirectory()
     {
-        $path = Yii::$app->storage->serverPath;
+        //$path = Yii::$app->storage->serverPath;
         
-        if (is_dir($path) && file_exists($path)) {
-            return FileHelper::findFiles($path, ['except' => ['.*']]);
-        }
+        //if (is_dir($path) && file_exists($path)) {
+            //return FileHelper::findFiles($path, ['except' => ['.*']]);
+        //}
         
         return false;
     }
@@ -128,7 +128,7 @@ class StorageImporter extends Importer
         $orphanedFileList = static::getOrphanedFileList();
         
         if ($orphanedFileList === false) {
-            $log["error"] = "unable to find a storage folder '".Yii::$app->storage->serverPath."' to compare.";
+            $log["error"] = "unable to find a storage folder compare.";
         } else {
             $log["files_missing_in_table"] = count($orphanedFileList);
             

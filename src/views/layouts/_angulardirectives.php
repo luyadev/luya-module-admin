@@ -348,7 +348,7 @@ use luya\admin\helpers\Angular;
                                 <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.thumbnail.source}}" /></span>
                                 <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                             </td>
-                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 30}}</td>
+                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 40}}</td>
                             <td ng-click="toggleSelection(file)">{{file.extension}}</td>
                             <td ng-click="openFileDetail(file)">{{file.uploadTimestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
@@ -365,70 +365,88 @@ use luya\admin\helpers\Angular;
         <!-- /Files -->
     </div>
 
-<div class="file-detail-view" ng-class="{'open': fileDetail}">
+    <div class="file-detail-view" ng-class="{'open': fileDetail}">
 
-    <div class="file-detail-view-head">
-        <a class="btn btn-icon btn-download" ng-href="{{fileDetail.href}}" target="_blank">Download</a>
-        <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
-        <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
-    </div>
-    <table class="table table-striped table-hover table-align-middle mt-4">
-        <tbody>
-        <tr>
-            <th scope="row">Filename</th>
-            <td>{{ fileDetail.name }}</td>
-        </tr>
-        <tr>
-            <th scope="row">Creation Date</th>
-            <td>{{fileDetail.uploadTimestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
-        </tr>
-        <tr>
-            <th scope="row">File Type</th>
-            <td>{{ fileDetail.extension }}</td>
-        </tr>
-        <tr>
-            <th scope="row">Size</th>
-            <td>{{ fileDetail.sizeReadable }}</td>
-        </tr>
-        <tr>
-            <th scope="row">Internal ID</th>
-            <td>{{ fileDetail.id }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div ng-if="fileDetail.isImage">
-        <img class="img-fluid" ng-src="{{fileDetail.thumbnailMedium.source}}" />
-    </div>
+        <div class="file-detail-view-head">
+            <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}" target="_blank">Download</a>
+            <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
+            <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
+            <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
+        </div>
 
-    <form class="bg-faded p-2 mt-4">
-        <h3 class="mb-3">File caption</h3>
-        <div class="form-group" ng-repeat="(key, cap) in fileDetail.captionArray">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="fileDetail.captionArray[key]">
-
-                <span class="flag flag--{{key}}">
-                    <span class="flag-fallback">{{key}}</span>
-                </span>
+        <h5 class="mt-4">
+        </h5>
+        <div class="inline-edit mt-4">
+            <div class="inline-edit-value">
+                <h5 class="inline-edit-label m-0" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</h5>
+                <input class="inline-edit-input" type="text" ng-show="nameEditMode" ng-model="fileDetailFull.name_original" />
+            </div>
+            <div class="inline-edit-button">
+                <button ng-show="!nameEditMode" type="button" class="btn btn-icon btn-edit" ng-click="nameEditMode=1"></button>
+                <button ng-show="nameEditMode" type="button" class="btn btn-icon btn-cancel" ng-click="nameEditMode=0"></button>
             </div>
         </div>
 
-        <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetail)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
-
-    </form>
-
-	<!--
-    <div class="file-detail-view-arrows">
-        <div class="file-detail-view-arrow file-detail-view-arrow-prev disabled">
-            <i class="material-icons">keyboard_arrow_up</i>
+        <div ng-if="fileDetail.isImage" class="mt-3 text-center">
+            <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
+                <div class="text-center">
+                    <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}" />
+                </div>
+            </modal>
+            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetail.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.thumbnailMedium.source}}" />
         </div>
-        <div class="file-detail-view-arrow file-detail-view-arrow-next">
-            <i class="material-icons">keyboard_arrow_down</i>
-        </div>
+        <table class="table table-striped table-hover table-align-middle mt-3">
+            <tbody>
+            <tr>
+                <td><small><?= Admin::t('model_pk_id'); ?></small></td>
+                <td>{{ fileDetail.id }}</td>
+            </tr>
+            <tr>
+                <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>
+                <td>{{fileDetail.uploadTimestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
+            </tr>
+            <tr>
+                <td><small><?= Admin::t('layout_filemanager_col_type'); ?></small></td>
+                <td>{{ fileDetail.extension }}</td>
+            </tr>
+            <tr>
+                <td><small><?= Admin::t('layout_filemanager_col_size'); ?></small></td>
+                <td>{{ fileDetail.sizeReadable }}</td>
+            </tr>
+            <tr>
+                <td><small><?= Admin::t('layout_filemanager_col_downloads'); ?></small></td>
+                <td>{{ fileDetailFull.passthrough_file_stats }}</td>
+            </tr>
+            <tr>
+                <td><small><?= Admin::t('layout_filemanager_col_upload_user'); ?></small></td>
+                <td>{{ fileDetailFull.user.firstname}} {{ fileDetailFull.user.lastname}}</td>
+            </tr>
+            <tr ng-if="fileDetailFull">
+                <td><small><?= Admin::t('layout_filemanager_col_file_disposition'); ?></small></td>
+                <td>
+                    <select ng-model="fileDetailFull.inline_disposition">
+                        <option ng-value="0"><?= Admin::t('layout_filemanager_col_file_disposition_download'); ?></option>
+                        <option ng-value="1"><?= Admin::t('layout_filemanager_col_file_disposition_browser'); ?></option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
+
+        <form class="bg-faded mt-4">
+            <h5 class="mb-3"><?= Admin::t('layout_filemanager_file_captions'); ?></h5>
+            <div class="form-group" ng-repeat="(key, cap) in fileDetailFull.file.captionArray">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="fileDetailFull.file.captionArray[key]">
+                    <span class="flag flag--{{key}}">
+                        <span class="flag-fallback">{{key}}</span>
+                    </span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
+        </form>
     </div>
-	-->
-
-</div>
-
 </script>
 
 <!-- /ANGULAR SCRIPTS -->

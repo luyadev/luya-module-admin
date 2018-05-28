@@ -70,7 +70,8 @@ final class LoginForm extends Model
             
             if (!$user || !$user->validatePassword($this->password)) {
                 if ($this->attempts) {
-                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password_attempts', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
+                    // use `model_loginform_wrong_user_or_password` instead of `model_loginform_wrong_user_or_password_attempts` due to informations about correct email input.
+                    $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password', ['attempt' => $this->attempts, 'allowedAttempts' => $this->allowedAttempts]));
                 } else {
                     $this->addError($attribute, Module::t('model_loginform_wrong_user_or_password'));
                 }
@@ -80,7 +81,7 @@ final class LoginForm extends Model
     
     /**
      * Check if the given user has a lockout, otherwise upcount the attempts.
-     * 
+     *
      * @param User $user
      * @return boolean
      * @since 1.2.0
@@ -102,7 +103,7 @@ final class LoginForm extends Model
     
     /**
      * Check if lockout has expired or not.
-     * 
+     *
      * @param User $user
      * @return boolean
      * @since 1.2.0

@@ -284,8 +284,8 @@ return [
     'model_user_groups' => 'Benutzergruppe',
     'aw_userhistorysummary_userdata' => 'Profildetails',
     'aw_userhistorysummary_contribcount' => 'Anzahl Beiträge',
-    'aw_userhistorysummary_contribcount_inserts' => 'Datensätze neu erstellt',
-    'aw_userhistorysummary_contribcount_updates' => 'Datensätze aktualisiert',
+    'aw_userhistorysummary_contribcount_inserts' => 'Erstellt',
+    'aw_userhistorysummary_contribcount_updates' => 'Aktualisiert',
     'aw_userhistorysummary_customsettings' => 'Benutzerdefinierte Einstellungen',
     'aw_userhistorysummary_lastsessions' => 'Letzte Sitzung',
     'aw_userhistorysummary_ngrestlogs' => 'Veränderungen',
@@ -339,4 +339,17 @@ return [
     'account_changeemail_wrongtokenorempty' => 'Leerer, ungültiger oder abgelaufener E-Mail-Bestätigungscode.',
     'account_changeemail_enterverificationtoken' => 'Bitte geben Sie den Bestätigungscode ein, der an <b>{{profile.email}}</b> geschickt wurde, um die Änderung Ihrer E-Mail-Adresse zu bestätigen <b>{{settings.newUserEmail}}</b>.',
     'model_user_email_verification_token' => 'E-Mail-Bestätigungscode',
+    'layout_filemanager_col_downloads' => 'Downloads',
+    'layout_filemanager_col_upload_user' => 'Hochgeladen von',
+    'layout_filemanager_col_file_disposition' => 'Dateiauslieferung',
+    'layout_filemanager_col_file_disposition_download' => 'Download',
+    'layout_filemanager_col_file_disposition_browser' => 'In Browser anzeigen',
+    
+// 1.2.1
+    
+    'mode_user_personal_info' => 'Personalien',
+    'settings_general' => 'Allgemein',
+    'settings_developer_mode' => 'Entwickler Modus',
+    'layout_logout_minutes' => '{{idleTimeRelative}} Minuten',
+
 ];

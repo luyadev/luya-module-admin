@@ -22,29 +22,45 @@ use luya\admin\storage\BaseFileSystemStorage;
  * @since 1.0.3
  */
 class DummyFileSystem extends BaseFileSystemStorage
-{
+{   
     /**
      * @inheritdoc
      */
-    public function getHttpPath()
+    public function fileHttpPath($fileName)
     {
-        return Yii::getAlias('@app/storage/http-path');
+        return Yii::getAlias('@app/storage/http-path') . DIRECTORY_SEPARATOR . $fileName;
     }
     
     /**
      * @inheritdoc
      */
-    public function getAbsoluteHttpPath()
+    public function fileAbsoluteHttpPath($fileName)
     {
-        return Yii::getAlias('@app/storage/absolute-http-path');
+        return Yii::getAlias('@app/storage/absolute-http-path') . DIRECTORY_SEPARATOR . $fileName;
     }
     
     /**
      * @inheritdoc
      */
-    public function getServerPath()
+    public function fileServerPath($fileName)
     {
-        return Yii::getAlias('@app/storage/server-path');
+        return Yii::getAlias('@app/storage/server-path') . DIRECTORY_SEPARATOR . $fileName;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function fileSystemExists($fileName)
+    {
+        return true;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function fileSystemContent($fileName)
+    {
+        return null;
     }
     
     /**
@@ -58,7 +74,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemReplaceFile($oldSource, $newSource)
+    public function fileSystemReplaceFile($fileName, $newSource)
     {
         return true;
     }
@@ -66,7 +82,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemDeleteFile($source)
+    public function fileSystemDeleteFile($fileName)
     {
         return true;
     }
@@ -75,9 +91,9 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Add a dummy file.
-     * 
+     *
      * Do not forget to call `insertDummyFiles()` afterwards.
-     * 
+     *
      * @param array $config
      * @since 1.1.1
      */
@@ -91,7 +107,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Insert the dummy files from `addDummyFile()`.
-     * 
+     *
      * @since 1.1.1
      */
     public function insertDummyFiles()
@@ -103,9 +119,9 @@ class DummyFileSystem extends BaseFileSystemStorage
 
     /**
      * Add dummy image.
-     * 
+     *
      * Do not forget to call `insertDummyImages()` afterwards.
-     * 
+     *
      * @param array $config
      * @since 1.1.1
      */
@@ -119,7 +135,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     
     /**
      * Insert the dummy images from `addDummyImage()`.
-     * 
+     *
      * @since 1.1.1
      */
     public function insertDummyImages()

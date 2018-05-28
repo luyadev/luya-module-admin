@@ -53,13 +53,13 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function getHttpPath()
+    public function fileHttpPath($fileName)
     {
         if ($this->_httpPath === null) {
-            $this->_httpPath = $this->request->baseUrl . '/' . $this->folderName;
+            $this->_httpPath = $this->request->baseUrl . DIRECTORY_SEPARATOR . $this->folderName;
         }
     
-        return $this->_httpPath;
+        return $this->_httpPath . DIRECTORY_SEPARATOR . $fileName;
     }
     
     private $_absoluteHttpPath;
@@ -91,28 +91,16 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function getAbsoluteHttpPath()
+    public function fileAbsoluteHttpPath($fileName)
     {
         if ($this->_absoluteHttpPath === null) {
-            $this->_absoluteHttpPath = Url::base(true) . '/' . $this->folderName;
+            $this->_absoluteHttpPath = Url::base(true) . DIRECTORY_SEPARATOR . $this->folderName;
         }
     
-        return $this->_absoluteHttpPath;
+        return $this->_absoluteHttpPath . DIRECTORY_SEPARATOR . $fileName;
     }
     
     private $_serverPath;
-    
-    /**
-     * @inheritdoc
-     */
-    public function getServerPath()
-    {
-        if ($this->_serverPath === null) {
-            $this->_serverPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $this->folderName;
-        }
-    
-        return $this->_serverPath;
-    }
     
     /**
      * Setter method for serverPath.
@@ -123,13 +111,41 @@ class LocalFileSystem extends BaseFileSystemStorage
     {
         $this->_serverPath = $path;
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function fileServerPath($fileName)
+    {
+        if ($this->_serverPath === null) {
+            $this->_serverPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $this->folderName;
+        }
+    
+        return $this->_serverPath . DIRECTORY_SEPARATOR . $fileName;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function fileSystemExists($fileName)
+    {
+        return file_exists($this->fileServerPath($fileName));
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function fileSystemContent($fileName)
+    {
+        return file_get_contents($this->fileServerPath($fileName));
+    }
 
     /**
      * @inheritdoc
      */
     public function fileSystemSaveFile($source, $fileName)
     {
-        $savePath = $this->getServerPath() . '/' . $fileName;
+        $savePath = $this->fileServerPath($fileName);
         
         if (is_uploaded_file($source)) {
             if (!@move_uploaded_file($source, $savePath)) {
@@ -147,8 +163,9 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemReplaceFile($oldSource, $newSource)
+    public function fileSystemReplaceFile($fileName, $newSource)
     {
+        $oldSource = $this->fileServerPath($fileName);
         $toDelete = $oldSource . uniqid('oldfile') . '.bkl';
         if (rename($oldSource, $toDelete)) {
             if (copy($newSource, $oldSource)) {
@@ -162,8 +179,8 @@ class LocalFileSystem extends BaseFileSystemStorage
     /**
      * @inheritdoc
      */
-    public function fileSystemDeleteFile($source)
+    public function fileSystemDeleteFile($fileName)
     {
-        return FileHelper::unlink($source);
+        return FileHelper::unlink($this->fileServerPath($fileName));
     }
 }

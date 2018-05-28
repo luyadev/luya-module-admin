@@ -351,7 +351,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     public function getItemIds()
     {
         if (empty($this->_itemId)) {
-            throw new InvalidCallException("Unable to determine the active window item id.");    
+            throw new InvalidCallException("Unable to determine the active window item id.");
         }
         
         return explode(",", $this->_itemId);
