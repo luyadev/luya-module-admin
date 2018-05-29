@@ -96,7 +96,7 @@ class StorageUploadValidator extends Validator
         }
 
         if (!is_array($files)) {
-            $files = [$files];
+            $files = is_null($files) ? [] : [$files];
         }
          
         $data = [];
