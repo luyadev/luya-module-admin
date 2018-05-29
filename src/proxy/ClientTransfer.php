@@ -32,7 +32,7 @@ class ClientTransfer extends BaseObject
             if (!$table->isComplet()) {
                 if ($this->build->optionStrict) {
                     $this->build->command->outputInfo('Rows Expected: ' . $table->getRows());
-                    $this->build->command->outputInfo('Rows Downloaded: ' . count($table->getContentRows()));
+                    $this->build->command->outputInfo('Rows Downloaded: ' . $table->getContentRowCount());
                     return $this->build->command->outputError('Incomplet build, stop execution: ' . $name);
                 }
             }
