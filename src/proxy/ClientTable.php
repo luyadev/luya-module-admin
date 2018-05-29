@@ -4,6 +4,7 @@ namespace luya\admin\proxy;
 
 use Yii;
 use Curl\Curl;
+use yii\db\Exception;
 use yii\helpers\Json;
 use yii\helpers\Console;
 use yii\base\BaseObject;
@@ -116,37 +117,50 @@ class ClientTable extends BaseObject
     {
     	return $this->_contentRowsCount;
     }
-    
-    public function syncData()
+
+	public function syncData()
     {
+	    $this->prepare();
+
 	    try {
-		    if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-			    // Disable foreign
-			    Yii::$app->db->createCommand('SET SESSION FOREIGN_KEY_CHECKS = 0;')->execute();
-			    Yii::$app->db->createCommand('SET SESSION UNIQUE_CHECKS = 0;')->execute();
-
-			    $sqlMode = Yii::$app->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
-			    Yii::$app->db->createCommand('SET SESSION SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
-		    }
-
 		    Yii::$app->db->createCommand()->truncateTable($this->getName())->execute();
 
-
 		    $this->syncDataInternal();
-
 	    }
-	    finally {
-
-		    if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-			    Yii::$app->db->createCommand('SET SESSION FOREIGN_KEY_CHECKS = 1;')->execute();
-			    Yii::$app->db->createCommand('SET SESSION UNIQUE_CHECKS = 1;')->execute();
-
-			    Yii::$app->db->createCommand('SET SESSION SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
-		    }
+	    catch (Exception $ex) {
+		    Console::error($ex->getMessage());
 	    }
-
+		finally {
+			$this->cleanup($sqlMode);
+		}
     }
 
+    private $_sqlMode;
+
+	private function prepare()
+	{
+		if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
+			Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+			Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 0;')->execute();
+
+			$this->_sqlMode = Yii::$app->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
+			Yii::$app->db->createCommand('SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
+		}
+	}
+
+	private function cleanup()
+	{
+		if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
+			Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+			Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
+
+			Yii::$app->db->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $this->_sqlMode])->execute();
+		}
+	}
+
+	/**
+	 * @throws \yii\db\Exception
+	 */
 	private function syncDataInternal()
 	{
 		Console::startProgress(0, $this->getOffsetTotal(), 'Fetch: ' . $this->getName() . ' ');
