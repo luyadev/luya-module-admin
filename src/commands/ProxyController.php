@@ -112,13 +112,18 @@ class ProxyController extends Command
      * @var string The token which is used for the identifier, looks like this: ESOH1isB3ka_dF09ozkDJewpeecGCdUw
      */
     public $token;
+
+	/**
+	 * @var integer Number of requests collected until they are written to the database. Should 
+	 */
+    public $syncRequestsCount = 10;
     
     /**
      * @inheritdoc
      */
     public function options($actionID)
     {
-        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token']);
+        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount']);
     }
     
     /**
@@ -184,6 +189,7 @@ class ProxyController extends Command
             $build = new ClientBuild($this, [
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
+                'syncRequestsCount' => $this->syncRequestsCount,
                 'buildToken' => sha1($response['buildToken']),
                 'buildConfig' => $response['config'],
                 'requestUrl' => $response['providerUrl'],

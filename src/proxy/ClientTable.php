@@ -20,13 +20,15 @@ use yii\base\BaseObject;
 class ClientTable extends BaseObject
 {
     private $_data;
-    
-    /**
+
+	/**
      * @var \luya\admin\proxy\ClientBuild
      */
     public $build;
-    
-    /**
+
+    public $syncRequestsCount = 10;
+
+	/**
      *
      * @param ClientBuild $build
      * @param array $data
@@ -35,6 +37,10 @@ class ClientTable extends BaseObject
     public function __construct(ClientBuild $build, array $data, array $config = [])
     {
         $this->build = $build;
+        if ($build->syncRequestsCount) {
+	        $this->syncRequestsCount = $build->syncRequestsCount;
+        }
+
         $this->_data = $data;
         parent::__construct($config);
     }
@@ -127,9 +133,6 @@ class ClientTable extends BaseObject
 
 		    $this->syncDataInternal();
 	    }
-	    catch (Exception $ex) {
-		    Console::error($ex->getMessage());
-	    }
 		finally {
 			$this->cleanup($sqlMode);
 		}
@@ -174,8 +177,8 @@ class ClientTable extends BaseObject
 				continue;
 			}
 
-			if ($i % 10 === 0) {
-				$inserted = $this->insertData($requestData);
+			if ($i % $this->syncRequestsCount === 0) {
+				$inserted = $this->insertData($dataChunk);
 				$this->_contentRowsCount += $inserted;
 				$dataChunk = [];
 			}
