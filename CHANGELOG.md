@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#135](https://github.com/luyadev/luya-module-admin/issues/135) Fixed login problem when connecting with ipv6 address.
 + [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of active record attribute.
 + [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach cruft behavior for global search response.
 + [#132](https://github.com/luyadev/luya-module-admin/pull/132) Fixed validation error on single file upload with the StorageUploadValidator.

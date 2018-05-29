@@ -11,7 +11,7 @@ class m150615_094744_admin_user_login extends Migration
             'user_id' => $this->integer()->notNull(),
             'timestamp_create' => $this->integer(11)->notNull(),
             'auth_token' => $this->string(120)->notNull(),
-            'ip' => $this->string(15)->notNull(),
+            'ip' => $this->string(45)->notNull(),
         ]);
     }
 
