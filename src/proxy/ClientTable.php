@@ -107,12 +107,7 @@ class ClientTable extends BaseObject
     
     public function isComplet()
     {
-        return $this->getRows() == $this->_contentRowsCount;
-    }
-    
-    public function getContentRows()
-    {
-	    throw new \ErrorException('Not implemented');
+        return $this->getRows() == $this->getContentRowCount();
     }
 
     private $_contentRowsCount;
@@ -152,7 +147,7 @@ class ClientTable extends BaseObject
 
     }
 
-	private function syncDataInternal(): void
+	private function syncDataInternal()
 	{
 		Console::startProgress(0, $this->getOffsetTotal(), 'Fetch: ' . $this->getName() . ' ');
 		$this->_contentRowsCount = 0;
@@ -203,9 +198,10 @@ class ClientTable extends BaseObject
 
 	/**
 	 * @param $dataChunk
+	 * @return integer
 	 * @throws \yii\db\Exception
 	 */
-	private function insertData($dataChunk): int
+	private function insertData($dataChunk)
 	{
 		$inserted = Yii::$app->db->createCommand()->batchInsert($this->getName(), $this->cleanUpBatchInsertFields($this->getFields()), $this->cleanUpMatchRow($dataChunk))->execute();
 
