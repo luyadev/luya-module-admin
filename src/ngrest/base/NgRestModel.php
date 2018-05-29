@@ -520,6 +520,33 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return [];
     }
     
+    /**
+     * The NgRest config has an options property which can contain a variaty of defintions.
+     * 
+     * + saveCallback: This will trigere an angular callback after save/update of a new/existing record.
+     * 
+     * Here an example for the predefined option saveCallback:
+     * 
+     * ```php
+     * public function ngRestConfigOptions()
+     * {
+     *     return [
+     *         'saveCallback' => "['ServiceMenuData', function(ServiceMenuData) { ServiceMenuData.load(true); }]",
+     *     ];
+     * }
+     * ```
+     * 
+     * This specific example will reload the menu service from the cms, see the services.js files in the modules to find all
+     * possible angular js services.
+     * 
+     * @return array Must be an array with an option identifier and value for the given key.
+     * @since 1.2.1
+     */
+    public function ngRestConfigOptions()
+    {
+        return [];
+    }
+    
     
     /**
      * Inject data from the model into the config, usage exmple in ngRestConfig method context:
@@ -634,6 +661,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         foreach ($this->ngRestActiveWindows() as $windowConfig) {
             $config->aw->load($windowConfig);
         }
+        
+        $config->options = $this->ngRestConfigOptions();
     }
     
     private $_config;
