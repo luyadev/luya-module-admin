@@ -662,7 +662,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->aw->load($windowConfig);
         }
         
-        $config->options = $this->ngRestConfigOptions();
+        if (!empty($this->ngRestConfigOptions()) {
+            $config->options = $this->ngRestConfigOptions();
+        }
     }
     
     private $_config;
