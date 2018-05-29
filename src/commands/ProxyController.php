@@ -114,7 +114,7 @@ class ProxyController extends Command
     public $token;
 
 	/**
-	 * @var integer Number of requests collected until they are written to the database. Should 
+	 * @var integer Number of requests collected until they are written to the database.
 	 */
     public $syncRequestsCount = 10;
     
@@ -189,7 +189,7 @@ class ProxyController extends Command
             $build = new ClientBuild($this, [
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
-                'syncRequestsCount' => $this->syncRequestsCount,
+                'syncRequestsCount' => (int)$this->syncRequestsCount,
                 'buildToken' => sha1($response['buildToken']),
                 'buildConfig' => $response['config'],
                 'requestUrl' => $response['providerUrl'],
