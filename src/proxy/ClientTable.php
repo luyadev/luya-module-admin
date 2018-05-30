@@ -3,7 +3,6 @@
 namespace luya\admin\proxy;
 
 use Curl\Curl;
-use luya\admin\Module;
 use Yii;
 use yii\base\BaseObject;
 use yii\helpers\Console;
