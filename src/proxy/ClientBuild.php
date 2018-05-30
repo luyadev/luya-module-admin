@@ -71,41 +71,63 @@ class ClientBuild extends BaseObject
     }
     
     private $_buildConfig;
-    
+
     public function setBuildConfig(array $config)
     {
         $this->_buildConfig = $config;
-        
+
         foreach ($config['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
-                $skip = true;
-                
-                foreach ($this->optionTable as $useName) {
-                    if ($useName == $tableName || StringHelper::startsWithWildcard($tableName, $useName)) {
-                        $skip = false;
-                    }
-                }
-                
+
+                $skip = $this->skipTable($tableName);
                 if ($skip) {
                     continue;
                 }
             }
-            
+
             $schema = Yii::$app->db->getTableSchema($tableName);
-            
+
             if ($schema !== null) {
                 $this->_tables[$tableName] = new ClientTable($this, $tableConfig);
             }
         }
     }
-    
+
+    /**
+     * @param $tableName
+     * @return bool
+     *
+     * @since  1.2.1
+     */
+    private function skipTable($tableName): bool
+    {
+        $skip = true;
+
+        foreach ($this->optionTable as $useName) {
+
+            $exlude = false;
+            if (substr($useName, 0, 1) == "!") {
+                $exlude = true;
+                $skip = false;
+
+                $useName = substr($useName, 1);
+            }
+
+            if ($useName == $tableName || StringHelper::startsWithWildcard($tableName, $useName)) {
+                return $exlude;
+            }
+        }
+
+        return $skip;
+    }
+
     public function getStorageFilesCount()
     {
         return $this->_buildConfig['storageFilesCount'];
     }
-    
+
     private $_tables = [];
-    
+
     public function getTables()
     {
         return $this->_tables;
