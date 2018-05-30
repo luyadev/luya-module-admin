@@ -108,6 +108,7 @@
                 	'<span ng-if="link.type==2">{{link.value}}</span>' +
                     '<span ng-if="link.type==3"><storage-file-display file-id="{{link.value}}"></storage-file-display></span>' +
                     '<span ng-if="link.type==4">{{link.value}}</span>' +
+                    '<span ng-if="link.type==5">{{link.value}}</span>' +
                 '</span>';
             }
         }
