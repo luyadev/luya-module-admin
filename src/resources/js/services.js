@@ -35,8 +35,6 @@ adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFiles
  * ```
  * 
  */
-(function() {
-	"use strict";
 	
 /*
 
@@ -431,14 +429,14 @@ Examples
 
 AdminToastService.notify('Hello i am Message and will be dismissed in 2 Seconds');
 
-AdminToastService.confirm('Hello i am a callback and wait for your', 'Das löschen?', function($q, $http) {
+AdminToastService.confirm('Hello i am a callback and wait for your', 'Das löschen?', ['$q', '$http', function($q, $http) {
 	// do some ajax call
 	$http.get().then(function() {
 		promise.resolve();
 	}).error(function() {
 		promise.reject();
 	});
-});
+}]);
 
 you can also close this dialog by sourself in the callback
 
@@ -503,12 +501,12 @@ zaa.factory("AdminToastService", ['$q', '$timeout', '$injector', function($q, $t
 			var response = $injector.invoke(this.callback, this, { $toast : this });
 			if (response !== undefined) {
 				response.then(function(r) {
-						queue.close();
-					}, function(r) {
-						queue.close();
-					}, function(r) {
-						// call loader later?
-					});
+					queue.close();
+				}, function(r) {
+					queue.close();
+				}, function(r) {
+					/* call or load at later time */
+				});
 			}
 		}, uuid: uuid, callback: callback, type: 'confirm', close: function() {
 			delete service.queue[this.uuid];
@@ -574,6 +572,3 @@ zaa.factory('HtmlStorage', function() {
 	
 	return service;
 });
-
-// end of use strict
-})();

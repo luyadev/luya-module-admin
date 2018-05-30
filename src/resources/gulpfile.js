@@ -1,2 +1,1 @@
-var zephirWorkflow = require('zephir-gulp-workflow');
-zephirWorkflow( require('gulp') );
+require('zephir-gulp-workflow')(require('gulp'));

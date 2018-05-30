@@ -33,35 +33,35 @@ interface RenderCrudInterface
     
     /**
      * Model preselection value when using ngrest relation calls.
-     * 
+     *
      * @param string $selection
      */
     public function setModelSelection($selection);
     
     /**
      * Model selection value from setter method.
-     * 
+     *
      * @return string|boolean
      */
     public function getModelSelection();
     
     /**
      * Optional defintions for settings button. Those definitions are made in the ngrest crud controller.
-     * 
+     *
      * @param array $buttons
      */
     public function setSettingButtonDefinitions(array $buttons);
     
     /**
      * Get an array with additionals button defintions.
-     * 
+     *
      * @return array
      */
     public function getSettingButtonDefinitions();
     
     /**
      * Whether create permission is granted.
-     * 
+     *
      * @return boolean Whether current user can create items.
      */
     public function canCreate();

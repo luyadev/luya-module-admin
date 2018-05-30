@@ -37,6 +37,7 @@ use luya\web\LinkTrait;
  * @property boolean $isHidden Whether the file is marked as hidden or not.
  * @property boolean $isDeleted Return whether the file has been removed from the filesytem or not.
  * @property booelan $fileExists Whether the file resource exists in the storage folder or not.
+ * @property string $content Returns the content fo the file.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -46,8 +47,6 @@ class Item extends ItemAbstract implements LinkInterface
     use LinkTrait;
     
     private $_imageMimeTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg', 'image/bmp', 'image/tiff'];
-    
-    private $_caption;
     
     /**
      * @inheritdoc
@@ -77,11 +76,12 @@ class Item extends ItemAbstract implements LinkInterface
         return empty($this->_target) ? '_blank' : $this->_target;
     }
     
+    private $_caption;
+    
     /**
      * Set caption for file item, override existings values
      *
      * @param string $text The caption text for this image
-     * @since 1.0.0
      */
     public function setCaption($text)
     {
@@ -92,7 +92,6 @@ class Item extends ItemAbstract implements LinkInterface
      * Return the caption text for this file, if not defined the item array will be collected
      *
      * @return string The caption text for this image
-     * @since 1.0.0
      */
     public function getCaption()
     {
@@ -298,9 +297,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getSource($scheme = false)
     {
-        $httpPath = $scheme ? Yii::$app->storage->absoluteHttpPath : Yii::$app->storage->httpPath;
-        
-        return $httpPath . '/' . $this->getKey('name_new_compound');
+        return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($this->getKey('name_new_compound')) : Yii::$app->storage->fileHttpPath($this->getKey('name_new_compound'));
     }
     
     /**
@@ -369,7 +366,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getServerSource()
     {
-        return Yii::$app->storage->serverPath . '/' . $this->getKey('name_new_compound');
+        return Yii::$app->storage->fileServerPath($this->systemFileName);
     }
     
     /**
@@ -379,7 +376,6 @@ class Item extends ItemAbstract implements LinkInterface
      * frontend can also be uploaded with the storage system but are hidden from the administration area
      * then the file is hidden but still available and usable.
      *
-     * @since 1.0.0
      * @return boolean Whether the file is marked as hidden or not.
      */
     public function getIsHidden()
@@ -394,7 +390,18 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getFileExists()
     {
-        return (bool) file_exists($this->getServerSource());
+        return Yii::$app->storage->fileSystemExists($this->systemFileName);
+    }
+    
+    /**
+     * Get the file content.
+     * 
+     * @return string
+     * @since 1.2.0
+     */
+    public function getContent()
+    {
+        return Yii::$app->storage->fileSystemContent($this->systemFileName);
     }
     
     /**
@@ -404,7 +411,6 @@ class Item extends ItemAbstract implements LinkInterface
      * in the administration area or by any other process who can delete files, the file will be removed from
      * the disk but will still exist in the database but is marked as *is_deleted*.
      *
-     * @since 1.0.0
      * @return boolean Return whether the file has been removed from the filesytem or not.
      */
     public function getIsDeleted()
@@ -418,7 +424,7 @@ class Item extends ItemAbstract implements LinkInterface
     public function fields()
     {
         return [
-            'id','folderId', 'name', 'systemFileName', 'source', 'link', 'href', 'serverSource', 'isImage', 'mimeType', 'extension', 'uploadTimestamp', 'size', 'sizeReadable', 'caption', 'captionArray'
+            'id', 'folderId', 'name', 'systemFileName', 'source', 'link', 'href', 'serverSource', 'isImage', 'mimeType', 'extension', 'uploadTimestamp', 'size', 'sizeReadable', 'caption', 'captionArray'
         ];
     }
 }

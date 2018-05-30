@@ -13,9 +13,9 @@ use luya\admin\assets\Login;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
- * 
+ *
  * 1. If session based {{luya\admin\Module::$loginSessionAttemptCount}} is exceeded a lockout ban will make login unavailable. Any async request is evaluated as attempt.
- * 2. If the email adresse is correctly retrieved from the database $loginUserAttemptCount exceed check starts. If the count is exceeded the lockout time is stored for the user inside the database. 
+ * 2. If the email adresse is correctly retrieved from the database $loginUserAttemptCount exceed check starts. If the count is exceeded the lockout time is stored for the user inside the database.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -44,9 +44,9 @@ class LoginController extends Controller
 
     /**
      * Login Form.
-     * 
+     *
      * This action renders and display the login form.
-     * 
+     *
      * + Single sign in runs {{luya\admin\controllers\LoginController::actionAsync()}}.
      * + 2FA calls {{luya\admin\controllers\LoginController::actionAsyncToken()}} afterwards.
      *
@@ -72,9 +72,9 @@ class LoginController extends Controller
     
     /**
      * Async single sign in action.
-     * 
+     *
      * This action is triggered by the async request from the login form.
-     * 
+     *
      * If successfull and 2FA is enabled, a token will be stored and sent to the user's email.
      *
      * @return array
@@ -148,7 +148,7 @@ class LoginController extends Controller
     
     /**
      * Change the response format to json and return the array.
-     * 
+     *
      * @param boolean $refresh
      * @param array $errors
      * @param boolean $enterSecureToken
@@ -170,7 +170,7 @@ class LoginController extends Controller
 
     /**
      * Ensure current brute force attempt based on session.
-     * 
+     *
      * @return boolean|integer
      * @since 1.2.0
      */

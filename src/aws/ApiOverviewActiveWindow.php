@@ -82,7 +82,6 @@ class ApiOverviewActiveWindow extends ActiveWindow
         
         foreach ($maps as $key => $value) {
             if (!isset($data[$key])) {
-                
                 $ctrl = Yii::createObject($value['class'], [$key, $this]);
                 
                 $data[$key] = [

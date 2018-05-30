@@ -70,19 +70,70 @@ class Api extends RestActiveController
     }
     
     /**
+     * Prepare Index Query.
+     * 
+     * You can override the prepare index query to preload relation data like
+     * 
+     * ```php
+     * public function prepareIndexQuery()
+     * {
+     *     return parent::prepareIndexQuery()->with(['relation1', 'relation2']);
+     * }
+     * ```
+     * 
+     * @return \yii\db\ActiveQuery
+     * @since 1.2.1
+     */
+    public function prepareIndexQuery()
+    {
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $modelClass = $this->modelClass;
+        return $modelClass::ngRestFind();
+    }
+    
+    /**
      * @inheritdoc
      */
     public function actions()
     {
-        $actions = parent::actions();
-        $actions['view']['class'] = 'luya\admin\ngrest\base\actions\ViewAction';
-        $actions['index']['class'] = 'luya\admin\ngrest\base\actions\IndexAction';
-        $actions['create']['class'] = 'luya\admin\ngrest\base\actions\CreateAction';
-        $actions['update']['class'] = 'luya\admin\ngrest\base\actions\UpdateAction';
-        $actions['delete']['class'] = 'luya\admin\ngrest\base\actions\DeleteAction';
+        $actions = [
+            'index' => [
+                'class' => 'luya\admin\ngrest\base\actions\IndexAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'prepareActiveDataQuery' => [$this, 'prepareIndexQuery'],
+            ],
+            'view' => [
+                'class' => 'luya\admin\ngrest\base\actions\ViewAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            'create' => [
+                'class' => 'luya\admin\ngrest\base\actions\CreateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'scenario' => $this->createScenario,
+            ],
+            'update' => [
+                'class' => 'luya\admin\ngrest\base\actions\UpdateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'scenario' => $this->updateScenario,
+            ],
+            'delete' => [
+                'class' => 'luya\admin\ngrest\base\actions\DeleteAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
+        ];
+        
         if ($this->enableCors) {
             $actions['options']['class'] = 'luya\admin\ngrest\base\actions\OptionsAction';
         }
+        
         return $actions;
     }
     

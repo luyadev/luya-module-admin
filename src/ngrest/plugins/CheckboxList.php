@@ -97,7 +97,7 @@ class CheckboxList extends Plugin
                 $data = $value;
             }
             
-            $event->sender->setAttribute($this->name, $this->i18nFieldEncode($data));
+            $this->writeAttribute($event, $this->i18nFieldEncode($data));
             return false;
         }
     
@@ -110,7 +110,7 @@ class CheckboxList extends Plugin
     public function onBeforeExpandFind($event)
     {
         if (!$this->i18n) {
-            $event->sender->setAttribute($this->name, $this->jsonDecode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
         
@@ -124,7 +124,7 @@ class CheckboxList extends Plugin
     {
         if (!$this->i18n) {
             $array = $this->jsonDecode($event->sender->getAttribute($this->name));
-            $event->sender->setAttribute($this->name, ArrayHelper::getColumn($array, 'value'));
+            $this->writeAttribute($event, ArrayHelper::getColumn($array, 'value'));
             return false;
         }
         
@@ -152,7 +152,7 @@ class CheckboxList extends Plugin
                     }
                 }
             }
-            $event->sender->setAttribute($this->name, implode(", ", $results));
+            $this->writeAttribute($event, implode(", ", $results));
         }
     }
 }

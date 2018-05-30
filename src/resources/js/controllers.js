@@ -1,30 +1,5 @@
-(function() {
-	"use strict";
 
-	zaa.config(['$stateProvider', 'resolverProvider', function($stateProvider, resolverProvider) {
-		
-		$stateProvider.state("default.route.detail", {
-			url: "/:id",
-			parent: 'default.route',
-			template: '<ui-view/>',
-			controller: ['$scope', '$stateParams', function($scope, $stateParams) {
-
-				$scope.crud = $scope.$parent;
-
-				$scope.init = function() {
-					if (!$scope.crud.config.inline) {
-						if ($scope.crud.data.updateId != $stateParams.id) {
-							$scope.crud.toggleUpdate($stateParams.id);
-						}
-					}
-				}
-
-				$scope.init();
-			}]
-		});
-		
-	}]);
-
+	
 	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 		$scope.data;
@@ -318,7 +293,7 @@
 		/****** DELETE, UPDATE, CREATE */
 
 		$scope.deleteItem = function(id, $event) {
-			AdminToastService.confirm(i18n['js_ngrest_rm_page'], i18n['ngrest_button_delete'], function($timeout, $toast) {
+			AdminToastService.confirm(i18n['js_ngrest_rm_page'], i18n['ngrest_button_delete'], ['$toast', function($toast) {
 				$http.delete($scope.config.apiEndpoint + '/'+id).then(function(response) {
 					$scope.loadList();
 					$toast.close();
@@ -326,7 +301,7 @@
 				}, function(data) {
 					$scope.printErrors(data);
 				});
-			});
+			}]);
 		};
 
 		$scope.toggleUpdate = function(id) {
@@ -640,7 +615,7 @@
 
 // activeWindowController.js
 
-	zaa.controller("ActiveWindowTagController", ['$scope', '$htt', 'AdminToastService', function($scope, $http, AdminToastService) {
+	zaa.controller("ActiveWindowTagController", ['$scope', '$http', 'AdminToastService', function($scope, $http, AdminToastService) {
 
 		$scope.crud = $scope.$parent; // {{ data.aw.itemId }}
 
@@ -914,7 +889,9 @@
         };
 	});
 
-	zaa.controller("LayoutMenuController", ['$scope', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', function ($scope, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
+	zaa.controller("LayoutMenuController", [
+		'$scope', '$document', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', 
+		function ($scope, $document, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
 
@@ -1020,12 +997,18 @@
 
 		$scope.visibleAdminReloadDialog = false;
 
+		$scope.lastKeyStroke = Date.now();
+		
+		$document.bind('keyup', function (e) {
+			$scope.lastKeyStroke = Date.now();
+		});
+		
 		(function tick(){
-			$http.get('admin/api-admin-timestamp', { ignoreLoadingBar: true }).then(function(response) {
+			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {
 					$scope.visibleAdminReloadDialog = true;
-					AdminToastService.confirm(i18n['js_admin_reload'], i18n['layout_btn_reload'], function($timeout, $toast) {
+					AdminToastService.confirm(i18n['js_admin_reload'], i18n['layout_btn_reload'], function() {
 						$scope.reload();
 						$scope.visibleAdminReloadDialog = false;
 					});
@@ -1033,6 +1016,8 @@
 
 				$scope.locked = response.data.locked;
 				$scope.notify = response.data.useronline;
+				$scope.idleStrokeDashoffset = response.data.idleStrokeDashoffset;
+				$scope.idleTimeRelative = response.data.idleTimeRelative;
 				$timeout(tick, 20000);
 			})
 		})();
@@ -1181,4 +1166,3 @@
 
 		$scope.getProfile();
 	}]);
-})();

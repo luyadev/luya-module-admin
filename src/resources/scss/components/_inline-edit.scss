@@ -1,0 +1,21 @@
+.inline-edit {
+    display: block;
+    position: relative;
+}
+
+.inline-edit-value {
+    display: block;
+    padding: 2px 40px 2px 0;
+}
+
+.inline-edit-input {
+    display: block;
+    width: 100%;
+}
+
+.inline-edit-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}

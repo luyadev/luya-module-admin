@@ -52,7 +52,7 @@ class UserController extends Api
     
     /**
      * Ensure whether the current user has an active email verification token or not.
-     * 
+     *
      * @param User $user The user object to evaluate.
      * @return boolean
      */
@@ -68,7 +68,7 @@ class UserController extends Api
     
     /**
      * Action to change the password for the given User.
-     * 
+     *
      * @return \luya\admin\models\UserChangePassword
      */
     public function actionChangePassword()
@@ -90,7 +90,7 @@ class UserController extends Api
     
     /**
      * Action to change the email based on token input.
-     * 
+     *
      * @return boolean
      * @since 1.2.0
      */
@@ -100,7 +100,6 @@ class UserController extends Api
         $user = Yii::$app->adminuser->identity;
         
         if (!empty($token) && sha1($token) == $user->email_verification_token && $this->hasOpenEmailValidation($user)) {
-            
             $newEmail = $user->setting->get(User::USER_SETTING_NEWUSEREMAIL);
             
             $user->email = $newEmail;
@@ -118,7 +117,7 @@ class UserController extends Api
     
     /**
      * Update data for the current session user.
-     * 
+     *
      * @return array
      */
     public function actionSessionUpdate()
@@ -157,7 +156,7 @@ class UserController extends Api
     
     /**
      * Change user settings.
-     * 
+     *
      * @return boolean
      */
     public function actionChangeSettings()

@@ -293,11 +293,11 @@ trait QueryTrait
     
     /**
      * Bind given values into the objects for a given id.
-     * 
+     *
      * ```php
      * (new Query())->find()->where(['in', 'id', [1,2,3])->bind([1 => ['caption' => 'barfoo'])->all();
      * ```
-     * 
+     *
      * @param array $values
      * @return \luya\admin\storage\QueryTrait
      * @since 1.1.1

@@ -16,6 +16,8 @@ use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
+use yii\base\InvalidParamException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Filemanager and Storage API.
@@ -86,14 +88,14 @@ class StorageController extends RestController
         if ($cache === false) {
             $files = [];
             foreach (Yii::$app->storage->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
-                $data = $file->toArray();
+                $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
                     // add tiny thumbnail
                     $filter = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
                     if ($filter) {
                         $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
                         if ($thumbnail) {
-                            $data['thumbnail'] = $thumbnail->toArray();
+                            $data['thumbnail'] = $thumbnail->toArray(['source']);
                         }
                     }
                     // add meidum thumbnail
@@ -101,7 +103,7 @@ class StorageController extends RestController
                     if ($filter) {
                         $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
                         if ($thumbnail) {
-                            $data['thumbnailMedium'] = $thumbnail->toArray();
+                            $data['thumbnailMedium'] = $thumbnail->toArray(['source']);
                         }
                     }
                 }
@@ -127,7 +129,7 @@ class StorageController extends RestController
             $images = [];
             foreach (Yii::$app->storage->findImages() as $image) {
                 if (!empty($image->file) && !$image->file->isHidden && !$image->file->isDeleted) {
-                    $images[] = $image->toArray();
+                    $images[] = $image->toArray(['id', 'fileId', 'filterId', 'source', 'resolutionHeight', 'resolutionWidth']);
                 }
             }
             $this->setHasCache('storageApiDataImages', $images, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_image']), 0);
@@ -138,6 +140,49 @@ class StorageController extends RestController
     }
     
     // ACTIONS
+    
+    /**
+     * Get all storage file informations for a given ID.
+     *
+     * @param integer $fileId
+     * @since 1.2.0
+     */
+    public function actionFileInfo($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+        
+        return $model->toArray([], ['user', 'file']);
+    }
+    
+    /**
+     *
+     * @param integer $id
+     * @throws NotFoundHttpException
+     * @return array
+     * @since 1.2.0
+     */
+    public function actionFileUpdate($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+        
+        $post = Yii::$app->request->bodyParams;
+        $model->attributes = $post;
+        
+        if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
+            $this->flushApiCache();
+            return $model;
+        }
+        
+        return $this->sendModelError($model);
+    }
 
     /**
      * Update the caption of storage file.
@@ -209,8 +254,8 @@ class StorageController extends RestController
         $raw = $_FILES['file'];
         /** @var $file \luya\admin\file\Item */
         if ($file = Yii::$app->storage->getFile($fileId)) {
-            $serverSource = $file->getServerSource();
-            if (is_uploaded_file($raw['tmp_name'])) {
+            $newFileSource = $raw['tmp_name'];
+            if (is_uploaded_file($newFileSource)) {
                 
                 // check for same extension / mimeType
                 $fileData = Yii::$app->storage->ensureFileUpload($raw['tmp_name'], $raw['name']);
@@ -219,15 +264,15 @@ class StorageController extends RestController
                     throw new BadRequestHttpException("The type must be the same as the original file in order to replace.");
                 }
                 
-                if (Storage::replaceFile($serverSource, $raw['tmp_name'], $raw['name'])) {
+                if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
                     foreach (Yii::$app->storage->findImages(['file_id' => $file->id]) as $img) {
                         Storage::removeImage($img->id, false);
                     }
                     
                     // calculate new file files based on new file
                     $model = StorageFile::findOne((int) $fileId);
-                    $fileHash = FileHelper::md5sum($serverSource);
-                    $fileSize = @filesize($serverSource);
+                    $fileHash = FileHelper::md5sum($newFileSource);
+                    $fileSize = @filesize($newFileSource);
                     $model->updateAttributes([
                         'hash_file' => $fileHash,
                         'file_size' => $fileSize,

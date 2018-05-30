@@ -32,6 +32,7 @@ class CmsPage extends Plugin
     {
         $fieldValue = $event->sender->getAttribute($this->name);
         $menuItem = (!empty($fieldValue)) ? Yii::$app->menu->find()->where(['nav_id' => $fieldValue])->with(['hidden'])->one() : false;
-        $event->sender->setAttribute($this->name, $menuItem);
+        
+        $this->writeAttribute($event, $menuItem);
     }
 }

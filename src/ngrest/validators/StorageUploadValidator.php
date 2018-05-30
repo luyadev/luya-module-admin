@@ -86,13 +86,17 @@ class StorageUploadValidator extends Validator
             return;
         }
         
-        $files = $this->multiple ? UploadedFile::getInstances($model, $attribute) : (array) UploadedFile::getInstance($model, $attribute);
-        
+        $files = $this->multiple ? UploadedFile::getInstances($model, $attribute) : UploadedFile::getInstance($model, $attribute);
+
         $contextModel = new DynamicModel(['file' => $files]);
         $contextModel->addRule(['file'], 'file', ['maxFiles' => $this->multiple ? 0 : 1])->validate();
-        
+
         if ($contextModel->hasErrors()) {
             return $this->addError($model, $attribute, $contextModel->getFirstError('file'));
+        }
+
+        if (!is_array($files)) {
+            $files = is_null($files) ? [] : [$files];
         }
          
         $data = [];

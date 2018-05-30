@@ -1,5 +1,5 @@
 <script>
-zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', function($scope, $controller, $injector) {
+zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', ['$scope', '$controller', '$injector', function($scope, $controller, $injector) {
     $scope.crud = $scope.$parent;
     $scope.params = {};
     $scope.responseData = {};
@@ -39,7 +39,7 @@ zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', function($scope, $c
             }
 		});
     };
-});
+}]);
 </script>
 <div ng-controller="<?= $angularCrudControllerName; ?>">
     <form ng-submit="sendButton('<?= $callbackName; ?>')">

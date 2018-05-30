@@ -38,6 +38,8 @@ class ClientBuild extends BaseObject
     public $storageFilesCount;
     
     public $optionStrict;
+
+    public $syncRequestsCount;
     
     private $_optionTable;
     

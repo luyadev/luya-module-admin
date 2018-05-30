@@ -66,7 +66,7 @@ class File extends Plugin
     public function onAfterFind($event)
     {
         if ($this->fileItem) {
-            $event->sender->setAttribute($this->name, Yii::$app->storage->getFile($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, Yii::$app->storage->getFile($this->getAttributeValue($event)));
         }
     }
 }

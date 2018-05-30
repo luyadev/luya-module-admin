@@ -156,7 +156,7 @@ class CrudController extends BaseCrudController
     /**
      * The module object.
      *
-     * @return \luya\base\Modue The module object itself, could be the application object as well.
+     * @return \luya\base\Module The module object itself, could be the application object as well.
      */
     public function getModule()
     {

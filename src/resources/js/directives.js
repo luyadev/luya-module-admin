@@ -1,5 +1,4 @@
-(function() {
-    "use strict";
+
 
     /* GLOBAL DIRECTIVES */
 
@@ -53,7 +52,12 @@
 
     /**
      * Controller: $scope.content = $sce.trustAsHtml(response.data);
-     * Template: <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
+     * 
+     * Usage:
+     * 
+     * ```
+     * <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
+     * ```
      */
     zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) {
         return {
@@ -88,6 +92,9 @@
         };
     }]);
 
+    /**
+     * Returns the link options as value.
+     */
     zaa.directive("linkObjectToString", function () {
         return {
             restrict: 'E',
@@ -298,43 +305,6 @@
             }
         };
     });
-
-    /**
-     * Directive to trigger fixed table head.
-     * 
-     * not used in new admin ui
-     */
-    /*
-    zaa.directive("fixedTableHead", function ($window) {
-        return function (scope, element, attrs) {
-            var onScroll = function () {
-                var table = angular.element(element.find('table'));
-                var thead = angular.element(table.find('thead'));
-
-                if (table.length > 0 && thead.length > 0) {
-                    thead.css('background-color', '#fff');
-
-                    var tableOffset = table.offset().top - $('.navbar-fixed').height();
-
-                    if (tableOffset <= 0) {
-                        thead.css('transform', 'translateY(' + (-1 - tableOffset) + 'px)');
-                        thead.css('box-shadow', '0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 0 rgba(0, 0, 0, 0.04), 0 3px 1px -2px rgba(0, 0, 0, 0.1)');
-                    } else {
-                        thead.css('transform', 'none');
-                        thead.css('box-shadow', 'none');
-                    }
-                }
-            };
-
-            onScroll();
-
-            angular.element(element).bind("scroll", function () {
-                onScroll();
-            });
-        };
-    });
-	
-    */
     
     /**
      * Apply auto generated height for textareas based on input values
@@ -398,6 +368,9 @@
         }
     });
 
+    /**
+     * Resize the given element
+     */
     zaa.directive('resizer', ['$document', function ($document) {
         return {
             scope: {
@@ -633,7 +606,7 @@
      * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
      * ```
      */
-    zaa.directive("crudLoader", ['$http', '$scre', function($http, $sce) {
+    zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
     	return {
     		restrict: "E",
     		replace: true,
@@ -688,6 +661,9 @@
     	}
     }]);
 
+    /**
+     * Directive to load curd relations.
+     */
     zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
     	return {
     		restrict: "E",
@@ -1406,7 +1382,7 @@
     /**
      * options = {'true-value' : 1, 'false-value' : 0};
      */
-    zaa.directive("zaaCheckbox", function($timeout) {
+    zaa.directive("zaaCheckbox", function() {
         return {
             restrict: "E",
             scope: {
@@ -1417,7 +1393,7 @@
                 "label": "@label",
                 "initvalue": "@initvalue"
             },
-            controller: ['$scope', function($scope) {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 if ($scope.options === null || $scope.options === undefined) {
                     $scope.valueTrue = 1;
                     $scope.valueFalse = 0;
@@ -2342,7 +2318,7 @@
             scope : {
                 ngModel : '='
             },
-            controller: ['$scope', '$filter', '$ServiceFilesData', function($scope, $filter, ServiceFilesData) {
+            controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
 
                 // ServiceFilesData inhertiance
 
@@ -2630,7 +2606,9 @@
                 allowSelection : '@selection',
                 onlyImages : '@onlyImages'
             },
-            controller : ['$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
+            controller : [
+            	'$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 
+            	function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
 
                 // ServiceFoldersData inheritance
 
@@ -2881,49 +2859,13 @@
                 $scope.folderDeleteForm = false;
 
                 $scope.folderDeleteConfirmForm = false;
-
-                /*
-                $scope.toggleFolderMode = function(mode) {
-                    if (mode == 'edit') {
-                        $scope.folderUpdateForm = true;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = false;
-                    } else if (mode == 'remove') {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = true;
-                        $scope.folderDeleteConfirmForm = false;
-                    } else if (mode == 'removeconfirm') {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = true;
-                    } else {
-                        $scope.folderUpdateForm = false;
-                        $scope.folderDeleteForm = false;
-                        $scope.folderDeleteConfirmForm = false;
-                    }
-                };
-
-                */
-
+                
                 $scope.updateFolder = function(folder) {
                     $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, $.param({ name : folder.name }), {
                         headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {});
-                }
-
-                /*
-                $scope.checkEmptyFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
-                        if (transport.data == true) {
-                            $scope.deleteFolder(folder);
-                        } else {
-                            $scope.toggleFolderMode('removeconfirm');
-                        }
                     });
                 };
-				*/
+                
                 $scope.deleteFolder = function(folder) {
 
                     // check if folder is empty
@@ -2943,7 +2885,7 @@
                             });
 
                         } else {
-                            AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: folder.filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], function($timeout, $toast) {
+                            AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: folder.filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
                                 $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, $.param({ name : folder.name }), {
                                     headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                                 }).then(function() {
@@ -2954,7 +2896,7 @@
                                         });
                                     });
                                 });
-                            });
+                            }]);
                         }
                     });
                 };
@@ -2963,16 +2905,43 @@
 
                 $scope.showFoldersToMove = false;
 
+                $scope.largeImagePreviewState = true;
+                
+                $scope.fileDetailFull = false;
+                
+                $scope.nameEditMode = false;
+                
                 $scope.openFileDetail = function(file) {
                 	if ($scope.fileDetail.id == file.id) {
                 		$scope.closeFileDetail();
                 	} else {
+                		
+                		$http.get('admin/api-admin-storage/file-info?id='+file.id).then(function(response) {
+                			$scope.fileDetailFull = response.data;
+                		});
+                		
                 		$scope.fileDetail = file;
                 	}
+                };
+                
+                $scope.updateFileData = function() {
+            		$http.put('admin/api-admin-storage/file-update?id='+$scope.fileDetailFull.id, $scope.fileDetailFull).then(function(response) {
+            			var file = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
+            			file.name = response.data.name_original;
+            			$scope.nameEditMode = false;
+            		});
                 };
 
                 $scope.closeFileDetail = function() {
                     $scope.fileDetail = false;
+                    $scope.fileDetailFull = false;
+                    $scope.nameEditMode = false;
+                };
+                
+                $scope.removeFile = function(detail) {
+                	$scope.selectedFiles = [];
+                	$scope.toggleSelection(detail);
+                	$scope.removeFiles();
                 };
 
                 $scope.moveFilesTo = function(folderId) {
@@ -2987,7 +2956,7 @@
                 };
 
                 $scope.removeFiles = function() {
-                    AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], function($timeout, $toast) {
+                    AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
                         $http.post('admin/api-admin-storage/filemanager-remove-files', $.param({'ids' : $scope.selectedFiles}), {
                             headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                         }).then(function(transport) {
@@ -2995,9 +2964,10 @@
                                 $toast.close();
                                 AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
                                 $scope.selectedFiles = [];
+                            	$scope.closeFileDetail();
                             });
                         });
-                    });
+                    }]);
                 }
 
                 // file detail view logic
@@ -3112,4 +3082,3 @@
             }
         };
     });
-})();

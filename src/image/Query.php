@@ -38,7 +38,7 @@ class Query extends BaseObject
     
     /**
      * Return all images from the storage system.
-     * 
+     *
      * @return array
      */
     public function getDataProvider()
@@ -48,7 +48,7 @@ class Query extends BaseObject
     
     /**
      * Get a specific images from the storage system.
-     * 
+     *
      * @param integer $id
      * @return boolean|array
      */
@@ -59,7 +59,7 @@ class Query extends BaseObject
     
     /**
      * Create the image object based on the array.
-     * 
+     *
      * @param array $itemArray
      * @return \luya\admin\image\Item
      */
@@ -70,7 +70,7 @@ class Query extends BaseObject
     
     /**
      * Create iterator object from a given data array.
-     * 
+     *
      * @param array $data
      * @return \luya\admin\image\Iterator
      */

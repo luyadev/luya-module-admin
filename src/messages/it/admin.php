@@ -44,7 +44,7 @@ return [
     'layout_filemanager_detail_size' => 'Dimensione',
     'layout_filemanager_detail_id' => 'ID interno',
     'layout_filemanager_detail_download' => 'Download',
-    'layout_btn_reload' => 'ricarica',
+    'layout_btn_reload' => 'Ricarica',
     'layout_btn_version' => 'Versione',
     'layout_btn_useronline' => 'Utenti Online',
     'layout_btn_logout' => 'Esci',
@@ -320,4 +320,22 @@ return [
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
+    'account_changeemail_subject' => 'Verify update of your email address',
+    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
+    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
+    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
+    'model_user_email_verification_token' => 'Email verification code',
+    'layout_filemanager_col_downloads' => 'Downloads',
+    'layout_filemanager_col_upload_user' => 'Uploaded by',
+    'layout_filemanager_col_file_disposition' => 'File delivery',
+    'layout_filemanager_col_file_disposition_download' => 'Download',
+    'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
+    
+// 1.2.1
+    
+    'mode_user_personal_info' => 'Informazioni personali',
+    'settings_general' => 'Generale',
+    'settings_developer_mode' => 'Modalità sviluppatore',
+    'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
 ];

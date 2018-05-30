@@ -71,11 +71,11 @@ abstract class Select extends Plugin
         $value = StringHelper::typeCast($event->sender->getAttribute($this->name));
         
         if ($this->emptyListValue && empty($value)) {
-            $event->sender->setAttribute($this->name, $this->emptyListValue);
+            $this->writeAttribute($event, $this->emptyListValue);
         } else {
             foreach ($this->getData() as $item) {
                 if (StringHelper::typeCast($item['value']) === $value) {
-                    $event->sender->setAttribute($this->name, $item['label']);
+                    $this->writeAttribute($event, $item['label']);
                 }
             }
         }

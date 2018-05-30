@@ -7,7 +7,6 @@ use yii\base\Component;
 use yii\helpers\Json;
 use yii\helpers\Html;
 use luya\Exception;
-
 use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
 
@@ -44,12 +43,32 @@ abstract class Plugin extends Component
     /**
      * @var boolean Whether the plugin is in i18n context or not.
      */
-    public $i18n;
+    public $i18n = false;
 
     /**
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
      */
     public $i18nEmptyValue = '';
+    
+    /**
+     * @var string Provide a condition in order to show or hide a given field. The condition relies on other fields from the forms. In order
+     * to make sure the right context is used (create, update) put the fieldname into curly brackets `{field1}`.
+     *
+     * ```php
+     * 'myText' => 'text',
+     * 'otherText' => ['text', 'condition' => "{myText}"], // which is equals to when {myText} is not empt display the `otherText` field.
+     * ```
+     *
+     * The above example would hide the `otherText` elment until `myText` is not empty. The condition is inside the `ng-show` element and the field
+     * must be declared inside `{}` this will return the field name based on the current context like `data.create.myText` or `data.update.myText`.
+     *
+     * + display when not empty: `{field}`
+     * + display when empty: `!{field}`
+     * + display when has a given value: `{field}==1` (could be used when field is a select with values).
+     *
+     * @since 1.2.0
+     */
+    public $condition;
     
     /**
      * @var \luya\admin\ngrest\render\RenderCrudInterface The render context object when rendering
@@ -209,6 +228,49 @@ abstract class Plugin extends Component
     {
         return Html::tag($name, $content, $options);
     }
+
+    /**
+     * Extract the context attribute name from the ngModel and replace with given $field name.
+     *
+     * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
+     * @param string $field The new field name to replace with the context field name.
+     * @return string Returns the string with the name field name like `data.create.$field`.
+     * @since 1.2.0
+     */
+    protected function replaceFieldFromNgModelContext($ngModel, $field)
+    {
+        // get all keys
+        $parts = explode(".", $ngModel);
+        end($parts);
+        $key = key($parts);
+        // replace the last key with the new fieldname
+        $parts[$key] = $field;
+        
+        return implode(".", $parts);
+    }
+    
+    /**
+     * Get the ng-show condition from a given ngModel context.
+     *
+     * Evaluates the ng-show condition from a given ngModel context. A condition like
+     * `{field} == true` would return `data.create.field == true`.
+     *
+     * @param string $ngModel The ngModel to get the context informations from.
+     * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
+     * @since 1.2.0
+     */
+    public function getNgShowCondition($ngModel)
+    {
+        preg_match_all('/{(.*?)}/', $this->condition, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1]);
+        }
+        
+        return str_replace($search, $replace, $this->condition);
+    }
     
     /**
      * Helper method to create a form tag based on current object.
@@ -221,7 +283,20 @@ abstract class Plugin extends Component
      */
     public function createFormTag($name, $id, $ngModel, array $options = [])
     {
-        return $this->createTag($name, null, array_merge($options, ['fieldid' => $id, 'model' => $ngModel, 'label' => $this->alias, 'fieldname' => $this->name, 'i18n' => ($this->i18n) ? 1 : '']));
+        $defaultOptions = [
+            'fieldid' => $id,
+            'model' => $ngModel,
+            'label' => $this->alias,
+            'fieldname' => $this->name,
+            'i18n' => $this->i18n ? 1 : '',
+        ];
+        
+        // if a condition is available, evalute from given context
+        if ($this->condition) {
+            $defaultOptions['ng-show'] = $this->getNgShowCondition($ngModel);
+        }
+        
+        return $this->createTag($name, null, array_merge($options, $defaultOptions));
     }
     
     /**
@@ -341,21 +416,20 @@ abstract class Plugin extends Component
     
     /**
      * After attribute value assignment.
-     * 
+     *
      * This event will trigger on:
-     * 
+     *
      * + AfterInsert
      * + AfterUpdate
      * + AfterRefresh
-     * 
+     *
      * The main purpose is to ensure html encoding when the model is not populated with after find from the database.
-     * 
+     *
      * @param \yii\base\ModelEvent $event When the database entry after insert, after update, after refresh.
      * @since 1.1.1
      */
     public function onAssign($event)
     {
-        
     }
     
     // ON LIST FIND
@@ -516,5 +590,36 @@ abstract class Plugin extends Component
     protected function isAttributeWriteable($event)
     {
         return ($event->sender->hasAttribute($this->name) || $event->sender->canSetProperty($this->name));
+    }
+    
+    /**
+     * Write a value to a plugin attribute or property.
+     * 
+     * As setAttribute() does only write to attributes therefore this method allwos you to write to
+     * a property or attribute value. As {{isAttributeWriteAble()}} returns true whether its a property
+     * or attribute.
+     * 
+     * @param \yii\base\Event $event The event to retrieve the values from (via $sender property).
+     * @param mixed $value The value to writte on the attribute or property.
+     * @since 1.2.1
+     */
+    protected function writeAttribute($event, $value)
+    {
+        $property = $this->name;
+        $event->sender->{$property} = $value;
+    }
+    
+    /**
+     * Get the value from the plugin attribute or property.
+     * 
+     * @param \yii\base\Event $event The event to retrieve the values from (via $sender property).
+     * @return mixed
+     * @since 1.2.1
+     */
+    protected function getAttributeValue($event)
+    {
+        $property = $this->name;
+        
+        return $event->sender->{$property};
     }
 }

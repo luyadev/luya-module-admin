@@ -44,13 +44,13 @@ class I18nTest extends AdminTestCase
         $this->assertSame(['English', 'English'], $active);
     }
     
-    public function testDecodeActive()
+    public function testDecodeFindActive()
     {
-        $this->assertSame('English', I18n::decodeActive($this->json));
+        $this->assertSame('English', I18n::decodeFindActive($this->json));
     }
     
-    public function testDecodeActiveArray()
+    public function testDecodeFindActiveArray()
     {
-        $this->assertSame(['English', 'English'], I18n::decodeActiveArray([$this->json, $this->json]));
+        $this->assertSame(['English', 'English'], I18n::decodeFindActiveArray([$this->json, $this->json]));
     }
 }

@@ -68,7 +68,7 @@ abstract class SortRelation extends Plugin
     public function onBeforeSave($event)
     {
         if (!$this->i18n) {
-            $event->sender->setAttribute($this->name, $this->i18nFieldEncode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, $this->i18nFieldEncode($event->sender->getAttribute($this->name)));
             return false;
         }
     
@@ -81,7 +81,7 @@ abstract class SortRelation extends Plugin
     public function onBeforeFind($event)
     {
         if (!$this->i18n) {
-            $event->sender->setAttribute($this->name, $this->jsonDecode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
         }
         
         return true;
@@ -93,7 +93,7 @@ abstract class SortRelation extends Plugin
     public function onBeforeExpandFind($event)
     {
         if (!$this->i18n) {
-            $event->sender->setAttribute($this->name, $this->jsonDecode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
         }
         
         return true;

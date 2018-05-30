@@ -4,287 +4,269 @@
 
 $btns: (
     'save': (
-        'background-color':     theme-color('success'),
-        'border-color':         theme-color('success'),
-        'color':                $btn-color-light,
+        'background-color': theme-color('success'),
+        'border-color': theme-color('success'),
+        'color': $btn-color-light,
         'icon': 'check',
         'hover': (
-            'background-color':     theme-color('success'),
-            'border-color':         theme-color('success'),
-            'color':                $btn-color-light,
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': $btn-color-light,
         )
     ),
     'outline-save': (
-            'background-color':     none,
-            'border-color':         theme-color('success'),
-            'color':                theme-color('success'),
-            'icon': 'check',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                map-get($colors, white),
-            )
+        'background-color': none,
+        'border-color': theme-color('success'),
+        'color': theme-color('success'),
+        'icon': 'check',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': map-get($colors, white),
+        )
     ),
-
     'delete': (
-            'background-color':     theme-color('danger'),
-            'border-color':         theme-color('danger'),
-            'color':                $btn-color-light,
-            'icon': 'delete',
-            'hover': (
-                    'background-color':     theme-color('danger'),
-                    'border-color':         theme-color('danger'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('danger'),
+        'border-color': theme-color('danger'),
+        'color': $btn-color-light,
+        'icon': 'delete',
+        'hover': (
+            'background-color': theme-color('danger'),
+            'border-color': theme-color('danger'),
+            'color': $btn-color-light,
+        )
     ),
     'outline-delete': (
-            'background-color':     none,
-            'border-color':         theme-color('danger'),
-            'color':                theme-color('danger'),
-            'icon': 'delete',
-            'hover': (
-                    'background-color':     theme-color('danger'),
-                    'border-color':         theme-color('danger'),
-                    'color':                map-get($colors, white),
-            )
+        'background-color': none,
+        'border-color': theme-color('danger'),
+        'color': theme-color('danger'),
+        'icon': 'delete',
+        'hover': (
+            'background-color': theme-color('danger'),
+            'border-color': theme-color('danger'),
+            'color': map-get($colors, white),
+        )
     ),
-
     'cancel': (
-            'background-color':     theme-color('secondary'),
-            'border-color':         theme-color('secondary'),
-            'color':                $btn-color-light,
-            'icon': 'clear',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('secondary'),
+        'border-color': theme-color('secondary'),
+        'color': $btn-color-light,
+        'icon': 'clear',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': $btn-color-light,
+        )
     ),
     'outline-cancel': (
-            'background-color':     none,
-            'border-color':         theme-color('danger'),
-            'color':                theme-color('danger'),
-            'icon': 'clear',
-            'hover': (
-                    'background-color':     theme-color('danger'),
-                    'border-color':         theme-color('danger'),
-                    'color':                map-get($colors, white),
-            )
+        'background-color': none,
+        'border-color': theme-color('danger'),
+        'color': theme-color('danger'),
+        'icon': 'clear',
+        'hover': (
+            'background-color': theme-color('danger'),
+            'border-color': theme-color('danger'),
+            'color': map-get($colors, white),
+        )
     ),
-
     'edit': (
-            'background-color':     theme-color('light'),
-            'border-color':         theme-color('light'),
-            'color':                $btn-color-dark,
-            'icon': 'edit',
-            'hover': (
-                    'background-color':     theme-color('light'),
-                    'border-color':         theme-color('light'),
-                    'color':                $btn-color-dark,
-            )
+        'background-color': theme-color('light'),
+        'border-color': theme-color('light'),
+        'color': $btn-color-dark,
+        'icon': 'edit',
+        'hover': (
+            'background-color': theme-color('light'),
+            'border-color': theme-color('light'),
+            'color': $btn-color-dark,
+        )
     ),
     'outline-edit': (
-            'background-color':     none,
-            'border-color':         theme-color('dark'),
-            'color':                theme-color('dark'),
-            'icon': 'edit',
-            'hover': (
-                    'background-color':     theme-color('dark'),
-                    'border-color':         theme-color('dark'),
-                    'color':                map-get($colors, white),
-            )
+        'background-color': none,
+        'border-color': theme-color('dark'),
+        'color': theme-color('dark'),
+        'icon': 'edit',
+        'hover': (
+            'background-color': theme-color('dark'),
+            'border-color': theme-color('dark'),
+            'color': map-get($colors, white),
+        )
     ),
-
     'add': (
-            'background-color':     theme-color('success'),
-            'border-color':         theme-color('success'),
-            'color':                $btn-color-light,
-            'icon': 'add',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('success'),
+        'border-color': theme-color('success'),
+        'color': $btn-color-light,
+        'icon': 'add',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': $btn-color-light,
+        )
     ),
     'outline-add': (
-            'background-color':     map-get($grays, 200),
-            'border-color':         theme-color('dark'),
-            'color':                theme-color('dark'),
-            'icon': 'add',
-            'hover': (
-                    'background-color':     theme-color('dark'),
-                    'border-color':         theme-color('dark'),
-                    'color':                map-get($colors, white),
-            )
+        'background-color': map-get($grays, 200),
+        'border-color': theme-color('dark'),
+        'color': theme-color('dark'),
+        'icon': 'add',
+        'hover': (
+            'background-color': theme-color('dark'),
+            'border-color': theme-color('dark'),
+            'color': map-get($colors, white),
+        )
     ),
-
     'add-folder': (
-            'background-color':     theme-color('success'),
-            'border-color':         theme-color('success'),
-            'color':                $btn-color-light,
-            'icon': 'create_new_folder',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('success'),
+        'border-color': theme-color('success'),
+        'color': $btn-color-light,
+        'icon': 'create_new_folder',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': $btn-color-light,
+        )
     ),
-
     'outline-folder': (
-            'background-color':     none,
-            'border-color':         theme-color('secondary'),
-            'color':                theme-color('secondary'),
-            'icon': 'subdirectory_arrow_right',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('secondary'),
+        'color': theme-color('secondary'),
+        'icon': 'subdirectory_arrow_right',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'help': (
-            'background-color':     theme-color('light'),
-            'border-color':         theme-color('light'),
-            'color':                $btn-color-dark,
-            'icon': 'help',
-            'hover': (
-                    'background-color':     theme-color('light'),
-                    'border-color':         theme-color('light'),
-                    'color':                $btn-color-dark,
-            )
+        'background-color': theme-color('light'),
+        'border-color': theme-color('light'),
+        'color': $btn-color-dark,
+        'icon': 'help',
+        'hover': (
+            'background-color': theme-color('light'),
+            'border-color': theme-color('light'),
+            'color': $btn-color-dark,
+        )
     ),
-
     'outline-help': (
-            'background-color':     none,
-            'border-color':         theme-color('dark'),
-            'color':                $btn-color-dark,
-            'icon': 'help',
-            'hover': (
-                    'background-color':     theme-color('dark'),
-                    'border-color':         theme-color('dark'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('dark'),
+        'color': $btn-color-dark,
+        'icon': 'help',
+        'hover': (
+            'background-color': theme-color('dark'),
+            'border-color': theme-color('dark'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'download': (
-            'background-color':     theme-color('success'),
-            'border-color':         theme-color('success'),
-            'color':                $btn-color-light,
-            'icon': 'file_download',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('success'),
+        'border-color': theme-color('success'),
+        'color': $btn-color-light,
+        'icon': 'file_download',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': $btn-color-light,
+        )
     ),
-
     'outline-download': (
-            'background-color':     none,
-            'border-color':         theme-color('success'),
-            'color':                theme-color('success'),
-            'icon': 'file_download',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('success'),
+        'color': theme-color('success'),
+        'icon': 'file_download',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'upload': (
-            'background-color':     theme-color('success'),
-            'border-color':         theme-color('success'),
-            'color':                $btn-color-light,
-            'icon': 'file_upload',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('success'),
+        'border-color': theme-color('success'),
+        'color': $btn-color-light,
+        'icon': 'file_upload',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': $btn-color-light,
+        )
     ),
-
     'outline-upload': (
-            'background-color':     none,
-            'border-color':         theme-color('success'),
-            'color':                theme-color('success'),
-            'icon': 'file_upload',
-            'hover': (
-                    'background-color':     theme-color('success'),
-                    'border-color':         theme-color('success'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('success'),
+        'color': theme-color('success'),
+        'icon': 'file_upload',
+        'hover': (
+            'background-color': theme-color('success'),
+            'border-color': theme-color('success'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'config': (
-            'background-color':     theme-color('light'),
-            'border-color':         theme-color('light'),
-            'color':                $btn-color-dark,
-            'icon': 'settings',
-            'hover': (
-                    'background-color':     theme-color('light'),
-                    'border-color':         theme-color('light'),
-                    'color':                $btn-color-dark,
-            )
+        'background-color': theme-color('light'),
+        'border-color': theme-color('light'),
+        'color': $btn-color-dark,
+        'icon': 'settings',
+        'hover': (
+            'background-color': theme-color('light'),
+            'border-color': theme-color('light'),
+            'color': $btn-color-dark,
+        )
     ),
-
     'outline-config': (
-            'background-color':     none,
-            'border-color':         theme-color('dark'),
-            'color':                theme-color('dark'),
-            'icon': 'settings',
-            'hover': (
-                    'background-color':     theme-color('dark'),
-                    'border-color':         theme-color('dark'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('secondary'),
+        'color': theme-color('secondary'),
+        'icon': 'settings',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'replace': (
-            'background-color':     theme-color('secondary'),
-            'border-color':         theme-color('secondary'),
-            'color':                $btn-color-light,
-            'icon': 'find_replace',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('secondary'),
+        'border-color': theme-color('secondary'),
+        'color': $btn-color-light,
+        'icon': 'find_replace',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': $btn-color-light,
+        )
     ),
-
     'outline-replace': (
-            'background-color':     none,
-            'border-color':         theme-color('secondary'),
-            'color':                theme-color('secondary'),
-            'icon': 'find_replace',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                map-get($colors, white)
-            )
+        'background-color': none,
+        'border-color': theme-color('secondary'),
+        'color': theme-color('secondary'),
+        'icon': 'find_replace',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': map-get($colors, white)
+        )
     ),
-
     'move': (
-            'background-color':     theme-color('secondary'),
-            'border-color':         theme-color('secondary'),
-            'color':                $btn-color-light,
-            'icon': 'subdirectory_arrow_right',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                $btn-color-light,
-            )
+        'background-color': theme-color('secondary'),
+        'border-color': theme-color('secondary'),
+        'color': $btn-color-light,
+        'icon': 'subdirectory_arrow_right',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': $btn-color-light,
+        )
     ),
-
     'outline-move': (
-            'background-color':     none,
-            'border-color':         theme-color('secondary'),
-            'color':                theme-color('secondary'),
-            'icon': 'subdirectory_arrow_right',
-            'hover': (
-                    'background-color':     theme-color('secondary'),
-                    'border-color':         theme-color('secondary'),
-                    'color':                map-get($colors, white)
-            )
-    ),
+        'background-color': none,
+        'border-color': theme-color('secondary'),
+        'color': theme-color('secondary'),
+        'icon': 'subdirectory_arrow_right',
+        'hover': (
+            'background-color': theme-color('secondary'),
+            'border-color': theme-color('secondary'),
+            'color': map-get($colors, white)
+        )
+    )
 );
 
 .btn {
@@ -303,7 +285,7 @@ $btns: (
     }
 
     &:not([class*="outline-"]):not([class^="outline-"]):not([class*="btn-"]):not([class^="btn-"]) {
-        background-color:  map-get($colors, gray-light);
+        background-color: map-get($colors, gray-light);
         color: $btn-color-dark;
     }
 
@@ -324,7 +306,8 @@ $btns: (
         background-color: transparent;
     }
 
-    &:hover {
+    &:hover,
+    &-active {
         &:not([class*=" btn-"]), &.btn-sm, &.btn-lg {
             background-color: darken(map-get($colors, gray-light), 7.5%);
             border-color: darken(map-get($colors, gray-light), 10%);
@@ -342,7 +325,8 @@ $btns: (
 
             @if type-of( map-get($iconValues, 'hover') ) == 'map' {
                 $iconHoverValues: map-get($iconValues, 'hover');
-                &:hover {
+                &:hover,
+                &.btn-active {
                     @if map-has-key($iconHoverValues, 'background-color') {
                         background-color: darken(map-get($iconHoverValues, 'background-color'), 7.5%);
                     }
@@ -358,7 +342,6 @@ $btns: (
             &.btn-icon {
                 padding-left: 30px;
 
-
                 &:empty {
                     padding-top: 26px;
                     padding-left: 24px;
@@ -372,12 +355,9 @@ $btns: (
     }
 }
 
-
-
 // ==================================================
 // Link button
 // ==================================================
-
 
 .btn-link {
     color: color(gray);
@@ -386,7 +366,7 @@ $btns: (
     background: transparent;
 
     &:hover {
-    color: theme-color(primary);
+        color: theme-color(primary);
     }
 }
 
@@ -394,12 +374,12 @@ $btns: (
 // Custom admin buttons
 // ==================================================
 
+// btn-toolbar is currently being used by the language buttons
 .btn-toolbar {
     border: none;
     border-radius: $border-radius;
     cursor: pointer;
     position: relative;
-
 }
 
 // Label outside of buttons

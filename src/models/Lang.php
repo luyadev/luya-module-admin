@@ -114,15 +114,22 @@ final class Lang extends NgRestModel
     /**
      * @inheritdoc
      */
-    public function ngRestConfig($config)
+    public function ngRestScopes()
     {
-        $this->ngRestConfigDefine($config, ['list', 'create', 'update'], ['name', 'short_code', 'is_default']);
-     
-        $config->options = ['saveCallback' => 'function(ServiceLanguagesData) { ServiceLanguagesData.load(true).then(function() { $scope.AdminLangService.load(); }); }'];
-        
-        $config->delete = true;
-        
-        return $config;
+        return [
+            [['list', 'create', 'update'], ['name', 'short_code', 'is_default']],
+            [['delete'], true],
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function ngRestConfigOptions()
+    {
+        return [
+            'saveCallback' => '[\'ServiceLanguagesData\', function(ServiceLanguagesData) { ServiceLanguagesData.load(true).then(function() { $scope.AdminLangService.load(); }); }]',
+        ];
     }
     
     private static $_langInstanceQuery;

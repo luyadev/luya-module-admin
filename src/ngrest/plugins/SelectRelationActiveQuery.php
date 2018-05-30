@@ -13,9 +13,23 @@ use yii\helpers\Json;
  * This plugin is for CRUD tables with large amount of tables, there for you can not access the the ActiveRecord object.
  *
  * ```php
- * 'parent_user_id' => ['class' => SelectRelationActiveQuery::class, 'query' => $this->getParentUser(), 'labelField' => 'firstname,lastname'],
- * 'client_id' => ['class' => SelectRelationActiveQuery::class, 'query' => $this->getClient(), 'labelField' => ['client_number', 'firstname', 'lastname']],
+ * 'client_id' => [
+ *     'class' => SelectRelationActiveQuery::class,
+ *     'query' => $this->getClient(),
+ *     'labelField' => ['client_number', 'firstname', 'lastname']
+ * ],
  * ```
+ *
+ * The above definition assumes `getClient()` is defined for example as:
+ *
+ * ```php
+ * public function getClient()
+ * {
+ *     return $this->hasOne(Client::class, ['id' => 'client_id']);
+ * }
+ * ```
+ *
+ * > Important: Keep in mind that the relation class which is used inside the query defintion for `Client` must be an NgRest CRUD model with controller and API!
  *
  * @property string|array $labelField Provide the sql fields to display.
  * @property yii\db\ActiveQuery $query The query with the relation.
@@ -117,13 +131,13 @@ class SelectRelationActiveQuery extends Plugin
         $value = $event->sender->getAttribute($this->name);
         
         if ($this->emptyListValue && empty($value)) {
-            $event->sender->setAttribute($this->name, $this->emptyListValue);
+            $this->writeAttribute($event, $this->emptyListValue);
         } else {
             $model = $this->_query->modelClass;
             $row = $model::find()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
             
             if (!empty($row)) {
-                $event->sender->setAttribute($this->name, implode(" ", $row));
+                $this->writeAttribute($event, implode(" ", $row));
             }
         }
     }

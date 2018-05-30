@@ -1,5 +1,3 @@
-var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
-
 /**
  * guid creator
  * @returns {String}
@@ -11,7 +9,6 @@ function guid() {
 
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
-
 /**
  * i18n localisation with params.
  *
@@ -37,7 +34,6 @@ function i18nParam(varName, params) {
 
     return varValue;
 }
-
 /**
  * Type cast numeric values to integer
  *
@@ -48,19 +44,24 @@ function typeCastValue(value) {
     return angular.isNumber(value) ? parseInt(value) : value;
 }
 
-(function () {
-    "use strict";
+/* DEFINE LUYA ADMIN ANGULAR VAR */
 
-    /* CONFIG */
+var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
     
-    zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
+/* CONFIG */
+
+zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatcherFactoryProvider', function($httpProvider, $stateProvider, $controllerProvider, $urlMatcherFactoryProvider) {
     	
         $httpProvider.interceptors.push("authInterceptor");
 
+        // used to bootstrap the angularjs controllers in the view 
         zaa.bootstrap = $controllerProvider;
 
         $urlMatcherFactoryProvider.strictMode(false)
 
+        /**
+         * resolvers: https://github.com/angular-ui/ui-router/wiki#resolve
+         */
         $stateProvider
             .state("default", {
                 url: "/default/:moduleId",
@@ -85,226 +86,254 @@ function typeCastValue(value) {
                 },
                 resolve: {
                     adminServiceResolver: adminServiceResolver,
-                    resolver: function (resolver) {
+                    resolverProvider: ['resolver', function (resolver) {
                         return resolver.then;
-                    }
+                    }]
                 }
             })
             .state("home", {
                 url: "",
                 templateUrl: "admin/default/dashboard"
+            })
+            // ngrest crud detail view
+            .state("default.route.detail", {
+				url: "/:id",
+				parent: 'default.route',
+				template: '<ui-view/>',
+				controller: ['$scope', '$stateParams', function($scope, $stateParams) {
+	
+					$scope.crud = $scope.$parent;
+	
+					$scope.init = function() {
+						if (!$scope.crud.config.inline) {
+							if ($scope.crud.data.updateId != $stateParams.id) {
+								$scope.crud.toggleUpdate($stateParams.id);
+							}
+						}
+					}
+	
+					$scope.init();
+				}]
             });
     }]);
-
-    /* PROVIDERS */
     
-    /**
-     * attach custom callback function to the custom state resolve. Use the resolverProvider in
-     * your configuration part:
-     *
-     * zaa.config(function(resolverProvider) {
-	 *		resolverProvider.addCallback(function(ServiceMenuData, ServiceBlocksData) {
-	 *			ServiceMenuData.load();
-	 *			ServiceBlocksData.load();
-	 *		});
-	 * });
-     */
-    zaa.provider("resolver", function () {
-        var list = [];
+/* PROVIDERS */
 
-        this.addCallback = function (callback) {
-            list.push(callback);
-        }
+/**
+ * resolver (or resolverProvider).
+ * 
+ * > Warning: The config part is known injected `resolverProvider` event when the provider name is `resolver`.
+ * > Info: can not rename this in admin 1.2 release due to usage in cms module old version branch
+ * 
+ * Attach custom callback function to the custom state resolve. Use the resolverProvider in
+ * your configuration part:
+ *
+ * ```js
+ * zaa.config(function(resolverProvider) {
+ *		resolverProvider.addCallback(function(ServiceMenuData, ServiceBlocksData) {
+ *			ServiceMenuData.load();
+ *			ServiceBlocksData.load();
+ *		});
+ * });
+ * ```
+ * 
+ * @see https://github.com/angular-ui/ui-router/wiki#resolve
+ */
+zaa.provider("resolver", [function() {
+    var list = [];
 
-        this.$get = function ($injector, $q, $state) {
-            return $q(function (resolve, reject) {
-                for (var i in list) {
-                    $injector.invoke(list[i]);
-                }
-            })
-        }
-    });
+    this.addCallback = function (callback) {
+        list.push(callback);
+    };
 
-    /* FACTORIES */
-    
-    /**
-     * LUYA LOADING
-     */
-    zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
-
-        var state = false;
-        var stateMessage = null;
-        var timeoutPromise = null;
-
-        return {
-            start: function (myMessage) {
-                if (myMessage == undefined) {
-                    stateMessage = i18n['js_zaa_server_proccess'];
-                } else {
-                    stateMessage = myMessage;
-                }
-                // rm previous timeouts
-                $timeout.cancel(timeoutPromise);
-
-                timeoutPromise = $timeout(function () {
-                    state = true;
-                }, 2000);
-            },
-            stop: function () {
-                $timeout.cancel(timeoutPromise);
-                state = false;
-            },
-            getStateMessage: function () {
-                return stateMessage;
-            },
-            getState: function () {
-                return state;
+    this.$get = ['$injector', '$q', '$state', function ($injector, $q, $state) {
+        return $q(function(resolve, reject) {
+            for (var i in list) {
+                $injector.invoke(list[i]);
             }
-        }
-    }]);
+        })
+    }];
     
-    /**
-     * Inside your Directive or Controller:
-     * 
-     * ```js
-     * AdminClassService.setClassSpace('modalBody', 'modal-open')
-     * ```
-     * 
-     * Inside your HTML layout file:
-     * 
-     * ```html
-     * <div class="{{AdminClassService.getClassSpace('modalBody')}}" />
-     * ```
-     * 
-     * In order to clear the class space afterwards:
-     * 
-     * ```js
-     * AdminClassService.clearSpace('modalBody');
-     * ```
-     */
-    zaa.factory("AdminClassService", function () {
+}]);
 
-        var service = [];
+/* FACTORIES */
 
-        service.vars = {};
+/**
+ * LUYA LOADING
+ */
+zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
 
-        service.getClassSpace = function (spaceName) {
-            if (service.vars.hasOwnProperty(spaceName)) {
-                return service.vars[spaceName];
+    var state = false;
+    var stateMessage = null;
+    var timeoutPromise = null;
+
+    return {
+        start: function (myMessage) {
+            if (myMessage == undefined) {
+                stateMessage = i18n['js_zaa_server_proccess'];
+            } else {
+                stateMessage = myMessage;
             }
-        };
+            // rm previous timeouts
+            $timeout.cancel(timeoutPromise);
 
-        service.hasClassSpace = function(spaceName) {
-        	 if (service.vars.hasOwnProperty(spaceName)) {
-        		 return true;
-        	 }
-        	 
-        	 return false;
-        };
-        
-        service.setClassSpace = function (spaceName, className) {
-            service.vars[spaceName] = className;
-        };
-        
-        service.clearSpace = function(spaceName) {
-        	if (service.vars.hasOwnProperty(spaceName)) {
-        		service.vars[spaceName] = null;
-        	}
-        };
-        
-        service.removeSpace = function(spaceName) {
-        	if (service.hasClassSpace(spaceName)) {
-        		delete service.vars[spaceName];
-        	}
-        };
+            timeoutPromise = $timeout(function () {
+                state = true;
+            }, 2000);
+        },
+        stop: function () {
+            $timeout.cancel(timeoutPromise);
+            state = false;
+        },
+        getStateMessage: function () {
+            return stateMessage;
+        },
+        getState: function () {
+            return state;
+        }
+    }
+}]);
 
-        service.stack = 0;
-        
-        service.modalStackPush = function() {
-        	service.stack += 1;
-        };
-        
-        service.modalStackRemove = function() {
-        	if (service.stack <= 1) {
-        		service.stack = 0; 
-        	} else {
-        		service.stack -= 1;
-        	}
-        };
-        
-        service.modalStackRemoveAll = function() {
-        	service.stack = 0;
-        };
-        
-        service.modalStackIsEmpty = function() {
-        	if (service.stack == 0) {
-        		return true;
+/**
+ * Inside your Directive or Controller:
+ * 
+ * ```js
+ * AdminClassService.setClassSpace('modalBody', 'modal-open')
+ * ```
+ * 
+ * Inside your HTML layout file:
+ * 
+ * ```html
+ * <div class="{{AdminClassService.getClassSpace('modalBody')}}" />
+ * ```
+ * 
+ * In order to clear the class space afterwards:
+ * 
+ * ```js
+ * AdminClassService.clearSpace('modalBody');
+ * ```
+ */
+zaa.factory("AdminClassService", function () {
+
+    var service = [];
+
+    service.vars = {};
+
+    service.getClassSpace = function (spaceName) {
+        if (service.vars.hasOwnProperty(spaceName)) {
+            return service.vars[spaceName];
+        }
+    };
+
+    service.hasClassSpace = function(spaceName) {
+    	 if (service.vars.hasOwnProperty(spaceName)) {
+    		 return true;
+    	 }
+    	 
+    	 return false;
+    };
+    
+    service.setClassSpace = function (spaceName, className) {
+        service.vars[spaceName] = className;
+    };
+    
+    service.clearSpace = function(spaceName) {
+    	if (service.vars.hasOwnProperty(spaceName)) {
+    		service.vars[spaceName] = null;
+    	}
+    };
+    
+    service.removeSpace = function(spaceName) {
+    	if (service.hasClassSpace(spaceName)) {
+    		delete service.vars[spaceName];
+    	}
+    };
+
+    service.stack = 0;
+    
+    service.modalStackPush = function() {
+    	service.stack += 1;
+    };
+    
+    service.modalStackRemove = function() {
+    	if (service.stack <= 1) {
+    		service.stack = 0; 
+    	} else {
+    		service.stack -= 1;
+    	}
+    };
+    
+    service.modalStackRemoveAll = function() {
+    	service.stack = 0;
+    };
+    
+    service.modalStackIsEmpty = function() {
+    	if (service.stack == 0) {
+    		return true;
+    	}
+    	
+    	return false;
+    };
+    
+    return service;
+});
+
+zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
+
+    var service = [];
+
+    service.reload = function () {
+        $http.get("admin/api-admin-common/cache").then(function (response) {
+            $window.location.reload();
+        });
+    }
+    
+    return service;
+}]);
+
+zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
+    return {
+        request: function (config) {
+        	if (!config.hasOwnProperty('ignoreLoadingBar')) {
+        		config.debugId = AdminDebugBar.pushRequest(config);
         	}
         	
-        	return false;
-        };
-        
-        return service;
-    });
-    
-    zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
-
-        var service = [];
-
-        service.reload = function () {
-            $http.get("admin/api-admin-common/cache").then(function (response) {
-                $window.location.reload();
-            });
-        }
-
-        return service;
-    }]);
-    
-    zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
-        return {
-            request: function (config) {
-            	if (!config.hasOwnProperty('ignoreLoadingBar')) {
-            		config.debugId = AdminDebugBar.pushRequest(config);
+        	if (config.hasOwnProperty('authToken')) {
+        		var authToken = config.authToken;
+        	} else {
+        		var authToken = $rootScope.luyacfg.authToken;
+        	}
+        	
+            config.headers = config.headers || {};
+            config.headers.Authorization = "Bearer " + authToken;
+            var csrfToken = document.head.querySelector("[name=csrf-token]").content;
+            config.headers['X-CSRF-Token'] = csrfToken;
+            
+            return config || $q.when(config);
+        },
+        response: function(config) {
+        	if (!config.hasOwnProperty('ignoreLoadingBar')) {
+        		AdminDebugBar.pushResponse(config);
+        	}
+        	
+        	return config || $q.when(config);
+        },
+        responseError: function (data) {
+            if (data.status == 401 || data.status == 403 || data.status == 405) {
+            	if (!data.config.hasOwnProperty('authToken')) {
+            		window.location = "admin/default/logout";
             	}
-            	
-            	if (config.hasOwnProperty('authToken')) {
-            		var authToken = config.authToken;
+            } else if (data.status != 422) {
+            	var message = data.data.hasOwnProperty('message');
+            	if (message) {
+            		AdminToastService.error(data.data.message, 10000);
             	} else {
-            		var authToken = $rootScope.luyacfg.authToken;
+            		AdminToastService.error("Response Error: " + data.status + " " + data.statusText, 10000);
             	}
-            	
-                config.headers = config.headers || {};
-                config.headers.Authorization = "Bearer " + authToken;
-                var csrfToken = document.head.querySelector("[name=csrf-token]").content;
-                config.headers['X-CSRF-Token'] = csrfToken;
                 
-                return config || $q.when(config);
-            },
-            response: function(config) {
-            	if (!config.hasOwnProperty('ignoreLoadingBar')) {
-            		AdminDebugBar.pushResponse(config);
-            	}
-            	
-            	return config || $q.when(config);
-            },
-            responseError: function (data) {
-                if (data.status == 401 || data.status == 403 || data.status == 405) {
-                	if (!data.config.hasOwnProperty('authToken')) {
-                		window.location = "admin/default/logout";
-                	}
-                } else if (data.status != 422) {
-                	var message = data.data.hasOwnProperty('message');
-                	if (message) {
-                		AdminToastService.error(data.data.message, 10000);
-                	} else {
-                		AdminToastService.error("Response Error: " + data.status + " " + data.statusText, 10000);
-                	}
-                    
-                }
-                
-                return $q.reject(data);
             }
-        };
-    }]);
-
-})();
+            
+            return $q.reject(data);
+        }
+    };
+}]);

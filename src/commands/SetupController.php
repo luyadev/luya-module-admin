@@ -9,6 +9,7 @@ use luya\admin\models\User;
 use luya\admin\models\Group;
 use yii\db\Query;
 use yii\imagine\Image;
+use yii\helpers\VarDumper;
 
 /**
  * Setup the Administration Interface.
@@ -123,7 +124,12 @@ class SetupController extends \luya\console\Command
         }
         
         if ($this->interactive) {
-            if ($this->confirm("Confirm your login details in order to proceed with the Setup. E-Mail: {$this->email} Password: {$this->password} - Are those informations correct?") !== true) {
+            $this->outputInfo('E-Mail: '. $this->email);
+            $this->outputInfo('Firstname: '. $this->firstname);
+            $this->outputInfo('Lastname: '. $this->lastname);
+            $this->outputInfo('Language: '. $this->langName);
+            
+            if ($this->confirm("Confirm your login details in order to proceed with the Setup. Are those informations correct?") !== true) {
                 return $this->outputError('Abort by user.');
             }
         }
@@ -218,7 +224,7 @@ class SetupController extends \luya\console\Command
         $user->lastname = $lastname;
         $user->title = $titleArray[$title];
         if (!$user->save()) {
-            throw new Exception("Unable to create new user.");
+            return $this->outputError('User validation error: ' . VarDumper::dumpAsString($user->getErrors()));
         }
 
         $groupSelect = [];
