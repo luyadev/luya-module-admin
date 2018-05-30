@@ -3,6 +3,7 @@
 namespace luya\admin\proxy;
 
 use Curl\Curl;
+use luya\admin\Module;
 use Yii;
 use yii\base\BaseObject;
 use yii\helpers\Console;
@@ -20,6 +21,8 @@ use yii\helpers\Json;
  */
 class ClientTable extends BaseObject
 {
+    const LARGE_TABLE_PROMPT = 10000;
+
     private $_data;
 
     /**
@@ -120,6 +123,12 @@ class ClientTable extends BaseObject
      */
     public function syncData()
     {
+        if (Yii::$app->controller->interactive && $this->getRows() > self::LARGE_TABLE_PROMPT) {
+            if (Console::confirm("{$this->getName()} has {$this->getRows()} entries. Do you want continue table sync?", true) === false) {
+                return;
+            }
+        }
+
         $sqlMode = $this->prepare();
 
         try {
