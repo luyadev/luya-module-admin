@@ -43,7 +43,7 @@ class ClientTable extends BaseObject
 
     public function getSchema()
     {
-        if (null === $this->_schema) {
+        if ($this->_schema === null) {
             $this->_schema = Yii::$app->db->getTableSchema($this->getName());
         }
 
@@ -173,7 +173,7 @@ class ClientTable extends BaseObject
             Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
             Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
 
-            if (null !== $sqlMode) {
+            if ($sqlMode !== null) {
                 Yii::$app->db->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
             }
         }
