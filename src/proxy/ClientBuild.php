@@ -79,8 +79,7 @@ class ClientBuild extends BaseObject
         foreach ($config['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
 
-                $skip = $this->skipTable($tableName);
-                if ($skip) {
+                if ($this->isSkipableTable($tableName, $this->optionTable)) {
                     continue;
                 }
             }
@@ -94,26 +93,40 @@ class ClientBuild extends BaseObject
     }
 
     /**
-     * @param $tableName
-     * @return bool
+     * Compare the tableName with the given filters.
      *
-     * @since  1.2.1
+     * Example filters:
+     *
+     *  "cms_*" include only cms_* tables
+     *  "cms_*,admin_*" include only cms_* and admin_* tables
+     *  "!cms_*" exclude all cms_* tables
+     *  "!cms_*,!admin_*" exclude all cms_*and admin_* tables
+     *  "cms_*,!admin_*" include all cms_* tables but exclude all admin_* tables
+     *
+     * Only first match is relevant:
+     *  "cms_*,!admin_*,admin_*" include all cms_* tables but exclude all admin_* tables (last match has no effect)
+     *  "cms_*,admin_*,!admin_*" include all cms_* and admin_* tables (last match has no effect)
+     *
+     * @param $tableName
+     * @param array $filters Array of tables which should skipped.
+     * @return bool True if table can be skipped.
+     * @since 1.2.1
      */
-    private function skipTable($tableName): bool
+    private function isSkipableTable($tableName, array $filters)
     {
         $skip = true;
 
-        foreach ($this->optionTable as $useName) {
+        foreach ($filterTables as $filter) {
 
             $exlude = false;
-            if (substr($useName, 0, 1) == "!") {
+            if (substr($filter, 0, 1) == "!") {
                 $exlude = true;
                 $skip = false;
 
-                $useName = substr($useName, 1);
+                $filter = substr($filter, 1);
             }
 
-            if ($useName == $tableName || StringHelper::startsWithWildcard($tableName, $useName)) {
+            if ($filter == $tableName || StringHelper::startsWithWildcard($tableName, $filter)) {
                 return $exlude;
             }
         }

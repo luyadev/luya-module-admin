@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#128](https://github.com/luyadev/luya-module-admin/issues/128) A new indicator display the amount of time left until the user is logged out automatically. Also every keystroke inside any text field will reset the logout timer to null. No more timeouts while working!
 + [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
 + [#20](https://github.com/luyadev/luya-module-admin/issues/20) New option `--sync-requests-count` for proxy command.
++ [#142](https://github.com/luyadev/luya-module-admin/issues/142) Proxy command can skip tables with `!` negation.
 
 ### Fixed
 
