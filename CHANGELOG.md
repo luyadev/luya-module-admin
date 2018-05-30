@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 
 + [#128](https://github.com/luyadev/luya-module-admin/issues/128) A new indicator display the amount of time left until the user is logged out automatically. Also every keystroke inside any text field will reset the logout timer to null. No more timeouts while working!
 + [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
++ [#20](https://github.com/luyadev/luya-module-admin/issues/20) New option `--sync-requests-count` for proxy command.
 
 ### Fixed
 
@@ -16,6 +17,8 @@ All notable changes to this project will be documented in this file. This projec
 + [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of active record attribute.
 + [#125](https://github.com/luyadev/luya-module-admin/issues/125) Detach cruft behavior for global search response.
 + [#132](https://github.com/luyadev/luya-module-admin/pull/132) Fixed validation error on single file upload with the StorageUploadValidator.
++ [#101](https://github.com/luyadev/luya-module-admin/pull/101) Proxy command disable now FOREIGN_KEY_CHECKS, UNIQUE_CHECKS and SQL_MODE while data sync.
++ [#20](https://github.com/luyadev/luya-module-admin/issues/20) Proxy command need now less memory and a bit faster.
 
 ## 1.2.0 (17. May 2018)
 
