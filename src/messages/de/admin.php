@@ -331,7 +331,6 @@ return [
     'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
-    'model_user_login_attempt_lock_expiration' => 'Login Sperrzeit',
     'model_user_login_attempt_lock_expiration' => 'Dauer Login-Lockout',
     'account_changeemail_subject' => 'Aktualisierung der E-Mail-Adresse bestätigen',
     'account_changeemail_body' => '<h1>Bestätigungscode</h1><p>Geben Sie den folgenden Bestätigungscode ein, um Ihre E-Mail-Adresse für die Website {url} zu aktualisieren.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
