@@ -96,7 +96,7 @@ use luya\admin\helpers\Angular;
 					<p class="mt-1"><small><?= Admin::t('view_index_redirect_mail_help'); ?></small></p>
 			    </div>
                 <div ng-switch-when="5">
-                    <input class="form-control" type="tel" pattern='(?:0|\+[0-9]{2})[\d- ]+' placeholder='(\+00)9999-9999' ng-model="data.value" />
+                    <input class="form-control" type="tel" ng-model="data.value" placeholder="(\+00)9999-9999" />
                     <p class="mt-1"><small><?= Admin::t('view_index_redirect_phone_help'); ?></small></p>
                 </div>
             </div>
