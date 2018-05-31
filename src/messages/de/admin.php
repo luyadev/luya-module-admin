@@ -351,7 +351,7 @@ return [
     'settings_general' => 'Allgemein',
     'settings_developer_mode' => 'Entwickler Modus',
     'layout_logout_minutes' => '{{idleTimeRelative}} Minuten',
-    'view_index_redirect_phone' => 'Telefonnummer',
-    'view_index_redirect_phone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
+    'view_index_redirect_telephone' => 'Telefonnummer',
+    'view_index_redirect_telephone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
 
 ];
