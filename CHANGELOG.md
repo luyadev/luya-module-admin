@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.
 + [#20](https://github.com/luyadev/luya-module-admin/issues/20) New option `--sync-requests-count` for proxy command.
 + [#141](https://github.com/luyadev/luya-module-admin/pull/141) Add telephone option to redirect form.
++ [#144](https://github.com/luyadev/luya-module-admin/pull/144) Proxy command ask for large table sync.
 
 ### Fixed
 
