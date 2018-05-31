@@ -79,7 +79,7 @@ class ClientBuild extends BaseObject
         foreach ($config['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
 
-                if ($this->isSkipableTable($tableName, $this->optionTable)) {
+                if ($this->isSkippableTable($tableName, $this->optionTable)) {
                     continue;
                 }
             }
@@ -112,22 +112,22 @@ class ClientBuild extends BaseObject
      * @return bool True if table can be skipped.
      * @since 1.2.1
      */
-    private function isSkipableTable($tableName, array $filters)
+    private function isSkippableTable($tableName, array $filters)
     {
         $skip = true;
 
-        foreach ($filterTables as $filter) {
+        foreach ($filters as $filter) {
 
-            $exlude = false;
+            $exclude = false;
             if (substr($filter, 0, 1) == "!") {
-                $exlude = true;
+                $exclude = true;
                 $skip = false;
 
                 $filter = substr($filter, 1);
             }
-
+            
             if ($filter == $tableName || StringHelper::startsWithWildcard($tableName, $filter)) {
-                return $exlude;
+                return $exclude;
             }
         }
 
