@@ -231,6 +231,8 @@ abstract class Plugin extends Component
 
     /**
      * Extract the context attribute name from the ngModel and replace with given $field name.
+     * 
+     * If an empty field value is provided no content will be returned.
      *
      * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
      * @param string $field The new field name to replace with the context field name.
@@ -239,6 +241,10 @@ abstract class Plugin extends Component
      */
     protected function replaceFieldFromNgModelContext($ngModel, $field)
     {
+        if (empty($field)) {
+            return;
+        }
+        
         // get all keys
         $parts = explode(".", $ngModel);
         end($parts);

@@ -926,17 +926,28 @@
         }
     });
 
+    /**
+     * Generates slug from a given model input.
+     *
+     * If a listener attribute is provided i will take the information from there.
+     */
     zaa.directive("zaaSlug", function() {
     	return {
     		restrict: "E",
     		scope: {
                 "model": "=",
                 "options": "=",
+                "listener" : "=",
                 "label": "@label",
                 "i18n": "@i18n",
                 "id": "@fieldid"
             },
     		controller: ['$scope', '$filter', function($scope, $filter) {
+    			
+    			$scope.$watch(function() { return $scope.listener; }, function(n, o) {
+    				$scope.model = $filter('slugify')(n);
+    			});
+    			
     			$scope.$watch(function() { return $scope.model; }, function(n, o) {
     				if (n!=o) {
     					$scope.model = $filter('slugify')(n);
