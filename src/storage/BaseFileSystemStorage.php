@@ -105,7 +105,7 @@ abstract class BaseFileSystemStorage extends Component
     
     /**
      * Return the http path for a given file on the file system.
-     * 
+     *
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @since 1.2.0
      */
@@ -113,21 +113,21 @@ abstract class BaseFileSystemStorage extends Component
     
     /**
      * Return the absolute http path for a given file on the file system.
-     * 
+     *
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @since 1.2.0
      */
     abstract public function fileAbsoluteHttpPath($fileName);
     /**
      * Returns the path internal server path to the given file on the file system.
-     * 
+     *
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      */
     abstract public function fileServerPath($fileName);
     
     /**
      * Check if the file exists on the given file system.
-     * 
+     *
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @since 1.2.0
      */
@@ -135,7 +135,7 @@ abstract class BaseFileSystemStorage extends Component
     
     /**
      * Get the content of the file on the given file system.
-     * 
+     *
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      * @since 1.2.0
      */

@@ -16,8 +16,6 @@ use Yii;
  */
 class IndexAction extends \yii\rest\IndexAction
 {
-    
-    
     public $prepareActiveDataQuery;
     
     /**

@@ -14,7 +14,7 @@ use luya\admin\ngrest\base\Plugin;
 class Decimal extends Plugin
 {
     /**
-     * 
+     *
      * @var float Floating point steps.
      */
     public $steps = 0.01;

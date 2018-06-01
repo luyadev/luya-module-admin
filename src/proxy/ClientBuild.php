@@ -78,7 +78,6 @@ class ClientBuild extends BaseObject
 
         foreach ($config['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
-
                 if ($this->isSkippableTable($tableName, $this->optionTable)) {
                     continue;
                 }
@@ -117,7 +116,6 @@ class ClientBuild extends BaseObject
         $skip = true;
 
         foreach ($filters as $filter) {
-
             $exclude = false;
             if (substr($filter, 0, 1) == "!") {
                 $exclude = true;

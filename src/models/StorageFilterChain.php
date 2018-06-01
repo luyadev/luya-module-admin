@@ -11,7 +11,7 @@ use Imagine\Image\ManipulatorInterface;
 
 /**
  * Contains all information about filter effects for a single Chain element (like: thumbnail, 200x200).
- * 
+ *
  * @property int $id
  * @property int $sort_index
  * @property int $filter_id
@@ -101,7 +101,7 @@ final class StorageFilterChain extends ActiveRecord
     
     /**
      * Load an image from a given path, apply all effects (filters) from effect_json_values and save the file.
-     * 
+     *
      * @param string $loadFromPath The absolute path to the existing file.
      * @param string $imageSavePath The absolute path to the new location where the file should be stroed.
      * @throws InvalidConfigException
@@ -140,7 +140,7 @@ final class StorageFilterChain extends ActiveRecord
 
     /**
      * Get the definition for a given effect name.
-     * 
+     *
      * @param string $effect
      * @param string $key
      * @return mixed
@@ -163,7 +163,7 @@ final class StorageFilterChain extends ActiveRecord
     
     /**
      * Check if a missing required param is not provided in the chain.
-     * 
+     *
      * @param string $effect
      * @return boolean
      * @since 1.2.0
@@ -181,7 +181,7 @@ final class StorageFilterChain extends ActiveRecord
     
     /**
      * Get the value from the effect chain for a given param/option.
-     * 
+     *
      * @param string $effect
      * @param string $param
      * @return mixed
@@ -202,7 +202,7 @@ final class StorageFilterChain extends ActiveRecord
     
     /**
      * Get the value for a effect json key.
-     * 
+     *
      * @param string $key
      * @return boolean
      */
@@ -213,9 +213,9 @@ final class StorageFilterChain extends ActiveRecord
     
     /**
      * Get the value from an effect for a given param.
-     * 
+     *
      * If the the is no value, try to return the defaultValue from options definition.
-     * 
+     *
      * @param string $name
      * @return string|array|number[]|boolean
      */

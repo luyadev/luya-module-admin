@@ -71,16 +71,16 @@ class Api extends RestActiveController
     
     /**
      * Prepare Index Query.
-     * 
+     *
      * You can override the prepare index query to preload relation data like
-     * 
+     *
      * ```php
      * public function prepareIndexQuery()
      * {
      *     return parent::prepareIndexQuery()->with(['relation1', 'relation2']);
      * }
      * ```
-     * 
+     *
      * @return \yii\db\ActiveQuery
      * @since 1.2.1
      */

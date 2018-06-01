@@ -43,7 +43,7 @@ class m180412_092824_user_security_columns_v12 extends Migration
     
     /**
      * Check if a given column exists.
-     * 
+     *
      * @param string $name
      */
     private function hasColumn($name)
@@ -53,7 +53,7 @@ class m180412_092824_user_security_columns_v12 extends Migration
     
     /**
      * Drop the column if exists.
-     * 
+     *
      * @param string $name
      */
     private function dropIfExists($name)

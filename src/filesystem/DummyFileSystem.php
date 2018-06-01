@@ -22,7 +22,7 @@ use luya\admin\storage\BaseFileSystemStorage;
  * @since 1.0.3
  */
 class DummyFileSystem extends BaseFileSystemStorage
-{   
+{
     /**
      * @inheritdoc
      */

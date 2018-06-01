@@ -57,7 +57,7 @@ final class Property extends ActiveRecord
     
     /**
      * Create the property object with a given value.
-     * 
+     *
      * @param mixed $value
      * @return \luya\admin\base\Property
      */
@@ -68,7 +68,7 @@ final class Property extends ActiveRecord
     
     /**
      * Generate the Property Object.
-     * 
+     *
      * @param string $className
      * @param mixed $value
      * @return \luya\admin\base\Property

@@ -114,9 +114,9 @@ class ProxyController extends Command
      */
     public $token;
 
-	/**
-	 * @var integer Number of requests collected until they are written to the database.
-	 */
+    /**
+     * @var integer Number of requests collected until they are written to the database.
+     */
     public $syncRequestsCount = 10;
 
     /**

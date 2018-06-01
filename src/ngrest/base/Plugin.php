@@ -594,11 +594,11 @@ abstract class Plugin extends Component
     
     /**
      * Write a value to a plugin attribute or property.
-     * 
+     *
      * As setAttribute() does only write to attributes therefore this method allwos you to write to
      * a property or attribute value. As {{isAttributeWriteAble()}} returns true whether its a property
      * or attribute.
-     * 
+     *
      * @param \yii\base\Event $event The event to retrieve the values from (via $sender property).
      * @param mixed $value The value to writte on the attribute or property.
      * @since 1.2.1
@@ -611,7 +611,7 @@ abstract class Plugin extends Component
     
     /**
      * Get the value from the plugin attribute or property.
-     * 
+     *
      * @param \yii\base\Event $event The event to retrieve the values from (via $sender property).
      * @return mixed
      * @since 1.2.1

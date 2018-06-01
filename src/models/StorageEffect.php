@@ -77,7 +77,7 @@ final class StorageEffect extends NgRestModel
     
     /**
      * Returns the effect name ensured with lowercase.
-     * 
+     *
      * @return string
      * @since 1.0.2
      */

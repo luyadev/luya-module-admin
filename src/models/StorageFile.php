@@ -44,7 +44,7 @@ final class StorageFile extends ActiveRecord
         parent::init();
         
         // ensure upload timestamp and upload_user_id if empty.
-        $this->on(self::EVENT_BEFORE_INSERT, function($event) {
+        $this->on(self::EVENT_BEFORE_INSERT, function ($event) {
             $this->upload_timestamp = time();
             if (empty($this->upload_user_id)) {
                 if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
@@ -86,11 +86,11 @@ final class StorageFile extends ActiveRecord
     
     /**
      * Delete a given file.
-     * 
+     *
      * Override default implementation. Mark as deleted and remove files from file system.
-     * 
+     *
      * Keep file in order to provide all file references.
-     * 
+     *
      * @return boolean
      */
     public function delete()
@@ -108,7 +108,7 @@ final class StorageFile extends ActiveRecord
     
     /**
      * Get upload user.
-     * 
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -118,7 +118,7 @@ final class StorageFile extends ActiveRecord
     
     /**
      * Get the file for the corresponding model.
-     * 
+     *
      * @return \luya\admin\file\Item|boolean
      * @since 1.2.0
      */

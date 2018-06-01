@@ -395,7 +395,7 @@ class Item extends ItemAbstract implements LinkInterface
     
     /**
      * Get the file content.
-     * 
+     *
      * @return string
      * @since 1.2.0
      */
