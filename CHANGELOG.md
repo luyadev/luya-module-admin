@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#133](https://github.com/luyadev/luya-module-admin/issues/133) Cms Page ngrest plugin display now the button to the page on the list overview.
 + [#139](https://github.com/luyadev/luya-module-admin/issues/139) Provide new option for ngRestConfigOptions fixes problem where after saving of a new language the language service does not reload.
 + [#135](https://github.com/luyadev/luya-module-admin/issues/135) Fixed login problem when connecting with ipv6 address.
 + [#129](https://github.com/luyadev/luya-module-admin/issues/129) Fixed problem when ngrest plugin try to write in object property instead of active record attribute.
