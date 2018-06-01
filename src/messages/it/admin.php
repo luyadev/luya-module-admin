@@ -338,4 +338,6 @@ return [
     'settings_general' => 'Generale',
     'settings_developer_mode' => 'Modalità sviluppatore',
     'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
+    'view_index_redirect_telephone' => 'telephone number',
+    'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
 ];

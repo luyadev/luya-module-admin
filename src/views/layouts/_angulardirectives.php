@@ -66,6 +66,9 @@ use luya\admin\helpers\Angular;
 
 			<input type="radio" ng-model="data.type" ng-value="4" id="to_mail">
             <label for="to_mail" ng-click="data.type = 4"><?= Admin::t('view_index_redirect_mail'); ?></label>
+
+            <input type="radio" ng-model="data.type" ng-value="5" id="to_telepone">
+            <label for="to_telephone" ng-click="data.type = 5"><?= Admin::t('view_index_redirect_phone'); ?></label>
         </div>
     </div>
     <div class="form-group form-side-by-side">
@@ -92,6 +95,10 @@ use luya\admin\helpers\Angular;
 					<input class="form-control" type="text" ng-model="data.value" />
 					<p class="mt-1"><small><?= Admin::t('view_index_redirect_mail_help'); ?></small></p>
 			    </div>
+                <div ng-switch-when="5">
+                    <input class="form-control" type="tel" ng-model="data.value" placeholder="(\+00)9999-9999" />
+                    <p class="mt-1"><small><?= Admin::t('view_index_redirect_phone_help'); ?></small></p>
+                </div>
             </div>
         </div>
     </div>

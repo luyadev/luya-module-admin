@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#20](https://github.com/luyadev/luya-module-admin/issues/20) New option `--sync-requests-count` for proxy command.
 + [#142](https://github.com/luyadev/luya-module-admin/issues/142) Proxy command can skip tables with `!` negation.
 + [#144](https://github.com/luyadev/luya-module-admin/pull/144) Proxy command ask for large table sync.
++ [#141](https://github.com/luyadev/luya-module-admin/pull/141) Add telephone option to redirect form.
 
 ### Fixed
 

@@ -352,4 +352,6 @@ return [
     'settings_general' => 'General',
     'settings_developer_mode' => 'Developer Mode',
     'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
+    'view_index_redirect_telephone' => 'telephone number',
+    'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
 ];
