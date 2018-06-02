@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#142](https://github.com/luyadev/luya-module-admin/issues/142) Proxy command can skip tables with `!` negation.
 + [#144](https://github.com/luyadev/luya-module-admin/pull/144) Proxy command ask for large table sync.
 + [#141](https://github.com/luyadev/luya-module-admin/pull/141) Add telephone option to redirect form.
++ [#49](https://github.com/luyadev/luya-module-admin/issues/49) Add autocomplete to text and password fields, implemented password manager annotation in account settings.
 
 ### Fixed
 

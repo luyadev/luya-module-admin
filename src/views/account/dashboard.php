@@ -13,9 +13,9 @@ use luya\admin\Module;
                 	<h2><?= Module::t('mode_user_personal_info') ?></h2>
                     <form ng-submit="changePersonData(profile)">
                         <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
-                        <zaa-text fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
-                        <zaa-text fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
-                        <zaa-text fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
+                        <zaa-text autocomplete="given-name" fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
+                        <zaa-text autocomplete="family-name" fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
+                        <zaa-text autocomplete="email" fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                         
                     </form>
@@ -36,9 +36,9 @@ use luya\admin\Module;
                 <div class="card-body">
                     <h2><?= Module::t('mode_user_password'); ?></h2>
                     <form ng-submit="changePassword()">
-                        <zaa-password fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
-                        <zaa-password fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
-                        <zaa-password fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
+                        <zaa-password autocomplete="current-password" fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
+                        <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
+                        <zaa-password autocomplete="off" fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                     </form>
                 </div>

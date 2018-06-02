@@ -710,10 +710,11 @@
                 "grid": "@grid",
                 "fieldid": "@fieldid",
                 "placeholder": "@placeholder",
-                "initvalue": "@initvalue"
+                "initvalue": "@initvalue",
+                "autocomplete": "@autocomplete"
             },
             link: function($scope, $element) {
-                var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" model="model" label="{{label}}" i18n="{{grid}}" />'))($scope);
+                var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" autocomplete="{{autocomplete}}" model="model" label="{{label}}" i18n="{{grid}}" />'))($scope);
                 $element.replaceWith(elmn);
             },
         }
@@ -1114,10 +1115,11 @@
                 "label": "@label",
                 "i18n": "@i18n",
                 "id": "@fieldid",
-                "placeholder": "@placeholder"
+                "placeholder": "@placeholder",
+                "autocomplete" : "@autocomplete"
             },
             template: function() {
-                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" /></div></div>';
+                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" /></div></div>';
             }
         }
     });
@@ -1189,10 +1191,11 @@
                 "options": "=",
                 "label": "@label",
                 "i18n": "@i18n",
-                "id": "@fieldid"
+                "id": "@fieldid",
+                "autocomplete": "@autocomplete"
             },
             template: function() {
-                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="password" class="form-control" placeholder="{{placeholder}}" /></div></div>';
+                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="password" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" /></div></div>';
             }
         }
     });
