@@ -128,7 +128,7 @@ use luya\admin\helpers\Angular;
             <div class="link-selector-btn btn btn-secondary" ng-click="toggleModal()">
                 <i class="material-icons left" ng-show="!fileinfo.name">file_upload</i>
                 <i class="material-icons left" ng-show="fileinfo.name">attach_file</i>
-                <span ng-if="fileinfo.name">{{fileinfo.name | truncateMiddle: 20}}</span>
+                <span ng-if="fileinfo.name">{{fileinfo.name | truncateMiddle: 30}}</span>
                 <span ng-if="!fileinfo.name">
                     <?= Admin::t('layout_select_file'); ?>
                 </span>
@@ -355,7 +355,7 @@ use luya\admin\helpers\Angular;
                                 <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.thumbnail.source}}" /></span>
                                 <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                             </td>
-                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 40}}</td>
+                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 50}}</td>
                             <td ng-click="toggleSelection(file)">{{file.extension}}</td>
                             <td ng-click="openFileDetail(file)">{{file.uploadTimestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
