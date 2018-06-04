@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#147](https://github.com/luyadev/luya-module-admin/issues/147) Add new read only directive returning the model value.
 + [#134](https://github.com/luyadev/luya-module-admin/issues/134) Add new listener option for slug plugin type. Slug plugin can now list to another attribute while typing and transform the value to a slugable string.
 + [#128](https://github.com/luyadev/luya-module-admin/issues/128) A new indicator display the amount of time left until the user is logged out automatically. Also every keystroke inside any text field will reset the logout timer to null. No more timeouts while working!
 + [#126](https://github.com/luyadev/luya-module-admin/issues/126) Provide option to eager load api model relations.

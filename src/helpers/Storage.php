@@ -331,7 +331,7 @@ class Storage
      *   )
      * ```
      * @param array $files
-     * @return array|unknown
+     * @return array
      */
     public static function extractFilesDataFromMultipleFiles(array $files)
     {

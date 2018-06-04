@@ -140,9 +140,9 @@ class Angular
     
     /**
      * Passwort
-     * @param unknown $ngModel
-     * @param unknown $label
-     * @param array $options
+     * @param string $ngModel The ng-model attribute which should be used as reference to be bound into the element.
+     * @param string $label The label which should be displayed for the given field.
+     * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * @return \luya\admin\helpers\string:
      */
     public static function password($ngModel, $label, array $options = [])
@@ -366,5 +366,38 @@ class Angular
     public static function fileUpload($ngModel, $label, array $options = [])
     {
         return self::injector(TypesInterface::TYPE_FILEUPLOAD, $ngModel, $label, [], $options);
+    }
+    
+    /**
+     * Generates a directive which requies a value from an api where the model is the primary key field of the api.
+     * Angular code example
+     * 
+     * ```js
+     * zaa-async-value model="theModel" label="Hello world" api="admin/api-admin-users" fields="[foo,bar]" />
+     * ```
+     * 
+     * @param string $ngModel The name of the ng model which should be used for data binding.
+     * @param string $label The label to display for the form input.
+     * @param string $api The path to the api endpoint like `admin/api-admin-users`.
+     * @param array $fields An array with all fiels which should be requested from the api 
+     * @param array $options
+     * @since 1.2.1
+     */
+    public static function asyncRequest($ngModel, $label, $api, $fields, array $options = [])
+    {
+        return self::injector(TYpesInterface::TYPE_ASYNC_VALUE, $ngModel, $label, [], ['api' => $api, 'fields' => $fields]);
+    }
+    
+    /**
+     * Generate a read only attribute tag.
+     * 
+     * @param string $ngModel The name of the ng model which should be used for data binding.
+     * @param string $label The label to display for the form input.
+     * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
+     * @since 1.2.1
+     */
+    public static function readonly($ngModel, $label, array $options = [])
+    {
+        return self::injector(TypesInterface::TYPE_READONLY, $ngModel, $label, [], $options);
     }
 }

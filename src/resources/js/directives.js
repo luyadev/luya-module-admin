@@ -79,6 +79,8 @@
      * ```
      * <div zaa-esc="methodClosesThisDiv()" />
      * ```
+     * 
+     * @todo Rename this directive, as it should be prefixed with zaa.
      */
     zaa.directive("zaaEsc", ['$document', function ($document) {
         return function (scope, element, attrs) {
@@ -688,6 +690,8 @@
     	}
     }]);
 
+/** ZAA ANGULAR FORM INPUT DIRECTIVES */
+    
     /**
      * Generate form input types based on ZAA Directives.
      *
@@ -1123,9 +1127,35 @@
             }
         }
     });
+    
+    /**
+     * Returns a field which just returns the value from model, like a read only attribute.
+     * 
+     * @since 1.2.1
+     */
+    zaa.directive("zaaReadonly", function() {
+    	return {
+    		restrict: "E",
+    		scope: {
+    			"model": "=",
+    			"label" : "@label",
+    			"i18n" : "@i18n"
+    		},
+    		template: function() {
+    			return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label>{{label}}</label></div><div class="form-side"><span class="text-muted">{{model}}</span></div></div>';
+    		}
+    	}
+    });
 
     /**
      * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
+     * 
+     * Generates a request to the corresponding model item view like the example above would request to:
+     * 
+     * ```
+     * /admin/admin-users/{model}?fields=foo,bar
+     * ```
+     * 
      */
     zaa.directive("zaaAsyncValue", function(){
         return {
@@ -1166,6 +1196,9 @@
         }
     });
 
+    /**
+     * Generate a textarea input.
+     */
     zaa.directive("zaaTextarea", function(){
         return {
             restrict: "E",
@@ -1183,6 +1216,9 @@
         }
     });
 
+    /**
+     * Generate a password input.
+     */
     zaa.directive("zaaPassword", function(){
         return {
             restrict: "E",

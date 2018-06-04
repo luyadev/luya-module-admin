@@ -164,4 +164,15 @@ interface TypesInterface
      * @var string Generates a multi selection and sortable list and returns a json array with the selected values.
      */
     const TYPE_SORT_RELATION_ARRAY = 'zaa-sort-relation-array';
+    
+    /**
+     * @var string Generates a field which is going to lookup the value for a given id with an xhr request to an API.
+     */
+    const TYPE_ASYNC_VALUE = 'zaa-async-value';
+    
+    /**
+     * @var string A read only attribute field which just displayes the ng model value.
+     * @since 1.2.1
+     */
+    const TYPE_READONLY = 'zaa-readonly';
 }
