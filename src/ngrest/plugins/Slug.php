@@ -6,13 +6,13 @@ use luya\admin\ngrest\base\Plugin;
 
 /**
  * Create a slugable input field.
- * 
+ *
  * The input field will remove whitespaces and other not valid utf8 url chars from the string while typing.
  *
  * If you like to generate the slug value from another field you can configure listenere with a listener attribute.
- * 
+ *
  * Example configuration where slug reads from input title.
- * 
+ *
  * ```php
  * public function ngRestAttributeTypes()
  * {
@@ -33,7 +33,7 @@ class Slug extends Plugin
     public $placeholder;
     
     /**
-     * @var string Define another input attribute as listener, which will then pass trough the input value from 
+     * @var string Define another input attribute as listener, which will then pass trough the input value from
      * the listener field into the slug field while typing.
      * @since 1.2.1
      */

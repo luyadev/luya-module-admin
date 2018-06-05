@@ -371,15 +371,15 @@ class Angular
     /**
      * Generates a directive which requies a value from an api where the model is the primary key field of the api.
      * Angular code example
-     * 
+     *
      * ```js
      * zaa-async-value model="theModel" label="Hello world" api="admin/api-admin-users" fields="[foo,bar]" />
      * ```
-     * 
+     *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param string $api The path to the api endpoint like `admin/api-admin-users`.
-     * @param array $fields An array with all fiels which should be requested from the api 
+     * @param array $fields An array with all fiels which should be requested from the api
      * @param array $options
      * @since 1.2.1
      */
@@ -390,7 +390,7 @@ class Angular
     
     /**
      * Generate a read only attribute tag.
-     * 
+     *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.

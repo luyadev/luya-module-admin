@@ -232,7 +232,7 @@ abstract class Plugin extends Component
 
     /**
      * Extract the context attribute name from the ngModel and replace with given $field name.
-     * 
+     *
      * If an empty field value is provided no content will be returned.
      *
      * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.

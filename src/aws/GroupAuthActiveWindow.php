@@ -98,10 +98,11 @@ class GroupAuthActiveWindow extends ActiveWindow
     {
         $data = (new Query())->select(['*'])->from('admin_auth')->orderBy(['module_name' => SORT_ASC, 'alias_name' => SORT_ASC])->all();
         
-        array_walk($data, function(&$item, $key) {
+        array_walk($data, function (&$item, $key) {
             try {
                 $item['alias_name'] = Yii::t($item['module_name'], $item['alias_name'], [], Yii::$app->language);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         });
         
         return ArrayHelper::index($data, null, 'module_name');
