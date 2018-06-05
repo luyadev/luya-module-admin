@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use luya\Exception;
 use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
+use luya\helpers\StringHelper;
 
 /**
  * Base class for NgRest Plugins.
@@ -244,11 +245,20 @@ abstract class Plugin extends Component
         if (empty($field)) {
             return;
         }
-        
+
         // get all keys
         $parts = explode(".", $ngModel);
         end($parts);
         $key = key($parts);
+        // old last $field name
+        $oldField = $parts[$key];
+        if (StringHelper::endsWith($oldField, ']')) {
+            // its an i18n field which has ['en'] suffix, we should extra this and add to $field
+            if (preg_match('/\[.*\]/', $oldField, $matches) === 1) {
+                $field .= $matches[0];
+            }
+        }
+
         // replace the last key with the new fieldname
         $parts[$key] = $field;
         
