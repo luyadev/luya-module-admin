@@ -352,5 +352,5 @@ return [
     'layout_logout_minutes' => '{{idleTimeRelative}} Minuten',
     'view_index_redirect_telephone' => 'Telefonnummer',
     'view_index_redirect_telephone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
-
+    'missing_file_upload_permission' => 'Keine berechtigung um Dateien hochzuladen.',
 ];

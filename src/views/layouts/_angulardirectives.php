@@ -124,6 +124,7 @@ use luya\admin\helpers\Angular;
 
 <script type="text/ng-template" id="storageFileUpload">
     <div class="link-selector">
+        <?php if (Yii::$app->adminuser->canRoute('admin/storage/index')): ?>
         <div class="link-selector-actions">
             <div class="link-selector-btn btn btn-secondary" ng-click="toggleModal()">
                 <i class="material-icons left" ng-show="!fileinfo.name">file_upload</i>
@@ -142,6 +143,9 @@ use luya\admin\helpers\Angular;
 				<storage-file-manager selection="true" />
 			</div>
 		</modal>
+        <?php else: ?>
+            <p class="text-muted"><?= Admin::t('missing_file_upload_permission'); ?></p>
+        <?php endif; ?>
     </div>
 </script>
 
@@ -158,13 +162,15 @@ use luya\admin\helpers\Angular;
                 <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolutionWidth }} x {{ imageinfo.resolutionHeight }}</div>
             </div>
         </div>
+        
         <div class="imageupload-upload">
             <storage-file-upload ng-model="fileId"></storage-file-upload>
         </div>
+        <?php if (Yii::$app->adminuser->canRoute('admin/storage/index')): ?>
         <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null">
             <select name="filterId" ng-model="filterId" convert-to-number><option value="0"><?= Admin::t('layout_no_filter'); ?></option><option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option></select>
         </div>
-
+        <?php endif; ?>
     </div>
 </script>
 

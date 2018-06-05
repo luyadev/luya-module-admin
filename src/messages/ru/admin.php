@@ -354,4 +354,5 @@ return [
     'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
     'view_index_redirect_telephone' => 'telephone number',
     'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
+    'missing_file_upload_permission' => 'Insufficient permissions for file uploads.',
 ];
