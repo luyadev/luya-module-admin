@@ -5,6 +5,8 @@ namespace luya\admin\aws;
 use Yii;
 use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
+use yii\db\Query;
+use luya\helpers\ArrayHelper;
 
 /**
  * Active Window to set permissions for a specific Group, used in groups ngrest model.
@@ -94,19 +96,15 @@ class GroupAuthActiveWindow extends ActiveWindow
      */
     private function getAuthData()
     {
-        $data = (new \yii\db\Query())->select('*')->from('admin_auth')->orderBy('module_name, alias_name ASC')->all();
-        $last = false;
-        foreach ($data as $k => $v) {
-            $data[$k]['is_head'] = ($last !== $v['module_name']) ? 1 : 0;
-            $data[$k]['group_alias'] = ucfirst($v['module_name']);
+        $data = (new Query())->select(['*'])->from('admin_auth')->orderBy(['module_name' => SORT_ASC, 'alias_name' => SORT_ASC])->all();
+        
+        array_walk($data, function(&$item, $key) {
             try {
-                $data[$k]['alias_name'] = Yii::t($v['module_name'], $v['alias_name'], [], Yii::$app->language);
-            } catch (\Exception $e) {
-            }
-            $last = $v['module_name'];
-        }
-
-        return $data;
+                $item['alias_name'] = Yii::t($item['module_name'], $item['alias_name'], [], Yii::$app->language);
+            } catch (\Exception $e) {}
+        });
+        
+        return ArrayHelper::index($data, null, 'module_name');
     }
 
     /**

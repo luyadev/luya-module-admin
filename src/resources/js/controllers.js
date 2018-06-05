@@ -757,16 +757,47 @@
 				$scope.reload();
 			});
 		};
+		
+		$scope.clearModule = function(items) {
+			angular.forEach(items, function(value) {
+				$scope.rights[value.id] = {base: 0, create: 0, update: 0, delete: 0};
+			});
+		};
 
+		$scope.toggleModule = function(items) {
+			angular.forEach(items, function(value) {
+				$scope.rights[value.id] = {base: 1, create: 1, update: 1, delete: 1};
+			});
+		};
+		
+		$scope.toggleGroup = function(id) {
+			
+			objectGroup = $scope.rights[id];
+			
+			if (objectGroup.base == 1) {
+				objectGroup.create = 1;
+				objectGroup.update = 1;
+				objectGroup.delete = 1;
+			} else if (objectGroup.base == 0) {
+				objectGroup.create = 0;
+				objectGroup.update = 0;
+				objectGroup.delete = 0;
+			}			
+		};
+		
 		$scope.toggleAll = function() {
-			angular.forEach($scope.auths,function(value, key) {
-				$scope.rights[value.id] = {base: 1, create: 1, update: 1, 'delete': 1 };
+			angular.forEach($scope.auths,function(items) {
+				angular.forEach(items, function(value) {
+					$scope.rights[value.id] = {base: 1, create: 1, update: 1, 'delete': 1 };
+				});
 			});
 		};
 
 		$scope.untoggleAll = function() {
-			angular.forEach($scope.auths,function(value, key) {
-				$scope.rights[value.id] = {base: 0, create: 0, update: 0, 'delete': 0 };
+			angular.forEach($scope.auths,function(items) {
+				angular.forEach(items, function(value) {
+					$scope.rights[value.id] = {base: 0, create: 0, update: 0, 'delete': 0 };
+				});
 			});
 		};
 
