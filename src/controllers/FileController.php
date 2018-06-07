@@ -39,12 +39,11 @@ class FileController extends \luya\web\Controller
                 }
                 
                 // update the model count stats
-                $count = $model->passthrough_file_stats + 1;
-                $model->passthrough_file_stats = $count;
-                $model->update(false);
-                
+                $model->updateCounters(['passthrough_file_stats' => 1]);
+
                 return Yii::$app->response->sendContentAsFile($fileData->content, $model->name_original, [
                     'inline' => (bool) $model->inline_disposition,
+                    'mimeType' => $model->mime_type,
                 ]);
             }
         }
