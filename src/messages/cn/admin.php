@@ -138,11 +138,11 @@ return [
 
 // added translation in 1.0.0-beta5:
 
-    'aws_gallery_empty' => 'Please select some images to the left to add them to the gallery album.',
-    'aws_gallery_images' => 'Album images',
+    'aws_gallery_empty' => '请在左边选择一些图片添加到Gallery中.',
+    'aws_gallery_images' => '专辑图片',
     'layout_useronline_name' => '昵称',
     'layout_useronline_mail' => '账号',
-    'layout_useronline_inactivesince' => 'Inactive since',
+    'layout_useronline_inactivesince' => '最后在线时间',
 
 // added translations in 1.0.0-beta6
 
@@ -152,10 +152,10 @@ return [
 
 // added translations in 1.0.0-beta7
 
-    'login_securetoken_mail_subject' => 'LUYA Security code',
-    'login_securetoken_mail' => '<h1>LUYA Security code</h1><p>Use the following security code to log into your administration at {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
-    'login_async_token_error' => 'The provided security code is invalid.',
-    'login_async_token_globalerror' => 'A Server error occurred, please contact your site administrator.',
+    'login_securetoken_mail_subject' => 'LUYA 安全验证码',
+    'login_securetoken_mail' => '<h1>LUYA 安全验证码</h1><p>使用以下安全验证码登录您的管理后台 {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_async_token_error' => '安全验证码无效.',
+    'login_async_token_globalerror' => '服务器错误，请联系管理员.',
     'ngrest_crud_csv_export_btn' => '生成 CSV',
     'ngrest_crud_csv_export_btn_dl' => '下载 CSV',
     'layout_filemanager_search_text' => '输入搜索词...',
@@ -327,29 +327,29 @@ return [
     
 // 1.2.0
     
-    'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
-    'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
-    'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
-    'model_user_login_attempt_lock_expiration' => 'Login lockout time',
-    'account_changeemail_subject' => 'Verify update of your email address',
-    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
-    'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
-    'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
-    'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
-    'model_user_email_verification_token' => 'Email verification code',
-    'layout_filemanager_col_downloads' => 'Downloads',
-    'layout_filemanager_col_upload_user' => 'Uploaded by',
+    'login_async_submission_limit_reached' => '提交次数过多,请 {time} 后再试.',
+    'model_loginform_max_user_attempts' => '登陆次数过多,请 {time} 后再试.',
+    'model_loginform_wrong_user_or_password_attempts' => '用户名或密码错误. Attempt #{attempt} of {allowedAttempts}.',
+    'model_user_login_attempt_lock_expiration' => '用户登录锁定中',
+    'account_changeemail_subject' => '验证更新邮件地址',
+    'account_changeemail_body' => '<h1>验证码</h1><p>输入以下验证码以更改您的电子邮件地址 {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_tokensenterror' => '验证码无法发送至 {email}. 请确保邮件模块配置正确.',
+    'account_changeemail_wrongtokenorempty' => '空的, 无效的或过期的邮箱验证码.',
+    'account_changeemail_enterverificationtoken' => '请输入发送到 <b>{{profile.email}}</b> 的验证码来确认新邮箱 <b>{{settings.newUserEmail}}</b> 的修改请求.',
+    'model_user_email_verification_token' => '邮件验证码',
+    'layout_filemanager_col_downloads' => '下载中心',
+    'layout_filemanager_col_upload_user' => '上传来至',
     'layout_filemanager_col_file_disposition' => 'File delivery',
-    'layout_filemanager_col_file_disposition_download' => 'Download',
-    'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
+    'layout_filemanager_col_file_disposition_download' => '下载',
+    'layout_filemanager_col_file_disposition_browser' => '在浏览器中显示',
     
 // 1.2.1
     
-    'mode_user_personal_info' => 'Personal info',
-    'settings_general' => 'General',
-    'settings_developer_mode' => 'Developer Mode',
-    'layout_logout_minutes' => '{{idleTimeRelative}} minutes',
-    'view_index_redirect_telephone' => 'telephone number',
-    'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
-    'missing_file_upload_permission' => 'Insufficient permissions for file uploads.',
+    'mode_user_personal_info' => '个人信息',
+    'settings_general' => '通用设置',
+    'settings_developer_mode' => '开发者模式',
+    'layout_logout_minutes' => '{{idleTimeRelative}} 分钟',
+    'view_index_redirect_telephone' => '电话号码',
+    'view_index_redirect_telephone_help' => '请输入有效的电话号码 (for "+" sign a leading "\" is require).',
+    'missing_file_upload_permission' => '文件上传权限不足.',
 ];
