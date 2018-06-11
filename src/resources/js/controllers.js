@@ -1097,7 +1097,7 @@
 						$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
 							$scope.searchResponse = response.data;
 						});
-					}, 400)
+					}, 800)
 				} else {
 	                $scope.searchResponse = null;
 				}
