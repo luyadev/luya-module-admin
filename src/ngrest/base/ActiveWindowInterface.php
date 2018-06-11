@@ -62,11 +62,34 @@ interface ActiveWindowInterface
     
     /**
      * Return the current label defined for this Active Window.
+     * 
+     * @return string Returns the label of the active window, keep in mind this value has not model context.
      */
     public function getLabel();
     
     /**
      * Return the current icon defined for this Active Window.
+     * 
+     * @return string Returns the material icon name as string.
      */
     public function getIcon();
+    
+    /**
+     * By default the title just returns the {{getLabel()}} value if not overriden.
+     * 
+     * In getTitle() its allowed to access the model context, which is not allowed in {{getLabel()}}.
+     * 
+     * Display the username as title could look like this:
+     * 
+     * ```php
+     * public function getTitle()
+     * {
+     *     return $this->model->username;
+     * }
+     * ```
+     * 
+     * @return string Returns the title string which can have model context.
+     * @since 1.2.2
+     */
+    public function getTitle();
 }

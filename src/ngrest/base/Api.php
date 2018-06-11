@@ -393,6 +393,7 @@ class Api extends RestActiveController
             'content' => $ngrest->render($render),
             'icon' => $render->getActiveWindowObject()->getIcon(),
             'label' => $render->getActiveWindowObject()->getLabel(),
+            'title' => $render->getActiveWindowObject()->getTitle(),
             'requestDate' => time(),
         ];
     }

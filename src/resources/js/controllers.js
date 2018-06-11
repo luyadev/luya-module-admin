@@ -183,7 +183,7 @@
 				$scope.data.aw.configHash = $scope.config.ngrestConfigHash;
 				$scope.data.aw.hash = activeWindowId;
 				$scope.data.aw.content = $sce.trustAsHtml(response.data.content);
-				$scope.data.aw.title = response.data.label;
+				$scope.data.aw.title = response.data.title;
 				$scope.$broadcast('awloaded', {id: activeWindowId});
 			})
 		};

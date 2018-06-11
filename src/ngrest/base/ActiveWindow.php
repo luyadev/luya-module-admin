@@ -190,6 +190,14 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     }
     
     /**
+     * @inheritdoc
+     */
+    public function getTitle()
+    {
+        return $this->getLabel();
+    }
+    
+    /**
      * If no extenion is set, this value is used.
      *
      * You can override this method in order to provide a default icon for your Active Window.
