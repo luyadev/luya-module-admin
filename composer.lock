@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "fbef086f51ac9806c882870a0f6473f3",
@@ -52,7 +52,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+                "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -511,7 +511,7 @@
             "version": "v1.6.10",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular/bower-angular.git",
+                "url": "git@github.com:angular/bower-angular.git",
                 "reference": "309e7f82ecc9098e1f93870eb33083b84dead289"
             },
             "dist": {
@@ -729,12 +729,29 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
                 "reference": "425d39571c91121e504dea4984b873306a60361f",
-                "shasum": null
+                "shasum": ""
             },
-            "type": "bower-asset",
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "twig/twig.min.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
             "license": [
                 "BSD-2-Clause"
-            ]
+            ],
+            "description": "A version of Twig JS for use with Bower",
+            "keywords": [
+                "bower",
+                "js",
+                "twig"
+            ],
+            "time": "2017-06-13T09:34:37+00:00"
         },
         {
             "name": "bower-asset/ui-router",
@@ -1072,16 +1089,16 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.4",
+            "version": "1.0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "c8db3138001f300afa5790ea3ade86eb0734ea08"
+                "reference": "2bb4096befb6de9ad2aab52c19556068dec3a7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/c8db3138001f300afa5790ea3ade86eb0734ea08",
-                "reference": "c8db3138001f300afa5790ea3ade86eb0734ea08",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/2bb4096befb6de9ad2aab52c19556068dec3a7fb",
+                "reference": "2bb4096befb6de9ad2aab52c19556068dec3a7fb",
                 "shasum": ""
             },
             "require-dev": {
@@ -1132,7 +1149,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-05-17T11:22:10+00:00"
+            "time": "2018-06-09T08:36:36+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
