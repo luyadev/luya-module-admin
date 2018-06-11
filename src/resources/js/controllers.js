@@ -244,7 +244,7 @@
 							$scope.config.pagerHiddenByAjaxSearch = true;
 							blockRequest = false;
 							$scope.config.fullSearchContainer = response.data;
-							$scope.data.listArray = $filter('filter')(response.data, n);
+							$scope.data.listArray = response.data; 
 						});
 					}, 500)
 				}

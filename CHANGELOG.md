@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#158](https://github.com/luyadev/luya-module-admin/issues/158) Searching in CRUD pagination fallback applied the angular filter, therefore values found in `ngRestFullQuerySearch()` where hidden by angular filter if they where not in the ngrest list scope.
 + [#152](https://github.com/luyadev/luya-module-admin/issues/152) Added proper `Content-Type` header with MIME type when delivering download files.
 
 ## 1.2.1 (5. June 2018)

@@ -237,8 +237,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * Search trough the whole table as ajax fallback when pagination is enabled.
      *
      * This method is used when the angular crud view switches to a pages view and a search term is entered into
-     * the query field. It differs to the generic search as it takes more performence to lookup all fields (except
-     * of boolean types).
+     * the query field. By default it will also take the fields from {{genericSearchFields()}}.
      *
      * When you have relations to lookup you can extend the parent implementation, for example:
      *
@@ -258,10 +257,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $find = $this->ngRestFind();
         
-        foreach ($this->getTableSchema()->columns as $column) {
-            if ($column->phpType !== "boolean") {
-                $find->orFilterWhere(['like', static::tableName() . '.' . $column->name, $query]);
-            }
+        foreach ($this->genericSearchFields() as $column) {
+            $find->orFilterWhere(['like', static::tableName() . '.' . $column, $query]);
         }
         
         return $find;

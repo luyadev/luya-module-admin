@@ -23,6 +23,10 @@ use yii\db\ActiveQuery;
 /**
  * The RestActiveController for all NgRest implementations.
  *
+ * When pagination is enabled (by setting {{$pagination}} property or if {{$autoEnablePagination}} apply) the crud search will be performed trough an
+ * async request instead of angular filtering. Angular filtering is searching for the string in the response, while async full search does
+ * call the {{actionFullResponse()}} method trough the api, which will the call the {{luya\admin\ngrest\base\NgRestModel::ngRestFullQuerySearch()}} method.
+ *
  * @property \luya\admin\ngrest\NgRestModel $model Get the model object based on the $modelClass property.
  *
  * @author Basil Suter <basil@nadar.io>
