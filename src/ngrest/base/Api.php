@@ -41,12 +41,17 @@ class Api extends RestActiveController
     public $modelClass;
     
     /**
-     * @var boolean Defines whether the automatic pagination should be enabled if more then 200 rows of data stored in this table or not.
+     * @var boolean Defines whether the automatic pagination should be enabled if more then 200 rows of data stored in this table or not. You can also
+     * enable pagination by setting the pagination property like:
+     * 
+     * ```php
+     * public $pagination = ['pageSize' => $this->pageSize];
+     * ```
      */
     public $autoEnablePagination = true;
     
     /**
-     * @var integer When pagination is enabled, this value is used for pagination rows by page.
+     * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size.
      */
     public $pageSize = 100;
     
