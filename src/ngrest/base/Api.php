@@ -45,13 +45,17 @@ class Api extends RestActiveController
      * enable pagination by setting the pagination property like:
      * 
      * ```php
-     * public $pagination = ['pageSize' => $this->pageSize];
+     * public $pagination = ['pageSize' => 100];
      * ```
+     * 
+     * If its enabled like the example above, the {{$pageSize}} param is ignored.
      */
     public $autoEnablePagination = true;
     
     /**
-     * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size.
+     * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size. If you are enabling pagination by setting
+     * the {{$pagination}} property `$pagination = ['pageSize' => 100]` this {{$pageSize}} property will be ignored!
+     * ```
      */
     public $pageSize = 100;
     
