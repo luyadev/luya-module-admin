@@ -982,6 +982,11 @@
 			$scope.debugDetail = debugDetail;
 			$scope.debugDetailKey = key;
 		};
+		
+		$scope.closeDebugDetail = function() {
+			$scope.debugDetail = null;
+			$scope.debugDetailKey = null;
+		};
 
 		$scope.notify = null;
 
