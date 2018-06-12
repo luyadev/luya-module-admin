@@ -96,13 +96,10 @@ class CommonController extends RestController
      */
     public function actionCache()
     {
-        if (Yii::$app->has('cache')) {
-            Yii::$app->cache->flush();
-        }
+        $this->flushHasCache();
     
         $user = Yii::$app->adminuser->identity;
-        $user->force_reload = false;
-        $user->save(false);
+        $user->updateAttributes(['force_reload' => false]);
     
         return true;
     }
