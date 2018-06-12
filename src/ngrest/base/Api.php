@@ -80,7 +80,7 @@ class Api extends RestActiveController
      * 
      * @since 1.2.2
      */
-    protected function ensureAutoPagination()
+    public function ensureAutoPagination()
     {
         // pagination is disabled by default, lets verfy if there are more then 400 rows in the table and auto enable
         if ($this->pagination === false && $this->autoEnablePagination) {
@@ -109,8 +109,6 @@ class Api extends RestActiveController
      */
     public function prepareIndexQuery()
     {
-        $this->ensureAutoPagination();
-        
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
         return $modelClass::ngRestFind();

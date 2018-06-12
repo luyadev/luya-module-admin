@@ -31,17 +31,12 @@ class IndexAction extends \yii\rest\IndexAction
             return call_user_func($this->prepareDataProvider, $this);
         }
         
+        $this->controller->ensureAutoPagination();
+        
         $data = new \yii\data\ActiveDataProvider([
             'pagination' => $this->controller->pagination,
             'query' => call_user_func($this->prepareActiveDataQuery, $this),
         ]);
-        
-        // caching
-        /*
-        Yii::$app->db->cache(function() use ($dataProvider) {
-            $dataProvider->prepare();
-        }, 3600);
-        */
 
         return $data;
     }
