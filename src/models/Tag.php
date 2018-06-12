@@ -44,14 +44,6 @@ final class Tag extends NgRestModel
             'name' => Module::t('model_tag_name'),
         ];
     }
-    
-    /**
-     * @inheritdoc
-     */
-    public function genericSearchFields()
-    {
-        return ['name'];
-    }
 
     /**
      * @inheritdoc

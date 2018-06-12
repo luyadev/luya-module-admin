@@ -119,6 +119,14 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * @inheritdoc
      */
+    public static function ngRestFind()
+    {
+        return self::find()->andWhere(['is_api_user' => false]);
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function ngRestListOrder()
     {
         return ['firstname' => SORT_ASC];
@@ -145,7 +153,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestFilters()
     {
         return [
-            'Removed' => self::find()->where(['is_deleted' => true]),
+            'Removed' => self::find()->where(['is_deleted' => true, 'is_api_user' => false]),
         ];
     }
     

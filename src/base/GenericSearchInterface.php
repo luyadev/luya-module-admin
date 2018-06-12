@@ -23,6 +23,7 @@ interface GenericSearchInterface
      * The Query which is going to be performend to the concret implementation.
      *
      * @param string $searchQuery An HTML encoded string to lookup the database table.
+     * @return \yii\db\QueryInterface|\yii\db\ActiveQueryInterface|array
      */
     public function genericSearch($searchQuery);
     

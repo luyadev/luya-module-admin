@@ -237,52 +237,6 @@ class Api extends RestActiveController
             ],
         ];
     }
-
-    /**
-     * Search API.
-     *
-     * This action is mainly used by  {{luya\admin\apis\SearchController}}.
-     *
-     * @param string $query
-     * @return string
-     */
-    public function actionSearch($query)
-    {
-        $this->checkAccess('search');
-        
-        return $this->model->genericSearch($query);
-    }
-
-    /**
-     * Search API Provider.
-     *
-     * The searchProvider provides informations about how the admin UI can render the clickable links
-     * for the found results.
-     *
-     * This action is mainly used by  {{luya\admin\apis\SearchController}} defined by {{luya\admin\base\GenericSearchInterface::genericSearchStateProvider}}
-     *
-     * @return array
-     */
-    public function actionSearchProvider()
-    {
-        $this->checkAccess('search-provider');
-        
-        return $this->model->genericSearchStateProvider();
-    }
-    
-    /**
-     * Search API Hidden Fields
-     *
-     * This action is mainly used by {luya\admin\apis\SearchController}}.
-     *
-     * @return array
-     */
-    public function actionSearchHiddenFields()
-    {
-        $this->checkAccess('search-hidden-fields');
-        
-        return $this->model->genericSearchHiddenFields();
-    }
     
     /**
      * Generate a response with pagination disabled.

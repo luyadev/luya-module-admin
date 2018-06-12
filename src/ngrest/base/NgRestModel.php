@@ -12,6 +12,7 @@ use luya\admin\base\GenericSearchInterface;
 use luya\admin\ngrest\Config;
 use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\base\RestActiveController;
+use yii\db\conditions\OrCondition;
 
 /**
  * NgRest Model.
@@ -257,28 +258,14 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $find = $this->ngRestFind();
         
+        $operand = [];
         foreach ($this->genericSearchFields() as $column) {
-            $find->orFilterWhere(['like', static::tableName() . '.' . $column, $query]);
+            $operand[] = ['like', $column, $query];
         }
         
+        $find->andWhere(new OrCondition($operand));
+        
         return $find;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterFind()
-    {
-        if ($this->getNgRestCallType()) {
-            if ($this->getNgRestCallType() == 'list') {
-                $this->trigger(self::EVENT_AFTER_NGREST_FIND);
-            }
-            if ($this->getNgRestCallType() == 'update') {
-                $this->trigger(self::EVENT_AFTER_NGREST_UPDATE_FIND);
-            }
-        } else {
-            return parent::afterFind();
-        }
     }
 
     /**
@@ -288,8 +275,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $fields = [];
         foreach ($this->getTableSchema()->columns as $name => $object) {
-            if ($object->phpType == 'string') {
-                $fields[] = $object->name;
+            if ($object->phpType == 'string' || $object->phpType == 'integer') {
+                $fields[] = static::tableName() . '.' . $object->name;
             }
         }
 
@@ -322,23 +309,24 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function genericSearch($searchQuery)
     {
-        $fields = $this->genericSearchFields();
-        
-        foreach ($this->getNgRestPrimaryKey() as $pk) {
-            // add pk to fields list automatically to make click able state providers
-            if (!in_array($pk, $fields)) {
-                $fields[] = $pk;
+        return $this->ngRestFullQuerySearch($searchQuery)->select($this->genericSearchFields());
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {
+        if ($this->getNgRestCallType()) {
+            if ($this->getNgRestCallType() == 'list') {
+                $this->trigger(self::EVENT_AFTER_NGREST_FIND);
             }
+            if ($this->getNgRestCallType() == 'update') {
+                $this->trigger(self::EVENT_AFTER_NGREST_UPDATE_FIND);
+            }
+        } else {
+            return parent::afterFind();
         }
-        
-        // create active query object
-        $query = self::find();
-        // foreach all fields from genericSearchFields metod
-        foreach ($fields as $field) {
-            $query->orWhere(['like', $field, $searchQuery]);
-        }
-        // return array based on orWhere statement
-        return $query->select($fields)->all();
     }
 
     private $_ngrestCallType;

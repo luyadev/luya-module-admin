@@ -77,6 +77,16 @@ final class ApiUser extends User
     /**
      * @inheritdoc
      */
+    public function ngRestFilters()
+    {
+        return [
+            'Removed' => self::find()->where(['is_deleted' => true, 'is_api_user' => true]),
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [

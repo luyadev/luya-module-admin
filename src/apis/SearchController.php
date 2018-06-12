@@ -7,6 +7,8 @@ use luya\Exception;
 use luya\admin\models\SearchData;
 use luya\admin\base\RestController;
 use luya\admin\base\GenericSearchInterface;
+use yii\db\QueryInterface;
+use yii\db\ActiveQueryInterface;
 
 /**
  * Search API, allows you to perform search querys for the entire administration including all items provided in the auth section.
@@ -16,6 +18,23 @@ use luya\admin\base\GenericSearchInterface;
  */
 class SearchController extends RestController
 {
+    /**
+     * Transform the different generic search response into an array.
+     * 
+     * @param array|\yii\db\QueryInterface|\yii\db\ActiveQueryInterface $response
+     * @return array
+     * @since 1.2.2
+     */
+    private function transformGenericSearchToData($response)
+    {
+        if ($response instanceof ActiveQueryInterface) {
+            return $response->asArray(true)->all();
+        } elseif ($response instanceof QueryInterface) {
+            return $response->all();
+        }
+        
+        return $response;
+    }
     /**
      * Administration Global search provider.
      *
@@ -36,7 +55,7 @@ class SearchController extends RestController
                 if (!$model instanceof GenericSearchInterface) {
                     throw new Exception('The model must be an instance of GenericSearchInterface');
                 }
-                $data = $model->genericSearch($query);
+                $data = $this->transformGenericSearchToData($model->genericSearch($query));
                 if (count($data) > 0) {
                     $stateProvider = $model->genericSearchStateProvider();
                     $search[] = [
@@ -55,19 +74,18 @@ class SearchController extends RestController
         foreach (Yii::$app->adminmenu->getItems() as $api) {
             if ($api['permissionIsApi']) {
                 $ctrl = $module->createController($api['permssionApiEndpoint']);
-                $ctrl[0]->detachBehavior('cruft');
-                $data = $ctrl[0]->runAction('search', ['query' => $query]);
+                $controller = $ctrl[0];
+                $data = $this->transformGenericSearchToData($controller->model->genericSearch($query));
                 if (count($data) > 0) {
-                    $stateProvider = $ctrl[0]->runAction('search-provider');
-                    $hiddenFields = $ctrl[0]->runAction('search-hidden-fields');
                     $search[] = [
-                        'hideFields' => $hiddenFields,
+                        'hideFields' => $controller->model->genericSearchHiddenFields(),
                         'type' => 'api',
                         'menuItem' => $api,
                         'data' => $data,
-                        'stateProvider' => $stateProvider,
+                        'stateProvider' => $controller->model->genericSearchStateProvider(),
                     ];
                 }
+                
                 unset($data);
             }
         }
