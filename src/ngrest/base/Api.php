@@ -327,6 +327,8 @@ class Api extends RestActiveController
             throw new InvalidCallException("The requested filter does not exists in the filter list.");
         }
 
+        $this->ensureAutoPagination();
+        
         return new ActiveDataProvider([
             'query' => $model->ngRestFilters()[$filterName],
             'pagination' => $this->pagination,
