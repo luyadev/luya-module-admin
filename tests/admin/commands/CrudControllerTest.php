@@ -169,14 +169,6 @@ class TestModel extends NgRestModel
     /**
      * @inheritdoc
      */
-    public function genericSearchFields()
-    {
-        return ['firstname', 'lastname', 'email', 'password', 'password_salt', 'auth_token', 'secure_token', 'settings', 'cookie_token'];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function ngRestAttributeTypes()
     {
         return [
@@ -307,14 +299,6 @@ class TestModel extends NgRestModel
             [['short_code'], 'string', 'max' => 15],
             [['is_default', 'is_deleted'], 'string', 'max' => 1],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function genericSearchFields()
-    {
-        return ['name', 'short_code'];
     }
 
     /**

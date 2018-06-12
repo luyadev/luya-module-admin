@@ -65,14 +65,6 @@ class <?= $className; ?> extends NgRestModel
     /**
      * @inheritdoc
      */
-    public function genericSearchFields()
-    {
-        return ['<?= implode("', '", $textFields); ?>'];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function ngRestAttributeTypes()
     {
         return [

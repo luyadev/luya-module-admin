@@ -29,7 +29,7 @@ class NgRestModelTest extends AdminTestCase
         $model->load();
         $tag = $model->getModel('tag1');
         
-        $this->assertSame(['name'], $tag->genericSearchFields());
+        $this->assertSame(['admin_tag.id', 'admin_tag.name'], $tag->genericSearchFields());
     }
     
     public function testGenericSearch()
@@ -41,7 +41,7 @@ class NgRestModelTest extends AdminTestCase
 
         $this->assertSame(1, count($results));
         
-        $this->assertSame('john', $results[0]->name);
+        $this->assertSame('john', $results[0]['name']);
     }
     
     public function testGetNgRestConfig()
