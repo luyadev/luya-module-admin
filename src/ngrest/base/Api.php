@@ -73,7 +73,15 @@ class Api extends RestActiveController
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
         }
-
+    }
+    
+    /**
+     * Enables the pagination for the current API for a given circumstances.
+     * 
+     * @since 1.2.2
+     */
+    protected function ensureAutoPagination()
+    {
         // pagination is disabled by default, lets verfy if there are more then 400 rows in the table and auto enable
         if ($this->pagination === false && $this->autoEnablePagination) {
             if ($this->model->ngRestFind()->count() > ($this->pageSize*2)) {
@@ -85,7 +93,7 @@ class Api extends RestActiveController
     /**
      * Prepare Index Query.
      *
-     * You can override the prepare index query to preload relation data like
+     * You can override the prepare index query to preload relation data like this:
      *
      * ```php
      * public function prepareIndexQuery()
@@ -93,12 +101,16 @@ class Api extends RestActiveController
      *     return parent::prepareIndexQuery()->with(['relation1', 'relation2']);
      * }
      * ```
+     * 
+     * Make sure to call the parent implementation!
      *
      * @return \yii\db\ActiveQuery
      * @since 1.2.1
      */
     public function prepareIndexQuery()
     {
+        $this->ensureAutoPagination();
+        
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
         return $modelClass::ngRestFind();

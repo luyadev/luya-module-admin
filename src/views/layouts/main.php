@@ -195,9 +195,9 @@ $this->beginPage()
                             <span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>
                             <i class="material-icons">{{item.menuItem.icon}}</i>&nbsp;<span>{{item.menuItem.alias}}</span><small class="ml-1"><i>({{item.data.length}})</i></small>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-2">
                             <div class="table-responsive-wrapper">
-                                <table class="table table-hover table-align-middle">
+                                <table class="table table-hover table-align-middle mb-0">
                                     <thead>
                                         <tr ng-repeat="row in item.data | limitTo:1">
                                             <th ng-hide="!item.hideFields.indexOf(k)" ng-repeat="(k,v) in row">{{k}}</th>
