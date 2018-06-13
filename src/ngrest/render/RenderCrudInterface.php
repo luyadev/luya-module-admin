@@ -2,6 +2,8 @@
 
 namespace luya\admin\ngrest\render;
 
+use luya\admin\ngrest\base\NgRestModelInterface;
+
 /**
  * Interface for CRUD renderers.
  *
@@ -12,9 +14,33 @@ namespace luya\admin\ngrest\render;
  */
 interface RenderCrudInterface
 {
+    /**
+     * Get an array with all relations
+     * 
+     * @return array
+     */
     public function getRelationCall();
     
+    /**
+     * Set an array with relations.
+     * 
+     * @param array $options
+     */
     public function setRelationCall(array $options);
+    
+    /**
+     * Set the current ngrest model for the crud.
+     * 
+     * @param \luya\admin\ngrest\base\NgRestModelInterface $model
+     * @since 1.2.2
+     */
+    public function setModel(NgRestModelInterface $model);
+    
+    /**
+     * @return \luya\admin\ngrest\base\NgRestModelInterface Returns the current ngrest model object.
+     * @since 1.2.2
+     */
+    public function getModel();
     
     /**
      * Get whether the inline mode is enabled or not.

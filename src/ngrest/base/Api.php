@@ -19,6 +19,7 @@ use luya\admin\ngrest\render\RenderActiveWindowCallback;
 use luya\admin\ngrest\NgRest;
 use yii\web\NotFoundHttpException;
 use yii\db\ActiveQuery;
+use luya\helpers\ArrayHelper;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -387,7 +388,23 @@ class Api extends RestActiveController
     {
         $this->checkAccess('export');
         
-        $tempData = ExportHelper::csv($this->model->find());
+        $header = Yii::$app->request->getBodyParam('header', 1);
+        $type = Yii::$app->request->getBodyParam('type');
+        $attributes = Yii::$app->request->getBodyParam('attributes', []);
+        $fields = ArrayHelper::getColumn($attributes, 'value');
+        
+        switch(strtolower($type)) {
+            case "csv":
+                $mime = 'application/csv';
+                $extension = 'csv';
+                break;
+            case "xlsx":
+                $mime = 'application/vnd.ms-excel';
+                $extension = 'xlsx';
+                break;
+        }
+        
+        $tempData = ExportHelper::$type($this->model->find()->select($fields), $fields, (bool) $header);
         
         $key = uniqid('ngre', true);
         
@@ -399,8 +416,8 @@ class Api extends RestActiveController
         $route = str_replace("/index", "/export-download", $route);
         
         if ($store) {
-            Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.csv');
-            Yii::$app->session->set('tempNgRestFileMime', 'application/csv');
+            Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.' . $extension);
+            Yii::$app->session->set('tempNgRestFileMime', $mime);
             Yii::$app->session->set('tempNgRestFileKey', $key);
             return [
                 'url' => Url::toRoute(['/'.$route, 'key' => base64_encode($key)]),

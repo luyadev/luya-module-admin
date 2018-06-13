@@ -11,11 +11,13 @@ use yii\base\InvalidConfigException;
 use yii\base\ViewContextInterface;
 use luya\helpers\Html;
 use luya\helpers\ArrayHelper;
+use luya\admin\ngrest\base\NgRestModelInterface;
 
 /**
  * Render the Crud view.
  *
  * @property \luya\admin\ngrest\render\RenderCrudView $view
+ * @property \luya\admin\ngrest\base\NgRestModelInterface $model
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -66,10 +68,43 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             'modelSelection' => $this->getModelSelection(),
             'relationCall' => $this->getRelationCall(), // this is currently only used for the curd_relation view file, there for split the RenderCrud into two sepeare renderes.
             'currentMenu' => Yii::$app->adminmenu->getApiDetail($this->getConfig()->getApiEndpoint()),
+            'downloadAttributes' => $this->generateDownloadAttributes(),
         ], $this);
+    }
+    
+    /**
+     * 
+     * @return NULL[]
+     */
+    public function generateDownloadAttributes()
+    {
+        $attributes = [];
+        foreach ($this->model->attributes as $key => $atr) {
+            $attributes[$key] = $this->model->getAttributeLabel($key);
+        }
+        
+        return $attributes;
     }
 
     // RenderCrudInterface
+
+    private $_model;
+    
+    /**
+     * @inheritdoc
+     */
+    public function setModel(NgRestModelInterface $model)
+    {
+        $this->_model = $model;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getModel()
+    {
+        return $this->_model;
+    }
     
     /**
      * @inheritdoc

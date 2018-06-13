@@ -42,6 +42,18 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     const EVENT_SERVICE_NGREST = 'serviceNgrest';
 
     /**
+     * @var string The constant for the rest create scenario
+     * @since 1.2.2
+     */
+    const SCENARIO_RESTCREATE = 'restcreate';
+    
+    /**
+     * @var string The constant for the rest update scenario
+     * @since 1.2.2
+     */
+    const SCENARIO_RESTUPDATE = 'restupdate';
+    
+    /**
      * @var array Defines all fields which should be casted as i18n fields. This will transform the defined fields into
      * json language content parings and the plugins will threat the fields different when saving/updating or request
      * informations.

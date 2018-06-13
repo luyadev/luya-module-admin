@@ -14,12 +14,13 @@ use luya\admin\base\TypesInterface;
  * NgRest Plugins sometimes you may want to reuse those. There is also a helper method called `directive` which
  * allows you the quickly generate a Html Tag for directives.
  *
+ * If the method has the suffix `array` it means the assigned model will contain an array of values. So
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
 class Angular
 {
-
     /**
      * Internal method to use to create the angular injector helper method like in angular context of directives.js
      *
@@ -58,17 +59,30 @@ class Angular
             'model' => $ngModel,
             'label' => $label,
             'options' => $options,
+            'fieldid' => Inflector::camel2id(Inflector::camelize($ngModel.'-'.$type)),
+            'fieldname' => Inflector::camel2id(Inflector::camelize($ngModel)),
         ]));
     }
     
     /**
      * Ensures the input structure for optional data for selects, radios etc.
+     * 
+     * Following options are possible:
+     * 
+     * + An array with key => values.
+     * + An array with a nested array ['label' => , 'value' => ] format.
+     * + A string, this can be used when two way data binding should be used instead of array genertion
      *
-     * @param array $data Key value Paring or an array with label and value key.
+     * @param array $data|string Key value Paring or an array with label and value key.
      * @return array
      */
-    public static function optionsArrayInput(array $data)
+    public static function optionsArrayInput($data)
     {
+        // seems to be a two way data binind, thefore direct return the string and do not transform.
+        if (is_scalar($data)) {
+            return $data;
+        }
+        
         $output = [];
         
         foreach ($data as $value => $label) {
@@ -211,6 +225,12 @@ class Angular
      * Radio Input.
      *
      * Generate a list of radios where you can select only one element.
+     * 
+     * Example:
+     * 
+     * ```php
+     * Angular::radio('exportType', 'Format', ['csv' => 'CSV', 'xlss' => 'XLSX'])
+     * ```
      *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
@@ -240,10 +260,10 @@ class Angular
      * zaaCheckboxArray directive
      *
      * ```php
-     * AngularInput::zaaCheckboxArray($ngModel, $this->alias, [['value' => 123, 'label' => 123123], ['value' => 'A', 'label' => 'BCZ']]);
+     * AngularInput::zaaCheckboxArray($ngModel, $this->alias, ['123' => 'OneTwoTrhee', 'foo' => 'Bar']);
      * ```
      *
-     * If you like to build your custom angualr directive to use two way binding without items data you can use something like tis
+     * If you like to build your custom angular directive to use two way binding without items data you can use something like this:
      *
      * ```php
      * Angular::directive('zaa-checkbox-array', $ngModel, ['options' => $this->getServiceName('myDataService')]);
@@ -255,11 +275,12 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $data
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
+     * + preselect: If true all entires from the checkbox will be preselect by default whether its update or add.
      * @return string
      */
     public static function checkboxArray($ngModel, $label, array $data, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => $data], $options);
+        return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => self::optionsArrayInput($data)], $options);
     }
     
     /**

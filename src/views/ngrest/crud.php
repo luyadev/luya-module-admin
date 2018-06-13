@@ -1,6 +1,7 @@
 <?php
 use luya\admin\ngrest\render\RenderCrud;
 use luya\admin\Module;
+use luya\admin\helpers\Angular;
 
 /** @var $config \luya\admin\ngrest\ConfigInterface */
 /** @var $this \luya\admin\ngrest\render\RenderCrudView */
@@ -18,20 +19,23 @@ $this->beginBody();
         <?php if (!$isInline): ?>
             <div class="crud-header">
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
+                <modal is-modal-hidden="isExportModalHidden" modal-title="Export">
+                    <div ng-if="!isExportModalHidden">
+                        <?= Angular::radio('exportdata.header', 'Kopfzeile', [1 => 'Yes', 0 => 'No']); ?>
+                        <?= Angular::radio('exportdata.type', 'Format', ['csv' => 'CSV', 'xlsx' => 'XLSX']); ?>
+                        <?= Angular::checkboxArray('exportdata.attributes', 'Attributes', $downloadAttributes, ['preselect' => true]); ?>
+                        <button ng-hide="exportResponse" type="button" class="btn btn-icon btn-secondary" ng-click="generateExport()">Generate export</button>
+                        <button ng-show="exportResponse" type="button" class="btn btn-icon btn-download" ng-click="downloadExport()"><?= Module::t('ngrest_crud_csv_export_btn_dl'); ?></button>
+                    </div>
+                </modal>
                 <div class="crud-toolbar">
-                    <div class="btn-group" ng-class="{'show': toggleSettings}">
-                        <button class="btn btn-toolbar" type="button" ng-click="toggleSettings=!toggleSettings">
+                    <div class="btn-group" ng-class="{'show': isSettingsVisible}">
+                        <button class="btn btn-toolbar" type="button" ng-click="toggleSettingsMenu()">
                             <i class="material-icons">more_vert</i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': toggleSettings}">
-                            <a class="dropdown-item" ng-show="!exportDownloadButton && !exportLoading" ng-click="exportData()">
-                                <i class="material-icons">get_app</i><span><?= Module::t('ngrest_crud_csv_export_btn'); ?></span>
-                            </a>
-                            <a class="dropdown-item" ng-show="exportLoading">
-                                <i class="material-icons spin">cached</i>
-                            </a>
-                            <a class="dropdown-item" ng-show="exportDownloadButton" ng-click="exportDownload()">
-                               <i class="material-icons">get_app</i><span><?= Module::t('ngrest_crud_csv_export_btn_dl'); ?></span>
+                        <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': isSettingsVisible}">
+                            <a class="dropdown-item" ng-click="toggleExportModal()">
+                                <i class="material-icons">get_app</i><span>Export Data</span>
                             </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
                                 <?= $button; ?>

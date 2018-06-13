@@ -1482,6 +1482,8 @@
      * options arg object:
      *
      * options.items[] = [{"value" : 1, "label" => 'Label for Value 1' }]
+     * 
+     * @param preselect boolean if enable all models will be selected by default.
      */
     zaa.directive("zaaCheckboxArray", function(){
         return {
@@ -1491,7 +1493,8 @@
                 "options": "=",
                 "i18n": "@i18n",
                 "id": "@fieldid",
-                "label": "@label"
+                "label": "@label",
+                "preselect" : "@preselect"
             },
             controller: ['$scope', '$filter', function($scope, $filter) {
 
@@ -1499,11 +1502,20 @@
                     $scope.model = [];
                 }
 
+                $scope.preselectOptionValuesToModel = function(options) {
+                	angular.forEach(options, function(value) {
+                		$scope.model.push({'value': value.value});
+                	});
+                };
+                
                 $scope.searchString = '';
 
                 $scope.$watch('options', function(n, o) {
                 	if (n != undefined && n.hasOwnProperty('items')) {
                     	$scope.optionitems = $filter('orderBy')(n.items, 'label');
+                    	if ($scope.preselect) {
+                    		$scope.preselectOptionValuesToModel(n.items);
+                    	}
                     }
                 });
 
@@ -1548,7 +1560,7 @@
                                     '<div class="input-group-addon">' +
                                         '<i class="material-icons">search</i>' +
                                     '</div>' +
-                                    '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="Enter search term...">' +
+                                    '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="'+i18n['ngrest_crud_search_text']+'">' +
 
                                     '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
                                 '</div>' +

@@ -108,35 +108,45 @@
 				$scope.config.groupBy = 1;
 			}
 		};
-
-		/********** EXPORT ****/
-
-		$scope.exportLoading = false;
-
+		
+		/********* SETTINGS DROPDOWN MENU ******/
+		
+		$scope.isSettingsVisible = false;
+		
+		$scope.toggleSettingsMenu = function() {
+			$scope.isSettingsVisible = !$scope.isSettingsVisible;
+		};
+		
+		$scope.hiddeSettingsMenu = function() {
+			$scope.isSettingsVisible = false;
+		};
+		
+		/********* NEW EXPORT MODAL ******/
+		
+		$scope.isExportModalHidden = true;
+		
+		$scope.exportdata = {header:1,type:"xlsx"};
+		
+		$scope.toggleExportModal = function() {
+			$scope.isExportModalHidden = !$scope.isExportModalHidden;
+		};
+		
 		$scope.exportResponse = false;
-
-		$scope.exportDownloadButton = false;
-
-		$scope.exportData = function() {
-			$scope.exportLoading = true;
-			$http.get($scope.config.apiEndpoint + '/export').then(function(response) {
-				$scope.exportLoading = false;
+		
+		$scope.generateExport = function() {
+			$http.post($scope.config.apiEndpoint + '/export', $scope.exportdata).then(function(response) {
 				$scope.exportResponse = response.data;
-				$scope.exportDownloadButton = true;
 			});
 		};
-
-		$scope.exportDownload = function() {
-			$scope.exportDownloadButton = false;
-			window.open($scope.exportResponse.url);
+		
+		$scope.downloadExport = function() {
+			var url = $scope.exportResponse.url;
+			$scope.exportResponse = false;
+			window.open(url);
 			return false;
 		};
-
-		$scope.applySaveCallback = function() {
-			if ($scope.config.saveCallback) {
-				$injector.invoke($scope.config.saveCallback, this);
-			}
-		};
+		
+		/********** CRUD LIST *******/
 
 		$scope.showCrudList = true;
 

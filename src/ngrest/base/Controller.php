@@ -131,6 +131,7 @@ class Controller extends \luya\admin\base\Controller
         
         // generate crud renderer
         $crud = new RenderCrud();
+        $crud->setModel($this->model);
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);
         $crud->setModelSelection($modelSelection);
