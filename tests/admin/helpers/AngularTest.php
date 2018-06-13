@@ -15,13 +15,13 @@ class AngularTest extends AdminTestCase
 
     public function testTextDirective()
     {
-        $this->assertSame('<zaa-text model="the-model" label="the-label" options=\'[]\'></zaa-text>', Angular::text('the-model', 'the-label'));
-        $this->assertSame('<zaa-text classAttr="value" model="the-model" label="the-label" options=\'[]\'></zaa-text>', Angular::text('the-model', 'the-label', ['classAttr' => 'value']));
+        $this->assertSame('<zaa-text model="the-model" label="the-label" options=\'[]\' fieldid="the-model-zaa-text" fieldname="the-model"></zaa-text>', Angular::text('the-model', 'the-label'));
+        $this->assertSame('<zaa-text classAttr="value" model="the-model" label="the-label" options=\'[]\' fieldid="the-model-zaa-text" fieldname="the-model"></zaa-text>', Angular::text('the-model', 'the-label', ['classAttr' => 'value']));
     }
 
     public function testSortRelationArrayDirective()
     {
-        $this->assertSame('<zaa-sort-relation-array model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\'></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar']));
-        $this->assertSame('<zaa-sort-relation-array classAtr="value" model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\'></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'], ['classAtr' => 'value']));
+        $this->assertSame('<zaa-sort-relation-array model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar']));
+        $this->assertSame('<zaa-sort-relation-array classAtr="value" model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'], ['classAtr' => 'value']));
     }
 }

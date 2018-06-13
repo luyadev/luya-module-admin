@@ -21,11 +21,11 @@ $this->beginBody();
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
                 <modal is-modal-hidden="isExportModalHidden" modal-title="Export">
                     <div ng-if="!isExportModalHidden">
-                        <?= Angular::radio('exportdata.header', 'Kopfzeile', [1 => 'Yes', 0 => 'No']); ?>
-                        <?= Angular::radio('exportdata.type', 'Format', ['csv' => 'CSV', 'xlsx' => 'XLSX']); ?>
-                        <?= Angular::checkboxArray('exportdata.attributes', 'Attributes', $downloadAttributes, ['preselect' => true]); ?>
-                        <button ng-hide="exportResponse" type="button" class="btn btn-icon btn-secondary" ng-click="generateExport()">Generate export</button>
-                        <button ng-show="exportResponse" type="button" class="btn btn-icon btn-download" ng-click="downloadExport()"><?= Module::t('ngrest_crud_csv_export_btn_dl'); ?></button>
+                        <?= Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]); ?>
+                        <?= Angular::radio('exportdata.type', Module::t('crud_exportdata_col_format'), ['xlsx' => Module::t('crud_exportdata_col_format_xlsx'), 'csv' => Module::t('crud_exportdata_col_format_csv')]); ?>
+                        <?= Angular::checkboxArray('exportdata.attributes', Module::t('crud_exportdata_col_columns'), $downloadAttributes, ['preselect' => true]); ?>
+                        <button ng-hide="exportResponse" type="button" class="btn btn-icon btn-secondary" ng-click="generateExport()"><?= Module::t('crud_exportdata_btn_generateexport')?></button>
+                        <button ng-show="exportResponse" type="button" class="btn btn-icon btn-download" ng-click="downloadExport()"><?= Module::t('crud_exportdata_btn_downloadexport'); ?></button>
                     </div>
                 </modal>
                 <div class="crud-toolbar">
@@ -35,7 +35,7 @@ $this->beginBody();
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': isSettingsVisible}">
                             <a class="dropdown-item" ng-click="toggleExportModal()">
-                                <i class="material-icons">get_app</i><span>Export Data</span>
+                                <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn')?></span>
                             </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
                                 <?= $button; ?>

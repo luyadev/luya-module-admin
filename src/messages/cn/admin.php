@@ -3,7 +3,7 @@
 return [
     'language_name' => '中文',
     'button_save' => '保存',
-    'button_confirm' => '确认',
+    'button_yes' => '确认',
     'button_abort' => '取消',
     'button_send' => '发送',
     'login_pre_title' => 'Login for {title}',
@@ -352,4 +352,16 @@ return [
     'view_index_redirect_telephone' => '电话号码',
     'view_index_redirect_telephone_help' => '请输入有效的电话号码 (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => '文件上传权限不足.',
+    
+// 1.2.2
+    
+    'button_no' => 'No',
+    'crud_exportdata_btn' => 'Export Data',
+    'crud_exportdata_col_header' => 'Header',
+    'crud_exportdata_col_format' => 'Format',
+    'crud_exportdata_col_format_csv' => 'CSV',
+    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+    'crud_exportdata_col_columns' => 'Columns',
+    'crud_exportdata_btn_generateexport' => 'Generate export',
+    'crud_exportdata_btn_downloadexport' => 'Download export',
 ];

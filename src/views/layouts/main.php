@@ -361,7 +361,7 @@ $this->beginPage()
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" ng-click="item.close()"><?= Admin::t('button_abort'); ?></button>
-                    <button type="button" class="btn btn-primary" ng-click="item.click()"><?= Admin::t('button_confirm'); ?></button>
+                    <button type="button" class="btn btn-primary" ng-click="item.click()"><?= Admin::t('button_yes'); ?></button>
                 </div>
             </div>
         </div>

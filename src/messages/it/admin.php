@@ -2,7 +2,7 @@
 return [
     'language_name' => 'Italiano',
     'button_save' => 'Salva',
-    'button_confirm' => 'Si',
+    'button_yes' => 'Si',
     'button_abort' => 'Cancella',
     'button_send' => 'Invia',
     'login_pre_title' => 'Login per {title}',
@@ -341,4 +341,16 @@ return [
     'view_index_redirect_telephone' => 'telephone number',
     'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => 'Insufficient permissions for file uploads.',
+    
+// 1.2.2
+    
+    'button_no' => 'No',
+    'crud_exportdata_btn' => 'Export Data',
+    'crud_exportdata_col_header' => 'Header',
+    'crud_exportdata_col_format' => 'Format',
+    'crud_exportdata_col_format_csv' => 'CSV',
+    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+    'crud_exportdata_col_columns' => 'Columns',
+    'crud_exportdata_btn_generateexport' => 'Generate export',
+    'crud_exportdata_btn_downloadexport' => 'Download export',
 ];

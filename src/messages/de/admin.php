@@ -3,7 +3,7 @@
 return [
     'language_name' => 'Deutsch',
     'button_save' => 'Speichern',
-    'button_confirm' => 'Ja',
+    'button_yes' => 'Ja',
     'button_abort' => 'Abbrechen',
     'button_send' => 'Senden',
     'login_pre_title' => 'Anmeldung für {title}',
@@ -353,4 +353,17 @@ return [
     'view_index_redirect_telephone' => 'Telefonnummer',
     'view_index_redirect_telephone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
     'missing_file_upload_permission' => 'Keine berechtigung um Dateien hochzuladen.',
+    
+    
+// 1.2.2
+    
+    'button_no' => 'Nein',
+    'crud_exportdata_btn' => 'Export generieren',
+    'crud_exportdata_col_header' => 'Kopfzeile',
+    'crud_exportdata_col_format' => 'Format',
+    'crud_exportdata_col_format_csv' => 'CSV',
+    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+    'crud_exportdata_col_columns' => 'Spalten',
+    'crud_exportdata_btn_generateexport' => 'Export generieren',
+    'crud_exportdata_btn_downloadexport' => 'Export herunterladen',
 ];

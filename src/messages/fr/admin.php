@@ -18,7 +18,7 @@ return [
 
     'language_name' => 'Français',
     'button_save' => 'Enregistrer',
-    'button_confirm' => 'Oui',
+    'button_yes' => 'Oui',
     'button_abort' => 'Annuler',
     'button_send' => 'Envoyer',
     'login_pre_title' => 'Connexion à {title}',
@@ -352,4 +352,16 @@ return [
     'view_index_redirect_telephone' => 'Numéro de téléphone',
     'view_index_redirect_telephone_help' => 'Veuillez saisir un numéro de téléphone valide (pour le signe "+", un "\" initial est requis).',
     'missing_file_upload_permission' => 'Permissions insuffisantes pour les téléversements de fichiers.',
+    
+// 1.2.2
+    
+    'button_no' => 'No',
+    'crud_exportdata_btn' => 'Export Data',
+    'crud_exportdata_col_header' => 'Header',
+    'crud_exportdata_col_format' => 'Format',
+    'crud_exportdata_col_format_csv' => 'CSV',
+    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+    'crud_exportdata_col_columns' => 'Columns',
+    'crud_exportdata_btn_generateexport' => 'Generate export',
+    'crud_exportdata_btn_downloadexport' => 'Download export',
 ];
