@@ -238,7 +238,7 @@ return [
 
 // rc4
 
-    'api_storage_file_upload_folder_error' => 
+    'api_storage_file_upload_folder_error' =>
     'Erro ao gravar o arquivo na pasta de armazenamento. Um erro de permissão pode causar esse problema. Certifique-se de que a pasta de armazenamento é gravável.',
     'model_user_oldpassword' => 'Senha anterior (antiga)',
     'js_account_update_profile_success' => 'Os dados do perfil foram atualizados com sucesso.',

@@ -48,11 +48,11 @@ class Api extends RestActiveController
     /**
      * @var boolean Defines whether the automatic pagination should be enabled if more then 200 rows of data stored in this table or not. You can also
      * enable pagination by setting the pagination property like:
-     * 
+     *
      * ```php
      * public $pagination = ['pageSize' => 100];
      * ```
-     * 
+     *
      * If its enabled like the example above, the {{$pageSize}} param is ignored.
      */
     public $autoEnablePagination = true;
@@ -78,7 +78,7 @@ class Api extends RestActiveController
     
     /**
      * Enables the pagination for the current API for a given circumstances.
-     * 
+     *
      * @since 1.2.2
      */
     public function ensureAutoPagination()
@@ -102,7 +102,7 @@ class Api extends RestActiveController
      *     return parent::prepareIndexQuery()->with(['relation1', 'relation2']);
      * }
      * ```
-     * 
+     *
      * Make sure to call the parent implementation!
      *
      * @return \yii\db\ActiveQuery
@@ -393,7 +393,7 @@ class Api extends RestActiveController
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
         $fields = ArrayHelper::getColumn($attributes, 'value');
         
-        switch(strtolower($type)) {
+        switch (strtolower($type)) {
             case "csv":
                 $mime = 'application/csv';
                 $extension = 'csv';

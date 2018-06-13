@@ -19,7 +19,7 @@ $this->beginBody();
         <?php if (!$isInline): ?>
             <div class="crud-header">
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
-                <modal is-modal-hidden="isExportModalHidden" modal-title="Export">
+                <modal is-modal-hidden="isExportModalHidden" modal-title="<?= Module::t('crud_exportdata_btn'); ?>">
                     <div ng-if="!isExportModalHidden">
                         <?= Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]); ?>
                         <?= Angular::radio('exportdata.type', Module::t('crud_exportdata_col_format'), ['xlsx' => Module::t('crud_exportdata_col_format_xlsx'), 'csv' => Module::t('crud_exportdata_col_format_csv')]); ?>
@@ -35,7 +35,7 @@ $this->beginBody();
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': isSettingsVisible}">
                             <a class="dropdown-item" ng-click="toggleExportModal()">
-                                <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn')?></span>
+                                <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn'); ?></span>
                             </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
                                 <?= $button; ?>

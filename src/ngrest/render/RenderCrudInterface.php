@@ -16,21 +16,21 @@ interface RenderCrudInterface
 {
     /**
      * Get an array with all relations
-     * 
+     *
      * @return array
      */
     public function getRelationCall();
     
     /**
      * Set an array with relations.
-     * 
+     *
      * @param array $options
      */
     public function setRelationCall(array $options);
     
     /**
      * Set the current ngrest model for the crud.
-     * 
+     *
      * @param \luya\admin\ngrest\base\NgRestModelInterface $model
      * @since 1.2.2
      */

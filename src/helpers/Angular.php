@@ -66,9 +66,9 @@ class Angular
     
     /**
      * Ensures the input structure for optional data for selects, radios etc.
-     * 
+     *
      * Following options are possible:
-     * 
+     *
      * + An array with key => values.
      * + An array with a nested array ['label' => , 'value' => ] format.
      * + A string, this can be used when two way data binding should be used instead of array genertion
@@ -225,9 +225,9 @@ class Angular
      * Radio Input.
      *
      * Generate a list of radios where you can select only one element.
-     * 
+     *
      * Example:
-     * 
+     *
      * ```php
      * Angular::radio('exportType', 'Format', ['csv' => 'CSV', 'xlss' => 'XLSX'])
      * ```
