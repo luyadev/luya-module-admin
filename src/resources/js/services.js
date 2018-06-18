@@ -2,7 +2,7 @@
 adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFilesData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
-	ServiceImagesData.load();
+	//ServiceImagesData.load();
 	//ServiceFilesData.load();
 	ServiceLanguagesData.load();
 	ServicePropertiesData.load();
@@ -121,10 +121,10 @@ $scope.imagesDataReload = function() {
 }
 
 */
-zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function($http, $q, $rootScope, $log) {
 	var service = [];
 	
-	service.data = null;
+	service.data = {};
 	
 	service.load = function(forceReload) {
 		/*
@@ -140,6 +140,31 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $
 			}
 		});
 		*/
+	};
+	
+	/**
+	 * Get a given file from the storage system by its id.
+	 * 
+	 * ```js
+	 * ServiceImagesData.getImage(1).then(function(response) {
+	 *     console.log(response);
+	 * });
+	 */
+	service.getImage = function(id, forceAsyncRequest) {
+		return $q(function(resolve, reject) {
+			$log.info('request image id ' + id);
+			
+			if (service.data.hasOwnProperty(id)) {
+				$log.info('image exists in data array.');
+				return resolve(service.data[id]);
+			}
+			
+			$http.get('admin/api-admin-storage/image-info?id='+id).then(function(response) {
+				var data = response.data;
+    			service.data[response.id] = data;
+    			return resolve(data);
+    		});
+		});
 	};
 	
 	return service;
@@ -164,6 +189,7 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 	service.data = {};
 	
 	service.load = function(forceReload) {
+		/*
 		return $q(function(resolve, reject) {
 			if (service.data !== null && forceReload !== true) {
 				resolve(service.data);
@@ -178,6 +204,7 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 				});
 			}
 		});
+		*/
 	};
 	
 	/**
@@ -193,14 +220,14 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 			$log.info('request file id ' + id);
 			
 			if (service.data.hasOwnProperty(id)) {
-				$log.info('file exists in datat array.');
+				$log.info('file exists in data array.');
 				return resolve(service.data[id]);
 			}
 			
 			$http.get('admin/api-admin-storage/file-info?id='+id).then(function(response) {
-    			service.data[response.id] = response;
-    			
-    			return resolve(response);
+				var data = response.data;
+    			service.data[response.id] = data;
+    			return resolve(data);
     		});
 		});
 	};

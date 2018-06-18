@@ -10,6 +10,12 @@ use luya\helpers\FileHelper;
 /**
  * StorageImage Model.
  *
+ * @property int $id
+ * @property int $file_id
+ * @property int $filter_id
+ * @property int $resolution_width
+ * @property int $resolution_height
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -47,11 +53,29 @@ final class StorageImage extends ActiveRecord
         }
     }
     
+    /**
+     * 
+     * @return StorageFile
+     */
     public function getFile()
     {
         return $this->hasOne(StorageFile::className(), ['id' => 'file_id']);
     }
     
+    /**
+     * Returns the current file source path for the current filter image.
+     * @return string
+     */
+    public function getSource()
+    {
+        $fileName = $this->filter_id . '_' . $this->file->name_new_compound;
+        
+        return Yii::$app->storage->fileAbsoluteHttpPath($fileName);
+    }
+    
+    /**
+     * @return boolean
+     */
     public function deleteSource()
     {
         $image = Yii::$app->storage->getImage($this->id);
@@ -64,5 +88,10 @@ final class StorageImage extends ActiveRecord
         }
         
         return true;
+    }
+    
+    public function extraFields()
+    {
+        return ['source'];
     }
 }

@@ -20,6 +20,8 @@ use yii\base\InvalidParamException;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use luya\admin\file\Query;
+use yii\data\ArrayDataProvider;
+use luya\admin\models\StorageImage;
 
 /**
  * Filemanager and Storage API.
@@ -85,7 +87,7 @@ class StorageController extends RestController
      */
     public function actionDataFiles($folderId = 0, $page = 0)
     {
-        $perPage = 50;
+        $perPage = 10;
         $totalCount = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         
         $files =  $this->getOrSetHasCache(['storageApiDataFiles', $folderId, $page], function() use ($folderId, $page, $perPage) {
@@ -119,12 +121,17 @@ class StorageController extends RestController
             return $files; 
         }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_file WHERE is_deleted=false']));
         
+        return $this->generatePaginationArrayResponse($page, $perPage, $totalCount, $files);
+    }
+    
+    private function generatePaginationArrayResponse($currentPage, $perPage, $totalCount, array $files)
+    {
         return [
+            'page' => (int) $currentPage,
             'perPage' => $perPage,
             'totalCount' => $totalCount,
             'count' => count($files),
             'data' => $files,
-            'page' => (int) $page,
         ];
     }
     
@@ -161,13 +168,24 @@ class StorageController extends RestController
      */
     public function actionFileInfo($id)
     {
-        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user', 'file']);
+        return $model->toArray([], ['user', 'file', 'images']);
+    }
+    
+    public function actionImageInfo($id)
+    {
+        $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage image.");
+        }
+        
+        return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source']);
     }
     
     /**
@@ -229,10 +247,9 @@ class StorageController extends RestController
      *
      * @return array
      */
-    public function actionImageUpload()
+    public function actionImageFilter()
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         try {
             $create = Yii::$app->storage->addImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {

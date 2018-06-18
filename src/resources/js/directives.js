@@ -2322,11 +2322,13 @@
 
                 // ServiceFilesData inhertiance
 
+            	/*
             	$scope.filesData = ServiceFilesData.data;
 
             	$scope.$on('service:FilesData', function(event, data) {
             		$scope.filesData = data;
                 });
+                */
 
                 // controller logic
 
@@ -2353,10 +2355,15 @@
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
+                    	/*
                         var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
                         if (filtering && filtering.length == 1) {
                         	$scope.fileinfo = filtering[0];
                         }
+                        */
+                        ServiceFilesData.getFile(n).then(function(response) {
+                        	$scope.fileinfo = response;
+                        });
                     }
 
                     /* reset file directive if an event resets the image model to undefined */
@@ -2428,17 +2435,25 @@
 
                 // ServiceImagesData inheritance
 
+                /*
                 $scope.imagesData = ServiceImagesData.data;
 
                 $scope.$on('service:ImagesData', function(event, data) {
                     $scope.imagesData = data;
                 });
+                */
 
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
                     if (n != 0 && n !== undefined) {
 
+                    	ServiceImagesData.getImage(n).then(function(response) {
+                    		console.log(response);
+                    	});
+                    	
+                    	/*
+                    	 * TODO USE getImage
                         var filtering = $filter('findidfilter')($scope.imagesData, n, true);
 
                         var file = $filter('findidfilter')($scope.filesData, filtering.fileId, true);
@@ -2446,6 +2461,7 @@
                         if (file && file.thumbnail) {
                         	$scope.imageSrc = file.thumbnail.source;
                         }
+                        */
                     }
                 });
 
@@ -2464,10 +2480,11 @@
                 ngModel : '=',
                 options : '=',
             },
-            controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService) {
+            controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', 'ServiceFilesData', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService, ServiceFilesData) {
 
                 // ServiceImagesData inheritance
 
+        		/*
                 $scope.imagesData = ServiceImagesData.data;
 
                 $scope.$on('service:ImagesData', function(event, data) {
@@ -2477,6 +2494,7 @@
                 $scope.imagesDataReload = function() {
                     return ServiceImagesData.load(true);
                 }
+                */
 
                 // ServiceFiltesrData inheritance
 
@@ -2507,6 +2525,21 @@
                 $scope.imageNotFoundError = false;
 
                 $scope.filterApply = function() {
+
+                    ServiceFilesData.getFile($scope.fileId).then(function(response) {
+                        var images = $filter('filter')(response.images, {filterId: $scope.filterId}, true);
+
+                        // unable to find the image for the given filter, create the image for the filter
+                        if (images.length == 0) {
+                            $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
+                                $scope.ngModel = uploadResponse.data.id;
+                                AdminToastService.success(i18n['js_dir_image_upload_ok']);
+                                $scope.imageLoading = false;
+                            });
+                        }
+                    });
+                    
+                	/*
                     var items = $filter('filter')($scope.imagesData, {fileId: $scope.fileId, filterId: $scope.filterId}, true);
                     if (items && items.length == 0) {
                         $scope.imageLoading = true;
@@ -2530,6 +2563,7 @@
                         $scope.ngModel = item.id
                         $scope.imageinfo = item;
                     }
+                    */
                 };
 
                 $scope.$watch(function() { return $scope.filterId }, function(n, o) {
@@ -2552,7 +2586,11 @@
 
                 $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
-                        var filtering = $filter('findidfilter')($scope.imagesData, n, true);
+                        //var filtering = $filter('findidfilter')($scope.imagesData, n, true);
+                        ServiceImagesData.getImage(n).then(function(response) {
+                        	$scope.imageinfo = response;
+                        });
+                        /*
                         if (filtering) {
                             $scope.imageinfo = filtering;
                             $scope.filterId = filtering.filterId;
@@ -2560,6 +2598,7 @@
                         } else {
                         	$scope.imageNotFoundError = true;
                         }
+                        */
                     }
                     /* reset image preview directive if an event resets the image model to undefined */
                     if (n == undefined || n == 0) {
@@ -2678,7 +2717,7 @@
                     }).then(function (response) {
                     	LuyaLoading.stop();
                     	if (response.status == 200) {
-                            $scope.filesDataReload().then(function() {
+                            //$scope.filesDataReload().then(function() {
                             	var fileref = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
                             	var random = (new Date()).toString();
                             	if (fileref.isImage) {
@@ -2687,7 +2726,7 @@
 	                            }
                             	$scope.fileDetail = fileref;
                             	AdminToastService.success('the file has been replaced successfull.');
-                            });
+                            //});
                     	}
                     }, function() {
                     	LuyaLoading.stop();
@@ -2712,10 +2751,10 @@
                 $scope.$watch('uploadResults', function(n, o) {
                     if ($scope.uploadingfiles != null) {
                         if (n == $scope.uploadingfiles.length && $scope.errorMsg == null) {
-                            $scope.filesDataReload().then(function() {
+                            //$scope.filesDataReload().then(function() {
                             	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
                                 LuyaLoading.stop();
-                            });
+                            //});
                         }
                     }
                 })
@@ -2733,10 +2772,10 @@
 	                            file: item.getAsFile()
 	                        }).then(function(response) {
                         		if (response.data.upload) {
-		                        	$scope.filesDataReload().then(function() {
+		                        	//$scope.filesDataReload().then(function() {
 		                            	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
 		                            	LuyaLoading.stop();
-		                            });
+		                            //});
                         		} else {
                         			AdminToastService.error(response.data.message);
                         			LuyaLoading.stop();
@@ -2887,9 +2926,9 @@
                                 headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                             }).then(function(transport) {
                                 $scope.foldersDataReload().then(function() {
-                                    $scope.filesDataReload().then(function() {
+                                    //$scope.filesDataReload().then(function() {
                                         $scope.currentFolderId = 0;
-                                    });
+                                    //});
                                 });
                             });
 
@@ -2899,10 +2938,10 @@
                                     headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                                 }).then(function() {
                                     $scope.foldersDataReload().then(function() {
-                                        $scope.filesDataReload().then(function() {
+                                        //$scope.filesDataReload().then(function() {
                                             $scope.currentFolderId = 0;
                                             $toast.close();
-                                        });
+                                        //});
                                     });
                                 });
                             }]);
@@ -2957,10 +2996,10 @@
                     $http.post('admin/api-admin-storage/filemanager-move-files', $.param({'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId}), {
                         headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                     }).then(function(transport) {
-                        $scope.filesDataReload().then(function() {
+                        //$scope.filesDataReload().then(function() {
                             $scope.selectedFiles = [];
                             $scope.showFoldersToMove = false;
-                        });
+                        //});
                     });
                 };
 
@@ -2969,12 +3008,12 @@
                         $http.post('admin/api-admin-storage/filemanager-remove-files', $.param({'ids' : $scope.selectedFiles}), {
                             headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                         }).then(function(transport) {
-                            $scope.filesDataReload().then(function() {
+                            //$scope.filesDataReload().then(function() {
                                 $toast.close();
                                 AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
                                 $scope.selectedFiles = [];
                             	$scope.closeFileDetail();
-                            });
+                            //});
                         });
                     }]);
                 }
