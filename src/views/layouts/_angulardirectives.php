@@ -121,8 +121,8 @@ use luya\admin\helpers\Angular;
             <div class="link-selector-btn btn btn-secondary" ng-click="toggleModal()">
                 <i class="material-icons left" ng-show="!fileinfo.name">file_upload</i>
                 <i class="material-icons left" ng-show="fileinfo.name">attach_file</i>
-                <span ng-if="fileinfo.name">{{fileinfo.name | truncateMiddle: 20}}</span>
-                <span ng-if="!fileinfo.name">
+                <span ng-if="fileinfo.name_original">{{fileinfo.name_original | truncateMiddle: 20}}</span>
+                <span ng-if="!fileinfo.name_original">
                     <?= Admin::t('layout_select_file'); ?>
                 </span>
             </div>
@@ -148,7 +148,7 @@ use luya\admin\helpers\Angular;
             <div class="imageupload-preview-sizer"></div>
             <img ng-src="{{thumb.source}}" ng-show="imageinfo != null" class="imageupload-preview-image" />
             <div class="imageupload-infos">
-                <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolutionWidth }} x {{ imageinfo.resolutionHeight }}</div>
+                <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolution_width }} x {{ imageinfo.resolution_height }}</div>
             </div>
         </div>
         <div class="imageupload-upload">

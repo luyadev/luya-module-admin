@@ -3879,10 +3879,9 @@ zaa.factory('HtmlStorage', function() {
                 $scope.imageNotFoundError = false;
 
                 $scope.filterApply = function() {
-
                     ServiceFilesData.getFile($scope.fileId).then(function(response) {
                         var images = $filter('filter')(response.images, {filterId: $scope.filterId}, true);
-
+                        $scope.imageLoading = true;
                         // unable to find the image for the given filter, create the image for the filter
                         if (images.length == 0) {
                             $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
@@ -3943,6 +3942,8 @@ zaa.factory('HtmlStorage', function() {
                         //var filtering = $filter('findidfilter')($scope.imagesData, n, true);
                         ServiceImagesData.getImage(n).then(function(response) {
                         	$scope.imageinfo = response;
+                        	$scope.fileId = response.file_id;
+                        	$scope.filterId = response.filter_id;
                         });
                         /*
                         if (filtering) {
@@ -4027,21 +4028,26 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.paginations = [];
                 
+                $scope.currentPageId = 0;
+                
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function(folderId) {
-                	$scope.getFilesForPageAndFolder(folderId, 0);
+                	console.log(folderId);
+                	if (folderId !== undefined) {
+                		$scope.getFilesForPageAndFolder(folderId, 0);
+                	}
                 });
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
-                        $scope.filesData = response.data.data;
+                        console.log('request filemanager list', folderId, pageId, response);
+                		$scope.filesData = response.data.data;
                         $scope.filesMetaToPagination(response.data.__meta);
                 	});
                 };
 
                 $scope.filesMetaToPagination = function(meta) {
                     var pages = [];
-                    console.log(meta);
                     for (i = 0; i < meta.totalPages; i++) {
                         var isActive = meta.currentPage == i;
                         pages.push({isActive: isActive, label: i+1, index: i});
@@ -4050,8 +4056,13 @@ zaa.factory('HtmlStorage', function() {
                 };
 
                 $scope.getFilesForPage = function(pageId) {
+                	$scope.currentPageId = pageId;
                     $scope.getFilesForPageAndFolder($scope.currentFolderId, pageId);
                 };
+                
+                $scope.getFilesForCurrentPage = function() {
+                	$scope.getFilesForPageAndFolder($scope.currentFolderId, $scope.currentPageId);
+                }
                 
                 // ServiceFolderId
 
@@ -4122,10 +4133,9 @@ zaa.factory('HtmlStorage', function() {
                 $scope.$watch('uploadResults', function(n, o) {
                     if ($scope.uploadingfiles != null) {
                         if (n == $scope.uploadingfiles.length && $scope.errorMsg == null) {
-                            //$scope.filesDataReload().then(function() {
-                            	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
-                                LuyaLoading.stop();
-                            //});
+                        	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                            LuyaLoading.stop();
+                            $scope.getFilesForCurrentPage();
                         }
                     }
                 })
@@ -4232,9 +4242,7 @@ zaa.factory('HtmlStorage', function() {
                 	if (!newFolderName) {
                 		return;
                 	}
-                    $http.post('admin/api-admin-storage/folder-create', $.param({ folderName : newFolderName , parentFolderId : $scope.currentFolderId }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function() {
+                    $http.post('admin/api-admin-storage/folder-create', { folderName : newFolderName , parentFolderId : $scope.currentFolderId }).then(function() {
                         $scope.foldersDataReload().then(function() {
                             $scope.folderFormToggler();
                             $scope.newFolderName = null;
@@ -4258,6 +4266,7 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.changeCurrentFolderId = function(folderId, noState) {
                     $scope.currentFolderId = folderId;
+                    $scope.currentPageId = 0;
                     if (noState !== true) {
                     	ServiceFoldersDirecotryId.folderId = folderId;
                     	$http.post('admin/api-admin-common/save-filemanager-folder-state', {folderId : folderId}, {ignoreLoadingBar: true});
@@ -4280,22 +4289,16 @@ zaa.factory('HtmlStorage', function() {
                 $scope.folderDeleteConfirmForm = false;
                 
                 $scope.updateFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    });
+                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name });
                 };
                 
                 $scope.deleteFolder = function(folder) {
 
                     // check if folder is empty
-                	$http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
+                	$http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
                         if (transport.data == true) {
 
-                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, $.param({ name : folder.name }), {
-                                headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                            }).then(function(transport) {
+                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
                                 $scope.foldersDataReload().then(function() {
                                     //$scope.filesDataReload().then(function() {
                                         $scope.currentFolderId = 0;
@@ -4305,9 +4308,7 @@ zaa.factory('HtmlStorage', function() {
 
                         } else {
                             AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: folder.filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                                $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, $.param({ name : folder.name }), {
-                                    headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                                }).then(function() {
+                                $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function() {
                                     $scope.foldersDataReload().then(function() {
                                         //$scope.filesDataReload().then(function() {
                                             $scope.currentFolderId = 0;
@@ -4364,9 +4365,7 @@ zaa.factory('HtmlStorage', function() {
                 };
 
                 $scope.moveFilesTo = function(folderId) {
-                    $http.post('admin/api-admin-storage/filemanager-move-files', $.param({'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId}), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
+                    $http.post('admin/api-admin-storage/filemanager-move-files', {'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId}).then(function(transport) {
                         //$scope.filesDataReload().then(function() {
                             $scope.selectedFiles = [];
                             $scope.showFoldersToMove = false;
@@ -4376,9 +4375,7 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.removeFiles = function() {
                     AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                        $http.post('admin/api-admin-storage/filemanager-remove-files', $.param({'ids' : $scope.selectedFiles}), {
-                            headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                        }).then(function(transport) {
+                        $http.post('admin/api-admin-storage/filemanager-remove-files', {'ids' : $scope.selectedFiles}).then(function(transport) {
                             //$scope.filesDataReload().then(function() {
                                 $toast.close();
                                 AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
@@ -4392,9 +4389,7 @@ zaa.factory('HtmlStorage', function() {
                 // file detail view logic
 
                 $scope.storeFileCaption = function(fileDetail) {
-                	$http.post('admin/api-admin-storage/filemanager-update-caption', $.param({'id': fileDetail.id, 'captionsText' : fileDetail.captionArray}), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
+                	$http.post('admin/api-admin-storage/filemanager-update-caption', {'id': fileDetail.id, 'captionsText' : fileDetail.captionArray}).then(function(transport) {
                     	AdminToastService.success('Captions has been updated');
                     });
                 }
@@ -4404,7 +4399,7 @@ zaa.factory('HtmlStorage', function() {
                 $scope.init = function() {
                 	if ($scope.$parent.fileinfo) {
                 		$scope.selectedFileFromParent = $scope.$parent.fileinfo;
-                		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folderId, true);
+                		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folder_id, true);
                 	}
                 }
 
