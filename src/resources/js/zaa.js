@@ -122,7 +122,7 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
 /**
  * resolver (or resolverProvider).
  * 
- * > Warning: The config part is known injected `resolverProvider` event when the provider name is `resolver`.
+ * > Warning: The config part is known injected `resolverProvider` even when the provider name is `resolver`.
  * > Info: can not rename this in admin 1.2 release due to usage in cms module old version branch
  * 
  * Attach custom callback function to the custom state resolve. Use the resolverProvider in
@@ -159,7 +159,19 @@ zaa.provider("resolver", [function() {
 /* FACTORIES */
 
 /**
- * LUYA LOADING
+ * LUYA Admin Loader.
+ * 
+ * A fullscreen loading bar which display a loader icon on a black full screen.
+ * 
+ * ```js
+ * LuyaLoading.start('We are loading something ...');
+ * ```
+ * 
+ * In order to hide the above loading screen use:
+ * 
+ * ```js
+ * LuyaLoading.stop();
+ * ```
  */
 zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
 
@@ -278,6 +290,13 @@ zaa.factory("AdminClassService", function () {
     return service;
 });
 
+/**
+ * A factory recipe to provide cache reload.
+ * 
+ * ```js
+ * CacheReloadService.reload();
+ * ```
+ */
 zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window) {
 
     var service = [];
@@ -291,6 +310,13 @@ zaa.factory('CacheReloadService', ['$http', '$window', function ($http, $window)
     return service;
 }]);
 
+/**
+ * Intercept the http request in order to provide the bearer token and write debug infos.
+ * 
+ * + Handling authentification trough Bearer Auth
+ * + Redirect to logout page on 401, 403 or 405 response status
+ * + Provide data for AdminDebugBar.
+ */
 zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminDebugBar', function ($rootScope, $q, AdminToastService, AdminDebugBar) {
     return {
         request: function (config) {
