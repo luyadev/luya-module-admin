@@ -360,6 +360,9 @@ use luya\admin\helpers\Angular;
                         </tr>
                     </tbody>
                 </table>
+                <ul class="pagination">
+                    <li ng-repeat="page in paginations" ng-class="{'active': page.isActive}" class="page-item"><a class="page-link" ng-click="getFilesForPage(page.index)">{{ page.label }}</a></li>
+                </ul>
             </div>
         </div>
         <!-- /Files -->

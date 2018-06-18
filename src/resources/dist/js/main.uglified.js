@@ -4019,11 +4019,13 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.foldersDataReload = function() {
                     return ServiceFoldersData.load(true);
-                }
+                };
 
                 // ServiceFilesData inheritance
 
                 $scope.filesData = [];
+
+                $scope.paginations = [];
                 
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function(folderId) {
@@ -4032,8 +4034,23 @@ zaa.factory('HtmlStorage', function() {
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
-                		$scope.filesData = response.data.data;
+                        $scope.filesData = response.data.data;
+                        $scope.filesMetaToPagination(response.data.__meta);
                 	});
+                };
+
+                $scope.filesMetaToPagination = function(meta) {
+                    var pages = [];
+                    console.log(meta);
+                    for (i = 0; i < meta.totalPages; i++) {
+                        var isActive = meta.currentPage == i;
+                        pages.push({isActive: isActive, label: i+1, index: i});
+                    }
+                    $scope.paginations = pages;
+                };
+
+                $scope.getFilesForPage = function(pageId) {
+                    $scope.getFilesForPageAndFolder($scope.currentFolderId, pageId);
                 };
                 
                 // ServiceFolderId

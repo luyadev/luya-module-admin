@@ -22,6 +22,7 @@ use yii\data\ActiveDataProvider;
 use luya\admin\file\Query;
 use yii\data\ArrayDataProvider;
 use luya\admin\models\StorageImage;
+use luya\admin\file\Item;
 
 /**
  * Filemanager and Storage API.
@@ -87,28 +88,36 @@ class StorageController extends RestController
      */
     public function actionDataFiles($folderId = 0, $page = 0)
     {
-        $perPage = 10;
-        $totalCount = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
+        $perPage = 20;
+        //$totalCount = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
+        $totalCount = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         
-        $files =  $this->getOrSetHasCache(['storageApiDataFiles', $folderId, $page], function() use ($folderId, $page, $perPage) {
+        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
+        $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
+
+        $files =  $this->getOrSetHasCache(['storageApiDataFiles', $folderId, $page], function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail) {
             $files = [];
-            $fileQuery = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*50)->limit($perPage)->all();
+            $fileQuery = StorageFile::find()
+                ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*$perPage)->limit($perPage)->asArray()->all();
+            //$fileQuery = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*$perPage)->limit($perPage)->all();
             
-            foreach ($fileQuery as $file) {
+
+            foreach ($fileQuery as $fileArray) {
+
+                $file = Item::create($fileArray);
                 $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
+                    /* TODO: as this will consum the full admin_storage_file and admin_storage_image table */
                     // add tiny thumbnail
-                    $filter = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
-                    if ($filter) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
+                    if ($tinyCrop) {
+                        $thumbnail = Yii::$app->storage->addImage($file->id, $tinyCrop['id']);
                         if ($thumbnail) {
                             $data['thumbnail'] = $thumbnail->toArray(['source']);
                         }
                     }
                     // add meidum thumbnail
-                    $filter = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
-                    if ($filter) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
+                    if ($mediumThumbnail) {
+                        $thumbnail = Yii::$app->storage->addImage($file->id, $mediumThumbnail['id']);
                         if ($thumbnail) {
                             $data['thumbnailMedium'] = $thumbnail->toArray(['source']);
                         }
@@ -127,10 +136,12 @@ class StorageController extends RestController
     private function generatePaginationArrayResponse($currentPage, $perPage, $totalCount, array $files)
     {
         return [
-            'page' => (int) $currentPage,
-            'perPage' => $perPage,
-            'totalCount' => $totalCount,
-            'count' => count($files),
+            '__meta' => [
+                'currentPage' => (int) $currentPage,
+                'perPage' => $perPage,
+                'totalPages' => ceil($totalCount/$perPage),
+                'totalFilesCount' => $totalCount,
+            ],
             'data' => $files,
         ];
     }
