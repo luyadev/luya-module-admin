@@ -17,13 +17,13 @@ use luya\admin\Module;
                 <table class="table m-0 p-0">
                     <thead>
                         <tr>
-                            <th>
+                            <th class="w-25">
                                 <span class="btn btn-icon btn-link" ng-click="toggleModule(items)"><i class="material-icons">done_all</i></span>
                                 <span class="btn btn-icon btn-link" ng-click="clearModule(items)"><i class="material-icons">clear_all</i></span>
                             </th>
-                            <th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_add'); ?>" tooltip-position="bottom">note_add</i></th>
-                            <th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_edit'); ?>" tooltip-position="bottom">create</i></th>
-                            <th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_remove'); ?>" tooltip-position="bottom">delete</i></th>
+                            <th class="w-25"><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_add'); ?>" tooltip-position="bottom">note_add</i></th>
+                            <th class="w-25"><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_edit'); ?>" tooltip-position="bottom">create</i></th>
+                            <th class="w-25"><i class="material-icons" tooltip tooltip-text="<?= Module::t('aws_groupauth_th_remove'); ?>" tooltip-position="bottom">delete</i></th>
                         </tr>
                     </thead>
                     <tr ng-repeat="a in items">
