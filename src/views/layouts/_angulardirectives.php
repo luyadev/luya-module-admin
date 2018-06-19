@@ -3,22 +3,7 @@ use luya\admin\Module as Admin;
 use luya\admin\helpers\Angular;
 
 ?>
-<div class="loading-overlay" ng-if="LuyaLoading.getState()">
-    <div class="loading-overlay-content">
-        <h3 class="loading-overlay-title">
-            {{LuyaLoading.getStateMessage()}}
-        </h3>
-        <div class="loading-overlay-loader">
-            <div class="loading-indicator">
-                <div class="rect1"></div><!--
-                --><div class="rect2"></div><!--
-                --><div class="rect3"></div><!--
-                --><div class="rect4"></div><!--
-                --><div class="rect5"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- modal template -->
 <script type="text/ng-template" id="modal">
 <div class="modal" tabindex="-1" aria-hidden="true" ng-class="{'show':!isModalHidden}" zaa-esc="escModal()">
     <div class="modal-dialog modal-xl">
@@ -36,7 +21,8 @@ use luya\admin\helpers\Angular;
     </div>
 </div>
 </script>
-<!-- UPDATE REDIRECT FORM -->
+
+<!-- page update redirect form -->
 <script type="text/ng-template" id="updateformredirect.html">
 <div>
 	<div class="form-group form-side-by-side">
@@ -97,9 +83,8 @@ use luya\admin\helpers\Angular;
     </div>
 </div>
 </script>
-<!-- /UPDATE REDIRECT FORM -->
 
-
+<!-- cms menu dropdown page selector -->
 <script type="text/ng-template" id="menuDropdownReverse">
     <span class="treeview-label treeview-label-page" ng-click="changeModel(data)">
         <span class="treeview-icon">
@@ -115,6 +100,7 @@ use luya\admin\helpers\Angular;
     </ul>
 </script>
 
+<!-- storage file upload directive -->
 <script type="text/ng-template" id="storageFileUpload">
     <div class="link-selector">
         <div class="link-selector-actions">
@@ -138,6 +124,7 @@ use luya\admin\helpers\Angular;
     </div>
 </script>
 
+<!-- storage image upload directive (including the file upload directive) -->
 <script type="text/ng-template" id="storageImageUpload">
     <div class="imageupload">
         <div ng-if="imageNotFoundError" class="alert alert-danger" style="margin-top:0px;">The requested image id ({{ngModel}}) could not be found anymore. The orignal file has been deleted in the filemanager!</div>
@@ -161,6 +148,7 @@ use luya\admin\helpers\Angular;
     </div>
 </script>
 
+<!-- filemanager folder recursion template -->
 <script type="text/ng-template" id="reverseFolders">
     <div class="folders-folder" ng-init="editFolderLabel = false" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove, 'folders-folder--undeletable': folder.subfolder}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
 
@@ -206,7 +194,7 @@ use luya\admin\helpers\Angular;
     </ul>
 </script>
 
-<!-- FILEMANAGER -->
+<!-- filemanger directive -->
 <script type="text/ng-template" id="storageFileManager">
 <div class="filemanager"  ng-paste="pasteUpload($event)">
         <!-- Folders -->
@@ -376,9 +364,6 @@ use luya\admin\helpers\Angular;
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
         </div>
-
-        <h5 class="mt-4">
-        </h5>
         <div class="inline-edit mt-4">
             <div class="inline-edit-value">
                 <h5 class="inline-edit-label m-0" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</h5>
@@ -451,5 +436,3 @@ use luya\admin\helpers\Angular;
         </form>
     </div>
 </script>
-
-<!-- /ANGULAR SCRIPTS -->

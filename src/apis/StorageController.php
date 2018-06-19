@@ -23,6 +23,7 @@ use luya\admin\file\Query;
 use yii\data\ArrayDataProvider;
 use luya\admin\models\StorageImage;
 use luya\admin\file\Item;
+use luya\helpers\ArrayHelper;
 
 /**
  * Filemanager and Storage API.
@@ -88,7 +89,7 @@ class StorageController extends RestController
      */
     public function actionDataFiles($folderId = 0, $page = 0)
     {
-        $perPage = 20;
+        $perPage = 50;
         //$totalCount = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         $totalCount = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         
@@ -98,16 +99,22 @@ class StorageController extends RestController
         $files =  $this->getOrSetHasCache(['storageApiDataFiles', $folderId, $page], function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail) {
             $files = [];
             $fileQuery = StorageFile::find()
-                ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*$perPage)->limit($perPage)->asArray()->all();
-            //$fileQuery = (new Query())->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->offset($page*$perPage)->limit($perPage)->all();
+                ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])
+                ->offset($page*$perPage)
+                ->indexBy(['id'])
+                ->limit($perPage)
+                ->asArray()
+            ->all();
             
+            // ass the addImage() method requires the list of images and files in Yi::$app->storage we have to inject, them:
+            Yii::$app->storage->setFilesArray($fileQuery);
+            Yii::$app->storage->setImagesArray(StorageImage::find()->where(['in', 'file_id', ArrayHelper::getColumn($fileQuery, 'id')])->asArray()->indexBy(['id'])->all());
 
             foreach ($fileQuery as $fileArray) {
 
                 $file = Item::create($fileArray);
                 $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
-                    /* TODO: as this will consum the full admin_storage_file and admin_storage_image table */
                     // add tiny thumbnail
                     if ($tinyCrop) {
                         $thumbnail = Yii::$app->storage->addImage($file->id, $tinyCrop['id']);
