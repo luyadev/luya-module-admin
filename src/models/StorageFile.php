@@ -117,6 +117,16 @@ final class StorageFile extends ActiveRecord
     }
     
     /**
+     * Get all images fro the given file.
+     * 
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(StorageImage::class, ['file_id' => 'id']);
+    }
+    
+    /**
      * Get the file for the corresponding model.
      *
      * @return \luya\admin\file\Item|boolean
@@ -132,6 +142,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file'];
+        return ['user', 'file', 'images'];
     }
 }

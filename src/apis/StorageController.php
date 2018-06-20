@@ -16,8 +16,10 @@ use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
-use yii\base\InvalidParamException;
 use yii\web\NotFoundHttpException;
+use luya\admin\models\StorageImage;
+use luya\admin\file\Item;
+use luya\helpers\ArrayHelper;
 
 /**
  * Filemanager and Storage API.
@@ -41,12 +43,11 @@ class StorageController extends RestController
     /**
      * Flush the storage caching data.
      */
-    protected function flushApiCache()
+    protected function flushApiCache($folderId = 0, $page = 0)
     {
         Yii::$app->storage->flushArrays();
         $this->deleteHasCache('storageApiDataFolders');
-        $this->deleteHasCache('storageApiDataFiles');
-        $this->deleteHasCache('storageApiDataImages');
+        $this->deleteHasCache(['storageApiDataFiles', (int) $folderId, (int) $page]);
     }
     
     // DATA READERS
@@ -58,22 +59,15 @@ class StorageController extends RestController
      */
     public function actionDataFolders()
     {
-        $cache = $this->getHasCache('storageApiDataFolders');
-        
-        if ($cache === false) {
+        return $this->getOrSetHasCache('storageApiDataFolders', function() {
             $folders = [];
             foreach (Yii::$app->storage->findFolders() as $key => $folder) {
                 $folders[$key] = $folder->toArray();
                 $folders[$key]['toggle_open'] = (int) Yii::$app->adminuser->identity->setting->get('foldertree.'.$folder->id);
                 $folders[$key]['subfolder'] = Yii::$app->storage->getFolder($folder->id)->hasChild();
             }
-            
-            $this->setHasCache('storageApiDataFolders', $folders, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']), 0);
-            
             return $folders;
-        }
-        
-        return $cache;
+        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']));
     }
     
     /**
@@ -81,62 +75,77 @@ class StorageController extends RestController
      *
      * @return array
      */
-    public function actionDataFiles()
+    public function actionDataFiles($folderId = 0, $page = 0)
     {
-        $cache = $this->getHasCache('storageApiDataFiles');
+        $perPage = 50;
+        $totalCount = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
         
-        if ($cache === false) {
+        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
+        $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
+
+        $files =  $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail) {
             $files = [];
-            foreach (Yii::$app->storage->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
+            $fileQuery = StorageFile::find()
+                ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])
+                ->offset($page*$perPage)
+                ->indexBy(['id'])
+                ->limit($perPage)
+                ->asArray()
+            ->all();
+            
+            // ass the addImage() method requires the list of images and files in Yi::$app->storage we have to inject, them:
+            Yii::$app->storage->setFilesArray($fileQuery);
+            Yii::$app->storage->setImagesArray(StorageImage::find()->where(['in', 'file_id', ArrayHelper::getColumn($fileQuery, 'id')])->asArray()->indexBy(['id'])->all());
+
+            foreach ($fileQuery as $fileArray) {
+
+                $file = Item::create($fileArray);
                 $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
                 if ($file->isImage) {
                     // add tiny thumbnail
-                    $filter = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
-                    if ($filter) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
+                    if ($tinyCrop) {
+                        $thumbnail = Yii::$app->storage->addImage($file->id, $tinyCrop['id']);
                         if ($thumbnail) {
                             $data['thumbnail'] = $thumbnail->toArray(['source']);
                         }
                     }
                     // add meidum thumbnail
-                    $filter = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
-                    if ($filter) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $filter['id']);
+                    if ($mediumThumbnail) {
+                        $thumbnail = Yii::$app->storage->addImage($file->id, $mediumThumbnail['id']);
                         if ($thumbnail) {
                             $data['thumbnailMedium'] = $thumbnail->toArray(['source']);
                         }
                     }
                 }
-                $files[] = $data;
+                
+                $files[$data['id']] = $data;
             }
-            $this->setHasCache('storageApiDataFiles', $files, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_file WHERE is_deleted=false']), 0);
-            return $files;
-        }
+            
+            return $files; 
+        }, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
         
-        return $cache;
+        return $this->generatePaginationArrayResponse($page, $perPage, $totalCount, $files);
     }
     
     /**
-     * Get all images from the storage container.
-     *
+     * 
+     * @param integer $currentPage
+     * @param integer $perPage
+     * @param integer $totalCount
+     * @param array $files
      * @return array
      */
-    public function actionDataImages()
+    private function generatePaginationArrayResponse($currentPage, $perPage, $totalCount, array $files)
     {
-        $cache = $this->getHasCache('storageApiDataImages');
-        
-        if ($cache === false) {
-            $images = [];
-            foreach (Yii::$app->storage->findImages() as $image) {
-                if (!empty($image->file) && !$image->file->isHidden && !$image->file->isDeleted) {
-                    $images[] = $image->toArray(['id', 'fileId', 'filterId', 'source', 'resolutionHeight', 'resolutionWidth']);
-                }
-            }
-            $this->setHasCache('storageApiDataImages', $images, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_image']), 0);
-            return $images;
-        }
-        
-        return $cache;
+        return [
+            '__meta' => [
+                'currentPage' => (int) $currentPage,
+                'perPage' => $perPage,
+                'totalPages' => ceil($totalCount/$perPage),
+                'totalFilesCount' => $totalCount,
+            ],
+            'data' => $files,
+        ];
     }
     
     // ACTIONS
@@ -145,17 +154,37 @@ class StorageController extends RestController
      * Get all storage file informations for a given ID.
      *
      * @param integer $fileId
+     * @throws NotFoundHttpException
+     * @return array
      * @since 1.2.0
      */
     public function actionFileInfo($id)
     {
-        $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
+        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user', 'file']);
+        return $model->toArray([], ['user', 'file', 'images']);
+    }
+    
+    /**
+     * 
+     * @param integer $id
+     * @throws NotFoundHttpException
+     * @return array
+     * @since 1.2.2
+     */
+    public function actionImageInfo($id)
+    {
+        $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
+        
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage image.");
+        }
+        
+        return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source']);
     }
     
     /**
@@ -165,7 +194,7 @@ class StorageController extends RestController
      * @return array
      * @since 1.2.0
      */
-    public function actionFileUpdate($id)
+    public function actionFileUpdate($id, $pageId = 0)
     {
         $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
         
@@ -177,7 +206,7 @@ class StorageController extends RestController
         $model->attributes = $post;
         
         if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
-            $this->flushApiCache();
+            $this->flushApiCache($model->folder_id, $pageId);
             return $model;
         }
         
@@ -195,6 +224,7 @@ class StorageController extends RestController
         
         $fileId = Yii::$app->request->post('id', false);
         $captionsText = Yii::$app->request->post('captionsText', false);
+        $pageId = Yii::$app->request->post('pageId', 0);
     
         if ($fileId && is_scalar($fileId) && $captionsText) {
             $model = StorageFile::findOne($fileId);
@@ -203,7 +233,7 @@ class StorageController extends RestController
                     'caption' => I18n::encode($captionsText),
                 ]);
     
-                $this->flushApiCache();
+                $this->flushApiCache($model->folder_id, $pageId);
     
                 return true;
             }
@@ -217,17 +247,19 @@ class StorageController extends RestController
      *
      * @return array
      */
-    public function actionImageUpload()
+    public function actionImageFilter()
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         try {
             $create = Yii::$app->storage->addImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {
                 return ['error' => false, 'id' => $create->id];
             }
         } catch (Exception $err) {
-            return ['error' => true, 'message' => Module::t('api_storage_image_upload_error', ['error' => $err->getMessage()])];
+            return $this->sendArrayError([
+                'error' => true, 
+                'message' => Module::t('api_storage_image_upload_error'),
+            ]);
         }
     }
     
@@ -251,6 +283,8 @@ class StorageController extends RestController
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
         
         $fileId = Yii::$app->request->post('fileId', false);
+        $pageId = Yii::$app->request->post('pageId', 0);
+        Yii::warning('replace request for file id' . $fileId, __METHOD__);
         $raw = $_FILES['file'];
         /** @var $file \luya\admin\file\Item */
         if ($file = Yii::$app->storage->getFile($fileId)) {
@@ -265,8 +299,8 @@ class StorageController extends RestController
                 }
                 
                 if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
-                    foreach (Yii::$app->storage->findImages(['file_id' => $file->id]) as $img) {
-                        Storage::removeImage($img->id, false);
+                    foreach (StorageImage::find()->where(['file_id' => $file->id])->all() as $img) {
+                        $removal = Storage::removeImage($img->id, false);
                     }
                     
                     // calculate new file files based on new file
@@ -278,8 +312,7 @@ class StorageController extends RestController
                         'file_size' => $fileSize,
                         'upload_timestamp' => time(),
                     ]);
-                    $this->flushApiCache();
-                    
+                    $this->flushApiCache($model->folder_id, $pageId);
                     return true;
                 }
             }
@@ -330,8 +363,13 @@ class StorageController extends RestController
         $toFolderId = Yii::$app->request->post('toFolderId', 0);
         $fileIds = Yii::$app->request->post('fileIds', []);
         
+        $currentPageId = Yii::$app->request->post('currentPageId', 0);
+        $currentFolderId = Yii::$app->request->post('currentFolderId', 0);
+        
         $response = Storage::moveFilesToFolder($fileIds, $toFolderId);
-        $this->flushApiCache();
+        $this->flushApiCache($currentFolderId, $currentPageId);
+        $this->flushApiCache($toFolderId, $currentPageId);
+        $this->flushHasCache($toFolderId, 0);
         return $response;
     }
     
@@ -344,13 +382,14 @@ class StorageController extends RestController
     public function actionFilemanagerRemoveFiles()
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
+        $pageId = Yii::$app->request->post('pageId', 0);
+        $folderId = Yii::$app->request->post('folderId', 0);
         foreach (Yii::$app->request->post('ids', []) as $id) {
             if (!Storage::removeFile($id)) {
                 return false;
             }
         }
-        $this->flushApiCache();
+        $this->flushApiCache($folderId, $pageId);
         return true;
     }
     
@@ -362,12 +401,12 @@ class StorageController extends RestController
      */
     public function actionIsFolderEmpty($folderId)
     {
-        $count = Yii::$app->storage->getFolder($folderId)->getFilesCount();
-        if ($count > 0) {
-            return false;
-        }
+        $count = StorageFile::find()->where(['folder_id' => $folderId, 'is_deleted' => false])->count();
         
-        return true;
+        return [
+            'count' => $count,
+            'empty' => $count > 0  ? false : true,
+        ];
     }
     
     /**

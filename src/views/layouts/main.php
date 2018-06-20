@@ -25,6 +25,22 @@ $this->beginPage()
 <body ng-cloak flow-prevent-drop class="{{browser}}" ng-class="{'debugToolbarOpen': showDebugBar, 'modal-open' : !AdminClassService.modalStackIsEmpty()}">
 <?php $this->beginBody(); ?>
 <?= $this->render('_angulardirectives'); ?>
+<div class="loading-overlay" ng-if="LuyaLoading.getState()">
+    <div class="loading-overlay-content">
+        <h3 class="loading-overlay-title">
+            {{LuyaLoading.getStateMessage()}}
+        </h3>
+        <div class="loading-overlay-loader">
+            <div class="loading-indicator">
+                <div class="rect1"></div><!--
+                --><div class="rect2"></div><!--
+                --><div class="rect3"></div><!--
+                --><div class="rect4"></div><!--
+                --><div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="luya">
     <div class="luya-mainnav" ng-class="{'luya-mainnav-small' : !isHover}">
         <div class="mainnav" ng-class="{'mainnav-small' : !isHover}">

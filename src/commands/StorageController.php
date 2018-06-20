@@ -4,15 +4,18 @@ namespace luya\admin\commands;
 
 use Yii;
 use luya\admin\importers\StorageImporter;
+use luya\console\Command;
 
 /**
  * LUYA Admin Storage command.
+ *
+ * As since 1.2 the storage importer is removed, we have to move all commands here, as they wont work since storage system refactoring.
  *
  * @author Martin Petrasch <martin.petrasch@zephir.ch>
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-class StorageController extends \luya\console\Command
+class StorageController extends Command
 {
     /**
      * Delete orphaned files, but requires user confirmation to ensure delete process.
@@ -96,7 +99,6 @@ class StorageController extends \luya\console\Command
                     ':filterId' => $row['filter_id'],
                 ])->queryOne();
             
-                
                 if (!$keep) {
                     $this->outputError('Unable to find the first row for this delete request. Skip this one');
                     continue;

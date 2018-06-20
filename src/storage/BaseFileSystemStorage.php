@@ -300,7 +300,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFilesArrayItem($fileId)
     {
-        return (isset($this->filesArray[$fileId])) ? $this->filesArray[$fileId] : false;
+        return isset($this->filesArray[$fileId]) ? $this->filesArray[$fileId] : false;
     }
 
     private $_imagesArray;
@@ -341,7 +341,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getImagesArrayItem($imageId)
     {
-        return (isset($this->imagesArray[$imageId])) ? $this->imagesArray[$imageId] : false;
+        return isset($this->imagesArray[$imageId]) ? $this->imagesArray[$imageId] : false;
     }
 
     /**
@@ -577,7 +577,7 @@ abstract class BaseFileSystemStorage extends Component
      * @param integer $filterId The id of the filter which should be applied to, if filter is 0, no filter will be added. Filter can new also be the string name of the filter like `tiny-crop`.
      * @param boolean $throwException Whether the addImage should throw an exception or just return boolean
      * @return bool|\luya\admin\image\Item|Exception Returns the item object, if an error happens and $throwException is off `false` is returned otherwhise an exception is thrown.
-     * @throws \Exception
+     * @throws \luya\Exception
      */
     public function addImage($fileId, $filterId = 0, $throwException = false)
     {
@@ -798,7 +798,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFiltersArrayItem($filterIdentifier)
     {
-        return (isset($this->filtersArray[$filterIdentifier])) ? $this->filtersArray[$filterIdentifier] : false;
+        return isset($this->filtersArray[$filterIdentifier]) ? $this->filtersArray[$filterIdentifier] : false;
     }
 
     /**

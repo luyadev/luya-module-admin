@@ -2,8 +2,8 @@
 adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFilesData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
-	ServiceImagesData.load();
-	ServiceFilesData.load();
+	//ServiceImagesData.load();
+	//ServiceFilesData.load();
 	ServiceLanguagesData.load();
 	ServicePropertiesData.load();
 	AdminLangService.load();
@@ -120,12 +120,13 @@ $scope.imagesDataReload = function() {
 }
 
 */
-zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function($http, $q, $rootScope, $log) {
 	var service = [];
 	
-	service.data = null;
+	service.data = {};
 	
 	service.load = function(forceReload) {
+		/*
 		return $q(function(resolve, reject) {
 			if (service.data !== null && forceReload !== true) {
 				resolve(service.data);
@@ -136,6 +137,32 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', function($http, $
 					resolve(service.data);
 				});
 			}
+		});
+		*/
+	};
+	
+	/**
+	 * Get a given file from the storage system by its id.
+	 * 
+	 * ```js
+	 * ServiceImagesData.getImage(1).then(function(response) {
+	 *     console.log(response);
+	 * });
+	 */
+	service.getImage = function(id, forceAsyncRequest) {
+		return $q(function(resolve, reject) {
+			$log.info('request image id ' + id);
+			
+			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
+				$log.info('image exists in data array.');
+				return resolve(service.data[id]);
+			}
+			
+			$http.get('admin/api-admin-storage/image-info?id='+id).then(function(response) {
+				var data = response.data;
+    			service.data[data.id] = data;
+    			return resolve(data);
+    		});
 		});
 	};
 	
@@ -155,22 +182,52 @@ $scope.filesDataReload = function() {
 }
 				
 */
-zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($http, $q, $rootScope, $log) {
 	var service = [];
 	
-	service.data = null;
+	service.data = {};
 	
 	service.load = function(forceReload) {
+		/*
 		return $q(function(resolve, reject) {
 			if (service.data !== null && forceReload !== true) {
 				resolve(service.data);
 			} else {
+				$log.info('load full list of all files from storage data-files api.');
 				$http.get("admin/api-admin-storage/data-files").then(function(response) {
 					service.data = response.data;
 					$rootScope.$broadcast('service:FilesData', service.data);
 					resolve(service.data);
+					$log.info('files are loaded from storage api and written to data property.');
+					$log.info(service.data);
 				});
 			}
+		});
+		*/
+	};
+	
+	/**
+	 * Get a given file from the storage system by its id.
+	 * 
+	 * ```js
+	 * ServiceFilesData.getFile(1).then(function(response) {
+	 *     console.log(response);
+	 * });
+	 */
+	service.getFile = function(id, forceAsyncRequest) {
+		return $q(function(resolve, reject) {
+			$log.info('request file id ' + id);
+			
+			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
+				$log.info('file exists in data array.');
+				return resolve(service.data[id]);
+			}
+			
+			$http.get('admin/api-admin-storage/file-info?id='+id).then(function(response) {
+				var data = response.data;
+    			service.data[data.id] = data;
+    			return resolve(data);
+    		});
 		});
 	};
 	

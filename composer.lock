@@ -590,7 +590,7 @@
             "version": "1.7.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lancedikson/bowser.git",
+                "url": "git@github.com:lancedikson/bowser.git",
                 "reference": "64f1ac148f6d652f7ce993646387cfe096756351"
             },
             "dist": {
@@ -663,7 +663,7 @@
             "version": "v2.7.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/flowjs/ng-flow.git",
+                "url": "git@github.com:flowjs/ng-flow.git",
                 "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "dist": {
@@ -758,7 +758,7 @@
             "version": "0.4.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular-ui/ui-router.git",
+                "url": "git@github.com:angular-ui/ui-router.git",
                 "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330"
             },
             "dist": {

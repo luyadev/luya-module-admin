@@ -2385,11 +2385,13 @@
 
                 // ServiceFilesData inhertiance
 
+            	/*
             	$scope.filesData = ServiceFilesData.data;
 
             	$scope.$on('service:FilesData', function(event, data) {
             		$scope.filesData = data;
                 });
+                */
 
                 // controller logic
 
@@ -2416,10 +2418,15 @@
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
+                    	/*
                         var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
                         if (filtering && filtering.length == 1) {
                         	$scope.fileinfo = filtering[0];
                         }
+                        */
+                        ServiceFilesData.getFile(n).then(function(response) {
+                        	$scope.fileinfo = response;
+                        });
                     }
 
                     /* reset file directive if an event resets the image model to undefined */
@@ -2454,10 +2461,16 @@
 
                 $scope.$watch('fileId', function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
+                    	
+                    	$scope.ServiceFilesData.getFile(n).then(function(file) {
+                    		$scope.fileinfo = file;
+                    	});
+                    	/*
                     	var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
                         if (filtering && filtering.length == 1) {
                         	$scope.fileinfo = filtering[0];
                         }
+                        */
                     }
                 });
     		}],
@@ -2485,17 +2498,25 @@
 
                 // ServiceImagesData inheritance
 
+                /*
                 $scope.imagesData = ServiceImagesData.data;
 
                 $scope.$on('service:ImagesData', function(event, data) {
                     $scope.imagesData = data;
                 });
+                */
 
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
                     if (n != 0 && n !== undefined) {
 
+                    	ServiceImagesData.getImage(n).then(function(response) {
+                    		console.log(response);
+                    	});
+                    	
+                    	/*
+                    	 * TODO USE getImage
                         var filtering = $filter('findidfilter')($scope.imagesData, n, true);
 
                         var file = $filter('findidfilter')($scope.filesData, filtering.fileId, true);
@@ -2503,6 +2524,7 @@
                         if (file && file.thumbnail) {
                         	$scope.imageSrc = file.thumbnail.source;
                         }
+                        */
                     }
                 });
 
@@ -2521,10 +2543,11 @@
                 ngModel : '=',
                 options : '=',
             },
-            controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService) {
+            controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', 'ServiceFilesData', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService, ServiceFilesData) {
 
                 // ServiceImagesData inheritance
 
+        		/*
                 $scope.imagesData = ServiceImagesData.data;
 
                 $scope.$on('service:ImagesData', function(event, data) {
@@ -2534,6 +2557,7 @@
                 $scope.imagesDataReload = function() {
                     return ServiceImagesData.load(true);
                 }
+                */
 
                 // ServiceFiltesrData inheritance
 
@@ -2564,6 +2588,20 @@
                 $scope.imageNotFoundError = false;
 
                 $scope.filterApply = function() {
+                    ServiceFilesData.getFile($scope.fileId).then(function(response) {
+                        var images = $filter('filter')(response.images, {filterId: $scope.filterId}, true);
+                        $scope.imageLoading = true;
+                        // unable to find the image for the given filter, create the image for the filter
+                        if (images.length == 0) {
+                            $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
+                                $scope.ngModel = uploadResponse.data.id;
+                                AdminToastService.success(i18n['js_dir_image_upload_ok']);
+                                $scope.imageLoading = false;
+                            });
+                        }
+                    });
+                    
+                	/*
                     var items = $filter('filter')($scope.imagesData, {fileId: $scope.fileId, filterId: $scope.filterId}, true);
                     if (items && items.length == 0) {
                         $scope.imageLoading = true;
@@ -2587,6 +2625,7 @@
                         $scope.ngModel = item.id
                         $scope.imageinfo = item;
                     }
+                    */
                 };
 
                 $scope.$watch(function() { return $scope.filterId }, function(n, o) {
@@ -2609,7 +2648,13 @@
 
                 $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
                     if (n != 0 && n != null && n !== undefined) {
-                        var filtering = $filter('findidfilter')($scope.imagesData, n, true);
+                        //var filtering = $filter('findidfilter')($scope.imagesData, n, true);
+                        ServiceImagesData.getImage(n).then(function(response) {
+                        	$scope.imageinfo = response;
+                        	$scope.fileId = response.file_id;
+                        	$scope.filterId = response.filter_id;
+                        });
+                        /*
                         if (filtering) {
                             $scope.imageinfo = filtering;
                             $scope.filterId = filtering.filterId;
@@ -2617,6 +2662,7 @@
                         } else {
                         	$scope.imageNotFoundError = true;
                         }
+                        */
                     }
                     /* reset image preview directive if an event resets the image model to undefined */
                     if (n == undefined || n == 0) {
@@ -2670,8 +2716,8 @@
                 onlyImages : '@onlyImages'
             },
             controller : [
-            	'$scope', '$http', '$filter', '$timeout', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 
-            	function($scope, $http, $filter, $timeout, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
+            	'$scope', '$http', '$filter', '$timeout', '$q', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 
+            	function($scope, $http, $filter, $timeout, $q, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
 
                 // ServiceFoldersData inheritance
 
@@ -2683,20 +2729,52 @@
 
                 $scope.foldersDataReload = function() {
                     return ServiceFoldersData.load(true);
-                }
+                };
 
                 // ServiceFilesData inheritance
 
-                $scope.filesData = ServiceFilesData.data;
+                $scope.filesData = [];
 
-                $scope.$on('service:FilesData', function(event, data) {
-                    $scope.filesData = data;
+                $scope.paginations = [];
+                
+                $scope.currentPageId = 0;
+                
+                // load files data for a given folder id
+                $scope.$watch('currentFolderId', function(folderId) {
+                	if (folderId !== undefined) {
+                		$scope.getFilesForPageAndFolder(folderId, 0);
+                	}
                 });
 
-                $scope.filesDataReload = function() {
-                    return ServiceFilesData.load(true);
-                }
+                $scope.getFilesForPageAndFolder = function(folderId, pageId) {
+                	return $q(function(resolve, reject) {
+	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
+	                        console.log('request filemanager list', folderId, pageId, response);
+	                		$scope.filesData = response.data.data;
+	                        $scope.filesMetaToPagination(response.data.__meta);
+	                        return resolve(true);
+	                	});
+                	});
+                };
 
+                $scope.filesMetaToPagination = function(meta) {
+                    var pages = [];
+                    for (i = 0; i < meta.totalPages; i++) {
+                        var isActive = meta.currentPage == i;
+                        pages.push({isActive: isActive, label: i+1, index: i});
+                    }
+                    $scope.paginations = pages;
+                };
+
+                $scope.getFilesForPage = function(pageId) {
+                	$scope.currentPageId = pageId;
+                    return $scope.getFilesForPageAndFolder($scope.currentFolderId, pageId);
+                };
+                
+                $scope.getFilesForCurrentPage = function() {
+                	return $scope.getFilesForPageAndFolder($scope.currentFolderId, $scope.currentPageId);
+                }
+                
                 // ServiceFolderId
 
                 $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
@@ -2719,20 +2797,21 @@
 
                 $scope.replaceFile = function(file, errorFiles) {
                 	$scope.replaceFiled = file;
-
                 	if (!file) {
                 		return;
                 	}
-
                 	LuyaLoading.start();
 
                 	Upload.upload({
                 		url: 'admin/api-admin-storage/file-replace',
-                        data: {file: file, fileId: $scope.fileDetail.id}
+                        data: {file: file, fileId: $scope.fileDetail.id, pageId: $scope.currentPageId}
                     }).then(function (response) {
                     	LuyaLoading.stop();
                     	if (response.status == 200) {
-                            $scope.filesDataReload().then(function() {
+                            $scope.getFilesForCurrentPage().then(function() {
+                            	
+                            	//$scope.openFileDetail($scope.fileDetail, true);
+                            	
                             	var fileref = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
                             	var random = (new Date()).toString();
                             	if (fileref.isImage) {
@@ -2740,6 +2819,8 @@
 	                            	fileref.thumbnailMedium.source = fileref.thumbnailMedium.source + "?cb=" + random;
 	                            }
                             	$scope.fileDetail = fileref;
+                            	
+                            	// @TODO TRANSLATION
                             	AdminToastService.success('the file has been replaced successfull.');
                             });
                     	}
@@ -2766,19 +2847,17 @@
                 $scope.$watch('uploadResults', function(n, o) {
                     if ($scope.uploadingfiles != null) {
                         if (n == $scope.uploadingfiles.length && $scope.errorMsg == null) {
-                            $scope.filesDataReload().then(function() {
-                            	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                        	$scope.getFilesForCurrentPage().then(function() {
+                        		AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
                                 LuyaLoading.stop();
-                            });
+                        	});
                         }
                     }
-                })
+                });
 
                 $scope.pasteUpload = function(e) {
-
                     for (var i = 0 ; i < e.originalEvent.clipboardData.items.length ; i++) {
                         var item = e.originalEvent.clipboardData.items[i];
-
                         if (item.kind == 'file') {
                         	LuyaLoading.start(i18n['js_dir_upload_wait']);
 	                        Upload.upload({
@@ -2787,7 +2866,7 @@
 	                            file: item.getAsFile()
 	                        }).then(function(response) {
                         		if (response.data.upload) {
-		                        	$scope.filesDataReload().then(function() {
+		                        	$scope.getFilesForCurrentPage().then(function() {
 		                            	AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
 		                            	LuyaLoading.stop();
 		                            });
@@ -2795,11 +2874,10 @@
                         			AdminToastService.error(response.data.message);
                         			LuyaLoading.stop();
                         		}
-
-	                        })
+	                        });
                         }
                     }
-                }
+                };
 
                 $scope.uploadUsingUpload = function(file) {
                 	file.upload = Upload.upload({
@@ -2876,9 +2954,7 @@
                 	if (!newFolderName) {
                 		return;
                 	}
-                    $http.post('admin/api-admin-storage/folder-create', $.param({ folderName : newFolderName , parentFolderId : $scope.currentFolderId }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function() {
+                    $http.post('admin/api-admin-storage/folder-create', { folderName : newFolderName , parentFolderId : $scope.currentFolderId }).then(function() {
                         $scope.foldersDataReload().then(function() {
                             $scope.folderFormToggler();
                             $scope.newFolderName = null;
@@ -2901,8 +2977,10 @@
                 };
 
                 $scope.changeCurrentFolderId = function(folderId, noState) {
+                	var oldCurrentFolder = $scope.currentFolderId;
                     $scope.currentFolderId = folderId;
-                    if (noState !== true) {
+                    $scope.currentPageId = 0;
+                    if (noState !== true && oldCurrentFolder != folderId) {
                     	ServiceFoldersDirecotryId.folderId = folderId;
                     	$http.post('admin/api-admin-common/save-filemanager-folder-state', {folderId : folderId}, {ignoreLoadingBar: true});
                     }
@@ -2924,39 +3002,25 @@
                 $scope.folderDeleteConfirmForm = false;
                 
                 $scope.updateFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    });
+                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name });
                 };
                 
                 $scope.deleteFolder = function(folder) {
-
-                    // check if folder is empty
-                	$http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, $.param({ name : folder.name }), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
-                        if (transport.data == true) {
-
-                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, $.param({ name : folder.name }), {
-                                headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                            }).then(function(transport) {
+                	$http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
+                		var isEmpty = transport.data.empty;
+                		var filesCount = transport.data.count;
+                		if (isEmpty) {
+                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
                                 $scope.foldersDataReload().then(function() {
-                                    $scope.filesDataReload().then(function() {
-                                        $scope.currentFolderId = 0;
-                                    });
+                                	$scope.currentFolderId = 0;
                                 });
                             });
-
                         } else {
-                            AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: folder.filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                                $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, $.param({ name : folder.name }), {
-                                    headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                                }).then(function() {
+                            AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
+                                $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function() {
                                     $scope.foldersDataReload().then(function() {
-                                        $scope.filesDataReload().then(function() {
-                                            $scope.currentFolderId = 0;
-                                            $toast.close();
-                                        });
+                                        $scope.currentFolderId = 0;
+                                        $toast.close();
                                     });
                                 });
                             }]);
@@ -2964,6 +3028,30 @@
                     });
                 };
 
+                $scope.removeFiles = function() {
+                    AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
+                        $http.post('admin/api-admin-storage/filemanager-remove-files', {'ids' : $scope.selectedFiles, 'pageId': $scope.currentPageId, 'folderId': $scope.currentFolderId}).then(function(transport) {
+                            $scope.getFilesForCurrentPage().then(function() {
+                                $toast.close();
+                                AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
+                                $scope.selectedFiles = [];
+                            	$scope.closeFileDetail();
+                            });
+                        });
+                    }]);
+                }
+
+                $scope.moveFilesTo = function(folderId) {
+                    $http.post('admin/api-admin-storage/filemanager-move-files', {'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId, 'currentPageId': $scope.currentPageId, 'currentFolderId': $scope.currentFolderId}).then(function(transport) {
+                        $scope.getFilesForCurrentPage().then(function() {
+                            $scope.selectedFiles = [];
+                            $scope.showFoldersToMove = false;
+                        });
+                    });
+                };
+                
+                /* file detail related stuff */
+                
                 $scope.fileDetail = false;
 
                 $scope.showFoldersToMove = false;
@@ -2974,13 +3062,13 @@
                 
                 $scope.nameEditMode = false;
                 
-                $scope.openFileDetail = function(file) {
-                	if ($scope.fileDetail.id == file.id) {
+                $scope.openFileDetail = function(file, force) {
+                	if ($scope.fileDetail.id == file.id && force !== true) {
                 		$scope.closeFileDetail();
                 	} else {
                 		
-                		$http.get('admin/api-admin-storage/file-info?id='+file.id).then(function(response) {
-                			$scope.fileDetailFull = response.data;
+                		ServiceFilesData.getFile(file.id, force).then(function(responseFile) {
+                			$scope.fileDetailFull = responseFile;
                 		});
                 		
                 		$scope.fileDetail = file;
@@ -2988,7 +3076,7 @@
                 };
                 
                 $scope.updateFileData = function() {
-            		$http.put('admin/api-admin-storage/file-update?id='+$scope.fileDetailFull.id, $scope.fileDetailFull).then(function(response) {
+            		$http.put('admin/api-admin-storage/file-update?id='+$scope.fileDetailFull.id+'&pageId='+$scope.currentPageId, $scope.fileDetailFull).then(function(response) {
             			var file = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
             			file.name = response.data.name_original;
             			$scope.nameEditMode = false;
@@ -3007,39 +3095,10 @@
                 	$scope.removeFiles();
                 };
 
-                $scope.moveFilesTo = function(folderId) {
-                    $http.post('admin/api-admin-storage/filemanager-move-files', $.param({'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId}), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
-                        $scope.filesDataReload().then(function() {
-                            $scope.selectedFiles = [];
-                            $scope.showFoldersToMove = false;
-                        });
-                    });
-                };
-
-                $scope.removeFiles = function() {
-                    AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                        $http.post('admin/api-admin-storage/filemanager-remove-files', $.param({'ids' : $scope.selectedFiles}), {
-                            headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                        }).then(function(transport) {
-                            $scope.filesDataReload().then(function() {
-                                $toast.close();
-                                AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
-                                $scope.selectedFiles = [];
-                            	$scope.closeFileDetail();
-                            });
-                        });
-                    }]);
-                }
-
-                // file detail view logic
-
                 $scope.storeFileCaption = function(fileDetail) {
-                	$http.post('admin/api-admin-storage/filemanager-update-caption', $.param({'id': fileDetail.id, 'captionsText' : fileDetail.captionArray}), {
-                        headers : {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-                    }).then(function(transport) {
-                    	AdminToastService.success('Captions has been updated');
+                	$http.post('admin/api-admin-storage/filemanager-update-caption', {'id': fileDetail.id, 'captionsText' : fileDetail.captionArray, 'pageId': $scope.currentPageId}).then(function(transport) {
+                    	// @TODO i18n
+                		AdminToastService.success('Captions has been updated');
                     });
                 }
 
@@ -3048,7 +3107,7 @@
                 $scope.init = function() {
                 	if ($scope.$parent.fileinfo) {
                 		$scope.selectedFileFromParent = $scope.$parent.fileinfo;
-                		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folderId, true);
+                		$scope.changeCurrentFolderId($scope.selectedFileFromParent.folder_id, true);
                 	}
                 }
 

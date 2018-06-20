@@ -129,8 +129,8 @@ use luya\admin\helpers\Angular;
             <div class="link-selector-btn btn btn-secondary" ng-click="toggleModal()">
                 <i class="material-icons left" ng-show="!fileinfo.name">file_upload</i>
                 <i class="material-icons left" ng-show="fileinfo.name">attach_file</i>
-                <span ng-if="fileinfo.name">{{fileinfo.name | truncateMiddle: 30}}</span>
-                <span ng-if="!fileinfo.name">
+                <span ng-if="fileinfo.name">{{fileinfo.name_original | truncateMiddle: 30}}</span>
+                <span ng-if="!fileinfo.name_original">
                     <?= Admin::t('layout_select_file'); ?>
                 </span>
             </div>
