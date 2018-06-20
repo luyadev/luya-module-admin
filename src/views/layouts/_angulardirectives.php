@@ -162,13 +162,15 @@ use luya\admin\helpers\Angular;
                 <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolution_width }} x {{ imageinfo.resolution_height }}</div>
             </div>
         </div>
-        
         <div class="imageupload-upload">
             <storage-file-upload ng-model="fileId"></storage-file-upload>
         </div>
         <?php if (Yii::$app->adminuser->canRoute('admin/storage/index')): ?>
         <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null">
-            <select name="filterId" ng-model="filterId" convert-to-number><option value="0"><?= Admin::t('layout_no_filter'); ?></option><option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option></select>
+            <select name="filterId" ng-model="filterId" ng-change="changeFilter()" convert-to-number>
+                <option value="0"><?= Admin::t('layout_no_filter'); ?></option>
+                <option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option>
+            </select>
         </div>
         <?php endif; ?>
     </div>

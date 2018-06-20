@@ -2460,6 +2460,7 @@
                 $scope.fileinfo = null;
 
                 $scope.$watch('fileId', function(n, o) {
+                	console.log('file fileId watch', n, o);
                     if (n != 0 && n != null && n !== undefined) {
                     	
                     	$scope.ServiceFilesData.getFile(n).then(function(file) {
@@ -2509,6 +2510,7 @@
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
+                	console.log('image-thumbnail-display imageId watch', n, o);
                     if (n != 0 && n !== undefined) {
 
                     	ServiceImagesData.getImage(n).then(function(response) {
@@ -2579,17 +2581,20 @@
 
                 $scope.imageLoading = false;
 
-                $scope.fileId = 0;
+                $scope.fileId = null;
 
                 $scope.filterId = 0;
 
                 $scope.imageinfo = null;
 
                 $scope.imageNotFoundError = false;
+                
+                $scope._filterApplyLockout = false;
 
                 $scope.filterApply = function() {
                     ServiceFilesData.getFile($scope.fileId).then(function(response) {
                         var images = $filter('filter')(response.images, {filterId: $scope.filterId}, true);
+                        console.log('images response from filter check of image', images, $scope.filterId);
                         $scope.imageLoading = true;
                         // unable to find the image for the given filter, create the image for the filter
                         if (images.length == 0) {
@@ -2628,22 +2633,40 @@
                     */
                 };
 
+                /*
                 $scope.$watch(function() { return $scope.filterId }, function(n, o) {
-                    if (n != null && n !== undefined && $scope.fileId !== 0 && n !== o && n != o) {
-                        $scope.filterApply();
-                    }
+                	if (n == null || n == undefined || $scope.fileId == 0 || n == 0) {
+                		return;
+                	}
+                	
+                	$scope.filterApply();
                 });
+                */
+                
+                $scope.changeFilter = function() {
+                	$scope.filterApply();
+                };
 
                 $scope.$watch(function() { return $scope.fileId }, function(n, o) {
+                	
+                	if (n == o || n == 0 || n == null || n == undefined) {
+                		return;
+                	}
+                	
+                	$scope.filterApply();
+                	/*
+                	console.log('==> image fileId watch', n, o);
                 	if (n !== undefined && n != null && n != o) {
                 		if (n == 0) {
                             $scope.filterId = 0;
                             $scope.imageinfo = null;
                             $scope.ngModel = 0;
                         } else {
+                        	console.log('[!!!!!!!!!!!!!!]from fileid watcher', n);
                         	$scope.filterApply();
                         }
                     }
+                    */
                 });
 
                 $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
@@ -2683,9 +2706,10 @@
                 		}
                 	}
                 	return $scope.thumbnailfilter;
-                }
+                };
 
                 $scope.$watch('imageinfo', function(n, o) {
+                	console.log('==> image imageinfo watch', n, o);
                 	if (n != 0 && n != null && n !== undefined) {
                 		if (n.filterId != 0) {
                 			$scope.thumb = n;
