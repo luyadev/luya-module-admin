@@ -13,6 +13,7 @@ use luya\console\Importer;
  *
  * Storage system importer behavior to cleanup the storage database and folder.
  *
+ * @deprecated remove in 1.2.2
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */

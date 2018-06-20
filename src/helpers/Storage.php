@@ -2,11 +2,12 @@
 
 namespace luya\admin\helpers;
 
-use Exception;
+use luya\Exception;
 use Yii;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageImage;
 use luya\admin\Module;
+use yii\helpers\VarDumper;
 
 /**
  * Helper class to handle remove, upload and moving of storage files.
@@ -80,7 +81,7 @@ class Storage
      * Remove an image from the storage system and database.
      *
      * @param integer $imageId The corresponding imageId for the {{\luya\admin\models\StorageImage}} Model to remove.
-     * @param boolean $cleanup If cleanup is enabled, all other images will be deleted. Event the {{\luya\admin\models\StorageFile}} will be removed
+     * @param boolean $cleanup If cleanup is enabled, all other images will be deleted. Even the {{\luya\admin\models\StorageFile}} will be removed
      * from the database and filesystem. By default cleanup is disabled and will only remove the provided $imageId itself from {{\luya\admin\models\StorageImage}}.
      * @return boolean
      */

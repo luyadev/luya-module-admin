@@ -154,14 +154,14 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function(
 		return $q(function(resolve, reject) {
 			$log.info('request image id ' + id);
 			
-			if (service.data.hasOwnProperty(id)) {
+			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
 				$log.info('image exists in data array.');
 				return resolve(service.data[id]);
 			}
 			
 			$http.get('admin/api-admin-storage/image-info?id='+id).then(function(response) {
 				var data = response.data;
-    			service.data[response.id] = data;
+    			service.data[data.id] = data;
     			return resolve(data);
     		});
 		});
@@ -219,14 +219,14 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 		return $q(function(resolve, reject) {
 			$log.info('request file id ' + id);
 			
-			if (service.data.hasOwnProperty(id)) {
+			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
 				$log.info('file exists in data array.');
 				return resolve(service.data[id]);
 			}
 			
 			$http.get('admin/api-admin-storage/file-info?id='+id).then(function(response) {
 				var data = response.data;
-    			service.data[response.id] = data;
+    			service.data[data.id] = data;
     			return resolve(data);
     		});
 		});

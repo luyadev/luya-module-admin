@@ -13,7 +13,6 @@ use luya\admin\components\AdminMenuBuilder;
 use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
-use luya\admin\importers\StorageImporter;
 use luya\admin\filesystem\LocalFileSystem;
 
 /**
@@ -277,7 +276,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'js_ngrest_rm_page', 'js_ngrest_rm_confirm', 'js_ngrest_error', 'js_ngrest_rm_update', 'js_ngrest_rm_success', 'js_tag_exists', 'js_tag_success', 'js_admin_reload', 'js_dir_till', 'js_dir_set_date', 'js_dir_table_add_row', 'js_dir_table_add_column', 'js_dir_image_description',
             'js_dir_no_selection', 'js_dir_image_upload_ok', 'js_dir_image_filter_error', 'js_dir_upload_wait', 'js_dir_manager_upload_image_ok', 'js_dir_manager_rm_file_confirm', 'js_dir_manager_rm_file_ok', 'js_zaa_server_proccess',
             'ngrest_select_no_selection', 'js_ngrest_toggler_success', 'js_filemanager_count_files_overlay', 'js_link_set_value', 'js_link_not_set', 'js_link_change_value', 'aws_changepassword_succes', 'js_account_update_profile_success', 'layout_filemanager_remove_dir_not_empty',
-            'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title'
+            'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title', 'js_dir_manager_rm_folder_confirm_title',
         ];
     }
     
@@ -378,7 +377,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             AuthImporter::class,
             FilterImporter::class,
             PropertyImporter::class,
-            StorageImporter::class,
         ];
     }
     
