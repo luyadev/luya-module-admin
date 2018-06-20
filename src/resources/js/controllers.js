@@ -148,6 +148,12 @@
 		
 		/********** CRUD LIST *******/
 
+		$scope.applySaveCallback = function() {
+			if ($scope.config.saveCallback) {	
+				$injector.invoke($scope.config.saveCallback, this);	
+			}	
+		};
+		
 		$scope.showCrudList = true;
 
 		/*********** ORDER **********/
