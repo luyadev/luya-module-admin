@@ -253,7 +253,10 @@ class StorageController extends RestController
         try {
             $create = Yii::$app->storage->addImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {
-                return ['error' => false, 'id' => $create->id];
+                return [
+                    'error' => false, 
+                    'id' => $create->id,
+                ];
             }
         } catch (Exception $err) {
             return $this->sendArrayError([

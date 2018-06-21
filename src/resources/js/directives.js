@@ -2417,22 +2417,14 @@
                 };
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-                    if (n != 0 && n != null && n !== undefined) {
-                    	/*
-                        var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
-                        if (filtering && filtering.length == 1) {
-                        	$scope.fileinfo = filtering[0];
-                        }
-                        */
-                        ServiceFilesData.getFile(n).then(function(response) {
-                        	$scope.fileinfo = response;
-                        });
-                    }
-
-                    /* reset file directive if an event resets the image model to undefined */
-                    if (n == 0) {
-                    	$scope.reset();
-                    }
+            		
+            		if (n == 0 || n == null || n == undefined || n == o) {
+            			return null;
+            		}
+            		
+            		ServiceFilesData.getFile(n).then(function(response) {
+                    	$scope.fileinfo = response;
+                    });
                 });
             }],
             templateUrl : 'storageFileUpload'
@@ -2460,19 +2452,13 @@
                 $scope.fileinfo = null;
 
                 $scope.$watch('fileId', function(n, o) {
-                	console.log('file fileId watch', n, o);
-                    if (n != 0 && n != null && n !== undefined) {
-                    	
-                    	$scope.ServiceFilesData.getFile(n).then(function(file) {
-                    		$scope.fileinfo = file;
-                    	});
-                    	/*
-                    	var filtering = $filter('filter')($scope.filesData, {id: parseInt(n)}, true);
-                        if (filtering && filtering.length == 1) {
-                        	$scope.fileinfo = filtering[0];
-                        }
-                        */
-                    }
+                	if (n == 0 || n == null || n == undefined || n == o) {
+                		return;
+                	}
+                	
+                	$scope.ServiceFilesData.getFile(n).then(function(file) {
+                		$scope.fileinfo = file;
+                	});
                 });
     		}],
     		template: function() {
@@ -2510,11 +2496,10 @@
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
-                	console.log('image-thumbnail-display imageId watch', n, o);
                     if (n != 0 && n !== undefined) {
 
                     	ServiceImagesData.getImage(n).then(function(response) {
-                    		console.log(response);
+                    		$scope.imageSrc = response.source;
                     	});
                     	
                     	/*
@@ -2581,7 +2566,7 @@
 
                 $scope.imageLoading = false;
 
-                $scope.fileId = null;
+                $scope.fileId = 0;
 
                 $scope.filterId = 0;
 
@@ -2589,13 +2574,12 @@
 
                 $scope.imageNotFoundError = false;
                 
-                $scope._filterApplyLockout = false;
-
+                $scope.thumb = false;
+                
                 $scope.filterApply = function() {
+                	$scope.imageLoading = true;
                     ServiceFilesData.getFile($scope.fileId).then(function(response) {
-                        var images = $filter('filter')(response.images, {filterId: $scope.filterId}, true);
-                        console.log('images response from filter check of image', images, $scope.filterId);
-                        $scope.imageLoading = true;
+                        var images = $filter('filter')(response.images, {filter_id: $scope.filterId});
                         // unable to find the image for the given filter, create the image for the filter
                         if (images.length == 0) {
                             $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
@@ -2603,6 +2587,9 @@
                                 AdminToastService.success(i18n['js_dir_image_upload_ok']);
                                 $scope.imageLoading = false;
                             });
+                        } else {
+                        	$scope.ngModel = images[0].id;
+                        	$scope.imageLoading = false;
                         }
                     });
                     
@@ -2670,6 +2657,18 @@
                 });
 
                 $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
+                	
+                	if (n == 0 || n == null || n == undefined) {
+                		return;
+                	}
+                	
+                	ServiceImagesData.getImage(n).then(function(response) {
+                		$scope.applyImageDetails(response);
+                    	$scope.fileId = response.file_id;
+                    	$scope.filterId = response.filter_id;
+                	});
+                	
+                	/*
                     if (n != 0 && n != null && n !== undefined) {
                         //var filtering = $filter('findidfilter')($scope.imagesData, n, true);
                         ServiceImagesData.getImage(n).then(function(response) {
@@ -2677,28 +2676,31 @@
                         	$scope.fileId = response.file_id;
                         	$scope.filterId = response.filter_id;
                         });
-                        /*
-                        if (filtering) {
-                            $scope.imageinfo = filtering;
-                            $scope.filterId = filtering.filterId;
-                            $scope.fileId = filtering.fileId;
-                        } else {
-                        	$scope.imageNotFoundError = true;
-                        }
-                        */
                     }
-                    /* reset image preview directive if an event resets the image model to undefined */
                     if (n == undefined || n == 0) {
                     	$scope.fileId = 0;
                         $scope.filterId = 0;
                         $scope.imageinfo = null;
                         $scope.thumb = false;
                     }
-
+					*/
                 });
+                
+                $scope.applyImageDetails = function(imageInfo) {
+                	$scope.imageinfo = imageInfo;
+                	$scope.thumb = imageInfo;
+                	/*
+                	if (imageInfo.filterId == 0) {
+                		// the original image is usual to bug, therefor we use a  thumbnail size instaed
+                		var thumbnail = $filter('findthumbnail')($scope.imagesData, n.fileId, $scope.getThumbnailFilter().id);
+                	} else {
+                		$scope.thumb = imageInfo;
+                	}
+                	*/
+                };
 
-                $scope.thumb = false;
-
+                
+                /*
                 $scope.getThumbnailFilter = function() {
                 	if ($scope.thumbnailfilter === null) {
                 		if ('medium-thumbnail' in $scope.filtersData) {
@@ -2707,9 +2709,14 @@
                 	}
                 	return $scope.thumbnailfilter;
                 };
+                */
 
+               
+                
+                /*
                 $scope.$watch('imageinfo', function(n, o) {
-                	console.log('==> image imageinfo watch', n, o);
+                	
+                	
                 	if (n != 0 && n != null && n !== undefined) {
                 		if (n.filterId != 0) {
                 			$scope.thumb = n;
@@ -2723,6 +2730,8 @@
                 		}
                 	}
                 })
+                
+                	*/
             }],
             templateUrl : 'storageImageUpload'
         }
@@ -2773,7 +2782,6 @@
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	return $q(function(resolve, reject) {
 	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
-	                        console.log('request filemanager list', folderId, pageId, response);
 	                		$scope.filesData = response.data.data;
 	                        $scope.filesMetaToPagination(response.data.__meta);
 	                        return resolve(true);
