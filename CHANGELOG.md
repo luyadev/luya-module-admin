@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#156](https://github.com/luyadev/luya-module-admin/issues/156) Do not display API users in global search.
 + [#158](https://github.com/luyadev/luya-module-admin/issues/158) Searching in CRUD pagination fallback applied the angular filter, therefore values found in `ngRestFullQuerySearch()` where hidden by angular filter if they where not in the ngrest list scope.
 + [#152](https://github.com/luyadev/luya-module-admin/issues/152) Added proper `Content-Type` header with MIME type when delivering download files.
++ [#166](https://github.com/luyadev/luya-module-admin/issues/166) Fixed bug with old admin user table structure where is_deleted has no default value.
 
 ## 1.2.1 (5. June 2018)
 

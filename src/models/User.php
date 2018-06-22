@@ -66,6 +66,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
                 $this->encodePassword();
                 
                 if ($this->isNewRecord) {
+                    $this->is_deleted = false;
                     $this->auth_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->password_salt);
                 }
             }
