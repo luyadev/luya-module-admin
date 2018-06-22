@@ -66,7 +66,7 @@
 			}
 
 			if (type == 0) {
-				$http.get($scope.config.apiEndpoint + '/unlock');
+				$http.get($scope.config.apiEndpoint + '/unlock', {ignoreLoadingBar: true});
 			}
 
 			if (type == 0 || type == 1) {
