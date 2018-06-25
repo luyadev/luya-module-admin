@@ -2387,14 +2387,18 @@
 
     			// ServiceFilesData inheritance
 
+    			/*
                 $scope.filesData = ServiceFilesData.data;
 
                 $scope.$on('service:FilesData', function(event, data) {
                     $scope.filesData = data;
                 });
+                */
 
                 // controller
 
+    			$scope.fileId = 0;
+    			
                 $scope.fileinfo = null;
 
                 $scope.$watch('fileId', function(n, o) {
@@ -2491,6 +2495,8 @@
 
                 // controller logic
 
+            	$scope.ngModel = 0;
+            	
             	$scope.modal = {state: 1};
 
             	$scope.modalContainer = false;
