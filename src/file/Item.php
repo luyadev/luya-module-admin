@@ -9,6 +9,7 @@ use luya\admin\helpers\I18n;
 use luya\admin\storage\ItemAbstract;
 use luya\web\LinkInterface;
 use luya\web\LinkTrait;
+use luya\helpers\Json;
 
 /**
  * Storage File Item.
@@ -96,7 +97,12 @@ class Item extends ItemAbstract implements LinkInterface
     public function getCaption()
     {
         if ($this->_caption === null) {
-            $this->_caption = I18n::findActive($this->getCaptionArray());
+            // if its a none json value, it has been observed by bind()
+            if (!Json::isJson($this->getKey('caption', false))) {
+                $this->_caption = $this->getKey('caption');
+            } else {
+                $this->_caption = I18n::findActive($this->getCaptionArray());
+            }
         }
     
         return $this->_caption;
