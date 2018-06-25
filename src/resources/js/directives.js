@@ -2375,61 +2375,7 @@
     });
     // storage.js
 
-    zaa.directive('storageFileUpload', function() {
-        return {
-            restrict : 'E',
-            scope : {
-                ngModel : '='
-            },
-            controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
-
-                // ServiceFilesData inhertiance
-
-            	/*
-            	$scope.filesData = ServiceFilesData.data;
-
-            	$scope.$on('service:FilesData', function(event, data) {
-            		$scope.filesData = data;
-                });
-                */
-
-                // controller logic
-
-            	$scope.modal = {state: 1};
-
-            	$scope.modalContainer = false;
-
-            	$scope.fileinfo = null;
-
-            	$scope.select = function(fileId) {
-                	$scope.toggleModal();
-                	$scope.ngModel = fileId;
-                };
-
-            	$scope.reset = function() {
-            		$scope.ngModel = 0;
-            		$scope.fileinfo = null;
-                };
-
-            	$scope.toggleModal = function() {
-            		$scope.modalContainer = !$scope.modalContainer;
-            		$scope.modal.state = !$scope.modal.state;
-                };
-
-            	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-            		
-            		if (n == 0 || n == null || n == undefined || n == o) {
-            			return null;
-            		}
-            		
-            		ServiceFilesData.getFile(n).then(function(response) {
-                    	$scope.fileinfo = response;
-                    });
-                });
-            }],
-            templateUrl : 'storageFileUpload'
-        }
-    });
+    
 
     zaa.directive('storageFileDisplay', function() {
     	return {
@@ -2477,11 +2423,13 @@
 
                 // ServiceFilesData inheritance
 
+                /*
                 $scope.filesData = ServiceFilesData.data;
 
                 $scope.$on('service:FilesData', function(event, data) {
                     $scope.filesData = data;
                 });
+                */
 
                 // ServiceImagesData inheritance
 
@@ -2520,6 +2468,62 @@
             template: function() {
                 return '<div ng-show="imageSrc!==false"><img ng-src="{{imageSrc}}" /></div>';
             }
+        }
+    });
+
+    zaa.directive('storageFileUpload', function() {
+        return {
+            restrict : 'E',
+            scope : {
+                ngModel : '='
+            },
+            controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
+
+                // ServiceFilesData inhertiance
+
+            	/*
+            	$scope.filesData = ServiceFilesData.data;
+
+            	$scope.$on('service:FilesData', function(event, data) {
+            		$scope.filesData = data;
+                });
+                */
+
+                // controller logic
+
+            	$scope.modal = {state: 1};
+
+            	$scope.modalContainer = false;
+
+            	$scope.fileinfo = null;
+
+            	$scope.select = function(fileId) {
+                	$scope.toggleModal();
+                	$scope.ngModel = fileId;
+                };
+
+            	$scope.reset = function() {
+            		$scope.ngModel = 0;
+            		$scope.fileinfo = null;
+                };
+
+            	$scope.toggleModal = function() {
+            		$scope.modalContainer = !$scope.modalContainer;
+            		$scope.modal.state = !$scope.modal.state;
+                };
+
+            	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
+            		
+            		if (n == 0 || n == null || n == undefined || n == o) {
+            			return null;
+            		}
+                    
+            		ServiceFilesData.getFile(n).then(function(response) {
+                    	$scope.fileinfo = response;
+                    });
+                });
+            }],
+            templateUrl : 'storageFileUpload'
         }
     });
 
@@ -2585,6 +2589,9 @@
                             $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
                                 $scope.ngModel = uploadResponse.data.id;
                                 AdminToastService.success(i18n['js_dir_image_upload_ok']);
+                                $scope.imageLoading = false;
+                            }, function(error) {
+                                AdminToastService.error(i18n['js_dir_image_filter_error']);
                                 $scope.imageLoading = false;
                             });
                         } else {

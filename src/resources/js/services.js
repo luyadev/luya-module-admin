@@ -125,22 +125,6 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function(
 	
 	service.data = {};
 	
-	service.load = function(forceReload) {
-		/*
-		return $q(function(resolve, reject) {
-			if (service.data !== null && forceReload !== true) {
-				resolve(service.data);
-			} else {
-				$http.get("admin/api-admin-storage/data-images").then(function(response) {
-					service.data = response.data;
-					$rootScope.$broadcast('service:ImagesData', service.data);
-					resolve(service.data);
-				});
-			}
-		});
-		*/
-	};
-	
 	/**
 	 * Get a given file from the storage system by its id.
 	 * 
@@ -151,10 +135,8 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function(
 	 */
 	service.getImage = function(id, forceAsyncRequest) {
 		return $q(function(resolve, reject) {
-			$log.info('request image id ' + id);
 			
 			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
-				$log.info('image exists in data array.');
 				return resolve(service.data[id]);
 			}
 			
@@ -187,25 +169,8 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 	
 	service.data = {};
 	
-	service.load = function(forceReload) {
-		/*
-		return $q(function(resolve, reject) {
-			if (service.data !== null && forceReload !== true) {
-				resolve(service.data);
-			} else {
-				$log.info('load full list of all files from storage data-files api.');
-				$http.get("admin/api-admin-storage/data-files").then(function(response) {
-					service.data = response.data;
-					$rootScope.$broadcast('service:FilesData', service.data);
-					resolve(service.data);
-					$log.info('files are loaded from storage api and written to data property.');
-					$log.info(service.data);
-				});
-			}
-		});
-		*/
-	};
-	
+	service._promises = {};
+
 	/**
 	 * Get a given file from the storage system by its id.
 	 * 
@@ -215,21 +180,33 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 	 * });
 	 */
 	service.getFile = function(id, forceAsyncRequest) {
+		// this ensures to not have two promises at the same time
+		if (service._promises.hasOwnProperty(id)) {
+			return service._promises[id];
+		}
+
+		var promise = service.newPromise(id, forceAsyncRequest);
+		service._promises[id] = promise;
+		return promise;
+	};
+
+	/**
+	 * Generate a promise to resolve
+	 */
+	service.newPromise = function(id, forceAsyncRequest) {
 		return $q(function(resolve, reject) {
-			$log.info('request file id ' + id);
-			
 			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
-				$log.info('file exists in data array.');
 				return resolve(service.data[id]);
 			}
-			
+
 			$http.get('admin/api-admin-storage/file-info?id='+id).then(function(response) {
 				var data = response.data;
-    			service.data[data.id] = data;
+				service.data[data.id] = data;
+				delete service._promises[id];
     			return resolve(data);
     		});
 		});
-	};
+	}
 	
 	return service;
 }]);
