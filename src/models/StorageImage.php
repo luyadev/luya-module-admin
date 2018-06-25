@@ -5,6 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use yii\db\ActiveRecord;
 use luya\helpers\FileHelper;
+use luya\admin\filters\TinyCrop;
 
 /**
  * StorageImage Model.
@@ -72,6 +73,13 @@ final class StorageImage extends ActiveRecord
         return Yii::$app->storage->fileAbsoluteHttpPath($fileName);
     }
     
+    public function getThumbnail()
+    {
+        // @TODO: check what happens on large file systems?
+        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
+        return Yii::$app->storage->addImage($this->file_id, $tinyCrop['id']);
+    }
+
     /**
      * @return boolean
      */
@@ -91,6 +99,6 @@ final class StorageImage extends ActiveRecord
     
     public function extraFields()
     {
-        return ['source'];
+        return ['source', 'thumbnail'];
     }
 }

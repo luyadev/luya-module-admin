@@ -266,7 +266,7 @@ use luya\admin\helpers\Angular;
                         <?= Admin::t('layout_filemanager_upload_files'); ?>
                     </div>
 
-                    <input class="filemanager-search" type="text"  ng-model="searchQuery" placeholder="<?= Admin::t('layout_filemanager_search_text') ?>" />
+                    <input class="filemanager-search" type="text" ng-change="runSearch()" ng-model="searchQuery" placeholder="<?= Admin::t('layout_filemanager_search_text') ?>" />
 
                 </div>
 
@@ -288,7 +288,7 @@ use luya\admin\helpers\Angular;
                     <thead class="thead-default">
                         <tr>
                             <th>
-                                <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()" tooltip tooltip-position="right" tooltip-text="{{ (filesData | filemanagerfilesfilter:currentFolderId:onlyImages:searchQuery | filter:searchQuery).length }} files">
+                                <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()" tooltip tooltip-position="right">
                                     <i class="material-icons">done_all</i>
                                 </span>
                             </th>
@@ -350,7 +350,7 @@ use luya\admin\helpers\Angular;
                     </thead>
                     <tbody>
                         <tr
-                            ng-repeat="file in filesData | filemanagerfilesfilter:currentFolderId:onlyImages:searchQuery | filter:searchQuery | orderBy:sortField" class="filemanager-file"
+                            ng-repeat="file in filesData" class="filemanager-file"
                             ng-class="{ 'clickable selectable' : allowSelection == 'false', 'filemanager-file-selected': selectedFileFromParent && selectedFileFromParent.id == file.id, 'filemanager-file-detail-open': fileDetail.id === file.id}"
                         >
                             <th scope="row" ng-click="toggleSelection(file)">
@@ -415,6 +415,13 @@ use luya\admin\helpers\Angular;
             <tr>
                 <td><small><?= Admin::t('model_pk_id'); ?></small></td>
                 <td>{{ fileDetail.id }}</td>
+            </tr>
+            <tr>
+                <td><small>Folder</small></td>
+                <td>
+                    <a ng-show="fileDetailFolder" ng-click="changeCurrentFolderId(fileDetailFolder.id)">{{ fileDetailFolder.name }}</a>
+                    <a ng-show="!fileDetailFolder" ng-click="changeCurrentFolderId(0)"><?= Admin::t('layout_filemanager_root_dir'); ?></a>
+                </td>
             </tr>
             <tr>
                 <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>

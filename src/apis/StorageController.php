@@ -69,29 +69,35 @@ class StorageController extends RestController
             return $folders;
         }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']));
     }
-    
+
     /**
-     * Get all files from the storage container.
-     *
-     * @return array
+     * Internal method to get list of files, also used for search
      */
-    public function actionDataFiles($folderId = 0, $page = 0)
+    private function getStorageFiles($folderId, $page, $searchQuery = null)
     {
         $perPage = 50;
-        $totalCount = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])->count();
+        $totalCountQuery = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false]);
+        if ($searchQuery) {
+            $totalCountQuery->andFilterWhere(['like', 'name_original', $searchQuery]);
+        }
+        $totalCount = $totalCountQuery->count();
         
         $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
         $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
 
-        $files =  $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail) {
+        $fn = function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail, $searchQuery) {
             $files = [];
-            $fileQuery = StorageFile::find()
+            $fileQueryObject = StorageFile::find()
                 ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])
                 ->offset($page*$perPage)
                 ->indexBy(['id'])
-                ->limit($perPage)
-                ->asArray()
-            ->all();
+                ->limit($perPage);
+                
+            if ($searchQuery) {
+                $fileQueryObject->andFilterWhere(['like', 'name_original', $searchQuery]);
+            }
+
+            $fileQuery = $fileQueryObject->asArray()->all();
             
             // ass the addImage() method requires the list of images and files in Yi::$app->storage we have to inject, them:
             Yii::$app->storage->setFilesArray($fileQuery);
@@ -122,10 +128,17 @@ class StorageController extends RestController
             }
             
             return $files; 
-        }, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
-        
+        };
+
+        if (empty($searchQuery)) {
+            $files =  $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], $fn, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
+        } else {
+            $files = call_user_func($fn);
+        }
         return $this->generatePaginationArrayResponse($page, $perPage, $totalCount, $files);
     }
+
+
     
     /**
      * 
@@ -148,6 +161,21 @@ class StorageController extends RestController
         ];
     }
     
+    /**
+     * Get all files from the storage container.
+     *
+     * @return array
+     */
+    public function actionDataFiles($folderId = 0, $page = 0)
+    {
+        return $this->getStorageFiles($folderId, $page);
+    }
+
+    public function actionSearch($query, $folderId = 0, $page = 0)
+    {
+        return $this->getStorageFiles($folderId, $page, $query);
+    }
+    
     // ACTIONS
     
     /**
@@ -168,7 +196,7 @@ class StorageController extends RestController
         
         return $model->toArray([], ['user', 'file', 'images']);
     }
-    
+
     /**
      * 
      * @param integer $id
@@ -184,7 +212,7 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
         
-        return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source']);
+        return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail']);
     }
     
     /**

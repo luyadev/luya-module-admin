@@ -2448,29 +2448,19 @@
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
-                    if (n != 0 && n !== undefined) {
+                	if (n == 0 || n == undefined || n == null) {
+                		return;
+                	}
 
-                    	ServiceImagesData.getImage(n).then(function(response) {
-                    		$scope.imageSrc = response.source;
-                    	});
-                    	
-                    	/*
-                    	 * TODO USE getImage
-                        var filtering = $filter('findidfilter')($scope.imagesData, n, true);
-
-                        var file = $filter('findidfilter')($scope.filesData, filtering.fileId, true);
-
-                        if (file && file.thumbnail) {
-                        	$scope.imageSrc = file.thumbnail.source;
-                        }
-                        */
-                    }
+                    ServiceImagesData.getImage(n).then(function(response) {
+                        $scope.imageSrc = response.thumbnail.source;
+                    });
                 });
 
                 $scope.imageSrc = null;
             }],
             template: function() {
-                return '<div ng-show="imageSrc!==false"><img ng-src="{{imageSrc}}" /></div>';
+                return '<div ng-show="imageSrc!==false"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
             }
         }
     });
@@ -2794,11 +2784,15 @@
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	return $q(function(resolve, reject) {
 	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
-	                		$scope.filesData = response.data.data;
-	                        $scope.filesMetaToPagination(response.data.__meta);
+                            $scope.filesResponseToVars(response);
 	                        return resolve(true);
 	                	});
                 	});
+                };
+
+                $scope.filesResponseToVars = function(response) {
+                    $scope.filesData = response.data.data;
+	                $scope.filesMetaToPagination(response.data.__meta);
                 };
 
                 $scope.filesMetaToPagination = function(meta) {
@@ -3012,7 +3006,17 @@
 
                 // controller logic
 
-                $scope.searchQuery = '';
+                $scope.searchQuery = null;
+
+                $scope.runSearch = function() {
+                    if ($scope.searchQuery.length > 0) {
+                        $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
+                            $scope.filesResponseToVars(response);
+                        });
+                    } else {
+                        $scope.getFilesForCurrentPage();
+                    }
+                };
 
                 $scope.sortField = 'name';
 
@@ -3105,6 +3109,8 @@
                 $scope.fileDetailFull = false;
                 
                 $scope.nameEditMode = false;
+
+                $scope.fileDetailFolder = false;
                 
                 $scope.openFileDetail = function(file, force) {
                 	if ($scope.fileDetail.id == file.id && force !== true) {
@@ -3112,8 +3118,9 @@
                 	} else {
                 		
                 		ServiceFilesData.getFile(file.id, force).then(function(responseFile) {
-                			$scope.fileDetailFull = responseFile;
-                		});
+                            $scope.fileDetailFull = responseFile;
+                            $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
+                        });
                 		
                 		$scope.fileDetail = file;
                 	}
