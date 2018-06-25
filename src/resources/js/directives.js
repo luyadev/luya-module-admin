@@ -2495,7 +2495,7 @@
 
                 // controller logic
 
-            	$scope.ngModel = 0;
+            	//$scope.ngModel = 0;
             	
             	$scope.modal = {state: 1};
 
@@ -2519,8 +2519,7 @@
                 };
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-            		
-            		if (n == 0 || n == null || n == undefined || n == o) {
+            		if (n == 0 || n == null || n == undefined) {
             			return null;
             		}
                     
@@ -2649,7 +2648,7 @@
 
                 $scope.$watch(function() { return $scope.fileId }, function(n, o) {
                 	
-                	if (n == o || n == 0 || n == null || n == undefined) {
+                	if (n == 0 || n == null || n == undefined) {
                 		return;
                 	}
                 	
