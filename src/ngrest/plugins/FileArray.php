@@ -130,6 +130,15 @@ class FileArray extends Plugin
         if (empty($values)) {
             return [];
         }
-        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'fileId')])->all();
+        
+        $binds = [];
+        
+        foreach ($values as $item) {
+            if (!empty($item['caption'])) {
+                $binds[$item['fileId']] = ['caption' => $item['caption']];
+            }
+        }
+        
+        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'fileId')])->bind($binds)->all();
     }
 }
