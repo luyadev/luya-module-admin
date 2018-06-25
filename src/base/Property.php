@@ -9,9 +9,9 @@ use luya\helpers\Json;
 /**
  * Abstract Page Property Class.
  *
- * Each property must implement this class.
- *
- * Reade more in the Guide [[app-cmsproperties.md]].
+ * Each property must implement this class. Reade more in the Guide [[app-cmsproperties.md]].
+ * 
+ * Example integration requires it least {{varName()}}, {{label()}} and {{type()}}.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -19,7 +19,7 @@ use luya\helpers\Json;
 abstract class Property extends Component implements TypesInterface
 {
     /**
-     * @var string The name of the event will be triggered before rendering
+     * @var string The name of the event will be triggered before rendering. Triggers an {{luya\cms\frontend\events\BeforeRenderEvent}} event.
      */
     const EVENT_BEFORE_RENDER = 'EVENT_BEFORE_RENDER';
 
