@@ -21,6 +21,13 @@ class ViewAction extends \yii\rest\ViewAction
     {
         $result = parent::run($id);
         
+        $relations = $this->controller->getWithRelation('view');
+        
+        // auto expand the given relations
+        foreach ($relations as $relationAttribute) {
+            $result->{$relationAttribute};
+        }
+        
         $modelClass = $this->modelClass;
 
         $table = $modelClass::tableName();

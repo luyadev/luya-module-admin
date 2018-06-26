@@ -92,6 +92,57 @@ class Api extends RestActiveController
     }
     
     /**
+     * Auto add those relations to queries.
+     * 
+     * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefintion in order to define
+     * which relation should be us when.
+     * 
+     * basic:
+     * 
+     * ```php
+     * return ['user', 'images'];
+     * ```
+     * 
+     * The above relations will be auto added trough {{yii\db\ActiveQuery::with()}}. In order to define view specific actions:
+     * 
+     * ```php
+     * return [
+     *     'index' => ['user', 'images'],
+     *     'list' => ['user'],
+     *     'view' => ['images', 'files'],
+     * ];
+     * ```
+     * 
+     * @return array
+     * @since 1.2.2
+     */
+    public function withRelations()
+    {
+        return [];
+    }
+    
+    /**
+     * Get the relations for the corresponding action name.
+     * 
+     * @param string $actionName The action name like `index`, `list` or `view`.
+     * @return array An array with relation names.
+     * @since 1.2.2
+     */
+    public function getWithRelation($actionName)
+    {
+        $rel = $this->withRelations();
+        
+        foreach ($rel as $relationName) {
+            // it seem to be the advance strucutre for given actions.
+            if (is_array($relationName)) {
+                return isset($rel[$actionName]) ?: [];
+            }
+        }
+        // simple structure
+        return $rel;
+    }
+    
+    /**
      * Prepare Index Query.
      *
      * You can override the prepare index query to preload relation data like this:
@@ -112,7 +163,7 @@ class Api extends RestActiveController
     {
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
-        return $modelClass::ngRestFind();
+        return $modelClass::ngRestFind()->with($this->getWithRelation('index'));
     }
     
     /**
@@ -122,6 +173,12 @@ class Api extends RestActiveController
     {
         $actions = [
             'index' => [
+                'class' => 'luya\admin\ngrest\base\actions\IndexAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+                'prepareActiveDataQuery' => [$this, 'prepareIndexQuery'],
+            ],
+            'list' => [ // for ngrest list
                 'class' => 'luya\admin\ngrest\base\actions\IndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],

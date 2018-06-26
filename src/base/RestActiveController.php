@@ -55,6 +55,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             case 'relation-call':
             case 'filter':
             case 'export':
+            case 'list':
                 $type = false;
                 break;
             case 'create':
