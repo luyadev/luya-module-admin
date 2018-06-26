@@ -379,7 +379,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             AuthImporter::class,
             FilterImporter::class,
             PropertyImporter::class,
-            StorageImporter::class,
         ];
     }
     
