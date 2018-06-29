@@ -332,8 +332,12 @@ zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminD
         	
             config.headers = config.headers || {};
             config.headers.Authorization = "Bearer " + authToken;
-            var csrfToken = document.head.querySelector("[name=csrf-token]").content;
-            config.headers['X-CSRF-Token'] = csrfToken;
+
+            var csrfObject = document.head.querySelector("[name=csrf-token]");
+
+            if (csrfObject !== null) {
+                config.headers['X-CSRF-Token'] = csrfObject.content;
+            }
             
             return config || $q.when(config);
         },
