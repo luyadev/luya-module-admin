@@ -93,11 +93,21 @@
 }
 
 .zaaselect-item {
-    padding: 5px 10px;
+}
 
-    &:hover {
+.zaaselect-label {
+    display: block;
+    cursor: pointer;
+    padding: 6px 10px 4px;
+
+    &:not(.zaaselect-label-active):hover {
         background-color: theme-color(primary);
         color: $white;
-        cursor: pointer;
+    }
+
+    &-active {
+        background-color: lighten(theme-color(primary), 30);
+        color: $white;
+        cursor: default;
     }
 }

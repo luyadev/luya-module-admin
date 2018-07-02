@@ -1418,8 +1418,8 @@
                                             '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
                                         '</div>' +
                                         '<div class="zaaselect-overflow">' +
-                                            '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery" ng-click="setModelValue(opt)">' +
-                                                '<span ng-class="{\'zaaselect-active\': opt[optionsvalue] == model}">{{opt[optionslabel]}}</span>' +
+                                            '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
+                                                '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
