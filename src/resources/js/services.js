@@ -136,6 +136,10 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function(
 	service.getImage = function(id, forceAsyncRequest) {
 		return $q(function(resolve, reject) {
 			
+			if (id == 0) {
+				return reject(id);
+			}
+			
 			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
 				return resolve(service.data[id]);
 			}
@@ -195,6 +199,11 @@ zaa.factory("ServiceFilesData", ['$http', '$q', '$rootScope', '$log', function($
 	 */
 	service.newPromise = function(id, forceAsyncRequest) {
 		return $q(function(resolve, reject) {
+			
+			if (id == 0) {
+				return reject(id);
+			}
+			
 			if (service.data.hasOwnProperty(id) && forceAsyncRequest !== true) {
 				return resolve(service.data[id]);
 			}

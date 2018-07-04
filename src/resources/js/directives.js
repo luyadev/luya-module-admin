@@ -865,7 +865,7 @@
     	}
     });
 
-    zaa.directive("zaaLink", function(){
+    zaa.directive("zaaLink", ['$filter', function($filter){
         return {
             restrict: "E",
             scope: {
@@ -896,22 +896,30 @@
             		if (n) {
             			$scope.model = n;
             		}
-            	}, true);
+                }, true);
+                
+                $scope.isEmpty = function(value) {
+                    if (value) {
+                        return $filter('isEmpty')(value);
+                    }
+                    
+                    return true;
+                };
             }],
             template: function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><labelfor="{{id}}">{{label}}</label></div><div class="form-side">' +
-                    '<div ng-if="model">' +
+                    '<div ng-if="!isEmpty(data.model)">' +
                         '<div class="link-selector">' +
                             '<div class="link-selector-actions">' +
                                 '<div class="link-selector-btn btn btn-secondary" ng-click="data.modalState=0">' +
                                     '<i class="material-icons left">insert_link</i>' +
-                                    '<span>' + i18n['js_link_set_value'] + '</span>' +
+                                    '<span>' + i18n['js_link_change_value'] + '</span>' +
                                 '</div>' +
                                 '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
                             '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
                         '</div>' +
                     '</div>' +
-                    '<div ng-if="!model">' +
+                    '<div ng-if="isEmpty(data.model)">' +
                         '<div class="link-selector">' +
                             '<div class="link-selector-actions">' +
                                 '<div class="link-selector__btn btn btn-secondary" ng-click="data.modalState=0">' +
@@ -929,7 +937,7 @@
                 '</div></div>';
             }
         }
-    });
+    }]);
 
     /**
      * Generates slug from a given model input.
@@ -2408,7 +2416,9 @@
                 	
                 	$scope.ServiceFilesData.getFile(n).then(function(file) {
                 		$scope.fileinfo = file;
-                	});
+                	}, function() {
+                        $scope.fileinfo = null;
+                    });
                 });
     		}],
     		template: function() {
@@ -2448,19 +2458,19 @@
                 // controller logic
 
                 $scope.$watch(function() { return $scope.imageId }, function(n, o) {
-                	if (n == 0 || n == undefined || n == null) {
-                		return;
-                	}
-
-                    ServiceImagesData.getImage(n).then(function(response) {
-                        $scope.imageSrc = response.thumbnail.source;
-                    });
+                    if (n != undefined || n != null) {
+                        ServiceImagesData.getImage(n).then(function(response) {
+                            $scope.imageSrc = response.thumbnail.source;
+                        }, function() {
+                            $scope.imageSrc = null;  
+                        });
+                    }
                 });
 
                 $scope.imageSrc = null;
             }],
             template: function() {
-                return '<div ng-show="imageSrc!==false"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
+                return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
             }
         }
     });
@@ -2509,12 +2519,14 @@
                 };
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-            		if (n == 0 || n == null || n == undefined) {
+            		if (n == null || n == undefined) {
             			return null;
             		}
                     
             		ServiceFilesData.getFile(n).then(function(response) {
                     	$scope.fileinfo = response;
+                    }, function() {
+                        $scope.fileinfo = null;
                     });
                 });
             }],
@@ -2522,6 +2534,17 @@
         }
     });
 
+    /**
+     * Sotrage Image Upload directive.
+     * 
+     * Call cycle when file directive implements the image directive:
+     * 
+     * + reset() in file directive
+     * + reset set $scope.fileId = 0
+     * + fileId watcher applys filter
+     * + filter can not find a file for id 0
+     * + ngModel set to 0
+     */
     zaa.directive('storageImageUpload', function() {
         return {
             restrict : 'E',
@@ -2546,6 +2569,8 @@
                 */
 
                 // ServiceFiltesrData inheritance
+            	
+            	//$scope.ngModel = 0;
 
                 $scope.filtersData = ServiceFiltersData.data;
 
@@ -2593,6 +2618,10 @@
                         	$scope.ngModel = images[0].id;
                         	$scope.imageLoading = false;
                         }
+                    }, function() {
+                        $scope.imageinfo = null;
+                        $scope.thumb = false;
+                        $scope.ngModel = 0;
                     });
                     
                 	/*
@@ -2638,11 +2667,11 @@
 
                 $scope.$watch(function() { return $scope.fileId }, function(n, o) {
                 	
-                	if (n == 0 || n == null || n == undefined) {
-                		return;
+                	if (n != null && n != undefined) {
+                		$scope.filterApply();
                 	}
                 	
-                	$scope.filterApply();
+                	
                 	/*
                 	console.log('==> image fileId watch', n, o);
                 	if (n !== undefined && n != null && n != o) {
@@ -2659,16 +2688,20 @@
                 });
 
                 $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-                	
-                	if (n == 0 || n == null || n == undefined) {
-                		return;
+                	if (n != null && n != undefined && n != 0) {
+                		ServiceImagesData.getImage(n).then(function(response) {
+                            $scope.applyImageDetails(response);
+                            $scope.fileId = response.file_id;
+                            $scope.filterId = response.filter_id;
+                        }, function() {
+                            $scope.fileId = 0;
+                            $scope.filterId = 0;
+                            $scope.imageinfo = null;
+                            $scope.thumb = false;
+                        });
                 	}
                 	
-                	ServiceImagesData.getImage(n).then(function(response) {
-                		$scope.applyImageDetails(response);
-                    	$scope.fileId = response.file_id;
-                    	$scope.filterId = response.filter_id;
-                	});
+                	
                 	
                 	/*
                     if (n != 0 && n != null && n !== undefined) {
@@ -3120,6 +3153,8 @@
                 		ServiceFilesData.getFile(file.id, force).then(function(responseFile) {
                             $scope.fileDetailFull = responseFile;
                             $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
+                        }, function() {
+
                         });
                 		
                 		$scope.fileDetail = file;
