@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#171](https://github.com/luyadev/luya-module-admin/issues/171) Fixed issue with link label when link has been set already.
 + [#70](https://github.com/luyadev/luya-module-admin/issues/70) Added styles and "disabled" click event for the active zaaselect dropdown item
 + [#167](https://github.com/luyadev/luya-module-admin/issues/167) NgRest FileArray plugin override the filesystem caption.
 + [#156](https://github.com/luyadev/luya-module-admin/issues/156) Do not display API users in global search.
