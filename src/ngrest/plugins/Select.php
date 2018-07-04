@@ -44,7 +44,10 @@ abstract class Select extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-select', $id, $ngModel, ['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')]);
+        return $this->createFormTag(self::TYPE_SELECT, $id, $ngModel, [
+            'initvalue' => $this->initValue,
+            'options' => $this->getServiceName('selectdata'),
+        ]);
     }
 
     /**

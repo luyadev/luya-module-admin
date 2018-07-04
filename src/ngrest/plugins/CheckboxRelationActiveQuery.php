@@ -45,6 +45,9 @@ use yii\base\InvalidConfigException;
  */
 class CheckboxRelationActiveQuery extends CheckboxRelation
 {
+    /**
+     * @inheritdoc
+     */
     public $onlyRestScenarios = true;
     
     /**

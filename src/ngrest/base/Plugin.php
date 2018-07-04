@@ -10,9 +10,13 @@ use luya\Exception;
 use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
+use luya\admin\base\TypesInterface;
 
 /**
  * Base class for NgRest Plugins.
+ *
+ * + renderList, renderCreate, renderUpdate are execute once when the crud template is generated
+ * + the on* methods are triggered for every model on the given events.
  *
  * Event trigger cycle for different use cases, the following use cases are available with its
  * event cycles.
@@ -20,7 +24,7 @@ use luya\helpers\StringHelper;
  * Async:
  * + onCollectServiceData: A collection bag where you can provide data and access them trough angular, its not available inside the same model as this process runs async
  *
- * Async:
+ * Data foreach:
  * + onFind: The model is used in your controller frontend logic to display and assign data into the view (developer use case)
  * + onListFind: The model is populated for the Admin Table list view where you can see all your items and click the edit/delete icons.
  * + onExpandFind: Equals to onFind but only for the view api of the model, which means the data which is used for edit.
@@ -29,7 +33,7 @@ use luya\helpers\StringHelper;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class Plugin extends Component
+abstract class Plugin extends Component implements TypesInterface
 {
     /**
      * @var string The name of the field corresponding to the ActiveRecord (also known as fieldname)

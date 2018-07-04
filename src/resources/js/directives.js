@@ -1177,6 +1177,36 @@
                 "id": "@fieldid"
             },
             controller: ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+
+            	$scope.resetValue = function() {
+            		$scope.model = 0;
+            		$scope.value = null;
+            	};
+            }],
+            template: function() {
+                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><async-value model="model" api="{{api}}" fields="fields"  ng-show="model" /><button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button></div></div>';
+            }
+        }
+    });
+
+    /**
+     * Can be used to just fetch a value from an api async.
+     * 
+     * ```
+     * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]" />
+     * ```
+     * 
+     * @since 1.2.2
+     */
+    zaa.directive("asyncValue", function() {
+        return {
+            restrict: "E",
+            scope: {
+                "model": "=",
+                "api" : "@",
+                "fields" : "="
+            },
+            controller: ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
             	$timeout(function() {
             		$scope.$watch('model', function(n, o) {
             			if (n) {
@@ -1192,14 +1222,9 @@
             			}
             		});
             	});
-
-            	$scope.resetValue = function() {
-            		$scope.model = 0;
-            		$scope.value = null;
-            	};
             }],
             template: function() {
-                return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><span ng-bind="value"></span><button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button></div></div>';
+                return '<span ng-bind="value"></span>';
             }
         }
     });
