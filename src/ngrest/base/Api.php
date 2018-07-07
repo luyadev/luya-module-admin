@@ -50,7 +50,7 @@ class Api extends RestActiveController
      * enable pagination by setting the pagination property like:
      *
      * ```php
-     * public $pagination = ['pageSize' => 100];
+     * public $pagination = ['defaultPageSize' => 100];
      * ```
      *
      * If its enabled like the example above, the {{$pageSize}} param is ignored.
@@ -59,7 +59,7 @@ class Api extends RestActiveController
     
     /**
      * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size. If you are enabling pagination by setting
-     * the {{$pagination}} property `$pagination = ['pageSize' => 100]` this {{$pageSize}} property will be ignored!
+     * the {{$pagination}} property `$pagination = ['defaultPageSize' => 100]` this {{$pageSize}} property will be ignored!
      * ```
      */
     public $pageSize = 100;
@@ -86,7 +86,7 @@ class Api extends RestActiveController
         // pagination is disabled by default, lets verfy if there are more then 400 rows in the table and auto enable
         if ($this->pagination === false && $this->autoEnablePagination) {
             if ($this->model->ngRestFind()->count() > ($this->pageSize*2)) {
-                $this->pagination = ['pageSize' => $this->pageSize];
+                $this->pagination = ['defaultPageSize' => $this->pageSize];
             }
         }
     }
