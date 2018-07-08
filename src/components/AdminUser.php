@@ -70,7 +70,9 @@ class AdminUser extends User
      */
     public function onAfterLogin(UserEvent $event)
     {
-        Yii::$app->language = $this->getInterfaceLanguage();
+        if (!$this->identity->is_api_user) {
+            Yii::$app->language = $this->getInterfaceLanguage();
+        }
     }
 
     /**
