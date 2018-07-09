@@ -194,9 +194,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxybuild' => 'luya\admin\apis\ProxyBuildController',
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
-        
     ];
 
+    /**
+     * @var array An array with all apis from every module, this property is assigned by the {{luya\web\Bootstrap::run()}} method.
+     * @since 1.2.2
+     */
+    public $apiDefintions = [];
+    
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
      */
@@ -219,12 +224,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      */
     public function getUrlRules()
     {
-        return [
-            ['class' => 'luya\admin\components\UrlRule', 'cacheFlag' => Yii::$app->request->isAdmin],
+        $rules = [
             ['pattern' => 'file/<id:\d+>/<hash:\w+>/<fileName:(.*?)+>', 'route' => 'admin/file/download'],
             ['pattern' => 'admin', 'route' => 'admin/default/index'],
             ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
         ];
+        
+        foreach ($this->apiDefintions as $definition) {
+            $definition['class'] = 'luya\admin\components\UrlRule';
+            $definition['cacheFlag'] = Yii::$app->request->isAdmin;
+            $rules[] = $definition;
+        }
+        
+        return $rules;
     }
     
     /**

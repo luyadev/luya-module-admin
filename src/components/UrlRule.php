@@ -18,7 +18,7 @@ use yii;
 class UrlRule extends \yii\rest\UrlRule
 {
     /**
-     * @var boolean This is used for ensure the url rule caching since 2.0.14
+     * @var boolean This is used to ensure the url rule caching works with yii version 2.0.14
      * @see https://github.com/luyadev/luya-module-admin/issues/68
      */
     public $cacheFlag;
@@ -31,6 +31,7 @@ class UrlRule extends \yii\rest\UrlRule
     /**
      * @inheritdoc
      */
+    /*
     public function init()
     {
         // get all controller mappings
@@ -41,6 +42,7 @@ class UrlRule extends \yii\rest\UrlRule
         if (count($map) > 0) {
             // assign the url rule from the admins controller map
             foreach ($map as $alias => $className) {
+                // effect controller roule would be: `admin/api-admin-user` as its registered in the controller map of the admin module`.
                 $this->controller[] = sprintf('%s/%s', 'admin', $alias);
             }
 
@@ -52,4 +54,5 @@ class UrlRule extends \yii\rest\UrlRule
         // an error.
         $this->controller = [];
     }
+    */
 }
