@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\render;
 
 use Yii;
+use luya\admin\Module;
 use luya\admin\components\Auth;
 use luya\admin\models\Lang;
 use luya\admin\ngrest\NgRest;
@@ -45,15 +46,18 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
         return $this->_view;
     }
-    
+
     /**
      * @inheritdoc
      */
     public function getViewPath()
     {
+        if ((Yii::$app->getModule(Module::getInstance()->id))->useAppViewPath) {
+            return '@app/views/admin/ngrest';
+        }
         return '@admin/views/ngrest';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -71,7 +75,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             'downloadAttributes' => $this->generateDownloadAttributes(),
         ], $this);
     }
-    
+
     /**
      * Generates an array with all attributes an the corresponding label.
      *
@@ -82,16 +86,16 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $attributes = [];
         foreach ($this->model->attributes() as $key) {
-            $attributes[$key] = $this->model->getAttributeLabel($key) . ' ('.$key.')';
+            $attributes[$key] = $this->model->getAttributeLabel($key) . ' (' . $key . ')';
         }
-        
+
         return $attributes;
     }
 
     // RenderCrudInterface
 
     private $_model;
-    
+
     /**
      * @inheritdoc
      */
@@ -99,7 +103,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $this->_model = $model;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -107,7 +111,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_model;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -115,7 +119,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->can(Auth::CAN_CREATE);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -123,7 +127,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->can(Auth::CAN_UPDATE);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -131,9 +135,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->can(Auth::CAN_DELETE);
     }
-    
+
     private $_relationCall = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -141,7 +145,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_relationCall;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -149,7 +153,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $this->_relationCall = $options;
     }
-    
+
     private $_isInline = false;
 
     /**
@@ -159,7 +163,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_isInline;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -167,9 +171,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $this->_isInline = $inline;
     }
-    
+
     private $_modelSelection;
-    
+
     /**
      * @inheritdoc
      */
@@ -177,7 +181,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $this->_modelSelection = $selection;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -185,9 +189,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_modelSelection;
     }
-    
+
     private $_settingButtonDefinitions = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -195,18 +199,18 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $elements = [];
         foreach ($buttons as $config) {
-            $innerContent = '<i class="material-icons">' . ArrayHelper::getValue($config, 'icon', 'extension') .'</i><span> '. $config['label'] . '</span>';
-            
+            $innerContent = '<i class="material-icons">' . ArrayHelper::getValue($config, 'icon', 'extension') . '</i><span> ' . $config['label'] . '</span>';
+
             $tagName = ArrayHelper::remove($config, 'tag', 'a');
-            
+
             if (!array_key_exists('class', $config)) {
                 $config['class'] = 'dropdown-item';
             }
-            
+
             $elements[] = Html::tag($tagName, $innerContent, $config);
         }
-        
-        $this->_settingButtonDefinitions= $elements;
+
+        $this->_settingButtonDefinitions = $elements;
     }
 
     /**
@@ -216,9 +220,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_settingButtonDefinitions;
     }
-    
+
     // methods used inside the view context: RenderCrudView
-    
+
     /**
      * Returns the current order by state.
      *
@@ -229,10 +233,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if ($this->getConfig()->getDefaultOrderField() === false) {
             return false;
         }
-        
+
         return $this->getConfig()->getDefaultOrderDirection() . $this->getConfig()->getDefaultOrderField();
     }
-    
+
     /**
      * Returns the primary key from the config.
      *
@@ -242,7 +246,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return implode(",", $this->config->getPrimaryKey());
     }
-    
+
     /**
      * Returns the api endpoint, but can add appendix.
      *
@@ -253,14 +257,14 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if ($append) {
             $append = '/' . ltrim($append, '/');
         }
-        
-        return 'admin/'.$this->getConfig()->getApiEndpoint() . $append;
+
+        return 'admin/' . $this->getConfig()->getApiEndpoint() . $append;
     }
-    
+
     // generic methods
-    
+
     private $_canTypes = [];
-    
+
     /**
      * Checks whether a given type can or can not.
      *
@@ -272,10 +276,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if (!array_key_exists($type, $this->_canTypes)) {
             $this->_canTypes[$type] = Yii::$app->auth->matchApi(Yii::$app->adminuser->getId(), $this->config->apiEndpoint, $type);
         }
-        
+
         return $this->_canTypes[$type];
     }
-    
+
     /**
      *
      * @param string $modelPrefix In common case its `item`.
@@ -286,16 +290,16 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         foreach ($this->config->getPrimaryKey() as $key) {
             $output[] = $modelPrefix . '.' . $key;
         }
-        
-        return "[". implode(",", $output) . "]";
+
+        return "[" . implode(",", $output) . "]";
     }
-    
+
     /*
      * OLD
      */
 
     private $_buttons;
-    
+
     /**
      * collection all the buttons in the crud list.
      *
@@ -313,39 +317,39 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         if ($this->_buttons === null) {
             $buttons = [];
-            
-            
+
+
             foreach ($this->getConfig()->getRelations() as $rel) {
                 $api = Yii::$app->adminmenu->getApiDetail($rel['apiEndpoint']);
-                
+
                 if (!$api) {
                     throw new InvalidConfigException("The configured api relation '{$rel['apiEndpoint']}' does not exists in the menu elements. Maybe you have no permissions to access this API.");
                 }
-                
-                $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.'.$rel['tabLabelAttribute'];
-                
+
+                $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.' . $rel['tabLabelAttribute'];
+
                 $buttons[] = [
-                    'ngClick' => 'addAndswitchToTab(item.'.$this->getPrimaryKey().', \''.$api['route'].'\', \''.$rel['arrayIndex'].'\', '.$label.', \''.$rel['modelClass'].'\')',
+                    'ngClick' => 'addAndswitchToTab(item.' . $this->getPrimaryKey() . ', \'' . $api['route'] . '\', \'' . $rel['arrayIndex'] . '\', ' . $label . ', \'' . $rel['modelClass'] . '\')',
                     'icon' => 'chrome_reader_mode',
                     'label' => $rel['label'],
                 ];
             }
-            
+
             if ($this->can(Auth::CAN_UPDATE)) {
                 // get all activeWindows assign to the crud
                 foreach ($this->getActiveWindows() as $hash => $config) {
                     $buttons[] = [
-                        'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
+                        'ngClick' => 'getActiveWindow(\'' . $hash . '\', ' . $this->getCompositionKeysForButtonActions('item') . ')',
                         'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
                         'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
                     ];
                 }
             }
-            
+
             // check if deletable is enabled
             if ($this->config->isDeletable() && $this->can(Auth::CAN_DELETE)) {
                 $buttons[] = [
-                    'ngClick' => 'deleteItem('.$this->getCompositionKeysForButtonActions('item').')',
+                    'ngClick' => 'deleteItem(' . $this->getCompositionKeysForButtonActions('item') . ')',
                     'icon' => 'delete',
                     'label' => '',
                 ];
@@ -353,12 +357,12 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             // do we have an edit button
             if (count($this->getFields('update')) > 0 && $this->can(Auth::CAN_UPDATE)) {
                 $buttons[] = [
-                    'ngClick' => 'toggleUpdate('.$this->getCompositionKeysForButtonActions('item').')',
+                    'ngClick' => 'toggleUpdate(' . $this->getCompositionKeysForButtonActions('item') . ')',
                     'icon' => 'mode_edit',
                     'label' => '',
                 ];
             }
-            
+
             $this->_buttons = $buttons;
         }
 
@@ -382,7 +386,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
     private $_fields = [];
-    
+
     /**
      * wrapper of $config->getPointer to get only the fields.
      */
@@ -411,8 +415,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return ($activeWindows = $this->config->getPointer('aw')) ? $activeWindows : [];
     }
-    
-    
+
+
     private $_langs;
 
     public function getLangs()
@@ -441,41 +445,41 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if (!$pointerElements) {
             return [];
         }
-        
+
         $names = [];
         foreach ($pointerElements as $elmn) {
             $names[$elmn['name']] = $elmn['name'];
         }
-        
-        foreach ($this->getConfig()->getAttributeGroups()as $group) {
+
+        foreach ($this->getConfig()->getAttributeGroups() as $group) {
             foreach ($group[0] as $item) {
                 if (in_array($item, $names)) {
                     unset($names[$item]);
                 }
             }
         }
-        
+
         $groups[] = [$names, '__default', 'collapsed' => true, 'is_default' => true];
-        
-        
+
+
         return array_merge($groups, $this->getConfig()->getAttributeGroups());
     }
-    
+
     public function forEachGroups($pointer)
     {
         $groups = $this->evalGroupFields($this->config->getPointer($pointer));
 
         $data = [];
-        
+
         foreach ($groups as $group) {
             $data[] = [
                 'fields' => $this->config->getFields($pointer, $group[0]),
                 'name' => $group[1],
-                'collapsed' => (isset($group['collapsed'])) ? (bool) $group['collapsed'] : false,
-                'is_default' => (isset($group['is_default'])) ? (bool) $group['is_default'] : false,
+                'collapsed' => (isset($group['collapsed'])) ? (bool)$group['collapsed'] : false,
+                'is_default' => (isset($group['is_default'])) ? (bool)$group['is_default'] : false,
             ];
         }
-        
+
         return $data;
     }
 
@@ -494,7 +498,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             foreach ($this->getLangs() as $lang) {
                 if ($i == 0) {
                     $return[] = [
-                        'html' => '<div class="form-i18n" ng-class="{\'has-field-help\': getFieldHelp(\''.$element['name'].'\')}">
+                        'html' => '<div class="form-i18n" ng-class="{\'has-field-help\': getFieldHelp(\'' . $element['name'] . '\')}">
                                        ' . $this->createFieldHelpButton($element, $configContext) . '
                                        <label class="form-i18n-label">
                                         ' . $element['alias'] . '
@@ -503,10 +507,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                     ];
                 }
                 $ngModel = $this->i18nNgModelString($configContext, $element['name'], $lang['short_code']);
-                $id = 'id-'.md5($ngModel.$lang['short_code']);
+                $id = 'id-' . md5($ngModel . $lang['short_code']);
                 // anzahl cols durch anzahl sprachen
                 $return[] = [
-                    'html' => '<div class="col" ng-show="AdminLangService.isInSelection(\''.$lang['short_code'].'\')">'.$this->renderElementPlugins($configContext, $element['type'], $id, $element['name'], $ngModel, $element['alias'], true).'<span class="flag flag-'.$lang['short_code'].' form-col-flag"><span class="flag-fallback">'.$lang['short_code'].'</span></span></div>',
+                    'html' => '<div class="col" ng-show="AdminLangService.isInSelection(\'' . $lang['short_code'] . '\')">' . $this->renderElementPlugins($configContext, $element['type'], $id, $element['name'], $ngModel, $element['alias'], true) . '<span class="flag flag-' . $lang['short_code'] . ' form-col-flag"><span class="flag-fallback">' . $lang['short_code'] . '</span></span></div>',
                 ];
 
                 ++$i;
@@ -517,7 +521,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         }
 
         $ngModel = $this->ngModelString($configContext, $element['name']);
-        $id = 'id-'.md5($ngModel);
+        $id = 'id-' . md5($ngModel);
 
         return [
             [
@@ -529,16 +533,16 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     private function createFieldHelpButton(array $element, $configContext)
     {
         if ($configContext !== self::TYPE_LIST) {
-            return '<span ng-if="getFieldHelp(\''.$element['name'].'\')" class="help-button btn btn-icon btn-help" tooltip tooltip-expression="getFieldHelp(\''.$element['name'].'\')" tooltip-position="left"></span>';
+            return '<span ng-if="getFieldHelp(\'' . $element['name'] . '\')" class="help-button btn btn-icon btn-help" tooltip tooltip-expression="getFieldHelp(\'' . $element['name'] . '\')" tooltip-position="left"></span>';
         }
     }
-    
+
     private function renderElementPlugins($configContext, $typeConfig, $elmnId, $elmnName, $elmnModel, $elmnAlias, $elmni18n)
     {
         $args = $typeConfig['args'];
         $args['renderContext'] = $this;
         $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $args);
-        $method = 'render'.ucfirst($configContext);
+        $method = 'render' . ucfirst($configContext);
         $html = $obj->$method($elmnId, $elmnModel);
 
         return is_array($html) ? implode(" ", $html) : $html;
@@ -546,11 +550,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     public function ngModelString($configContext, $fieldId)
     {
-        return ($configContext == self::TYPE_LIST) ? 'item.'.$fieldId : 'data.'.$configContext.'.'.$fieldId;
+        return ($configContext == self::TYPE_LIST) ? 'item.' . $fieldId : 'data.' . $configContext . '.' . $fieldId;
     }
 
     private function i18nNgModelString($configContext, $fieldId, $lang)
     {
-        return 'data.'.$configContext.'.'.$fieldId.'[\''.$lang.'\']';
+        return 'data.' . $configContext . '.' . $fieldId . '[\'' . $lang . '\']';
     }
 }
