@@ -4,7 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
 use luya\TagParser;
-use luya\helpers\Html;
+use luya\helpers\Html as HtmlHelper;
 
 /**
  * Create a textarea input for a given field.
@@ -79,7 +79,7 @@ class Textarea extends Plugin
     public function onAfterFind($event)
     {
         if ($this->encoding) {
-            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, HtmlHelper::encode($event->sender->getAttribute($this->name)));
         }
         
         if ($this->nl2br) {
@@ -97,7 +97,7 @@ class Textarea extends Plugin
     public function onAssign($event)
     {
         if (!$this->i18n && $this->encoding && $this->isAttributeWriteable($event)) {
-            $this->writeAttribute($event, Html::encode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, HtmlHelper::encode($event->sender->getAttribute($this->name)));
         }
     }
 }
