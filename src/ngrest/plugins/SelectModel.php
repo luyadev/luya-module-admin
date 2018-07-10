@@ -111,12 +111,14 @@ class SelectModel extends Select
         $class = $query->modelClass;
         
         $keys = [$class];
-        foreach ($query->where as $v) {
-            if (is_scalar($v)) {
-                $keys[] = $v;
+        if ($query->where) {
+            foreach ($query->where as $v) {
+                if (is_scalar($v)) {
+                    $keys[] = $v;
+                }
             }
         }
-        
+
         $instanceName = implode(",", $keys);
         
         if (!isset(static::$_dataInstance[$instanceName])) {
