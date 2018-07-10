@@ -109,12 +109,22 @@ class SelectModel extends Select
     private static function getDataInstance(ActiveQuery $query)
     {
         $class = $query->modelClass;
-        if (!isset(static::$_dataInstance[$class])) {
-            $queryData = $query->all();
-            static::$_dataInstance[$class] = $queryData;
+        
+        $keys = [$class];
+        foreach ($query->where as $v) {
+            if (is_scalar($v)) {
+                $keys[] = $v;
+            }
         }
         
-        return static::$_dataInstance[$class];
+        $instanceName = implode(",", $keys);
+        
+        if (!isset(static::$_dataInstance[$instanceName])) {
+            $queryData = $query->all();
+            static::$_dataInstance[$instanceName] = $queryData;
+        }
+        
+        return static::$_dataInstance[$instanceName];
     }
     
     /**
