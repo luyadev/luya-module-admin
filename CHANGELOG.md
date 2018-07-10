@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#179](https://github.com/luyadev/luya-module-admin/issues/179) Added angular evaluation ngrest plugin to run angular code inside lists and forms.
 + [#174](https://github.com/luyadev/luya-module-admin/issues/174) Implementation of new luya base module $apiRules.
 + [#164](https://github.com/luyadev/luya-module-admin/pull/164) Turkish translations for admin and core modules.
 + [#161](https://github.com/luyadev/luya-module-admin/issues/161) NgRest CRUD exporter provides now the option to download xlsx.
