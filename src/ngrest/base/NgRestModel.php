@@ -45,13 +45,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @var string The constant for the rest create scenario
      * @since 1.2.2
      */
-    const SCENARIO_RESTCREATE = 'restcreate';
+    const SCENARIO_RESTCREATE = RestActiveController::SCENARIO_RESTCREATE;
     
     /**
      * @var string The constant for the rest update scenario
      * @since 1.2.2
      */
-    const SCENARIO_RESTUPDATE = 'restupdate';
+    const SCENARIO_RESTUPDATE = RestActiveController::SCENARIO_RESTUPDATE;
     
     /**
      * @var array Defines all fields which should be casted as i18n fields. This will transform the defined fields into
@@ -61,6 +61,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * ```php
      * public $i18n = ['textField', 'anotherTextField', 'imageField']);
      * ```
+     * 
+     * In order to build where conditions for i18n fields you can use `find()->i18nWhere('fieldname', 'value')`.
      */
     public $i18n = [];
 
@@ -89,8 +91,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[RestActiveController::SCENARIO_RESTCREATE] = $scenarios[self::SCENARIO_DEFAULT];
-        $scenarios[RestActiveController::SCENARIO_RESTUPDATE] = $scenarios[self::SCENARIO_DEFAULT];
+        $scenarios[self::SCENARIO_RESTCREATE] = $scenarios[self::SCENARIO_DEFAULT];
+        $scenarios[self::SCENARIO_RESTUPDATE] = $scenarios[self::SCENARIO_DEFAULT];
         return $scenarios;
     }
     
@@ -101,6 +103,16 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $extraFieldKeys = array_keys($this->ngRestExtraAttributeTypes());
         return array_merge(parent::extraFields(), $this->extractRootFields($extraFieldKeys));
+    }
+    
+    /**
+     * {@inheritdoc}
+     * 
+     * @return \luya\admin\ngrest\base\NgRestActiveQuery
+     */
+    public static function find()
+    {
+        return new NgRestActiveQuery(get_called_class());
     }
     
     /**
