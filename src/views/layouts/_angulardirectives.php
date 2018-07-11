@@ -283,7 +283,7 @@ use luya\admin\helpers\Angular;
                 </div>
             </div>
             <div class="filemanager-files-table">
-                <div class="table-responsive-wrapper"></div>
+                <div class="table-responsive-wrapper">
                 <table class="table table-hover table-responsive table-striped table-align-middle mt-4">
                     <thead class="thead-default">
                         <tr>
@@ -375,6 +375,10 @@ use luya\admin\helpers\Angular;
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                <ul class="pagination">
+                    <li ng-repeat="page in paginations" ng-class="{'active': page.isActive}" class="page-item"><a class="page-link" ng-click="getFilesForPage(page.index)">{{ page.label }}</a></li>
+                </ul>
             </div>
         </div>
         <!-- /Files -->
