@@ -3,7 +3,7 @@
 namespace luya\admin\components;
 
 use Yii;
-use Exception;
+use luya\Exception;
 use luya\helpers\ArrayHelper;
 
 /**
@@ -151,7 +151,7 @@ class AdminMenu extends \yii\base\Component
      * )
      * ```
      *
-     * @throws \Exception
+     * @throws Exception
      * @return array Returns an array with all modules you have permission for.
      */
     public function getModules()
@@ -199,7 +199,7 @@ class AdminMenu extends \yii\base\Component
                                     $permissionGranted = true;
                                 }
                             } else {
-                                throw new \Exception('Menu item detected without permission entry');
+                                throw new Exception('Menu item detected without permission entry');
                             }
                         }
                     }
@@ -271,11 +271,11 @@ class AdminMenu extends \yii\base\Component
                             continue;
                         }
                     } else {
-                        throw new \Exception('Menu item detected without permission entry');
+                        throw new Exception('Menu item detected without permission entry');
                     }
                     try {
                         $alias = Yii::t($data['moduleId'], $data['groups'][$groupName]['items'][$groupItemKey]['alias'], [], Yii::$app->language);
-                    } catch (Exception $err) {
+                    } catch (\Exception $err) {
                         $alias = $data['groups'][$groupName]['items'][$groupItemKey]['alias'];
                     }
                     
