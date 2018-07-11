@@ -224,8 +224,8 @@ final class Logger extends NgRestModel
     /**
      * Get array index based on identifiers.
      *
-     * @param unknown $message
-     * @param unknown $groupIdentifier
+     * @param string $message
+     * @param string $groupIdentifier
      * @return string[]|mixed[]
      */
     private static function getHashArray($message, $groupIdentifier)
@@ -248,10 +248,10 @@ final class Logger extends NgRestModel
     /**
      * Internal generate log message.
      *
-     * @param unknown $type
-     * @param unknown $message
-     * @param unknown $trace
-     * @param unknown $groupIdentifier
+     * @param string $type
+     * @param string $message
+     * @param string $trace
+     * @param string $groupIdentifier
      * @return boolean
      */
     private static function log($type, $message, $trace, $groupIdentifier)
