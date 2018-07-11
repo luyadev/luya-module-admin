@@ -7,6 +7,12 @@ use yii\db\ActiveRecord;
 /**
  * Storage Folder Model.
  *
+ * @property int $id
+ * @property string $name
+ * @property int $parent_id
+ * @property int $timestamp_create
+ * @property int $is_deleted
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -27,7 +33,7 @@ final class StorageFolder extends ActiveRecord
     {
         return parent::find()->orderBy(['name' => 'ASC']);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -35,8 +41,9 @@ final class StorageFolder extends ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['parent_id', 'timestamp_create', 'is_deleted'], 'safe'],
-            [['is_deleted'], 'boolean']
+            [['parent_id', 'timestamp_create'], 'integer'],
+            [['is_deleted'], 'boolean'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 }
