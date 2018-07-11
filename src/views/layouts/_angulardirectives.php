@@ -284,7 +284,7 @@ use luya\admin\helpers\Angular;
             </div>
             <div class="filemanager-files-table">
                 <div class="table-responsive-wrapper">
-                <table class="table table-hover table-responsive table-striped table-align-middle mt-4">
+                <table class="table table-hover table-striped table-align-middle mt-4">
                     <thead class="thead-default">
                         <tr>
                             <th>
