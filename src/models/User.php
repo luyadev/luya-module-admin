@@ -368,7 +368,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function fields()
     {
         $fields = parent::fields();
-        unset($fields['password'], $fields['password_salt'], $fields['auth_token'], $fields['is_deleted'], $fields['email_verification_token']);
+        unset($fields['password'], $fields['password_salt'], $fields['auth_token'], $fields['is_deleted'], $fields['email_verification_token'], $fields['cookie_token'], $fields['secure_token'], $fields['settings']);
         return $fields;
     }
 
