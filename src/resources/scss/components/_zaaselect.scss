@@ -101,12 +101,11 @@
     padding: 6px 10px 4px;
 
     &:not(.zaaselect-label-active):hover {
-        background-color: theme-color(primary);
-        color: $white;
+        background-color: rgba(0, 0, 0, .15);
     }
 
     &-active {
-        background-color: lighten(theme-color(primary), 30);
+        background-color: theme-color(primary);
         color: $white;
         cursor: default;
     }

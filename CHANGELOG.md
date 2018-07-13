@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Changed
 
++ [#184](https://github.com/luyadev/luya-module-admin/issues/184) Changed active and hover color for zaaselect.
 + [#159](https://github.com/luyadev/luya-module-admin/issues/159) Refactor generic search behavior to return ActiveQuery object, improved speed and remove global search ngrest api endpoints.
 
 ### Added
