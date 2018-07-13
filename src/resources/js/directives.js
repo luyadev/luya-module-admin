@@ -1048,7 +1048,7 @@
                 "id": "@fieldid"
             },
             template: function() {
-                return '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2"></ng-wig>';
+                return '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig>';
             }
         }
     });
