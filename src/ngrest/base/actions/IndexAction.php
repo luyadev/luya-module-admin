@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * IndexAction for REST implementation.
@@ -16,6 +17,10 @@ use Yii;
  */
 class IndexAction extends \yii\rest\IndexAction
 {
+    /**
+     * @var callable A callable which is executed.
+     * @since 1.2.1
+     */
     public $prepareActiveDataQuery;
     
     /**
@@ -27,17 +32,37 @@ class IndexAction extends \yii\rest\IndexAction
      */
     protected function prepareDataProvider()
     {
-        if ($this->prepareDataProvider !== null) {
-            return call_user_func($this->prepareDataProvider, $this);
+        $requestParams = Yii::$app->getRequest()->getBodyParams();
+        if (empty($requestParams)) {
+            $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
         
-        $this->controller->ensureAutoPagination();
+        $filter = null;
+        if ($this->dataFilter !== null) {
+            $this->dataFilter = Yii::createObject($this->dataFilter);
+            if ($this->dataFilter->load($requestParams)) {
+                $filter = $this->dataFilter->build();
+                if ($filter === false) {
+                    return $this->dataFilter;
+                }
+            }
+        }
         
-        $data = new \yii\data\ActiveDataProvider([
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $modelClass = $this->modelClass;
+        
+        $query = call_user_func($this->prepareActiveDataQuery, $this);
+        if (!empty($filter)) {
+            $query->andWhere($filter);
+        }
+        
+        return Yii::createObject([
+            'class' => ActiveDataProvider::className(),
+            'query' => $query,
             'pagination' => $this->controller->pagination,
-            'query' => call_user_func($this->prepareActiveDataQuery, $this),
+            'sort' => [
+                'params' => $requestParams,
+            ],
         ]);
-
-        return $data;
     }
 }
