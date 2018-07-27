@@ -364,4 +364,5 @@ return [
     'crud_exportdata_col_columns' => 'Sütunlar',
     'crud_exportdata_btn_generateexport' => 'Dışa aktarma oluştur',
     'crud_exportdata_btn_downloadexport' => 'Dışa aktarma indir',
+    'js_pagination_page' => 'Page',
 ];

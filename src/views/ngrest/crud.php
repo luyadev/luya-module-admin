@@ -188,8 +188,10 @@ $this->beginBody();
 
             <div ng-show="data.list.length == 0" class="alert"><?= Module::t('ngrest_crud_empty_row'); ?></div>
 
-            <div class="crud-pagination" ng-if="pager && !config.pagerHiddenByAjaxSearch">
-                <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
+            <div class="crud-pagination-wrapper">
+                <div class="crud-pagination" ng-if="pager && !config.pagerHiddenByAjaxSearch">
+                    <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
+                </div>
             </div>
         </div>
         <?php if ($canCreate && $config->getPointer('create')): ?>
