@@ -1,5 +1,5 @@
 
-	
+
 	zaa.controller("DefaultDashboardObjectController", ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 		$scope.data;
@@ -44,10 +44,10 @@
 
 			$scope.switchTo(4);
 		};
-		
+
 		$scope.addAndswitchToTab = function(pk, route, index, label, model) {
 			$scope.tabService.addTab(pk, route, index, label, model);
-			
+
 			$scope.switchTo(4);
 		}
 
@@ -108,52 +108,52 @@
 				$scope.config.groupBy = 1;
 			}
 		};
-		
+
 		/********* SETTINGS DROPDOWN MENU ******/
-		
+
 		$scope.isSettingsVisible = false;
-		
+
 		$scope.toggleSettingsMenu = function() {
 			$scope.isSettingsVisible = !$scope.isSettingsVisible;
 		};
-		
+
 		$scope.hiddeSettingsMenu = function() {
 			$scope.isSettingsVisible = false;
 		};
-		
+
 		/********* NEW EXPORT MODAL ******/
-		
+
 		$scope.isExportModalHidden = true;
-		
+
 		$scope.exportdata = {header:1,type:"xlsx"};
-		
+
 		$scope.toggleExportModal = function() {
 			$scope.isExportModalHidden = !$scope.isExportModalHidden;
 		};
-		
+
 		$scope.exportResponse = false;
-		
+
 		$scope.generateExport = function() {
 			$http.post($scope.config.apiEndpoint + '/export', $scope.exportdata).then(function(response) {
 				$scope.exportResponse = response.data;
 			});
 		};
-		
+
 		$scope.downloadExport = function() {
 			var url = $scope.exportResponse.url;
 			$scope.exportResponse = false;
 			window.open(url);
 			return false;
 		};
-		
+
 		/********** CRUD LIST *******/
 
 		$scope.applySaveCallback = function() {
-			if ($scope.config.saveCallback) {	
-				$injector.invoke($scope.config.saveCallback, this);	
-			}	
+			if ($scope.config.saveCallback) {
+				$injector.invoke($scope.config.saveCallback, this);
+			}
 		};
-		
+
 		$scope.showCrudList = true;
 
 		/*********** ORDER **********/
@@ -260,7 +260,7 @@
 							$scope.config.pagerHiddenByAjaxSearch = true;
 							blockRequest = false;
 							$scope.config.fullSearchContainer = response.data;
-							$scope.data.listArray = response.data; 
+							$scope.data.listArray = response.data;
 						});
 					}, 500)
 				}
@@ -282,7 +282,7 @@
 		$scope.parentSelectInline = function(item) {
 			$scope.$parent.$parent.$parent.setModelValue($scope.getRowPrimaryValue(item), item);
 		};
-		
+
 		/**
 		 * Check if a field exists in the parents relation list, if yes hide the field
 		 * for the given form and return the relation call value instead in order to auto store those.
@@ -291,16 +291,16 @@
 			// this call is relation call, okay check for the parent relation defition
 			if ($scope.config.relationCall) {
 				var relations = $scope.$parent.$parent.config.relations;
-				
+
 				var definition = relations[parseInt($scope.config.relationCall.arrayIndex)];
-				
+
 				var linkDefintion = definition.relationLink;
-				
+
 				if (linkDefintion !== null && linkDefintion.hasOwnProperty(field)) {
 					return parseInt($scope.config.relationCall.id);
 				}
 			}
-			
+
 			return false;
 		}
 
@@ -417,7 +417,6 @@
 		*/
 
 
-
 		/*** PAGINIATION ***/
 
 		$scope.pagerPrevClick = function() {
@@ -431,6 +430,12 @@
 				$scope.loadList(parseInt($scope.pager.currentPage)+1);
 			}
 		};
+
+        $scope.$watch('pager.currentPage', function(newVal, oldVal) {
+            if (newVal != oldVal) {
+                $scope.loadList($scope.pager.currentPage);
+            }
+        });
 
 		$scope.pager = false;
 
@@ -449,7 +454,7 @@
 					'pageCount': pageCount,
 					'perPage': perPage,
 					'totalItems': totalItems,
-					'pages': urls,
+					'pages': urls
 				};
 			} else {
 				$scope.pager = false;
@@ -551,7 +556,7 @@
 				$scope.reloadCrudList(pageId);
 			}
 		};
-		
+
 		$scope.totalRows = 0;
 
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
@@ -705,7 +710,7 @@
 
 		$scope.select = function(id) {
 			var exists = $filter('filter')($scope.files, {'fileId' : id}, true);
-			
+
 			if (exists.length == 0) {
 				$scope.crud.sendActiveWindowCallback('AddImageToIndex', {'fileId' : id }).then(function(response) {
 					var data = response.data;
@@ -719,7 +724,7 @@
 				$scope.files = response.data;
 			})
 		};
-		
+
 		$scope.changePosition = function(file, index, direction) {
 			var index = parseInt(index);
 			var oldRow = $scope.files[index];
@@ -731,14 +736,14 @@
                 $scope.files[index+1] = oldRow;
 			}
 			var newRow = $scope.files[index];
-			
+
 			$scope.crud.sendActiveWindowCallback('ChangeSortIndex', {'new': newRow, 'old': oldRow});
 		};
-		
+
 		$scope.moveUp = function(file, index) {
 			$scope.changePosition(file, index, 'up');
 		};
-		
+
 		$scope.moveDown = function(file, index) {
 			$scope.changePosition(file, index, 'down');
 		}
@@ -773,7 +778,7 @@
 				$scope.reload();
 			});
 		};
-		
+
 		$scope.clearModule = function(items) {
 			angular.forEach(items, function(value) {
 				$scope.rights[value.id] = {base: 0, create: 0, update: 0, delete: 0};
@@ -785,11 +790,11 @@
 				$scope.rights[value.id] = {base: 1, create: 1, update: 1, delete: 1};
 			});
 		};
-		
+
 		$scope.toggleGroup = function(id) {
-			
+
 			objectGroup = $scope.rights[id];
-			
+
 			if (objectGroup.base == 1) {
 				objectGroup.create = 1;
 				objectGroup.update = 1;
@@ -798,9 +803,9 @@
 				objectGroup.create = 0;
 				objectGroup.update = 0;
 				objectGroup.delete = 0;
-			}			
+			}
 		};
-		
+
 		$scope.toggleAll = function() {
 			angular.forEach($scope.auths,function(items) {
 				angular.forEach(items, function(value) {
@@ -937,7 +942,7 @@
 	});
 
 	zaa.controller("LayoutMenuController", [
-		'$scope', '$document', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService', 
+		'$scope', '$document', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService',
 		function ($scope, $document, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
@@ -966,7 +971,7 @@
 		$scope.profile = {};
 		$scope.settings = {};
 		$scope.packages = [];
-		
+
 		$scope.getProfileAndSettings = function() {
 			$http.get('admin/api-admin-user/session').then(function(success) {
 				$scope.profile = success.data.user;
@@ -998,7 +1003,7 @@
 			$scope.debugDetail = debugDetail;
 			$scope.debugDetailKey = key;
 		};
-		
+
 		$scope.closeDebugDetail = function() {
 			$scope.debugDetail = null;
 			$scope.debugDetailKey = null;
@@ -1050,11 +1055,11 @@
 		$scope.visibleAdminReloadDialog = false;
 
 		$scope.lastKeyStroke = Date.now();
-		
+
 		$document.bind('keyup', function (e) {
 			$scope.lastKeyStroke = Date.now();
 		});
-		
+
 		(function tick(){
 			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
@@ -1077,10 +1082,10 @@
 		$scope.isLocked = function(table, pk) {
 			return $filter('lockFilter')($scope.locked, table, pk);
 		};
-		
+
 		$scope.getLockedName = function(table, pk) {
 			var response = $scope.isLocked(table, pk);
-			
+
 			return response.firstname + ' ' + response.lastname;
 		};
 
@@ -1165,9 +1170,9 @@
 	}]);
 
 	zaa.controller("AccountController", ['$scope', '$http', '$window', 'AdminToastService', function($scope, $http, $window, AdminToastService) {
-		
+
 		$scope.pass = {};
-		
+
 		$scope.changePassword = function() {
 			$http.post('admin/api-admin-user/change-password', $scope.pass).then(function(response) {
 				AdminToastService.success(i18n['aws_changepassword_succes']);
@@ -1187,7 +1192,7 @@
 		$scope.profile = {};
 		$scope.settings = {};
 		$scope.activities = {};
-		
+
 		$scope.email = {};
 
 		$scope.getProfile = function() {
@@ -1206,7 +1211,7 @@
 				AdminToastService.errorArray(error.data);
 			});
 		};
-		
+
 		$scope.changeEmail = function() {
 			$http.put('admin/api-admin-user/change-email', {token: $scope.email.token}).then(function(success) {
 				AdminToastService.success(i18n['js_account_update_profile_success']);

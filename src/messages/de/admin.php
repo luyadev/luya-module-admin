@@ -366,4 +366,5 @@ return [
     'crud_exportdata_col_columns' => 'Spalten',
     'crud_exportdata_btn_generateexport' => 'Export generieren',
     'crud_exportdata_btn_downloadexport' => 'Export herunterladen',
+    'js_pagination_page' => 'Seite',
 ];

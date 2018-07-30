@@ -376,9 +376,10 @@ use luya\admin\helpers\Angular;
                     </tbody>
                 </table>
                 </div>
-                <ul class="pagination">
-                    <li ng-repeat="page in paginations" ng-class="{'active': page.isActive}" class="page-item"><a class="page-link" ng-click="getFilesForPage(page.index)">{{ page.label }}</a></li>
-                </ul>
+
+                <div class="filemanager-pagination">
+                    <pagination current-page="currentPageId" page-count="pageCount"></pagination>
+                </div>
             </div>
         </div>
         <!-- /Files -->

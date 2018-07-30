@@ -1,0 +1,41 @@
+.rzslider {
+    margin: 35px 0 5px 0;
+
+    .rz-pointer {
+        cursor: move;
+        background-color: theme-color(primary);
+        width: 20px;
+        height: 20px;
+
+        &:after {
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        &.rz-active {
+            &:after {
+                background-color: $white;
+            }
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .rz-bar-wrapper {
+        height: 24px;
+        padding-top: 10px;
+    }
+
+    .rz-bar {
+        cursor: pointer;
+    }
+
+    .rz-bubble {
+        font-size: 14px;
+        padding: 0 0 5px 0;
+    }
+
+}

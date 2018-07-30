@@ -188,37 +188,9 @@ $this->beginBody();
 
             <div ng-show="data.list.length == 0" class="alert"><?= Module::t('ngrest_crud_empty_row'); ?></div>
 
-            <div class="pagination-wrapper" ng-if="pager && !config.pagerHiddenByAjaxSearch">
-                <div class="pagination">
-                    <ul class="pagination-list" has-enough-space loading-condition="pager && !config.pagerHiddenByAjaxSearch">
-                        <li class="page-item page-item-icon" ng-class="{'disabled' : pager.currentPage == 1}" >
-                            <a class="page-link" ng-click="pagerPrevClick()"><i class="material-icons">keyboard_arrow_left</i></a>
-                        </li>
-                        <li class="page-item" ng-repeat="pageId in pager.pages" ng-class="{'active': pageId == pager.currentPage}">
-                            <a class="page-link" ng-click="reloadCrudList(pageId)">{{pageId}}</a>
-                        </li>
-                        <li class="page-item page-item-icon" ng-class="{'disabled' : pager.currentPage == pager.pageCount}">
-                            <a class="page-link" ng-click="pagerNextClick();"><i class="material-icons">keyboard_arrow_right</i></a>
-                        </li>
-                    </ul>
-                    <ul class="pagination-list pagination-list-small">
-                        <li class="page-item page-item-icon" ng-class="{'disabled' : pager.currentPage == 1}" >
-                            <a class="page-link" ng-click="pagerPrevClick()"><i class="material-icons">keyboard_arrow_left</i></a>
-                        </li>
-                        <li class="page-item">
-                            <div class="btn-group" role="group" ng-init="openDropdown = false" ng-class="{'show': openDropdown}">
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="openDropdown = !openDropdown">
-                                    {{pager.currentPage}}
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" ng-class="{'show': openDropdown}">
-                                    <button class="dropdown-item" ng-repeat="pageId in pager.pages" ng-show="pager.currentPage != pageId" ng-click="reloadCrudList(pageId); openDropdown = false;">{{pageId}}</button>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="page-item page-item-icon" ng-class="{'disabled' : pager.currentPage == pager.pageCount}">
-                            <a class="page-link" ng-click="pagerNextClick();"><i class="material-icons">keyboard_arrow_right</i></a>
-                        </li>
-                    </ul>
+            <div class="crud-pagination-wrapper">
+                <div class="crud-pagination" ng-if="pager && !config.pagerHiddenByAjaxSearch">
+                    <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
                 </div>
             </div>
         </div>

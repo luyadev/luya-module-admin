@@ -2828,8 +2828,8 @@
 
                 $scope.filesData = [];
 
-                $scope.paginations = [];
-                
+                $scope.pages = [];
+                $scope.pageCount = 0;
                 $scope.currentPageId = 0;
                 
                 // load files data for a given folder id
@@ -2837,6 +2837,12 @@
                 	if (folderId !== undefined) {
                 		$scope.getFilesForPageAndFolder(folderId, 0);
                 	}
+                });
+
+                $scope.$watch('currentPageId', function(pageId) {
+                    if (pageId !== undefined) {
+                        $scope.getFilesForCurrentPage();
+                    }
                 });
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
@@ -2859,12 +2865,8 @@
                         var isActive = meta.currentPage == i;
                         pages.push({isActive: isActive, label: i+1, index: i});
                     }
-                    $scope.paginations = pages;
-                };
-
-                $scope.getFilesForPage = function(pageId) {
-                	$scope.currentPageId = pageId;
-                    return $scope.getFilesForPageAndFolder($scope.currentFolderId, pageId);
+                    $scope.pages = pages;
+                    $scope.pageCount = meta.totalPages;
                 };
                 
                 $scope.getFilesForCurrentPage = function() {
@@ -3155,7 +3157,7 @@
                         });
                     });
                 };
-                
+
                 /* file detail related stuff */
                 
                 $scope.fileDetail = false;
@@ -3313,5 +3315,47 @@
                     element.toggleClass(scope.activeClass);
                 });
             }
+        };
+    });
+    
+    zaa.directive('pagination', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                currentPage: '=',
+                pageCount: '='
+            },
+            link: function (scope, element) {
+                // Start slider on correct page
+                scope.initialPage = scope.currentPage;
+
+                // Watch for pageCOunt changes and refresh ceil value for slider
+                scope.$watch('pageCount', function(newValue) {
+                    if (newValue !== undefined) {
+                        scope.sliderOptions.ceil = scope.pageCount;
+                    }
+                });
+
+                scope.sliderOptions = {
+                    floor: 1,
+                    ceil: scope.pageCount,
+                    translate: function (value, sliderId, label) {
+                        // Change the default label
+                        switch (label) {
+                            case 'floor':
+                                return value;
+                            case 'ceil':
+                                return value;
+                            default:
+                                return i18n['js_pagination_page'] + ' ' + value
+                        }
+                    },
+                    onEnd: function(sliderId, modelValue) {
+                        // Update the currentPage once the user stopped dragging (or on click)
+                        scope.currentPage = modelValue;
+                    }
+                };
+            },
+            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions"></rzslider>',
         };
     });

@@ -75,7 +75,9 @@
 // ==================================================
 // Import vendor CSS files
 // ==================================================
+
 @import "../../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker";
+@import "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.scss";
 
 // ==================================================
 // Base
@@ -126,7 +128,7 @@
 @import "components/tab";
 @import "components/nav";
 @import "components/ng-wig";
-@import "components/pagination";
+@import "components/rzslider";
 @import "components/table";
 @import "components/timeline";
 @import "components/toasts";

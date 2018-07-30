@@ -121,6 +121,7 @@ module.exports = {
                 "../../vendor/bower-asset/bowser/src/useragent.js",
                 "../../vendor/bower-asset/bowser/src/bowser.js",
                 "../../vendor/bower-asset/echarts/dist/echarts.min.js",
+                "../../vendor/bower-asset/angularjs-slider/dist/rzslider.js",
             ]
         },
         jsUglify: {
