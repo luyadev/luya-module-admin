@@ -3349,6 +3349,6 @@
                     }
                 };
             },
-            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions" ng-hide="pageCount==currentPage"></rzslider>',
+            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
         };
     });
