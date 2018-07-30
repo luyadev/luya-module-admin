@@ -75,7 +75,7 @@ class StorageController extends RestController
      */
     private function getStorageFiles($folderId, $page, $searchQuery = null)
     {
-        $perPage = 50;
+        $perPage = 20;
         $totalCountQuery = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false]);
         if ($searchQuery) {
             $totalCountQuery->andFilterWhere(['like', 'name_original', $searchQuery]);
@@ -85,6 +85,10 @@ class StorageController extends RestController
         $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
         $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
 
+        if ($page < 0) {
+            $page = 0;
+        }
+        
         $fn = function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail, $searchQuery) {
             $files = [];
             $fileQueryObject = StorageFile::find()
@@ -152,7 +156,7 @@ class StorageController extends RestController
     {
         return [
             '__meta' => [
-                'currentPage' => (int) $currentPage,
+                'currentPage' => ((int) $currentPage + 1),
                 'perPage' => $perPage,
                 'totalPages' => ceil($totalCount/$perPage),
                 'totalFilesCount' => $totalCount,

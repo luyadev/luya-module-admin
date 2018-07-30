@@ -2828,19 +2828,18 @@
 
                 $scope.filesData = [];
 
-                $scope.pages = [];
                 $scope.pageCount = 0;
-                $scope.currentPageId = 0;
+                $scope.currentPageId = 1;
                 
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function(folderId) {
                 	if (folderId !== undefined) {
-                		$scope.getFilesForPageAndFolder(folderId, 0);
+                		$scope.getFilesForPageAndFolder(folderId, 1);
                 	}
                 });
 
-                $scope.$watch('currentPageId', function(pageId) {
-                    if (pageId !== undefined) {
+                $scope.$watch('currentPageId', function(pageId, oldPageId) {
+                    if (pageId !== undefined && pageId != oldPageId) {
                         $scope.getFilesForCurrentPage();
                     }
                 });
@@ -2860,12 +2859,6 @@
                 };
 
                 $scope.filesMetaToPagination = function(meta) {
-                    var pages = [];
-                    for (i = 0; i < meta.totalPages; i++) {
-                        var isActive = meta.currentPage == i;
-                        pages.push({isActive: isActive, label: i+1, index: i});
-                    }
-                    $scope.pages = pages;
                     $scope.pageCount = meta.totalPages;
                 };
                 
@@ -3087,7 +3080,7 @@
                 $scope.changeCurrentFolderId = function(folderId, noState) {
                 	var oldCurrentFolder = $scope.currentFolderId;
                     $scope.currentFolderId = folderId;
-                    $scope.currentPageId = 0;
+                    $scope.currentPageId = 1;
                     if (noState !== true && oldCurrentFolder != folderId) {
                     	ServiceFoldersDirecotryId.folderId = folderId;
                     	$http.post('admin/api-admin-common/save-filemanager-folder-state', {folderId : folderId}, {ignoreLoadingBar: true});
@@ -3356,6 +3349,6 @@
                     }
                 };
             },
-            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions"></rzslider>',
+            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions" ng-hide="pageCount==currentPage"></rzslider>',
         };
     });

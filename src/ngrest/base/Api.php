@@ -46,16 +46,10 @@ class Api extends RestActiveController
     public $modelClass;
     
     /**
-     * @var boolean Defines whether the automatic pagination should be enabled if more then 200 rows of data stored in this table or not. You can also
-     * enable pagination by setting the pagination property like:
-     *
-     * ```php
-     * public $pagination = ['defaultPageSize' => 100];
-     * ```
-     *
-     * If its enabled like the example above, the {{$pageSize}} param is ignored.
+     * @var array An array with default pagination configuration
+     * @since 1.2.2
      */
-    public $autoEnablePagination = true;
+    public $pagination = ['defaultPageSize' => 50];
     
     /**
      * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size. If you are enabling pagination by setting
@@ -80,21 +74,6 @@ class Api extends RestActiveController
     
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
-        }
-    }
-    
-    /**
-     * Enables the pagination for the current API for a given circumstances.
-     *
-     * @since 1.2.2
-     */
-    public function ensureAutoPagination()
-    {
-        // pagination is disabled by default, lets verfy if there are more then 400 rows in the table and auto enable
-        if ($this->pagination === false && $this->autoEnablePagination) {
-            if ($this->model->ngRestFind()->count() > ($this->pageSize*2)) {
-                $this->pagination = ['defaultPageSize' => $this->pageSize];
-            }
         }
     }
     
@@ -411,8 +390,6 @@ class Api extends RestActiveController
         if (!array_key_exists($filterName, $model->ngRestFilters())) {
             throw new InvalidCallException("The requested filter does not exists in the filter list.");
         }
-
-        $this->ensureAutoPagination();
         
         return new ActiveDataProvider([
             'query' => $model->ngRestFilters()[$filterName],
