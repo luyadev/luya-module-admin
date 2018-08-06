@@ -3081,6 +3081,7 @@
                 	var oldCurrentFolder = $scope.currentFolderId;
                     $scope.currentFolderId = folderId;
                     $scope.currentPageId = 1;
+                    $scope.selectedFiles = [];
                     if (noState !== true && oldCurrentFolder != folderId) {
                     	ServiceFoldersDirecotryId.folderId = folderId;
                     	$http.post('admin/api-admin-common/save-filemanager-folder-state', {folderId : folderId}, {ignoreLoadingBar: true});
