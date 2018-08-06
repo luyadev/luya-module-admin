@@ -367,4 +367,5 @@ return [
     'crud_exportdata_btn_generateexport' => 'Export generieren',
     'crud_exportdata_btn_downloadexport' => 'Export herunterladen',
     'js_pagination_page' => 'Seite',
+    'dashboard_log_message_delete' => 'Eineb Datensatz in <strong>{container}</strong> gelöscht.',
 ];

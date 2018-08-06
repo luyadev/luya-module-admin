@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#169](https://github.com/luyadev/luya-module-admin/issues/168) Fixed missing log message in dashboard for deleted records.
 + [#177](https://github.com/luyadev/luya-module-admin/issues/177) NgRest SelectModel problem with where statements on the same model class.
 + [#172](https://github.com/luyadev/luya-module-admin/issues/172) API users should not have default language from UI.
 + [#171](https://github.com/luyadev/luya-module-admin/issues/171) Fixed issue with link label when link has been set already.

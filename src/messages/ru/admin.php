@@ -368,4 +368,5 @@ return [
     'crud_exportdata_btn_generateexport' => 'Generate export',
     'crud_exportdata_btn_downloadexport' => 'Download export',
     'js_pagination_page' => 'Page',
+    'dashboard_log_message_delete' => 'Deleted a record in <strong>{container}</strong>.',
 ];

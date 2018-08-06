@@ -365,4 +365,5 @@ return [
     'crud_exportdata_btn_generateexport' => 'Dışa aktarma oluştur',
     'crud_exportdata_btn_downloadexport' => 'Dışa aktarma indir',
     'js_pagination_page' => 'Page',
+    'dashboard_log_message_delete' => 'Deleted a record in <strong>{container}</strong>.',
 ];
