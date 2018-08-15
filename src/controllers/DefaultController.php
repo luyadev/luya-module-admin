@@ -20,6 +20,9 @@ use luya\admin\models\UserLogin;
  */
 class DefaultController extends Controller
 {
+    /**
+     * @var boolean Whether the permission system should apply or not, if disabled it will stil check if admin user is logged in or not.
+     */
     public $disablePermissionCheck = true;
     
     /**
@@ -28,7 +31,7 @@ class DefaultController extends Controller
     public $layout = '@admin/views/layouts/main';
     
     /**
-     * Yii initializer. Find assets to register, and add them into the view if they are not ignore by $skipModuleAssets.
+     * Find assets to register, and add them into the view.
      */
     public function init()
     {
@@ -41,6 +44,11 @@ class DefaultController extends Controller
         }
     }
 
+    /**
+     * Render the admin index page.
+     * 
+     * @return string
+     */
     public function actionIndex()
     {
         $tags = [];
@@ -67,6 +75,11 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
+    /**
+     * Render Partial for dashboard objects (angular template).
+     * 
+     * @return string
+     */
     public function actionDashboard()
     {
         $items = [];
@@ -81,6 +94,11 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * Trigger user logout.
+     * 
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         if (!Yii::$app->adminuser->logout(false)) {
@@ -90,6 +108,13 @@ class DefaultController extends Controller
         return $this->redirect(['/admin/login/index', 'logout' => true]);
     }
     
+    /**
+     * Context helper for layout main.php in order to colorize debug informations.
+     * 
+     * @param string $value
+     * @param boolean $displayValue
+     * @return string
+     */
     public function colorizeValue($value, $displayValue = false)
     {
         $text = ($displayValue) ? $value : Module::t('debug_state_on');
@@ -97,10 +122,5 @@ class DefaultController extends Controller
             return '<span style="color:green;">'.$text.'</span>';
         }
         return '<span style="color:red;">'.Module::t('debug_state_off').'</span>';
-    }
-    
-    public function getTags()
-    {
-        return TagParser::getInstantiatedTagObjects();
     }
 }
