@@ -52,13 +52,6 @@ class Api extends RestActiveController
     public $pagination = ['defaultPageSize' => 50];
     
     /**
-     * @var integer When {{$autoEnablePagination}} is enabled this value will be used for page size. If you are enabling pagination by setting
-     * the {{$pagination}} property `$pagination = ['defaultPageSize' => 100]` this {{$pageSize}} property will be ignored!
-     * ```
-     */
-    public $pageSize = 100;
-    
-    /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index,list
      * @see https://www.yiiframework.com/doc/guide/2.0/en/output-data-providers#filtering-data-providers-using-data-filters
      * @since 1.2.2
