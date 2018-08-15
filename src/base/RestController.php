@@ -59,7 +59,7 @@ class RestController extends Controller implements UserBehaviorInterface
      */
     public function checkRouteAccess($route)
     {
-        UserOnline::refreshUser($this->userAuthClass()->identity->id, $route);
+        UserOnline::refreshUser($this->userAuthClass()->identity, $route);
         
         if (!Yii::$app->auth->matchRoute($this->userAuthClass()->identity->id, $route)) {
             throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');

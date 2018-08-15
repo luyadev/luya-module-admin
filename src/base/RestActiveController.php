@@ -74,7 +74,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 break;
         }
 
-        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
+        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
         
         if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type)) {
             throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
@@ -89,7 +89,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      */
     public function checkEndpointAccess()
     {
-        UserOnline::refreshUser($this->userAuthClass()->identity->id, $this->id);
+        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
         
         if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, false)) {
             throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');

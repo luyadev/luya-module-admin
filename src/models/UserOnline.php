@@ -119,18 +119,24 @@ final class UserOnline extends ActiveRecord
     /**
      * Refresh the state of the current user, or add if not exists.
      *
-     * @param integer $userId
+     * @param User $user
      * @param string $route
      * @return bool
      */
-    public static function refreshUser($userId, $route)
+    public static function refreshUser(User $user, $route)
     {
-        $model = self::findOne(['user_id' => $userId]);
+        // skip the process if an api user is try to refresh.
+        if ($user->is_api_user) {
+            return;
+        }
+        
+        $model = self::findOne(['user_id' => $user->id]);
+        
         if ($model) {
             return (bool) $model->updateAttributes(['last_timestamp' => time(), 'invoken_route' => $route]);
         }
         
-        $model = new self(['last_timestamp' => time(), 'user_id' => $userId, 'invoken_route' => $route]);
+        $model = new self(['last_timestamp' => time(), 'user_id' => $user->id, 'invoken_route' => $route]);
         return $model->save();
     }
 

@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 + [#191](https://github.com/luyadev/luya-module-admin/issues/191) Added angularjs-slider dep; Added pagination directive (uses angularjs-slider) for use in crud and filemanager; Removed old pagination code
 + [#184](https://github.com/luyadev/luya-module-admin/issues/184) Changed active and hover color for zaaselect.
 + [#159](https://github.com/luyadev/luya-module-admin/issues/159) Refactor generic search behavior to return ActiveQuery object, improved speed and remove global search ngrest api endpoints.
++ [#199](https://github.com/luyadev/luya-module-admin/issues/199) Change signature or UserOnline::refreshUser() in order to no track api request in user online system.
 
 ### Added
 

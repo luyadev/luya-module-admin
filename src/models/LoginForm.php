@@ -194,7 +194,7 @@ final class LoginForm extends Model
             $login->save();
             
             // refresh user online list
-            UserOnline::refreshUser($user->id, 'login');
+            UserOnline::refreshUser($user, 'login');
             return $user;
         }
         
