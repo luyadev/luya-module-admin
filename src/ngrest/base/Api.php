@@ -20,6 +20,7 @@ use luya\admin\ngrest\NgRest;
 use yii\web\NotFoundHttpException;
 use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
+use luya\admin\ngrest\base\actions\IndexAction;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -49,7 +50,7 @@ class Api extends RestActiveController
      * @var array An array with default pagination configuration
      * @since 1.2.2
      */
-    public $pagination = ['defaultPageSize' => 50];
+    public $pagination = ['defaultPageSize' => 2];
     
     /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index,list
@@ -88,9 +89,14 @@ class Api extends RestActiveController
      * return [
      *     'index' => ['user', 'images'],
      *     'list' => ['user'],
-     *     'view' => ['images', 'files'],
      * ];
      * ```
+     * 
+     * Possible action column names:
+     * 
+     * + index
+     * + list
+     * + search
      * 
      * @return array
      * @since 1.2.2
@@ -103,7 +109,7 @@ class Api extends RestActiveController
     /**
      * Get the relations for the corresponding action name.
      * 
-     * @param string $actionName The action name like `index`, `list` or `view`.
+     * @param string $actionName The action name like `index`, `list`, `search`
      * @return array An array with relation names.
      * @since 1.2.2
      */
@@ -114,7 +120,7 @@ class Api extends RestActiveController
         foreach ($rel as $relationName) {
             // it seem to be the advance strucutre for given actions.
             if (is_array($relationName)) {
-                return isset($rel[$actionName]) ?: [];
+                return isset($rel[$actionName]) ? $rel[$actionName] : [];
             }
         }
         // simple structure
@@ -133,7 +139,9 @@ class Api extends RestActiveController
      * }
      * ```
      *
-     * Make sure to call the parent implementation!
+     * Make sure to call the parent implementation.
+     * 
+     * > This will call the `find()` method of the model.
      *
      * @return \yii\db\ActiveQuery
      * @since 1.2.1
@@ -142,7 +150,23 @@ class Api extends RestActiveController
     {
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
-        return $modelClass::ngRestFind()->with($this->getWithRelation('index'));
+        return $modelClass::find()->with($this->getWithRelation('index'));
+    }
+    
+    /**
+     * Prepare the NgRest List Query.
+     * 
+     * > This will call the `ngRestFind()` method of the model.
+     * 
+     * @see {{prepareIndexQuery()}}
+     * @return \yii\db\ActiveQuery
+     * @since 1.2.2
+     */
+    public function prepareListQuery()
+    {
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $modelClass = $this->modelClass;
+        return $modelClass::ngRestFind()->with($this->getWithRelation('list'));
     }
     
     /**
@@ -169,7 +193,7 @@ class Api extends RestActiveController
     public function actions()
     {
         $actions = [
-            'index' => [
+            'index' => [ // for casual api request behavior
                 'class' => 'luya\admin\ngrest\base\actions\IndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
@@ -180,7 +204,7 @@ class Api extends RestActiveController
                 'class' => 'luya\admin\ngrest\base\actions\IndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
-                'prepareActiveDataQuery' => [$this, 'prepareIndexQuery'],
+                'prepareActiveDataQuery' => [$this, 'prepareListQuery'],
                 'dataFilter' => $this->getDataFilter(),
             ],
             'view' => [
@@ -258,7 +282,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Unlock the useronline locker.
+     * Unlock this API for the current logged in user.
      */
     public function actionUnlock()
     {
@@ -312,17 +336,17 @@ class Api extends RestActiveController
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionFullResponse()
+    public function actionSearch()
     {
-        $this->checkAccess('full-response');
+        $this->checkAccess('search');
         
         $query = Yii::$app->request->post('query');
         
         $find = $this->model->ngRestFullQuerySearch($query);
         
         return new ActiveDataProvider([
-            'query' => $find,
-            'pagination' => false,
+            'query' => $find->with($this->getWithRelation('search')),
+            'pagination' => $this->pagination,
         ]);
     }
     
@@ -361,7 +385,7 @@ class Api extends RestActiveController
         
         return new ActiveDataProvider([
             'query' => $query,
-            'pagination' => false,
+            'pagination' => $this->pagination,
         ]);
     }
     
@@ -417,8 +441,8 @@ class Api extends RestActiveController
         
         // generate ngrest active window
         $render = new RenderActiveWindow();
-        $render->setItemId(Yii::$app->request->post('itemId', false));
-        $render->setActiveWindowHash(Yii::$app->request->post('activeWindowHash', false));
+        $render->setItemId(Yii::$app->request->getBodyParam('itemId', false));
+        $render->setActiveWindowHash(Yii::$app->request->getBodyParam('activeWindowHash', false));
         
         // process ngrest render view with config context
         $ngrest = new NgRest($this->model->getNgRestConfig());

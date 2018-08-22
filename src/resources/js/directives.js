@@ -3320,9 +3320,6 @@
                 pageCount: '='
             },
             link: function (scope, element) {
-                // Start slider on correct page
-                scope.initialPage = scope.currentPage;
-
                 // Watch for pageCOunt changes and refresh ceil value for slider
                 scope.$watch('pageCount', function(newValue) {
                     if (newValue !== undefined) {
@@ -3350,6 +3347,6 @@
                     }
                 };
             },
-            template: '<rzslider rz-slider-model="initialPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
+            template: '<rzslider rz-slider-model="currentPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
         };
     });

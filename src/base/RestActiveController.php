@@ -51,7 +51,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             case 'index':
             case 'view':
             case 'services':
-            case 'full-response':
+            case 'search':
             case 'relation-call':
             case 'filter':
             case 'export':

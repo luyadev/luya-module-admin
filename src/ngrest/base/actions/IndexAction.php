@@ -51,7 +51,7 @@ class IndexAction extends \yii\rest\IndexAction
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
         
-        $query = call_user_func($this->prepareActiveDataQuery, $this);
+        $query = call_user_func($this->prepareActiveDataQuery);
         if (!empty($filter)) {
             $query->andWhere($filter);
         }

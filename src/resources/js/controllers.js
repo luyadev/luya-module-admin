@@ -154,8 +154,6 @@
 			}
 		};
 
-		$scope.showCrudList = true;
-
 		/*********** ORDER **********/
 
 		$scope.isOrderBy = function(field) {
@@ -168,18 +166,8 @@
 
 		$scope.changeOrder = function(field, sort) {
 			$scope.config.orderBy = sort + field;
-
 			$http.post('admin/api-admin-common/ngrest-order', {'apiEndpoint' : $scope.config.apiEndpoint, sort: sort, field: field}, { ignoreLoadingBar: true });
-
-			if ($scope.pager && !$scope.config.pagerHiddenByAjaxSearch) {
-				$scope.loadList(1);
-			} else {
-				$scope.data.listArray = $filter('orderBy')($scope.data.listArray, sort + field);
-			}
-		};
-
-		$scope.reApplyOrder = function() {
-			$scope.data.listArray = $filter('orderBy')($scope.data.listArray, $scope.config.orderBy);
+			$scope.loadList();
 		};
 
 		/***************** ACTIVE WINDOW *********/
@@ -189,9 +177,7 @@
 		}
 
 		$scope.getActiveWindow = function (activeWindowId, id, $event) {
-			$http.post($scope.config.activeWindowRenderUrl, $.param({ itemId : id, activeWindowHash : activeWindowId , ngrestConfigHash : $scope.config.ngrestConfigHash }), {
-				headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-			})
+			$http.post($scope.config.activeWindowRenderUrl, { itemId : id, activeWindowHash : activeWindowId , ngrestConfigHash : $scope.config.ngrestConfigHash })
 			.then(function(response) {
 				$scope.openActiveWindow();
 				$scope.data.aw.itemId = id;
@@ -228,12 +214,12 @@
 
 		/*************** SEARCH ******************/
 
+		$scope.searchPromise = null;
 
 		$scope.$watch('config.searchQuery', function(n, o) {
 			if (n == o || n == undefined || n == null) {
 				return;
 			}
-
 			$scope.applySearchQuery(n);
 		});
 
@@ -241,38 +227,18 @@
 			if (n == undefined || n == null) {
 				return;
 			}
-			var blockRequest = false;
-			if ($scope.pager) {
-				if (n.length == 0) {
-					$timeout.cancel($scope.searchPromise);
-					$scope.data.listArray = $scope.data.list;
-					$scope.config.pagerHiddenByAjaxSearch = false;
-				} else {
-					$timeout.cancel($scope.searchPromise);
-
-					if (blockRequest) {
-						return;
-					}
-
-					$scope.searchPromise = $timeout(function() {
-						blockRequest = true;
-						$http.post($scope.config.apiEndpoint + '/full-response?' + $scope.config.apiListQueryString, {query: n}).then(function(response) {
-							$scope.config.pagerHiddenByAjaxSearch = true;
-							blockRequest = false;
-							$scope.config.fullSearchContainer = response.data;
-							$scope.data.listArray = response.data;
-						});
-					}, 500)
-				}
+			$timeout.cancel($scope.searchPromise);
+			if (n.length == 0) {
+				$scope.loadList(1);
 			} else {
-				$scope.config.pagerHiddenByAjaxSearch = false;
-				$scope.data.listArray = $filter('filter')($scope.data.list, n);
+				$scope.searchPromise = $timeout(function() {
+					$http.post($scope.generateUrlWithParams('search'), {query: n}).then(function(response) {
+						$scope.parseResponseQueryToListArray(response);
+					});
+				}, 400)
 			}
 		};
 
-		$scope.reApplySearch = function() {
-			$scope.applySearchQuery($scope.config.searchQuery);
-		}
 
 		/******* RELATION CALLLS *********/
 
@@ -347,19 +313,12 @@
 				$scope.loadList();
 				$scope.applySaveCallback();
 				$scope.switchTo(0, true);
-				$scope.highlightItemId($scope.data.updateId);
 			}, function(response) {
 				$scope.printErrors(response.data);
 			});
 		};
 
-
 		$scope.submitCreate = function() {
-
-			if ($scope.config.relationCall) {
-				//$scope.data.create[$scope.relationCall.field] = parseInt($scope.relationCall.id);
-			}
-
 			$http.post($scope.config.apiEndpoint, angular.toJson($scope.data.create, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_success']);
 				$scope.loadList();
@@ -381,55 +340,13 @@
 			$scope.data.update = angular.copy({});
 		};
 
-		/****** HIGHLIHGED ****/
-
-		$scope.highlightId = 0;
-
-		$scope.isHighlighted = function(itemId) {
-			if (itemId[$scope.config.pk] == $scope.highlightId) {
-				return true;
-			}
-
-			return false;
-		};
-
-		$scope.highlightItemId = function(id) {
-			$scope.highlightId = id;
-			$timeout(function() {
-				$scope.highlightId = 0;
-			}, 3000);
-		}
-
 		$scope.changeNgRestFilter = function() {
 			$http.post('admin/api-admin-common/ngrest-filter', {'apiEndpoint' : $scope.config.apiEndpoint, 'filterName': $scope.config.filter}, { ignoreLoadingBar: true });
-			$scope.loadList();
-		}
-
-		/*
-
-		$scope.$watch('config.filter', function(n, o) {
-			if (n != o && n != undefined) {
-				$scope.blockFilterSeriveReload = true;
-				$http.post('admin/api-admin-common/ngrest-filter', {'apiEndpoint' : $scope.config.apiEndpoint, 'filterName': $scope.config.filter}, { ignoreLoadingBar: true });
-				$scope.reloadCrudList();
-			}
-		})
-		*/
+			$scope.loadList(1);
+		};
 
 
 		/*** PAGINIATION ***/
-
-		$scope.pagerPrevClick = function() {
-			if ($scope.pager.currentPage != 1) {
-				$scope.loadList(parseInt($scope.pager.currentPage)-1);
-			}
-		};
-
-		$scope.pagerNextClick = function() {
-			if ($scope.pager.currentPage != $scope.pager.pageCount) {
-				$scope.loadList(parseInt($scope.pager.currentPage)+1);
-			}
-		};
 
         $scope.$watch('pager.currentPage', function(newVal, oldVal) {
             if (newVal != oldVal) {
@@ -437,28 +354,21 @@
             }
         });
 
-		$scope.pager = false;
+        $scope.pager = {
+			'currentPage': 1,
+			'pageCount': 1,
+			'perPage': 0,
+			'totalItems': 0,
+		};
 
 		$scope.setPagination = function(currentPage, pageCount, perPage, totalItems) {
-			if (currentPage != null && pageCount != null && perPage != null && totalItems != null) {
-
-				$scope.totalRows = totalItems;
-				var i = 1;
-				var urls = [];
-				for (i = 1; i <= pageCount; i++) {
-					urls.push(i);
-				}
-
-				$scope.pager = {
-					'currentPage': currentPage,
-					'pageCount': pageCount,
-					'perPage': perPage,
-					'totalItems': totalItems,
-					'pages': urls
-				};
-			} else {
-				$scope.pager = false;
-			}
+			$scope.totalRows = totalItems;
+			$scope.pager = {
+				'currentPage': currentPage,
+				'pageCount': pageCount,
+				'perPage': perPage,
+				'totalItems': totalItems,
+			};
 		};
 
 		/***** TOGGLER PLUGIN *****/
@@ -472,7 +382,6 @@
 			json[fieldName] = invert;
 			$http.put($scope.config.apiEndpoint + '/' + rowId +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true)).then(function(response) {
 				row[fieldName] = invert;
-				$scope.highlightItemId(rowId);
 				AdminToastService.success(i18nParam('js_ngrest_toggler_success', {field: fieldLabel}));
 			}, function(data) {
 				$scope.printErrors(data);
@@ -559,56 +468,57 @@
 
 		$scope.totalRows = 0;
 
+		/**
+		 * Parse an Pagination (or not pagination) object into a response.
+		 */
+		$scope.parseResponseQueryToListArray = function(response) {
+			$scope.setPagination(
+				response.headers('X-Pagination-Current-Page'),
+				response.headers('X-Pagination-Page-Count'),
+				response.headers('X-Pagination-Per-Page'),
+				response.headers('X-Pagination-Total-Count')
+			);
+			$scope.data.listArray = response.data;
+		};
+		
+		/**
+		 * Exmaple
+		 * 
+		 * generateUrlWithParams('search', 1);
+		 * generateUrlWithParams('list', 2);
+		 */
+		$scope.generateUrlWithParams = function(endpoint, pageId) {
+			var url = $scope.config.apiEndpoint + '/'+endpoint+'?' + $scope.config.apiListQueryString;
+			
+			if ($scope.config.orderBy) {
+				url = url + '&sort=' + $scope.config.orderBy.replace("+", "");
+			}
+			
+			if (pageId !== undefined) {
+				url = url + '&page=' + pageId;
+			}
+			
+			return url;
+		};
+		
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
 			if (parseInt($scope.config.filter) == 0) {
 				if ($scope.config.relationCall) {
-					var url = $scope.config.apiEndpoint + '/relation-call/?' + $scope.config.apiListQueryString;
+					var url = $scope.generateUrlWithParams('relation-call', pageId);
 					url = url + '&arrayIndex=' + $scope.config.relationCall.arrayIndex + '&id=' + $scope.config.relationCall.id + '&modelClass=' + $scope.config.relationCall.modelClass;
 				} else {
-					var url = $scope.config.apiEndpoint + '/?' + $scope.config.apiListQueryString;
+					var url = $scope.generateUrlWithParams('list', pageId);
 				}
-
-				if (pageId !== undefined) {
-					url = url + '&page=' + pageId;
-				}
-				if ($scope.config.orderBy) {
-					url = url + '&sort=' + $scope.config.orderBy.replace("+", "");
-				}
+				
 				$http.get(url).then(function(response) {
-					$scope.totalRows = response.data.length;
-					$scope.setPagination(
-						response.headers('X-Pagination-Current-Page'),
-						response.headers('X-Pagination-Page-Count'),
-						response.headers('X-Pagination-Per-Page'),
-						response.headers('X-Pagination-Total-Count')
-					);
-
-					$scope.data.list = response.data;
-					$scope.data.listArray = response.data;
-					$scope.reApplyOrder();
-					$scope.reApplySearch();
+					$scope.parseResponseQueryToListArray(response);
 				});
 			} else {
-				var url = $scope.config.apiEndpoint + '/filter?filterName=' + $scope.config.filter + '&' + $scope.config.apiListQueryString;
-				if (pageId) {
-					url = url + '&page=' + pageId;
-				}
-				if ($scope.config.orderBy) {
-					url = url + '&sort=' + $scope.config.orderBy.replace("+", "");
-				}
+				var url = $scope.generateUrlWithParams('filter', pageId);
+				var url = url + '&filterName=' + $scope.config.filter;
 				$http.get(url).then(function(response) {
-					$scope.totalRows = response.data.length;
-					$scope.setPagination(
-						response.headers('X-Pagination-Current-Page'),
-						response.headers('X-Pagination-Page-Count'),
-						response.headers('X-Pagination-Per-Page'),
-						response.headers('X-Pagination-Total-Count')
-					);
-					$scope.data.list = response.data;
-					$scope.data.listArray = response.data;
-					$scope.reApplyOrder();
-					$scope.reApplySearch();
+					$scope.parseResponseQueryToListArray(response);
 				});
 			}
 		};
