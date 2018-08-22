@@ -50,7 +50,7 @@ class Api extends RestActiveController
      * @var array An array with default pagination configuration
      * @since 1.2.2
      */
-    public $pagination = ['defaultPageSize' => 2];
+    public $pagination = ['defaultPageSize' => 50];
     
     /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index,list
