@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#197](https://github.com/luyadev/luya-module-admin/pull/197) Added dutch language, thanks to @mahkali
 + [#74](https://github.com/luyadev/luya-module-admin/issues/74) Added index for FK fields.
 + [#188](https://github.com/luyadev/luya-module-admin/issues/188) Renamed CallbackFormWidget to ActiveWindowFromWidget, added initValue() method and new dropDownSelect method.
 + [#183](https://github.com/luyadev/luya-module-admin/issues/183) Added `i18nWhere()` for ngrest models and json fields.
