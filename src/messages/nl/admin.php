@@ -1,6 +1,6 @@
 <?php
 return [
-    'language_name' => 'Engels',
+    'language_name' => 'Dutch',
     'button_save' => 'Opslaan',
     'button_yes' => 'Ja',
     'button_abort' => 'Annuleren',
