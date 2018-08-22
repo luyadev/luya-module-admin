@@ -94,7 +94,7 @@ return [
     'api_storage_file_upload_success' => 'Файлы были успешно загружены.',
     'api_sotrage_file_upload_error' => 'Произошла следующая ошибка при загрузки файла \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Не найдено файлов для загрузки. Выбрали ли вы какие-то файлы?',
-    'aws_changepassword_info' => 'Пожалуйста введите новый пароль. Пароль должен состоять минимум из 6 символов.',
+    'aws_changepassword_info' => 'Пожалуйста введите новый пароль. Пароль должен состоять минимум из 8 символов.',
     'aws_changepassword_succes' => 'Пароль успешно изменен.',
     'aws_changepassword_new_pass' => 'Новый пароль',
     'aws_changepassword_new_pass_retry' => 'Повторите пароль',

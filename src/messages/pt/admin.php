@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Os arquivos foram enviados com sucesso.',
     'api_sotrage_file_upload_error' => 'Ocorreu o seguinte erro ao tentar enviar o arquivo  \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Não foi encontrado nenhum arquivo para enviar. Você selecionou algum arquivo?',
-    'aws_changepassword_info' => 'Por favor, digite a nova senha para este usuário. A senha deve ter pelo menos 6 caracteres.',
+    'aws_changepassword_info' => 'Por favor, digite a nova senha para este usuário. A senha deve ter pelo menos 8 caracteres.',
     'aws_changepassword_succes' => 'A senha foi criptada e armazenada com sucesso.',
     'aws_changepassword_new_pass' => 'Nova senha',
     'aws_changepassword_new_pass_retry' => 'Repetição da nova senha',

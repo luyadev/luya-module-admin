@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Files have been uploaded successfully.',
     'api_sotrage_file_upload_error' => 'The following error occurred while uploading a file \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'No files found for uploading. Did you select any files?',
-    'aws_changepassword_info' => 'Please enter a new password for this user. The password must have a minimum length of 6 characters.',
+    'aws_changepassword_info' => 'Please enter a new password for this user. The password must have a minimum length of 8 characters.',
     'aws_changepassword_succes' => 'The password has been encrypted and stored successfully.',
     'aws_changepassword_new_pass' => '新密码',
     'aws_changepassword_new_pass_retry' => '重复密码',

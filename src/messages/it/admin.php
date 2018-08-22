@@ -92,7 +92,7 @@ return [
     'api_storage_file_upload_success' => 'I files sono stati caricati correttamente.',
     'api_sotrage_file_upload_error' => 'Si è verificato il seguente errore durante il caricamento del file \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Nessun file da caricare, sei sicuro di aver selezionato qualche file?',
-    'aws_changepassword_info' => 'Inserisci una nuova password per questo utente. La password deve essere di almeno 6 caratteri.',
+    'aws_changepassword_info' => 'Inserisci una nuova password per questo utente. La password deve essere di almeno 8 caratteri.',
     'aws_changepassword_succes' => 'La password è stata cambiata con successo.',
     'aws_changepassword_new_pass' => 'Nuova password',
     'aws_changepassword_new_pass_retry' => 'Ripeti nuova password',

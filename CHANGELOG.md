@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#198](https://github.com/luyadev/luya-module-admin/issues/198) Typo in password length information for $minCharLength in ChangePasswordActiveWindow.
 + [#202](https://github.com/luyadev/luya-module-admin/issues/202) Changed sorting of image filters.
 + [#201](https://github.com/luyadev/luya-module-admin/issues/201) Escape filter name input.
 + [#204](https://github.com/luyadev/luya-module-admin/issues/204) Fixed problem with filter generator and chain values.

@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Dosyalar başarıyla yüklendi.',
     'api_sotrage_file_upload_error' => 'Bir dosya yüklenirken takip eden hata oluştu \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Yükleme için dosya bulunamadı. Herhangi bir dosya seçtiniz mi?',
-    'aws_changepassword_info' => 'Lütfen bu kullanıcı için yeni bir şifre girin. Şifre en az 6 karakter uzunluğunda olmalıdır.',
+    'aws_changepassword_info' => 'Lütfen bu kullanıcı için yeni bir şifre girin. Şifre en az 8 karakter uzunluğunda olmalıdır.',
     'aws_changepassword_succes' => 'Şifre şifrelendi ve başarıyla saklandı.',
     'aws_changepassword_new_pass' => 'Yeni şifre',
     'aws_changepassword_new_pass_retry' => 'Yeni şifre tekrarı',

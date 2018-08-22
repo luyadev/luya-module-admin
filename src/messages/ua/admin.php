@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Файли були завантажені успішно.',
     'api_sotrage_file_upload_error' => 'Сталася помилка під час завантаження файлу \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Немає файлів для завантаження, ви вибрали файли?',
-    'aws_changepassword_info' => 'Будь ласка, введіть новий пароль для цього користувача. Пароль повинен мати довжину не менше 6 символів.',
+    'aws_changepassword_info' => 'Будь ласка, введіть новий пароль для цього користувача. Пароль повинен мати довжину не менше 8 символів.',
     'aws_changepassword_succes' => 'Пароль був зашифрований та успішно збереженний.',
     'aws_changepassword_new_pass' => 'Новий пароль',
     'aws_changepassword_new_pass_retry' => 'Повтор нового паролю',

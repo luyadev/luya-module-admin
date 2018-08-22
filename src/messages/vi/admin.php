@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Tập tin được tải lên thành công.',
     'api_sotrage_file_upload_error' => 'Trong lúc tải lên tập tin xảy ra lỗi sau \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Không có tập tin nào được tải lên, hãy chọn ít nhất 1 tập tin',
-    'aws_changepassword_info' => 'Vui lòng nhập mật khẩu mới cho tài khoản này. Mật khẩu chứa ít nhất 6 ký tự.',
+    'aws_changepassword_info' => 'Vui lòng nhập mật khẩu mới cho tài khoản này. Mật khẩu chứa ít nhất 8 ký tự.',
     'aws_changepassword_succes' => 'Mật khẩu được mã hóa và lưu trữ thành công.',
     'aws_changepassword_new_pass' => 'Mật khẩu mới',
     'aws_changepassword_new_pass_retry' => 'Nhập lại mật khẩu mới',

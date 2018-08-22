@@ -96,7 +96,7 @@ return [
     'api_storage_file_upload_success' => 'Les fichiers ont été téléchargés avec succès',
     'api_sotrage_file_upload_error' => 'L\'erreur suivante est survenue lors du chargement d\'un fichier : \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Aucun fichier à charger, avez-vous sélectionné des fichiers ?',
-    'aws_changepassword_info' => 'Entrez un nouveau mot de passe pour cet utilisateur. Le mot de passe doit contenir au moins 6 caractères',
+    'aws_changepassword_info' => 'Entrez un nouveau mot de passe pour cet utilisateur. Le mot de passe doit contenir au moins 8 caractères',
     'aws_changepassword_succes' => 'Le mot de passe a été crypté et sauvegardé avec succès',
     'aws_changepassword_new_pass' => 'Nouveau mot de passe',
     'aws_changepassword_new_pass_retry' => 'Répétition du nouveau mot de passe',
@@ -144,7 +144,7 @@ return [
     'layout_useronline_mail' => 'Email',
     'layout_useronline_inactivesince' => 'Inactif depuis',
 
-    /* Added translations in 1.0.0-beta6 */
+    /* Added translations in 1.0.0-beta8 */
     'layout_debug_caching' => 'Cache',
     'debug_state_on' => 'Activé',
     'debug_state_off' => 'Désactivé',

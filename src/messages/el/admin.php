@@ -92,7 +92,7 @@ return [
     'api_storage_file_upload_success' => 'Τα αρχεία μεταφορτώθηκαν επιτυχώς.',
     'api_sotrage_file_upload_error' => 'Το παρακάτω σφάλμα συνέβει κατά τη μεταφόρτωση του αρχείου \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Κανένα αρχείο για μεταφόρωση, έχετε επιλέξει αρχεία;',
-    'aws_changepassword_info' => 'Παρακαλώ εισάγετε ένα κωδικό για αυτόν το χρήστη. Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες.',
+    'aws_changepassword_info' => 'Παρακαλώ εισάγετε ένα κωδικό για αυτόν το χρήστη. Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες.',
     'aws_changepassword_succes' => 'Ο κωδικός κρυπτογραφήθηκε και αποθηκεύτηκε επιτυχώς.',
     'aws_changepassword_new_pass' => 'Νεος Κωδικός',
     'aws_changepassword_new_pass_retry' => 'Επανεισάγετε τον νέο κωδικό',

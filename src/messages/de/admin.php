@@ -93,7 +93,7 @@ return [
     'api_storage_file_upload_success' => 'Datei wurde erfolgreich hochgeladen.',
     'api_sotrage_file_upload_error' => 'Beim Hochladen der Datei ist folgender Fehler aufgetreten \'{error}\'.',
     'api_sotrage_file_upload_empty_error' => 'Es wurden keine Dateien zum Hochladen gefunden. Keine Daten ausgewählt.',
-    'aws_changepassword_info' => 'Gib ein neues Passwort für den Benutzer ein. Das neue Passwort muss mindestens <strong>6 Zeichen</strong> lang sein.',
+    'aws_changepassword_info' => 'Gib ein neues Passwort für den Benutzer ein. Das neue Passwort muss mindestens <strong>8 Zeichen</strong> lang sein.',
     'aws_changepassword_succes' => 'Dein neues Passwort wurde erfolgreich verschlüsselt und gespeichert.',
     'aws_changepassword_new_pass' => 'Neues Passwort',
     'aws_changepassword_new_pass_retry' => 'Neues Passwort wiederholen',
