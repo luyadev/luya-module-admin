@@ -86,7 +86,7 @@ class FilterController extends Command
     {
         return $this->view->render('@admin/commands/views/filter/filterClass', [
             'identifier' => $identifier,
-            'name' => $name,
+            'name' => addslashes($name),
             'chain' => $chain,
             'className' => $className,
             'luyaText' => $this->getGeneratorText('block/create'),

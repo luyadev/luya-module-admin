@@ -24,6 +24,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#202](https://github.com/luyadev/luya-module-admin/issues/202) Changed sorting of image filters.
++ [#201](https://github.com/luyadev/luya-module-admin/issues/201) Escape filter name input.
++ [#204](https://github.com/luyadev/luya-module-admin/issues/204) Fixed problem with filter generator and chain values.
 + [#169](https://github.com/luyadev/luya-module-admin/issues/168) Fixed missing log message in dashboard for deleted records.
 + [#177](https://github.com/luyadev/luya-module-admin/issues/177) NgRest SelectModel problem with where statements on the same model class.
 + [#172](https://github.com/luyadev/luya-module-admin/issues/172) API users should not have default language from UI.

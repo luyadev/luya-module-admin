@@ -43,15 +43,15 @@ class className extends Filter
     {
         return [
             [method, [
-                'arg' => 'v',
-                'foo' => 'bar',
+                'arg' => 100,
+                'foo' => null,
             ]],
         ];
     }
 }
 EOT;
 
-        $render = $this->removeNewline($ctrl->generateClassView('idf', 'Nam', ['method' => ['arg' => 'v', 'foo' => 'bar']], 'className'));
+        $render = $this->removeNewline($ctrl->generateClassView('idf', 'Nam', ['method' => ['arg' => 100, 'foo' => null]], 'className'));
         $this->assertSame($this->removeNewline($buff), $render);
     }
 }

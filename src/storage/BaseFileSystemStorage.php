@@ -772,7 +772,7 @@ abstract class BaseFileSystemStorage extends Component
     public function getFiltersArray()
     {
         if ($this->_filtersArray === null) {
-            $this->_filtersArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_filter')->select(['id', 'identifier', 'name'])->indexBy('identifier'), self::CACHE_KEY_FILTER);
+            $this->_filtersArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_filter')->select(['id', 'identifier', 'name'])->indexBy('identifier')->orderBy(['name' => SORT_ASC]), self::CACHE_KEY_FILTER);
         }
 
         return $this->_filtersArray;

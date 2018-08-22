@@ -29,7 +29,7 @@ class <?= $className; ?> extends Filter
 <?php foreach ($chain as $filter => $args): ?>
             [<?= $filter; ?>, [
 <?php foreach ($args as $k => $v): ?>
-                '<?= $k; ?>' => '<?= $v; ?>',
+                '<?= $k; ?>' => <?= empty($v) ? 'null' : $v; ?>,
 <?php endforeach; ?>
             ]],
 <?php endforeach; ?>
