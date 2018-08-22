@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#200](https://github.com/luyadev/luya-module-admin/issues/200) Crud generator command asks for sql table instead of model. Also Updated the gii generator methods.
 + [#197](https://github.com/luyadev/luya-module-admin/pull/197) Added dutch language, thanks to @mahkali
 + [#74](https://github.com/luyadev/luya-module-admin/issues/74) Added index for FK fields.
 + [#188](https://github.com/luyadev/luya-module-admin/issues/188) Renamed CallbackFormWidget to ActiveWindowFromWidget, added initValue() method and new dropDownSelect method.

@@ -10,6 +10,7 @@ use yii\console\Exception;
 use luya\admin\base\BaseCrudController;
 use luya\helpers\FileHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
+use luya\helpers\StringHelper;
 
 /**
  * Console command to create a NgRest Crud with Controller, Api and Model based on a SQL Table.
@@ -66,7 +67,7 @@ class CrudController extends BaseCrudController
      */
     public function options($actionID)
     {
-        return ['hideCoreModules', 'hideFrontendModules'];
+        return ['hideCoreModules', 'hideFrontendModules', 'moduleName', 'modelName', 'apiEndpoint', 'dbTableName', 'enableI18n'];
     }
     
     /**
@@ -128,13 +129,13 @@ class CrudController extends BaseCrudController
     }
     
     /**
-     * Generate a suggestion for the database table name.
+     * Generate a suggestion for the model table name.
      *
-     * @return string The database table suggestion.
+     * @return string The model table suggestion.
      */
-    public function getDatabaseNameSuggestion()
+    public function getModelNameSuggestion()
     {
-        return strtolower($this->getModuleNameWithoutAdminSuffix().'_'.Inflector::underscore($this->modelName));
+        return Inflector::camelize(StringHelper::replaceFirst($this->getModuleNameWithoutAdminSuffix(), '', $this->dbTableName));
     }
     
     private $_dbTableShema;
@@ -209,6 +210,11 @@ class CrudController extends BaseCrudController
     
     private $_modelNamespace;
     
+    /**
+     * Getter method for modelNamespace.
+     * 
+     * @return string
+     */
     public function getModelNamespace()
     {
         if ($this->_modelNamespace === null) {
@@ -218,6 +224,10 @@ class CrudController extends BaseCrudController
         return $this->_modelNamespace;
     }
     
+    /**
+     * Setter method for modelNamepsace.
+     * @param string $ns
+     */
     public function setModelNamespace($ns)
     {
         $this->_modelNamespace = $ns;
@@ -378,15 +388,36 @@ class CrudController extends BaseCrudController
      */
     public function actionCreate()
     {
+        // 1. ask for module
         if ($this->moduleName === null) {
             Console::clearScreenBeforeCursor();
             $this->moduleName = $this->selectModule(['onlyAdmin' => $this->hideFrontendModules, 'hideCore' => $this->hideCoreModules, 'text' => 'Select the Module where the CRUD files should be saved:']);
         }
         
+        // 2. ask for sql table
+        if ($this->dbTableName === null) {
+            $this->dbTableName = $this->prompt('Enter the name of the database table to generate the model for (? to see all tables):', ['required' => true, 'validator' => function($input, &$error) {
+                if ($input == '?') {
+                    foreach ($this->getSqlTablesArray() as $table) {
+                        $this->outputInfo("- " . $table);
+                    }
+                    return false;
+                }
+                
+                if (!isset($this->getSqlTablesArray()[$input])) {
+                    $error = "Table '$input' does not exists. Type '?' to see all tables.";
+                    return false;
+                }
+                
+                return true;
+            }]);
+        }
+        
+        // 3. ask for model name
         if ($this->modelName === null) {
             $modelSelection = true;
             while ($modelSelection) {
-                $modelName = $this->prompt('Model Name (e.g. Album):', ['required' => true]);
+                $modelName = $this->prompt('Model Name (e.g. Album):', ['required' => true, 'default' => $this->getModelNameSuggestion()]);
                 $camlizeModelName = Inflector::camelize($modelName);
                 if ($modelName !== $camlizeModelName) {
                     if ($this->confirm("We have camlized the model name to '$camlizeModelName' do you want to continue with this name?")) {
@@ -400,28 +431,12 @@ class CrudController extends BaseCrudController
             }
         }
         
+        // 4. ask for api endpoint name
         if ($this->apiEndpoint === null) {
             $this->apiEndpoint = $this->prompt('Api Endpoint:', ['required' => true, 'default' => $this->getApiEndpointSuggestion()]);
         }
 
-        if ($this->dbTableName === null) {
-            $sqlSelection = true;
-            while ($sqlSelection) {
-                $sqlTable = $this->prompt('Database Table name for the Model:', ['required' => true, 'default' => $this->getDatabaseNameSuggestion()]);
-                if ($sqlTable == '?') {
-                    foreach ($this->getSqlTablesArray() as $table) {
-                        $this->outputInfo("- " . $table);
-                    }
-                }
-                if (isset($this->getSqlTablesArray()[$sqlTable])) {
-                    $this->dbTableName = $sqlTable;
-                    $sqlSelection = false;
-                } else {
-                    $this->outputError("The selected database '$sqlTable' does not exists in the list of tables. Type '?' to see all tables.");
-                }
-            }
-        }
-
+        // 5. ask for i18n
         if ($this->enableI18n === null) {
             $this->enableI18n = $this->confirm("Would you like to enable i18n field input for text fields? Only required for multilingual pages.");
         }

@@ -13,7 +13,7 @@ use luya\console\Command;
  *
  * As we can not ensure to access the gii model generate class we have to copy the base of the class, check the see section.
  *
- * @see https://github.com/yiisoft/yii2-gii/blob/master/generators/model/Generator.php
+ * @see https://github.com/yiisoft/yii2-gii/blob/master/src/generators/model/Generator.php
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -55,6 +55,7 @@ abstract class BaseCrudController extends Command
     
         return array_combine($names, $names);
     }
+    
     /**
      * Generates validation rules for the specified table.
      * @param \yii\db\TableSchema $table the table schema
@@ -75,13 +76,14 @@ abstract class BaseCrudController extends Command
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
+                case Schema::TYPE_TINYINT:
                     $types['integer'][] = $column->name;
                     break;
                 case Schema::TYPE_BOOLEAN:
                     $types['boolean'][] = $column->name;
                     break;
                 case Schema::TYPE_FLOAT:
-                case 'double': // Schema::TYPE_DOUBLE, which is available since Yii 2.0.3
+                case Schema::TYPE_DOUBLE:
                 case Schema::TYPE_DECIMAL:
                 case Schema::TYPE_MONEY:
                     $types['number'][] = $column->name;
@@ -90,6 +92,7 @@ abstract class BaseCrudController extends Command
                 case Schema::TYPE_TIME:
                 case Schema::TYPE_DATETIME:
                 case Schema::TYPE_TIMESTAMP:
+                case Schema::TYPE_JSON:
                     $types['safe'][] = $column->name;
                     break;
                 default: // strings
@@ -101,7 +104,11 @@ abstract class BaseCrudController extends Command
             }
         }
         $rules = [];
+        $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
+            if ($driverName === 'pgsql' && $type === 'integer') {
+                $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
+            }
             $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
         foreach ($lengths as $length => $columns) {
@@ -110,7 +117,8 @@ abstract class BaseCrudController extends Command
         $db = $this->getDbConnection();
         // Unique indexes rules
         try {
-            $uniqueIndexes = $db->getSchema()->findUniqueIndexes($table);
+            $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), [$table->primaryKey]);
+            $uniqueIndexes = array_unique($uniqueIndexes, SORT_REGULAR);
             foreach ($uniqueIndexes as $uniqueColumns) {
                 // Avoid validating auto incremental columns
                 if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
@@ -118,10 +126,8 @@ abstract class BaseCrudController extends Command
                     if ($attributesCount === 1) {
                         $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
                     } elseif ($attributesCount > 1) {
-                        $labels = array_intersect_key($this->generateLabels($table), array_flip($uniqueColumns));
-                        $lastLabel = array_pop($labels);
                         $columnsList = implode("', '", $uniqueColumns);
-                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList'], 'message' => 'The combination of " . implode(', ', $labels) . " and $lastLabel has already been taken.']";
+                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList']]";
                     }
                 }
             }
@@ -227,6 +233,18 @@ abstract class BaseCrudController extends Command
             }
         }
         return $labels;
+    }
+    
+    /**
+     * @return string|null driver name of db connection.
+     * In case db is not instance of \yii\db\Connection null will be returned.
+     * @since 2.0.6
+     */
+    protected function getDbDriverName()
+    {
+        /** @var Connection $db */
+        $db = $this->getDbConnection();
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
     
     /**

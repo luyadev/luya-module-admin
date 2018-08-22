@@ -5,13 +5,50 @@ namespace admintests\admin\commands;
 use Yii;
 use luya\admin\commands\CrudController;
 use admintests\AdminTestCase;
+use luya\testsuite\fixtures\ActiveRecordFixture;
+use luya\admin\models\User;
+use luya\admin\models\Lang;
 
 class CrudControllerTest extends AdminTestCase
 {
+    public function getConfigArray()
+    {
+        $array = parent::getConfigArray();
+        $array['components']['db'] = [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'sqlite::memory:',
+        ];
+        return $array;
+    }
+    
+    private function generateAdminUserSchema()
+    {
+        return new ActiveRecordFixture([
+            'modelClass' => User::class,
+            'schema' => [
+                'id' => 'integer',
+                'firstname' => 'string',
+                'lastname' => 'string',
+                'title' => 'smallint',
+                'email' => 'string',
+                'password' => 'string',
+                'password_salt' => 'string',
+                'auth_token' => 'string',
+                'is_deleted' => 'tinyint',
+                'secure_token' => 'string',
+                'secure_token_timestamp' => 'integer',
+                'force_reload' => 'tinyint',
+                'settings' => 'text',
+                'cookie_token' => 'string',
+            ]
+        ]);
+    }
+    
     public function testFindModelFolderIsModelFolderAvailable()
     {
         $ctrl = new CrudController('id', Yii::$app);
     
+        $this->generateAdminUserSchema();
         $testShema = Yii::$app->db->getTableSchema('admin_user', true);
         $ctrl->moduleName = 'crudmodulefolderadmin';
         
@@ -26,11 +63,11 @@ class CrudControllerTest extends AdminTestCase
     {
         $ctrl = new CrudController('id', Yii::$app);
         
+        $this->generateAdminUserSchema();
         $testShema = Yii::$app->db->getTableSchema('admin_user', true);
         
         $this->assertNotNull($testShema);
-        
-        $this->assertSame(8, count($ctrl->generateRules($testShema)));
+        $this->assertSame(3, count($ctrl->generateRules($testShema)));
         $this->assertSame(14, count($ctrl->generateLabels($testShema)));
         
         $tpl = <<<'EOT'
@@ -155,14 +192,9 @@ class TestModel extends NgRestModel
     public function rules()
     {
         return [
-            [['title', 'secure_token_timestamp'], 'integer'],
-            [['email'], 'required'],
+            [['title', 'is_deleted', 'secure_token_timestamp', 'force_reload'], 'integer'],
             [['settings'], 'string'],
-            [['firstname', 'lastname', 'password', 'password_salt', 'auth_token', 'cookie_token'], 'string', 'max' => 255],
-            [['email'], 'string', 'max' => 120],
-            [['is_deleted', 'force_reload'], 'string', 'max' => 1],
-            [['secure_token'], 'string', 'max' => 40],
-            [['email'], 'unique'],
+            [['firstname', 'lastname', 'email', 'password', 'password_salt', 'auth_token', 'secure_token', 'cookie_token'], 'string', 'max' => 255],
         ];
     }
 
@@ -230,6 +262,16 @@ EOT;
     {
         $ctrl = new CrudController('id', Yii::$app);
         
+        new ActiveRecordFixture([
+            'modelClass' => Lang::class,
+            'schema' => [
+                'name' => 'string',
+                'short_code' => 'string(15)',
+                'is_default' => 'boolean',
+                'is_deleted' => 'boolean',
+            ]
+        ]);
+        
         $c = $ctrl->generateModelContent(
             'file\\namespace',
             'TestModel',
@@ -254,8 +296,8 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property integer $id
  * @property string $name
  * @property string $short_code
- * @property tinyint $is_default
- * @property tinyint $is_deleted
+ * @property boolean $is_default
+ * @property boolean $is_deleted
  */
 class TestModel extends NgRestModel
 {
@@ -295,9 +337,9 @@ class TestModel extends NgRestModel
     public function rules()
     {
         return [
+            [['is_default', 'is_deleted'], 'boolean'],
             [['name'], 'string', 'max' => 255],
             [['short_code'], 'string', 'max' => 15],
-            [['is_default', 'is_deleted'], 'string', 'max' => 1],
         ];
     }
 
@@ -309,8 +351,8 @@ class TestModel extends NgRestModel
         return [
             'name' => 'text',
             'short_code' => 'text',
-            'is_default' => 'number',
-            'is_deleted' => 'number',
+            'is_default' => 'toggleStatus',
+            'is_deleted' => 'toggleStatus',
         ];
     }
 
