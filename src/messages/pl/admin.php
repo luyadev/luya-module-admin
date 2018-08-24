@@ -349,8 +349,4 @@ return [
 'view_index_redirect_telephone' => 'Numer telefonu',
 'view_index_redirect_telephone_help' => 'Proszę podać poprawny numer telefonu (dla znaku "+" wymagany jest wiodący "\")',
 "missing_file_upload_permission" => 'Niewystarczające uprawnienia do przesyłania plików.',
-
-'view_index_redirect_phone_help' => 'Proszę podać poprawny numer telefonu (dla znaku "+" wymagany jest wiodący "\")',
-'view_index_redirect_phone' => 'Numer telefonu',
-
 ];
