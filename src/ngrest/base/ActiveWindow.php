@@ -36,7 +36,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     /**
      * @var string The class name of the called class where the actice window is bound to.
      */
-    public $ngRestModelClass = null;
+    public $ngRestModelClass;
     
     /**
      * @var string the module name in where the active window context is loaded, in order to find view files.

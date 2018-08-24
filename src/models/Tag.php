@@ -42,6 +42,7 @@ final class Tag extends NgRestModel
     {
         return [
             'name' => Module::t('model_tag_name'),
+            'relationsCount' => Module::t('model_tag_relations_count'),
         ];
     }
 
@@ -66,11 +67,32 @@ final class Tag extends NgRestModel
     /**
      * @inheritdoc
      */
-    public function ngRestConfig($config)
+    public function ngRestExtraAttributeTypes()
     {
-        $this->ngRestConfigDefine($config, ['list', 'create', 'update'], ['name']);
-
-        return $config;
+        return [
+            'relationsCount' => 'text',
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function ngRestScopes()
+    {
+        return [
+            [['list'], ['name', 'relationsCount']],
+            [['create', 'update'], ['name']],
+        ];
+    }
+    
+    /**
+     * Returns the amount of rows for the curren tag.
+     * 
+     * @return integer
+     */
+    public function getRelationsCount()
+    {
+        return count($this->tagRelations);
     }
 
     /**
@@ -94,5 +116,13 @@ final class Tag extends NgRestModel
     public static function findRelationsTable($tableName)
     {
         return self::find()->innerJoin(TagRelation::tableName(), 'admin_tag_relation.tag_id=admin_tag.id')->distinct()->where(['table_name' => $tableName])->indexBy('name')->all();
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTagRelations()
+    {
+        return $this->hasMany(TagRelation::class, ['tag_id' => 'id']);
     }
 }

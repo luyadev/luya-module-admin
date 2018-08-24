@@ -16,4 +16,12 @@ class TagController extends Api
      * @var string The path to the tag model.
      */
     public $modelClass = 'luya\admin\models\Tag';
+    
+    /**
+     * @inheritdoc
+     */
+    public function withRelations()
+    {
+        return ['tagRelations'];
+    }
 }

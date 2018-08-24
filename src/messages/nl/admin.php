@@ -340,4 +340,5 @@ return [
     'crud_exportdata_btn_downloadexport' => 'Export downloaden',
     'js_pagination_page' => 'Pagina',
     'dashboard_log_message_delete' => 'Een record verwijderd in <strong> {container} </strong>.',
+    'model_tag_relations_count' => 'Used',
 ];
