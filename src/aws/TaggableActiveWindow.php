@@ -5,6 +5,7 @@ namespace luya\admin\aws;
 use luya\admin\models\Tag;
 use luya\admin\models\TagRelation;
 use luya\admin\ngrest\base\ActiveWindow;
+use luya\admin\Module;
 
 /**
  * Create an Active Window where you can assign tags to a row of the underlying table via a ref table.
@@ -98,7 +99,7 @@ class TaggableActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'Tags';
+        return Module::t('menu_system_item_tags');
     }
     
     /**
