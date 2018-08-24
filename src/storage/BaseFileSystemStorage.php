@@ -236,6 +236,14 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.1.0
      */
     public $whitelistMimeTypes = [];
+    
+    /**
+     * @var array An array with extensions which are whitelisted. This can be very dangerous as it will skip the check whether the mime type is
+     * matching the extension types. If an extensions in {{$dangerousExtensions}} and {{$whitelistExtensions}} it will still throw an exception as
+     * {{$dangerousExtensions}} take precedence over {{$$whitelistExtensions}}.
+     * @since 1.2.2
+     */
+    public $whitelistExtensions = [];
 
     /**
      * @var \luya\web\Request Request object resolved by the Dependency Injector.
@@ -424,18 +432,22 @@ abstract class BaseFileSystemStorage extends Component
             throw new Exception("Unable to find mimeType for the given file, make sure the php extension 'fileinfo' is installed.");
         }
 
-        $extensionByMimeType = FileHelper::getExtensionsByMimeType($mimeType);
-         
-        if (empty($extensionByMimeType)) {
+        $extensionsFromMimeType = FileHelper::getExtensionsByMimeType($mimeType);
+        
+        if (empty($extensionsFromMimeType) && empty($this->whitelistExtensions)) {
             throw new Exception("Unable to find extension for given mimeType \"{$mimeType}\" or it contains insecure data.");
+        }
+        
+        if (!empty($this->whitelistExtensions)) {
+            $extensionsFromMimeType = array_merge($extensionsFromMimeType, $this->whitelistExtensions);
         }
 
         // check if the file extension is matching the entries from FileHelper::getExtensionsByMimeType array.
-        if (!in_array($fileInfo->extension, $extensionByMimeType) && !in_array($mimeType, $this->whitelistMimeTypes)) {
-            throw new Exception("The given file extension \"{$fileInfo->extension}\" for file with mimeType \"{$mimeType}\" is not matching any valid extension: ".VarDumper::dumpAsString($extensionByMimeType).".");
+        if (!in_array($fileInfo->extension, $extensionsFromMimeType) && !in_array($mimeType, $this->whitelistMimeTypes)) {
+            throw new Exception("The given file extension \"{$fileInfo->extension}\" for file with mimeType \"{$mimeType}\" is not matching any valid extension: ".VarDumper::dumpAsString($extensionsFromMimeType).".");
         }
          
-        foreach ($extensionByMimeType as $extension) {
+        foreach ($extensionsFromMimeType as $extension) {
             if (in_array($extension, $this->dangerousExtensions)) {
                 throw new Exception("The file extension '{$extension}' seems to be dangerous and can not be stored.");
             }

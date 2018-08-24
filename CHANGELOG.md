@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#207](https://github.com/luyadev/luya-module-admin/issues/207) New option to whitelist extensions for file uploads.
 + [#200](https://github.com/luyadev/luya-module-admin/issues/200) Crud generator command asks for sql table instead of model. Also Updated the gii generator methods.
 + [#197](https://github.com/luyadev/luya-module-admin/pull/197) Added dutch language, thanks to @mahkali
 + [#74](https://github.com/luyadev/luya-module-admin/issues/74) Added index for FK fields.
