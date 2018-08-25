@@ -3,7 +3,7 @@
 return [
 'language_name' => 'Polski',
 'button_save' => 'Zapisz',
-'button_confirm' => 'Tak',
+'button_yes' => 'Tak',
 'button_abort' => 'Anuluj',
 'button_send' => 'Wyślij',
 'login_pre_title' => 'Zaloguj się w {title}',
