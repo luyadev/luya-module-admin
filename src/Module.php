@@ -51,7 +51,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
-     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pt, fa, cn, nl
+     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pt, fa, cn, nl, pl
      */
     public $interfaceLanguage = 'en';
     
