@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#209](https://github.com/luyadev/luya-module-admin/pull/209) Polish translations for admin and core modules.
 + [#207](https://github.com/luyadev/luya-module-admin/issues/207) New option to whitelist extensions for file uploads.
 + [#200](https://github.com/luyadev/luya-module-admin/issues/200) Crud generator command asks for sql table instead of model. Also Updated the gii generator methods.
 + [#197](https://github.com/luyadev/luya-module-admin/pull/197) Added dutch language, thanks to @mahkali
