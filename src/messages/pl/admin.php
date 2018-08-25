@@ -349,4 +349,19 @@ return [
 'view_index_redirect_telephone' => 'Numer telefonu',
 'view_index_redirect_telephone_help' => 'Proszę podać poprawny numer telefonu (dla znaku "+" wymagany jest wiodący "\")',
 "missing_file_upload_permission" => 'Niewystarczające uprawnienia do przesyłania plików.',
+    
+// 1.2.2
+    
+    'button_no' => 'Yes',
+    'crud_exportdata_btn' => 'Eksportuj dane',
+    'crud_exportdata_col_header' => 'Nagłówek',
+    'crud_exportdata_col_format' => 'Format',
+    'crud_exportdata_col_format_csv' => 'CSV',
+    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+    'crud_exportdata_col_columns' => 'Kolumny',
+    'crud_exportdata_btn_generateexport' => 'Wygeneruj eksport',
+    'crud_exportdata_btn_downloadexport' => 'Sciągnij eksport',
+    'js_pagination_page' => 'Strona',
+    'dashboard_log_message_delete' => 'Usunięto rekord w <strong>{container}</strong>.',
+    'model_tag_relations_count' => 'Używany',
 ];
