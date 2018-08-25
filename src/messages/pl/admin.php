@@ -221,7 +221,7 @@ return [
 "model_storagefilter_identifier" => "Identyfikator filtra",
 "model_storagefilter_name" => "Nazwa filtra",
 "model_tag_name" => "Identyfikator tagu",
-"model_user_lastlogintimamp" => "Ostatnie logowanie",
+"model_user_lastlogintimestamp" => "Ostatnie logowanie",
 "model_user_title_mr" => "Pan",
 'model_user_title_mrs' => 'Pani',
 'js_ngrest_toggler_success' => '%field% zostało pomyślnie zaktualizowane.',
