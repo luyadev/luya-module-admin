@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Changed
 
++ [#137](https://github.com/luyadev/luya-module-admin/issues/137) Rewritten the file system in order to support large amount of data, therefore images create an xhr request for every file info, instead of preloading those trough `data-files` directive. This is can be slower for small system, but is much faster for systems with over 20k images and files.
 + [#160](https://github.com/luyadev/luya-module-admin/issues/160) Renmaed full-response to search.
 + [#191](https://github.com/luyadev/luya-module-admin/issues/191) Added angularjs-slider dep; Added pagination directive (uses angularjs-slider) for use in crud and filemanager; Removed old pagination code
 + [#184](https://github.com/luyadev/luya-module-admin/issues/184) Changed active and hover color for zaaselect.
