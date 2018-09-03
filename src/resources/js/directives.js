@@ -3312,6 +3312,12 @@
         };
     });
     
+    /**
+     * Pagination directive
+     * 
+     * > Currently its not supported to change the current page value from outside the directive. therefore
+     * > the pagination always starts on page 1
+     */
     zaa.directive('pagination', function () {
         return {
             restrict: 'E',
@@ -3319,17 +3325,17 @@
                 currentPage: '=',
                 pageCount: '='
             },
-            link: function (scope, element) {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 // Watch for pageCOunt changes and refresh ceil value for slider
-                scope.$watch('pageCount', function(newValue) {
+                $scope.$watch('pageCount', function(newValue) {
                     if (newValue !== undefined) {
-                        scope.sliderOptions.ceil = scope.pageCount;
+                        $scope.sliderOptions.ceil = newValue;
                     }
                 });
 
-                scope.sliderOptions = {
+                $scope.sliderOptions = {
                     floor: 1,
-                    ceil: scope.pageCount,
+                    ceil: $scope.pageCount,
                     translate: function (value, sliderId, label) {
                         // Change the default label
                         switch (label) {
@@ -3343,10 +3349,15 @@
                     },
                     onEnd: function(sliderId, modelValue) {
                         // Update the currentPage once the user stopped dragging (or on click)
-                        scope.currentPage = modelValue;
-                    }
+                        $scope.currentPage = modelValue;
+                    } 
                 };
-            },
-            template: '<rzslider rz-slider-model="currentPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
+
+                $timeout(function() {
+                    $scope.$broadcast('rzSliderForceRender')
+                });
+
+            }],
+            template: '<rzslider rz-slider-model="1" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
         };
     });
