@@ -76,9 +76,11 @@ class StorageController extends RestController
     private function getStorageFiles($folderId, $page, $searchQuery = null)
     {
         $perPage = 50;
-        $totalCountQuery = StorageFile::find()->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false]);
+        $totalCountQuery = StorageFile::find()->where(['is_hidden' => false, 'is_deleted' => false]);
         if ($searchQuery) {
             $totalCountQuery->andFilterWhere(['like', 'name_original', $searchQuery]);
+        } else {
+            $totalCountQuery->andWhere(['folder_id' => $folderId]);
         }
         $totalCount = $totalCountQuery->count();
         
@@ -93,13 +95,15 @@ class StorageController extends RestController
         $fn = function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail, $searchQuery) {
             $files = [];
             $fileQueryObject = StorageFile::find()
-                ->where(['folder_id' => $folderId, 'is_hidden' => false, 'is_deleted' => false])
+                ->where(['is_hidden' => false, 'is_deleted' => false])
                 ->offset($page*$perPage)
                 ->indexBy(['id'])
                 ->limit($perPage);
                 
             if ($searchQuery) {
                 $fileQueryObject->andFilterWhere(['like', 'name_original', $searchQuery]);
+            } else {
+                $fileQueryObject->andWhere(['folder_id' => $folderId]);
             }
 
             $fileQuery = $fileQueryObject->asArray()->all();

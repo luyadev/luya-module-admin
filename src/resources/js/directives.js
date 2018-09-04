@@ -3060,12 +3060,16 @@
                 // controller logic
 
                 $scope.searchQuery = null;
-
+                $scope.searchPromise = null;
+                
                 $scope.runSearch = function() {
                     if ($scope.searchQuery.length > 0) {
-                        $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
-                            $scope.filesResponseToVars(response);
-                        });
+                        $timeout.cancel($scope.searchPromise);
+                        $scope.searchPromise = $timeout(function() {
+                            $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
+                                $scope.filesResponseToVars(response);
+                            });
+                        }, 600);
                     } else {
                         $scope.getFilesForCurrentPage();
                     }

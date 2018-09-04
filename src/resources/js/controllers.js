@@ -235,7 +235,7 @@
 					$http.post($scope.generateUrlWithParams('search'), {query: n}).then(function(response) {
 						$scope.parseResponseQueryToListArray(response);
 					});
-				}, 400)
+				}, 600)
 			}
 		};
 
