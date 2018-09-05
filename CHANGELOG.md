@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.2.1 (in progress)
 
++ [#212](https://github.com/luyadev/luya-module-admin/issues/212) Ensure search action for ngrest is used trough get param instad of post.
 + [#137](https://github.com/luyadev/luya-module-admin/issues/137) Fixed issue with search and timeout.
 
 ## 1.2.2 (3. September 2018)

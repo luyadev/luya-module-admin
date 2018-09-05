@@ -334,13 +334,16 @@ class Api extends RestActiveController
      *
      * Search querys with Pagination will be handled by this action.
      *
+     * @param string $query The search paramter, if empty post will be used.
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionSearch()
+    public function actionSearch($query = null)
     {
         $this->checkAccess('search');
         
-        $query = Yii::$app->request->post('query');
+        if (empty($query)) {
+            $query = Yii::$app->request->post('query');
+        }
         
         $find = $this->model->ngRestFullQuerySearch($query);
         
