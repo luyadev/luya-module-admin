@@ -34,7 +34,7 @@ class ViewAction extends \yii\rest\ViewAction
         }
         */
         
-        if (!Yii::$app->user->identity->is_api_user) {
+        if (!Yii::$app->adminuser->identity->is_api_user) {
             $modelClass = $this->modelClass;
             $table = $modelClass::tableName();
             $alias = Yii::$app->adminmenu->getApiDetail($modelClass::ngRestApiEndpoint());
