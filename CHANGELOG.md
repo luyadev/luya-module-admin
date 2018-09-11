@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.2.1 (in progress)
 
++ Do not lock data on ngrest view if api user.
++ Removed auto expand of fields join with `withRelation()` in API ViewAction as it can make problem with sub relations. Use expand instead.
 + [#212](https://github.com/luyadev/luya-module-admin/issues/212) Ensure search action for ngrest is used trough get param instad of post.
 + [#137](https://github.com/luyadev/luya-module-admin/issues/137) Fixed issue with search and timeout.
 

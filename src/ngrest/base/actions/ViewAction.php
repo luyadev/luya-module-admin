@@ -21,20 +21,25 @@ class ViewAction extends \yii\rest\ViewAction
     {
         $result = parent::run($id);
         
-        $relations = $this->controller->getWithRelation('view');
-        
         // auto expand the given relations
+        // @TODO 11.9.2018: Fields should be resolved trough expand param of get request. The yii serializer should then expand those given fields instead of auto expand those
+        // trough $relations
+        // As this can make problems with relations like `items.news` (sub relations) the expand wont work.
+        // a. either check to remove sub relations 
+        // b. or remove this implementation
+        /*
+        $relations = $this->controller->getWithRelation('view');
         foreach ($relations as $relationAttribute) {
             $result->{$relationAttribute};
         }
+        */
         
-        $modelClass = $this->modelClass;
-
-        $table = $modelClass::tableName();
-        
-        $alias = Yii::$app->adminmenu->getApiDetail($modelClass::ngRestApiEndpoint());
-        
-        UserOnline::lock(Yii::$app->adminuser->id, $table, $id, 'lock_admin_edit_crud_item', ['table' => $alias['alias'], 'id' => $id, 'module' => $alias['module']['alias']]);
+        if (!Yii::$app->user->identity->is_api_user) {
+            $modelClass = $this->modelClass;
+            $table = $modelClass::tableName();
+            $alias = Yii::$app->adminmenu->getApiDetail($modelClass::ngRestApiEndpoint());
+            UserOnline::lock(Yii::$app->adminuser->id, $table, $id, 'lock_admin_edit_crud_item', ['table' => $alias['alias'], 'id' => $id, 'module' => $alias['module']['alias']]);
+        }
         
         return $result;
     }
