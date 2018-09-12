@@ -83,16 +83,6 @@ final class StorageFile extends ActiveRecord
             [['caption'], 'string'],
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fields()
-    {
-        $fields = parent::fields();
-        $fields['source'] = 'source';
-        return $fields;
-    }
     
     /**
      * Delete a given file.
@@ -161,6 +151,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images'];
+        return ['user', 'file', 'images', 'source'];
     }
 }
