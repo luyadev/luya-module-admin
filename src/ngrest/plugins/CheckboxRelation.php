@@ -49,7 +49,14 @@ use luya\admin\helpers\I18n;
  *
  * ```php
  * 'labelField' => function($model) {
- *     return $model->firstname . ' ' . $model->lastname;
+ *     return $model['firstname'] . ' ' . $model['lastname'];
+ * }
+ * ```
+ *
+ * If you want to output an i18n field:
+ * ```php
+ * 'labelField' => function($model) {
+ *     return I18n::decodeFindActive($model["i18nfield"]);
  * }
  * ```
  *
