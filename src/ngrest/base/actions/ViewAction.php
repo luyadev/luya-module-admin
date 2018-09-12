@@ -4,6 +4,8 @@ namespace luya\admin\ngrest\base\actions;
 
 use Yii;
 use luya\admin\models\UserOnline;
+use yii\web\NotFoundHttpException;
+use yii\db\ActiveRecordInterface;
 
 /**
  * IndexAction for REST implementation.
@@ -17,23 +19,72 @@ use luya\admin\models\UserOnline;
  */
 class ViewAction extends \yii\rest\ViewAction
 {
+    /**
+     * Returns the data model based on the primary key given.
+     * If the data model is not found, a 404 HTTP exception will be raised.
+     * @param string $id the ID of the model to be loaded. If the model has a composite primary key,
+     * the ID must be a string of the primary key values separated by commas.
+     * The order of the primary key values should follow that returned by the `primaryKey()` method
+     * of the model.
+     * 
+     * > This override of parent models allows us to join the relation data without using extraFields() basically its a main idea
+     * > behind yii relations and serializer which is not used for the view action without overriding findModel().
+     * 
+     * @return ActiveRecordInterface the model found
+     * @throws NotFoundHttpException if the model cannot be found
+     * @since 1.2.2.1
+     */
+    public function findModel($id)
+    {
+        if ($this->findModel !== null) {
+            return call_user_func($this->findModel, $id, $this);
+        }
+
+        /* @var $modelClass ActiveRecordInterface */
+        $modelClass = $this->modelClass;
+        $keys = $modelClass::primaryKey();
+        if (count($keys) > 1) {
+            $values = explode(',', $id);
+            if (count($keys) === count($values)) {
+                $model = $this->findModelFromCondition(array_combine($keys, $values), $keys, $modelClass);
+            }
+        } elseif ($id !== null) {
+            $model = $this->findModelFromCondition($id, $keys, $modelClass);
+        }
+
+        if (isset($model)) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException("Object not found: $id");
+    }
+
+    /**
+     * This equals to the ActieRecord::findByCondition which is sadly a protected method.
+     *  
+     * @since 1.2.2.1
+     * @return yii\db\ActiveRecord
+     */
+    protected function findModelFromCondition($condition, $primaryKey, $modelClass)
+    {
+        $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
+
+        return $modelClass::find()->andWhere($condition)->with($this->controller->getWithRelation('view'))->one();
+    }
+
+    /**
+     * Return the model for a given resource id.
+     * 
+     * @return yii\db\ActiveRecordInterface
+     */
     public function run($id)
     {
-        $result = parent::run($id);
-        
-        // auto expand the given relations
-        // @TODO 11.9.2018: Fields should be resolved trough expand param of get request. The yii serializer should then expand those given fields instead of auto expand those
-        // trough $relations
-        // As this can make problems with relations like `items.news` (sub relations) the expand wont work.
-        // a. either check to remove sub relations 
-        // b. or remove this implementation
-        /*
-        $relations = $this->controller->getWithRelation('view');
-        foreach ($relations as $relationAttribute) {
-            $result->{$relationAttribute};
+        $model = $this->findModel($id);
+
+        if ($this->checkAccess) {
+            call_user_func($this->checkAccess, $this->id, $model);
         }
-        */
-        
+
         if (!Yii::$app->adminuser->identity->is_api_user) {
             $modelClass = $this->modelClass;
             $table = $modelClass::tableName();
@@ -41,6 +92,6 @@ class ViewAction extends \yii\rest\ViewAction
             UserOnline::lock(Yii::$app->adminuser->id, $table, $id, 'lock_admin_edit_crud_item', ['table' => $alias['alias'], 'id' => $id, 'module' => $alias['module']['alias']]);
         }
         
-        return $result;
+        return $model;
     }
 }
