@@ -20,6 +20,7 @@ use yii\web\NotFoundHttpException;
 use luya\admin\models\StorageImage;
 use luya\admin\file\Item;
 use luya\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 
 /**
  * Filemanager and Storage API.
@@ -224,6 +225,22 @@ class StorageController extends RestController
         return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail']);
     }
     
+    /**
+     * A post request with an array of images to load!
+     * 
+     * 
+     * @since 1.2.2.1
+     */
+    public function actionImagesInfo()
+    {
+        $ids = Yii::$app->request->getBodyParam('ids', []);
+        $ids = array_unique($ids);
+        return new ActiveDataProvider([
+            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file']),
+            'pagination' => false,
+        ]);
+    }
+
     /**
      *
      * @param integer $id

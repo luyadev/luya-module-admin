@@ -54,7 +54,7 @@ class Image extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        return $this->createTag('storage-image-thumbnail-display', null, ['image-id' => "{{{$ngModel}}}"]);
+        return $this->createTag('storage-image-crud-list', null, ['image-id' => "{{{$ngModel}}}"]);
     }
 
     /**

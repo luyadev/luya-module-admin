@@ -151,6 +151,17 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function(
     		});
 		});
 	};
+
+	service.loadImages = function(imagesArray) {
+		return $q(function(resolve, reject) {
+			$http.post('admin/api-admin-storage/images-info?expand=source,thumbnail', {ids: imagesArray}).then(function(response) {
+				angular.forEach(response.data, function(value) {
+					service.data[value.id] = value;
+				});
+				return resolve();
+			});
+		});
+	};
 	
 	return service;
 }]);

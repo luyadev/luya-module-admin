@@ -2452,6 +2452,32 @@
     	}
     });
 
+    zaa.directive('storageImageCrudList', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                imageId: '@imageId'
+            },
+            controller: ['$scope', 'ServiceImagesData', function($scope, ServiceImagesData) {
+                $scope.imageSrc = null;
+
+                $scope.$emit('requestImageSource', {imageId: $scope.imageId});
+
+                $scope.$on('requestImageSourceReady', function() {
+                    // now access trough getImage of images service
+                    if ($scope.imageId != 0) {
+                        ServiceImagesData.getImage($scope.imageId).then(function(response) {
+                            $scope.imageSrc = response.thumbnail.source;
+                        });
+                    }
+                });
+            }],
+            template: function() {
+                return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
+            }
+        }
+    });
+
     zaa.directive('storageImageThumbnailDisplay', function() {
         return {
             restrict: 'E',

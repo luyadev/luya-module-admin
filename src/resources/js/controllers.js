@@ -18,7 +18,7 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", ['$scope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
+	zaa.controller("CrudController", ['$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', function($scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService, ServiceImagesData) {
 
 		$scope.toast = AdminToastService;
 
@@ -468,6 +468,15 @@
 
 		$scope.totalRows = 0;
 
+		$scope.requestedImages = [];
+
+		$scope.$on('requestImageSource', function(e, args) {
+			if (args.imageId != 0) {
+				$scope.requestedImages.push(args.imageId);
+			}
+		});
+		
+
 		/**
 		 * Parse an Pagination (or not pagination) object into a response.
 		 */
@@ -479,6 +488,12 @@
 				response.headers('X-Pagination-Total-Count')
 			);
 			$scope.data.listArray = response.data;
+			$timeout(function() {
+				ServiceImagesData.loadImages($scope.requestedImages).then(function() {
+					$scope.$broadcast('requestImageSourceReady');
+					$scope.requestedImages = [];
+				});
+			});
 		};
 		
 		/**
@@ -503,6 +518,7 @@
 		
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
+			$scope.requestedImages = [];
 			if (parseInt($scope.config.filter) == 0) {
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);
