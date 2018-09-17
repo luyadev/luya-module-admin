@@ -468,14 +468,7 @@
 
 		$scope.totalRows = 0;
 
-		$scope.requestedImages = [];
-
-		$scope.$on('requestImageSource', function(e, args) {
-			if (args.imageId != 0) {
-				$scope.requestedImages.push(args.imageId);
-			}
-		});
-		
+		$scope.requestedImages = [];		
 
 		/**
 		 * Parse an Pagination (or not pagination) object into a response.
@@ -488,6 +481,18 @@
 				response.headers('X-Pagination-Total-Count')
 			);
 			$scope.data.listArray = response.data;
+
+			$scope.requestedImages = [];
+			angular.forEach($scope.service, function(value, key) {
+				// fix check for lazyload images property for service
+				if (value.hasOwnProperty('lazyload_images')) {
+					// yes
+					angular.forEach(response.data, function(row) {
+						$scope.requestedImages.push(row[key]);
+					});
+				}
+			});
+			
 			$timeout(function() {
 				ServiceImagesData.loadImages($scope.requestedImages).then(function() {
 					$scope.$broadcast('requestImageSourceReady');
@@ -518,7 +523,6 @@
 		
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
-			$scope.requestedImages = [];
 			if (parseInt($scope.config.filter) == 0) {
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);

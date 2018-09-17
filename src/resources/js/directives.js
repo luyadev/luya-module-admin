@@ -2461,7 +2461,11 @@
             controller: ['$scope', 'ServiceImagesData', function($scope, ServiceImagesData) {
                 $scope.imageSrc = null;
 
-                $scope.$emit('requestImageSource', {imageId: $scope.imageId});
+                $scope.$watch('imageId', function(n, o) {
+                    if (n != o) {
+                        $scope.imageSrc = null;
+                    }
+                });
 
                 $scope.$on('requestImageSourceReady', function() {
                     // now access trough getImage of images service
@@ -2505,6 +2509,12 @@
                     $scope.imagesData = data;
                 });
                 */
+
+                $scope.$watch('imageId', function(n, o) {
+                    if (n != o) {
+                        $scope.imageSrc = null;
+                    }
+                });
 
                 // controller logic
 

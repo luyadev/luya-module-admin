@@ -82,4 +82,11 @@ class Image extends Plugin
             $this->writeAttribute($event, Yii::$app->storage->getImage($event->sender->getAttribute($this->name)));
         }
     }
+
+    public function serviceData($event)
+    {
+        return [
+            'lazyload_images' => true,
+        ];
+    }
 }
