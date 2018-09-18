@@ -79,7 +79,7 @@ class StorageController extends RestController
         $perPage = 50;
         $totalCountQuery = StorageFile::find()->where(['is_hidden' => false, 'is_deleted' => false]);
         if ($searchQuery) {
-            $totalCountQuery->andFilterWhere(['like', 'name_original', $searchQuery]);
+            $totalCountQuery->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
         } else {
             $totalCountQuery->andWhere(['folder_id' => $folderId]);
         }
@@ -103,7 +103,7 @@ class StorageController extends RestController
                 ->limit($perPage);
                 
             if ($searchQuery) {
-                $query->andFilterWhere(['like', 'name_original', $searchQuery]);
+                $query->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
             } else {
                 $query->andWhere(['folder_id' => $folderId]);
             }
