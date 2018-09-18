@@ -2471,7 +2471,16 @@
                     // now access trough getImage of images service
                     if ($scope.imageId != 0) {
                         ServiceImagesData.getImage($scope.imageId).then(function(response) {
-                            $scope.imageSrc = response.thumbnail.source;
+                            if (response.thumbnail) {
+                                $scope.imageSrc = response.thumbnail.source;
+                            } else {
+                                // the thumbnail does not exists, try to force a new xhr request which should generate the thumbnail:
+                                ServiceImagesData.getImage($scope.imageId, true).then(function(r) {
+                                    if (r.thumbnail) {
+                                        $scope.imageSrc = r.thumbnail.source;
+                                    }
+                                });
+                            }
                         });
                     }
                 });

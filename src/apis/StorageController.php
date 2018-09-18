@@ -124,11 +124,21 @@ class StorageController extends RestController
                                 if ($image->filter_id == $tinyCrop) {
                                     return ['source' => $image->source];
                                 }
+                                // create the thumbnail on the fly if not existing
+                                $image = Yii::$app->storage->createImage($model->id, $tinyCrop);
+                                if ($image) {
+                                    return ['source' => $image->source];
+                                }
                             }
                         },
                         'thumbnailMedium' => function($model) use ($mediumThumbnail) {
                             foreach ($model->images as $image) {
                                 if ($image->filter_id == $mediumThumbnail) {
+                                    return ['source' => $image->source];
+                                }
+                                // create the thumbnail on the fly if not existing
+                                $image = Yii::$app->storage->createImage($model->id, $mediumThumbnail);
+                                if ($image) {
                                     return ['source' => $image->source];
                                 }
                             }
@@ -224,7 +234,10 @@ class StorageController extends RestController
 
         // try to create thumbnail on view if not done
         if (empty($model->thumbnail)) {
+            // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
             Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
+            // refresh model internal (as $model->refresh() wont load the relations data we have to call the same model with relations again)
+            $$model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one(); 
         }
         
         return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail.file']);
