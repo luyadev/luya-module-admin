@@ -109,7 +109,7 @@ class Item extends ItemAbstract
             
             // The image source does not exist, probably it has been deleted due to filter changes.
             // storage component is going go try to re-create this image now.
-            $apply = Yii::$app->storage->addImage($this->getFileId(), $this->getFilterId());
+            $apply = Yii::$app->storage->createImage($this->getFileId(), $this->getFilterId());
         }
         
         $fileName = $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();

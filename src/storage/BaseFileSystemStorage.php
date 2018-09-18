@@ -224,6 +224,14 @@ abstract class BaseFileSystemStorage extends Component
     ];
 
     /**
+     * @var array a list of mime types which are indicating images
+     * @since 1.2.2.1
+     */
+    public $imageMimeTypes = [
+        'image/gif', 'image/jpeg', 'image/png', 'image/jpg', 'image/bmp', 'image/tiff',
+    ];
+
+    /**
      * @var boolean Whether secure file upload is enabled or not. If enabled dangerous mime types and extensions will
      * be rejected and the file mime type needs to be verified by phps `fileinfo` extension.
      */
@@ -591,7 +599,7 @@ abstract class BaseFileSystemStorage extends Component
      * @return bool|\luya\admin\image\Item|Exception Returns the item object, if an error happens and $throwException is off `false` is returned otherwhise an exception is thrown.
      * @throws \luya\Exception
      */
-    public function addImage($fileId, $filterId = 0, $throwException = false)
+    public function addImage($fileId, $filterId = 0, $throwException = true)
     {
         try {
             // if the filterId is provded as a string the filter will be looked up by its name in the get filters array list.
@@ -619,51 +627,10 @@ abstract class BaseFileSystemStorage extends Component
                 throw new Exception("Unable to find the file with id '{$fileId}', image can not be created.");
             }
 
-            $fileName = $filterId.'_'.$fileQuery->systemFileName;
-            //$fileSavePath = $this->fileServerPath($fileName);
-            
-            $tempFile = tempnam(sys_get_temp_dir(), 'prefix');
-            $tempFile.= $fileName;
+            $model = $this->createImage($fileId, $filterId);
 
-            if (empty($filterId)) {
-                $save = @copy($fileQuery->serverSource, $tempFile);
-            } else {
-                $model = StorageFilter::find()->where(['id' => $filterId])->one();
-
-                if (!$model) {
-                    throw new Exception("Could not find the provided filter id '$filterId'.");
-                }
-
-                if (!$model->applyFilterChain($fileQuery, $tempFile)) {
-                    throw new Exception("Unable to create and save image '".$tempFile."'.");
-                }
-            }
-
-            $resolution = Storage::getImageResolution($tempFile);
-            // now copy the file to the storage system
-            $this->fileSystemSaveFile($tempFile, $fileName);
-            unlink($tempFile);
-
-            // ensure the existing of the model
-            $model = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();
-
-            if ($model) {
-                $model->updateAttributes([
-                    'resolution_width' => $resolution['width'],
-                    'resolution_height' => $resolution['height'],
-                ]);
-            } else {
-                $model = new StorageImage();
-                $model->setAttributes([
-                    'file_id' => $fileId,
-                    'filter_id' => $filterId,
-                    'resolution_width' => $resolution['width'],
-                    'resolution_height' => $resolution['height'],
-                ]);
-
-                if (!$model->save()) {
-                    throw new Exception("Unable to save storage image, fatal database exception.");
-                }
+            if (!$model) {
+                throw new Exception("Unable to create the image on the filesystem.");
             }
 
             $this->_imagesArray[$model->id] = $model->toArray();
@@ -677,6 +644,73 @@ abstract class BaseFileSystemStorage extends Component
         }
 
         return false;
+    }
+
+    /**
+     * Just creating the image based on input informations without usage of storage files or images list.
+     * 
+     * @since 1.2.2.1
+     * @return \luya\admin\models\StorageImage|false Returns the storage image model on success, otherwise false.
+     */
+    public function createImage($fileId, $filterId)
+    {
+        $image = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();
+
+        // the image exists already in the database and the file system
+        if ($image && $image->fileExists) {
+            return $image;
+        }
+
+        $file = StorageFile::findOne($fileId);
+
+        if (!$file) {
+            return false;
+        }
+
+        // create the new image name
+        $fileName = $filterId.'_'.$file->name_new_compound;
+
+        // create a temp file
+        $tempFile = tempnam(sys_get_temp_dir(), 'prefix');
+        $tempFile.= $fileName;
+
+        // there is no filter, which means we create an image version for a given file.
+        if (empty($filterId)) {
+            @copy($file->serverSource, $tempFile);
+        } else {
+            $filter = StorageFilter::findOne($filterId);
+
+            if (!$filter) {
+                throw new Exception("Could not find the provided filter id '$filterId'.");
+            }
+
+            if (!$filter->applyFilterChain($file->serverSource, $tempFile)) {
+                throw new Exception("Unable to create and save image '".$tempFile."'.");
+            }
+        }
+
+        $resolution = Storage::getImageResolution($tempFile);
+        // now copy the file to the storage system
+        $this->fileSystemSaveFile($tempFile, $fileName);
+        unlink($tempFile);
+
+        // ensure the existing of the model
+        if ($image) {
+            $image->resolution_height = $resolution['height'];
+            $image->resolution_width = $resolution['width'];
+            $image->save();
+
+            return $image;
+        }
+
+        $image = new StorageImage();
+        $image->file_id = $fileId;
+        $image->filter_id = $filterId;
+        $image->resolution_height = $resolution['height'];
+        $image->resolution_width = $resolution['width'];
+        $image->save();
+
+        return $image;
     }
 
     private $_foldersArray;
@@ -858,8 +892,8 @@ abstract class BaseFileSystemStorage extends Component
         foreach ($this->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
             if ($file->isImage) {
                 // create tiny thumbnail
-                $this->addImage($file->id, TinyCrop::identifier());
-                $this->addImage($file->id, MediumThumbnail::identifier());
+                $this->createImage($file->id, TinyCrop::identifier());
+                $this->createImage($file->id, MediumThumbnail::identifier());
             }
         }
 

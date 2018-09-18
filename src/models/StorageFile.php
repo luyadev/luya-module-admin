@@ -147,6 +147,60 @@ final class StorageFile extends ActiveRecord
     }
 
     /**
+     * Get the path to the source files internal, on the servers path.
+     *
+     * This is used when you want to to grab the file on server side for example to read the file
+     * with `file_get_contents` and is the absolut path on the file system on the server.
+     *
+     * @return string The path to the file on the filesystem of the server.
+     * @since 1.2.2.1
+     */
+    public function getServerSource()
+    {
+        return Yii::$app->storage->fileServerPath($this->name_new_compound);
+    }
+
+    /**
+     * Get the size of a file in human readable size.
+     *
+     * For example sizes are partial splitet in readable forms:
+     *
+     * + 100B
+     * + 100KB
+     * + 10MB
+     * + 1GB
+     *
+     * @return string The humand readable size.
+     * @since 1.2.2.1
+     */
+    public function getSizeReadable()
+    {
+        return FileHelper::humanReadableFilesize($this->file_size);
+    }
+
+    /**
+     * Whether the file is of type image or not.
+     *
+     * If the mime type of the files is equals to:
+     *
+     * + `image/gif`
+     * + `image/jpeg`
+     * + `image/jpg`
+     * + `image/png`
+     * + `image/bmp`
+     * + `image/tiff`
+     *
+     * The file indicates to be an image and return value is true.
+     *
+     * @return boolean Whether the file is of type image or not.
+     * @since 1.2.2
+     */
+    public function getIsImage()
+    {
+        return in_array($this->mime_type, Yii::$app->storage->imageMimeTypes);
+    }
+
+    /**
      * @inheritdoc
      */
     public function extraFields()

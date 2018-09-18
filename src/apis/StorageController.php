@@ -85,8 +85,8 @@ class StorageController extends RestController
         }
         $totalCount = $totalCountQuery->count();
         
-        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
-        $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier());
+        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id'];
+        $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier())['id'];
 
         $page = $page - 1;
         if ($page < 0) {
@@ -94,54 +94,54 @@ class StorageController extends RestController
         }
         
         $fn = function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail, $searchQuery) {
-            $files = [];
-            $fileQueryObject = StorageFile::find()
+            
+            $query = StorageFile::find()
                 ->where(['is_hidden' => false, 'is_deleted' => false])
+                ->with(['images'])
                 ->offset($page*$perPage)
                 ->indexBy(['id'])
                 ->limit($perPage);
                 
             if ($searchQuery) {
-                $fileQueryObject->andFilterWhere(['like', 'name_original', $searchQuery]);
+                $query->andFilterWhere(['like', 'name_original', $searchQuery]);
             } else {
-                $fileQueryObject->andWhere(['folder_id' => $folderId]);
+                $query->andWhere(['folder_id' => $folderId]);
             }
-
-            $fileQuery = $fileQueryObject->asArray()->all();
             
-            // ass the addImage() method requires the list of images and files in Yi::$app->storage we have to inject, them:
-            Yii::$app->storage->setFilesArray($fileQuery);
-            Yii::$app->storage->setImagesArray(StorageImage::find()->where(['in', 'file_id', ArrayHelper::getColumn($fileQuery, 'id')])->asArray()->indexBy(['id'])->all());
-
-            foreach ($fileQuery as $fileArray) {
-
-                $file = Item::create($fileArray);
-                $data = $file->toArray(['id', 'folderId', 'name', 'isImage', 'sizeReadable', 'extension', 'uploadTimestamp']);
-                if ($file->isImage) {
-                    // add tiny thumbnail
-                    if ($tinyCrop) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $tinyCrop['id']);
-                        if ($thumbnail) {
-                            $data['thumbnail'] = $thumbnail->toArray(['source']);
+            $files = [];
+            foreach ($query->all() as $data) {
+                $files[$data['id']] = ArrayHelper::toArray($data, [
+                    'luya\admin\models\StorageFile' => [
+                        'id',
+                        'folderId' => 'folder_id',
+                        'name' => 'name_original',
+                        'isImage',
+                        'sizeReadable',
+                        'extension',
+                        'uploadTimestamp' => 'upload_timestamp',
+                        'thumbnail' => function($model) use ($tinyCrop) {
+                            foreach ($model->images as $image) {
+                                if ($image->filter_id == $tinyCrop) {
+                                    return ['source' => $image->source];
+                                }
+                            }
+                        },
+                        'thumbnailMedium' => function($model) use ($mediumThumbnail) {
+                            foreach ($model->images as $image) {
+                                if ($image->filter_id == $mediumThumbnail) {
+                                    return ['source' => $image->source];
+                                }
+                            }
                         }
-                    }
-                    // add meidum thumbnail
-                    if ($mediumThumbnail) {
-                        $thumbnail = Yii::$app->storage->addImage($file->id, $mediumThumbnail['id']);
-                        if ($thumbnail) {
-                            $data['thumbnailMedium'] = $thumbnail->toArray(['source']);
-                        }
-                    }
-                }
-                
-                $files[$data['id']] = $data;
+                    ],
+                ]);
             }
             
             return $files; 
         };
 
         if (empty($searchQuery)) {
-            $files =  $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], $fn, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
+            $files = $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], $fn, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
         } else {
             $files = call_user_func($fn);
         }
@@ -216,13 +216,18 @@ class StorageController extends RestController
      */
     public function actionImageInfo($id)
     {
-        $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
+        $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
+
+        // try to create thumbnail on view if not done
+        if (empty($model->thumbnail)) {
+            Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
+        }
         
-        return $model->toArray(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail']);
+        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail.file']);
     }
     
     /**
@@ -236,7 +241,7 @@ class StorageController extends RestController
         $ids = Yii::$app->request->getBodyParam('ids', []);
         $ids = array_unique($ids);
         return new ActiveDataProvider([
-            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file']),
+            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file', 'thumbnail.file']),
             'pagination' => false,
         ]);
     }
@@ -305,7 +310,7 @@ class StorageController extends RestController
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
         try {
-            $create = Yii::$app->storage->addImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
+            $create = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {
                 return [
                     'error' => false, 
