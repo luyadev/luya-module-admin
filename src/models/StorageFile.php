@@ -55,11 +55,14 @@ final class StorageFile extends ActiveRecord
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
-        $behaviors = parent::behaviors();
-        $behaviors[] = LogBehavior::class;
-        return $behaviors;
+        return [
+            LogBehavior::class,
+        ];
     }
 
     /**
