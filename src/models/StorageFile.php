@@ -6,6 +6,7 @@ use Yii;
 use luya\web\Application;
 use yii\db\ActiveRecord;
 use luya\helpers\FileHelper;
+use luya\admin\behaviors\LogBehavior;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -54,6 +55,13 @@ final class StorageFile extends ActiveRecord
         });
     }
 
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors[] = LogBehavior::class;
+        return $behaviors;
+    }
+
     /**
      * @inheritdoc
      */
@@ -95,15 +103,17 @@ final class StorageFile extends ActiveRecord
      */
     public function delete()
     {
-        $file = Yii::$app->storage->getFile($this->id);
+        if ($this->beforeDelete()) {
         
-        if ($file && !Yii::$app->storage->fileSystemDeleteFile($file->systemFileName)) {
-            Logger::error("Unable to remove file from filesystem: " . $file->systemFileName);
+            if (!Yii::$app->storage->fileSystemDeleteFile($this->name_new_compound)) {
+                Logger::error("Unable to remove file from filesystem: " . $this->name_new_compound);
+            }
+            
+            $this->updateAttributes(['is_deleted' => true]);
+            
+            $this->afterDelete();
+            return true;
         }
-        
-        $this->updateAttributes(['is_deleted' => true]);
-        
-        return true;
     }
     
     /**
