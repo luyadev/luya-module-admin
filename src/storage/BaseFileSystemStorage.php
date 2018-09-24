@@ -228,7 +228,7 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.2.2.1
      */
     public $imageMimeTypes = [
-        'image/gif', 'image/jpeg', 'image/png', 'image/jpg', 'image/bmp', 'image/tiff',
+        'image/gif', 'image/jpeg', 'image/png', 'image/jpg',
     ];
 
     /**
@@ -725,7 +725,17 @@ abstract class BaseFileSystemStorage extends Component
     public function getFoldersArray()
     {
         if ($this->_foldersArray === null) {
-            $this->_foldersArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_folder')->select(['id', 'name', 'parent_id', 'timestamp_create'])->where(['is_deleted' => false])->orderBy(['name' => 'ASC'])->indexBy('id'), self::CACHE_KEY_FOLDER);
+            $query = (new Query())
+                ->from('admin_storage_folder as f')
+                ->select(['f.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(*) filesCount'])
+                ->where(['f.is_deleted' => false])
+                ->orderBy(['name' => 'ASC'])
+                ->innerJoin('admin_storage_file as file', 'file.folder_id=f.id')
+                ->groupBy(['file.folder_id'])
+                ->indexBy(['id']);
+
+            $this->_foldersArray = $this->getQueryCacheHelper($query, self::CACHE_KEY_FOLDER);
+
         }
 
         return $this->_foldersArray;

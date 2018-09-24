@@ -86,7 +86,7 @@ class Item extends ItemAbstract
      */
     public function getFilesCount()
     {
-        return (int) (new \luya\admin\file\Query())->where(['is_hidden' => 0, 'is_deleted' => 0, 'folder_id' => $this->getId()])->count();
+        return (int) $this->getKey('filesCount');
     }
     
     /**
