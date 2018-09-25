@@ -7,6 +7,8 @@ use luya\web\Application;
 use yii\db\ActiveRecord;
 use luya\helpers\FileHelper;
 use luya\admin\behaviors\LogBehavior;
+use luya\admin\filters\TinyCrop;
+use luya\admin\filters\MediumThumbnail;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -78,7 +80,7 @@ final class StorageFile extends ActiveRecord
      */
     public static function find()
     {
-        return parent::find()->orderBy(['name_original' => 'ASC']);
+        return parent::find();
     }
 
     /**
@@ -213,11 +215,51 @@ final class StorageFile extends ActiveRecord
         return in_array($this->mime_type, Yii::$app->storage->imageMimeTypes);
     }
 
+    public function getCreateThumbnail()
+    {
+        if (!$this->isImage) {
+            return false;
+        }
+
+        $tinyCrop = Yii::$app->storage->getFilterId(TinyCrop::identifier());
+        foreach ($this->images as $image) {
+            if ($image->filter_id == $tinyCrop) {
+                return ['source' => $image->source];
+            }
+        }
+
+        // create the thumbnail on the fly if not existing
+        $image = Yii::$app->storage->createImage($this->id, $tinyCrop);
+        if ($image) {
+            return ['source' => $image->source];
+        }
+    }
+
+    public function getCreateThumbnailMedium()
+    {
+        if (!$this->isImage) {
+            return false;
+        }
+        $mediumThumbnail = Yii::$app->storage->getFilterId(MediumThumbnail::identifier());
+
+        foreach ($this->images as $image) {
+            if ($image->filter_id == $mediumThumbnail) {
+                return ['source' => $image->source];
+            }
+        }
+
+        // create the thumbnail on the fly if not existing
+        $image = Yii::$app->storage->createImage($this->id, $mediumThumbnail);
+        if ($image) {
+            return ['source' => $image->source];
+        }
+    }
+
     /**
      * @inheritdoc
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'source'];
+        return ['user', 'file', 'images', 'source', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable'];
     }
 }

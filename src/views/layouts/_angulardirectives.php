@@ -203,7 +203,7 @@ use luya\admin\helpers\Angular;
 
         <div class="folder-right folder-action-default">
             <button class="folder-button folder-button--edit" ng-click="editFolderLabel=!editFolderLabel;"><i class="material-icons">edit</i></button>
-            <button class="folder-button folder-button--delete" ng-hide="folder.subfolder" ng-click="deleteFolder(folder)"><i class="material-icons">delete</i></button>
+            <button class="folder-button folder-button--delete" ng-hide="folder.subfolder || folder.filesCount > 0" ng-click="deleteFolder(folder)"><i class="material-icons">delete</i></button>
         </div>
 
         <div class="folder-right folder-action-edit">
@@ -294,13 +294,13 @@ use luya\admin\helpers\Angular;
                             </th>
                             <th></th><!-- image thumbnail / file icon -->
                             <th>
-                                <span ng-if="sortField!='name' && sortField!='-name'" ng-click="changeSortField('-name')"><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                <span ng-if="sortField!='name_original' && sortField!='-name_original'" ng-click="changeSortField('-name_original')"><?= Admin::t('layout_filemanager_col_name'); ?></span>    
                                 <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='name'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-name')">
+                                    <div ng-if="sortField=='name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-name_original')">
                                         <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
-                                    <div ng-if="sortField=='-name'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('name')">
+                                    <div ng-if="sortField=='-name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('name_original')">
                                         <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
@@ -320,26 +320,26 @@ use luya\admin\helpers\Angular;
                                 </div>
                             </th>
                             <th>
-                                <span ng-if="sortField!='uploadTimestamp' && sortField!='-uploadTimestamp'" ng-click="changeSortField('-uploadTimestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                <span ng-if="sortField!='upload_timestamp' && sortField!='-upload_timestamp'" ng-click="changeSortField('-upload_timestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>    
                                 <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='uploadTimestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-uploadTimestamp')">
+                                    <div ng-if="sortField=='upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-upload_timestamp')">
                                         <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
-                                    <div ng-if="sortField=='-uploadTimestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('uploadTimestamp')">
+                                    <div ng-if="sortField=='-upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('upload_timestamp')">
                                         <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
                                 </div>
                             </th>
                             <th>
-                                <span ng-if="sortField!='size' && sortField!='-size'" ng-click="changeSortField('-size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                <span ng-if="sortField!='file_size' && sortField!='-file_size'" ng-click="changeSortField('-file_size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>    
                                 <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-size')">
+                                    <div ng-if="sortField=='file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-file_size')">
                                         <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </div>
-                                    <div ng-if="sortField=='-size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('size')">
+                                    <div ng-if="sortField=='-file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('file_size')">
                                         <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
                                         <i class="material-icons">keyboard_arrow_down</i>
                                     </div>
@@ -359,13 +359,13 @@ use luya\admin\helpers\Angular;
                                     <label></label>
                                 </div>
                             </th>
-                            <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-image-url="{{file.thumbnailMedium.source}}" tooltip-disabled="!file.isImage">
-                                <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.thumbnail.source}}" /></span>
+                            <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
+                                <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}" /></span>
                                 <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                             </td>
-                            <td ng-click="toggleSelection(file)">{{file.name | truncateMiddle: 50}}</td>
+                            <td ng-click="toggleSelection(file)">{{file.name_original | truncateMiddle: 50}}</td>
                             <td ng-click="toggleSelection(file)">{{file.extension}}</td>
-                            <td ng-click="openFileDetail(file)">{{file.uploadTimestamp * 1000 | date:"short"}}</td>
+                            <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
                             <td class="text-right">
                                 <button type="button" class="btn btn-sm" ng-click="openFileDetail(file)">
@@ -413,7 +413,7 @@ use luya\admin\helpers\Angular;
                     <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}" />
                 </div>
             </modal>
-            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetail.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.thumbnailMedium.source}}" />
+            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}" />
         </div>
         <table class="table table-striped table-hover table-align-middle mt-3">
             <tbody>
@@ -430,11 +430,11 @@ use luya\admin\helpers\Angular;
             </tr>
             <tr>
                 <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>
-                <td>{{fileDetail.uploadTimestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
+                <td>{{fileDetailFull.upload_timestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
             </tr>
             <tr>
                 <td><small><?= Admin::t('layout_filemanager_col_type'); ?></small></td>
-                <td>{{ fileDetail.extension }}</td>
+                <td>{{ fileDetailFull.extension }}</td>
             </tr>
             <tr>
                 <td><small><?= Admin::t('layout_filemanager_col_size'); ?></small></td>

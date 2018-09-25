@@ -70,140 +70,39 @@ class StorageController extends RestController
             return $folders;
         }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']));
     }
-
-    /**
-     * Internal method to get list of files, also used for search
-     */
-    private function getStorageFiles($folderId, $page, $searchQuery = null)
-    {
-        $perPage = 50;
-        $totalCountQuery = StorageFile::find()->where(['is_hidden' => false, 'is_deleted' => false]);
-        if ($searchQuery) {
-            $totalCountQuery->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
-        } else {
-            $totalCountQuery->andWhere(['folder_id' => $folderId]);
-        }
-        $totalCount = $totalCountQuery->count();
-        
-        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id'];
-        $mediumThumbnail = Yii::$app->storage->getFiltersArrayItem(MediumThumbnail::identifier())['id'];
-
-        $page = $page - 1;
-        if ($page < 0) {
-            $page = 0;
-        }
-        
-        $fn = function() use ($folderId, $page, $perPage, $tinyCrop, $mediumThumbnail, $searchQuery) {
-            
-            $query = StorageFile::find()
-                ->where(['is_hidden' => false, 'is_deleted' => false])
-                ->with(['images.file'])
-                ->offset($page*$perPage)
-                ->indexBy(['id'])
-                ->limit($perPage);
-                
-            if ($searchQuery) {
-                $query->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
-            } else {
-                $query->andWhere(['folder_id' => $folderId]);
-            }
-            
-            $files = [];
-            foreach ($query->all() as $data) {
-                $files[$data['id']] = ArrayHelper::toArray($data, [
-                    'luya\admin\models\StorageFile' => [
-                        'id',
-                        'folderId' => 'folder_id',
-                        'name' => 'name_original',
-                        'isImage',
-                        'sizeReadable',
-                        'extension',
-                        'uploadTimestamp' => 'upload_timestamp',
-                        'thumbnail' => function($model) use ($tinyCrop) {
-                            if (!$model->isImage) {
-                                return false;
-                            }
-
-                            foreach ($model->images as $image) {
-                                if ($image->filter_id == $tinyCrop) {
-                                    return ['source' => $image->source];
-                                }
-                            }
-
-                            // create the thumbnail on the fly if not existing
-                            $image = Yii::$app->storage->createImage($model->id, $tinyCrop);
-                            if ($image) {
-                                return ['source' => $image->source];
-                            }
-                        },
-                        'thumbnailMedium' => function($model) use ($mediumThumbnail) {
-                            if (!$model->isImage) {
-                                return false;
-                            }
-
-                            foreach ($model->images as $image) {
-                                if ($image->filter_id == $mediumThumbnail) {
-                                    return ['source' => $image->source];
-                                }
-                            }
-
-                            // create the thumbnail on the fly if not existing
-                            $image = Yii::$app->storage->createImage($model->id, $mediumThumbnail);
-                            if ($image) {
-                                return ['source' => $image->source];
-                            }
-                        }
-                    ],
-                ]);
-            }
-            
-            return $files; 
-        };
-
-        if (empty($searchQuery)) {
-            $files = $this->getOrSetHasCache(['storageApiDataFiles', (int) $folderId, (int) $page], $fn, 0, new DbDependency(['sql' => 'SELECT MAX(upload_timestamp) FROM admin_storage_file WHERE is_deleted=false AND folder_id=:folderId', 'params' => [':folderId' => $folderId]]));
-        } else {
-            $files = call_user_func($fn);
-        }
-        return $this->generatePaginationArrayResponse($page, $perPage, $totalCount, $files);
-    }
-
-
-    
-    /**
-     * 
-     * @param integer $currentPage
-     * @param integer $perPage
-     * @param integer $totalCount
-     * @param array $files
-     * @return array
-     */
-    private function generatePaginationArrayResponse($currentPage, $perPage, $totalCount, array $files)
-    {
-        return [
-            '__meta' => [
-                'currentPage' => ((int) $currentPage),
-                'perPage' => $perPage,
-                'totalPages' => ceil($totalCount/$perPage),
-                'totalFilesCount' => (int) $totalCount,
-            ],
-            'data' => $files,
-        ];
-    }
     
     /**
      * Get all files from the storage container.
      *
      * @return array
      */
-    public function actionDataFiles($folderId = 0, $page = 0)
+    public function actionDataFiles($folderId = 0)
     {
-        return $this->getStorageFiles($folderId, $page);
+        return $this->getStorageFiles($folderId);
     }
 
-    public function actionSearch($query, $folderId = 0, $page = 0)
+    public function actionSearch($query, $folderId = 0)
     {
-        return $this->getStorageFiles($folderId, $page, $query);
+        return $this->getStorageFiles($folderId, $query);
+    }
+
+    /**
+     * Internal method to get list of files, also used for search
+     */
+    private function getStorageFiles($folderId, $searchQuery = null)
+    {
+        $query = StorageFile::find()
+            ->select(['id', 'name_original', 'extension', 'upload_timestamp', 'file_size', 'mime_type'])
+            ->where(['is_hidden' => false, 'is_deleted' => false, 'folder_id' => $folderId])
+            ->with(['images.file']);
+
+        if ($searchQuery) {
+            $query->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
     }
     
     // ACTIONS

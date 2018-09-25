@@ -2872,7 +2872,7 @@
                 // ServiceFilesData inheritance
 
                 $scope.filesData = [];
-
+                $scope.totalFiles = 0;
                 $scope.pageCount = 0;
                 $scope.currentPageId = 1;
                 
@@ -2891,7 +2891,7 @@
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	return $q(function(resolve, reject) {
-	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
+	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + $scope.sortField).then(function(response) {
                             $scope.filesResponseToVars(response);
 	                        return resolve(true);
 	                	});
@@ -2899,8 +2899,11 @@
                 };
 
                 $scope.filesResponseToVars = function(response) {
-                    $scope.filesData = response.data.data;
-	                $scope.filesMetaToPagination(response.data.__meta);
+                    $scope.filesData = response.data;
+                    // meta
+                    $scope.pageCount = response.headers('X-Pagination-Page-Count');
+                    $scope.currentPageId = response.headers('X-Pagination-Current-Page');
+                    $scope.totalFiles = response.headers('X-Pagination-Total-Count');
                 };
 
                 $scope.filesMetaToPagination = function(meta) {
@@ -2951,8 +2954,8 @@
                             	var fileref = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
                             	var random = (new Date()).toString();
                             	if (fileref.isImage) {
-	                            	fileref.thumbnail.source = fileref.thumbnail.source + "?cb=" + random;
-	                            	fileref.thumbnailMedium.source = fileref.thumbnailMedium.source + "?cb=" + random;
+	                            	fileref.createThumbnail.source = fileref.createThumbnail.source + "?cb=" + random;
+	                            	fileref.createThumbnailMedium.source = fileref.createThumbnailMedium.source + "?cb=" + random;
 	                            }
                             	$scope.fileDetail = fileref;
                             	
@@ -3120,10 +3123,11 @@
                     }
                 };
 
-                $scope.sortField = 'name';
+                $scope.sortField = 'name_original';
 
                 $scope.changeSortField = function(name) {
-                	$scope.sortField = name;
+                    $scope.sortField = name;
+                    $scope.getFilesForCurrentPage();
                 };
 
                 $scope.changeCurrentFolderId = function(folderId, noState) {

@@ -726,12 +726,12 @@ abstract class BaseFileSystemStorage extends Component
     {
         if ($this->_foldersArray === null) {
             $query = (new Query())
-                ->from('admin_storage_folder as f')
-                ->select(['f.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(*) filesCount'])
-                ->where(['f.is_deleted' => false])
+                ->from('admin_storage_folder as folder')
+                ->select(['folder.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(file.id) filesCount'])
+                ->where(['folder.is_deleted' => false])
                 ->orderBy(['name' => 'ASC'])
-                ->innerJoin('admin_storage_file as file', 'file.folder_id=f.id')
-                ->groupBy(['file.folder_id'])
+                ->leftJoin('admin_storage_file as file', 'folder.id=file.folder_id AND file.is_deleted = 0')
+                ->groupBy(['folder.id'])
                 ->indexBy(['id']);
 
             $this->_foldersArray = $this->getQueryCacheHelper($query, self::CACHE_KEY_FOLDER);
@@ -855,6 +855,14 @@ abstract class BaseFileSystemStorage extends Component
     public function getFiltersArrayItem($filterIdentifier)
     {
         return isset($this->filtersArray[$filterIdentifier]) ? $this->filtersArray[$filterIdentifier] : false;
+    }
+
+    /**
+     * 
+     */
+    public function getFilterId($identifier)
+    {
+        return $this->getFiltersArrayItem($identifier)['id'];
     }
 
     /**
