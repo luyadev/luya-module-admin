@@ -2891,12 +2891,17 @@
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	return $q(function(resolve, reject) {
-	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + $scope.sortField).then(function(response) {
+                        $http.get($scope.createUrl(folderId, pageId, $scope.sortField, $scope.searchQuery)).then(function(response) {
                             $scope.filesResponseToVars(response);
 	                        return resolve(true);
 	                	});
                 	});
                 };
+
+                $scope.createUrl = function(folderId, pageId, sortField, search)
+                {
+                    return 'admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + sortField + '&search=' + search;
+                }
 
                 $scope.filesResponseToVars = function(response) {
                     $scope.filesData = response.data;
@@ -3107,17 +3112,20 @@
 
                 // controller logic
 
-                $scope.searchQuery = null;
+                $scope.searchQuery = '';
                 $scope.searchPromise = null;
                 
                 $scope.runSearch = function() {
                     if ($scope.searchQuery.length > 0) {
                         $timeout.cancel($scope.searchPromise);
                         $scope.searchPromise = $timeout(function() {
+                            $scope.getFilesForCurrentPage();
+                            /*
                             $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
                                 $scope.filesResponseToVars(response);
                             });
-                        }, 600);
+                            */
+                        }, 1000);
                     } else {
                         $scope.getFilesForCurrentPage();
                     }
@@ -3131,6 +3139,7 @@
                 };
 
                 $scope.changeCurrentFolderId = function(folderId, noState) {
+                    $scope.searchQuery = '';
                 	var oldCurrentFolder = $scope.currentFolderId;
                     $scope.currentFolderId = folderId;
                     $scope.currentPageId = 1;

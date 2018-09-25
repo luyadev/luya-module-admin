@@ -235,7 +235,7 @@
 					$http.post($scope.generateUrlWithParams('search'), {query: n}).then(function(response) {
 						$scope.parseResponseQueryToListArray(response);
 					});
-				}, 600)
+				}, 1000)
 			}
 		};
 
@@ -1053,7 +1053,7 @@
 						$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
 							$scope.searchResponse = response.data;
 						});
-					}, 800)
+					}, 1000)
 				} else {
 	                $scope.searchResponse = null;
 				}

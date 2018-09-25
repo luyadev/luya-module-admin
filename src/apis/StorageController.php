@@ -76,28 +76,17 @@ class StorageController extends RestController
      *
      * @return array
      */
-    public function actionDataFiles($folderId = 0)
-    {
-        return $this->getStorageFiles($folderId);
-    }
-
-    public function actionSearch($query, $folderId = 0)
-    {
-        return $this->getStorageFiles($folderId, $query);
-    }
-
-    /**
-     * Internal method to get list of files, also used for search
-     */
-    private function getStorageFiles($folderId, $searchQuery = null)
+    public function actionDataFiles($folderId = 0, $search = null)
     {
         $query = StorageFile::find()
             ->select(['id', 'name_original', 'extension', 'upload_timestamp', 'file_size', 'mime_type'])
-            ->where(['is_hidden' => false, 'is_deleted' => false, 'folder_id' => $folderId])
+            ->where(['is_hidden' => false, 'is_deleted' => false])
             ->with(['images.file']);
 
-        if ($searchQuery) {
-            $query->andFilterWhere(['or', ['like', 'name_original', $searchQuery], ['like', 'caption', $searchQuery]]);
+        if (!empty($search)) {
+            $query->andFilterWhere(['or', ['like', 'name_original', $search], ['like', 'caption', $search]]);
+        } else {
+            $query->andWhere(['folder_id' => $folderId]);
         }
 
         return new ActiveDataProvider([
