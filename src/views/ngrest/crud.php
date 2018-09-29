@@ -152,7 +152,7 @@ $this->beginBody();
                             <th class="crud-buttons-column"></th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="(key, items) in data.listArray | groupBy: config.groupByField" ng-init="viewToggler[key]=true">
+                    <tbody ng-repeat="(key, items) in data.listArray | groupBy: config.groupByField" ng-init="viewToggler[key]=config.groupByExpanded">
                         <tr ng-if="config.groupBy" class="table-group" ng-click="viewToggler[key]=!viewToggler[key]">
                             <td colspan="<?= count($config->getPointer('list')) + 1 ?>">
                                 <strong>{{key}}</strong>

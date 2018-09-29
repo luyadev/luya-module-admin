@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 + Removed auto expand of fields join with `withRelation()` in API ViewAction as it can make problem with sub relations. Use expand instead.
 + [#212](https://github.com/luyadev/luya-module-admin/issues/212) Ensure search action for ngrest is used trough get param instad of post.
 + [#137](https://github.com/luyadev/luya-module-admin/issues/137) Fixed issue with search and timeout.
++ [#217](https://github.com/luyadev/luya-module-admin/pull/217) Added possibility to set if will be grouped items expanded or not when is table shown.
 
 ## 1.2.2 (3. September 2018)
 

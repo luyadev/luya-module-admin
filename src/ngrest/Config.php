@@ -199,7 +199,27 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_groupByField = $groupByField;
     }
-    
+
+    private $_groupByExpanded;
+
+    /**
+     * @inheritdoc
+     */
+    public function getGroupByExpanded()
+    {
+        return $this->_groupByExpanded;
+    }
+
+    /**
+     *
+     * @param bool $groupByExpanded
+     * @since 1.2.2.1
+     */
+    public function setGroupByExpanded($groupByExpanded)
+    {
+        $this->_groupByExpanded = $groupByExpanded;
+    }
+
     private $_tableName;
     
     public function getTableName()
