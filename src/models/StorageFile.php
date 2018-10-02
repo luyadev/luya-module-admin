@@ -9,6 +9,7 @@ use luya\helpers\FileHelper;
 use luya\admin\behaviors\LogBehavior;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
+use luya\admin\traits\TaggableTrait;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -38,6 +39,8 @@ use luya\admin\filters\MediumThumbnail;
  */
 final class StorageFile extends ActiveRecord
 {
+    use TaggableTrait;
+    
     /**
      * @inheritdoc
      */
