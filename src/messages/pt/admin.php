@@ -356,16 +356,16 @@ return [
     
 // 1.2.2
     
-    'button_no' => 'No',
-    'crud_exportdata_btn' => 'Export Data',
-    'crud_exportdata_col_header' => 'Header',
-    'crud_exportdata_col_format' => 'Format',
+    'button_no' => 'Não',
+    'crud_exportdata_btn' => 'Exportar Dados',
+    'crud_exportdata_col_header' => 'Cabeçalho',
+    'crud_exportdata_col_format' => 'Formato',
     'crud_exportdata_col_format_csv' => 'CSV',
     'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
-    'crud_exportdata_col_columns' => 'Columns',
-    'crud_exportdata_btn_generateexport' => 'Generate export',
-    'crud_exportdata_btn_downloadexport' => 'Download export',
-    'js_pagination_page' => 'Page',
-    'dashboard_log_message_delete' => 'Deleted a record in <strong>{container}</strong>.',
-    'model_tag_relations_count' => 'Used',
+    'crud_exportdata_col_columns' => 'Colunas',
+    'crud_exportdata_btn_generateexport' => 'Gerar exportação',
+    'crud_exportdata_btn_downloadexport' => 'Baixar exportação',
+    'js_pagination_page' => 'Página',
+    'dashboard_log_message_delete' => 'Excluído um registro no <strong>{container}</strong>.',
+    'model_tag_relations_count' => 'Usado',
 ];
