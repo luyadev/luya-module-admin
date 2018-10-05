@@ -910,8 +910,8 @@ abstract class BaseFileSystemStorage extends Component
         foreach ($this->findFiles(['is_hidden' => false, 'is_deleted' => false]) as $file) {
             if ($file->isImage) {
                 // create tiny thumbnail
-                $this->createImage($file->id, TinyCrop::identifier());
-                $this->createImage($file->id, MediumThumbnail::identifier());
+                $this->createImage($file->id, $this->getFilterId(TinyCrop::identifier()));
+                $this->createImage($file->id, $this->getFilterId(MediumThumbnail::identifier()));
             }
         }
 
