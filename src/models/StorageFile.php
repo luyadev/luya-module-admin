@@ -211,13 +211,21 @@ final class StorageFile extends ActiveRecord
      * The file indicates to be an image and return value is true.
      *
      * @return boolean Whether the file is of type image or not.
-     * @since 1.2.2
+     * @since 1.2.2.1
      */
     public function getIsImage()
     {
         return in_array($this->mime_type, Yii::$app->storage->imageMimeTypes);
     }
 
+    /**
+     * Create the thumbnail for this given file if its an image.
+     * 
+     * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
+     *
+     * @return array Returns an array with the key source which contains the source to the thumbnail.
+     * @since 1.2.2.1
+     */
     public function getCreateThumbnail()
     {
         if (!$this->isImage) {
@@ -238,6 +246,14 @@ final class StorageFile extends ActiveRecord
         }
     }
 
+    /**
+     * Create the thumbnail medium for this given file if its an image.
+     * 
+     * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
+     *
+     * @return array Returns an array with the key source which contains the source to the thumbnail medium.
+     * @since 1.2.2.1
+     */
     public function getCreateThumbnailMedium()
     {
         if (!$this->isImage) {
