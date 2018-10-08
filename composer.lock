@@ -682,7 +682,7 @@
             "version": "v2.7.8",
             "source": {
                 "type": "git",
-                "url": "git@github.com:flowjs/ng-flow.git",
+                "url": "https://github.com/flowjs/ng-flow.git",
                 "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "dist": {
@@ -1034,16 +1034,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.11",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "b3b65043a8ec02c5263d8359671b96d560b43c0e"
+                "reference": "82ae26e7b47f840f235fe2f0f40e0a1df29255c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/b3b65043a8ec02c5263d8359671b96d560b43c0e",
-                "reference": "b3b65043a8ec02c5263d8359671b96d560b43c0e",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/82ae26e7b47f840f235fe2f0f40e0a1df29255c6",
+                "reference": "82ae26e7b47f840f235fe2f0f40e0a1df29255c6",
                 "shasum": ""
             },
             "require": {
@@ -1087,20 +1087,20 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-09-05T08:59:30+00:00"
+            "time": "2018-10-08T14:45:51+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "4a547473c63af224d7137691679e97762536ec14"
+                "reference": "020c4161ade189c01b72304ee0765652a279a9f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/4a547473c63af224d7137691679e97762536ec14",
-                "reference": "4a547473c63af224d7137691679e97762536ec14",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/020c4161ade189c01b72304ee0765652a279a9f2",
+                "reference": "020c4161ade189c01b72304ee0765652a279a9f2",
                 "shasum": ""
             },
             "require-dev": {
@@ -1151,36 +1151,31 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-09-03T13:34:40+00:00"
+            "time": "2018-10-08T14:57:12+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.11",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "0fb63f6192458f42b4bd0546d9f9f1a3fb9e40e9"
+                "reference": "9857ccc904ae59b5f828462b561e933f0dcac6d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/0fb63f6192458f42b4bd0546d9f9f1a3fb9e40e9",
-                "reference": "0fb63f6192458f42b4bd0546d9f9f1a3fb9e40e9",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/9857ccc904ae59b5f828462b561e933f0dcac6d6",
+                "reference": "9857ccc904ae59b5f828462b561e933f0dcac6d6",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "^1.0",
-                "luyadev/luya-core": "~1.0",
-                "luyadev/luya-module-admin": "~1.0",
-                "luyadev/luya-module-cms": "~1.0",
+                "luyadev/luya-core": "^1.0",
+                "luyadev/luya-module-admin": "^1.0",
+                "luyadev/luya-module-cms": "^1.0",
                 "phpunit/phpunit": "~6.0.0",
                 "twig/twig": "^1.0"
             },
             "type": "luya-core",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "luya\\testsuite\\": "src/"
@@ -1204,7 +1199,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-07-18T14:21:43+00:00"
+            "time": "2018-10-08T15:16:16+00:00"
         },
         {
             "name": "myclabs/deep-copy",
