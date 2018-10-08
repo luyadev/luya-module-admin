@@ -599,7 +599,7 @@ abstract class BaseFileSystemStorage extends Component
      * @return bool|\luya\admin\image\Item|Exception Returns the item object, if an error happens and $throwException is off `false` is returned otherwhise an exception is thrown.
      * @throws \luya\Exception
      */
-    public function addImage($fileId, $filterId = 0, $throwException = true)
+    public function addImage($fileId, $filterId = 0, $throwException = false)
     {
         try {
             // if the filterId is provded as a string the filter will be looked up by its name in the get filters array list.
@@ -858,7 +858,13 @@ abstract class BaseFileSystemStorage extends Component
     }
 
     /**
+     * Get the filter id based on the identifier.
      * 
+     * This is a short hand method as its used very often
+     *
+     * @param string $identifier
+     * @return integer
+     * @since 1.2.2.1
      */
     public function getFilterId($identifier)
     {
