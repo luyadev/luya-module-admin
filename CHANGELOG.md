@@ -2,11 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.2.2.1 (in progress)
+## 1.2.2.1 (8. October 2018)
 
 + [#211](https://github.com/luyadev/luya-module-admin/issues/211) Try to load all images in crud list in one request and access them trough images service afterwards.
-+ Do not lock data on ngrest view if api user.
-+ Removed auto expand of fields join with `withRelation()` in API ViewAction as it can make problem with sub relations. Use expand instead.
++ [#222](https://github.com/luyadev/luya-module-admin/issues/222) Do not lock data on ngrest view if api user.
++ [#223](https://github.com/luyadev/luya-module-admin/issues/223) Removed auto expand of fields join with `withRelation()` in API ViewAction as it can make problem with sub relations. Use expand instead.
 + [#212](https://github.com/luyadev/luya-module-admin/issues/212) Ensure search action for ngrest is used trough get param instad of post.
 + [#137](https://github.com/luyadev/luya-module-admin/issues/137) Fixed issue with search and timeout.
 + [#217](https://github.com/luyadev/luya-module-admin/pull/217) Added possibility to set if will be grouped items expanded or not when is table shown.

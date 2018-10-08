@@ -641,16 +641,16 @@
         },
         {
             "name": "bower-asset/flow.js",
-            "version": "v2.13.0",
+            "version": "v2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flowjs/flow.js.git",
-                "reference": "172e3d1b05d4089a735b24c394c0983a7d0e29c5"
+                "reference": "aadc5a72b1414d87ed1aa3563b30209f9b1f7773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flowjs/flow.js/zipball/172e3d1b05d4089a735b24c394c0983a7d0e29c5",
-                "reference": "172e3d1b05d4089a735b24c394c0983a7d0e29c5",
+                "url": "https://api.github.com/repos/flowjs/flow.js/zipball/aadc5a72b1414d87ed1aa3563b30209f9b1f7773",
+                "reference": "aadc5a72b1414d87ed1aa3563b30209f9b1f7773",
                 "shasum": null
             },
             "type": "bower-asset"
@@ -779,16 +779,16 @@
         },
         {
             "name": "curl/curl",
-            "version": "1.9.2",
+            "version": "1.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-mod/curl.git",
-                "reference": "8fa349f9f82f8d892137fe87239a70b0d358d160"
+                "reference": "43436a604b18c2a985cbc3f983be817fbe500e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-mod/curl/zipball/8fa349f9f82f8d892137fe87239a70b0d358d160",
-                "reference": "8fa349f9f82f8d892137fe87239a70b0d358d160",
+                "url": "https://api.github.com/repos/php-mod/curl/zipball/43436a604b18c2a985cbc3f983be817fbe500e99",
+                "reference": "43436a604b18c2a985cbc3f983be817fbe500e99",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +830,7 @@
                 "curl",
                 "dot"
             ],
-            "time": "2018-08-18T15:32:01+00:00"
+            "time": "2018-09-05T17:16:47+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1034,16 +1034,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "2619b21764ce1ecea301b33d01ba7307877607f5"
+                "reference": "b3b65043a8ec02c5263d8359671b96d560b43c0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/2619b21764ce1ecea301b33d01ba7307877607f5",
-                "reference": "2619b21764ce1ecea301b33d01ba7307877607f5",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/b3b65043a8ec02c5263d8359671b96d560b43c0e",
+                "reference": "b3b65043a8ec02c5263d8359671b96d560b43c0e",
                 "shasum": ""
             },
             "require": {
@@ -1087,7 +1087,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-07-18T14:13:30+00:00"
+            "time": "2018-09-05T08:59:30+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -2779,7 +2779,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.45",
+            "version": "v2.8.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
