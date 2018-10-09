@@ -13,9 +13,9 @@ use luya\admin\ngrest\base\Plugin;
  * ```
  *
  * @author David-Julian Buch <david@web-premiere.fr>
- * @since 1.0.0
+ * @since 1.2.3
  */
-class Wig extends Plugin
+class Wysiwyg extends Plugin
 {
     /**
      * @inheritdoc
