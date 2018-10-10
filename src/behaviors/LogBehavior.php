@@ -44,6 +44,21 @@ class LogBehavior extends Behavior
         
         return Json::encode($array);
     }
+
+    /**
+     * Returns the user id for the current admin user if logged in and component is existsi.
+     *
+     * @return integer
+     * @since 1.2.3
+     */
+    protected function getUserId()
+    {
+        if (Yii::$app->has('adminuser') && Yii::$app->adminuser->getIdentity()) {
+            return Yii::$app->adminuser->id;
+        }
+
+        return 0;
+    }
     
     /**
      * After delete event.
@@ -54,7 +69,7 @@ class LogBehavior extends Behavior
     {
         if (Yii::$app instanceof Application) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,
@@ -77,7 +92,7 @@ class LogBehavior extends Behavior
     {
         if (Yii::$app instanceof Application) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,
@@ -100,7 +115,7 @@ class LogBehavior extends Behavior
     {
         if (Yii::$app instanceof Application) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,
