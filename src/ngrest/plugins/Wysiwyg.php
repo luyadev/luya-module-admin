@@ -9,7 +9,7 @@ use luya\admin\ngrest\base\Plugin;
  *
  *
  * ```php
- * ['mytext' => ['wig']]
+ * ['mytext' => ['wysiwyg']]
  * ```
  *
  * @author David-Julian Buch <david@web-premiere.fr>
