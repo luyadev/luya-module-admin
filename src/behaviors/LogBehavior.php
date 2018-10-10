@@ -59,6 +59,22 @@ class LogBehavior extends Behavior
 
         return 0;
     }
+
+    /**
+     * Method to ensure whether the current log process should be run or not as log behavior can also be attached
+     * the very universal models.
+     *
+     * @return boolean
+     * @since 1.2.3
+     */
+    protected function isLoggable()
+    {
+        if (Yii::$app instanceof Application && Yii::$app->hasModule('admin') && Yii::$app->has('adminuser')) {
+            return true;
+        }
+
+        return false;
+    }
     
     /**
      * After delete event.
@@ -67,7 +83,7 @@ class LogBehavior extends Behavior
      */
     public function eventAfterDelete($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
@@ -90,7 +106,7 @@ class LogBehavior extends Behavior
      */
     public function eventAfterInsert($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
@@ -113,7 +129,7 @@ class LogBehavior extends Behavior
      */
     public function eventAfterUpdate($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
