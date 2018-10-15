@@ -208,6 +208,16 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         return false;
     }
+
+    /**
+     * When is enabled grouping, you can set if will be grouped items showed expanded*
+     * @return bool true cause the grouped items will be expaded on page load (default)
+     * @since 1.2.2.1
+     */
+    public function ngRestGroupByExpanded()
+    {
+        return true;
+    }
     
     /**
      * Define your relations in order to access the relation data and manage them directly in the same view.
@@ -704,6 +714,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->setDefaultOrder($this->ngRestListOrder());
             $config->setAttributeGroups($this->ngRestAttributeGroups());
             $config->setGroupByField($this->ngRestGroupByField());
+            $config->setGroupByExpanded($this->ngRestGroupByExpanded());
             $config->setTableName($this->tableName());
             $config->setAttributeLabels($this->attributeLabels());
             

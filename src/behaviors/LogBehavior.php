@@ -44,6 +44,37 @@ class LogBehavior extends Behavior
         
         return Json::encode($array);
     }
+
+    /**
+     * Returns the user id for the current admin user if logged in and component is existsi.
+     *
+     * @return integer
+     * @since 1.2.3
+     */
+    protected function getUserId()
+    {
+        if (Yii::$app->has('adminuser') && Yii::$app->adminuser->getIdentity()) {
+            return Yii::$app->adminuser->id;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Method to ensure whether the current log process should be run or not as log behavior can also be attached
+     * the very universal models.
+     *
+     * @return boolean
+     * @since 1.2.3
+     */
+    protected function isLoggable()
+    {
+        if (Yii::$app instanceof Application && Yii::$app->hasModule('admin') && Yii::$app->has('adminuser')) {
+            return true;
+        }
+
+        return false;
+    }
     
     /**
      * After delete event.
@@ -52,9 +83,9 @@ class LogBehavior extends Behavior
      */
     public function eventAfterDelete($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,
@@ -75,9 +106,9 @@ class LogBehavior extends Behavior
      */
     public function eventAfterInsert($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,
@@ -98,9 +129,9 @@ class LogBehavior extends Behavior
      */
     public function eventAfterUpdate($event)
     {
-        if (Yii::$app instanceof Application) {
+        if ($this->isLoggable()) {
             Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
-                'user_id' => is_null(Yii::$app->adminuser->getIdentity()) ? 0 : Yii::$app->adminuser->getId(),
+                'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
                 'api' => $this->api,

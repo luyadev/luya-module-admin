@@ -2,15 +2,35 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.2.2 (in progress)
+## 1.2.3 (in progress)
+
+### Added
+
++ [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
+
+### Fixed
+
++ [#231](https://github.com/luyadev/luya-module-admin/issues/231) Ensure Loggable behavior only runs when admin module exists.
+
+## 1.2.2.1 (8. October 2018)
+
++ [#211](https://github.com/luyadev/luya-module-admin/issues/211) Try to load all images in crud list in one request and access them trough images service afterwards.
++ [#222](https://github.com/luyadev/luya-module-admin/issues/222) Do not lock data on ngrest view if api user.
++ [#223](https://github.com/luyadev/luya-module-admin/issues/223) Removed auto expand of fields join with `withRelation()` in API ViewAction as it can make problem with sub relations. Use expand instead.
++ [#212](https://github.com/luyadev/luya-module-admin/issues/212) Ensure search action for ngrest is used trough get param instad of post.
++ [#137](https://github.com/luyadev/luya-module-admin/issues/137) Fixed issue with search and timeout.
++ [#217](https://github.com/luyadev/luya-module-admin/pull/217) Added possibility to set if will be grouped items expanded or not when is table shown.
+
+## 1.2.2 (3. September 2018)
 
 ### Changed
 
++ [#137](https://github.com/luyadev/luya-module-admin/issues/137) Rewritten the file system in order to support large amount of data, therefore images create an xhr request for every file info, instead of preloading those trough `data-files` directive. This is can be slower for small system, but is much faster for systems with over 20k images and files.
 + [#160](https://github.com/luyadev/luya-module-admin/issues/160) Renmaed full-response to search.
 + [#191](https://github.com/luyadev/luya-module-admin/issues/191) Added angularjs-slider dep; Added pagination directive (uses angularjs-slider) for use in crud and filemanager; Removed old pagination code
 + [#184](https://github.com/luyadev/luya-module-admin/issues/184) Changed active and hover color for zaaselect.
 + [#159](https://github.com/luyadev/luya-module-admin/issues/159) Refactor generic search behavior to return ActiveQuery object, improved speed and remove global search ngrest api endpoints.
-+ [#199](https://github.com/luyadev/luya-module-admin/issues/199) Change signature or UserOnline::refreshUser() in order to no track api request in user online system.$
++ [#199](https://github.com/luyadev/luya-module-admin/issues/199) Change signature or UserOnline::refreshUser() in order to not track api request in user online system.
 + [#192](https://github.com/luyadev/luya-module-admin/issues/192) Enabled pagination for all api responses.
 + [#208](https://github.com/luyadev/luya-module-admin/issues/208) Renamed TagsTrait to TaggableTrait and TagsActiveWindow to TaggableActiveWindow, changed getTags() to a relation definition which can be preloaded.
 
@@ -31,6 +51,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#186](https://github.com/luyadev/luya-module-admin/issues/186) Add option to display code in wysiwyg editor.
 + [#198](https://github.com/luyadev/luya-module-admin/issues/198) Typo in password length information for $minCharLength in ChangePasswordActiveWindow.
 + [#202](https://github.com/luyadev/luya-module-admin/issues/202) Changed sorting of image filters.
 + [#201](https://github.com/luyadev/luya-module-admin/issues/201) Escape filter name input.

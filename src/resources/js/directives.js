@@ -2459,6 +2459,45 @@
     	}
     });
 
+    zaa.directive('storageImageCrudList', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                imageId: '@imageId'
+            },
+            controller: ['$scope', 'ServiceImagesData', function($scope, ServiceImagesData) {
+                $scope.imageSrc = null;
+
+                $scope.$watch('imageId', function(n, o) {
+                    if (n != o) {
+                        $scope.imageSrc = null;
+                    }
+                });
+
+                $scope.$on('requestImageSourceReady', function() {
+                    // now access trough getImage of images service
+                    if ($scope.imageId != 0) {
+                        ServiceImagesData.getImage($scope.imageId).then(function(response) {
+                            if (response.thumbnail) {
+                                $scope.imageSrc = response.thumbnail.source;
+                            } else {
+                                // the thumbnail does not exists, try to force a new xhr request which should generate the thumbnail:
+                                ServiceImagesData.getImage($scope.imageId, true).then(function(r) {
+                                    if (r.thumbnail) {
+                                        $scope.imageSrc = r.thumbnail.source;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }],
+            template: function() {
+                return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
+            }
+        }
+    });
+
     zaa.directive('storageImageThumbnailDisplay', function() {
         return {
             restrict: 'E',
@@ -2486,6 +2525,12 @@
                     $scope.imagesData = data;
                 });
                 */
+
+                $scope.$watch('imageId', function(n, o) {
+                    if (n != o) {
+                        $scope.imageSrc = null;
+                    }
+                });
 
                 // controller logic
 
@@ -2834,7 +2879,7 @@
                 // ServiceFilesData inheritance
 
                 $scope.filesData = [];
-
+                $scope.totalFiles = 0;
                 $scope.pageCount = 0;
                 $scope.currentPageId = 1;
                 
@@ -2853,16 +2898,24 @@
 
                 $scope.getFilesForPageAndFolder = function(folderId, pageId) {
                 	return $q(function(resolve, reject) {
-	                	$http.get('admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId).then(function(response) {
+                        $http.get($scope.createUrl(folderId, pageId, $scope.sortField, $scope.searchQuery)).then(function(response) {
                             $scope.filesResponseToVars(response);
 	                        return resolve(true);
 	                	});
                 	});
                 };
 
+                $scope.createUrl = function(folderId, pageId, sortField, search)
+                {
+                    return 'admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + sortField + '&search=' + search;
+                }
+
                 $scope.filesResponseToVars = function(response) {
-                    $scope.filesData = response.data.data;
-	                $scope.filesMetaToPagination(response.data.__meta);
+                    $scope.filesData = response.data;
+                    // meta
+                    $scope.pageCount = response.headers('X-Pagination-Page-Count');
+                    $scope.currentPageId = response.headers('X-Pagination-Current-Page');
+                    $scope.totalFiles = response.headers('X-Pagination-Total-Count');
                 };
 
                 $scope.filesMetaToPagination = function(meta) {
@@ -2913,8 +2966,8 @@
                             	var fileref = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
                             	var random = (new Date()).toString();
                             	if (fileref.isImage) {
-	                            	fileref.thumbnail.source = fileref.thumbnail.source + "?cb=" + random;
-	                            	fileref.thumbnailMedium.source = fileref.thumbnailMedium.source + "?cb=" + random;
+	                            	fileref.createThumbnail.source = fileref.createThumbnail.source + "?cb=" + random;
+	                            	fileref.createThumbnailMedium.source = fileref.createThumbnailMedium.source + "?cb=" + random;
 	                            }
                             	$scope.fileDetail = fileref;
                             	
@@ -3066,25 +3119,34 @@
 
                 // controller logic
 
-                $scope.searchQuery = null;
-
+                $scope.searchQuery = '';
+                $scope.searchPromise = null;
+                
                 $scope.runSearch = function() {
                     if ($scope.searchQuery.length > 0) {
-                        $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
-                            $scope.filesResponseToVars(response);
-                        });
+                        $timeout.cancel($scope.searchPromise);
+                        $scope.searchPromise = $timeout(function() {
+                            $scope.getFilesForCurrentPage();
+                            /*
+                            $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
+                                $scope.filesResponseToVars(response);
+                            });
+                            */
+                        }, 1000);
                     } else {
                         $scope.getFilesForCurrentPage();
                     }
                 };
 
-                $scope.sortField = 'name';
+                $scope.sortField = 'name_original';
 
                 $scope.changeSortField = function(name) {
-                	$scope.sortField = name;
+                    $scope.sortField = name;
+                    $scope.getFilesForCurrentPage();
                 };
 
                 $scope.changeCurrentFolderId = function(folderId, noState) {
+                    $scope.searchQuery = '';
                 	var oldCurrentFolder = $scope.currentFolderId;
                     $scope.currentFolderId = folderId;
                     $scope.currentPageId = 1;
@@ -3319,6 +3381,12 @@
         };
     });
     
+    /**
+     * Pagination directive
+     * 
+     * > Currently its not supported to change the current page value from outside the directive. therefore
+     * > the pagination always starts on page 1
+     */
     zaa.directive('pagination', function () {
         return {
             restrict: 'E',
@@ -3326,17 +3394,17 @@
                 currentPage: '=',
                 pageCount: '='
             },
-            link: function (scope, element) {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 // Watch for pageCOunt changes and refresh ceil value for slider
-                scope.$watch('pageCount', function(newValue) {
+                $scope.$watch('pageCount', function(newValue) {
                     if (newValue !== undefined) {
-                        scope.sliderOptions.ceil = scope.pageCount;
+                        $scope.sliderOptions.ceil = newValue;
                     }
                 });
 
-                scope.sliderOptions = {
+                $scope.sliderOptions = {
                     floor: 1,
-                    ceil: scope.pageCount,
+                    ceil: $scope.pageCount,
                     translate: function (value, sliderId, label) {
                         // Change the default label
                         switch (label) {
@@ -3350,10 +3418,15 @@
                     },
                     onEnd: function(sliderId, modelValue) {
                         // Update the currentPage once the user stopped dragging (or on click)
-                        scope.currentPage = modelValue;
-                    }
+                        $scope.currentPage = modelValue;
+                    } 
                 };
-            },
-            template: '<rzslider rz-slider-model="currentPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
+
+                $timeout(function() {
+                    $scope.$broadcast('rzSliderForceRender')
+                });
+
+            }],
+            template: '<rzslider rz-slider-model="1" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
         };
     });

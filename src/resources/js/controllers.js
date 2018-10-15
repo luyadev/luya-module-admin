@@ -18,7 +18,7 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", ['$scope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', function($scope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService) {
+	zaa.controller("CrudController", ['$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'LuyaLoading', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', function($scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, LuyaLoading, AdminToastService, CrudTabService, ServiceImagesData) {
 
 		$scope.toast = AdminToastService;
 
@@ -235,7 +235,7 @@
 					$http.post($scope.generateUrlWithParams('search'), {query: n}).then(function(response) {
 						$scope.parseResponseQueryToListArray(response);
 					});
-				}, 400)
+				}, 1000)
 			}
 		};
 
@@ -468,6 +468,8 @@
 
 		$scope.totalRows = 0;
 
+		$scope.requestedImages = [];		
+
 		/**
 		 * Parse an Pagination (or not pagination) object into a response.
 		 */
@@ -479,6 +481,24 @@
 				response.headers('X-Pagination-Total-Count')
 			);
 			$scope.data.listArray = response.data;
+
+			$scope.requestedImages = [];
+			angular.forEach($scope.service, function(value, key) {
+				// fix check for lazyload images property for service
+				if (value.hasOwnProperty('lazyload_images')) {
+					// yes
+					angular.forEach(response.data, function(row) {
+						$scope.requestedImages.push(row[key]);
+					});
+				}
+			});
+			
+			$timeout(function() {
+				ServiceImagesData.loadImages($scope.requestedImages).then(function() {
+					$scope.$broadcast('requestImageSourceReady');
+					$scope.requestedImages = [];
+				});
+			});
 		};
 		
 		/**
@@ -1033,7 +1053,7 @@
 						$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
 							$scope.searchResponse = response.data;
 						});
-					}, 800)
+					}, 1000)
 				} else {
 	                $scope.searchResponse = null;
 				}

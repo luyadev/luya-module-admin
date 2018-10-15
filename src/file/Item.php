@@ -47,8 +47,6 @@ class Item extends ItemAbstract implements LinkInterface
 {
     use LinkTrait;
     
-    private $_imageMimeTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg', 'image/bmp', 'image/tiff'];
-    
     /**
      * @inheritdoc
      */
@@ -266,7 +264,7 @@ class Item extends ItemAbstract implements LinkInterface
      */
     public function getIsImage()
     {
-        return in_array($this->getMimeType(), $this->_imageMimeTypes);
+        return in_array($this->getMimeType(), Yii::$app->storage->imageMimeTypes);
     }
     
     /**

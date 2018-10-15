@@ -3,6 +3,8 @@
 namespace luya\admin\apis;
 
 use luya\admin\ngrest\base\Api;
+use luya\admin\models\Tag;
+use yii\data\ActiveDataProvider;
 
 /**
  * Tags API, provides ability to add, manage or collect all system tags.
@@ -23,5 +25,19 @@ class TagController extends Api
     public function withRelations()
     {
         return ['tagRelations'];
+    }
+
+    /**
+     * Return all tags for a given relation table.
+     *
+     * @param string $tableName The table which is used to store the relation.
+     * @return ActiveDataProvider
+     * @since 1.2.2.1
+     */
+    public function actionTable($tableName)
+    {
+        return new ActiveDataProvider([
+            'query' => Tag::find()->joinWith(['tagRelations'])->where(['table_name' => $tableName])->distinct(),
+        ]);
     }
 }

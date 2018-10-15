@@ -88,6 +88,7 @@ trait SoftDeleteTrait
         if ($this->beforeDelete()) {
             $this->updateAttributes(static::internalUpdateValues());
             $result = true;
+            $this->afterDelete();
         }
         
         return $result;

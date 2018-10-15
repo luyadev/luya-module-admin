@@ -43,6 +43,14 @@ final class StorageImage extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function fields()
+    {
+        return ['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'source'];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function beforeDelete()
     {
         if (parent::beforeDelete()) {
@@ -54,7 +62,6 @@ final class StorageImage extends ActiveRecord
     }
     
     /**
-     * 
      * @return StorageFile
      */
     public function getFile()
@@ -64,20 +71,51 @@ final class StorageImage extends ActiveRecord
     
     /**
      * Returns the current file source path for the current filter image.
+     * 
      * @return string
      */
     public function getSource()
     {
-        $fileName = $this->filter_id . '_' . $this->file->name_new_compound;
-        
-        return Yii::$app->storage->fileAbsoluteHttpPath($fileName);
+        return Yii::$app->storage->fileAbsoluteHttpPath($this->filter_id . '_' . $this->file->name_new_compound);
     }
     
+    /**
+     * Get the path to the source files internal, on the servers path.
+     *
+     * This is used when you want to to grab the file on server side for example to read the file
+     * with `file_get_contents` and is the absolut path on the file system on the server.
+     *
+     * @return string The path to the file on the filesystem of the server.
+     * @since 1.2.2.1
+     */
+    public function getServerSource()
+    {
+        return Yii::$app->storage->fileServerPath($this->filter_id . '_' . $this->file->name_new_compound);
+    }
+
+    /**
+     * Return boolean value whether the file server source exsits on the server or not.
+     *
+     * @return boolean Whether the file still exists in the storage folder or not.
+     * @since 1.2.2.1
+     */
+    public function getFileExists()
+    {
+        return Yii::$app->storage->fileSystemExists($this->filter_id . '_' . $this->file->name_new_compound);
+    }
+
+    /**
+     * Return a storage image object representing the thumbnail which is used for file manager and crud list previews.
+     * 
+     * > The thumbnail won't be created on the fly! So you have to use storage system to create the thumbnail for the givne filter.
+     * > This should have been done already while uploading
+     * 
+     * @since 1.2.2.1
+     */
     public function getThumbnail()
     {
-        // @TODO: check what happens on large file systems?
         $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
-        return Yii::$app->storage->addImage($this->file_id, $tinyCrop['id']);
+        return $this->hasOne(self::class, ['file_id' => 'file_id'])->andWhere(['filter_id' => $tinyCrop['id']]);
     }
 
     /**
@@ -97,8 +135,11 @@ final class StorageImage extends ActiveRecord
         return true;
     }
     
+    /**
+     * Expand fields source and thumbnail.
+     */
     public function extraFields()
     {
-        return ['source', 'thumbnail'];
+        return ['thumbnail'];
     }
 }

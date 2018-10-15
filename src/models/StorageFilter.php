@@ -86,13 +86,14 @@ final class StorageFilter extends NgRestModel
      *
      * Apply all filters from the chain to a given file and stores the new generated file on the $fileSavePath
      *
-     * @param \luya\admin\file\Item $file
+     * @param string $source the Source path to the file, which the filter chain should be applied to.
      * @param string $fileSavePath
      * @return boolean
      */
-    public function applyFilterChain(Item $file, $fileSavePath)
+    public function applyFilterChain($source, $fileSavePath)
     {
-        $loadFrom = $file->getServerSource();
+        $loadFrom = $source;
+        //$loadFrom = $file->getServerSource();
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter

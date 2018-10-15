@@ -3,6 +3,7 @@
 namespace luya\admin\models;
 
 use yii\db\ActiveRecord;
+use luya\admin\behaviors\LogBehavior;
 
 /**
  * Storage Folder Model.
@@ -32,6 +33,16 @@ final class StorageFolder extends ActiveRecord
     public static function find()
     {
         return parent::find()->orderBy(['name' => 'ASC']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            LogBehavior::class,
+        ];
     }
     
     /**

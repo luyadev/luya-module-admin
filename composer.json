@@ -20,7 +20,7 @@
 	    "flowjs/flow-php-server": "^1.0"
 	},
 	"require-dev" : {
-        "luyadev/luya-testsuite" : "~1.0.0",
+        "luyadev/luya-testsuite" : "~1.0.11",
         "php-coveralls/php-coveralls": "^1.0",
         "twbs/bootstrap": "v4.0.0-beta",
         "bower-asset/angular" : "~1.6.5",
@@ -46,9 +46,9 @@
             "admintests\\" : "tests/"
         }
     },
-	"extra": {
-        "branch-alias": {
-            "dev-master": "1.2.x-dev"
+    "extra": {	
+        "branch-alias": {	
+            "dev-master": "1.2.x-dev"	
         }
     },
     "config": {

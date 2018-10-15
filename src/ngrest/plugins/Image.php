@@ -54,7 +54,7 @@ class Image extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        return $this->createTag('storage-image-thumbnail-display', null, ['image-id' => "{{{$ngModel}}}"]);
+        return $this->createTag('storage-image-crud-list', null, ['image-id' => "{{{$ngModel}}}"]);
     }
 
     /**
@@ -81,5 +81,12 @@ class Image extends Plugin
         if ($this->imageItem) {
             $this->writeAttribute($event, Yii::$app->storage->getImage($event->sender->getAttribute($this->name)));
         }
+    }
+
+    public function serviceData($event)
+    {
+        return [
+            'lazyload_images' => true,
+        ];
     }
 }

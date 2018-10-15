@@ -35,6 +35,14 @@ interface ConfigInterface
     public function getOption($key);
 
     public function getGroupByField();
+
+    /**
+     * Determine whether the groups are expanded by default or not.
+     * If enabled, the groups are expanded otherwise they are collapsed.
+     * @since 1.2.2.1
+     * @return bool
+     */
+    public function getGroupByExpanded();
     
     public function getFilters();
     

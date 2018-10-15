@@ -50,7 +50,7 @@ class Api extends RestActiveController
      * @var array An array with default pagination configuration
      * @since 1.2.2
      */
-    public $pagination = ['defaultPageSize' => 50];
+    public $pagination = ['defaultPageSize' => 25];
     
     /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index,list
@@ -334,13 +334,16 @@ class Api extends RestActiveController
      *
      * Search querys with Pagination will be handled by this action.
      *
+     * @param string $query The search paramter, if empty post will be used.
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionSearch()
+    public function actionSearch($query = null)
     {
         $this->checkAccess('search');
         
-        $query = Yii::$app->request->post('query');
+        if (empty($query)) {
+            $query = Yii::$app->request->post('query');
+        }
         
         $find = $this->model->ngRestFullQuerySearch($query);
         
