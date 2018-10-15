@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file. This projec
 
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
 
+### Fixed
+
++ [#231](https://github.com/luyadev/luya-module-admin/issues/231) Ensure Loggable behavior only runs when admin module exists.
+
 ## 1.2.2.1 (8. October 2018)
 
 + [#211](https://github.com/luyadev/luya-module-admin/issues/211) Try to load all images in crud list in one request and access them trough images service afterwards.
