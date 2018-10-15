@@ -159,7 +159,7 @@
      * <span tooltip tooltip-text="Tooltip" tooltip-disabled="variableMightBeTrueMightBeFalseMightChange">Span Text</span>
      * ```
      */
-    zaa.directive("tooltip", ['$document', function ($document) {
+    zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
         return {
             restrict: 'A',
             scope: {
@@ -169,6 +169,7 @@
                 'tooltipOffsetTop': '@',
                 'tooltipOffsetLeft': '@',
                 'tooltipImageUrl': '@',
+                'tooltipPreviewUrl': '@',
                 'tooltipDisabled': '='
             },
             link: function (scope, element, attr) {
@@ -248,6 +249,12 @@
                             };
                             image.src = scope.tooltipImageUrl;
                             $html.find('.tooltip-inner').append(image);
+                        }
+
+                        if(scope.tooltipPreviewUrl) {
+                            $http.get(scope.tooltipPreviewUrl).then(function(response) {
+                                $html.find('.tooltip-inner').append('<div class="tooltip-preview">'+response.data+'</div>');
+                            });
                         }
 
                         scope.pop = $html;
