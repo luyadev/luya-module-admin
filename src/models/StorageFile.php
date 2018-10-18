@@ -10,6 +10,7 @@ use luya\admin\behaviors\LogBehavior;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\traits\TaggableTrait;
+use luya\admin\helpers\I18n;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -272,6 +273,15 @@ final class StorageFile extends ActiveRecord
         if ($image) {
             return ['source' => $image->source];
         }
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['caption'] = function($model) {
+            return I18n::decodeFindActive($model->caption);
+        };
+        return $fields;
     }
 
     /**

@@ -68,3 +68,9 @@ After successfully installation and configuration run the migrate, import and se
 ```
 
 You can now login to your Administration Interface by adding the admin module in the Url: `http://example.com/admin`
+
+
+## Developers
+
+If you want to contribute, make sure to read the following guidelines: https://luya.io/guide/luya-guideline  
+The guidelines will help you understand our coding standards and how to work with our GULP Workflow to compile SCSS and JS.

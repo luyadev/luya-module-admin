@@ -45,7 +45,7 @@ final class StorageImage extends ActiveRecord
      */
     public function fields()
     {
-        return ['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'source'];
+        return ['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'source', 'file'];
     }
 
     /**

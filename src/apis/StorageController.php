@@ -138,7 +138,7 @@ class StorageController extends RestController
             $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one(); 
         }
         
-        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'], ['source', 'thumbnail.file']);
+        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'thumbnail.file']);
     }
     
     /**
