@@ -159,7 +159,7 @@
      * <span tooltip tooltip-text="Tooltip" tooltip-disabled="variableMightBeTrueMightBeFalseMightChange">Span Text</span>
      * ```
      */
-    zaa.directive("tooltip", ['$document', function ($document) {
+    zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
         return {
             restrict: 'A',
             scope: {
@@ -169,6 +169,7 @@
                 'tooltipOffsetTop': '@',
                 'tooltipOffsetLeft': '@',
                 'tooltipImageUrl': '@',
+                'tooltipPreviewUrl': '@',
                 'tooltipDisabled': '='
             },
             link: function (scope, element, attr) {
@@ -213,12 +214,14 @@
                         offset = positions[defaultPosition]();
                     }
 
-                    if (typeof scope.tooltipOffsetTop == 'number') {
-                        offset.top = offset.top + scope.tooltipOffsetTop;
+                    var tooltipOffsetTop = parseInt(scope.tooltipOffsetTop);
+                    if (tooltipOffsetTop) {
+                        offset.top = offset.top + tooltipOffsetTop;
                     }
 
-                    if (typeof scope.tooltipOffsetLeft == 'number') {
-                        offset.left = offset.left + scope.tooltipOffsetLeft;
+                    var tooltipOffsetLeft = parseInt(scope.tooltipOffsetLeft);
+                    if (tooltipOffsetLeft) {
+                        offset.left = offset.left + tooltipOffsetLeft;
                     }
 
                     scope.pop.css(offset);
@@ -248,6 +251,12 @@
                             };
                             image.src = scope.tooltipImageUrl;
                             $html.find('.tooltip-inner').append(image);
+                        }
+
+                        if(scope.tooltipPreviewUrl) {
+                            $http.get(scope.tooltipPreviewUrl).then(function(response) {
+                                $html.find('.tooltip-inner').append('<div class="tooltip-preview">'+response.data+'</div>');
+                            });
                         }
 
                         scope.pop = $html;
@@ -957,15 +966,18 @@
             },
     		controller: ['$scope', '$filter', function($scope, $filter) {
     			
-    			$scope.$watch(function() { return $scope.listener; }, function(n, o) {
-    				$scope.model = $filter('slugify')(n);
+    			$scope.$watch('listener', function(n, o) {
+                    if (n !== undefined) {
+                        $scope.model = $filter('slugify')(n);
+                    }
     			});
     			
-    			$scope.$watch(function() { return $scope.model; }, function(n, o) {
+    			$scope.$watch('model', function(n, o) {
     				if (n!=o) {
     					$scope.model = $filter('slugify')(n);
     				}
-    			});
+                });
+                
     		}],
     		template:function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" /></div></div>';
