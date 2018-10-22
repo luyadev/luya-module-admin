@@ -6,7 +6,18 @@ use luya\admin\ngrest\base\Plugin;
 use luya\helpers\Html as HtmlHelper;
 
 /**
- * Create a text input select for a given field.
+ * Create a generic form input based on ZAA Directives.
+ *
+ * ```php
+ *   public function ngRestAttributeTypes()
+ *   {
+ *      return [
+ *          'name' => 'text',
+ *          'type' => 'text',
+ *          'value' => ['injector', 'directiveField' => 'type'],
+ *      ];
+ *   }
+ * ```
  *
  * @author Bennet Klarhoelter <boehsermoe@me.com>
  * @since 1.2.3
@@ -14,26 +25,16 @@ use luya\helpers\Html as HtmlHelper;
 class Injector extends Plugin
 {
     /**
-     * @var string
+     * @var string Property name from the model to use as ZAA Directive.
      */
-    public $dir;
-    
-    /**
-     * @var boolean Whether the value should be encoded after find by {{luya\helpers\Html::encode()}} or not.
-     */
-    public $encoding = true;
-    
-    /**
-     * @var array An array with options can be passed to the createListTag.
-     */
-    public $listOptions = [];
+    public $directiveField;
 
     /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
-        return $this->createListTag($ngModel, $this->listOptions);
+        return $this->createListTag($ngModel);
     }
 
     /**
@@ -41,7 +42,7 @@ class Injector extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.create.' . $this->dir, 'options' => null]);
+        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.create.' . $this->directiveField, 'options' => null]);
     }
 
     /**
