@@ -4,6 +4,8 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
 use luya\helpers\Html as HtmlHelper;
+use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 
 /**
  * Create a generic form input based on ZAA Directives.
@@ -12,9 +14,8 @@ use luya\helpers\Html as HtmlHelper;
  *   public function ngRestAttributeTypes()
  *   {
  *      return [
- *          'name' => 'text',
- *          'type' => 'text',
- *          'value' => ['injector', 'directiveField' => 'type'],
+ *          'type' => ['selectArrray', 'data' => [self::TYPE_PASSWORD => 'Passwort Input', self::TYPE_TEXT => 'Text Input']],
+ *          'value' => ['injector', 'attribute' => 'type'],
  *      ];
  *   }
  * ```
@@ -27,7 +28,23 @@ class Injector extends Plugin
     /**
      * @var string Property name from the model to use as ZAA Directive.
      */
-    public $directiveField;
+    public $attribute;
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        /**
+         * @todo $this->renderContext->getModel() should return BaseObject
+         * @see BaseObject::canGetProperty
+         */
+        if (!$this->renderContext->getModel()->canGetProperty($this->attribute)) {
+            throw new InvalidConfigException("Model property `$this->attribute` must be exist and readable.");
+        }
+
+        parent::init();
+    }
 
     /**
      * @inheritdoc
@@ -42,7 +59,7 @@ class Injector extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.create.' . $this->directiveField, 'options' => null]);
+        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.create.' . $this->attribute, 'options' => null]);
     }
 
     /**

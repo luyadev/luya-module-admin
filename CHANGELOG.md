@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
++ [##235](https://github.com/luyadev/luya-module-admin/pull/#235) Add Injector NgRest plugin.
 
 ### Fixed
 
