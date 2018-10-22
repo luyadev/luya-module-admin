@@ -966,15 +966,18 @@
             },
     		controller: ['$scope', '$filter', function($scope, $filter) {
     			
-    			$scope.$watch(function() { return $scope.listener; }, function(n, o) {
-    				$scope.model = $filter('slugify')(n);
+    			$scope.$watch('listener', function(n, o) {
+                    if (n !== undefined) {
+                        $scope.model = $filter('slugify')(n);
+                    }
     			});
     			
-    			$scope.$watch(function() { return $scope.model; }, function(n, o) {
+    			$scope.$watch('model', function(n, o) {
     				if (n!=o) {
     					$scope.model = $filter('slugify')(n);
     				}
-    			});
+                });
+                
     		}],
     		template:function() {
                 return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" /></div></div>';

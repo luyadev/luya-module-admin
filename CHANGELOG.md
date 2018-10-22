@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#221](https://github.com/luyadev/luya-module-admin/issues/221) Fixed problem with zaa slug directive when editing existing value.
 + [#231](https://github.com/luyadev/luya-module-admin/issues/231) Ensure Loggable behavior only runs when admin module exists.
 
 ## 1.2.2.1 (8. October 2018)
