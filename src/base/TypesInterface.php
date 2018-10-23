@@ -159,7 +159,13 @@ interface TypesInterface
      * ```
      */
     const TYPE_MULTIPLE_INPUTS = 'zaa-multiple-inputs';
-    
+
+    /**
+     * @var string Create a dynamic form input based on Angular Directives.
+     * @since 1.2.3
+     */
+    const TYPE_INJECTOR = 'zaa-injector';
+
     /**
      * @var string Generates a multi selection and sortable list and returns a json array with the selected values.
      */
