@@ -8,6 +8,8 @@ use luya\admin\models\Property;
 use luya\admin\models\Lang;
 use luya\admin\base\RestController;
 use luya\admin\models\UserLogin;
+use luya\admin\models\Scheduler;
+use yii\data\ActiveDataProvider;
 
 /**
  * Common Admin API Tasks.
@@ -22,6 +24,25 @@ class CommonController extends RestController
 {
     use CacheableTrait;
     
+    public function actionSchedulerLog($model)
+    {
+        return new ActiveDataProvider([
+            'query' => Scheduler::find()->where(['model_class' => $model]),
+        ]);
+    }
+
+    public function actionSchedulerAdd()
+    {
+        $model = new Scheduler();
+        $model->attributes = Yii::$app->request->bodyParams;
+        if ($model->save()) {
+            $model->pushQueue();
+            return $model;
+        }
+
+        return $this->sendModelError($model);
+    }
+
     /**
      * Set the lastest ngrest filter selection in the User Settings.
      *
