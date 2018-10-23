@@ -73,6 +73,6 @@ class Injector extends Plugin
      */
     public function renderUpdate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.update.' . $this->dir, 'options' => null]);
+        return $this->createFormTag('zaa-injector', $id, $ngModel, ['dir' => 'data.update.' . $this->attribute, 'options' => null]);
     }
 }
