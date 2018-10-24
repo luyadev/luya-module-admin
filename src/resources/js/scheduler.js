@@ -36,11 +36,11 @@ zaa.directive("luyaSchedule", function() {
 
             // get existing job data
 
-            $scope.log = [];
+            $scope.logs = [];
 
             $scope.getLogTable = function() {
                 $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass).then(function(response) {
-                    $scope.log = response.data;
+                    $scope.logs = response.data;
                 });
             };
 
@@ -58,19 +58,28 @@ zaa.directive("luyaSchedule", function() {
                     new_attribute_value: $scope.newvalue,
                     schedule_timestamp: $scope.timestamp
                 }).then(function(response) {
-                    console.log(response);
+                    $scope.getLogTable();
+                    // post success message with admin toast
                 });
             };
             
         }],
         template: function () {
-            return '<div><span ng-click="toggleWindow()">Toggler ({{value}})</span>' + 
-            '<div ng-show="isVisible" style="position:static;"><div class="card card-body mb-3" style="height:400px;">'+
+            return '<div><span ng-click="toggleWindow()"><i class="material-icons">timelapse</i> {{value}}</span>' + 
+            '<div ng-show="isVisible"><div class="card card-body mb-3">'+
             '<div class="row">'+
             '<div class="col">'+
-            '{{log || json}}'+
-            '</div><div class="col"><h2>Add</h2>'+
-            '<zaa-datetime model="timestamp" /><zaa-text model="newvalue" /><button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
+                '<p class="lead">Log</p>'+
+                '<table class="table table-bordered">'+
+                '<tr ng-repeat="log in logs">'+
+                '<td>{{log.new_attribute_value}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
+                '</tr>' + 
+                '</table>'+
+            '</div><div class="col">'+
+                '<p class="lead">Schedule Event</p>'+
+                '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
+                '<zaa-text model="newvalue" label="Neuer Wert" />'+
+                '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
             '</div></div></div></div>'+
             '</div>';
         }
