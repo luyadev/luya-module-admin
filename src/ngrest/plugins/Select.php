@@ -14,6 +14,14 @@ use luya\admin\ngrest\base\Plugin;
 abstract class Select extends Plugin
 {
     /**
+     * If enabled the list tag will transform into an interactive schedling overlay.
+     *
+     * @var boolean
+     * @since 1.3.0
+     */
+    public $scheduling = false;
+
+    /**
      * @var integer|string If an init value is available which is matching with the select data, you can not reset the model to null. So initvalue ensures
      * that a value must be selected, or selects your initvalue by default.
      */
@@ -36,6 +44,10 @@ abstract class Select extends Plugin
      */
     public function renderList($id, $ngModel)
     {
+        if ($this->scheduling) {
+            return $this->createSchedulerListTag($ngModel, $this->getData());
+        }
+        
         return $this->createListTag($ngModel);
     }
 
@@ -73,12 +85,16 @@ abstract class Select extends Plugin
     {
         $value = StringHelper::typeCast($event->sender->getAttribute($this->name));
         
-        if ($this->emptyListValue && empty($value)) {
-            $this->writeAttribute($event, $this->emptyListValue);
+        if ($this->scheduling) {
+            $this->writeAttribute($event, $value);
         } else {
-            foreach ($this->getData() as $item) {
-                if (StringHelper::typeCast($item['value']) === $value) {
-                    $this->writeAttribute($event, $item['label']);
+            if ($this->emptyListValue && empty($value)) {
+                $this->writeAttribute($event, $this->emptyListValue);
+            } else {
+                foreach ($this->getData() as $item) {
+                    if (StringHelper::typeCast($item['value']) === $value) {
+                        $this->writeAttribute($event, $item['label']);
+                    }
                 }
             }
         }

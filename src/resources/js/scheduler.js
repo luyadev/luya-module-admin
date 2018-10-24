@@ -7,7 +7,13 @@
  /**
   * 
   * ```
-  * <luya-schedule value="{{currentValueOfTheEntity}}" model-class="luya\admin\models\User" attribute-name="is_deleted" attribute-values="{0:'Not Deleted',1:'Deleted'}" />
+  * <luya-schedule 
+  *     value="{{currentValueOfTheEntity}}" 
+  *     primary-key-value="{{primaryKeyModelValue}}" 
+  *     model-class="luya\admin\models\User" 
+  *     attribute-name="is_deleted" 
+  *     attribute-values="[{"label":"Draft","value":0},{"label":"Archived","value":2},{"label":"Published","value":1}]"
+  * />
   * ```
   */
 zaa.directive("luyaSchedule", function() {
@@ -16,9 +22,10 @@ zaa.directive("luyaSchedule", function() {
         relace: true,
         scope: {
             value: "=",
+            attributeValues: "=",
+            primaryKeyValue: "=",
             modelClass: "@",
-            attributeName: "@",
-            attributeValues: "@"
+            attributeName: "@"
         },
         controller: ['$scope', '$http', function($scope, $http) {
 
@@ -39,48 +46,69 @@ zaa.directive("luyaSchedule", function() {
             $scope.logs = [];
 
             $scope.getLogTable = function() {
-                $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass).then(function(response) {
+                $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass+'&pk=' + $scope.primaryKeyValue).then(function(response) {
                     $scope.logs = response.data;
+
+                    // check if latestId is done, if yes, maybe directly change the value for a given field.
+                    angular.forEach($scope.logs, function(value, key) {
+                        if (value.id == $scope.latestId && value.is_done) {
+                            $scope.value = value.new_attribute_value;
+                        }
+                    });
                 });
             };
 
+            $scope.valueToLabel = function(inputValue) {
+                var label;
+                angular.forEach($scope.attributeValues, function(value) {
+                    console.log(value.value, inputValue);
+                    if (value.value == inputValue) {
+                        label = value.label;
+                    }
+                });
+
+                return label;
+            };
+
             // submit new job
-
-            $scope.timestamp;
-            $scope.newvalue;
-
+            var now = new Date().getTime() / 1000;
+            $scope.latestId;
+            $scope.timestamp = parseInt(now);
+            $scope.newvalue = $scope.value;
             $scope.saveNewJob = function() {
-                console.log($scope.attributeName);
                 $http.post('admin/api-admin-common/scheduler-add', {
                     model_class: $scope.modelClass,
-                    primary_key: $scope.value,
+                    primary_key: $scope.primaryKeyValue,
                     target_attribute_name: $scope.attributeName,
                     new_attribute_value: $scope.newvalue,
                     schedule_timestamp: $scope.timestamp
                 }).then(function(response) {
+                    $scope.latestId = response.data.id;
                     $scope.getLogTable();
                     // post success message with admin toast
                 });
-            };
+            }; 
             
         }],
         template: function () {
-            return '<div><span ng-click="toggleWindow()"><i class="material-icons">timelapse</i> {{value}}</span>' + 
-            '<div ng-show="isVisible"><div class="card card-body mb-3">'+
+            return '<div style="position: relative;" ng-class="{\'temp-z-index-fix\' : isVisible}"><span ng-click="toggleWindow()"><i class="material-icons">timelapse</i> {{valueToLabel(value)}}</span>' + 
+            '<div ng-show="isVisible" style="position: absolute; left: 50%; transform: translate(-50%, 0); min-width: 1300px;"><div class="card card-body mb-3" style="box-shadow: 3px 0px 1px 3px #ccc; ">'+
             '<div class="row">'+
             '<div class="col">'+
                 '<p class="lead">Log</p>'+
                 '<table class="table table-bordered">'+
+                '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
                 '<tr ng-repeat="log in logs">'+
-                '<td>{{log.new_attribute_value}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
+                '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
                 '</tr>' + 
                 '</table>'+
             '</div><div class="col">'+
                 '<p class="lead">Schedule Event</p>'+
                 '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
-                '<zaa-text model="newvalue" label="Neuer Wert" />'+
+                '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
                 '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
             '</div></div></div></div>'+
+            '<style>.temp-z-index-fix { z-index:100 }</style>' +
             '</div>';
         }
     };

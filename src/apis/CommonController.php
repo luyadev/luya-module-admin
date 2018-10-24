@@ -24,10 +24,11 @@ class CommonController extends RestController
 {
     use CacheableTrait;
     
-    public function actionSchedulerLog($model)
+    public function actionSchedulerLog($model, $pk)
     {
         return new ActiveDataProvider([
-            'query' => Scheduler::find()->where(['model_class' => $model]),
+            'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk]),
+            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_DESC]]
         ]);
     }
 
@@ -37,6 +38,10 @@ class CommonController extends RestController
         $model->attributes = Yii::$app->request->bodyParams;
         if ($model->save()) {
             $model->pushQueue();
+
+            // if its a "now" job, run the internal worker now so the log table is refreshed immediately
+            Yii::$app->adminqueue->run(false);
+
             return $model;
         }
 

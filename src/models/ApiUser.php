@@ -104,7 +104,7 @@ final class ApiUser extends User
         return [
             'firstname' => 'text',
             'email' => 'text',
-            'lastname' => ['scheduler', 'values' => [0 => 'nein', 1 => 'Ja']],
+            'lastname' => 'text',
         ];
     }
     

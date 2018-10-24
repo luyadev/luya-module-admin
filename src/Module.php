@@ -196,6 +196,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxybuild' => 'luya\admin\apis\ProxyBuildController',
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
+        'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
     ];
 
     /**
@@ -346,6 +347,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'view_list', 'api-admin-tag')
                     ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
+                    ->itemApi('Queue Logger', 'admin/queue-log/index', 'label', 'api-admin-queuelog')
                 ->group('menu_group_images')
                     ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
                     ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')

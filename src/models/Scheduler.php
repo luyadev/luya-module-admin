@@ -4,6 +4,7 @@ namespace luya\admin\models;
 
 use Yii;
 use luya\admin\jobs\ScheduleJob;
+use luya\helpers\StringHelper;
 
 /**
  * This is the model class for table "admin_scheduler".
@@ -35,8 +36,8 @@ class Scheduler extends \yii\db\ActiveRecord
         return [
             [['model_class', 'primary_key', 'target_attribute_name', 'new_attribute_value', 'schedule_timestamp'], 'required'],
             [['schedule_timestamp', 'is_done'], 'integer'],
-            [['model_class', 'target_attribute_name', 'new_attribute_value'], 'string', 'max' => 255],
-            [['old_attribute_value'], 'safe'],
+            [['model_class', 'target_attribute_name'], 'string', 'max' => 255],
+            [['old_attribute_value', 'new_attribute_value'], 'safe'],
         ];
     }
 
@@ -65,7 +66,7 @@ class Scheduler extends \yii\db\ActiveRecord
 
             if ($model) {
                 $oldValue = $model->{$this->target_attribute_name};
-                $model->{$this->target_attribute_name} = $this->new_attribute_value;
+                $model->{$this->target_attribute_name} = StringHelper::typeCast($this->new_attribute_value);
                 $model->save(true, [$this->target_attribute_name]);
 
                 return $this->updateAttributes(['old_attribute_value' => $oldValue, 'is_done' => true]);
@@ -80,7 +81,7 @@ class Scheduler extends \yii\db\ActiveRecord
         $delay = $this->schedule_timestamp - time();
 
         if ($delay < 1) {
-            $delay = 1;
+            $delay = 0;
         }
 
         Yii::$app->adminqueue->delay($delay)->push(new ScheduleJob(['schedulerId' => $this->id]));
