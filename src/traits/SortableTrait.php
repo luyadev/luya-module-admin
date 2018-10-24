@@ -34,12 +34,22 @@ trait SortableTrait
     }
     
     /**
+     * The order which should by used to sort.
+     *
+     * @return int
+     */
+    public static function sortableOrder()
+    {
+        return SORT_ASC;
+    }
+    
+    /**
      * Overrides the ngRestFind() method of the ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public static function ngRestFind()
     {
-        return parent::ngRestFind()->orderBy([self::sortableField() => SORT_ASC]);
+        return parent::ngRestFind()->orderBy([self::sortableField() => self::sortableOrder()]);
     }
     
     /**
@@ -48,7 +58,7 @@ trait SortableTrait
      */
     public static function find()
     {
-        return parent::find()->orderBy([self::sortableField() => SORT_ASC]);
+        return parent::find()->orderBy([self::sortableField() => self::sortableOrder()]);
     }
     
     /**
