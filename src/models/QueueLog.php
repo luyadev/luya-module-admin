@@ -85,7 +85,7 @@ class QueueLog extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['queue_id', 'title', 'push_timestamp', 'run_timestamp', 'end_timestamp', 'is_error']],
+            ['list', ['title', 'push_timestamp', 'run_timestamp', 'end_timestamp', 'is_error']],
         ];
     }
 }
