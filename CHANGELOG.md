@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#238](https://github.com/luyadev/luya-module-admin/issues/238) Storage image models rename methods.
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
 + [#232](https://github.com/luyadev/luya-module-admin/pull/232) Add tooltip option to load content from xhr request.
 + [#235](https://github.com/luyadev/luya-module-admin/pull/235) Add Injector NgRest plugin.
