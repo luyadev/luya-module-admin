@@ -5,6 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\jobs\ScheduleJob;
 use luya\helpers\StringHelper;
+use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * This is the model class for table "admin_scheduler".
@@ -58,6 +59,13 @@ class Scheduler extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Job Trigger.
+     * 
+     * This method is execute by the queue job.
+     *
+     * @return void
+     */
     public function triggerJob()
     {
         try {
@@ -76,6 +84,28 @@ class Scheduler extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Ensure if the given class is an ngrest model and permission exists.
+     *
+     * @param string $class
+     * @return boolean
+     */
+    public function hasTriggerPermission($class)
+    {
+        $model = new $class();
+
+        if (!$model instanceof NgRestModel) {
+            return false;
+        }
+
+        return Yii::$app->adminmenu->getApiDetail($class::ngRestApiEndpoint());
+    }
+
+    /**
+     * Push the given scheduler model into the queue.
+     *
+     * @return void
+     */
     public function pushQueue()
     {
         $delay = $this->schedule_timestamp - time();

@@ -11,6 +11,7 @@ use luya\admin\base\RestController;
 use luya\admin\models\UserLogin;
 use luya\admin\models\Scheduler;
 use yii\data\ActiveDataProvider;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Common Admin API Tasks.
@@ -25,6 +26,14 @@ class CommonController extends RestController
 {
     use CacheableTrait;
     
+    /**
+     * Get all log entries for a given scheulder model with primary key.
+     *
+     * @param [type] $model
+     * @param [type] $pk
+     * @return void
+     * @since 1.3.0
+     */
     public function actionSchedulerLog($model, $pk)
     {
         return new ActiveDataProvider([
@@ -33,10 +42,20 @@ class CommonController extends RestController
         ]);
     }
 
+    /**
+     * Add a task to the scheduler.
+     *
+     * @return void
+     */
     public function actionSchedulerAdd()
     {
         $model = new Scheduler();
         $model->attributes = Yii::$app->request->bodyParams;
+
+        if (!$model->hasTriggerPermission($model->model_class)) {
+            throw new ForbiddenHttpException("Unable to schedule a task for the given model.");
+        }
+
         if ($model->save()) {
             $model->pushQueue();
 

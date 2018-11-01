@@ -44,8 +44,8 @@ abstract class Select extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        if ($this->scheduling) {
-            return $this->createSchedulerListTag($ngModel, $this->getData());
+        if ($this->scheduling && $this->renderContext->canUpdate()) {
+            return $this->createSchedulerListTag($ngModel, $this->getData(), 'item');
         }
         
         return $this->createListTag($ngModel);
@@ -67,6 +67,13 @@ abstract class Select extends Plugin
      */
     public function renderUpdate($id, $ngModel)
     {
+        if ($this->scheduling && $this->renderContext->canUpdate()) {
+            return [
+                '<div class="crud-loader-tag">' . $this->createSchedulerListTag($ngModel, $this->getData(), 'data.update', ['only-icon' => 1]) . '</div>',
+                $this->renderCreate($id, $ngModel),
+            ];
+        }
+
         return $this->renderCreate($id, $ngModel);
     }
 

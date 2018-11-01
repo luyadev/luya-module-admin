@@ -25,7 +25,8 @@ zaa.directive("luyaSchedule", function() {
             attributeValues: "=",
             primaryKeyValue: "=",
             modelClass: "@",
-            attributeName: "@"
+            attributeName: "@",
+            onlyIcon: "@"
         },
         controller: ['$scope', '$http', function($scope, $http) {
 
@@ -61,7 +62,6 @@ zaa.directive("luyaSchedule", function() {
             $scope.valueToLabel = function(inputValue) {
                 var label;
                 angular.forEach($scope.attributeValues, function(value) {
-                    console.log(value.value, inputValue);
                     if (value.value == inputValue) {
                         label = value.label;
                     }
@@ -91,8 +91,9 @@ zaa.directive("luyaSchedule", function() {
             
         }],
         template: function () {
-            return '<div style="position: relative;" ng-class="{\'temp-z-index-fix\' : isVisible}"><span ng-click="toggleWindow()"><i class="material-icons">timelapse</i> {{valueToLabel(value)}}</span>' + 
+            return '<div style="position: relative;" ng-class="{\'temp-z-index-fix\' : isVisible}"><button ng-click="toggleWindow()" type="button" class="btn btn-link"><i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span></button>' + 
             '<div ng-show="isVisible" style="position: absolute; left: 50%; transform: translate(-50%, 0); min-width: 1300px;"><div class="card card-body mb-3" style="box-shadow: 3px 0px 1px 3px #ccc; ">'+
+            
             '<div class="row">'+
             '<div class="col">'+
                 '<p class="lead">Log</p>'+
@@ -103,6 +104,7 @@ zaa.directive("luyaSchedule", function() {
                 '</tr>' + 
                 '</table>'+
             '</div><div class="col">'+
+            '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
                 '<p class="lead">Schedule Event</p>'+
                 '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
                 '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+

@@ -369,15 +369,15 @@ abstract class Plugin extends Component implements TypesInterface
      * @return void
      * @since 1.3.0
      */
-    public function createSchedulerListTag($ngModel, $values)
+    public function createSchedulerListTag($ngModel, $values, $dataRow, array $options = [])
     {
-        return $this->createTag('luya-schedule', null, [
+        return $this->createTag('luya-schedule', null, array_merge([
             'value' => $ngModel,
             'model-class' => get_class($this->renderContext->getModel()),
             'attribute-name' => $this->name,
             'attribute-values' => Angular::optionsArrayInput($values),
-            'primary-key-value' => 'getRowPrimaryValue(item)',
-        ]);
+            'primary-key-value' => 'getRowPrimaryValue('.$dataRow.')',
+        ], $options));
     }
     
     // EVENTS
