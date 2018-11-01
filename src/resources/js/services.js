@@ -1,9 +1,7 @@
 // service resolver
-adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFilesData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceImagesData, ServiceFilesData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
+adminServiceResolver = ['ServiceFoldersData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
-	//ServiceImagesData.load();
-	//ServiceFilesData.load();
 	ServiceLanguagesData.load();
 	ServicePropertiesData.load();
 	AdminLangService.load();
@@ -35,6 +33,38 @@ adminServiceResolver = ['ServiceFoldersData', 'ServiceImagesData', 'ServiceFiles
  * ```
  */
 	
+/**
+ * A service to retrieve and hold all admin tags.
+ * 
+ * The main purpose is to display the tags an several parts of the admin area.
+ * 
+ * The service also needs an option to refresh the data as its it needs a refresh when adding new tags
+ * + Tag Active Window Form.
+ * + Tag CRUD Add/Edit Form.
+ * @since 1.3.0
+ */
+zaa.factory("ServiceAdminTags", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+	var service = {};
+
+	service.data = null;
+	
+	service.load = function(forceReload) {
+		return $q(function(resolve, reject) {
+			if (service.data !== null && forceReload !== true) {
+				resolve(service.data);
+			} else {
+				$http.get("admin/api-admin-common/tags").then(function(response) {
+					service.data = response.data;
+					$rootScope.$broadcast('service:AdminTags', service.data);
+					resolve(service.data);
+				});
+			}
+		});
+	};
+
+	return service;
+}]);
+
 /*
 
 $scope.foldersData = ServiceFoldersData.data;

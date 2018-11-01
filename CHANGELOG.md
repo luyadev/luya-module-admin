@@ -6,10 +6,14 @@ All notable changes to this project will be documented in this file. This projec
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
- ## Changed
+## Changed
 
- + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
- + [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
++ [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
++ [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
+
+## Added
+
++ [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
 
 ## 1.2.3 (in progress)
 

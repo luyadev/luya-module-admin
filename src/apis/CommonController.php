@@ -6,6 +6,7 @@ use Yii;
 use luya\traits\CacheableTrait;
 use luya\admin\models\Property;
 use luya\admin\models\Lang;
+use luya\admin\models\Tag;
 use luya\admin\base\RestController;
 use luya\admin\models\UserLogin;
 use luya\admin\models\Scheduler;
@@ -46,6 +47,19 @@ class CommonController extends RestController
         }
 
         return $this->sendModelError($model);
+    }
+
+    /**
+     * Get all available tags.
+     * 
+     * This response differs to the admin-api-tag as returns all tags without pagination.
+     *
+     * @return array
+     * @since 1.3.0
+     */
+    public function actionTags()
+    {
+        return Tag::find()->select(['id', 'name', 'translation'])->orderBy(['name' => SORT_ASC])->all();
     }
 
     /**

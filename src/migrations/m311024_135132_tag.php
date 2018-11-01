@@ -13,6 +13,7 @@ class m311024_135132_tag extends Migration
     public function safeUp()
     {
         $this->addColumn('admin_tag', 'translation', $this->text());
+        $this->addPrimaryKey('admin_tag_relation_pk', 'admin_tag_relation', ['tag_id', 'table_name', 'pk_id']);
     }
     
 
@@ -22,5 +23,6 @@ class m311024_135132_tag extends Migration
     public function safeDown()
     {
         $this->dropColumn('admin_tag', 'translation');
+        $this->dropPrimaryKey('admin_tag_relation_pk', 'admin_tag_relation');
     }
 }
