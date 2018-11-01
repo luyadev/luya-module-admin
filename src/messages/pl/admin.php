@@ -352,16 +352,21 @@ return [
     
 // 1.2.2
     
-    'button_no' => 'Yes',
-    'crud_exportdata_btn' => 'Eksportuj dane',
-    'crud_exportdata_col_header' => 'Nagłówek',
-    'crud_exportdata_col_format' => 'Format',
-    'crud_exportdata_col_format_csv' => 'CSV',
-    'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
-    'crud_exportdata_col_columns' => 'Kolumny',
-    'crud_exportdata_btn_generateexport' => 'Wygeneruj eksport',
-    'crud_exportdata_btn_downloadexport' => 'Sciągnij eksport',
-    'js_pagination_page' => 'Strona',
-    'dashboard_log_message_delete' => 'Usunięto rekord w <strong>{container}</strong>.',
-    'model_tag_relations_count' => 'Używany',
+'button_no' => 'Yes',
+'crud_exportdata_btn' => 'Eksportuj dane',
+'crud_exportdata_col_header' => 'Nagłówek',
+'crud_exportdata_col_format' => 'Format',
+'crud_exportdata_col_format_csv' => 'CSV',
+'crud_exportdata_col_format_xlsx' => 'Excel (xlsx)',
+'crud_exportdata_col_columns' => 'Kolumny',
+'crud_exportdata_btn_generateexport' => 'Wygeneruj eksport',
+'crud_exportdata_btn_downloadexport' => 'Sciągnij eksport',
+'js_pagination_page' => 'Strona',
+'dashboard_log_message_delete' => 'Usunięto rekord w <strong>{container}</strong>.',
+'model_tag_relations_count' => 'Używany',
+
+// 1.3
+
+'model_tag_translation' => 'Translation',
+'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
 ];

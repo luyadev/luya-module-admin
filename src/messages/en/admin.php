@@ -367,4 +367,9 @@ return [
     'js_pagination_page' => 'Page',
     'dashboard_log_message_delete' => 'Deleted a record in <strong>{container}</strong>.',
     'model_tag_relations_count' => 'Used',
+
+// 1.3
+
+    'model_tag_translation' => 'Translation',
+    'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
 ];

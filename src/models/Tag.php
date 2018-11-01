@@ -16,6 +16,8 @@ use luya\admin\Module;
  */
 final class Tag extends NgRestModel
 {
+    public $i18n = ['translation'];
+
     /**
      * @inheritdoc
      */
@@ -31,6 +33,7 @@ final class Tag extends NgRestModel
     {
         return [
             [['name'], 'required'],
+            [['translation'], 'string'],
             [['name'], 'unique'],
         ];
     }
@@ -43,6 +46,14 @@ final class Tag extends NgRestModel
         return [
             'name' => Module::t('model_tag_name'),
             'relationsCount' => Module::t('model_tag_relations_count'),
+            'translation' => Module::t('model_tag_translation'),
+        ];
+    }
+
+    public function attributeHints()
+    {
+        return [
+            'translation' => Module::t('model_tag_translation_hint'),
         ];
     }
 
@@ -61,6 +72,7 @@ final class Tag extends NgRestModel
     {
         return [
             'name' => 'text',
+            'translation' => 'text',
         ];
     }
     
@@ -81,7 +93,7 @@ final class Tag extends NgRestModel
     {
         return [
             [['list'], ['name', 'relationsCount']],
-            [['create', 'update'], ['name']],
+            [['create', 'update'], ['name', 'translation']],
         ];
     }
     
