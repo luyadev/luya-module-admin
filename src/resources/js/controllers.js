@@ -324,6 +324,7 @@
 				$scope.loadList();
 				$scope.applySaveCallback();
 				$scope.switchTo(0, true);
+				$scope.resetData();
 			}, function(data) {
 				$scope.printErrors(data.data);
 			});
@@ -408,8 +409,8 @@
 			angular.forEach($scope.data.listArray, function(value, key) {
 				var json = {};
 				json[fieldName] = key;
-				var rowId = value[$scope.config.pk];
-				$http.put($scope.config.apiEndpoint + '/' + rowId +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true), {
+				var pk = $scope.getRowPrimaryValue(value);
+				$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true), {
 					  ignoreLoadingBar: true
 				});
 			});
@@ -435,6 +436,17 @@
 		};
 
 		$scope.getRowPrimaryValue = function(row) {
+			var pk = $scope.config.pk;
+
+			if (angular.isArray(pk)) {
+				var values = [];
+				angular.forEach(pk, function(name) {
+					values.push(row[name]);
+				});
+
+				return values.join();
+			}
+
 			return row[$scope.config.pk];
 		};
 
