@@ -21,6 +21,7 @@ use yii\web\NotFoundHttpException;
 use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\actions\IndexAction;
+use luya\helpers\StringHelper;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -109,6 +110,9 @@ class Api extends RestActiveController
     /**
      * Get the relations for the corresponding action name.
      * 
+     * Since version 1.2.3 it also checks if the $expand get param is provided for the given relations, otherwise
+     * the relation will not be joined trough `with`. This reduces the database querie time.
+     * 
      * @param string $actionName The action name like `index`, `list`, `search`, `relation-call`.
      * @return array An array with relation names.
      * @since 1.2.2
@@ -117,14 +121,47 @@ class Api extends RestActiveController
     {
         $rel = $this->withRelations();
         
+        $expand = Yii::$app->request->get('expand', null);
+        $relationPrefixes = [];
+        foreach (StringHelper::explode($expand, ',', true, true) as $relation) {
+            // check for subrelation dot notation.
+            $relationPrefixes[] = current(explode(".", $relation));
+        }
+
+        // no expand param found, return empty join with array.
+        if (empty($relationPrefixes)) {
+            return [];
+        }
+
         foreach ($rel as $relationName) {
             // it seem to be the advance strucutre for given actions.
-            if (is_array($relationName)) {
-                return isset($rel[$actionName]) ? $rel[$actionName] : [];
+            if (is_array($relationName) &&  isset($rel[$actionName])) {
+                return $this->relationsFromExpand($rel[$actionName], $relationPrefixes);
             }
         }
         // simple structure
-        return $rel;
+        return $this->relationsFromExpand($rel, $relationPrefixes);
+    }
+
+    /**
+     * Ensure if the expand prefix exists in the relation.
+     *
+     * @param array $relations The available relations
+     * @param array $expandPrefixes The available expand relation names
+     * @return array
+     * @since 1.2.3
+     */
+    private function relationsFromExpand(array $relations, array $expandPrefixes)
+    {
+        $valid = [];
+        foreach ($expandPrefixes as $prefix) {
+            foreach ($relations as $relation) {
+                if (StringHelper::startsWith($relation, $prefix)) {
+                    $valid[] = $relation;
+                }
+            }
+        }
+        return $valid;
     }
     
     /**
