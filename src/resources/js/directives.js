@@ -2451,7 +2451,7 @@
                 		return;
                 	}
                 	
-                	$scope.ServiceFilesData.getFile(n).then(function(file) {
+                	ServiceFilesData.getFile(n).then(function(file) {
                 		$scope.fileinfo = file;
                 	}, function() {
                         $scope.fileinfo = null;
@@ -2601,7 +2601,7 @@
                 };
 
             	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-            		if (n == null || n == undefined) {
+            		if (n == null || n == undefined || !angular.isNumber(n)) {
             			return null;
             		}
                     

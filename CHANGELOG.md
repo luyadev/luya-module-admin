@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
++ [#243](https://github.com/luyadev/luya-module-admin/issues/243) Fix issue when file id is not a numeric value.
 + [#242](https://github.com/luyadev/luya-module-admin/issues/242) Reset add form values when saving.
 + [#241](https://github.com/luyadev/luya-module-admin/issues/241) Fix problem with composite key detecting.
 + [#221](https://github.com/luyadev/luya-module-admin/issues/221) Fixed problem with zaa slug directive when editing existing value.
