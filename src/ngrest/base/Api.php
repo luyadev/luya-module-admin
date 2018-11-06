@@ -109,7 +109,7 @@ class Api extends RestActiveController
     /**
      * Get the relations for the corresponding action name.
      * 
-     * @param string $actionName The action name like `index`, `list`, `search`
+     * @param string $actionName The action name like `index`, `list`, `search`, `relation-call`.
      * @return array An array with relation names.
      * @since 1.2.2
      */
@@ -387,7 +387,7 @@ class Api extends RestActiveController
         }
         
         return new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query->with($this->getWithRelation('relation-call')),
             'pagination' => $this->pagination,
         ]);
     }
