@@ -22,7 +22,7 @@ $this->beginBody();
                 <modal is-modal-hidden="isExportModalHidden" modal-title="<?= Module::t('crud_exportdata_btn'); ?>">
                     <div ng-if="!isExportModalHidden">
                         <?= Angular::radio('exportdata.type', Module::t('crud_exportdata_col_format'), ['xlsx' => Module::t('crud_exportdata_col_format_xlsx'), 'csv' => Module::t('crud_exportdata_col_format_csv')]); ?>
-                        <?php // Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]); ?>
+                        <?php // Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]);?>
                         <?= Angular::checkboxArray('exportdata.attributes', Module::t('crud_exportdata_col_columns'), $downloadAttributes, ['preselect' => true]); ?>
                         <button ng-hide="exportResponse" type="button" class="btn btn-icon btn-secondary" ng-click="generateExport()"><?= Module::t('crud_exportdata_btn_generateexport')?></button>
                         <button ng-show="exportResponse" type="button" class="btn btn-icon btn-download" ng-click="downloadExport()"><?= Module::t('crud_exportdata_btn_downloadexport'); ?></button>
@@ -172,7 +172,19 @@ $this->beginBody();
                                         <i class="crud-buttons-toggler material-icons">more_vert</i>
                                         <div class="crud-buttons-pan">
                                             <?php foreach ($this->context->getButtons() as $item): ?>
-                                                <button type="button" class="crud-buttons-button" ng-click="<?= $item['ngClick']; ?>"><i class="material-icons"><?= $item['icon']; ?></i><?php if (!empty($item["label"])): echo "<span class=\"btn-crud-label\">". $item["label"] .  "</span>"; endif; ?></span></button>
+                                                <button type="button" class="crud-buttons-button" ng-click="<?= $item['ngClick']; ?>">
+                                                    <i class="crud-buttons-button-icon material-icons"><?= $item['icon']; ?></i>
+                                                    <?php if (!empty($item["label"])): ?>
+                                                        <span class="btn-crud-label"><?= $item["label"] ?></span>
+                                                    <?php endif; ?>
+                                                    <div class="crud-buttons-button-loader">
+                                                        <div class="loader">
+                                                            <svg class="loader-svg" viewBox="25 25 50 50">
+                                                                <circle class="loader-circle" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </button>
                                             <?php endforeach; ?>
                                         </div>
                                     </div>
