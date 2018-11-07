@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest\base;
 
+use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -85,6 +86,8 @@ abstract class ActiveButton extends BaseObject
      */
     public function sendError($message)
     {
+        Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
+
         return [
             'success' => false,
             'message' => $message,
