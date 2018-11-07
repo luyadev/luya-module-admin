@@ -340,6 +340,15 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                         'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
                     ];
                 }
+
+                foreach ($this->config->getActiveButtons() as $btn) {
+                    $buttons[] = [
+                        'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",
+                        'icon' => $btn['icon'],
+                        'label' => $btn['label'],
+                    ];
+                }
+                
             }
             
             // check if deletable is enabled

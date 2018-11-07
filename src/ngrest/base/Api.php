@@ -308,14 +308,49 @@ class Api extends RestActiveController
      */
     public function findModel($id)
     {
-        $class = $this->modelClass;
-        $model = $class::findOne((int) $id);
+        $model = $this->findModelClassObject($this->modelClass, $id, 'view');
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the Model for the given ID");
         }
         
         return $model;
+    }
+
+    
+    /**
+     * Find the model for a given class and id.
+     *
+     * @param [type] $modelClass
+     * @param [type] $id
+     * @return void
+     */
+    public function findModelClassObject($modelClass, $id, $relationContext)
+    {
+        $keys = $modelClass::primaryKey();
+        if (count($keys) > 1) {
+            $values = explode(',', $id);
+            if (count($keys) === count($values)) {
+                return $this->findModelFromCondition(array_combine($keys, $values), $keys, $modelClass, $relationContext);
+            }
+        } elseif ($id !== null) {
+            return $this->findModelFromCondition($id, $keys, $modelClass, $relationContext);
+        }
+
+        return false;
+    }
+
+    /**
+     * This equals to the ActieRecord::findByCondition which is sadly a protected method.
+     *  
+     * @since 1.2.3
+     * @return yii\db\ActiveRecord
+     */
+    protected function findModelFromCondition($condition, $primaryKey, $modelClass, $relationContext)
+    {
+        $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
+
+        return $modelClass::find()->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
     }
     
     /**
@@ -543,5 +578,21 @@ class Api extends RestActiveController
         }
         
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
+    }
+
+    /**
+     * Run active button
+     *
+     * @param string $hash The hash from the class name.
+     * @param string|integer $id
+     * @return void
+     * @since 1.2.3
+     */
+    public function actionActiveButton($hash, $id)
+    {
+        $this->checkAccess('active-button');
+        $model = $this->findModel($id);
+
+        return $model->handleNgRestActiveButton($hash);
     }
 }

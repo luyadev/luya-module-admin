@@ -170,6 +170,36 @@
 			$scope.loadList();
 		};
 
+		/****************** ACTIVE BUTTON ***********/
+
+		$scope.callActiveButton = function(hash, id, event) {
+			var elmn = angular.element(event.currentTarget);
+			elmn.addClass('crud-buttons-button-loading');
+			$http.get($scope.config.apiEndpoint + '/active-button?hash=' + hash + '&id=' + id.join()).then(function(success) {
+				elmn.removeClass('crud-buttons-button-loading');
+				elmn.addClass('crud-buttons-button-success');
+				$timeout(function() {
+					elmn.removeClass('crud-buttons-button-success');
+				}, 5000);
+
+				angular.forEach(success.data.events, function(value) {
+					// event names
+					if (value == 'loadList') {
+						$scope.loadList();
+					}
+				});
+
+				AdminToastService.success(success.data.message);
+			}, function(error) {
+				elmn.removeClass('crud-buttons-button-loading');
+				elmn.addClass('crud-buttons-button-danger');
+				$timeout(function() {
+					elmn.removeClass('crud-buttons-button-danger');
+				}, 5000);
+				AdminToastService.error(error.data.message);
+			});
+		};
+
 		/***************** ACTIVE WINDOW *********/
 
 		$scope.reloadActiveWindow = function() {

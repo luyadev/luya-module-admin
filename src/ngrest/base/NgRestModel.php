@@ -539,6 +539,46 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         return [];
     }
+
+    /**
+     * Define Active Buttons.
+     * 
+     * An array with active button elements:
+     * 
+     * ```php
+     * public function ngRestActiveButton()
+     * {
+     *     return [
+     *          ['class' => 'luya\admin\activebuttons\MyActiveButton', 'property' => 'value'],
+     *     ];
+     * }
+     * ```
+     *
+     * @return array
+     * @since 1.2.3
+     */
+    public function ngRestActiveButtons()
+    {
+        return [];
+    }
+
+    /**
+     * find and call an acitve button
+     *
+     * @param [type] $hash
+     * @return void
+     */
+    public function handleNgRestActiveButton($hash)
+    {
+        foreach ($this->ngRestActiveButtons() as $item) {
+            if (sha1($item['class']) == $hash) {
+                $button = Yii::createObject($item);
+                return $button->handle($this);
+            }
+        }
+
+        return false;
+    }
     
     /**
      * The NgRest config has an options property which can contain a variaty of defintions.
@@ -717,6 +757,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->setGroupByExpanded($this->ngRestGroupByExpanded());
             $config->setTableName($this->tableName());
             $config->setAttributeLabels($this->attributeLabels());
+            $config->setActiveButtons($this->ngRestActiveButtons());
             
             // ensure relations are made not on composite table.
             if ($this->ngRestRelations() && count($this->getNgRestPrimaryKey()) > 1) {
