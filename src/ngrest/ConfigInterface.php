@@ -53,4 +53,12 @@ interface ConfigInterface
     public function getRelations();
     
     public function setAttributeLabels(array $labels);
+
+    /**
+     * Get an array with the button configuration like hash, label and icon.
+     *
+     * @return array An array with hash, label and icon key.
+     * @since 1.2.3
+     */
+    public function getActiveButtons();
 }

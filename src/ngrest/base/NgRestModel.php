@@ -563,10 +563,11 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
-     * find and call an acitve button
+     * Handle a given active button based on the hash (classname in sha1).
      *
-     * @param [type] $hash
-     * @return void
+     * @param string $hash The hash name, equals to the class name of the button
+     * @return array|boolean Returns the button array response or false if not found.
+     * @since 1.2.3
      */
     public function handleNgRestActiveButton($hash)
     {

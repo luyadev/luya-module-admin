@@ -581,7 +581,7 @@ class Api extends RestActiveController
     }
 
     /**
-     * Run active button
+     * Trigger an Active Button handler.
      *
      * @param string $hash The hash from the class name.
      * @param string|integer $id

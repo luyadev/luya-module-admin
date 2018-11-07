@@ -341,6 +341,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                     ];
                 }
 
+                // add active buttons.
                 foreach ($this->config->getActiveButtons() as $btn) {
                     $buttons[] = [
                         'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",
