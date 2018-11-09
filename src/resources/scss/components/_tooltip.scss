@@ -24,6 +24,7 @@
 
 .tooltip-inner {
     box-shadow: $tooltip-box-shadow;
+    max-width: 300px;
 
     .tooltip-image & {
         max-width: 100%;
@@ -93,4 +94,8 @@
 .tooltip-preview {
     background: $white;
     color: $black;
+
+    & {
+        max-width: 100%;
+    }
 }
