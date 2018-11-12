@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
++ [#247](https://github.com/luyadev/luya-module-admin/issues/247) Add new option to enable API caching by defining a cache dependency for the API.
 + [#18](https://github.com/luyadev/luya-module-admin/issues/18) Active Buttons for NgRest.
 + [#238](https://github.com/luyadev/luya-module-admin/issues/238) Storage image models rename methods.
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
