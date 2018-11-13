@@ -694,6 +694,8 @@ abstract class BaseFileSystemStorage extends Component
         $this->fileSystemSaveFile($tempFile, $fileName);
         unlink($tempFile);
 
+        $this->flushImageArray();
+
         // ensure the existing of the model
         if ($image) {
             $image->resolution_height = $resolution['height'];
@@ -903,6 +905,17 @@ abstract class BaseFileSystemStorage extends Component
         $this->deleteHasCache(self::CACHE_KEY_IMAGE);
         $this->deleteHasCache(self::CACHE_KEY_FOLDER);
         $this->deleteHasCache(self::CACHE_KEY_FILTER);
+    }
+
+    /**
+     * Flush only images array and image cache.
+     * 
+     * @since 1.2.3
+     */
+    public function flushImageArray()
+    {
+        $this->_imagesArray = null;
+        $this->deleteHasCache(self::CACHE_KEY_IMAGE);
     }
 
     /**
