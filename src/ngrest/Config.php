@@ -118,8 +118,8 @@ class Config extends BaseObject implements ConfigInterface
             $object = Yii::createObject($button);
             $btns[] = [
                 'hash' => $hash,
-                'label' => $object->label,
-                'icon' => $object->icon,
+                'label' => $object->getLabel(),
+                'icon' => $object->getIcon(),
             ];
         }
 
