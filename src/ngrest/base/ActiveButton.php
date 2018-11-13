@@ -42,17 +42,51 @@ abstract class ActiveButton extends BaseObject
      */
     const EVENT_RELOAD_LIST = 'loadList';
 
+    public function getDefaultLabel()
+    {
+        return false;
+    }
+
+    private $_label;
+
+    public function setLabel($label)
+    {
+        $this->_label = $label;
+    }
+
+    public function getLabel()
+    {
+        return $this->_label ?: $this->getDefaultLabel();
+    }
+    
     /**
      * @var string  A label value. You can also access different angular list  fields when using brackets:
      * 
      * 'label' => '{fieldname}',
      */
-    public $label;
+    //public $label;
+
+    public function getDefaultIcon()
+    {
+        return 'extension';
+    }
+
+    private $_icon;
+
+    public function setIcon($icon)
+    {
+        $this->_icon = $icon;
+    }
+
+    public function getIcon()
+    {
+        return $this->_icon ?: $this->getDefaultIcon();
+    }
 
     /**
      * @var string The icon from material icons list
      */
-    public $icon = 'extension';
+    //public $icon = 'extension';
 
     private $_events = [];
 
