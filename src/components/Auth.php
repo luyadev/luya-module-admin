@@ -44,7 +44,7 @@ class Auth extends \yii\base\Component
     {
         if ($this->_permissionTable === null) {
             $this->_permissionTable = (new Query())
-                ->select("*")
+                ->select(['user_id', 'crud_create', 'crud_update', 'crud_delete', 'alias_name', 'module_name', 'is_crud', 'route', 'api'])
                 ->from('admin_user_group')
                 ->innerJoin('admin_group_auth', 'admin_user_group.group_id=admin_group_auth.group_id')
                 ->innerJoin('admin_auth', 'admin_group_auth.auth_id = admin_auth.id')
