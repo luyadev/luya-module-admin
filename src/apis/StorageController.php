@@ -326,8 +326,8 @@ class StorageController extends RestController
             }
         }
     
-        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini
-        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_INI_SIZE), 'file' => null];
+        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload defintion.
+        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null];
     }
     
     /**
