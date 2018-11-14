@@ -298,6 +298,12 @@ class StorageController extends RestController
     /**
      * Upload a new file from $_FILES array.
      *
+     * Post Values:
+     * 
+     * + file
+     * + folderId
+     * + isHidden
+     * 
      * @return array An array with upload and message key.
     */
     public function actionFilesUpload()
@@ -306,22 +312,22 @@ class StorageController extends RestController
         
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
-                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error'])];
+                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error']), 'file' => null];
             }
             try {
-                $response = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], Yii::$app->request->post('folderId', 0));
+                $response = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], Yii::$app->request->post('folderId', 0), Yii::$app->request->post('isHidden', false));
                 if ($response) {
-                    return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes')];
+                    return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes'), 'file' => $response];
                 } else {
-                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error')];
+                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error'), 'file' => null];
                 }
             } catch (Exception $err) {
-                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()])];
+                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null];
             }
         }
     
         // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini
-        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_INI_SIZE)];
+        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_INI_SIZE), 'file' => null];
     }
     
     /**
