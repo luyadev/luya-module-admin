@@ -112,7 +112,7 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user', 'file', 'images']);
+        return $model->toArray([], ['user', 'file', 'images', 'source']);
     }
 
     /**
