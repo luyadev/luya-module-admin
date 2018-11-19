@@ -1,17 +1,17 @@
 /**
  * LUYA Admin scheduler
- * 
+ *
  * @since 1.3.0
  */
 
  /**
-  * 
+  *
   * ```
-  * <luya-schedule 
-  *     value="{{currentValueOfTheEntity}}" 
-  *     primary-key-value="{{primaryKeyModelValue}}" 
-  *     model-class="luya\admin\models\User" 
-  *     attribute-name="is_deleted" 
+  * <luya-schedule
+  *     value="{{currentValueOfTheEntity}}"
+  *     primary-key-value="{{primaryKeyModelValue}}"
+  *     model-class="luya\admin\models\User"
+  *     attribute-name="is_deleted"
   *     attribute-values="[{"label":"Draft","value":0},{"label":"Archived","value":2},{"label":"Published","value":1}]"
   * />
   * ```
@@ -38,7 +38,10 @@ zaa.directive("luyaSchedule", function() {
                 $scope.isVisible = !$scope.isVisible;
 
                 if ($scope.isVisible) {
+                    $scope.showInlineModal();
                     $scope.getLogTable();
+                } else {
+                    $scope.hideInlineModal();
                 }
             };
 
@@ -87,31 +90,61 @@ zaa.directive("luyaSchedule", function() {
                     $scope.getLogTable();
                     // post success message with admin toast
                 });
-            }; 
-            
+            };
+
         }],
+        link: function (scope, element, attr) {
+            scope.showInlineModal = function() {
+                var inlineModal = element.find('.inlinemodal');
+                var buttonBcr = element.find('.scheduler-btn')[0].getBoundingClientRect();
+
+                inlineModal.css({position: 'absolute', display: 'block'});
+                var modalBcr = inlineModal[0].getBoundingClientRect();
+                inlineModal.css({display: 'none'});
+
+                element.find('.inlinemodal').css({
+                    display: 'block',
+                    position: 'absolute',
+                    top: buttonBcr.y + buttonBcr.height,
+                    left: buttonBcr.x - (modalBcr.width / 2)
+                });
+            };
+
+            scope.hideInlineModal = function() {
+                element.find('.inlinemodal').css({display: 'none'});
+            };
+        },
         template: function () {
-            return '<div style="position: relative;" ng-class="{\'temp-z-index-fix\' : isVisible}"><button ng-click="toggleWindow()" type="button" class="btn btn-link"><i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span></button>' + 
-            '<div ng-show="isVisible" style="position: absolute; left: 50%; transform: translate(-50%, 0); min-width: 1300px;"><div class="card card-body mb-3" style="box-shadow: 3px 0px 1px 3px #ccc; ">'+
-            
-            '<div class="row">'+
-            '<div class="col">'+
-                '<p class="lead">Log</p>'+
-                '<table class="table table-bordered">'+
-                '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
-                '<tr ng-repeat="log in logs">'+
-                '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
-                '</tr>' + 
-                '</table>'+
-            '</div><div class="col">'+
-            '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
-                '<p class="lead">Schedule Event</p>'+
-                '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
-                '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
-                '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
-            '</div></div></div></div>'+
-            '<style>.temp-z-index-fix { z-index:100 }</style>' +
-            '</div>';
+            return '<div class="scheduler" ng-class="{\'inlinemodal--open\' : isVisible}">'+
+                        '<button ng-click="toggleWindow()" type="button" class="scheduler-btn btn btn-link">' +
+                            '<i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
+                        '</button>' +
+                        '<div class="inlinemodal" style="display: none;">' +
+                            '<div class="inlinemodal-inner">' +
+                                '<div class="card card-body mb-3" style="box-shadow: 3px 0px 1px 3px #ccc; ">' +
+                                    '<div class="row">'+
+                                        '<div class="col">'+
+                                            '<p class="lead">Log</p>'+
+                                            '<table class="table table-bordered">'+
+                                                '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
+                                                '<tr ng-repeat="log in logs">'+
+                                                    '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
+                                                '</tr>' +
+                                                '</table>'+
+                                            '</div>' +
+                                        '<div class="col">'+
+                                            '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
+                                            '<p class="lead">Schedule Event</p>'+
+                                            '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
+                                            '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
+                                            '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<style>.temp-z-index-fix { z-index:100 }</style>' +
+                    '</div>';
         }
     };
 });

@@ -1,0 +1,10 @@
+.inlinemodal {
+    // position: relative;
+}
+
+.inlinemodal-content {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+}
