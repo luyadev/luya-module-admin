@@ -289,19 +289,8 @@ final class StorageFile extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function fields()
-    {
-        $fields = parent::fields();
-        $fields['source'] = 'source';
-        $fields['caption'] = 'caption';
-        return $fields;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable'];
+        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption'];
     }
 }
