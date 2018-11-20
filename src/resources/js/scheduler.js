@@ -28,7 +28,7 @@ zaa.directive("luyaSchedule", function() {
             attributeName: "@",
             onlyIcon: "@"
         },
-        controller: ['$scope', '$http', function($scope, $http) {
+        controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
             // toggle window
 
@@ -38,7 +38,6 @@ zaa.directive("luyaSchedule", function() {
                 $scope.isVisible = !$scope.isVisible;
 
                 if ($scope.isVisible) {
-                    $scope.showInlineModal();
                     $scope.getLogTable();
                 } else {
                     $scope.hideInlineModal();
@@ -49,7 +48,7 @@ zaa.directive("luyaSchedule", function() {
 
             $scope.logs = [];
 
-            $scope.getLogTable = function() {
+            $scope.getLogTable = function(callback) {
                 $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass+'&pk=' + $scope.primaryKeyValue).then(function(response) {
                     $scope.logs = response.data;
 
@@ -58,6 +57,10 @@ zaa.directive("luyaSchedule", function() {
                         if (value.id == $scope.latestId && value.is_done) {
                             $scope.value = value.new_attribute_value;
                         }
+                    });
+
+                    $timeout(function() {
+                        $scope.showInlineModal();
                     });
                 });
             };
@@ -92,21 +95,88 @@ zaa.directive("luyaSchedule", function() {
                 });
             };
 
+            var w = angular.element(window);
+            w.bind('resize', function(){
+                $scope.isVisible = false;
+                $scope.hideInlineModal();
+            });
         }],
         link: function (scope, element, attr) {
+            scope.getModalBcr = function(modal, buttonBcr) {
+                modal.css({display: 'block', left: buttonBcr.left, top: (buttonBcr.top + buttonBcr.height), height: 'auto', width: '100%', maxWidth: '1000px'});
+                var modalBcr = modal[0].getBoundingClientRect();
+                modal.css({display: 'none'});
+
+                return modalBcr;
+            };
+
+            scope.updateModalBcr = function(inlineModal, buttonBcr, inlineModalBcr, documentSize) {
+
+                // Check if modal overlaps to the right and decrease left value
+                if(inlineModalBcr.x + inlineModalBcr.width > documentSize.width) {
+                    console.log("too big, more to the left");
+                    // +25 for 25px spacing from the border
+                    inlineModalBcr.x = inlineModalBcr.x - ((inlineModalBcr.x + inlineModalBcr.width) - documentSize.width + 25);
+
+                    // Minimum left is 25
+                    if(inlineModalBcr.x < 25) {
+                        inlineModalBcr.x = 25;
+
+                        // The modal now overlaps to the right, set max-width
+                        if(inlineModalBcr.x + inlineModalBcr.width > documentSize.width) {
+                            // -50 because of the spacing on the left and
+                            // the spacing we want on the right
+                            inlineModal.css('width', documentSize.width - 50);
+                        }
+                    }
+                }
+
+                // Check if the modal is too high and disappears on the bottom
+                // of the window
+                // +25 because we want a 25px spacing
+                if((inlineModalBcr.y + 25) + inlineModalBcr.height > documentSize.height) {
+
+                    // Too high, set top position
+                    inlineModalBcr.y = buttonBcr.y - inlineModalBcr.height;
+
+                    // Check if modal disappears on top of the window
+                    if(inlineModalBcr.y - inlineModalBcr.height < 0) {
+
+                        // In this case the inline modal is too high and
+                        // needs to be resized
+                        if(buttonBcr.y > documentSize.height - buttonBcr.y) {
+                            // Space above the button is bigger than below
+                            inlineModalBcr.y = 25; // 25 px from top
+                            inlineModal.css('height', buttonBcr.y - inlineModalBcr.y - 5); // -5 for better spacing between modal and clicked button
+                        } else {
+                            // Space below the button is bigger than above
+                            inlineModalBcr.y = buttonBcr.y + buttonBcr.height;
+                            // +25 for 25px spacing from the border
+                            inlineModal.css('height', (inlineModalBcr.height - ((inlineModalBcr.y + inlineModalBcr.height) - documentSize.height + 25)) + 'px');
+                        }
+                    }
+                }
+
+                return inlineModalBcr;
+            };
+
             scope.showInlineModal = function() {
                 var inlineModal = element.find('.inlinemodal');
-                var buttonBcr = element.find('.scheduler-btn')[0].getBoundingClientRect();
+                var button = element.find('.scheduler-btn');
+                var buttonBcr = button[0].getBoundingClientRect();
 
-                inlineModal.css({position: 'absolute', display: 'block'});
-                var modalBcr = inlineModal[0].getBoundingClientRect();
-                inlineModal.css({display: 'none'});
+                var inlineModalBcr = scope.getModalBcr(inlineModal, buttonBcr);
+                var documentSize = {width: $(document).width(), height: $(document).height()};
 
-                element.find('.inlinemodal').css({
+                inlineModalBcr = scope.updateModalBcr(inlineModal, buttonBcr, inlineModalBcr, documentSize);
+
+                console.log(inlineModalBcr);
+
+                inlineModal.css({
                     display: 'block',
-                    position: 'absolute',
-                    top: buttonBcr.y + buttonBcr.height,
-                    left: buttonBcr.x - (modalBcr.width / 2)
+                    top: inlineModalBcr.top,
+                    left: inlineModalBcr.left,
+                    zIndex: 500
                 });
             };
 
@@ -119,26 +189,26 @@ zaa.directive("luyaSchedule", function() {
                         '<button ng-click="toggleWindow()" type="button" class="scheduler-btn btn btn-link">' +
                             '<i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
                         '</button>' +
-                        '<div class="inlinemodal" style="display: none;">' +
-                            '<div class="inlinemodal-inner">' +
-                                '<div class="card card-body mb-3" style="box-shadow: 3px 0px 1px 3px #ccc; ">' +
-                                    '<div class="row">'+
-                                        '<div class="col">'+
-                                            '<p class="lead">Log</p>'+
-                                            '<table class="table table-bordered">'+
-                                                '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
-                                                '<tr ng-repeat="log in logs">'+
-                                                    '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
-                                                '</tr>' +
-                                                '</table>'+
-                                            '</div>' +
-                                        '<div class="col">'+
-                                            '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
-                                            '<p class="lead">Schedule Event</p>'+
-                                            '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
-                                            '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
-                                            '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
+                        '<div class="inlinemodal" style="width: 100%; max-width: 1000px; display: none;">' +
+                            '<div class="inlinemodal-head clearfix">' +
+                                '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
+                            '</div>' +
+                            '<div class="inlinemodal-content">' +
+                                '<div class="row">'+
+                                    '<div class="col">'+
+                                        '<p class="lead">Log</p>'+
+                                        '<table class="table table-bordered">'+
+                                            '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
+                                            '<tr ng-repeat="log in logs">'+
+                                                '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
+                                            '</tr>' +
+                                            '</table>'+
                                         '</div>' +
+                                    '<div class="col">'+
+                                        '<p class="lead">Schedule Event</p>'+
+                                        '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
+                                        '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
+                                        '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
