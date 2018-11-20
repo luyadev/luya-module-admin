@@ -870,7 +870,8 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFilterId($identifier)
     {
-        return $this->getFiltersArrayItem($identifier)['id'];
+        $filter = $this->getFiltersArrayItem($identifier);
+        return $filter ? (int) $filter['id'] : false;
     }
 
     /**

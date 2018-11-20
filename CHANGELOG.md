@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.2.3 (in progress)
 
+### Changed
+
++ [#248](https://github.com/luyadev/luya-module-admin/issues/248) Changed file upload response status code on error.
+
 ### Added
 
++ [#249](https://github.com/luyadev/luya-module-admin/issues/249) Add image upload endpoint.
 + [#247](https://github.com/luyadev/luya-module-admin/issues/247) Add new option to enable API caching by defining a cache dependency for the API.
 + [#18](https://github.com/luyadev/luya-module-admin/issues/18) Active Buttons for NgRest.
 + [#238](https://github.com/luyadev/luya-module-admin/issues/238) Storage image models rename methods.

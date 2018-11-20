@@ -171,6 +171,7 @@ class StorageController extends RestController
         }
 
         // try to create thumbnail on view if not done
+        // @TODO rename to given filters: tinyCropImage and mediumThumbnailImage
         if (empty($model->thumbnail)) {
             // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
             Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
@@ -334,6 +335,41 @@ class StorageController extends RestController
         return false;
     }
     
+    /**
+     * Image Upload with $_FILES array:
+     * 
+     * Post values:
+     * + file
+     * + folderId
+     * + isHidden
+     *
+     * @return array
+     * @since 1.2.3
+     */
+    public function actionImagesUpload()
+    {
+        $result = $this->actionFilesUpload();
+
+        if ($result['upload'] && $result['file']) {
+            $fileId = $result['file']->id;
+
+            $image = Yii::$app->storage->createImage($fileId, 0);
+
+            if ($image) {
+                // create system thumbnails
+                $tinyCrop = Yii::$app->storage->createImage($fileId, Yii::$app->storage->getFilterId(TinyCrop::identifier()));
+                $mediumThumbnail = Yii::$app->storage->createImage($fileId, Yii::$app->storage->getFilterId(MediumThumbnail::identifier()));
+            }
+
+            return [
+                'image' => $image,
+                'tinyCrop' => $tinyCrop,
+                'mediumThumbnail' => $mediumThumbnail,
+            ];
+        }
+
+        return $this->sendArrayError(['image' => 'Unable to create the given with and the corresponding filters.']);
+    }
     
     /**
      * Upload a new file from $_FILES array.
@@ -352,6 +388,7 @@ class StorageController extends RestController
         
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
+                Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
                 return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error']), 'file' => null];
             }
             try {
@@ -359,14 +396,17 @@ class StorageController extends RestController
                 if ($response) {
                     return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes'), 'file' => $response];
                 } else {
+                    Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
                     return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error'), 'file' => null];
                 }
             } catch (Exception $err) {
+                Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
                 return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null];
             }
         }
     
         // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload defintion.
+        Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
         return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null];
     }
     
