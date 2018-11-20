@@ -116,6 +116,46 @@ class StorageController extends RestController
     }
 
     /**
+     * Get file model.
+     * 
+     * This is mainly used for external api access.
+     *
+     * @param integer $id
+     * @return StorageFile
+     * @since 1.2.3
+     */
+    public function actionFile($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+
+        return $model;
+    }
+
+    /**
+     * Get image model.
+     * 
+     * This is mainly used for external api access.
+     *
+     * @param integer $id
+     * @return StorageImage
+     * @since 1.2.3
+     */
+    public function actionImage($id)
+    {
+        $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage image.");
+        }
+
+        return $model;
+    }
+
+    /**
      * 
      * @param integer $id
      * @throws NotFoundHttpException
