@@ -275,13 +275,15 @@ final class StorageFile extends ActiveRecord
         }
     }
 
-    public function fields()
+    /**
+     * Get the parsed response for a file caption as expand.
+     * 
+     * @since 1.2.3
+     * @return string The caption parsed for the current input langauge.
+     */
+    public function getCaption()
     {
-        $fields = parent::fields();
-        $fields['caption'] = function($model) {
-            return I18n::decodeFindActive($model->caption);
-        };
-        return $fields;
+        return I18n::decodeFindActive($this->caption);
     }
 
     /**
@@ -289,6 +291,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'source', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'tags'];
+        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption', 'tags'];
     }
 }

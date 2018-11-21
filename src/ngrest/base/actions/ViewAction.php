@@ -40,36 +40,14 @@ class ViewAction extends \yii\rest\ViewAction
             return call_user_func($this->findModel, $id, $this);
         }
 
-        /* @var $modelClass ActiveRecordInterface */
-        $modelClass = $this->modelClass;
-        $keys = $modelClass::primaryKey();
-        if (count($keys) > 1) {
-            $values = explode(',', $id);
-            if (count($keys) === count($values)) {
-                $model = $this->findModelFromCondition(array_combine($keys, $values), $keys, $modelClass);
-            }
-        } elseif ($id !== null) {
-            $model = $this->findModelFromCondition($id, $keys, $modelClass);
-        }
+        
+        $model = $this->controller->findModelClassObject($this->modelClass, $id, 'view');
 
-        if (isset($model)) {
+        if ($model) {
             return $model;
         }
 
         throw new NotFoundHttpException("Object not found: $id");
-    }
-
-    /**
-     * This equals to the ActieRecord::findByCondition which is sadly a protected method.
-     *  
-     * @since 1.2.2.1
-     * @return yii\db\ActiveRecord
-     */
-    protected function findModelFromCondition($condition, $primaryKey, $modelClass)
-    {
-        $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
-
-        return $modelClass::find()->andWhere($condition)->with($this->controller->getWithRelation('view'))->one();
     }
 
     /**

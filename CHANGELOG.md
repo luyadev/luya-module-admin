@@ -15,15 +15,27 @@ This release contains new migrations and requires to run the `migrate` command a
 
 + [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
 
-## 1.2.3 (in progress)
+## 1.2.3 (21. November 2018)
+
+### Changed
+
++ [#248](https://github.com/luyadev/luya-module-admin/issues/248) Changed file upload response status code on error.
 
 ### Added
 
++ [#249](https://github.com/luyadev/luya-module-admin/issues/249) Add image upload endpoint.
++ [#247](https://github.com/luyadev/luya-module-admin/issues/247) Add new option to enable API caching by defining a cache dependency for the API.
++ [#18](https://github.com/luyadev/luya-module-admin/issues/18) Active Buttons for NgRest.
++ [#238](https://github.com/luyadev/luya-module-admin/issues/238) Storage image models rename methods.
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.
 + [#232](https://github.com/luyadev/luya-module-admin/pull/232) Add tooltip option to load content from xhr request.
++ [#235](https://github.com/luyadev/luya-module-admin/pull/235) Add Injector NgRest plugin.
 
 ### Fixed
 
++ [#243](https://github.com/luyadev/luya-module-admin/issues/243) Fix issue when file id is not a numeric value.
++ [#242](https://github.com/luyadev/luya-module-admin/issues/242) Reset add form values when saving.
++ [#241](https://github.com/luyadev/luya-module-admin/issues/241) Fix problem with composite key detecting.
 + [#221](https://github.com/luyadev/luya-module-admin/issues/221) Fixed problem with zaa slug directive when editing existing value.
 + [#231](https://github.com/luyadev/luya-module-admin/issues/231) Ensure Loggable behavior only runs when admin module exists.
 

@@ -21,6 +21,7 @@ use yii\web\NotFoundHttpException;
 use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\actions\IndexAction;
+use luya\helpers\StringHelper;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -58,6 +59,26 @@ class Api extends RestActiveController
      * @since 1.2.2
      */
     public $filterSearchModelClass;
+
+    /**
+     * @var array|string Define a yii caching depency will enable the caching for this API.
+     * 
+     * Example usage:
+     * 
+     * ```php
+     * public $cacheDependency = [
+     *     'class' => 'yii\caching\DbDependency',
+     *     'sql' => 'SELECT MAX(update_ad) FROM news',
+     * ];
+     * ```
+     * 
+     * This should be used very carefully as the ngrest crud list data is cached too. Therefore this should be used together
+     * with a Timestamp behavior!
+     * 
+     * @see https://www.yiiframework.com/doc/guide/2.0/en/caching-data#cache-dependencies
+     * @since 1.2.3
+     */
+    public $cacheDependency;
     
     /**
      * @inheritdoc
@@ -109,7 +130,10 @@ class Api extends RestActiveController
     /**
      * Get the relations for the corresponding action name.
      * 
-     * @param string $actionName The action name like `index`, `list`, `search`
+     * Since version 1.2.3 it also checks if the $expand get param is provided for the given relations, otherwise
+     * the relation will not be joined trough `with`. This reduces the database querie time.
+     * 
+     * @param string $actionName The action name like `index`, `list`, `search`, `relation-call`.
      * @return array An array with relation names.
      * @since 1.2.2
      */
@@ -117,14 +141,47 @@ class Api extends RestActiveController
     {
         $rel = $this->withRelations();
         
+        $expand = Yii::$app->request->get('expand', null);
+        $relationPrefixes = [];
+        foreach (StringHelper::explode($expand, ',', true, true) as $relation) {
+            // check for subrelation dot notation.
+            $relationPrefixes[] = current(explode(".", $relation));
+        }
+
+        // no expand param found, return empty join with array.
+        if (empty($relationPrefixes)) {
+            return [];
+        }
+
         foreach ($rel as $relationName) {
             // it seem to be the advance strucutre for given actions.
-            if (is_array($relationName)) {
-                return isset($rel[$actionName]) ? $rel[$actionName] : [];
+            if (is_array($relationName) &&  isset($rel[$actionName])) {
+                return $this->relationsFromExpand($rel[$actionName], $relationPrefixes);
             }
         }
         // simple structure
-        return $rel;
+        return $this->relationsFromExpand($rel, $relationPrefixes);
+    }
+
+    /**
+     * Ensure if the expand prefix exists in the relation.
+     *
+     * @param array $relations The available relations
+     * @param array $expandPrefixes The available expand relation names
+     * @return array
+     * @since 1.2.3
+     */
+    private function relationsFromExpand(array $relations, array $expandPrefixes)
+    {
+        $valid = [];
+        foreach ($expandPrefixes as $prefix) {
+            foreach ($relations as $relation) {
+                if (StringHelper::startsWith($relation, $prefix)) {
+                    $valid[] = $relation;
+                }
+            }
+        }
+        return $valid;
     }
     
     /**
@@ -271,14 +328,49 @@ class Api extends RestActiveController
      */
     public function findModel($id)
     {
-        $class = $this->modelClass;
-        $model = $class::findOne((int) $id);
+        $model = $this->findModelClassObject($this->modelClass, $id, 'view');
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the Model for the given ID");
         }
         
         return $model;
+    }
+
+    
+    /**
+     * Find the model for a given class and id.
+     *
+     * @param [type] $modelClass
+     * @param [type] $id
+     * @return void
+     */
+    public function findModelClassObject($modelClass, $id, $relationContext)
+    {
+        $keys = $modelClass::primaryKey();
+        if (count($keys) > 1) {
+            $values = explode(',', $id);
+            if (count($keys) === count($values)) {
+                return $this->findModelFromCondition(array_combine($keys, $values), $keys, $modelClass, $relationContext);
+            }
+        } elseif ($id !== null) {
+            return $this->findModelFromCondition($id, $keys, $modelClass, $relationContext);
+        }
+
+        return false;
+    }
+
+    /**
+     * This equals to the ActieRecord::findByCondition which is sadly a protected method.
+     *  
+     * @since 1.2.3
+     * @return yii\db\ActiveRecord
+     */
+    protected function findModelFromCondition($condition, $primaryKey, $modelClass, $relationContext)
+    {
+        $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
+
+        return $modelClass::find()->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
     }
     
     /**
@@ -387,7 +479,7 @@ class Api extends RestActiveController
         }
         
         return new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query->with($this->getWithRelation('relation-call')),
             'pagination' => $this->pagination,
         ]);
     }
@@ -506,5 +598,21 @@ class Api extends RestActiveController
         }
         
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
+    }
+
+    /**
+     * Trigger an Active Button handler.
+     *
+     * @param string $hash The hash from the class name.
+     * @param string|integer $id
+     * @return void
+     * @since 1.2.3
+     */
+    public function actionActiveButton($hash, $id)
+    {
+        $this->checkAccess('active-button');
+        $model = $this->findModel($id);
+
+        return $model->handleNgRestActiveButton($hash);
     }
 }

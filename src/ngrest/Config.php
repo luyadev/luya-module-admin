@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest;
 
+use Yii;
 use luya\helpers\ArrayHelper;
 use luya\admin\Module;
 use yii\base\InvalidConfigException;
@@ -93,6 +94,39 @@ class Config extends BaseObject implements ConfigInterface
         $this->_relations[] = $relation;
     }
     
+    private $_activeButtons = [];
+
+    /**
+     * Setter method for the active button array from the model
+     *
+     * @param array
+     * @since 1.2.3 
+     */
+    public function setActiveButtons(array $buttons)
+    {
+        $this->_activeButtons = $buttons;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActiveButtons()
+    {
+        $btns = [];
+        foreach ($this->_activeButtons as $button) {
+            $hash = sha1($button['class']);
+            $object = Yii::createObject($button);
+            $btns[] = [
+                'hash' => $hash,
+                'label' => $object->getLabel(),
+                'icon' => $object->getIcon(),
+            ];
+        }
+
+        return $btns;
+    }
+    
+
     private $_apiEndpoint;
     
     /**

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use luya\helpers\FileHelper;
 use luya\admin\filters\TinyCrop;
+use luya\admin\filters\MediumThumbnail;
 
 /**
  * StorageImage Model.
@@ -105,17 +106,57 @@ final class StorageImage extends ActiveRecord
     }
 
     /**
-     * Return a storage image object representing the thumbnail which is used for file manager and crud list previews.
-     * 
-     * > The thumbnail won't be created on the fly! So you have to use storage system to create the thumbnail for the givne filter.
-     * > This should have been done already while uploading
+     * Use getTinyCropImage().
      * 
      * @since 1.2.2.1
+     * @deprecated 1.2.3 use getTinyCropImage() instead.
      */
     public function getThumbnail()
     {
-        $tinyCrop = Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier());
-        return $this->hasOne(self::class, ['file_id' => 'file_id'])->andWhere(['filter_id' => $tinyCrop['id']]);
+        return $this->getFilterImage(TinyCrop::identifier());
+    }
+
+    /**
+     * Return a storage image object representing the tiny crop which is used for file manager and crud list previews.
+     * 
+     * The tiny crop image filter is also the thumbnail used in ngrest list (and file manager).
+     * 
+     * > The thumbnail won't be created on the fly! Use storage system to create the image for the given filter.
+     * > This should have been done already while uploading.
+     * 
+     * @since 1.2.3
+     */
+    public function getTinyCropImage()
+    {
+        return $this->getFilterImage(TinyCrop::identifier());
+    }
+
+    /**
+     * Return a storage image object representing the medium thumbail which is used for file manager and crud list previews.
+     * 
+     * The Medium Thumbnail image filter is used when hovering the image in file manager.
+     * 
+     * > The thumbnail won't be created on the fly! Use storage system to create the image for the given filter.
+     * > This should have been done already while uploading.
+     * 
+     * @since 1.2.3
+     */
+    public function getMediumThumbnailImage()
+    {
+        return $this->getFilterImage(MediumThumbnail::identifier());
+    }
+
+    /**
+     * The the relation for an storage image with the given filter identifier
+     *
+     * @param string $identifier The identifier of the filter to use.
+     * @return self
+     * @since 1.2.3
+     */
+    public function getFilterImage($identifier)
+    {
+        $filterId = Yii::$app->storage->getFilterId($identifier);
+        return $this->hasOne(self::class, ['file_id' => 'file_id'])->andWhere(['filter_id' => $filterId]);
     }
 
     /**
@@ -140,6 +181,6 @@ final class StorageImage extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['thumbnail'];
+        return ['file', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
     }
 }

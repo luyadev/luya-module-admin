@@ -370,8 +370,15 @@ return [
     'dashboard_log_message_delete' => 'Ein Datensatz in <strong>{container}</strong> wurde gelöscht.',
     'model_tag_relations_count' => 'Verwendungen',
 
+// 1.2.3
+
+    'active_button_duplicate_label' => 'Duplizieren',
+    'active_button_duplicate_success' => 'Eine Kopie wurde erstellt.',
+    'active_button_duplicate_error' => 'Beim Duplizieren trat ein Fehler auf: {message}',
+
 // 1.3
 
 'model_tag_translation' => 'Translation',
 'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
+
 ];

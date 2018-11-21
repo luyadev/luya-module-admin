@@ -63,6 +63,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 break;
             case 'active-window-render':
             case 'active-window-callback':
+            case 'active-button':
             case 'update':
                 $type = Auth::CAN_UPDATE;
                 break;
