@@ -164,22 +164,21 @@ class StorageController extends RestController
      */
     public function actionImageInfo($id)
     {
-        $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one();
+        $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
 
-        // try to create thumbnail on view if not done
-        // @TODO rename to given filters: tinyCropImage and mediumThumbnailImage
-        if (empty($model->thumbnail)) {
+        // try to create thumbnail on view if not done 
+        if (empty($model->tinyCropImage)) {
             // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
             Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
             // refresh model internal (as $model->refresh() wont load the relations data we have to call the same model with relations again)
-            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one(); 
+            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one(); 
         }
         
-        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'thumbnail.file']);
+        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'tinyCropImage.file']);
     }
     
     /**
@@ -193,7 +192,7 @@ class StorageController extends RestController
         $ids = Yii::$app->request->getBodyParam('ids', []);
         $ids = array_unique($ids);
         return new ActiveDataProvider([
-            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file', 'thumbnail.file']),
+            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file', 'tinyCropImage.file']),
             'pagination' => false,
         ]);
     }
