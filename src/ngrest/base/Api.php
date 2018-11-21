@@ -68,9 +68,13 @@ class Api extends RestActiveController
      * ```php
      * public $cacheDependency = [
      *     'class' => 'yii\caching\DbDependency',
-     *     'sql' => 'SELECT MAX(id) FROM news',
+     *     'sql' => 'SELECT MAX(update_ad) FROM news',
      * ];
      * ```
+     * 
+     * This should be used very carefully as the ngrest crud list data is cached too. Therefore this should be used together
+     * with a Timestamp behavior!
+     * 
      * @see https://www.yiiframework.com/doc/guide/2.0/en/caching-data#cache-dependencies
      * @since 1.2.3
      */
