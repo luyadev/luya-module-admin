@@ -3030,7 +3030,10 @@
                         			AdminToastService.error(response.data.message);
                         			LuyaLoading.stop();
                         		}
-	                        });
+	                        }, function(error) {
+                                AdminToastService.error(error.data.message);
+                                LuyaLoading.stop();
+                            });
                         }
                     }
                 };
@@ -3054,9 +3057,10 @@
                             }
                         });
                     }, function (response) {
-                        if (response.status > 0) {
-                            $scope.errorMsg = true;
-                        }
+                        file = response.data;
+                        AdminToastService.error(file.message);
+                        LuyaLoading.stop();
+                        $scope.errorMsg = true
                     });
 
                     file.upload.progress(function (evt) {
