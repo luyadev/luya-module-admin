@@ -473,6 +473,14 @@ use luya\admin\helpers\Angular;
             </div>
             <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
         </form>
+
+        <h5 class="mb-3 mt-4"><?= Admin::t('menu_system_item_tags'); ?></h5>
+        <span style="font-size:15px;" 
+            ng-repeat="tag in tags"
+            ng-click="saveTagRelation(tag, fileDetailFull)"
+            ng-class="{'badge-primary font-weight-bold text-bold': fileHasTag(tag), 'badge-secondary': !fileHasTag(tag)}"
+            class="badge badge-pill mx-1 mb-2"
+        >{{tag.name}}</span>
     </div>
 </script>
 

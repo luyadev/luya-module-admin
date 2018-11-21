@@ -2707,8 +2707,8 @@
                 onlyImages : '@onlyImages'
             },
             controller : [
-            	'$scope', '$http', '$filter', '$timeout', '$q', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 
-            	function($scope, $http, $filter, $timeout, $q, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId) {
+            	'$scope', '$http', '$filter', '$timeout', '$q', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 
+            	function($scope, $http, $filter, $timeout, $q, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
 
                 // ServiceFoldersData inheritance
 
@@ -2721,6 +2721,14 @@
                 $scope.foldersDataReload = function() {
                     return ServiceFoldersData.load(true);
                 };
+
+                // Service Tags
+
+                $scope.tags = [];
+
+                ServiceAdminTags.load().then(function(response) {
+                    $scope.tags = response;
+                });
 
                 // ServiceFilesData inheritance
 
@@ -3085,6 +3093,7 @@
 
                 $scope.fileDetailFolder = false;
                 
+                
                 $scope.openFileDetail = function(file, force) {
                 	if ($scope.fileDetail.id == file.id && force !== true) {
                 		$scope.closeFileDetail();
@@ -3099,6 +3108,23 @@
                 		
                 		$scope.fileDetail = file;
                 	}
+                };
+
+                $scope.saveTagRelation = function(tag, file) {
+                    $http.post('admin/api-admin-storage/toggle-file-tag', {tagId: tag.id, fileId: file.id}).then(function(response) {
+                        $scope.fileDetailFull.tags = response.data;
+                    });
+                };
+
+                $scope.fileHasTag = function(tag) {
+                    var exists = false;
+                    angular.forEach($scope.fileDetailFull.tags, function(value) {
+                        if (value.id == tag.id) {
+                            exists = true;
+                        }
+                    });
+
+                    return exists;
                 };
                 
                 $scope.updateFileData = function() {

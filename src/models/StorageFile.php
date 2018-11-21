@@ -291,6 +291,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption'];
+        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption', 'tags'];
     }
 }

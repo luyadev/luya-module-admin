@@ -103,8 +103,8 @@ final class ApiUser extends User
     {
         return [
             'firstname' => 'text',
-            'lastname' => 'text',
             'email' => 'text',
+            'lastname' => 'text',
         ];
     }
     

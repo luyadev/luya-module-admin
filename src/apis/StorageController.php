@@ -21,6 +21,7 @@ use luya\admin\models\StorageImage;
 use luya\admin\file\Item;
 use luya\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use luya\admin\models\TagRelation;
 
 /**
  * Filemanager and Storage API.
@@ -97,6 +98,42 @@ class StorageController extends RestController
     // ACTIONS
     
     /**
+     * Toggle Tags for a given file.
+     * 
+     * If a relation exists, remove, otherwise add.
+     *
+     * @return The array of associated tags for the given file.
+     * @since 1.3.0
+     */
+    public function actionToggleFileTag()
+    {
+        $tagId = Yii::$app->request->getBodyParam('tagId');
+        $fileId = Yii::$app->request->getBodyParam('fileId');
+
+        $file = StorageFile::findOne($fileId);
+
+        if (!$file) {
+            throw new NotFoundHttpException("Unable to find the given file to toggle the tag.");
+        }
+    
+        $relation = TagRelation::find()->where(['table_name' => StorageFile::tableName(), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
+
+        if ($relation) {
+            $relation->delete();
+
+            return $file->tags;
+        }
+
+        $model = new TagRelation();
+        $model->table_name = StorageFile::tableName();
+        $model->pk_id = $fileId;
+        $model->tag_id = $tagId;
+
+        $model->save();
+        return $file->tags;
+    }
+
+    /**
      * Get all storage file informations for a given ID.
      *
      * @param integer $fileId
@@ -106,13 +143,13 @@ class StorageController extends RestController
      */
     public function actionFileInfo($id)
     {
-        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images'])->one();
+        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images', 'tags'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user', 'file', 'images', 'source']);
+        return $model->toArray([], ['user', 'file', 'images', 'source', 'tags']);
     }
 
     /**

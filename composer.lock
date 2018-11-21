@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afd916b62ded277af0fb27063af1df6c",
+    "content-hash": "aa36af65f8e1cad298816ac4c6a6f18e",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -303,6 +303,55 @@
             "time": "2017-05-16T10:31:22+00:00"
         },
         {
+            "name": "symfony/process",
+            "version": "v3.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/07432804942b9f6dd7b7377faf9920af5f95d70a",
+                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-07-13T13:05:09+00:00"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "2.0.15.1",
             "source": {
@@ -503,6 +552,86 @@
                 "yii2"
             ],
             "time": "2018-02-22T11:57:06+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-queue",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-queue.git",
+                "reference": "8c2b337f7d9ea934c2affdfc21c9fb387d0a0773"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-queue/zipball/8c2b337f7d9ea934c2affdfc21c9fb387d0a0773",
+                "reference": "8c2b337f7d9ea934c2affdfc21c9fb387d0a0773",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "symfony/process": "*",
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "require-dev": {
+                "enqueue/amqp-lib": "^0.8",
+                "jeremeamia/superclosure": "*",
+                "pda/pheanstalk": "*",
+                "php-amqplib/php-amqplib": "*",
+                "phpunit/phpunit": "~4.4",
+                "yiisoft/yii2-debug": "*",
+                "yiisoft/yii2-gii": "*",
+                "yiisoft/yii2-redis": "*"
+            },
+            "suggest": {
+                "enqueue/amqp-lib": "Need for AMQP interop queue.",
+                "ext-gearman": "Need for Gearman queue.",
+                "ext-pcntl": "Need for process signals.",
+                "pda/pheanstalk": "Need for Beanstalk queue.",
+                "php-amqplib/php-amqplib": "Need for AMQP queue.",
+                "yiisoft/yii2-redis": "Need for Redis queue."
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\queue\\": "src",
+                    "yii\\queue\\amqp\\": "src/drivers/amqp",
+                    "yii\\queue\\amqp_interop\\": "src/drivers/amqp_interop",
+                    "yii\\queue\\beanstalk\\": "src/drivers/beanstalk",
+                    "yii\\queue\\db\\": "src/drivers/db",
+                    "yii\\queue\\file\\": "src/drivers/file",
+                    "yii\\queue\\gearman\\": "src/drivers/gearman",
+                    "yii\\queue\\redis\\": "src/drivers/redis",
+                    "yii\\queue\\sync\\": "src/drivers/sync"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Zhuravlev",
+                    "email": "zhuravljov@gmail.com"
+                }
+            ],
+            "description": "Yii2 Queue Extension which supported DB, Redis, RabbitMQ, Beanstalk and Gearman",
+            "keywords": [
+                "async",
+                "beanstalk",
+                "db",
+                "gearman",
+                "gii",
+                "queue",
+                "rabbitmq",
+                "redis",
+                "yii"
+            ],
+            "time": "2017-12-26T17:16:14+00:00"
         }
     ],
     "packages-dev": [
@@ -682,7 +811,7 @@
             "version": "v2.7.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/flowjs/ng-flow.git",
+                "url": "git@github.com:flowjs/ng-flow.git",
                 "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "dist": {
@@ -1091,16 +1220,16 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.7",
+            "version": "1.0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "020c4161ade189c01b72304ee0765652a279a9f2"
+                "reference": "4b57893b2d847c0cbddf4796332c225188f7c6ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/020c4161ade189c01b72304ee0765652a279a9f2",
-                "reference": "020c4161ade189c01b72304ee0765652a279a9f2",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/4b57893b2d847c0cbddf4796332c225188f7c6ca",
+                "reference": "4b57893b2d847c0cbddf4796332c225188f7c6ca",
                 "shasum": ""
             },
             "require-dev": {
@@ -1151,20 +1280,20 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-10-08T14:57:12+00:00"
+            "time": "2018-10-17T19:22:23+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.12",
+            "version": "1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "9857ccc904ae59b5f828462b561e933f0dcac6d6"
+                "reference": "316bf8e8b35eb3690af426a6ae6a4349b8c897e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/9857ccc904ae59b5f828462b561e933f0dcac6d6",
-                "reference": "9857ccc904ae59b5f828462b561e933f0dcac6d6",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/316bf8e8b35eb3690af426a6ae6a4349b8c897e8",
+                "reference": "316bf8e8b35eb3690af426a6ae6a4349b8c897e8",
                 "shasum": ""
             },
             "require": {
@@ -1199,7 +1328,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-10-08T15:16:16+00:00"
+            "time": "2018-10-15T10:00:39+00:00"
         },
         {
             "name": "myclabs/deep-copy",

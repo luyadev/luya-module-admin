@@ -6,8 +6,12 @@ use Yii;
 use luya\traits\CacheableTrait;
 use luya\admin\models\Property;
 use luya\admin\models\Lang;
+use luya\admin\models\Tag;
 use luya\admin\base\RestController;
 use luya\admin\models\UserLogin;
+use luya\admin\models\Scheduler;
+use yii\data\ActiveDataProvider;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Common Admin API Tasks.
@@ -22,6 +26,61 @@ class CommonController extends RestController
 {
     use CacheableTrait;
     
+    /**
+     * Get all log entries for a given scheulder model with primary key.
+     *
+     * @param [type] $model
+     * @param [type] $pk
+     * @return void
+     * @since 1.3.0
+     */
+    public function actionSchedulerLog($model, $pk)
+    {
+        return new ActiveDataProvider([
+            'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk]),
+            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_DESC]]
+        ]);
+    }
+
+    /**
+     * Add a task to the scheduler.
+     *
+     * @return void
+     */
+    public function actionSchedulerAdd()
+    {
+        $model = new Scheduler();
+        $model->attributes = Yii::$app->request->bodyParams;
+
+        if (!$model->hasTriggerPermission($model->model_class)) {
+            throw new ForbiddenHttpException("Unable to schedule a task for the given model.");
+        }
+
+        if ($model->save()) {
+            $model->pushQueue();
+
+            // if its a "now" job, run the internal worker now so the log table is refreshed immediately
+            Yii::$app->adminqueue->run(false);
+
+            return $model;
+        }
+
+        return $this->sendModelError($model);
+    }
+
+    /**
+     * Get all available tags.
+     * 
+     * This response differs to the admin-api-tag as returns all tags without pagination.
+     *
+     * @return array
+     * @since 1.3.0
+     */
+    public function actionTags()
+    {
+        return Tag::find()->select(['id', 'name', 'translation'])->orderBy(['name' => SORT_ASC])->all();
+    }
+
     /**
      * Set the lastest ngrest filter selection in the User Settings.
      *

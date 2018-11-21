@@ -374,4 +374,10 @@ return [
     'active_button_duplicate_label' => 'Duplicate',
     'active_button_duplicate_success' => 'A copy has been created.',
     'active_button_duplicate_error' => 'Error while creating the copy: {message}',
+
+// 1.3
+
+'model_tag_translation' => 'Translation',
+'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
+
 ];

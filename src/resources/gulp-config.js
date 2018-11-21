@@ -132,6 +132,7 @@ module.exports = {
                 "js/filters.js",
                 "js/directives.js",
                 "js/controllers.js",
+                "js/scheduler.js"
             ],
             "dist/js/login.js": [
                 "js/login.js"
