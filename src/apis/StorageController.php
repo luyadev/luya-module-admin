@@ -21,6 +21,7 @@ use luya\admin\models\StorageImage;
 use luya\admin\file\Item;
 use luya\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use luya\admin\models\TagRelation;
 
 /**
  * Filemanager and Storage API.
@@ -97,6 +98,42 @@ class StorageController extends RestController
     // ACTIONS
     
     /**
+     * Toggle Tags for a given file.
+     * 
+     * If a relation exists, remove, otherwise add.
+     *
+     * @return The array of associated tags for the given file.
+     * @since 1.3.0
+     */
+    public function actionToggleFileTag()
+    {
+        $tagId = Yii::$app->request->getBodyParam('tagId');
+        $fileId = Yii::$app->request->getBodyParam('fileId');
+
+        $file = StorageFile::findOne($fileId);
+
+        if (!$file) {
+            throw new NotFoundHttpException("Unable to find the given file to toggle the tag.");
+        }
+    
+        $relation = TagRelation::find()->where(['table_name' => StorageFile::tableName(), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
+
+        if ($relation) {
+            $relation->delete();
+
+            return $file->tags;
+        }
+
+        $model = new TagRelation();
+        $model->table_name = StorageFile::tableName();
+        $model->pk_id = $fileId;
+        $model->tag_id = $tagId;
+
+        $model->save();
+        return $file->tags;
+    }
+
+    /**
      * Get all storage file informations for a given ID.
      *
      * @param integer $fileId
@@ -106,13 +143,53 @@ class StorageController extends RestController
      */
     public function actionFileInfo($id)
     {
-        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images'])->one();
+        $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images', 'tags'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
         
-        return $model->toArray([], ['user', 'file', 'images']);
+        return $model->toArray([], ['user', 'file', 'images', 'source', 'tags']);
+    }
+
+    /**
+     * Get file model.
+     * 
+     * This is mainly used for external api access.
+     *
+     * @param integer $id
+     * @return StorageFile
+     * @since 1.2.3
+     */
+    public function actionFile($id)
+    {
+        $model = StorageFile::find()->where(['id' => $id])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage file.");
+        }
+
+        return $model;
+    }
+
+    /**
+     * Get image model.
+     * 
+     * This is mainly used for external api access.
+     *
+     * @param integer $id
+     * @return StorageImage
+     * @since 1.2.3
+     */
+    public function actionImage($id)
+    {
+        $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException("Unable to find the given storage image.");
+        }
+
+        return $model;
     }
 
     /**
@@ -124,21 +201,21 @@ class StorageController extends RestController
      */
     public function actionImageInfo($id)
     {
-        $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one();
+        $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
 
-        // try to create thumbnail on view if not done
-        if (empty($model->thumbnail)) {
+        // try to create thumbnail on view if not done 
+        if (empty($model->tinyCropImage)) {
             // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
             Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
             // refresh model internal (as $model->refresh() wont load the relations data we have to call the same model with relations again)
-            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'thumbnail.file'])->one(); 
+            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one(); 
         }
         
-        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'thumbnail.file']);
+        return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'tinyCropImage.file']);
     }
     
     /**
@@ -152,7 +229,7 @@ class StorageController extends RestController
         $ids = Yii::$app->request->getBodyParam('ids', []);
         $ids = array_unique($ids);
         return new ActiveDataProvider([
-            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file', 'thumbnail.file']),
+            'query' => StorageImage::find()->where(['in', 'id', $ids])->with(['file', 'tinyCropImage.file']),
             'pagination' => false,
         ]);
     }
@@ -294,10 +371,51 @@ class StorageController extends RestController
         return false;
     }
     
+    /**
+     * Image Upload with $_FILES array:
+     * 
+     * Post values:
+     * + file
+     * + folderId
+     * + isHidden
+     *
+     * @return array
+     * @since 1.2.3
+     */
+    public function actionImagesUpload()
+    {
+        $result = $this->actionFilesUpload();
+
+        if ($result['upload'] && $result['file']) {
+            $fileId = $result['file']->id;
+
+            $image = Yii::$app->storage->createImage($fileId, 0);
+
+            if ($image) {
+                // create system thumbnails
+                $tinyCrop = Yii::$app->storage->createImage($fileId, Yii::$app->storage->getFilterId(TinyCrop::identifier()));
+                $mediumThumbnail = Yii::$app->storage->createImage($fileId, Yii::$app->storage->getFilterId(MediumThumbnail::identifier()));
+            }
+
+            return [
+                'image' => $image,
+                'tinyCrop' => $tinyCrop,
+                'mediumThumbnail' => $mediumThumbnail,
+            ];
+        }
+
+        return $this->sendArrayError(['image' => 'Unable to create the given with and the corresponding filters.']);
+    }
     
     /**
      * Upload a new file from $_FILES array.
      *
+     * Post Values:
+     * 
+     * + file
+     * + folderId
+     * + isHidden
+     * 
      * @return array An array with upload and message key.
     */
     public function actionFilesUpload()
@@ -306,22 +424,26 @@ class StorageController extends RestController
         
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
-                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error'])];
+                Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
+                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error']), 'file' => null];
             }
             try {
-                $response = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], Yii::$app->request->post('folderId', 0));
+                $response = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], Yii::$app->request->post('folderId', 0), Yii::$app->request->post('isHidden', false));
                 if ($response) {
-                    return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes')];
+                    return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes'), 'file' => $response];
                 } else {
-                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error')];
+                    Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
+                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error'), 'file' => null];
                 }
             } catch (Exception $err) {
-                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()])];
+                Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
+                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null];
             }
         }
     
-        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini
-        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_INI_SIZE)];
+        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload defintion.
+        Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
+        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null];
     }
     
     /**

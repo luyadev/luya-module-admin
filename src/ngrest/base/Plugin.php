@@ -11,6 +11,7 @@ use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
 use luya\admin\base\TypesInterface;
+use luya\admin\helpers\Angular;
 
 /**
  * Base class for NgRest Plugins.
@@ -352,6 +353,31 @@ abstract class Plugin extends Component implements TypesInterface
         }
         
         return null;
+    }
+
+    /**
+     * Create the Scheulder tag for a given field.
+     * 
+     * The scheduler tag allows you to change the given field value based on input values for a given field if a model is ailable.
+     * 
+     * ```
+     * <luya-schedule value="{{currentValueOfTheEntity}}" model-class="luya\admin\models\User" attribute-name="is_deleted" attribute-values="{0:'Not Deleted',1:'Deleted'}"
+     * ```
+     *
+     * @param [type] $ngModel
+     * @param [type] $values
+     * @return void
+     * @since 1.3.0
+     */
+    public function createSchedulerListTag($ngModel, $values, $dataRow, array $options = [])
+    {
+        return $this->createTag('luya-schedule', null, array_merge([
+            'value' => $ngModel,
+            'model-class' => get_class($this->renderContext->getModel()),
+            'attribute-name' => $this->name,
+            'attribute-values' => Angular::optionsArrayInput($values),
+            'primary-key-value' => 'getRowPrimaryValue('.$dataRow.')',
+        ], $options));
     }
     
     // EVENTS

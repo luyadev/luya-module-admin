@@ -155,7 +155,7 @@ final class StorageImage extends ActiveRecord
      */
     public function getFilterImage($identifier)
     {
-        $filterId = Yii::$app->storage->getFiltersArrayItem($identifier);
+        $filterId = Yii::$app->storage->getFilterId($identifier);
         return $this->hasOne(self::class, ['file_id' => 'file_id'])->andWhere(['filter_id' => $filterId]);
     }
 
@@ -181,6 +181,6 @@ final class StorageImage extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
+        return ['file', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
     }
 }

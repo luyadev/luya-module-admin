@@ -15,8 +15,15 @@ use yii\base\BaseObject;
  * ```php
  * class CreateCampaignActiveButton extends ActiveButton
  * {
- *     public $label = 'Campaign Button';
- *     public $icon = 'extension';
+ *     public function getDefaultLabel()
+ *     {
+ *          return 'Campaign';
+ *     }
+ * 
+ *     public function getDefaultIcon()
+ *     {
+ *          return 'extension';
+ *     }
  * 
  *     public function handle(\luya\admin\ngrest\base\NgRestModel $model)
  *     {
@@ -32,6 +39,23 @@ use yii\base\BaseObject;
  * }
  * ```
  * 
+ * Integration of the Button:
+ * 
+ * ```php
+ * public function ngRestActiveButtons()
+ * {
+ *     return [
+ *          ['class' => CreateCampaignActiveButton::class],
+ *     ];
+ * }
+ * ```
+ * 
+ * The label an icon can override the default label and default icon:
+ * 
+ * ```php
+ * ['class' => CreateCampaignActiveButton::class, 'label' => 'My Label', 'icon' => 'myicon'],
+ * ```
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
@@ -43,16 +67,70 @@ abstract class ActiveButton extends BaseObject
     const EVENT_RELOAD_LIST = 'loadList';
 
     /**
-     * @var string  A label value. You can also access different angular list  fields when using brackets:
-     * 
-     * 'label' => '{fieldname}',
+     * Get the default label if not set trough {{$label}}.
+     *
+     * @return string|boolean
      */
-    public $label;
+    public function getDefaultLabel()
+    {
+        return false;
+    }
+
+    private $_label;
 
     /**
-     * @var string The icon from material icons list
+     * Set label
+     *
+     * @param string $label The label for the button.
      */
-    public $icon = 'extension';
+    public function setLabel($label)
+    {
+        $this->_label = $label;
+    }
+
+    /**
+     * Get the button label, if not set default label is used.
+     *
+     * If label is false or null, the button has no label.
+     * 
+     * @return string|boolean
+     */
+    public function getLabel()
+    {
+        return $this->_label ?: $this->getDefaultLabel();
+    }
+
+    /**
+     * The default icon of not overriden trough {{$icon}}.
+     *
+     * @return string
+     */
+    public function getDefaultIcon()
+    {
+        return 'extension';
+    }
+
+    private $_icon;
+
+    /**
+     * Setter method for icon
+     *
+     * @param string $icon The material icon
+     */
+    public function setIcon($icon)
+    {
+        $this->_icon = $icon;
+    }
+
+    /**
+     * Get the button icon, if icon is not set default icon is used.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->_icon ?: $this->getDefaultIcon();
+    }
 
     private $_events = [];
 

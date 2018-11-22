@@ -2,10 +2,29 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.2.3 (in progress)
+## 1.3 (in progress)
+
+This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
+
+## Changed
+
++ [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
++ [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
+
+## Added
+
++ [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
+
+## 1.2.3 (21. November 2018)
+
+### Changed
+
++ [#248](https://github.com/luyadev/luya-module-admin/issues/248) Changed file upload response status code on error.
 
 ### Added
 
++ [#249](https://github.com/luyadev/luya-module-admin/issues/249) Add image upload endpoint.
++ [#247](https://github.com/luyadev/luya-module-admin/issues/247) Add new option to enable API caching by defining a cache dependency for the API.
 + [#18](https://github.com/luyadev/luya-module-admin/issues/18) Active Buttons for NgRest.
 + [#238](https://github.com/luyadev/luya-module-admin/issues/238) Storage image models rename methods.
 + [#230](https://github.com/luyadev/luya-module-admin/pull/230) Add WYSIWYG NgRest plugin.

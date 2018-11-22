@@ -59,6 +59,26 @@ class Api extends RestActiveController
      * @since 1.2.2
      */
     public $filterSearchModelClass;
+
+    /**
+     * @var array|string Define a yii caching depency will enable the caching for this API.
+     * 
+     * Example usage:
+     * 
+     * ```php
+     * public $cacheDependency = [
+     *     'class' => 'yii\caching\DbDependency',
+     *     'sql' => 'SELECT MAX(update_ad) FROM news',
+     * ];
+     * ```
+     * 
+     * This should be used very carefully as the ngrest crud list data is cached too. Therefore this should be used together
+     * with a Timestamp behavior!
+     * 
+     * @see https://www.yiiframework.com/doc/guide/2.0/en/caching-data#cache-dependencies
+     * @since 1.2.3
+     */
+    public $cacheDependency;
     
     /**
      * @inheritdoc

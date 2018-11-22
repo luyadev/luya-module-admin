@@ -1,0 +1,22 @@
+.inlinemodal {
+    background-color: $white;
+    border: 1px solid color(gray);
+    border-radius: $border-radius;
+    box-shadow: $modal-content-box-shadow-sm-up;
+    max-width: 1000px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+.inlinemodal-head {
+    height: 54px;
+    padding: 10px;
+}
+
+.inlinemodal-content {
+    max-height: calc(100% - 54px);
+    overflow: auto;
+    padding: 10px 20px;
+    position: relative;
+}

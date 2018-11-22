@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\base\actions;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use luya\traits\CacheableTrait;
 
 /**
  * IndexAction for REST implementation.
@@ -17,6 +18,8 @@ use yii\data\ActiveDataProvider;
  */
 class IndexAction extends \yii\rest\IndexAction
 {
+    use CacheableTrait;
+
     /**
      * @var callable A callable which is executed.
      * @since 1.2.1
@@ -56,13 +59,21 @@ class IndexAction extends \yii\rest\IndexAction
             $query->andWhere($filter);
         }
         
-        return Yii::createObject([
-            'class' => ActiveDataProvider::className(),
+        $dataProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
             'query' => $query,
             'pagination' => $this->controller->pagination,
             'sort' => [
                 'params' => $requestParams,
             ],
         ]);
+
+        if ($this->isCachable() && $this->controller->cacheDependency) {
+            Yii::$app->db->cache(function() use ($dataProvider) {
+                $dataProvider->prepare();
+            }, 0, Yii::createObject($this->controller->cacheDependency));
+        }
+
+        return $dataProvider;
     }
 }

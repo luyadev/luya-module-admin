@@ -4,19 +4,35 @@ namespace luya\admin\buttons;
 
 use luya\admin\ngrest\base\ActiveButton;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\Module;
 
 /**
- * Adds a duplicate row button.
+ * Adds a duplicate row button to the CRUD.
  * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
 class DuplicateActiveButton extends ActiveButton
 {
-    public $icon = 'control_point_duplicate';
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultIcon()
+    {
+        return 'control_point_duplicate';
+    }
 
-    public $label = 'Duplicate';
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultLabel()
+    {
+        return Module::t('active_button_duplicate_label');
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     public function handle(NgRestModel $model)
     {
         $copy = clone $model;
@@ -27,9 +43,10 @@ class DuplicateActiveButton extends ActiveButton
         
         if ($copy->save()) {
             $this->sendReloadEvent();
-            return $this->sendSuccess("A copy has been made.");
+            return $this->sendSuccess(Module::t('active_button_duplicate_success'));
         }
 
-        return $this->sendError("Error while duplicate the given model." . var_export($copy->getErrors(), true));
+        $message = implode(" ", $copy->getErrorSummary(true));
+        return $this->sendError(Module::t('active_button_duplicate_error', ['message' => $message]));
     }
 }

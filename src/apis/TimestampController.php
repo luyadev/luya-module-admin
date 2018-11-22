@@ -31,6 +31,9 @@ class TimestampController extends RestController
             Yii::$app->response->statusCode = 401;
             return Yii::$app->response->send();
         }
+
+        // run internal worker
+        Yii::$app->adminqueue->run(false);
         
         // update keystrokes
         $lastKeyStroke = Yii::$app->request->getBodyParam('lastKeyStroke');
