@@ -32,6 +32,7 @@ class IndexActionTest extends AdminTestCase
             'modelClass' => TestModel::class,
             'fixtureData' => [
                 'id1' => [
+                    'id' => 1,
                     'name' => 'barfoo',
                 ]
             ]
@@ -43,7 +44,7 @@ class IndexActionTest extends AdminTestCase
         $r = $ctrl->runAction('index');
         
         $this->assertSame([
-            ['id' => null, 'name' => 'barfoo']
+            ['id' => 1, 'name' => 'barfoo']
         ], $r);
     }
 }
