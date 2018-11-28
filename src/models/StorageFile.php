@@ -11,6 +11,7 @@ use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\traits\TaggableTrait;
 use luya\admin\helpers\I18n;
+use luya\helpers\Json;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -281,9 +282,19 @@ final class StorageFile extends ActiveRecord
      * @since 1.2.3
      * @return string The caption parsed for the current input langauge.
      */
-    public function getCaption()
+    public function getCaptions()
     {
-        return I18n::decodeFindActive($this->caption);
+        return Json::decode($this->caption);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['captions'] = 'captions';
+        return $fields;
     }
 
     /**
@@ -291,6 +302,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption', 'tags'];
+        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'tags'];
     }
 }
