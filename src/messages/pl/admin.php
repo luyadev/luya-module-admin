@@ -367,13 +367,13 @@ return [
 
 // 1.2.3
 
-    'active_button_duplicate_label' => 'Duplicate',
-    'active_button_duplicate_success' => 'A copy has been created.',
-    'active_button_duplicate_error' => 'Error while creating the copy: {message}',
+    'active_button_duplicate_label' => 'Duplikat',
+    'active_button_duplicate_success' => 'Kopia została utworzona.',
+    'active_button_duplicate_error' => 'Błąd podczas tworzenia kopii: {message}',
 
 // 1.3
 
-'model_tag_translation' => 'Translation',
-'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
+'model_tag_translation' => 'Tłumaczenie',
+'model_tag_translation_hint' => 'Opcjonalne tłumaczenie dla tagu w danym języku. Pozwala to przypisać i wypisać ten sam znacznik na stronach wielojęzycznych.'
 
 ];
