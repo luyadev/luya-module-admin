@@ -379,14 +379,24 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         // basic query
         $query = ['ngrestCallType' => $type];
+
+        $fields = [];
+        foreach ($this->model->primaryKey() as $n) {
+            $fields[] = $n;
+        }
         // see if we have fields for this type
         if (count($this->getFields($type)) > 0) {
-            $query['fields'] = implode(',', $this->getFields($type));
+            foreach ($this->getFields($type) as $field) {
+                $fields[] = $field;
+            }
         }
         // doe we have extra fields to expand
         if (count($this->config->getPointerExtraFields($type)) > 0) {
             $query['expand'] = implode(',', $this->config->getPointerExtraFields($type));
         }
+        
+        array_unique($fields);
+        $query['fields'] = implode(",", $fields);
         // return url decoed string from http_build_query
         return http_build_query($query, '', '&');
     }
