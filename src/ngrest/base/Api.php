@@ -22,6 +22,7 @@ use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\actions\IndexAction;
 use luya\helpers\StringHelper;
+use yii\db\ActiveQueryInterface;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -478,8 +479,12 @@ class Api extends RestActiveController
             throw new InvalidConfigException("The relation defintion must be a hasMany() relation.");
         }
         
+        if ($query instanceof ActiveQueryInterface) {
+            $query->with($this->getWithRelation('relation-call'));
+        }
+
         return new ActiveDataProvider([
-            'query' => $query->with($this->getWithRelation('relation-call')),
+            'query' => $query,
             'pagination' => $this->pagination,
         ]);
     }

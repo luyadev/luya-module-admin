@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 1.2.3.1 (6. December 2018)
+
++ [#256](https://github.com/luyadev/luya-module-admin/issues/256) Fixed bug with relation query instead of active query.
+
 ## 1.2.3 (21. November 2018)
 
 ### Changed
