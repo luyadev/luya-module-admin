@@ -5,7 +5,6 @@ namespace admintests\admin\ngrest\base;
 use admintests\AdminTestCase;
 use luya\admin\ngrest\base\Api;
 
-
 class ApiTest extends AdminTestCase
 {
     public function testWithRelations()

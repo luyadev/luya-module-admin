@@ -9,11 +9,11 @@ use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * Set a timestamp for a given attribute.
- * 
+ *
  * This buttons allows you to save the current timestamp for a given attribute in the model.
- * 
+ *
  * Usage example:
- * 
+ *
  * ```php
  * [
  *     'class' => 'luya\admin\buttons\TimestampActiveButton',
@@ -21,7 +21,7 @@ use luya\admin\ngrest\base\NgRestModel;
  *     'label' => 'Set Timestamp',
  * ]
  * ```
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.3.0
  */

@@ -61,7 +61,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * ```php
      * public $i18n = ['textField', 'anotherTextField', 'imageField']);
      * ```
-     * 
+     *
      * In order to build where conditions for i18n fields you can use `find()->i18nWhere('fieldname', 'value')`.
      */
     public $i18n = [];
@@ -107,7 +107,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     
     /**
      * {@inheritdoc}
-     * 
+     *
      * @return \luya\admin\ngrest\base\NgRestActiveQuery
      */
     public static function find()
@@ -542,9 +542,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Define Active Buttons.
-     * 
+     *
      * An array with active button elements:
-     * 
+     *
      * ```php
      * public function ngRestActiveButton()
      * {

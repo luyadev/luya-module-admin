@@ -100,7 +100,7 @@ class Config extends BaseObject implements ConfigInterface
      * Setter method for the active button array from the model
      *
      * @param array
-     * @since 1.2.3 
+     * @since 1.2.3
      */
     public function setActiveButtons(array $buttons)
     {

@@ -373,7 +373,10 @@ return [
 
 // 1.3
 
-'model_tag_translation' => 'Tłumaczenie',
-'model_tag_translation_hint' => 'Opcjonalne tłumaczenie dla tagu w danym języku. Pozwala to przypisać i wypisać ten sam znacznik na stronach wielojęzycznych.'
+    'model_tag_translation' => 'Tłumaczenie',
+    'model_tag_translation_hint' => 'Opcjonalne tłumaczenie dla tagu w danym języku. Pozwala to przypisać i wypisać ten sam znacznik na stronach wielojęzycznych.',
+    'active_button_timestamp_label' => 'Timestamp',
+    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_error' => 'Error while storing timestamp.',
 
 ];

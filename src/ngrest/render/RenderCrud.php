@@ -349,7 +349,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                         'label' => $btn['label'],
                     ];
                 }
-                
             }
             
             // check if deletable is enabled

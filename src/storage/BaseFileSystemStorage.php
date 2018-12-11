@@ -648,7 +648,7 @@ abstract class BaseFileSystemStorage extends Component
 
     /**
      * Just creating the image based on input informations without usage of storage files or images list.
-     * 
+     *
      * @since 1.2.2.1
      * @return \luya\admin\models\StorageImage|false Returns the storage image model on success, otherwise false.
      */
@@ -737,7 +737,6 @@ abstract class BaseFileSystemStorage extends Component
                 ->indexBy(['id']);
 
             $this->_foldersArray = $this->getQueryCacheHelper($query, self::CACHE_KEY_FOLDER);
-
         }
 
         return $this->_foldersArray;
@@ -861,7 +860,7 @@ abstract class BaseFileSystemStorage extends Component
 
     /**
      * Get the filter id based on the identifier.
-     * 
+     *
      * This is a short hand method as its used very often
      *
      * @param string $identifier
@@ -910,7 +909,7 @@ abstract class BaseFileSystemStorage extends Component
 
     /**
      * Flush only images array and image cache.
-     * 
+     *
      * @since 1.2.3
      */
     public function flushImageArray()

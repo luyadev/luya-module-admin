@@ -57,7 +57,7 @@ class ActiveWindowFormField extends BaseObject
     
     /**
      * Add a default value when initializing.
-     * 
+     *
      * @param string|integer $value
      * @return \luya\admin\ngrest\aw\ActiveField
      * @since 1.2.2
@@ -74,7 +74,7 @@ class ActiveWindowFormField extends BaseObject
     }
     
     /**
-     * 
+     *
      * @return string
      */
     protected function getNgModel()
@@ -132,7 +132,7 @@ class ActiveWindowFormField extends BaseObject
     
     /**
      * Generate a select dropdown with data as array.
-     * 
+     *
      * @param array $data
      * @param array $options
      * @return \luya\admin\ngrest\aw\ActiveField

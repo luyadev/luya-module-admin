@@ -11,5 +11,4 @@ namespace luya\admin\ngrest\aw;
  */
 class ActiveField extends ActiveWindowFormField
 {
-    
 }

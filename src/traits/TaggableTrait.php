@@ -24,7 +24,7 @@ use luya\admin\models\Tag;
  * ```
  *
  * Since `getTags()` is a relation you can also preload those tag informations within a model like:
- * 
+ *
  * ```php
  * foreach (News::find()->with(['tags'])->all() as $news) {
  *     var_dump($news->tags);
@@ -43,7 +43,7 @@ trait TaggableTrait
      */
     public function getTags()
     {
-        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('admin_tag_relation', ['pk_id' => 'id'], function($query) {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('admin_tag_relation', ['pk_id' => 'id'], function ($query) {
             $query->andWhere(['table_name' => static::tableName()]);
         });
     }

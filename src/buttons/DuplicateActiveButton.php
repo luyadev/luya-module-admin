@@ -8,7 +8,7 @@ use luya\admin\Module;
 
 /**
  * Adds a duplicate row button to the CRUD.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */

@@ -212,7 +212,7 @@ class CrudController extends BaseCrudController
     
     /**
      * Getter method for modelNamespace.
-     * 
+     *
      * @return string
      */
     public function getModelNamespace()
@@ -396,7 +396,7 @@ class CrudController extends BaseCrudController
         
         // 2. ask for sql table
         if ($this->dbTableName === null) {
-            $this->dbTableName = $this->prompt('Enter the name of the database table to generate the model for (? to see all tables):', ['required' => true, 'validator' => function($input, &$error) {
+            $this->dbTableName = $this->prompt('Enter the name of the database table to generate the model for (? to see all tables):', ['required' => true, 'validator' => function ($input, &$error) {
                 if ($input == '?') {
                     foreach ($this->getSqlTablesArray() as $table) {
                         $this->outputInfo("- " . $table);

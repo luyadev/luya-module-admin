@@ -9,7 +9,6 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\User;
 
-
 class IndexActionTest extends AdminTestCase
 {
     public function getConfigArray()

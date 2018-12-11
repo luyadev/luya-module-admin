@@ -99,7 +99,7 @@ final class Tag extends NgRestModel
     
     /**
      * Returns the amount of rows for the curren tag.
-     * 
+     *
      * @return integer
      */
     public function getRelationsCount()

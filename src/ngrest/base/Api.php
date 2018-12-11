@@ -62,19 +62,19 @@ class Api extends RestActiveController
 
     /**
      * @var array|string Define a yii caching depency will enable the caching for this API.
-     * 
+     *
      * Example usage:
-     * 
+     *
      * ```php
      * public $cacheDependency = [
      *     'class' => 'yii\caching\DbDependency',
      *     'sql' => 'SELECT MAX(update_ad) FROM news',
      * ];
      * ```
-     * 
+     *
      * This should be used very carefully as the ngrest crud list data is cached too. Therefore this should be used together
      * with a Timestamp behavior!
-     * 
+     *
      * @see https://www.yiiframework.com/doc/guide/2.0/en/caching-data#cache-dependencies
      * @since 1.2.3
      */
@@ -94,31 +94,31 @@ class Api extends RestActiveController
     
     /**
      * Auto add those relations to queries.
-     * 
+     *
      * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefintion in order to define
      * which relation should be us when.
-     * 
+     *
      * basic:
-     * 
+     *
      * ```php
      * return ['user', 'images'];
      * ```
-     * 
+     *
      * The above relations will be auto added trough {{yii\db\ActiveQuery::with()}}. In order to define view specific actions:
-     * 
+     *
      * ```php
      * return [
      *     'index' => ['user', 'images'],
      *     'list' => ['user'],
      * ];
      * ```
-     * 
+     *
      * Possible action column names:
-     * 
+     *
      * + index
      * + list
      * + search
-     * 
+     *
      * @return array
      * @since 1.2.2
      */
@@ -129,10 +129,10 @@ class Api extends RestActiveController
     
     /**
      * Get the relations for the corresponding action name.
-     * 
+     *
      * Since version 1.2.3 it also checks if the $expand get param is provided for the given relations, otherwise
      * the relation will not be joined trough `with`. This reduces the database querie time.
-     * 
+     *
      * @param string $actionName The action name like `index`, `list`, `search`, `relation-call`.
      * @return array An array with relation names.
      * @since 1.2.2
@@ -197,7 +197,7 @@ class Api extends RestActiveController
      * ```
      *
      * Make sure to call the parent implementation.
-     * 
+     *
      * > This will call the `find()` method of the model.
      *
      * @return \yii\db\ActiveQuery
@@ -212,9 +212,9 @@ class Api extends RestActiveController
     
     /**
      * Prepare the NgRest List Query.
-     * 
+     *
      * > This will call the `ngRestFind()` method of the model.
-     * 
+     *
      * @see {{prepareIndexQuery()}}
      * @return \yii\db\ActiveQuery
      * @since 1.2.2
@@ -228,7 +228,7 @@ class Api extends RestActiveController
     
     /**
      * Returns whether the `$dataFilter` property of IndexAction should be set with the according value.
-     * 
+     *
      * @return array|boolean
      * @since 1.2.2
      */
@@ -362,7 +362,7 @@ class Api extends RestActiveController
 
     /**
      * This equals to the ActieRecord::findByCondition which is sadly a protected method.
-     *  
+     *
      * @since 1.2.3
      * @return yii\db\ActiveRecord
      */

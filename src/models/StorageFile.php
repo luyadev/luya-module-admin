@@ -114,7 +114,6 @@ final class StorageFile extends ActiveRecord
     public function delete()
     {
         if ($this->beforeDelete()) {
-        
             if (!Yii::$app->storage->fileSystemDeleteFile($this->name_new_compound)) {
                 Logger::error("Unable to remove file from filesystem: " . $this->name_new_compound);
             }
@@ -138,7 +137,7 @@ final class StorageFile extends ActiveRecord
     
     /**
      * Get all images fro the given file.
-     * 
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getImages()
@@ -222,7 +221,7 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Create the thumbnail for this given file if its an image.
-     * 
+     *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
      * @return array Returns an array with the key source which contains the source to the thumbnail.
@@ -250,7 +249,7 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Create the thumbnail medium for this given file if its an image.
-     * 
+     *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
      * @return array Returns an array with the key source which contains the source to the thumbnail medium.
@@ -278,7 +277,7 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Get the parsed response for a file caption as expand.
-     * 
+     *
      * @since 1.2.3
      * @return string The caption parsed for the current input langauge.
      */

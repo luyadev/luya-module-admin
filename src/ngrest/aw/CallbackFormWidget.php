@@ -42,5 +42,4 @@ use luya\base\Widget;
  */
 class CallbackFormWidget extends ActiveWindowFormWidget
 {
-    
 }

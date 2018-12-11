@@ -61,7 +61,7 @@ class Scheduler extends \yii\db\ActiveRecord
 
     /**
      * Job Trigger.
-     * 
+     *
      * This method is execute by the queue job.
      *
      * @return void
@@ -115,5 +115,5 @@ class Scheduler extends \yii\db\ActiveRecord
         }
 
         Yii::$app->adminqueue->delay($delay)->push(new ScheduleJob(['schedulerId' => $this->id]));
-    }    
+    }
 }
