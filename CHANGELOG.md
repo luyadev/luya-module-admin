@@ -5,8 +5,6 @@ All notable changes to this project will be documented in this file. This projec
 
 ## Added
 
-+ [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
-
 ## 1.3 (in progress)
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
@@ -19,6 +17,7 @@ This release contains new migrations and requires to run the `migrate` command a
 ## Added
 
 + [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
++ [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
 
 ## 1.2.3 (21. November 2018)
 
