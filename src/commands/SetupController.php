@@ -28,12 +28,12 @@ use yii\helpers\VarDumper;
 class SetupController extends \luya\console\Command
 {
     /**
-     * @var string The email of the user to create.
+     * @var string The email of the user to create or change.
      */
     public $email;
     
     /**
-     * @var string The blank password of the user to create.
+     * @var string The blank password of the user to create or change.
      */
     public $password;
     
@@ -199,7 +199,7 @@ class SetupController extends \luya\console\Command
         while (true) {
             $email = $this->prompt('User E-Mail:');
             if (!empty(User::findByEmail($email))) {
-                $this->outputError('The provided E-Mail already exsists in the System.');
+                $this->outputError('The provided E-Mail already exists in the System.');
             } else {
                 break;
             }
@@ -241,6 +241,40 @@ class SetupController extends \luya\console\Command
         ]);
 
         return $this->outputSuccess("The user ($email) has been created.");
+    }
+    
+    /**
+     * Change the password of a admin user.
+     *
+     * @return bool
+     * @since 1.3
+     */
+    public function actionResetPassword()
+    {
+        /** @var User $user */
+        $user = null;
+        
+        while (empty($user)) {
+            $email = $this->email ?: $this->prompt('User E-Mail:');
+            $user = User::findByEmail($email);
+            if (empty($user)) {
+                $this->outputError('The provided E-Mail not found in the System.');
+            }
+        }
+    
+        $password = $this->password ?: $this->prompt('User Password:');
+    
+        if ($this->confirm("Are you sure to change the password of User '$email'?") !== true) {
+            return $this->outputError('Abort password change process.');
+        }
+        
+        $user->password_salt = Yii::$app->getSecurity()->generateRandomString();
+        $user->password = Yii::$app->getSecurity()->generatePasswordHash($password.$user->password_salt);
+        if ($user->save(true, ['password', 'password_salt'])) {
+            return $this->outputSuccess("The password for user ($email) has been changed.");
+        }
+    
+        return $this->outputError("The password could not changed.\n" . implode("\n", $user->firstErrors));
     }
 
     /**
