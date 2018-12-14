@@ -274,7 +274,7 @@ class SetupController extends \luya\console\Command
             return $this->outputSuccess("The password for user ($email) has been changed.");
         }
     
-        return $this->outputError("The password could not changed. " . $user->firstErrors);
+        return $this->outputError("The password could not changed.\n" . implode("\n", $user->firstErrors));
     }
 
     /**
