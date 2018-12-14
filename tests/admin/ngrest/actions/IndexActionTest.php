@@ -9,7 +9,6 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\User;
 
-
 class IndexActionTest extends AdminTestCase
 {
     public function getConfigArray()
@@ -32,6 +31,7 @@ class IndexActionTest extends AdminTestCase
             'modelClass' => TestModel::class,
             'fixtureData' => [
                 'id1' => [
+                    'id' => 1,
                     'name' => 'barfoo',
                 ]
             ]
@@ -43,7 +43,7 @@ class IndexActionTest extends AdminTestCase
         $r = $ctrl->runAction('index');
         
         $this->assertSame([
-            ['id' => null, 'name' => 'barfoo']
+            ['id' => 1, 'name' => 'barfoo']
         ], $r);
     }
 }

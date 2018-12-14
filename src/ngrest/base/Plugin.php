@@ -357,9 +357,9 @@ abstract class Plugin extends Component implements TypesInterface
 
     /**
      * Create the Scheulder tag for a given field.
-     * 
+     *
      * The scheduler tag allows you to change the given field value based on input values for a given field if a model is ailable.
-     * 
+     *
      * ```
      * <luya-schedule value="{{currentValueOfTheEntity}}" model-class="luya\admin\models\User" attribute-name="is_deleted" attribute-values="{0:'Not Deleted',1:'Deleted'}"
      * ```

@@ -72,7 +72,7 @@ final class StorageImage extends ActiveRecord
     
     /**
      * Returns the current file source path for the current filter image.
-     * 
+     *
      * @return string
      */
     public function getSource()
@@ -107,7 +107,7 @@ final class StorageImage extends ActiveRecord
 
     /**
      * Use getTinyCropImage().
-     * 
+     *
      * @since 1.2.2.1
      * @deprecated 1.2.3 use getTinyCropImage() instead.
      */
@@ -118,12 +118,12 @@ final class StorageImage extends ActiveRecord
 
     /**
      * Return a storage image object representing the tiny crop which is used for file manager and crud list previews.
-     * 
+     *
      * The tiny crop image filter is also the thumbnail used in ngrest list (and file manager).
-     * 
+     *
      * > The thumbnail won't be created on the fly! Use storage system to create the image for the given filter.
      * > This should have been done already while uploading.
-     * 
+     *
      * @since 1.2.3
      */
     public function getTinyCropImage()
@@ -133,12 +133,12 @@ final class StorageImage extends ActiveRecord
 
     /**
      * Return a storage image object representing the medium thumbail which is used for file manager and crud list previews.
-     * 
+     *
      * The Medium Thumbnail image filter is used when hovering the image in file manager.
-     * 
+     *
      * > The thumbnail won't be created on the fly! Use storage system to create the image for the given filter.
      * > This should have been done already while uploading.
-     * 
+     *
      * @since 1.2.3
      */
     public function getMediumThumbnailImage()

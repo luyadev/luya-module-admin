@@ -46,7 +46,7 @@ class DefaultController extends Controller
 
     /**
      * Render the admin index page.
-     * 
+     *
      * @return string
      */
     public function actionIndex()
@@ -77,7 +77,7 @@ class DefaultController extends Controller
 
     /**
      * Render Partial for dashboard objects (angular template).
-     * 
+     *
      * @return string
      */
     public function actionDashboard()
@@ -96,7 +96,7 @@ class DefaultController extends Controller
 
     /**
      * Trigger user logout.
-     * 
+     *
      * @return \yii\web\Response
      */
     public function actionLogout()
@@ -110,7 +110,7 @@ class DefaultController extends Controller
     
     /**
      * Context helper for layout main.php in order to colorize debug informations.
-     * 
+     *
      * @param string $value
      * @param boolean $displayValue
      * @return string

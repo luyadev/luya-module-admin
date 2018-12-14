@@ -10,7 +10,7 @@ use luya\helpers\Json;
  * Abstract Page Property Class.
  *
  * Each property must implement this class. Reade more in the Guide [[app-cmsproperties.md]].
- * 
+ *
  * Example integration requires it least {{varName()}}, {{label()}} and {{type()}}.
  *
  * @author Basil Suter <basil@nadar.io>

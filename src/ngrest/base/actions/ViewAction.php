@@ -26,10 +26,10 @@ class ViewAction extends \yii\rest\ViewAction
      * the ID must be a string of the primary key values separated by commas.
      * The order of the primary key values should follow that returned by the `primaryKey()` method
      * of the model.
-     * 
+     *
      * > This override of parent models allows us to join the relation data without using extraFields() basically its a main idea
      * > behind yii relations and serializer which is not used for the view action without overriding findModel().
-     * 
+     *
      * @return ActiveRecordInterface the model found
      * @throws NotFoundHttpException if the model cannot be found
      * @since 1.2.2.1
@@ -52,7 +52,7 @@ class ViewAction extends \yii\rest\ViewAction
 
     /**
      * Return the model for a given resource id.
-     * 
+     *
      * @return yii\db\ActiveRecordInterface
      */
     public function run($id)

@@ -61,7 +61,7 @@ class StorageController extends RestController
      */
     public function actionDataFolders()
     {
-        return $this->getOrSetHasCache('storageApiDataFolders', function() {
+        return $this->getOrSetHasCache('storageApiDataFolders', function () {
             $folders = [];
             foreach (Yii::$app->storage->findFolders() as $key => $folder) {
                 $folders[$key] = $folder->toArray();
@@ -99,7 +99,7 @@ class StorageController extends RestController
     
     /**
      * Toggle Tags for a given file.
-     * 
+     *
      * If a relation exists, remove, otherwise add.
      *
      * @return The array of associated tags for the given file.
@@ -154,7 +154,7 @@ class StorageController extends RestController
 
     /**
      * Get file model.
-     * 
+     *
      * This is mainly used for external api access.
      *
      * @param integer $id
@@ -174,7 +174,7 @@ class StorageController extends RestController
 
     /**
      * Get image model.
-     * 
+     *
      * This is mainly used for external api access.
      *
      * @param integer $id
@@ -193,7 +193,7 @@ class StorageController extends RestController
     }
 
     /**
-     * 
+     *
      * @param integer $id
      * @throws NotFoundHttpException
      * @return array
@@ -207,12 +207,12 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
 
-        // try to create thumbnail on view if not done 
+        // try to create thumbnail on view if not done
         if (empty($model->tinyCropImage)) {
             // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
             Yii::$app->storage->createImage($model->file_id, Yii::$app->storage->getFiltersArrayItem(TinyCrop::identifier())['id']);
             // refresh model internal (as $model->refresh() wont load the relations data we have to call the same model with relations again)
-            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one(); 
+            $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         }
         
         return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'tinyCropImage.file']);
@@ -220,8 +220,8 @@ class StorageController extends RestController
     
     /**
      * A post request with an array of images to load!
-     * 
-     * 
+     *
+     *
      * @since 1.2.2.1
      */
     public function actionImagesInfo()
@@ -301,13 +301,13 @@ class StorageController extends RestController
             $create = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
             if ($create) {
                 return [
-                    'error' => false, 
+                    'error' => false,
                     'id' => $create->id,
                 ];
             }
         } catch (Exception $err) {
             return $this->sendArrayError([
-                'error' => true, 
+                'error' => true,
                 'message' => Module::t('api_storage_image_upload_error'),
             ]);
         }
@@ -373,7 +373,7 @@ class StorageController extends RestController
     
     /**
      * Image Upload with $_FILES array:
-     * 
+     *
      * Post values:
      * + file
      * + folderId
@@ -411,11 +411,11 @@ class StorageController extends RestController
      * Upload a new file from $_FILES array.
      *
      * Post Values:
-     * 
+     *
      * + file
      * + folderId
      * + isHidden
-     * 
+     *
      * @return array An array with upload and message key.
     */
     public function actionFilesUpload()

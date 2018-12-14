@@ -7,8 +7,8 @@ use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * Queue Log.
- * 
- * File has been created with `crud/create` command. 
+ *
+ * File has been created with `crud/create` command.
  *
  * @property integer $id
  * @property integer $queue_id

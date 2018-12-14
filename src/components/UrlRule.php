@@ -48,7 +48,7 @@ class UrlRule extends \yii\rest\UrlRule
 
             return parent::init();
         }
-        
+
         // if there is no controller from controller map we have to fake
         // an empty controller property otherwise the url rule will generate
         // an error.

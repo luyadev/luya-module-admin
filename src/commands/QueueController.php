@@ -8,9 +8,9 @@ use yii\console\ExitCode;
 
 /**
  * Run jobs inside the Queue.
- * 
+ *
  * You might schedule this command trough cronjob every 5 minutes (or lower).
- * 
+ *
  * ```sh
  * ./vendor/bin/luya admin/queue
  * ```

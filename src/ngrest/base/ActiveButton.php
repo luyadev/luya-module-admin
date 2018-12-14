@@ -7,11 +7,11 @@ use yii\base\BaseObject;
 
 /**
  * Active Button Base Class.
- * 
+ *
  * An active button is a trigger option for the current model.
- * 
+ *
  * Example integration:
- * 
+ *
  * ```php
  * class CreateCampaignActiveButton extends ActiveButton
  * {
@@ -19,28 +19,28 @@ use yii\base\BaseObject;
  *     {
  *          return 'Campaign';
  *     }
- * 
+ *
  *     public function getDefaultIcon()
  *     {
  *          return 'extension';
  *     }
- * 
+ *
  *     public function handle(\luya\admin\ngrest\base\NgRestModel $model)
  *     {
  *         // do something with the $model
  *         $model->udpateAttributes(['campagin' => 123]);
- * 
+ *
  *         // maybe you change value which should be visible in the list, then you can trigger a reload event.
  *         $this->sendReloadEvent();
- * 
+ *
  *         // let the crud know everything was good and inform user with a message.
  *         return $this->sendSuccess('Campaign done for ' . $model->title);
  *     }
  * }
  * ```
- * 
+ *
  * Integration of the Button:
- * 
+ *
  * ```php
  * public function ngRestActiveButtons()
  * {
@@ -49,13 +49,13 @@ use yii\base\BaseObject;
  *     ];
  * }
  * ```
- * 
+ *
  * The label an icon can override the default label and default icon:
- * 
+ *
  * ```php
  * ['class' => CreateCampaignActiveButton::class, 'label' => 'My Label', 'icon' => 'myicon'],
  * ```
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
@@ -92,7 +92,7 @@ abstract class ActiveButton extends BaseObject
      * Get the button label, if not set default label is used.
      *
      * If label is false or null, the button has no label.
-     * 
+     *
      * @return string|boolean
      */
     public function getLabel()
@@ -136,7 +136,7 @@ abstract class ActiveButton extends BaseObject
 
     /**
      * The handler which implements the function of the button.
-     * 
+     *
      * The model is passed as arugment and is refereing to the current model the active button has been pushed.
      *
      * @param NgRestModel $model
@@ -146,7 +146,7 @@ abstract class ActiveButton extends BaseObject
     
     /**
      * Send a crud reload event.
-     * 
+     *
      * @return void
      */
     protected function sendReloadEvent()
@@ -155,8 +155,8 @@ abstract class ActiveButton extends BaseObject
     }
 
     /**
-     * Send an error message as response. 
-     * 
+     * Send an error message as response.
+     *
      * Events are only triggered on success messages {{sendSuccess()}}.
      *
      * @param string $message The error message.

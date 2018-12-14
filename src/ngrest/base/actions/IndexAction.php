@@ -69,7 +69,7 @@ class IndexAction extends \yii\rest\IndexAction
         ]);
 
         if ($this->isCachable() && $this->controller->cacheDependency) {
-            Yii::$app->db->cache(function() use ($dataProvider) {
+            Yii::$app->db->cache(function () use ($dataProvider) {
                 $dataProvider->prepare();
             }, 0, Yii::createObject($this->controller->cacheDependency));
         }

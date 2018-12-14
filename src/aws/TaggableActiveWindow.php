@@ -112,7 +112,7 @@ class TaggableActiveWindow extends ActiveWindow
 
     /**
      * Get all tags
-     * 
+     *
      * @return array
      */
     public function callbackLoadTags()
@@ -122,7 +122,7 @@ class TaggableActiveWindow extends ActiveWindow
 
     /**
      * Get only tags for the current record.
-     * 
+     *
      * @return array|\yii\db\ActiveRecord[]
      */
     public function callbackLoadRelations()
@@ -132,7 +132,7 @@ class TaggableActiveWindow extends ActiveWindow
 
     /**
      * Save or delete a given tag id from the list of tags.
-     * 
+     *
      * @param integer $tagId The id of the tag.
      * @return number
      */
@@ -157,7 +157,7 @@ class TaggableActiveWindow extends ActiveWindow
 
     /**
      * Save new tag to the list of tags.
-     * 
+     *
      * @param string $tagName
      * @return boolean|number
      */

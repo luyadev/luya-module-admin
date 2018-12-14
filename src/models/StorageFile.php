@@ -11,6 +11,7 @@ use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\traits\TaggableTrait;
 use luya\admin\helpers\I18n;
+use luya\helpers\Json;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -113,7 +114,6 @@ final class StorageFile extends ActiveRecord
     public function delete()
     {
         if ($this->beforeDelete()) {
-        
             if (!Yii::$app->storage->fileSystemDeleteFile($this->name_new_compound)) {
                 Logger::error("Unable to remove file from filesystem: " . $this->name_new_compound);
             }
@@ -137,7 +137,7 @@ final class StorageFile extends ActiveRecord
     
     /**
      * Get all images fro the given file.
-     * 
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getImages()
@@ -221,7 +221,7 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Create the thumbnail for this given file if its an image.
-     * 
+     *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
      * @return array Returns an array with the key source which contains the source to the thumbnail.
@@ -249,7 +249,7 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Create the thumbnail medium for this given file if its an image.
-     * 
+     *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
      * @return array Returns an array with the key source which contains the source to the thumbnail medium.
@@ -277,13 +277,23 @@ final class StorageFile extends ActiveRecord
 
     /**
      * Get the parsed response for a file caption as expand.
-     * 
+     *
      * @since 1.2.3
      * @return string The caption parsed for the current input langauge.
      */
-    public function getCaption()
+    public function getCaptions()
     {
-        return I18n::decodeFindActive($this->caption);
+        return Json::decode($this->caption);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['captions'] = 'captions';
+        return $fields;
     }
 
     /**
@@ -291,6 +301,6 @@ final class StorageFile extends ActiveRecord
      */
     public function extraFields()
     {
-        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'caption', 'tags'];
+        return ['user', 'file', 'images', 'createThumbnail', 'createThumbnailMedium', 'isImage', 'sizeReadable', 'source', 'tags'];
     }
 }

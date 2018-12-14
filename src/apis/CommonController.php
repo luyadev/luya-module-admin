@@ -70,7 +70,7 @@ class CommonController extends RestController
 
     /**
      * Get all available tags.
-     * 
+     *
      * This response differs to the admin-api-tag as returns all tags without pagination.
      *
      * @return array

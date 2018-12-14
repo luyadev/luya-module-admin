@@ -356,7 +356,10 @@ return [
     'active_button_duplicate_error' => 'Error while creating the copy: {message}',
 // 1.3
 
-'model_tag_translation' => 'Translation',
-'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.'
+    'model_tag_translation' => 'Translation',
+    'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
+    'active_button_timestamp_label' => 'Timestamp',
+    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_error' => 'Error while storing timestamp.',
 
 ];

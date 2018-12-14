@@ -908,24 +908,24 @@
         },
         {
             "name": "curl/curl",
-            "version": "1.9.3",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-mod/curl.git",
-                "reference": "43436a604b18c2a985cbc3f983be817fbe500e99"
+                "reference": "63ef7e7ba7b37c909886f7ca0bbf99bfb0dfaad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-mod/curl/zipball/43436a604b18c2a985cbc3f983be817fbe500e99",
-                "reference": "43436a604b18c2a985cbc3f983be817fbe500e99",
+                "url": "https://api.github.com/repos/php-mod/curl/zipball/63ef7e7ba7b37c909886f7ca0bbf99bfb0dfaad6",
+                "reference": "63ef7e7ba7b37c909886f7ca0bbf99bfb0dfaad6",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
-                "php": ">=5.3.0"
+                "php": "^5.6 | ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
+                "phpunit/phpunit": "^5.7",
                 "squizlabs/php_codesniffer": "~2.1"
             },
             "type": "library",
@@ -959,7 +959,7 @@
                 "curl",
                 "dot"
             ],
-            "time": "2018-09-05T17:16:47+00:00"
+            "time": "2018-11-17T10:32:36+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1163,20 +1163,20 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.12",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "82ae26e7b47f840f235fe2f0f40e0a1df29255c6"
+                "reference": "80fe9192b66b1cf80ff49637403db61884859ef3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/82ae26e7b47f840f235fe2f0f40e0a1df29255c6",
-                "reference": "82ae26e7b47f840f235fe2f0f40e0a1df29255c6",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/80fe9192b66b1cf80ff49637403db61884859ef3",
+                "reference": "80fe9192b66b1cf80ff49637403db61884859ef3",
                 "shasum": ""
             },
             "require": {
-                "curl/curl": "~1.0",
+                "curl/curl": "^2.0 || ^1.0",
                 "luyadev/luya-composer": "~1.0.0",
                 "phpmailer/phpmailer": "^6.0",
                 "yiisoft/yii2": "~2.0.15"
@@ -1216,7 +1216,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-10-08T14:45:51+00:00"
+            "time": "2018-11-17T11:49:53+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -1284,20 +1284,20 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.13",
+            "version": "1.0.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "316bf8e8b35eb3690af426a6ae6a4349b8c897e8"
+                "reference": "0818dd2acb3ac1324e8af802b77de45514c2d785"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/316bf8e8b35eb3690af426a6ae6a4349b8c897e8",
-                "reference": "316bf8e8b35eb3690af426a6ae6a4349b8c897e8",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/0818dd2acb3ac1324e8af802b77de45514c2d785",
+                "reference": "0818dd2acb3ac1324e8af802b77de45514c2d785",
                 "shasum": ""
             },
             "require": {
-                "curl/curl": "^1.0",
+                "curl/curl": "^2.0 || ^1.0",
                 "luyadev/luya-core": "^1.0",
                 "luyadev/luya-module-admin": "^1.0",
                 "luyadev/luya-module-cms": "^1.0",
@@ -1328,7 +1328,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-10-15T10:00:39+00:00"
+            "time": "2018-11-17T12:24:14+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1590,16 +1590,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.5",
+            "version": "v6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32"
+                "reference": "8190d73eb5def11a43cfb020b7f36db65330698c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/cb3ea134d4d3729e7857737d5f320cce9caf4d32",
-                "reference": "cb3ea134d4d3729e7857737d5f320cce9caf4d32",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/8190d73eb5def11a43cfb020b7f36db65330698c",
+                "reference": "8190d73eb5def11a43cfb020b7f36db65330698c",
                 "shasum": ""
             },
             "require": {
@@ -1652,7 +1652,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2018-03-27T13:49:45+00:00"
+            "time": "2018-11-16T00:41:32+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -2110,16 +2110,16 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
                 "shasum": ""
             },
             "require": {
@@ -2153,7 +2153,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2018-11-20T15:27:04+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2903,16 +2903,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.46",
+            "version": "v2.8.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "84ae343f39947aa084426ed1138bb96bf94d1f12"
+                "reference": "a77e974a5fecb4398833b0709210e3d5e334ffb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/84ae343f39947aa084426ed1138bb96bf94d1f12",
-                "reference": "84ae343f39947aa084426ed1138bb96bf94d1f12",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a77e974a5fecb4398833b0709210e3d5e334ffb0",
+                "reference": "a77e974a5fecb4398833b0709210e3d5e334ffb0",
                 "shasum": ""
             },
             "require": {
@@ -2959,7 +2959,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T09:03:18+00:00"
+            "time": "2018-11-21T14:20:20+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -3012,7 +3012,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -3070,16 +3070,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
                 "shasum": ""
             },
             "require": {
@@ -3125,7 +3125,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/stopwatch",
