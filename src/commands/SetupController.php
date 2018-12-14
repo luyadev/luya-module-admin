@@ -8,6 +8,7 @@ use luya\admin\models\Config;
 use luya\admin\models\User;
 use luya\admin\models\Group;
 use yii\db\Query;
+use yii\helpers\Console;
 use yii\imagine\Image;
 use yii\helpers\VarDumper;
 
@@ -251,17 +252,16 @@ class SetupController extends \luya\console\Command
      */
     public function actionResetPassword()
     {
-        while (true) {
-            $email = $this->email ?: $this->prompt('User E-Mail:');
-            $user = User::findByEmail($email);
-            if (empty($user)) {
-                $this->outputError('The provided E-Mail not found in the System.');
-            } else {
-                break;
+        $email = $this->email ?: $this->prompt('User email:', ['required' => true, 'validator' => function($input, &$error) {
+            $user = User::findByEmail($input);
+            if ($user) {
+                return true;
             }
-        }
+            $error = Console::ansiFormat("The provided email not found in the System.", [Console::FG_RED]);
+            return false;
+        }]);
     
-        $password = $this->password ?: $this->prompt('User Password:');
+        $password = $this->password ?: $this->prompt('New password:');
     
         if ($this->confirm("Are you sure to change the password of User '$email'?") !== true) {
             return $this->outputError('Abort password change process.');
