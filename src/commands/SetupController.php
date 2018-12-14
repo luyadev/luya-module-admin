@@ -251,13 +251,14 @@ class SetupController extends \luya\console\Command
      */
     public function actionResetPassword()
     {
-        while (true) {
+        /** @var User $user */
+        $user = null;
+        
+        while (empty($user)) {
             $email = $this->email ?: $this->prompt('User E-Mail:');
             $user = User::findByEmail($email);
             if (empty($user)) {
                 $this->outputError('The provided E-Mail not found in the System.');
-            } else {
-                break;
             }
         }
     
@@ -267,7 +268,6 @@ class SetupController extends \luya\console\Command
             return $this->outputError('Abort password change process.');
         }
         
-        /** @var User $user */
         $user->password_salt = Yii::$app->getSecurity()->generateRandomString();
         $user->password = Yii::$app->getSecurity()->generatePasswordHash($password.$user->password_salt);
         if ($user->save(true, ['password', 'password_salt'])) {
