@@ -4,6 +4,7 @@ namespace luya\admin\controllers;
 
 use Yii;
 use yii\web\Response;
+use yii\filters\HttpCache;;
 use luya\helpers\Url;
 use luya\admin\models\LoginForm;
 use luya\admin\Module;
@@ -40,6 +41,24 @@ class LoginController extends Controller
                 'roles' => ['?', '@'],
             ],
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        
+        $behaviors['httpCache'] = [
+            'class' => HttpCache::class,
+            'cacheControlHeader' => 'no-store, no-cache',
+            'lastModified' => function ($action, $params) {
+                return time();
+            },
+        ];
+
+        return $behaviors;
     }
 
     /**
