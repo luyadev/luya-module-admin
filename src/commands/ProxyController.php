@@ -182,7 +182,7 @@ class ProxyController extends Command
         $curl = new Curl();
         $curl->get($proxyUrl, ['identifier' => $identifier, 'token' => sha1($token)]);
 
-        if (!$curl->error) {
+        if ($curl->isSuccess()) {
             $this->flushHasCache();
 
             $this->verbosePrint($curl->response);
