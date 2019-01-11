@@ -1,12 +1,50 @@
 .inlinemodal {
     background-color: $white;
-    border: 1px solid color(gray);
+    border: 2px solid $luya;
     border-radius: $border-radius;
+    bottom: 25px;
     box-shadow: $modal-content-box-shadow-sm-up;
     max-width: 1000px;
-    overflow: hidden;
     position: fixed;
-    width: 100%;
+    top: 25px;
+    width: auto;
+
+    .btn-icon {
+        padding-left: 30px;
+    }
+}
+
+.inlinemodal-arrow {
+    height: 0;
+    margin-top: -2px;
+    position: absolute;
+    top: 0;
+    width: 0;
+
+    .inlinemodal--left & {
+        // If modal is aligned left, show arrow right
+        border-bottom: 15px solid transparent;
+        border-left: 15px solid $luya;
+        border-top: 15px solid transparent;
+        margin-right: -1px;
+        right: 0;
+        transform: translateX(100%);
+    }
+    .inlinemodal--right & {
+        // If modal is aligned right, show arrow left
+        border-bottom: 15px solid transparent;
+        border-right: 15px solid $luya;
+        border-top: 15px solid transparent;
+        left: 0;
+        margin-left: -1px;
+        transform: translateX(-100%);
+    }
+}
+
+.inlinemodal-inner {
+    display: block;
+    height: 100%;
+    overflow: hidden;
 }
 
 .inlinemodal-head {
@@ -15,8 +53,8 @@
 }
 
 .inlinemodal-content {
-    max-height: calc(100% - 54px);
-    overflow: hidden;
+    height: calc(100% - 54px);
+    overflow: auto;
     padding: 10px 20px;
     position: relative;
 }
