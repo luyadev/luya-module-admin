@@ -251,7 +251,7 @@ zaa.directive("luyaSchedule", function() {
                                     '<div class="card mt-3" ng-class="{\'card-closed\': !archiveAccordionOpen}" ng-hide="logs.archived.length <= 0">' +
                                         '<div class="card-header" ng-click="archiveAccordionOpen=!archiveAccordionOpen">' +
                                             '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>' +
-                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> Archived</span><small class="ml-1"><i>({{logs.archived.length}})</i></small>' +
+                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> Completed</span><small class="ml-1"><i>({{logs.archived.length}})</i></small>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive-wrapper">' +
