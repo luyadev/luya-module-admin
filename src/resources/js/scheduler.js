@@ -228,23 +228,29 @@ zaa.directive("luyaSchedule", function() {
                             '</div>' +
                             '<div class="inlinemodal-content">' +
                                 '<div class="clearfix">' +
-                                    '<div class="row">'+
-                                        '<div class="col">'+
-                                            '<p class="lead">Log</p>'+
-                                            '<table class="table table-bordered">'+
-                                                '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Is Done</th></tr></thead>'+
-                                                '<tr ng-repeat="log in logs">'+
-                                                    '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td><td>{{log.is_done}}</td>'+
-                                                '</tr>' +
-                                                '</table>'+
-                                            '</div>' +
-                                        '<div class="col">'+
-                                            '<p class="lead">Schedule Event</p>'+
-                                            '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
-                                            '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
-                                            '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
-                                        '</div>' +
-                                    '</div>' +
+
+                                    '<p class="lead">Change</p>'+
+                                    '<zaa-datetime model="timestamp" label="Zeitpunkt" />'+
+                                    '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />'+
+                                    '<button type="button" class="btn btn-save btn-icon" ng-click="saveNewJob()"></button>'+
+
+                                    '<p class="lead">Upcoming</p>'+
+                                    '<table class="table table-bordered">'+
+                                        '<thead><tr><th>New Value</th><th>Schedule Time</th><th>Action</th></tr></thead>'+
+                                        '<tr ng-repeat="log in logs | filter:{is_done:0}">'+
+                                            '<td>{{valueToLabel(log.new_attribute_value)}}</td>'+
+                                            '<td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td>'+
+                                            '<td>TRASH</td>'+
+                                        '</tr>' +
+                                    '</table>'+
+
+                                    '<p class="lead">Archive</p>'+
+                                    '<table class="table table-bordered">'+
+                                        '<thead><tr><th>New Value</th><th>Schedule Time</th></tr></thead>'+
+                                        '<tr ng-repeat="log in logs | filter:{is_done:1}">'+
+                                            '<td>{{valueToLabel(log.new_attribute_value)}}</td><td>{{log.schedule_timestamp*1000 | date:\'short\'}}</td>'+
+                                        '</tr>' +
+                                    '</table>'+
                                 '</div>' +
                             '</div>' +
                         '</div>' +

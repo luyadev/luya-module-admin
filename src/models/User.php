@@ -139,7 +139,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestAttributeTypes()
     {
         return [
-            'title' => ['selectArray', 'data' => static::getTitles(), 'initValue' => 0],
+            'title' => ['selectArray', 'data' => static::getTitles(), 'initValue' => 0, 'scheduling' => true],
             'firstname' => 'text',
             'lastname' => 'text',
             'email' => 'text',
@@ -174,7 +174,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestScopes()
     {
         return [
-            ['list', ['firstname', 'lastname', 'email', 'lastloginTimestamp']],
+            ['list', ['title', 'firstname', 'lastname', 'email', 'lastloginTimestamp']],
             ['create', ['title', 'firstname', 'lastname', 'email', 'password']],
             ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration']],
             ['delete', true],
