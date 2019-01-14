@@ -12,6 +12,7 @@
   *     primary-key-value="{{primaryKeyModelValue}}"
   *     model-class="luya\admin\models\User"
   *     attribute-name="is_deleted"
+  *     title="A title"
   *     attribute-values="[{"label":"Draft","value":0},{"label":"Archived","value":2},{"label":"Published","value":1}]"
   * />
   * ```
@@ -26,7 +27,8 @@ zaa.directive("luyaSchedule", function() {
             primaryKeyValue: "=",
             modelClass: "@",
             attributeName: "@",
-            onlyIcon: "@"
+            onlyIcon: "@",
+            title: "@"
         },
         controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
@@ -35,6 +37,7 @@ zaa.directive("luyaSchedule", function() {
             $scope.isVisible = false;
             $scope.upcomingAccordionOpen = true;
             $scope.archiveAccordionOpen = false;
+            $scope.showDatepicker = false;
 
             $scope.toggleWindow = function() {
                 $scope.isVisible = !$scope.isVisible;
@@ -44,6 +47,10 @@ zaa.directive("luyaSchedule", function() {
                 } else {
                     $scope.hideInlineModal();
                 }
+            };
+
+            $scope.getUniqueFormId = function(prefix) {
+                return prefix + $scope.primaryKeyValue + '_' + $scope.attributeName;
             };
 
             // get existing job data
@@ -110,7 +117,9 @@ zaa.directive("luyaSchedule", function() {
             };
 
             $scope.deleteJob = function(job) {
-                // todo: Delete
+                $http.delete('admin/api-admin-common/scheduler-delete?id=' + job.id).then(function(response) {
+                    $scope.getLogTable();
+                });
             };
         }],
         link: function (scope, element, attr) {
@@ -214,17 +223,19 @@ zaa.directive("luyaSchedule", function() {
                                     '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
                                 '</div>' +
                                 '<div class="inlinemodal-content">' +
-
                                     '<div class="clearfix">' +
-                                        '<zaa-datetime model="timestamp" label="Zeitpunkt" />' +
+
+                                        'title: {{title}}'+
                                         '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />' +
+                                        '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="Planen" />'+
+                                        '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="Zeitpunkt" />' +
                                         '<button type="button" class="btn btn-save btn-icon float-right" ng-click="saveNewJob()">New job</button>' +
                                     '</div>' +
                                     
                                     '<div class="card mt-4" ng-class="{\'card-closed\': !upcomingAccordionOpen}" ng-hide="logs.upcoming.length <= 0">' +
                                         '<div class="card-header" ng-click="upcomingAccordionOpen=!upcomingAccordionOpen">' +
                                             '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>' +
-                                            '<i class="material-icons">alarm</i>&nbsp;<span> Upcoming</span><small class="ml-1"><i>({{logs.upcoming.length}})</i></small>' +
+                                            '<i class="material-icons">alarm</i>&nbsp;<span> Upcoming</span><span class="badge badge-secondary float-right">{{logs.upcoming.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive-wrapper">' +
@@ -251,7 +262,7 @@ zaa.directive("luyaSchedule", function() {
                                     '<div class="card mt-3" ng-class="{\'card-closed\': !archiveAccordionOpen}" ng-hide="logs.archived.length <= 0">' +
                                         '<div class="card-header" ng-click="archiveAccordionOpen=!archiveAccordionOpen">' +
                                             '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>' +
-                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> Completed</span><small class="ml-1"><i>({{logs.archived.length}})</i></small>' +
+                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> Completed</span><span class="badge badge-secondary float-right">{{logs.archived.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive-wrapper">' +

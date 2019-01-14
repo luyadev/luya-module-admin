@@ -209,7 +209,7 @@ $this->beginPage()
                     <div class="card" ng-class="{'card-closed': !groupVisibility}">
                         <div class="card-header" ng-click="groupVisibility=!groupVisibility">
                             <span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>
-                            <i class="material-icons">{{item.menuItem.icon}}</i>&nbsp;<span>{{item.menuItem.alias}}</span><small class="ml-1"><i>({{item.data.length}})</i></small>
+                            <i class="material-icons">{{item.menuItem.icon}}</i>&nbsp;<span>{{item.menuItem.alias}}</span><span class="badge badge-secondary float-right">{{item.data.length}}</span>
                         </div>
                         <div class="card-body p-2">
                             <div class="table-responsive-wrapper">

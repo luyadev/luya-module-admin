@@ -13,6 +13,9 @@ class ScheduleJob extends BaseObject implements JobInterface
     public function execute($queue)
     {
         $model = Scheduler::findOne($this->schedulerId);
-        $model->triggerJob();
+        // ensure delete schedule jobs wont trigger an error.
+        if ($model) {
+            $model->triggerJob();
+        }
     }
 }

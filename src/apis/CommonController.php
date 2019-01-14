@@ -38,7 +38,7 @@ class CommonController extends RestController
     {
         return new ActiveDataProvider([
             'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk]),
-            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_DESC]]
+            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_ASC]]
         ]);
     }
 
@@ -66,6 +66,20 @@ class CommonController extends RestController
         }
 
         return $this->sendModelError($model);
+    }
+
+    /**
+     * Remove a job
+     */
+    public function actionSchedulerDelete($id)
+    {
+        $job = Scheduler::findOne($id);
+
+        if ($job) {
+            return $job->delete();
+        }
+
+        return false;
     }
 
     /**
