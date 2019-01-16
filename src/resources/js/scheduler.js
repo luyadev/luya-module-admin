@@ -262,24 +262,24 @@ zaa.directive("luyaSchedule", function() {
                                 '</div>' +
                                 '<div class="inlinemodal-content">' +
                                     '<div class="clearfix">' +
-                                        '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />' +
-                                        '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="Planen" />'+
-                                        '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="Zeitpunkt" />' +
-                                        '<button type="button" class="btn btn-save btn-icon float-right" ng-click="saveNewJob()">New job</button>' +
+                                        '<zaa-select model="newvalue" options="attributeValues" label="' + i18n['js_scheduler_new_value'] + '" />' +
+                                        '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="' + i18n['js_scheduler_show_datepicker'] + '" />'+
+                                        '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="' + i18n['js_scheduler_time'] + '" />' +
+                                        '<button type="button" class="btn btn-save btn-icon float-right" ng-click="saveNewJob()">' + i18n['js_scheduler_save'] + '</button>' +
                                     '</div>' +
                                     
                                     '<div class="card mt-4" ng-class="{\'card-closed\': !upcomingAccordionOpen}" ng-hide="logs.upcoming.length <= 0">' +
                                         '<div class="card-header" ng-click="upcomingAccordionOpen=!upcomingAccordionOpen">' +
                                             '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>' +
-                                            '<i class="material-icons">alarm</i>&nbsp;<span> Upcoming</span><span class="badge badge-secondary float-right">{{logs.upcoming.length}}</span>' +
+                                            '<i class="material-icons">alarm</i>&nbsp;<span> ' + i18n['js_scheduler_title_upcoming'] + '</span><span class="badge badge-secondary float-right">{{logs.upcoming.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive-wrapper">' +
                                                 '<table class="table table-hover table-align-middle mb-0">' +
                                                     '<thead>' +
                                                         '<tr>' +
-                                                            '<th>New Value</th>' +
-                                                            '<th>Scheduled time</th>' +
+                                                            '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +
+                                                            '<th>' + i18n['js_scheduler_table_timestamp'] + '</th>' +
                                                             '<th></th>' +
                                                         '</tr>' +
                                                     '</thead>' +
@@ -298,15 +298,15 @@ zaa.directive("luyaSchedule", function() {
                                     '<div class="card mt-3" ng-class="{\'card-closed\': !archiveAccordionOpen}" ng-hide="logs.archived.length <= 0">' +
                                         '<div class="card-header" ng-click="archiveAccordionOpen=!archiveAccordionOpen">' +
                                             '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>' +
-                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> Completed</span><span class="badge badge-secondary float-right">{{logs.archived.length}}</span>' +
+                                            '<i class="material-icons">alarm_on</i>&nbsp;<span> ' + i18n['js_scheduler_title_completed'] + '</span><span class="badge badge-secondary float-right">{{logs.archived.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive-wrapper">' +
                                                 '<table class="table table-hover table-align-middle mb-0">' +
                                                     '<thead>' +
                                                         '<tr>' +
-                                                            '<th>New Value</th>' +
-                                                            '<th>Scheduled time</th>' +
+                                                            '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +
+                                                            '<th>' + i18n['js_scheduler_table_timestamp'] + '</th>' +
                                                         '</tr>' +
                                                     '</thead>' +
                                                     '<tbody>' +
