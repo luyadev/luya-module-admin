@@ -1,13 +1,15 @@
 .inlinemodal {
+    @include border-radius($border-radius-lg);
+
     background-color: $white;
-    border: 2px solid $luya;
-    border-radius: $border-radius;
+    border: 2px solid $gray-600;
     bottom: 25px;
     box-shadow: $modal-content-box-shadow-sm-up;
     max-width: 1000px;
     position: fixed;
     top: 25px;
     width: auto;
+    z-index: z-index(inlinemodal);
 
     .btn-icon {
         padding-left: 30px;
@@ -16,7 +18,6 @@
 
 .inlinemodal-arrow {
     height: 0;
-    margin-top: -2px;
     position: absolute;
     top: 0;
     width: 0;
@@ -24,7 +25,7 @@
     .inlinemodal--left & {
         // If modal is aligned left, show arrow right
         border-bottom: 15px solid transparent;
-        border-left: 15px solid $luya;
+        border-left: 15px solid $gray-600;
         border-top: 15px solid transparent;
         margin-right: -1px;
         right: 0;
@@ -33,7 +34,7 @@
     .inlinemodal--right & {
         // If modal is aligned right, show arrow left
         border-bottom: 15px solid transparent;
-        border-right: 15px solid $luya;
+        border-right: 15px solid $gray-600;
         border-top: 15px solid transparent;
         left: 0;
         margin-left: -1px;
@@ -48,13 +49,14 @@
 }
 
 .inlinemodal-head {
-    height: 54px;
-    padding: 10px;
+    display: block;
+    height: 55px;
+    overflow: hidden;
 }
 
 .inlinemodal-content {
-    height: calc(100% - 54px);
+    height: calc(100% - 55px);
     overflow: auto;
-    padding: 10px 20px;
+    padding: 15px;
     position: relative;
 }

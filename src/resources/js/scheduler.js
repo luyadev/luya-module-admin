@@ -38,6 +38,7 @@ zaa.directive("luyaSchedule", function() {
             $scope.upcomingAccordionOpen = true;
             $scope.archiveAccordionOpen = false;
             $scope.showDatepicker = false;
+            $scope.modalPositionClass = "";
 
             $scope.toggleWindow = function() {
                 $scope.isVisible = !$scope.isVisible;
@@ -45,6 +46,13 @@ zaa.directive("luyaSchedule", function() {
                 if ($scope.isVisible) {
                     $scope.getLogTable();
                 } else {
+                    $scope.hideInlineModal();
+                }
+            };
+
+            $scope.escModal = function() {
+                if($scope.isVisible) {
+                    $scope.isVisible = false;
                     $scope.hideInlineModal();
                 }
             };
@@ -126,8 +134,22 @@ zaa.directive("luyaSchedule", function() {
             var inlineModal = element.find('.inlinemodal');
             var inlineModalArrow = element.find('.inlinemodal-arrow');
             var button = element.find('.scheduler-btn');
-            var modalMargin = 25;
-            var minSpaceRight = 700;
+
+            // The spacing the modal has to the window border
+            // and button
+            var modalMargin = 15;
+
+            // If the space right to the button is smaller than minSpaceRight
+            // and the space to the left is bigger than to the right
+            // the modal will be aligned to the left of the button
+            var minSpaceRight = 500;
+
+            // If the space left or right of the button is smaller than minSpace
+            // the modal will be display in full width
+            var minSpace = 300;
+
+            // The max width of the modal, defined in the scss component inlinemodal
+            var maxWidth = 1100;
 
             // Get the button position and align the modal to the right if
             // it hast at least "minSpaceRight" spacing to the right
@@ -136,23 +158,36 @@ zaa.directive("luyaSchedule", function() {
                 var documentSize = {width: $(document).width(), height: element.parents('.luya-content')[0].scrollHeight || $(document).height()};
                 var buttonBcr = button[0].getBoundingClientRect();
 
-                var buttonSpaceRight = documentSize.width - (buttonBcr.left + buttonBcr.width);
-                var alignRight = buttonSpaceRight >= minSpaceRight;
+                var buttonSpaceRight = documentSize.width - (buttonBcr.left + buttonBcr.width + (modalMargin * 2));
+                var buttonSpaceLeft = buttonBcr.left - (modalMargin * 2);
+                var alignRight = buttonSpaceRight >= minSpaceRight || buttonSpaceRight >= buttonSpaceLeft;
+                var notEnoughSpace = buttonSpaceLeft < minSpace && buttonSpaceRight < minSpace;
 
-                inlineModal.removeClass('inlinemodal--left inlinemodal--right');
-                if (alignRight) {
+                inlineModal.removeClass('inlinemodal--left inlinemodal--right inlinemodal--full');
+                if(notEnoughSpace) {
+                    inlineModal.addClass('inlinemodal--full');
+                    inlineModal.css({
+                        display: 'block',
+                        left: modalMargin,
+                        right: modalMargin,
+                        top: modalMargin,
+                        bottom: modalMargin
+                    });
+                } else if (alignRight) {
                     inlineModal.addClass('inlinemodal--right');
                     inlineModal.css({
-                        'left': buttonBcr.left + buttonBcr.width + modalMargin,
-                        'right': modalMargin,
-                        'width': 'auto'
+                        display: 'block',
+                        left: buttonBcr.left + buttonBcr.width + modalMargin,
+                        right: modalMargin,
+                        width: 'auto'
                     });
                 } else {
                     inlineModal.addClass('inlinemodal--left');
                     inlineModal.css({
-                        'left': buttonBcr.left > 1100 ? 'auto' : modalMargin + 'px',
-                        'right': (buttonSpaceRight + buttonBcr.width + modalMargin) + 'px',
-                        'width': buttonBcr.left > 1100 ? '100%' : 'auto'
+                        display: 'block',
+                        left: buttonBcr.left > maxWidth ? 'auto' : modalMargin,
+                        right: (documentSize.width + modalMargin) - buttonBcr.left,
+                        width: buttonBcr.left > maxWidth ? '100%' : 'auto'
                     });
                 }
 
@@ -165,11 +200,12 @@ zaa.directive("luyaSchedule", function() {
             scope.alignModalArrow = function() {
                 var modalBcr = inlineModal[0].getBoundingClientRect();
                 var buttonBcr = button[0].getBoundingClientRect();
+                var arrowHeight = inlineModalArrow.outerHeight();
 
-                var newTop = buttonBcr.top - modalMargin;
+                var newTop = buttonBcr.top - modalMargin - (arrowHeight / 2); // 7.5 equals the height of the arrow / 2
 
-                var topMin = 5;
-                var topMax = (((modalBcr.top + modalBcr.height) - modalMargin) - $(inlineModalArrow).outerHeight()) - 5;
+                var topMin = 10;
+                var topMax = modalBcr.height - modalMargin - (arrowHeight / 2) - 10;
 
                 if (newTop <= topMin) {
                     newTop = topMin;
@@ -178,21 +214,16 @@ zaa.directive("luyaSchedule", function() {
                 }
 
                 inlineModalArrow.css({
-                    top: newTop + 'px'
+                    top: newTop
                 });
             };
 
             scope.showInlineModal = function() {
                 scope.alignModal();
-
-                inlineModal.css({
-                    display: 'block',
-                    zIndex: 500
-                });
             };
 
             scope.hideInlineModal = function() {
-                element.find('.inlinemodal').css({display: 'none'});
+                inlineModal.css({display: 'none'});
             };
 
             var w = angular.element(window);
@@ -217,15 +248,20 @@ zaa.directive("luyaSchedule", function() {
                         '<button ng-click="toggleWindow()" type="button" class="scheduler-btn btn btn-link">' +
                             '<i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
                         '</button>' +
-                        '<div class="inlinemodal" style="display: none;">' +
+                        '<div class="inlinemodal" style="display: none;" ng-class="modalPositionClass" zaa-esc="escModal()">' +
                             '<div class="inlinemodal-inner">' +
                                 '<div class="inlinemodal-head clearfix">' +
-                                    '<span class="btn btn-cancel btn-icon float-right" ng-click="toggleWindow()"></span>' +
+                                    '<div class="modal-header">' +
+                                        '<h5 class="modal-title">{{title}}</h5>' +
+                                        '<div class="modal-close">' +
+                                            '<button type="button" class="close" aria-label="Close" ng-click="toggleWindow()">' +
+                                                '<span aria-hidden="true"><span class="modal-esc">ESC</span> &times;</span>' +
+                                            '</button>' +
+                                        '</div>' +
+                                    '</div>' +
                                 '</div>' +
                                 '<div class="inlinemodal-content">' +
                                     '<div class="clearfix">' +
-
-                                        'title: {{title}}'+
                                         '<zaa-select model="newvalue" options="attributeValues" label="Neuer Wert" />' +
                                         '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="Planen" />'+
                                         '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="Zeitpunkt" />' +
