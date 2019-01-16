@@ -383,5 +383,13 @@ return [
     'active_button_timestamp_label' => 'Timestamp',
     'active_button_timestamp_success' => 'Timestamp has been set successfull.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
+    'js_scheduler_show_datepicker' => 'Terminieren',
+    'js_scheduler_new_value' => 'Neuer Wert',
+    'js_scheduler_time' => 'Ausführungszeit',
+    'js_scheduler_save' => 'Hinzufügen',
+    'js_scheduler_title_upcoming' => 'Anstehend',
+    'js_scheduler_title_completed' => 'Ausgeführt',
+    'js_scheduler_table_newvalue' => 'Neuer Wert',
+    'js_scheduler_table_timestamp' => 'Ausführungszeit',
 
 ];
