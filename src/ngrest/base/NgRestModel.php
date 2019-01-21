@@ -251,7 +251,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * can override this method in order to hide data from the ngRestFind command
      * which populates all data from the database.
      *
-     * An example for hidding deleted news posts from the curd list:
+     * An example for hidding deleted news posts from the crud list:
      *
      * ```php
      * public static function ngRestFind()
@@ -261,6 +261,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * ```
      *
      * + see [[yii\db\ActiveRecord::find()]]
+     * 
+     * > This method will taken for all internal *NOT API USER* related calls.
      *
      * @return yii\db\ActiveQuery
      */

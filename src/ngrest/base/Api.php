@@ -370,7 +370,14 @@ class Api extends RestActiveController
     {
         $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
 
-        return $modelClass::find()->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
+        // If its not an api user the internal ngrest methods are used to find items.
+        if (!Yii::$app->adminuser->identity->is_api_user) {
+            $findModelInstance = $modelClass::ngRestFind();
+        } else {
+            $findModelInstance = $modelClass::find();
+        }
+
+        return $findModelInstance->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
     }
     
     /**
