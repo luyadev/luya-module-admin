@@ -16,6 +16,8 @@ use yii\base\BaseObject;
  */
 class ClientBuild extends BaseObject
 {
+    public $db;
+
     /**
      * @var \luya\console\Command $command object
      */
@@ -59,6 +61,10 @@ class ClientBuild extends BaseObject
     {
         $this->command = $command;
         parent::__construct($config);
+
+        if (!$this->db) {
+            $this->db = Yii::$app->db;
+        }
     }
     
     public function init()
@@ -83,10 +89,10 @@ class ClientBuild extends BaseObject
                 }
             }
 
-            $schema = Yii::$app->db->getTableSchema($tableName);
+            $schema = $this->db->getTableSchema($tableName);
 
             if ($schema !== null) {
-                $this->_tables[$tableName] = new ClientTable($this, $tableConfig);
+                $this->_tables[$tableName] = new ClientTable($this, $tableConfig, ['db' => $this->db]);
             }
         }
     }

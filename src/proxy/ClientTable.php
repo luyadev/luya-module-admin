@@ -24,6 +24,8 @@ class ClientTable extends BaseObject
 
     private $_data;
 
+    public $db;
+
     /**
      * @var \luya\admin\proxy\ClientBuild
      */
@@ -39,6 +41,10 @@ class ClientTable extends BaseObject
         $this->build = $build;
         $this->_data = $data;
         parent::__construct($config);
+
+        if (!$this->db) {
+            $this->db = Yii::$app->db;
+        }
     }
 
     private $_schema;
@@ -46,7 +52,7 @@ class ClientTable extends BaseObject
     public function getSchema()
     {
         if ($this->_schema === null) {
-            $this->_schema = Yii::$app->db->getTableSchema($this->getName());
+            $this->_schema = $this->db->getTableSchema($this->getName());
         }
 
         return $this->_schema;
@@ -131,7 +137,7 @@ class ClientTable extends BaseObject
         $sqlMode = $this->prepare();
 
         try {
-            Yii::$app->db->createCommand()->truncateTable($this->getName())->execute();
+            $this->db->createCommand()->truncateTable($this->getName())->execute();
 
             $this->syncDataInternal();
         } finally {
@@ -153,12 +159,12 @@ class ClientTable extends BaseObject
     {
         $sqlMode = null;
 
-        if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-            Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-            Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 0;')->execute();
+        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
+            $this->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+            $this->db->createCommand('SET UNIQUE_CHECKS = 0;')->execute();
 
-            $sqlMode = Yii::$app->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
-            Yii::$app->db->createCommand('SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
+            $sqlMode = $this->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
+            $this->db->createCommand('SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
         }
 
         return $sqlMode;
@@ -177,12 +183,12 @@ class ClientTable extends BaseObject
      */
     private function cleanup($sqlMode)
     {
-        if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
-            Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-            Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
+        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
+            $this->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+            $this->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
 
             if ($sqlMode !== null) {
-                Yii::$app->db->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
+                $this->db->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
             }
         }
     }
@@ -266,7 +272,7 @@ class ClientTable extends BaseObject
      */
     private function insertData($data)
     {
-        $inserted = Yii::$app->db->createCommand()->batchInsert(
+        $inserted = $this->db->createCommand()->batchInsert(
             $this->getName(),
             $this->cleanUpBatchInsertFields($this->getFields()),
             $this->cleanUpMatchRow($data)

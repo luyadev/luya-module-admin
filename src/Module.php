@@ -15,6 +15,7 @@ use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\importers\StorageImporter;
 use luya\admin\filesystem\LocalFileSystem;
+use yii\db\Connection;
 
 /**
  * Admin Module.
@@ -156,7 +157,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.0
      */
     public $userIdleTimeout = 1800;
-    
+
+    /**
+     * @var Connection The component/connection name from application.
+     */
+    public $proxyConnectionName = 'db';
+
     /**
      * @var integer The number of rows which should be transferd for each request.
      */
@@ -221,7 +227,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'admin' => 'admin.php',
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */

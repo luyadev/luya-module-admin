@@ -5,6 +5,7 @@ namespace luya\admin\apis;
 use Yii;
 use luya\rest\Controller;
 use luya\admin\models\ProxyMachine;
+use yii\db\Connection;
 use yii\web\ForbiddenHttpException;
 use yii\db\Query;
 use luya\admin\models\ProxyBuild;
@@ -30,12 +31,24 @@ use yii\web\NotFoundHttpException;
 class ProxyController extends Controller
 {
     /**
+     * @var Connection
+     */
+    protected $db;
+
+    /**
      * @var array A list of tables which will be ignored and can not be synced with the proxy command.
      */
     protected $ignoreTables = [
         'migration', 'admin_proxy_build', 'admin_proxy_machine',
     ];
-    
+
+    public function beforeAction($action)
+    {
+        $this->db = Yii::$app->get($this->module->proxyConnectionName);
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * Gathers basic informations about the build.
      *
@@ -47,11 +60,11 @@ class ProxyController extends Controller
     public function actionIndex($identifier, $token)
     {
         $machine = ProxyMachine::findOne(['identifier' => $identifier, 'is_deleted' => false]);
-        
+
         if (!$machine) {
             throw new ForbiddenHttpException("Unable to acccess the proxy api.");
         }
-        
+
         if (sha1($machine->access_token) !== $token) {
             throw new ForbiddenHttpException("Unable to acccess the proxy api due to invalid token.");
         }
@@ -64,13 +77,13 @@ class ProxyController extends Controller
             'storageFilesCount' => StorageFile::find()->count(),
         ];
         
-        foreach (Yii::$app->db->schema->tableNames as $table) {
+        foreach ($this->db->schema->tableNames as $table) {
             if (in_array($table, $this->ignoreTables)) {
                 continue;
             }
             
-            $schema = Yii::$app->db->getTableSchema($table);
-            $rows = (new Query())->from($table)->count();
+            $schema = $this->db->getTableSchema($table);
+            $rows = (new Query())->from($table)->count('*', $this->db);
             $config['tables'][$table] = [
                 'pks' => $schema->primaryKey,
                 'name' => $table,
@@ -165,7 +178,7 @@ class ProxyController extends Controller
             $query->orderBy($orders);
         }
         
-        return $query->all();
+        return $query->all($this->db);
     }
     
     /**

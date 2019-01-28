@@ -2,6 +2,7 @@
 
 namespace luya\admin\commands;
 
+use Yii;
 use Curl\Curl;
 use yii\helpers\Json;
 use luya\admin\models\Config;
@@ -188,6 +189,7 @@ class ProxyController extends Command
             $this->verbosePrint($curl->response);
             $response = Json::decode($curl->response);
             $build = new ClientBuild($this, [
+                'db' => Yii::$app->get($this->module->proxyConnectionName),
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
                 'syncRequestsCount' => (int)$this->syncRequestsCount,
