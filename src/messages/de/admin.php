@@ -319,7 +319,7 @@ return [
     'menu_group_contentproxy_machines' => 'Geräte',
     'menu_group_contentproxy_builds' => 'Builds',
     'tag_file_readme' => 'Generiert einen Link zu der angegebenen Datei. Beispiel: `file[1]` generiert einen Link zur Datei mit der Id 1 und nutzt den Dateinamen als Label. Um ein anderes Label zu definieren, gibt man `file[1](Mein Label-Text)` an. Die Datei wird immer in einem neuen Fenster geöffnet.',
-    'aw_apioverview_no_perm_groups' => 'Der API Benutzer mus mindestens einer Berechtigungsgruppe zugewiesen sein.',
+    'aw_apioverview_no_perm_groups' => 'Der API Benutzer muss mindestens einer Berechtigungsgruppe zugewiesen sein.',
     'aw_apioverview_no_access_token' => 'Der API Benutzer muss einen Zugangstoken angeben, um die API nutzen zu können.',
 
 // 1.1.1
