@@ -51,7 +51,7 @@ class TaggableActiveWindow extends ActiveWindow
     public $module = 'admin';
     
     /**
-     * When removing Tag Active Window in 1.3 this can be removed.
+     * When removing Tag Active Window in 2.0 this can be removed.
      */
     public function getViewFolderName()
     {

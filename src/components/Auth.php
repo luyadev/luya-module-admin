@@ -19,7 +19,7 @@ class Auth extends \yii\base\Component
 {
     /**
      * @var integer Can View/list records
-     * @since 1.3.0
+     * @since 2.0.0
      */
     const CAN_VIEW = 0;
 

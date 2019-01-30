@@ -1,8 +1,9 @@
 # CHANGELOG
 
-All notable changes to this project will be documented in this file. This project make usage of the [Yii Versioning Strategy](https://github.com/yiisoft/yii2/blob/master/docs/internals/versions.md). In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
+All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
+In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 1.3 (in progress)
+## 2.0 (in progress)
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 

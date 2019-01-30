@@ -103,7 +103,7 @@ class StorageController extends RestController
      * If a relation exists, remove, otherwise add.
      *
      * @return The array of associated tags for the given file.
-     * @since 1.3.0
+     * @since 2.0.0
      */
     public function actionToggleFileTag()
     {

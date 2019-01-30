@@ -93,7 +93,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * @param integer $type
      * @return boolean Returns true otherwise throws an exception
      * @throws ForbiddenHttpException
-     * @since 1.3
+     * @since 2.0.0
      */
     public function can($type)
     {

@@ -15,7 +15,7 @@ use yii\console\ExitCode;
  * ./vendor/bin/luya admin/queue
  * ```
  *
- * @since 1.3.0
+ * @since 2.0.0
  */
 class QueueController extends Command
 {

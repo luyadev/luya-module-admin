@@ -367,7 +367,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @param [type] $ngModel
      * @param [type] $values
      * @return void
-     * @since 1.3.0
+     * @since 2.0.0
      */
     public function createSchedulerListTag($ngModel, $values, $dataRow, array $options = [])
     {

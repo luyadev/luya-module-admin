@@ -32,7 +32,7 @@ class CommonController extends RestController
      * @param [type] $model
      * @param [type] $pk
      * @return void
-     * @since 1.3.0
+     * @since 2.0.0
      */
     public function actionSchedulerLog($model, $pk)
     {
@@ -88,7 +88,7 @@ class CommonController extends RestController
      * This response differs to the admin-api-tag as returns all tags without pagination.
      *
      * @return array
-     * @since 1.3.0
+     * @since 2.0.0
      */
     public function actionTags()
     {
