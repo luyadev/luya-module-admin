@@ -30,6 +30,8 @@ use luya\admin\helpers\Angular;
  * + onListFind: The model is populated for the Admin Table list view where you can see all your items and click the edit/delete icons.
  * + onExpandFind: Equals to onFind but only for the view api of the model, which means the data which is used for edit.
  * + onSave: Before Update / Create of the new data set.
+ * 
+ * @property string|array $sortField
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -132,6 +134,43 @@ abstract class Plugin extends Component implements TypesInterface
         $this->addEvent(NgRestModel::EVENT_AFTER_NGREST_FIND, 'onListFind');
         $this->addEvent(NgRestModel::EVENT_AFTER_NGREST_UPDATE_FIND, 'onExpandFind');
         $this->addEvent(NgRestModel::EVENT_SERVICE_NGREST, 'onCollectServiceData');
+    }
+
+    private $_sortField;
+
+    /**
+     * Setter method for sortField
+     *
+     * @param string|array $field A sort field definition, this can be either a string `firstname` or an array with a defintion or multiple defintions
+     * ```php
+     * 'sortField' => [
+     *     'age',
+     *     'name' => [
+     *          'asc' => ['first_name' => SORT_ASC],
+     *          'desc' => ['first_name' => SORT_DESC],
+     *     ]
+     * ] 
+     * ```
+     * @since 2.0.0
+     */
+    public function setSortField($field)
+    {
+        $this->_sortField = $field;
+    }
+
+    /**
+     * Getter method for a sortField defintion.
+     * 
+     * If no sortField definition has been set, the plugin attribute name is used.
+     *
+     * @return array
+     * @since 2.0.0
+     */
+    public function getSortField()
+    {
+        $field = $this->_sortField ? $this->_sortField : $this->name;
+
+        return (array) $field;
     }
 
     /**

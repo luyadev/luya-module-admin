@@ -6,6 +6,7 @@ use yii\base\BaseObject;
 use yii\db\QueryInterface;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\base\InvalidConfigException;
 
 /**
  * NgRest Relation Defintion.
@@ -17,6 +18,28 @@ use yii\db\ActiveQuery;
  */
 class NgRestRelation extends BaseObject implements NgRestRelationInterface
 {
+    private $_targetModel;
+
+    /**
+     * @inheritdoc
+     */
+    public function setTargetModel($targetModel)
+    {
+        $this->_targetModel = $targetModel;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTargetModel()
+    {
+        if (!$this->_targetModel) {
+            throw new InvalidConfigException("The targetModel configuration of an ngrest relation can not be empty.");
+        }
+
+        return $this->_targetModel;
+    }
+
     private $_modelClass;
     
     /**
@@ -51,7 +74,13 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
      */
     public function getApiEndpoint()
     {
-        return $this->_apiEndpoint;
+        if ($this->_apiEndpoint) {
+            return $this->_apiEndpoint;
+        }
+
+        $targetModel = $this->getTargetModel();
+        
+        return $targetModel::ngRestApiEndpoint();
     }
 
     private $_relationLink;

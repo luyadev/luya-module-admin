@@ -469,29 +469,39 @@ class Api extends RestActiveController
         $model = $modelClass::findOne((int) $id);
         
         if (!$model) {
-            throw new InvalidCallException("unable to resolve relation call model.");
+            throw new InvalidCallException("Unable to resolve relation call model.");
         }
         
         /** @var $query \yii\db\Query */
-        $arrayItem = $model->ngRestRelations()[$arrayIndex];
-        
-        if ($arrayItem instanceof NgRestRelation) {
-            $query = $arrayItem->getDataProvider();
-        } else {
-            $query = $arrayItem['dataProvider'];
+        $relation = $model->getNgRestRelationByIndex($arrayIndex);
+
+        if (!$relation) {
+            throw new InvalidCallException("Unable to find the given ng rest relation for this index value.");
         }
+
+        $query = $relation->getDataProvider();
         
         if ($query instanceof ActiveQuery && !$query->multiple) {
-            throw new InvalidConfigException("The relation defintion must be a hasMany() relation.");
+            throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
         }
         
         if ($query instanceof ActiveQueryInterface) {
             $query->with($this->getWithRelation('relation-call'));
         }
 
+        $targetModel = Yii::createObject(['class' => $relation->getTargetModel()]);
+
+        $sortAttributes = [];
+        foreach ($targetModel->getNgRestConfig()->getPointerPlugins('list') as $plugin) {
+            $sortAttributes = array_merge($plugin->getSortField(), $sortAttributes);
+        }
+
         return new ActiveDataProvider([
             'query' => $query,
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => array_unique($sortAttributes),
+            ]
         ]);
     }
     
