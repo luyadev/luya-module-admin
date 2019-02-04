@@ -7,6 +7,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
+## Fixed
+
++ [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
+
 ## Changed
 
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.

@@ -48,6 +48,26 @@ class I18nTest extends AdminTestCase
     {
         $this->assertSame('English', I18n::decodeFindActive($this->json));
     }
+
+    public function testDecodeFindActiveEmptyValue()
+    {
+        $this->assertSame('empty', I18n::decodeFindActive($this->json, 'empty', 'es'));
+    }
+
+    public function testDecodeFindActiveArrayEmptyValue()
+    {
+        $this->assertSame(['empty', 'empty'], I18n::decodeFindActiveArray([$this->json, $this->json], 'empty', 'es'));
+    }
+
+    public function testDecodeFindActiveLang()
+    {
+        $this->assertSame('Deutsch', I18n::decodeFindActive($this->json, '', 'de'));
+    }
+
+    public function testDecodeFindActiveArrayLang()
+    {
+        $this->assertSame(['Deutsch', 'Deutsch'], I18n::decodeFindActiveArray([$this->json, $this->json], '', 'de'));
+    }
     
     public function testDecodeFindActiveArray()
     {

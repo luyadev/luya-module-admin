@@ -118,7 +118,7 @@ class I18n
      */
     public static function decodeFindActive($input, $onEmptyValue = '', $lang = null)
     {
-        return static::findActive(static::decode($input, $onEmptyValue), $lang);
+        return static::findActive(static::decode($input, $onEmptyValue), $onEmptyValue, $lang);
     }
     
     /**
