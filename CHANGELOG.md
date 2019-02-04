@@ -9,7 +9,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ## Fixed
 
-+ [#260](https://github.com/luyadev/luya-module-admin/pull/260) I18n::decodeFindActive returned empty value for explicitly selected lang
++ [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
 
 ## Changed
 
