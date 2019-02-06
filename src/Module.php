@@ -13,7 +13,6 @@ use luya\admin\components\AdminMenuBuilder;
 use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
-use luya\admin\importers\StorageImporter;
 use luya\admin\filesystem\LocalFileSystem;
 
 /**
