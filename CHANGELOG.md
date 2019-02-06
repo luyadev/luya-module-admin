@@ -7,18 +7,18 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
-## Fixed
-
-+ [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
-+ [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
-+ [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
-
 ## Changed
 
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.
 + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
 + [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
+
+## Fixed
+
++ [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
++ [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
++ [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
 
 ## Added
 
