@@ -94,10 +94,14 @@ $this->beginBody();
                 <div class="row mt-2">
                     <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon">
+                            <div class="input-group-addon" ng-hide="config.searchQuery">
                                 <i class="material-icons">search</i>
                             </div>
+                            <span class="input-group-addon" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
+                                <i class="material-icons">clear</i>
+                            </span>
                             <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
+                            
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
