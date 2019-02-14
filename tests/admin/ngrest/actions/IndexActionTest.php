@@ -43,7 +43,7 @@ class IndexActionTest extends AdminTestCase
         $r = $ctrl->runAction('index');
         
         $this->assertSame([
-            ['id' => 1, 'name' => 'barfoo']
+            ['id' => "1", 'name' => 'barfoo'], // as the data is cached, the serializer wont type case the values afterwards - there for its id="1" instead of id=1
         ], $r);
     }
 }

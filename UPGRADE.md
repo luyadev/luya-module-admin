@@ -5,8 +5,8 @@ This document will help you upgrading from a LUYA admin module version into anot
 ## from 1.2 to 2.0 (in progress)
 
 + Change version constraint as we follow semver (from `~1.2` to `^2.0`)
-+ [#]() Change the ngRestRelation `apiEndpoint` to `targetModel`. From `'apiEndpoint' => Sale::ngRestApiEndpoint()` to `'targetModel' => Sale::class` inside of `ngRestRelations()`.
-
++ Change the ngRestRelation `apiEndpoint` to `targetModel`. From `'apiEndpoint' => Sale::ngRestApiEndpoint()` to `'targetModel' => Sale::class` inside of `ngRestRelations()`.
++ [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes and methods haven been removed.
 
 ## from 1.1 to 1.2 (17. May 2018)
 

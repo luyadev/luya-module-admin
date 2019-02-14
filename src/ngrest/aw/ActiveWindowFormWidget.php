@@ -15,7 +15,7 @@ use luya\base\Widget;
  * Example usage:
  *
  * ```php
- * <?php $form = CallbackFormWidget::begin(['callback' => 'get-coordinates', 'buttonValue' => 'Verify', 'angularCallbackFunction' => 'function($response) {
+ * <?php $form = ActiveWindowFormWidget::begin(['callback' => 'get-coordinates', 'buttonValue' => 'Verify', 'angularCallbackFunction' => 'function($response) {
  *
  * console.log($response)
  *

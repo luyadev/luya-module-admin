@@ -280,7 +280,7 @@ class Config extends BaseObject implements ConfigInterface
      *
      * @param string $key
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey(array $key)
     {
         $this->_primaryKey = $key;
     }
@@ -574,7 +574,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function onFinish()
     {
-        foreach ($this->primaryKey as $pk) {
+        foreach ($this->getPrimaryKey() as $pk) {
             if (!$this->hasField('list', $pk)) {
                 $alias = $pk;
                 

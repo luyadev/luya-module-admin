@@ -14,7 +14,7 @@ use yii\base\BaseObject;
 class ActiveWindowFormField extends BaseObject
 {
     /**
-     * @var \luya\admin\ngrest\aw\CallbackFormWidget The form widget object
+     * @var \luya\admin\ngrest\aw\ActiveWindowFormWidget The form widget object
      */
     public $form;
     

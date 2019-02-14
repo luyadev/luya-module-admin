@@ -1,11 +1,11 @@
 <?php
-use luya\admin\ngrest\aw\CallbackFormWidget;
+use luya\admin\ngrest\aw\ActiveWindowFormWidget;
 
 ?>
 
 <h1>Maps</h1>
 
-<?php $form = CallbackFormWidget::begin(['callback' => 'get-coordinates', 'buttonValue' => 'Verify', 'angularCallbackFunction' => 'function($response) {
+<?php $form = ActiveWindowFormWidget::begin(['callback' => 'get-coordinates', 'buttonValue' => 'Verify', 'angularCallbackFunction' => 'function($response) {
     
     initMap($response.cords);
 

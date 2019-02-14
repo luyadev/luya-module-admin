@@ -413,7 +413,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 throw new InvalidConfigException("The NgRestModel '".__CLASS__."' requires at least one primaryKey in order to work.");
             }
             
-            return $keys;
+            return (array) $keys;
         }
 
         return $this->_ngRestPrimaryKey;

@@ -63,7 +63,7 @@ class TestNewNotationNgRestModel extends NgRestModel
 
     public static function primaryKey()
     {
-        return 'id';
+        return ['id'];
     }
 
     public static function ngRestApiEndpoint()
