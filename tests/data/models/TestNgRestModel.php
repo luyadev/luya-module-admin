@@ -3,7 +3,7 @@
 namespace admintests\data\models;
 
 use luya\admin\ngrest\base\NgRestModel;
-use luya\admin\aws\TagActiveWindow;
+use luya\admin\aws\TaggableActiveWindow;
 
 class TestNgRestModel extends NgRestModel
 {
@@ -49,7 +49,7 @@ class TestNgRestModel extends NgRestModel
         $this->ngRestConfigDefine($config, 'list', ['foo', 'bar', 'extraAttr']);
         $this->ngRestConfigDefine($config, ['create', 'update'], ['foo']);
         $config->delete = true;
-        $config->aw->load(['class' => TagActiveWindow::class]);
+        $config->aw->load(['class' => TaggableActiveWindow::class]);
         return $config;
     }
 }
@@ -105,7 +105,7 @@ class TestNewNotationNgRestModel extends NgRestModel
     public function ngRestActiveWindows()
     {
         return [
-            ['class' => TagActiveWindow::class],
+            ['class' => TaggableActiveWindow::class],
         ];
     }
 }
