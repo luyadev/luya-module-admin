@@ -369,11 +369,12 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
+     * @param boolean $noFilter Whether the user can select a filter not, if not the original is taken.
      * @return string
      */
-    public static function imageUpload($ngModel, $label, array $options = [])
+    public static function imageUpload($ngModel, $label, array $options = [], $noFilter = false)
     {
-        return self::injector(TypesInterface::TYPE_IMAGEUPLOAD, $ngModel, $label, [], $options);
+        return self::injector(TypesInterface::TYPE_IMAGEUPLOAD, $ngModel, $label, ['no_filter' => (int) $noFilter], $options);
     }
     
     /**
