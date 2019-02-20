@@ -874,6 +874,9 @@
     	}
     });
 
+    /**
+     * <zaa-link model="linkinfo" />
+     */
     zaa.directive("zaaLink", ['$filter', function($filter){
         return {
             restrict: "E",
