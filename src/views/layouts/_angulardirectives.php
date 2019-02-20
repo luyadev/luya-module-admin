@@ -118,7 +118,7 @@ use luya\admin\helpers\Angular;
         </span>
     </span>
     <ul class="treeview-items">
-        <li class="treeview-item" ng-class="{'treeview-item-has-children' : (menuData.items | menuparentfilter:container.id:data.id).length}" ng-repeat="data in menuData.items | menuparentfilter:container.id:data.id" ng-include="'menuDropdownReverse'"></li>
+        <li class="treeview-item" ng-class="{'treeview-item-has-children' : (menuData.items | menuparentfilter:container.id:data.id).length}" ng-repeat="data in menuData.items | menuparentfilter:container.id:data.id track by data.id" ng-include="'menuDropdownReverse'"></li>
     </ul>
 </script>
 
