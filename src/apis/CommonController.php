@@ -38,7 +38,8 @@ class CommonController extends RestController
     {
         return new ActiveDataProvider([
             'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk]),
-            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_ASC]]
+            'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_ASC]],
+            'pagination' => false,
         ]);
     }
 
