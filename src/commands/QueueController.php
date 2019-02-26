@@ -5,6 +5,7 @@ namespace luya\admin\commands;
 use Yii;
 use luya\console\Command;
 use yii\console\ExitCode;
+use luya\admin\models\Config;
 
 /**
  * Run jobs inside the Queue.
@@ -25,7 +26,7 @@ class QueueController extends Command
     public function actionIndex()
     {
         Yii::$app->adminqueue->run(false);
-
+        Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
         return ExitCode::OK;
     }
 }

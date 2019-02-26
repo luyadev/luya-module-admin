@@ -12,6 +12,7 @@ use luya\admin\models\UserLogin;
 use luya\admin\models\Scheduler;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
+use luya\admin\models\Config;
 
 /**
  * Common Admin API Tasks.
@@ -29,9 +30,9 @@ class CommonController extends RestController
     /**
      * Get all log entries for a given scheulder model with primary key.
      *
-     * @param [type] $model
-     * @param [type] $pk
-     * @return void
+     * @param string $model The namespace to the model
+     * @param integer $pk The primary key
+     * @return ActiveDataProvider
      * @since 2.0.0
      */
     public function actionSchedulerLog($model, $pk)
@@ -46,7 +47,8 @@ class CommonController extends RestController
     /**
      * Add a task to the scheduler.
      *
-     * @return void
+     * @return array
+     * @since 2.0.0
      */
     public function actionSchedulerAdd()
     {
@@ -62,7 +64,7 @@ class CommonController extends RestController
 
             // if its a "now" job, run the internal worker now so the log table is refreshed immediately
             Yii::$app->adminqueue->run(false);
-
+            Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
             return $model;
         }
 
@@ -70,7 +72,10 @@ class CommonController extends RestController
     }
 
     /**
-     * Remove a job
+     * Remove a job for a given ID.
+     * 
+     * @return boolean
+     * @since 2.0.0
      */
     public function actionSchedulerDelete($id)
     {

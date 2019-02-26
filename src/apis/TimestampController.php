@@ -5,6 +5,8 @@ namespace luya\admin\apis;
 use Yii;
 use luya\admin\models\UserOnline;
 use luya\admin\base\RestController;
+use luya\traits\CacheableTrait;
+use luya\admin\models\Config;
 
 /**
  * Timestamp API, refreshes the UserOnline system of the administration area.
@@ -14,6 +16,8 @@ use luya\admin\base\RestController;
  */
 class TimestampController extends RestController
 {
+    use CacheableTrait;
+
     /**
      * The timestamp action provider informations about currenct only users and if the ui needs to be refreshed.
      *
@@ -33,7 +37,10 @@ class TimestampController extends RestController
         }
 
         // run internal worker
-        Yii::$app->adminqueue->run(false);
+        $this->getOrSetHasCache(['timestamp', 'queue', 'run'], function() {
+            Yii::$app->adminqueue->run(false);
+            Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
+        }, 60*5);
         
         // update keystrokes
         $lastKeyStroke = Yii::$app->request->getBodyParam('lastKeyStroke');
