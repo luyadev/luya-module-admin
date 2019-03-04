@@ -164,7 +164,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestExtraAttributeTypes()
     {
         return [
-            'lastloginTimestamp' => 'datetime',
+            'lastloginTimestamp' => ['datetime', 'sortField' => false],
         ];
     }
     

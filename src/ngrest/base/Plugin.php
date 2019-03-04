@@ -145,9 +145,15 @@ abstract class Plugin extends Component implements TypesInterface
      * 
      * ```php
      * 'sortField' => [
-     *          'asc' => ['fist_name' => SORT_ASC, 'last_name' => SORT_ASC],
-     *          'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
+     *     'asc' => ['fist_name' => SORT_ASC, 'last_name' => SORT_ASC],
+     *     'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
      * ] 
+     * ```
+     * 
+     * Or you have an ngrest attribute which does not exists in the database, so you can define the original sorting attribute:
+     * 
+     * ```php
+     * 'sortField' => 'field_name_inside_the_table'
      * ```
      * 
      * A very common scenario when define sortField is when display a value from a relation, therefore you need to prepare the data provider
@@ -155,10 +161,17 @@ abstract class Plugin extends Component implements TypesInterface
      * 
      * ```php
      * 'sortField' => [
-     *          'asc' => ['city_table.name' => SORT_ASC],
-     *          'desc' => ['city_table.name' => SORT_DESC],
+     *      'asc' => ['city_table.name' => SORT_ASC],
+     *      'desc' => ['city_table.name' => SORT_DESC],
      * ]
      * ```
+     * 
+     * There are situations you might turn of the sorting for the given attribute therefore just sortfield to false:
+     * 
+     * ```php
+     * 'sortField' => false,
+     * ```
+     * 
      * @since 2.0.0
      */
     public function setSortField($field)
@@ -176,6 +189,10 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function getSortField()
     {
+        if ($this->_sortField === false) {
+            return [];
+        }
+
         if ($this->_sortField) {
             $field = array();
             $field[$this->name] = $this->_sortField;

@@ -101,7 +101,6 @@ $this->beginBody();
                                 <i class="material-icons">clear</i>
                             </span>
                             <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
-                            
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
@@ -126,8 +125,8 @@ $this->beginBody();
             </div>
             <?php if ($relationCall && $canCreate && $config->getPointer('create')): ?>
             <button type="button" class="btn btn-add ml-3 mt-3" ng-click="switchTo(1)">
-                    <i class="material-icons">add_box</i>
-                    <span><?= Module::t('ngrest_crud_btn_add'); ?></span>
+                <i class="material-icons">add_box</i>
+                <span><?= Module::t('ngrest_crud_btn_add'); ?></span>
             </button>
             <?php endif; ?>
             <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
@@ -138,7 +137,7 @@ $this->beginBody();
                             <?php foreach ($config->getPointer('list') as $item): ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
-                                    <?php if ($config->getDefaultOrderField()): ?>
+                                    <?php if ($config->getDefaultOrderField() && $this->context->isSortable($item)): ?>
                                         <div class="table-sorter table-sorter-up" ng-click="changeOrder('<?= $item['name']; ?>', '-')" ng-class="{'is-sorting': !isOrderBy('-<?= $item['name']; ?>')}">
                                             <span><?= $item['alias']; ?></span>
                                             <i class="material-icons">keyboard_arrow_up</i>

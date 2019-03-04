@@ -128,7 +128,7 @@ final class Logger extends NgRestModel
     public function ngRestExtraAttributeTypes()
     {
         return [
-            'typeBadge' => 'html',
+            'typeBadge' => ['html', 'sortField' => 'type'],
         ];
     }
     

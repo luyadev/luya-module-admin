@@ -12,6 +12,7 @@ use yii\base\ViewContextInterface;
 use luya\helpers\Html;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
+use luya\admin\ngrest\Config;
 
 /**
  * Render the Crud view.
@@ -210,6 +211,20 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
     /**
+     * Indicates whether the current plugin config is sortable or not.
+     *
+     * @param array $item
+     * @return boolean
+     * @since 2.0.0
+     */
+    public function isSortable(array $item)
+    {
+        $config = Config::createField($item);
+
+        return $config->getSortField() ? true : false;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getSettingButtonDefinitions()
@@ -389,7 +404,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                 $fields[] = $field;
             }
         }
-        // doe we have extra fields to expand
+        // do we have extra fields to expand
         if (count($this->config->getPointerExtraFields($type)) > 0) {
             $query['expand'] = implode(',', $this->config->getPointerExtraFields($type));
         }
