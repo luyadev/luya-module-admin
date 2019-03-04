@@ -589,7 +589,7 @@
 				});
 			} else {
 				var url = $scope.generateUrlWithParams('filter', pageId);
-				var url = url + '&filterName=' + $scope.config.filter;
+				url = url + '&filterName=' + $scope.config.filter;
 				$http.get(url).then(function(response) {
 					$scope.parseResponseQueryToListArray(response);
 				});
