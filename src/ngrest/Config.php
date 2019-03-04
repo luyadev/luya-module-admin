@@ -388,10 +388,17 @@ class Config extends BaseObject implements ConfigInterface
         return NgRest::createPluginObject($plugin['type']['class'], $plugin['name'], $plugin['alias'], $plugin['i18n'], $plugin['type']['args']);
     }
 
+    /**
+     * Get all plugin objects for a given pointer.
+     * 
+     * @param string $pointer The name of the pointer (list, create, update).
+     * @return \luya\admin\ngrest\base\Plugin An array with plugin objects
+     * @since 2.0.0
+     */
     public function getPointerPlugins($pointer)
     {
         $plugins = [];
-        foreach ($this->getPointer('list', []) as $field) {
+        foreach ($this->getPointer($pointer, []) as $field) {
             $plugins[] = self::createField($field);
         }
 

@@ -31,7 +31,7 @@ use luya\admin\helpers\Angular;
  * + onExpandFind: Equals to onFind but only for the view api of the model, which means the data which is used for edit.
  * + onSave: Before Update / Create of the new data set.
  * 
- * @property string|array $sortField
+ * @property string|array $sortField Sort field defintion (since 2.0.0)
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -142,14 +142,22 @@ abstract class Plugin extends Component implements TypesInterface
      * Setter method for sortField
      *
      * @param string|array $field A sort field definition, this can be either a string `firstname` or an array with a defintion or multiple defintions
+     * 
      * ```php
      * 'sortField' => [
-     *     'age',
-     *     'name' => [
-     *          'asc' => ['first_name' => SORT_ASC],
-     *          'desc' => ['first_name' => SORT_DESC],
-     *     ]
+     *          'asc' => ['fist_name' => SORT_ASC, 'last_name' => SORT_ASC],
+     *          'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
      * ] 
+     * ```
+     * 
+     * A very common scenario when define sortField is when display a value from a relation, therefore you need to prepare the data provider
+     * inside the API in order to **join** the relation (joinWith(['relationName])) aftewards you can use the table name
+     * 
+     * ```php
+     * 'sortField' => [
+     *          'asc' => ['city_table.name' => SORT_ASC],
+     *          'desc' => ['city_table.name' => SORT_DESC],
+     * ]
      * ```
      * @since 2.0.0
      */
@@ -168,7 +176,12 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function getSortField()
     {
-        $field = $this->_sortField ? $this->_sortField : $this->name;
+        if ($this->_sortField) {
+            $field = array();
+            $field[$this->name] = $this->_sortField;
+        } else {
+            $field = $this->name;
+        }
 
         return (array) $field;
     }

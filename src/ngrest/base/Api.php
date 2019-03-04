@@ -22,6 +22,7 @@ use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\actions\IndexAction;
 use luya\helpers\StringHelper;
+use luya\admin\ngrest\Config;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -449,7 +450,26 @@ class Api extends RestActiveController
         return new ActiveDataProvider([
             'query' => $find->with($this->getWithRelation('search')),
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => $this->generateSortAttributes($this->model->getNgRestConfig()),
+            ]
         ]);
+    }
+
+    /**
+     * Generate an array of sortable attribute defintions from a ngrest config object.
+     * 
+     * @param Config $config The Ngrest Config object
+     * @return array
+     * @since 2.0.0
+     */
+    public function generateSortAttributes(Config $config)
+    {
+        $sortAttributes = [];
+        foreach ($config->getPointerPlugins('list') as $plugin) {
+            $sortAttributes = ArrayHelper::merge($plugin->getSortField(), $sortAttributes);
+        }
+        return array_unique($sortAttributes);
     }
     
     /**
@@ -491,16 +511,11 @@ class Api extends RestActiveController
 
         $targetModel = Yii::createObject(['class' => $relation->getTargetModel()]);
 
-        $sortAttributes = [];
-        foreach ($targetModel->getNgRestConfig()->getPointerPlugins('list') as $plugin) {
-            $sortAttributes = array_merge($plugin->getSortField(), $sortAttributes);
-        }
-
         return new ActiveDataProvider([
             'query' => $query,
             'pagination' => $this->pagination,
             'sort' => [
-                'attributes' => array_unique($sortAttributes),
+                'attributes' => $this->generateSortAttributes($targetModel->getNgRestConfig()),
             ]
         ]);
     }
@@ -527,6 +542,9 @@ class Api extends RestActiveController
         return new ActiveDataProvider([
             'query' => $model->ngRestFilters()[$filterName],
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => $this->generateSortAttributes($model->getNgRestConfig()),
+            ]
         ]);
     }
     
