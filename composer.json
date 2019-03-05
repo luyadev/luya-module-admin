@@ -26,7 +26,7 @@
         "twbs/bootstrap": "v4.0.0-beta",
         "bower-asset/angular" : "~1.6.5",
         "bower-asset/angular-loading-bar" : "^0.9",
-        "bower-asset/angularjs-datepicker" : "^2.1.0",
+        "bower-asset/angularjs-datepicker" : "^2.0",
         "bower-asset/ui-router" : "~0.4.0",
         "bower-asset/ng-file-upload" : "~12.2.0",
         "bower-asset/ng-flow" : "~2.7.0",
@@ -50,10 +50,21 @@
     "extra": {	
         "branch-alias": {	
             "dev-master": "1.2.x-dev"	
+        },
+        "luya" : {
+        	"bootstrap": ["\\luya\\admin\\Bootstrap"]
         }
     },
     "config": {
-        "platform": {"php": "7.0"}
+        "platform": {
+            "php": "7.0"
+        },
+        "fxp-asset" : {
+            "pattern-skip-version": "(-build|-patch)",
+             "installer-paths": {
+                "bower-asset-library": "vendor/bower"
+            }
+        }
     },
     "repositories": [
         {

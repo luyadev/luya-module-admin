@@ -17,7 +17,7 @@ abstract class Select extends Plugin
      * If enabled the list tag will transform into an interactive schedling overlay.
      *
      * @var boolean
-     * @since 1.3.0
+     * @since 2.0.0
      */
     public $scheduling = false;
 

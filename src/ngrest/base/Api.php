@@ -22,6 +22,7 @@ use yii\db\ActiveQuery;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\actions\IndexAction;
 use luya\helpers\StringHelper;
+use luya\admin\ngrest\Config;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -449,7 +450,26 @@ class Api extends RestActiveController
         return new ActiveDataProvider([
             'query' => $find->with($this->getWithRelation('search')),
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => $this->generateSortAttributes($this->model->getNgRestConfig()),
+            ]
         ]);
+    }
+
+    /**
+     * Generate an array of sortable attribute defintions from a ngrest config object.
+     * 
+     * @param Config $config The Ngrest Config object
+     * @return array
+     * @since 2.0.0
+     */
+    public function generateSortAttributes(Config $config)
+    {
+        $sortAttributes = [];
+        foreach ($config->getPointerPlugins('list') as $plugin) {
+            $sortAttributes = ArrayHelper::merge($plugin->getSortField(), $sortAttributes);
+        }
+        return array_unique($sortAttributes);
     }
     
     /**
@@ -458,10 +478,11 @@ class Api extends RestActiveController
      * @param mixed $arrayIndex
      * @param mixed $id
      * @param string $modelClass The name of the model where the ngRestRelation is defined.
+     * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
      * @throws InvalidCallException
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionRelationCall($arrayIndex, $id, $modelClass)
+    public function actionRelationCall($arrayIndex, $id, $modelClass, $query = null)
     {
         $this->checkAccess('relation-call');
         
@@ -469,29 +490,41 @@ class Api extends RestActiveController
         $model = $modelClass::findOne((int) $id);
         
         if (!$model) {
-            throw new InvalidCallException("unable to resolve relation call model.");
+            throw new InvalidCallException("Unable to resolve relation call model.");
         }
         
-        /** @var $query \yii\db\Query */
-        $arrayItem = $model->ngRestRelations()[$arrayIndex];
+        /** @var $relation \luya\admin\ngrest\base\NgRestRelationInterface */
+        $relation = $model->getNgRestRelationByIndex($arrayIndex);
+
+        if (!$relation) {
+            throw new InvalidCallException("Unable to find the given ng rest relation for this index value.");
+        }
+
+        $find = $relation->getDataProvider();
         
-        if ($arrayItem instanceof NgRestRelation) {
-            $query = $arrayItem->getDataProvider();
-        } else {
-            $query = $arrayItem['dataProvider'];
+        if ($find instanceof ActiveQuery && !$find->multiple) {
+            throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
         }
         
-        if ($query instanceof ActiveQuery && !$query->multiple) {
-            throw new InvalidConfigException("The relation defintion must be a hasMany() relation.");
+        if ($find instanceof ActiveQueryInterface) {
+            $find->with($this->getWithRelation('relation-call'));
         }
-        
-        if ($query instanceof ActiveQueryInterface) {
-            $query->with($this->getWithRelation('relation-call'));
+
+        $targetModel = Yii::createObject(['class' => $relation->getTargetModel()]);
+
+        if ($query) {
+            foreach ($targetModel->getNgRestPrimaryKey() as $pkName) {
+                $searchQuery = $targetModel->ngRestFullQuerySearch($query)->select([$targetModel->tableName() . '.' . $pkName]);
+                $find->andWhere(['in', $targetModel->tableName() . '.' . $pkName, $searchQuery]);
+            }
         }
 
         return new ActiveDataProvider([
-            'query' => $query,
+            'query' => $find,
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => $this->generateSortAttributes($targetModel->getNgRestConfig()),
+            ]
         ]);
     }
     
@@ -499,10 +532,11 @@ class Api extends RestActiveController
      * Filter the Api response by a defined Filtername.
      *
      * @param string $filterName
+     * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
      * @throws InvalidCallException
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionFilter($filterName)
+    public function actionFilter($filterName, $query = null)
     {
         $this->checkAccess('filter');
         
@@ -511,12 +545,24 @@ class Api extends RestActiveController
         $filterName = Html::encode($filterName);
         
         if (!array_key_exists($filterName, $model->ngRestFilters())) {
-            throw new InvalidCallException("The requested filter does not exists in the filter list.");
+            throw new InvalidCallException("The requested filter '$filterName' does not exists in the filter list.");
+        }
+
+        $find = $model->ngRestFilters()[$filterName];
+
+        if ($query) {
+            foreach ($model->getNgRestPrimaryKey() as $pkName) {
+                $searchQuery = $model->ngRestFullQuerySearch($query)->select([$model->tableName() . '.' . $pkName]);
+                $find->andWhere(['in', $model->tableName() . '.' . $pkName, $searchQuery]);
+            }
         }
         
         return new ActiveDataProvider([
-            'query' => $model->ngRestFilters()[$filterName],
+            'query' => $find,
             'pagination' => $this->pagination,
+            'sort' => [
+                'attributes' => $this->generateSortAttributes($model->getNgRestConfig()),
+            ]
         ]);
     }
     

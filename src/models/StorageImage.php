@@ -106,17 +106,6 @@ final class StorageImage extends ActiveRecord
     }
 
     /**
-     * Use getTinyCropImage().
-     *
-     * @since 1.2.2.1
-     * @deprecated 1.2.3 use getTinyCropImage() instead.
-     */
-    public function getThumbnail()
-    {
-        return $this->getFilterImage(TinyCrop::identifier());
-    }
-
-    /**
      * Return a storage image object representing the tiny crop which is used for file manager and crud list previews.
      *
      * The tiny crop image filter is also the thumbnail used in ngrest list (and file manager).

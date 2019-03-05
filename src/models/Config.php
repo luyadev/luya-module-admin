@@ -25,6 +25,11 @@ final class Config extends NgRestModel
     const CONFIG_SETUP_COMMAND_TIMESTAMP = 'setup_command_timestamp';
     
     const CONFIG_INSTALLER_VENDOR_TIMESTAMP = 'installer_vendor_timestamp';
+
+    /**
+     * @since 2.0.0
+     */
+    const CONFIG_QUEUE_TIMESTAMP = 'queue_timestamp';
     
     /**
      * @inheritdoc

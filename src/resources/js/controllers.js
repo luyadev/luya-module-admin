@@ -18,8 +18,8 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", ['$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', 
-	function($scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData) {
+	zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', 
+	function(cfpLoadingBar, $scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData) {
 
 		$scope.toast = AdminToastService;
 
@@ -262,13 +262,18 @@
 			if (n.length == 0) {
 				$scope.loadList(1);
 			} else {
+				cfpLoadingBar.start();
 				$scope.searchPromise = $timeout(function() {
-					$http.post($scope.generateUrlWithParams('search'), {query: n}).then(function(response) {
-						$scope.parseResponseQueryToListArray(response);
-					});
-				}, 1000)
+					$scope.generateSearchPromise(n, 1);
+				}, 500)
 			}
 		};
+
+		$scope.generateSearchPromise = function(value, page) {
+			return $http.post($scope.generateUrlWithParams('search', page), {query: value}).then(function(response) {
+				$scope.parseResponseQueryToListArray(response);
+			});
+		}
 
 
 		/******* RELATION CALLLS *********/
@@ -382,7 +387,7 @@
 
         $scope.$watch('pager.currentPage', function(newVal, oldVal) {
             if (newVal != oldVal) {
-                $scope.loadList($scope.pager.currentPage);
+				$scope.loadList($scope.pager.currentPage);
             }
         });
 
@@ -567,6 +572,11 @@
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
 			if (parseInt($scope.config.filter) == 0) {
+
+				if ($scope.config.searchQuery) {
+					return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
+				}
+				
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);
 					url = url + '&arrayIndex=' + $scope.config.relationCall.arrayIndex + '&id=' + $scope.config.relationCall.id + '&modelClass=' + $scope.config.relationCall.modelClass;
@@ -579,7 +589,7 @@
 				});
 			} else {
 				var url = $scope.generateUrlWithParams('filter', pageId);
-				var url = url + '&filterName=' + $scope.config.filter;
+				url = url + '&filterName=' + $scope.config.filter;
 				$http.get(url).then(function(response) {
 					$scope.parseResponseQueryToListArray(response);
 				});

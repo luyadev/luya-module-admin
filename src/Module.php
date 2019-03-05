@@ -13,7 +13,6 @@ use luya\admin\components\AdminMenuBuilder;
 use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
-use luya\admin\importers\StorageImporter;
 use luya\admin\filesystem\LocalFileSystem;
 use yii\db\Connection;
 
@@ -52,7 +51,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
-     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pt, fa, cn, nl, pl
+     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl
      */
     public $interfaceLanguage = 'en';
     

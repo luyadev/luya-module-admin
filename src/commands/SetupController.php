@@ -247,7 +247,7 @@ class SetupController extends \luya\console\Command
      * Change the password of a admin user.
      *
      * @return bool
-     * @since 1.3
+     * @since 2.0.0
      */
     public function actionResetPassword()
     {

@@ -228,7 +228,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * public function ngRestRelations()
      * {
      * 	   return [
-     *          ['label' => 'The Label', 'apiEndpoint' => \path\to\ngRest\Model::ngRestApiEndpoint(), 'dataProvider' => $this->getSales()],
+     *          ['label' => 'The Label', 'targetModel' => Model::class, 'dataProvider' => $this->getSales()],
      *     ];
      * }
      * ```
@@ -413,7 +413,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 throw new InvalidConfigException("The NgRestModel '".__CLASS__."' requires at least one primaryKey in order to work.");
             }
             
-            return $keys;
+            return (array) $keys;
         }
 
         return $this->_ngRestPrimaryKey;
@@ -768,22 +768,55 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             }
             
             // generate relations
-            foreach ($this->ngRestRelations() as $key => $item) {
-                /** @var $item \luya\admin\ngrest\base\NgRestRelationInterface */
-                if (!$item instanceof NgRestRelation) {
-                    if (!isset($item['class'])) {
-                        $item['class'] = 'luya\admin\ngrest\base\NgRestRelation';
-                    }
-                    $item = Yii::createObject($item);
-                }
-                $item->setModelClass($this->className());
-                $item->setArrayIndex($key);
-                $config->setRelation($item);
+            foreach ($this->generateNgRestRelations() as $relation) {
+                $config->setRelation($relation);
             }
-            
+
+            $config->onFinish();
             $this->_config = $config;
         }
 
         return $this->_config;
+    }
+
+    /**
+     * Generate an array with NgRestRelation objects
+     *
+     * @return array
+     * @since 2.0.0
+     */
+    protected function generateNgRestRelations()
+    {
+        $relations = [];
+        // generate relations
+        foreach ($this->ngRestRelations() as $key => $item) {
+            /** @var $item \luya\admin\ngrest\base\NgRestRelationInterface */
+            if (!$item instanceof NgRestRelation) {
+                if (!isset($item['class'])) {
+                    $item['class'] = 'luya\admin\ngrest\base\NgRestRelation';
+                }
+                $item = Yii::createObject($item);
+            }
+            $item->setModelClass($this->className());
+            $item->setArrayIndex($key);
+            
+            $relations[$key] = $item;
+        }
+
+        return $relations;
+    }
+
+    /**
+     * Get the NgRest Relation defintion object.
+     *
+     * @param integer $index
+     * @return NgRestRelationInterface
+     * @since 2.0.0
+     */
+    public function getNgRestRelationByIndex($index)
+    {
+        $relations = $this->generateNgRestRelations();
+
+        return isset($relations[$index]) ? $relations[$index] : false;
     }
 }

@@ -12,6 +12,14 @@ namespace luya\admin\ngrest\base;
 interface NgRestRelationInterface
 {
     // setter
+
+    /**
+     * Set the target model class.
+     *
+     * @param string $targetModel
+     * @since 2.0.0
+     */
+    public function setTargetModel($targetModel);
     
     /**
      * Set the model class of the current ngRestModel.
@@ -28,6 +36,14 @@ interface NgRestRelationInterface
     public function setArrayIndex($arrayIndex);
     
     // getters
+
+    /**
+     * Get the target model class path.
+     *  
+     * @return string
+     * @since 2.0.0
+     */
+    public function getTargetModel();
     
     /**
      * Get the encoded model class name.

@@ -51,19 +51,17 @@ class IndexAction extends \yii\rest\IndexAction
             }
         }
         
-        /* @var $modelClass \yii\db\BaseActiveRecord */
-        $modelClass = $this->modelClass;
-        
         $query = call_user_func($this->prepareActiveDataQuery);
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-        
+
         $dataProvider = Yii::createObject([
             'class' => ActiveDataProvider::class,
             'query' => $query,
             'pagination' => $this->controller->pagination,
             'sort' => [
+                'attributes' => $this->controller->generateSortAttributes($this->controller->model->getNgRestConfig()),
                 'params' => $requestParams,
             ],
         ]);

@@ -18,6 +18,12 @@ use yii\helpers\ArrayHelper;
 class Auth extends \yii\base\Component
 {
     /**
+     * @var integer Can View/list records
+     * @since 2.0.0
+     */
+    const CAN_VIEW = 0;
+
+    /**
      * @var integer Can create new records
      */
     const CAN_CREATE = 1;
@@ -161,7 +167,7 @@ class Auth extends \yii\base\Component
     {
         $groups = $this->getApiTable($userId, $apiEndpoint);
 
-        if ($typeVerification === false) {
+        if ($typeVerification === false || $typeVerification === self::CAN_VIEW) {
             return (count($groups) > 0) ? true : false;
         }
 

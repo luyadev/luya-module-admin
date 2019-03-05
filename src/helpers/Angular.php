@@ -45,7 +45,7 @@ class Angular
      * + fieldname:
      * + placeholder:
      * + initvalue:
-     * @return string:
+     * @return AngularObject:
      */
     protected static function injector($type, $ngModel, $label, $options = [], array $mergeOptions = [])
     {
@@ -55,13 +55,19 @@ class Angular
                 $mergeOptions[$key] = (int) $value;
             }
         }
-        return static::directive($type, array_merge($mergeOptions, [
+
+        $opt = array_merge($mergeOptions, [
             'model' => $ngModel,
             'label' => $label,
             'options' => $options,
             'fieldid' => Inflector::camel2id(Inflector::camelize($ngModel.'-'.$type)),
             'fieldname' => Inflector::camel2id(Inflector::camelize($ngModel)),
-        ]));
+        ]);
+
+        return new AngularObject([
+            'type' => $type,
+            'options' => $opt,
+        ]);
     }
     
     /**
@@ -131,7 +137,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $sourceData
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function sortRelationArray($ngModel, $label, array $sourceData, array $options = [])
     {
@@ -145,7 +151,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * + placeholder: Optionally add placeholder value to text inputs.
-     * @return string
+     * @return AngularObject
      */
     public static function text($ngModel, $label, array $options = [])
     {
@@ -157,7 +163,7 @@ class Angular
      * @param string $ngModel The ng-model attribute which should be used as reference to be bound into the element.
      * @param string $label The label which should be displayed for the given field.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return \luya\admin\helpers\string:
+     * @return AngularObject
      */
     public static function password($ngModel, $label, array $options = [])
     {
@@ -170,7 +176,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function textarea($ngModel, $label, array $options = [])
     {
@@ -183,7 +189,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function number($ngModel, $label, array $options = [])
     {
@@ -196,7 +202,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function decimal($ngModel, $label, array $options = [])
     {
@@ -214,7 +220,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $data
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function select($ngModel, $label, array $data, array $options = [])
     {
@@ -236,7 +242,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $data An array with data where the array key is what is stored in the model e.g. `[1 => 'Mrs', 2 => 'Mr']`
      * @param array $options Additonal arguments to create the tag.
-     * @return \luya\admin\helpers\string:
+     * @return AngularObject
      */
     public static function radio($ngModel, $label, array $data, array $options = [])
     {
@@ -249,7 +255,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function checkbox($ngModel, $label, array $options = [])
     {
@@ -276,7 +282,7 @@ class Angular
      * @param array $data
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * + preselect: If true all entires from the checkbox will be preselect by default whether its update or add.
-     * @return string
+     * @return AngularObject
      */
     public static function checkboxArray($ngModel, $label, array $data, array $options = [])
     {
@@ -290,7 +296,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * + resetable: boolean, Whether the date can be reseted to null or not.
-     * @return string
+     * @return AngularObject
      */
     public static function date($ngModel, $label, array $options = [])
     {
@@ -304,7 +310,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * + resetable: boolean, Whether the datetime can be reseted to null or not.
-     * @return string
+     * @return AngularObject
      */
     public static function datetime($ngModel, $label, array $options = [])
     {
@@ -317,7 +323,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function table($ngModel, $label, array $options = [])
     {
@@ -330,7 +336,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function listArray($ngModel, $label, array $options = [])
     {
@@ -343,7 +349,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function fileArrayUpload($ngModel, $label, array $options = [])
     {
@@ -356,7 +362,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function imageArrayUpload($ngModel, $label, array $options = [])
     {
@@ -369,11 +375,12 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @param boolean $noFilter Whether the user can select a filter not, if not the original is taken.
+     * @return AngularObject
      */
-    public static function imageUpload($ngModel, $label, array $options = [])
+    public static function imageUpload($ngModel, $label, array $options = [], $noFilter = false)
     {
-        return self::injector(TypesInterface::TYPE_IMAGEUPLOAD, $ngModel, $label, [], $options);
+        return self::injector(TypesInterface::TYPE_IMAGEUPLOAD, $ngModel, $label, ['no_filter' => (int) $noFilter], $options);
     }
     
     /**
@@ -382,7 +389,7 @@ class Angular
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
-     * @return string
+     * @return AngularObject
      */
     public static function fileUpload($ngModel, $label, array $options = [])
     {
@@ -403,6 +410,7 @@ class Angular
      * @param array $fields An array with all fiels which should be requested from the api
      * @param array $options
      * @since 1.2.1
+     * @return AngularObject
      */
     public static function asyncRequest($ngModel, $label, $api, $fields, array $options = [])
     {
@@ -416,6 +424,7 @@ class Angular
      * @param string $label The label to display for the form input.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * @since 1.2.1
+     * @return AngularObject
      */
     public static function readonly($ngModel, $label, array $options = [])
     {

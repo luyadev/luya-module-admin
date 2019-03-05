@@ -76,14 +76,14 @@ class ConfigBuilderTest extends AdminTestCase
         $this->assertArrayHasKey('icon', $obj);
 
 
-        $ngRestConfig = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => 'id']);
+        $ngRestConfig = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => ['id']]);
         $ngRestConfig->setConfig($cfg);
     }
 
     public function testNgRestConfigPlugins()
     {
         $configData = $this->getConfig();
-        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => 'id']);
+        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => ['id']]);
         $ngRest->setConfig($configData);
         $plugins = $ngRest->getPlugins();
 
@@ -93,7 +93,7 @@ class ConfigBuilderTest extends AdminTestCase
     public function testNgRestConfigExtraFields()
     {
         $configData = $this->getConfig();
-        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => 'id']);
+        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => ['id']]);
         $ngRest->setConfig($configData);
 
         $fields = $ngRest->getExtraFields();
@@ -108,7 +108,7 @@ class ConfigBuilderTest extends AdminTestCase
     public function testNgRestConfigAppendFieldOption()
     {
         $configData = $this->getConfig();
-        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => 'id']);
+        $ngRest = new Config(['apiEndpoint' => 'api-admin-test', 'primaryKey' => ['id']]);
         $ngRest->setConfig($configData);
 
         $ngRest->appendFieldOption('list_var_1', 'i18n', true);

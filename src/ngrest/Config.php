@@ -280,7 +280,7 @@ class Config extends BaseObject implements ConfigInterface
      *
      * @param string $key
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey(array $key)
     {
         $this->_primaryKey = $key;
     }
@@ -306,7 +306,7 @@ class Config extends BaseObject implements ConfigInterface
             return false;
         }
         
-        $direction = (is_array($this->getDefaultOrder())) ? current($this->getDefaultOrder()) : null; // us preg split to find in string?
+        $direction = is_array($this->getDefaultOrder()) ? current($this->getDefaultOrder()) : null; // us preg split to find in string?
 
         if ($direction == SORT_ASC || strtolower($direction) == 'asc') {
             return '+';
@@ -377,6 +377,35 @@ class Config extends BaseObject implements ConfigInterface
     }
 
     /**
+     * Create a plugin object cased on a field array config.
+     *
+     * @param array $plugin
+     * @return \luya\admin\ngrest\base\Plugin
+     * @since 2.0.0
+     */
+    public static function createField(array $plugin)
+    {
+        return NgRest::createPluginObject($plugin['type']['class'], $plugin['name'], $plugin['alias'], $plugin['i18n'], $plugin['type']['args']);
+    }
+
+    /**
+     * Get all plugin objects for a given pointer.
+     * 
+     * @param string $pointer The name of the pointer (list, create, update).
+     * @return \luya\admin\ngrest\base\Plugin An array with plugin objects
+     * @since 2.0.0
+     */
+    public function getPointerPlugins($pointer)
+    {
+        $plugins = [];
+        foreach ($this->getPointer($pointer, []) as $field) {
+            $plugins[] = self::createField($field);
+        }
+
+        return $plugins;
+    }
+
+    /**
      *
      * @param string $pointer
      * @param array $fields
@@ -392,7 +421,7 @@ class Config extends BaseObject implements ConfigInterface
         }
         return $data;
     }
-    
+
     /**
      * Get an option by its key from the options pointer. Define options like
      *
@@ -552,7 +581,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function onFinish()
     {
-        foreach ($this->primaryKey as $pk) {
+        foreach ($this->getPrimaryKey() as $pk) {
             if (!$this->hasField('list', $pk)) {
                 $alias = $pk;
                 

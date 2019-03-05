@@ -15,6 +15,7 @@ use yii\queue\JobInterface;
  * Log Behavior.
  *
  * @author Roman Zhuravlev <zhuravljov@gmail.com>
+ * @since 2.0.0
  */
 class QueueLogBehavior extends Behavior
 {

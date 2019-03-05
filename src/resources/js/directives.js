@@ -874,6 +874,9 @@
     	}
     });
 
+    /**
+     * <zaa-link model="linkinfo" />
+     */
     zaa.directive("zaaLink", ['$filter', function($filter){
         return {
             restrict: "E",
@@ -2447,10 +2450,9 @@
                 $scope.fileinfo = null;
 
                 $scope.$watch('fileId', function(n, o) {
-                	if (n == 0 || n == null || n == undefined || n == o) {
+                	if (n == 0 || n == null || n == undefined) {
                 		return;
                 	}
-                	
                 	ServiceFilesData.getFile(n).then(function(file) {
                 		$scope.fileinfo = file;
                 	}, function() {
@@ -2459,7 +2461,7 @@
                 });
     		}],
     		template: function() {
-                return '<div ng-show="fileinfo!==null">{{ fileinfo.name }}</div>';
+                return '<a ng-show="fileinfo" href="{{ fileinfo.source }}" target="_blank">{{ fileinfo.name_original }}</a>';
             }
     	}
     });
@@ -2566,7 +2568,7 @@
             		$scope.modal.state = !$scope.modal.state;
                 };
 
-            	$scope.$watch(function() { return $scope.ngModel }, function(n, o) {
+            	$scope.$watch(function() { return $scope.ngModel }, function(n) {
             		if (n == null || n == undefined || !angular.isNumber(n)) {
             			return null;
             		}
