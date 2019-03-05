@@ -14,7 +14,6 @@ use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\filesystem\LocalFileSystem;
-use yii\db\Connection;
 
 /**
  * Admin Module.
@@ -158,7 +157,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $userIdleTimeout = 1800;
 
     /**
-     * @var Connection The component/connection name from application.
+     * @var string The component/connection name from application.
      * @since 2.0.0
      */
     public $proxyConnectionName = 'db';
