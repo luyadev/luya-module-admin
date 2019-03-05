@@ -29,6 +29,7 @@ class Datetime extends Plugin
     
     /**
      * @var string Use custom datetime format by [date filter](https://docs.angularjs.org/api/ng/filter/date). Default is 'short'. Use false to take \yii\i18n\Formatter::$datetimeFormat as fallback.
+     * @since 2.0.0
      */
     public $format = 'short';
     
