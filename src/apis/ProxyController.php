@@ -32,6 +32,7 @@ class ProxyController extends Controller
 {
     /**
      * @var Connection
+     * @since 2.0.0
      */
     protected $db;
 

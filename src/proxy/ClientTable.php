@@ -23,7 +23,11 @@ class ClientTable extends BaseObject
     const LARGE_TABLE_PROMPT = 10000;
 
     private $_data;
-
+    
+    /**
+     * @var \yii\db\Connection
+     * @since 2.0.0
+     */
     public $db;
 
     /**

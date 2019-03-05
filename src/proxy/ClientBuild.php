@@ -16,6 +16,10 @@ use yii\base\BaseObject;
  */
 class ClientBuild extends BaseObject
 {
+    /**
+     * @var \yii\db\Connection
+     * @since 2.0.0
+     */
     public $db;
 
     /**

@@ -159,6 +159,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
 
     /**
      * @var Connection The component/connection name from application.
+     * @since 2.0.0
      */
     public $proxyConnectionName = 'db';
 
