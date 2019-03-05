@@ -7,25 +7,26 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
-## Changed
+### Changed
 
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.
 + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
 + [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
 
-## Fixed
+### Fixed
 
 + [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
 + [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
 + [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
 
-## Added
+### Added
 
 + [#205](https://github.com/luyadev/luya-module-admin/issues/205) CRUD search works now in filters and relation calls, sorting and pagination works in searching.
 + [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
 + [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
 + [#253](https://github.com/luyadev/luya-module-admin/pull/253) Added command action to reset password for users via cli.
++ [#270](https://github.com/luyadev/luya-module-admin/pull/270) Custom date format for date plugin in listing.
 
 ## 1.2.3 (21. November 2018)
 

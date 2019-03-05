@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Data input field
@@ -28,12 +29,20 @@ class Date extends Plugin
     public $emptyMessage = '-';
     
     /**
+     * @var string Use custom datetime format by [date filter](https://docs.angularjs.org/api/ng/filter/date). Default is 'shortDate'. Use false to take \yii\i18n\Formatter::$dateFormat as fallback.
+     * @since 2.0.0
+     */
+    public $format = 'shortDate';
+    
+    /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
+        $format = $this->format ?? Yii::$app->formatter->dateFormat;
+    
         return [
-            $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel.'*1000 | date : \'shortDate\'']),
+            $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel."*1000 | date : '$format'"]),
             $this->createTag('span', $this->emptyMessage, ['ng-show' => '!'.$ngModel]),
         ];
     }
