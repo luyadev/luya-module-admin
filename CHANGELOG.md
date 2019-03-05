@@ -26,6 +26,7 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
 + [#253](https://github.com/luyadev/luya-module-admin/pull/253) Added command action to reset password for users via cli.
 + [#270](https://github.com/luyadev/luya-module-admin/pull/270) Custom date format for date plugin in listing.
++ [#271](https://github.com/luyadev/luya-module-admin/pull/271) Proxy with different database connection.
 
 ## 1.2.3 (21. November 2018)
 
