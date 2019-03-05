@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Data input field
@@ -38,7 +39,7 @@ class Date extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        $format = $this->format ?? \Yii::$app->formatter->dateFormat;
+        $format = $this->format ?? Yii::$app->formatter->dateFormat;
     
         return [
             $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel."*1000 | date : '$format'"]),

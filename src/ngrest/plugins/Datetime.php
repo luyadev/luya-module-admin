@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Date and Time input field
@@ -38,14 +39,14 @@ class Datetime extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        $format = $this->format ?? \Yii::$app->formatter->datetimeFormat;
+        $format = $this->format ?? Yii::$app->formatter->datetimeFormat;
         
         return [
             $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel."*1000 | date : '$format'"]),
             $this->createTag('span', $this->emptyMessage, ['ng-show' => '!'.$ngModel]),
         ];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -53,7 +54,7 @@ class Datetime extends Plugin
     {
         return $this->createFormTag('zaa-datetime', $id, $ngModel);
     }
-
+    
     /**
      * @inheritdoc
      */
