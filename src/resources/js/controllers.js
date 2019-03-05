@@ -264,8 +264,8 @@
 			} else {
 				cfpLoadingBar.start();
 				$scope.searchPromise = $timeout(function() {
-					$scope.generateSearchPromise(n, 1);
-				}, 500)
+					$scope.reloadCrudList(1);
+				}, 700)
 			}
 		};
 
@@ -565,6 +565,11 @@
 			if (pageId !== undefined) {
 				url = url + '&page=' + pageId;
 			}
+
+			var query = $scope.config.searchQuery;
+			if (query) {
+				url = url + '&query=' + query;
+			}
 			
 			return url;
 		};
@@ -573,13 +578,17 @@
 		$scope.reloadCrudList = function(pageId) {
 			if (parseInt($scope.config.filter) == 0) {
 
+				/*
 				if ($scope.config.searchQuery) {
 					return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
 				}
+				*/
 				
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);
 					url = url + '&arrayIndex=' + $scope.config.relationCall.arrayIndex + '&id=' + $scope.config.relationCall.id + '&modelClass=' + $scope.config.relationCall.modelClass;
+				} else if ($scope.config.searchQuery) {
+					return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
 				} else {
 					var url = $scope.generateUrlWithParams('list', pageId);
 				}
