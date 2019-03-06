@@ -72,7 +72,7 @@ class NgRest
      */
     public static function createPluginObject($className, $name, $alias, $i18n, $args = [])
     {
-        $hash = md5($className . $name . $alias . $i18n . serialize($args));
+        $hash = md5($className . $name . $alias);
 
         if (array_key_exists($hash, self::$_objects)) {
             return self::$_objects[$hash];
