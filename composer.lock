@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6589fe63305981d55ca245853f568a9",
+    "content-hash": "49c2e3694db0e1373598762463e00787",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -353,16 +353,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.16",
+            "version": "2.0.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "789de9783d41e6ca10fffc3644a43a764f79b399"
+                "reference": "089198cced57c4b8c9545ddc56001a1bd114b2dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/789de9783d41e6ca10fffc3644a43a764f79b399",
-                "reference": "789de9783d41e6ca10fffc3644a43a764f79b399",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/089198cced57c4b8c9545ddc56001a1bd114b2dd",
+                "reference": "089198cced57c4b8c9545ddc56001a1bd114b2dd",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +449,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-01-30T23:54:16+00:00"
+            "time": "2019-02-28T07:03:06+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1160,16 +1160,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.14.2",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "46226dc830d03b9428b337a446e2df5837a80b7c"
+                "reference": "8cbcaace84d20d4357b830519abf55c669d4298e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/46226dc830d03b9428b337a446e2df5837a80b7c",
-                "reference": "46226dc830d03b9428b337a446e2df5837a80b7c",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8cbcaace84d20d4357b830519abf55c669d4298e",
+                "reference": "8cbcaace84d20d4357b830519abf55c669d4298e",
                 "shasum": ""
             },
             "require": {
@@ -1213,20 +1213,20 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-12-03T12:45:15+00:00"
+            "time": "2019-02-19T12:18:46+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "80863ec01f17487ede12cc11d170ef8eba92c64e"
+                "reference": "f5153ddc3211f73cfd3661f5866349c159e5e99a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/80863ec01f17487ede12cc11d170ef8eba92c64e",
-                "reference": "80863ec01f17487ede12cc11d170ef8eba92c64e",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/f5153ddc3211f73cfd3661f5866349c159e5e99a",
+                "reference": "f5153ddc3211f73cfd3661f5866349c159e5e99a",
                 "shasum": ""
             },
             "require-dev": {
@@ -1277,7 +1277,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2018-12-03T14:07:31+00:00"
+            "time": "2019-02-18T09:55:07+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
