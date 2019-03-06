@@ -225,6 +225,20 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
     /**
+     * Indicates whether the field should be hidden from the list.
+     *
+     * @param array $item
+     * @return boolean
+     * @since 2.0.0
+     */
+    public function isHiddenInList(array $item)
+    {
+        $config = Config::createField($item);
+
+        return $config->hideInList;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getSettingButtonDefinitions()

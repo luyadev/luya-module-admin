@@ -57,6 +57,8 @@ class NgRest
         $this->render->setConfig($this->config);
         return $this->render->render();
     }
+
+    private static $_objects = [];
     
     /**
      * Generates an NgRest Plugin Object.
@@ -70,11 +72,21 @@ class NgRest
      */
     public static function createPluginObject($className, $name, $alias, $i18n, $args = [])
     {
-        return Yii::createObject(array_merge([
+        $hash = md5($className . $name . $alias . $i18n . serialize($args));
+
+        if (array_key_exists($hash, self::$_objects)) {
+            return self::$_objects[$hash];
+        }
+
+        $object = Yii::createObject(array_merge([
             'class' => $className,
             'name' => $name,
             'alias' => $alias,
             'i18n' => $i18n,
         ], $args));
+
+        self::$_objects[$hash] = $object;
+
+        return $object;
     }
 }

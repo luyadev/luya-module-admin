@@ -134,7 +134,7 @@ $this->beginBody();
                 <table class="table table-hover table-align-middle table-striped mt-0">
                     <thead class="thead-default">
                         <tr>
-                            <?php foreach ($config->getPointer('list') as $item): ?>
+                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) { continue; } ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
                                     <?php if ($config->getDefaultOrderField() && $this->context->isSortable($item)): ?>
@@ -164,7 +164,7 @@ $this->beginBody();
                             </td>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
-                            <?php $i = 0; foreach ($config->getPointer('list') as $item): $i++; ?>
+                            <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) { continue; } $i++; ?>
                                 <?php foreach ($this->context->createElements($item, RenderCrud::TYPE_LIST) as $element): ?>
                                      <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>"><?= $element['html']; ?></td>
                                  <?php endforeach; ?>

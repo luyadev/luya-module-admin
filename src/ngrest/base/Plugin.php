@@ -38,6 +38,12 @@ use luya\admin\helpers\Angular;
  */
 abstract class Plugin extends Component implements TypesInterface
 {
+    const CREATE_CONTEXT_PREFIX = 'create.';
+
+    const UPDATE_CONTEXT_RPEFXI = 'update.';
+
+    const LIST_CONTEXT_PREFIX = 'item.';
+
     /**
      * @var string The name of the field corresponding to the ActiveRecord (also known as fieldname)
      */
@@ -52,6 +58,13 @@ abstract class Plugin extends Component implements TypesInterface
      * @var boolean Whether the plugin is in i18n context or not.
      */
     public $i18n = false;
+
+    /**
+     * @var boolean Whether this column should be hidden in the list. If the column is hidden in the list the data will be loaded from the api and can
+     * be used by other fields, but its not visible in list view.
+     * @since 2.0.0
+     */
+    public $hideInList = false;
 
     /**
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
@@ -337,6 +350,24 @@ abstract class Plugin extends Component implements TypesInterface
         $parts[$key] = $field;
         
         return implode(".", $parts);
+    }
+
+    /**
+     * Preprends the context name for a certain ng model.
+     * 
+     * As the angular attributes have different names in different contexts, this will append the correct context.
+     *
+     * ```php
+     * $this->appendFieldNgModelContext('myfieldname', self::LIST_CONTEXT_PREFIX);
+     * ```
+     * 
+     * @param string $field
+     * @param string $context
+     * @return string
+     */
+    protected function appendFieldNgModelContext($field, $context)
+    {
+        return $context . ltrim($field, '.');
     }
     
     /**
