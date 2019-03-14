@@ -3,10 +3,8 @@
 namespace luya\admin\proxy;
 
 use Curl\Curl;
-use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Yii;
 use yii\base\BaseObject;
-use yii\db\Exception;
 use yii\helpers\Console;
 use yii\helpers\Json;
 
