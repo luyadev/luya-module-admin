@@ -21,7 +21,7 @@ class ClientTableTest extends AdminTestCase
     
         Yii::$app->controller = new ProxyController('proxyctrl', $this->app);
         $build = new ClientBuild(Yii::$app->controller, [
-            'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest']]],
+            'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest', 'rows' => []]]],
         ]);
         $table = new ClientTableMock($build, ['name' => 'temp_synctest']);
     
