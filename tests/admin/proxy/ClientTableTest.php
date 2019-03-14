@@ -7,6 +7,7 @@ use admintests\data\mocks\proxy\ClientTableMock;
 use luya\admin\proxy\ClientBuild;
 use luya\admin\commands\ProxyController;
 use yii\db\Exception;
+use Yii;
 
 class ClientTableTest extends AdminTestCase
 {
@@ -17,9 +18,9 @@ class ClientTableTest extends AdminTestCase
     public function testSyncDataWithConnectionLost()
     {
         $this->app->db->createCommand('CREATE TABLE IF NOT EXISTS temp_synctest LIKE admin_user')->execute();
-        
-        $ctrl = new ProxyController('proxyctrl', $this->app);
-        $build = new ClientBuild($ctrl, [
+    
+        Yii::$app->controller = new ProxyController('proxyctrl', $this->app);
+        $build = new ClientBuild(Yii::$app->controller, [
             'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest']]],
         ]);
         $table = new ClientTableMock($build, ['name' => 'temp_synctest']);
