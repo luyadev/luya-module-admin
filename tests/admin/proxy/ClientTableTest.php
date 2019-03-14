@@ -5,8 +5,8 @@ namespace admintests\admin\proxy;
 use admintests\AdminTestCase;
 use admintests\data\mocks\proxy\ClientTableMock;
 use luya\admin\proxy\ClientBuild;
-use luya\admin\proxy\ClientTable;
 use luya\admin\commands\ProxyController;
+use yii\db\Exception;
 
 class ClientTableTest extends AdminTestCase
 {
@@ -24,11 +24,8 @@ class ClientTableTest extends AdminTestCase
         ]);
         $table = new ClientTableMock($build, ['name' => 'temp_synctest']);
     
-        try {
-            $table->syncData();
-        } catch (\yii\db\Exception $exception) {
-            $this->assertEquals('PDOStatement::execute(): MySQL server has gone away', $exception->getPrevious()->getMessage());
-            throw $exception;
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('PDOStatement::execute(): MySQL server has gone away');
+        $table->syncData();
     }
 }
