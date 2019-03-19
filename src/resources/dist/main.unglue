@@ -1,0 +1,14 @@
+{
+    "js": [
+        "../js/dnd.js",
+        "../js/zaa.js",
+        "../js/services.js",
+        "../js/filters.js",
+        "../js/directives.js",
+        "../js/controllers.js",
+        "../js/scheduler.js"
+    ],
+    "css" : [
+        "../scss/admin.scss"
+    ]
+}
