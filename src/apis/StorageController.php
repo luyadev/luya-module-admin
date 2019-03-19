@@ -311,7 +311,7 @@ class StorageController extends RestController
 
         return $this->sendArrayError([
             'error' => true,
-            'message' => Module::t('api_storage_image_upload_error'),
+            'message' => Module::t('api_storage_image_upload_error', ['error' => 'Unable to create the filter for the given image. Maybe the file source is not readable.']),
         ]);
     }
     

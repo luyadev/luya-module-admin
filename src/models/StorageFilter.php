@@ -91,17 +91,12 @@ final class StorageFilter extends NgRestModel
      * @return boolean
      */
     public function applyFilterChain($source, $fileSavePath)
-    {
-        if (!file_exists($source)) {
-            return false;
-        }
-        
+    {   
         $loadFrom = $source;
-        //$loadFrom = $file->getServerSource();
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter
-            $response = $chain->applyFilter($loadFrom, $fileSavePath);
+            $chain->applyFilter($loadFrom, $fileSavePath);
             // override load from path for next iteration (if any).
             $loadFrom = $fileSavePath;
         }

@@ -166,6 +166,17 @@ final class StorageFile extends ActiveRecord
     }
 
     /**
+     * Get the content of the file
+     *
+     * @return string|stream
+     * @since 2.0
+     */
+    public function getContent()
+    {
+        return Yii::$app->storage->fileSystemContent($this->name_new_compound);   
+    }
+
+    /**
      * Get the path to the source files internal, on the servers path.
      *
      * This is used when you want to to grab the file on server side for example to read the file

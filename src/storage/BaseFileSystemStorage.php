@@ -668,20 +668,29 @@ abstract class BaseFileSystemStorage extends Component
         if (!$file) {
             return false;
         }
-
         // create the new image name
         $fileName = $filterId.'_'.$file->name_new_compound;
 
+        $fromTempFile = tempnam(sys_get_temp_dir(), 'fromFile');
+        $fromTempFile.= $fileName;
+
+        $writeFile = FileHelper::writeFile($fromTempFile, $file->getContent());
+
+        // unable to write the temp file
+        if (!$writeFile) {
+            return false;
+        }
+
         // create a temp file
-        $tempFile = tempnam(sys_get_temp_dir(), 'prefix');
+        $tempFile = tempnam(sys_get_temp_dir(), 'destFile');
         $tempFile.= $fileName;
 
         // there is no filter, which means we create an image version for a given file.
         if (empty($filterId)) {
-            @copy($file->serverSource, $tempFile);
+            @copy($fromTempFile, $tempFile);
         } else {
             $filter = StorageFilter::findOne($filterId);
-            if (!$filter || !$filter->applyFilterChain($file->serverSource, $tempFile)) {
+            if (!$filter || !$filter->applyFilterChain($fromTempFile, $tempFile)) {
                 return false;
             }
         }
@@ -690,6 +699,7 @@ abstract class BaseFileSystemStorage extends Component
         // now copy the file to the storage system
         $this->fileSystemSaveFile($tempFile, $fileName);
         unlink($tempFile);
+        unlink($fromTempFile);
 
         $this->flushImageArray();
 
