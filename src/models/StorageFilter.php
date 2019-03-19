@@ -92,6 +92,10 @@ final class StorageFilter extends NgRestModel
      */
     public function applyFilterChain($source, $fileSavePath)
     {
+        if (!file_exists($source)) {
+            return false;
+        }
+        
         $loadFrom = $source;
         //$loadFrom = $file->getServerSource();
         

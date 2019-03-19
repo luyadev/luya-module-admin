@@ -681,13 +681,8 @@ abstract class BaseFileSystemStorage extends Component
             @copy($file->serverSource, $tempFile);
         } else {
             $filter = StorageFilter::findOne($filterId);
-
-            if (!$filter) {
-                throw new Exception("Could not find the provided filter id '$filterId'.");
-            }
-
-            if (!$filter->applyFilterChain($file->serverSource, $tempFile)) {
-                throw new Exception("Unable to create and save image '".$tempFile."'.");
+            if (!$filter || !$filter->applyFilterChain($file->serverSource, $tempFile)) {
+                return false;
             }
         }
 
