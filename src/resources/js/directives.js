@@ -1686,8 +1686,8 @@
         							$scope.min = 59;
         						}
 
-		        				var en = res[1] + "/" + res[0] + "/" + res[2] + " " + $scope.hour + ":" + $scope.min;
-		        				$scope.model = (Date.parse(en)/1000);
+		        				var en = res[1] + "/" + res[0] + "/" + res[2] + " " + $scope.hour + ":" + $scope.min + " GMT";
+                                $scope.model = (Date.parse(en)/1000);
 		        				$scope.datePickerToggler = false;
             				}
             			}
@@ -1802,7 +1802,7 @@
             			var res = n.split(".");
             			if (res.length == 3) {
             				if (res[2].length == 4) {
-            					var en = res[1] + "/" + res[0] + "/" + res[2];
+            					var en = res[1] + "/" + res[0] + "/" + res[2] + " GMT";
 		        				$scope.model = (Date.parse(en)/1000);
 		        				$scope.datePickerToggler = false;
             				}
