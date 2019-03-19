@@ -649,6 +649,8 @@ abstract class BaseFileSystemStorage extends Component
     /**
      * Just creating the image based on input informations without usage of storage files or images list.
      *
+     * @param integer $fileId The id of the file to create  filter of
+     * @param integer $filterId The filter id to apply on the given file.
      * @since 1.2.2.1
      * @return \luya\admin\models\StorageImage|false Returns the storage image model on success, otherwise false.
      */

@@ -292,25 +292,27 @@ class StorageController extends RestController
     /**
      * Upload an image to the filemanager.
      *
-     * @return array
+     * @return array An array with
+     * - error: Whether an error occured or not.
+     * - id: The id of the image
+     * - image: The image object (since 2.0)
      */
     public function actionImageFilter()
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        try {
-            $create = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
-            if ($create) {
-                return [
-                    'error' => false,
-                    'id' => $create->id,
-                ];
-            }
-        } catch (Exception $err) {
-            return $this->sendArrayError([
-                'error' => true,
-                'message' => Module::t('api_storage_image_upload_error'),
-            ]);
+        $image = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null));
+        if ($image) {
+            return [
+                'error' => false,
+                'id' => $image->id,
+                'image' => $image
+            ];
         }
+
+        return $this->sendArrayError([
+            'error' => true,
+            'message' => Module::t('api_storage_image_upload_error'),
+        ]);
     }
     
     /**
