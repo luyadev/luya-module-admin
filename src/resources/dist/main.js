@@ -804,6 +804,10 @@ zaa.factory("ServiceImagesData", ['$http', '$q', '$rootScope', '$log', function 
 
   service.loadImages = function (imagesArray) {
     return $q(function (resolve, reject) {
+      if (imagesArray.length == 0) {
+        return resolve();
+      }
+
       $http.post('admin/api-admin-storage/images-info?expand=source,tinyCropImage', {
         ids: imagesArray
       }).then(function (response) {
@@ -2231,6 +2235,10 @@ zaa.directive("zaaSortRelationArray", function () {
     }
   };
 });
+/**
+ * <zaa-link model="linkinfo" />
+ */
+
 zaa.directive("zaaLink", ['$filter', function ($filter) {
   return {
     restrict: "E",
@@ -3517,7 +3525,7 @@ zaa.directive('storageFileDisplay', function () {
       $scope.fileId = 0;
       $scope.fileinfo = null;
       $scope.$watch('fileId', function (n, o) {
-        if (n == 0 || n == null || n == undefined || n == o) {
+        if (n == 0 || n == null || n == undefined) {
           return;
         }
 
@@ -3529,7 +3537,7 @@ zaa.directive('storageFileDisplay', function () {
       });
     }],
     template: function template() {
-      return '<div ng-show="fileinfo!==null">{{ fileinfo.name }}</div>';
+      return '<a ng-show="fileinfo" href="{{ fileinfo.source }}" target="_blank">{{ fileinfo.name_original }}</a>';
     }
   };
 });
@@ -3630,7 +3638,7 @@ zaa.directive('storageFileUpload', function () {
 
       $scope.$watch(function () {
         return $scope.ngModel;
-      }, function (n, o) {
+      }, function (n) {
         if (n == null || n == undefined || !angular.isNumber(n)) {
           return null;
         }
@@ -4651,8 +4659,8 @@ zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$fil
     } else {
       cfpLoadingBar.start();
       $scope.searchPromise = $timeout(function () {
-        $scope.generateSearchPromise(n, 1);
-      }, 500);
+        $scope.reloadCrudList(1);
+      }, 700);
     }
   };
 
@@ -4952,19 +4960,28 @@ zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$fil
       url = url + '&page=' + pageId;
     }
 
+    var query = $scope.config.searchQuery;
+
+    if (query) {
+      url = url + '&query=' + query;
+    }
+
     return url;
   }; // this method is also used withing after save/update events in order to retrieve current selecter filter data.
 
 
   $scope.reloadCrudList = function (pageId) {
     if (parseInt($scope.config.filter) == 0) {
+      /*
       if ($scope.config.searchQuery) {
-        return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
+      	return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
       }
-
+      */
       if ($scope.config.relationCall) {
         var url = $scope.generateUrlWithParams('relation-call', pageId);
         url = url + '&arrayIndex=' + $scope.config.relationCall.arrayIndex + '&id=' + $scope.config.relationCall.id + '&modelClass=' + $scope.config.relationCall.modelClass;
+      } else if ($scope.config.searchQuery) {
+        return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
       } else {
         var url = $scope.generateUrlWithParams('list', pageId);
       }
@@ -4974,7 +4991,7 @@ zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$fil
       });
     } else {
       var url = $scope.generateUrlWithParams('filter', pageId);
-      var url = url + '&filterName=' + $scope.config.filter;
+      url = url + '&filterName=' + $scope.config.filter;
       $http.get(url).then(function (response) {
         $scope.parseResponseQueryToListArray(response);
       });
