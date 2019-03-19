@@ -1802,7 +1802,7 @@
             			var res = n.split(".");
             			if (res.length == 3) {
             				if (res[2].length == 4) {
-            					var en = res[1] + "/" + res[0] + "/" + res[2] + " UTC";
+                                var en = res[1] + "/" + res[0] + "/" + res[2] + " UTC";
 		        				$scope.model = (Date.parse(en)/1000);
 		        				$scope.datePickerToggler = false;
             				}
