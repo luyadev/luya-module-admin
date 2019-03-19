@@ -6,27 +6,9 @@
         "../js/filters.js",
         "../js/directives.js",
         "../js/controllers.js",
-        "../js/scheduler.js",
-        "../../../vendor/bower-asset/angular/angular.min.js",
-        "../vendorlibs/ng-colorwheel/ng-colorwheel.js", 
-        "../../../vendor/bower-asset/angular-loading-bar/build/loading-bar.min.js",
-        "../../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.js",
-        "../../../vendor/bower-asset/ui-router/release/angular-ui-router.js",
-        "../../../vendor/bower-asset/ng-file-upload/ng-file-upload-shim.min.js",
-        "../../../vendor/bower-asset/ng-file-upload/ng-file-upload.min.js",
-        "../../../vendor/bower-asset/ng-flow/dist/ng-flow-standalone.min.js",
-        "../../../vendor/bower-asset/ng-wig/dist/ng-wig.min.js",
-        "../../../vendor/bower-asset/twigjs-bower/twig/twig.js",
-        "../../../vendor/bower-asset/angular-filter/dist/angular-filter.min.js",
-        "../../../vendor/bower-asset/bowser/src/useragent.js",
-        "../../../vendor/bower-asset/bowser/src/bowser.js",
-        "../../../vendor/bower-asset/echarts/dist/echarts.min.js",
-        "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.js"
+        "../js/scheduler.js"
     ],
     "css" : [
         "../scss/admin.scss"
-    ],
-    "doesnotwork" : [
-        "../vendorlibs/ng-colorwheel/ng-colorwheel.js"
     ]
 }
