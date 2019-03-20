@@ -25,6 +25,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#228](https://github.com/luyadev/luya-module-admin/issues/228) New `sortField` attribute option for plugins.
 + [#94](https://github.com/luyadev/luya-module-admin/issues/94) Required CRUD fields are now highlight as bold text.
 + [#277](https://github.com/luyadev/luya-module-admin/issues/277) Using [unglue.io](https://unglue.io) to compile admin resources.
 + [#205](https://github.com/luyadev/luya-module-admin/issues/205) CRUD search works now in filters and relation calls, sorting and pagination works in searching.
