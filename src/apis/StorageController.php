@@ -85,7 +85,11 @@ class StorageController extends RestController
             ->with(['images.file']);
 
         if (!empty($search)) {
-            $query->andFilterWhere(['or', ['like', 'name_original', $search], ['like', 'caption', $search]]);
+            $query->andFilterWhere(['or', 
+                ['like', 'name_original', $search],
+                ['like', 'caption', $search],
+                ['=', 'id', $search],
+            ]);
         } else {
             $query->andWhere(['folder_id' => $folderId]);
         }

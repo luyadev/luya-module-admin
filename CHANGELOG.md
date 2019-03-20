@@ -19,6 +19,7 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
 + [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
 + [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
++ [#275](https://github.com/luyadev/luya-module-admin/issues/275) Search for file IDs in file manager.
 
 ### Added
 
