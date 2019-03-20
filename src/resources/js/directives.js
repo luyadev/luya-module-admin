@@ -1653,8 +1653,8 @@
             			var datep = new Date(n*1000);
             			$scope.pickerPreselect = datep;
             			$scope.date = $filter('date')(datep, 'dd.MM.yyyy');
-            			$scope.hour = $filter('date')(datep, 'H');
-            			$scope.min = $filter('date')(datep, 'm');
+            			$scope.hour = $filter('date')(datep, 'HH');
+            			$scope.min = $filter('date')(datep, 'mm');
             		} else {
             			$scope.date = null;
             			$scope.model = null;
