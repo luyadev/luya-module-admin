@@ -139,7 +139,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestAttributeTypes()
     {
         return [
-            'title' => ['selectArray', 'data' => static::getTitles(), 'initValue' => 0, 'scheduling' => true],
+            'title' => ['selectArray', 'data' => static::getTitles(), 'scheduling' => true],
             'firstname' => 'text',
             'lastname' => 'text',
             'email' => 'text',

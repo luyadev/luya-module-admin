@@ -13,6 +13,7 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.
 + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
 + [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration. The queue is triggered by fake job (frontend) or via cronjob console command.
++ [#61](https://github.com/luyadev/luya-module-admin/issues/61) The `initvalue` attribute of Select plugins is now by default `null` instead of `0`. This is needed cause the require validator won't handle `0` as empty until you configure `isEmpty` option.
 
 ### Fixed
 
