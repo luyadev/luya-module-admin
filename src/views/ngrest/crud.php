@@ -74,13 +74,15 @@ $this->beginBody();
                 </a>
             </li>
             <?php endif; ?>
-            <li class="nav-item nav-item-alternative" ng-repeat="lang in AdminLangService.data" ng-class="{'ml-auto' : $first}" ng-show="AdminLangService.data.length > 1">
+            <?php if (!empty($this->context->model->i18n)): ?>
+            <li class="nav-item nav-item-alternative" ng-repeat="lang in AdminLangService.data" ng-class="{'ml-auto' : $first}" ng-show="crudSwitchType!=0 && AdminLangService.data.length > 1">
                 <a class="nav-link" ng-click="AdminLangService.toggleSelection(lang)" ng-class="{'active' : AdminLangService.isInSelection(lang.short_code)}" role="tab">
                     <span class="flag flag-{{lang.short_code}}">
                         <span class="flag-fallback">{{lang.name}}</span>
                     </span>
                 </a>
             </li>
+            <?php endif; ?>
         </ul>
     <?php endif; ?>
     <div class="tab-content">

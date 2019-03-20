@@ -16,6 +16,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#239](https://github.com/luyadev/luya-module-admin/issues/239) Hide i18n flags when no i18n field is configured, also hide in list view as its not possible to toggle in this context.
 + [#273](https://github.com/luyadev/luya-module-admin/issues/273) Fixed a bug where canceling of the folder renaming where not restoring the old folder name.
 + [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
 + [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
