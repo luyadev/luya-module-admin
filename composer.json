@@ -13,7 +13,7 @@
 		}
 	],
 	"support" : {
-		"issues" : "https://github.com/luyadev/luya/issues"
+		"issues" : "https://github.com/luyadev/luya-module-admin/issues"
 	},
 	"require" : {
         "yiisoft/yii2-imagine": "~2.1.0",
@@ -36,7 +36,7 @@
         "bower-asset/bowser": "~1.7.3",
         "bower-asset/echarts": "~3.8.5",
         "bower-asset/angularjs-slider": "~6.6.0",
-		"unglue/client": "^1.3"
+		"unglue/client": "^1.4.1"
 	},
 	"autoload" : {
 		"psr-4" : {
