@@ -24,7 +24,7 @@
         "luyadev/luya-testsuite" : "~1.0.11",
         "php-coveralls/php-coveralls": "^1.0",
         "twbs/bootstrap": "v4.0.0-beta",
-        "bower-asset/angular" : "~1.6.5",
+        "bower-asset/angular" : "^1.7",
         "bower-asset/angular-loading-bar" : "^0.9",
         "bower-asset/angularjs-datepicker" : "^2.0",
         "bower-asset/ui-router" : "~0.4.0",
@@ -33,7 +33,7 @@
         "bower-asset/ng-wig" : "~3.0.0",
         "bower-asset/twigjs-bower": "~0.10.5",
         "bower-asset/angular-filter" : "~0.5.15",
-        "bower-asset/bowser": "~1.7.3",
+        "bower-asset/bowser": "^1.9",
         "bower-asset/echarts": "~3.8.5",
         "bower-asset/angularjs-slider": "~6.6.0",
 		"unglue/client": "^1.4.1"

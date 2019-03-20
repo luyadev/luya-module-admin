@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afeb16bdf71e016f199834c7137f33e4",
+    "content-hash": "89693e2b521ba3a4ee4105cc05b0d54d",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -637,16 +637,16 @@
     "packages-dev": [
         {
             "name": "bower-asset/angular",
-            "version": "v1.6.10",
+            "version": "v1.7.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/angular/bower-angular.git",
-                "reference": "309e7f82ecc9098e1f93870eb33083b84dead289"
+                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/angular/bower-angular/zipball/309e7f82ecc9098e1f93870eb33083b84dead289",
-                "reference": "309e7f82ecc9098e1f93870eb33083b84dead289",
+                "url": "https://api.github.com/repos/angular/bower-angular/zipball/56690b5e545ad36d04e369a65171de1adbe3ce64",
+                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64",
                 "shasum": null
             },
             "type": "bower-asset",
@@ -735,16 +735,16 @@
         },
         {
             "name": "bower-asset/bowser",
-            "version": "1.7.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lancedikson/bowser.git",
-                "reference": "64f1ac148f6d652f7ce993646387cfe096756351"
+                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lancedikson/bowser/zipball/64f1ac148f6d652f7ce993646387cfe096756351",
-                "reference": "64f1ac148f6d652f7ce993646387cfe096756351",
+                "url": "https://api.github.com/repos/lancedikson/bowser/zipball/1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
+                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
                 "shasum": null
             },
             "type": "bower-asset",
