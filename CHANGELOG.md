@@ -23,6 +23,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#277](https://github.com/luyadev/luya-module-admin/issues/277) Using [unglue.io](https://unglue.io) to compile admin resources.
 + [#205](https://github.com/luyadev/luya-module-admin/issues/205) CRUD search works now in filters and relation calls, sorting and pagination works in searching.
 + [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
 + [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
