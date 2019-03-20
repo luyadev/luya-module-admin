@@ -13,6 +13,7 @@ use luya\helpers\Html;
 use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
 use luya\admin\ngrest\Config;
+use luya\helpers\Inflector;
 
 /**
  * Render the Crud view.
@@ -340,69 +341,76 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     public function getButtons()
     {
-        if ($this->_buttons === null) {
-            $buttons = [];
-            
-            
-            foreach ($this->getConfig()->getRelations() as $rel) {
-                $api = Yii::$app->adminmenu->getApiDetail($rel['apiEndpoint']);
-                
-                if (!$api) {
-                    throw new InvalidConfigException("The configured api relation '{$rel['apiEndpoint']}' does not exists in the menu elements. Maybe you have no permissions to access this API.");
-                }
-                
-                $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.'.$rel['tabLabelAttribute'];
-                
-                $buttons[] = [
-                    'ngClick' => 'addAndswitchToTab(item.'.$this->getPrimaryKey().', \''.$api['route'].'\', \''.$rel['arrayIndex'].'\', '.$label.', \''.$rel['modelClass'].'\')',
-                    'icon' => 'chrome_reader_mode',
-                    'label' => $rel['label'],
-                ];
-            }
-            
-            if ($this->can(Auth::CAN_UPDATE)) {
-                // get all activeWindows assign to the crud
-                foreach ($this->getActiveWindows() as $hash => $config) {
-                    $buttons[] = [
-                        'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
-                        'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
-                        'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
-                    ];
-                }
-
-                // add active buttons.
-                foreach ($this->config->getActiveButtons() as $btn) {
-                    $buttons[] = [
-                        'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",
-                        'icon' => $btn['icon'],
-                        'label' => $btn['label'],
-                    ];
-                }
-            }
-            
-            // check if deletable is enabled
-            if ($this->config->isDeletable() && $this->can(Auth::CAN_DELETE)) {
-                $buttons[] = [
-                    'ngClick' => 'deleteItem('.$this->getCompositionKeysForButtonActions('item').')',
-                    'icon' => 'delete',
-                    'label' => '',
-                ];
-            }
-            // do we have an edit button
-            if (count($this->getFields('update')) > 0 && $this->can(Auth::CAN_UPDATE)) {
-                $buttons[] = [
-                    'ngClick' => 'toggleUpdate('.$this->getCompositionKeysForButtonActions('item').')',
-                    'icon' => 'mode_edit',
-                    'label' => '',
-                ];
-            }
-            
-            $this->_buttons = $buttons;
+        // if already assigned return the resutl
+        if ($this->_buttons) {
+            return $this->_buttons;
         }
 
-        return $this->_buttons;
+        $buttons = [];
+        
+        // ngrest relation buttons
+        foreach ($this->getConfig()->getRelations() as $rel) {
+            $api = Yii::$app->adminmenu->getApiDetail($rel['apiEndpoint']);
+            
+            if (!$api) {
+                throw new InvalidConfigException("The configured api relation '{$rel['apiEndpoint']}' does not exists in the menu elements. Maybe you have no permissions to access this API.");
+            }
+            
+            $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.'.$rel['tabLabelAttribute'];
+            
+            $buttons[] = [
+                'ngClick' => 'addAndswitchToTab(item.'.$this->getPrimaryKey().', \''.$api['route'].'\', \''.$rel['arrayIndex'].'\', '.$label.', \''.$rel['modelClass'].'\')',
+                'icon' => 'chrome_reader_mode',
+                'label' => $rel['label'],
+            ];
+        }
+        
+        if ($this->can(Auth::CAN_UPDATE)) {
+            // get all activeWindows assign to the crud
+            foreach ($this->getActiveWindows() as $hash => $config) {
+                $buttons[] = [
+                    'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
+                    'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
+                    'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
+                ];
+            }
+            // add active buttons.
+            foreach ($this->config->getActiveButtons() as $btn) {
+                $buttons[] = [
+                    'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",
+                    'icon' => $btn['icon'],
+                    'label' => $btn['label'],
+                ];
+            }
+        }
+        
+        // check if deletable is enabled
+        if ($this->config->isDeletable() && $this->can(Auth::CAN_DELETE)) {
+            $buttons[] = [
+                'ngClick' => 'deleteItem('.$this->getCompositionKeysForButtonActions('item').')',
+                'icon' => 'delete',
+                'label' => '',
+            ];
+        }
+        // do we have an edit button
+        if (count($this->getFields('update')) > 0 && $this->can(Auth::CAN_UPDATE)) {
+            $buttons[] = [
+                'ngClick' => 'toggleUpdate('.$this->getCompositionKeysForButtonActions('item').')',
+                'icon' => 'mode_edit',
+                'label' => '',
+            ];
+        }
+        
+        $this->_buttons = $buttons;
+        return $buttons;
     }
 
+    /**
+     * Generate the api query string for a certain context type
+     *
+     * @param string $type
+     * @return string
+     */
     public function apiQueryString($type)
     {
         // basic query
@@ -425,14 +433,17 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         
         array_unique($fields);
         $query['fields'] = implode(",", $fields);
-        // return url decoed string from http_build_query
+        // return url decoded string from http_build_query
         return http_build_query($query, '', '&');
     }
 
     private $_fields = [];
     
     /**
-     * wrapper of $config->getPointer to get only the fields.
+     * Short hand method to get all fields for a certain type context
+     *
+     * @param string $type
+     * @return array
      */
     public function getFields($type)
     {
@@ -443,47 +454,151 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                     $fields[] = $item['name'];
                 }
             }
-
             $this->_fields[$type] = $fields;
         }
 
         return $this->_fields[$type];
     }
 
-    public function getFieldsJson($type)
-    {
-        return json_encode($this->getFields($type));
-    }
-
+    /**
+     * Short hand method to get all active windows (if available).
+     * 
+     * @return array
+     */
     public function getActiveWindows()
     {
         return ($activeWindows = $this->config->getPointer('aw')) ? $activeWindows : [];
     }
     
+    /**
+     * Generate an array with elements grouped by groups (...).
+     *
+     * @param string $pointer
+     * @return array
+     */
+    public function forEachGroups($pointer)
+    {
+        $data = [];
+        foreach ($this->evalGroupFields($this->config->getPointer($pointer)) as $group) {
+            $data[] = [
+                'fields' => $this->config->getFields($pointer, $group[0]),
+                'name' => $group[1],
+                'collapsed' => isset($group['collapsed']) ? (bool) $group['collapsed'] : false,
+                'is_default' => isset($group['is_default']) ? (bool) $group['is_default'] : false,
+            ];
+        }
+        
+        return $data;
+    }
+
+    /**
+     * Generate the HTML code for the plugin element based on the current context.
+     *
+     * @param array $element
+     * @param string $configContext
+     * @return string
+     * @since 2.0
+     */
+    public function generatePluginHtml(array $element, $configContext)
+    {
+        if ($element['i18n'] && $configContext !== self::TYPE_LIST) {
+
+            return $this->view->render('_crudform_i18n_pluginhtml', [
+                'element' => $element,
+                'configContext' => $configContext,
+                'languages' => Lang::getQuery(),
+                'helpButtonHtml' => $this->createFieldHelpButton($element, $configContext),
+            ]);
+        }   
+
+        $ngModel = $this->ngModelString($configContext, $element['name']);
+
+        return $this->createFieldHelpButton($element, $configContext) . 
+            $this->renderElementPlugins($configContext, $element['type'], Inflector::slug($ngModel), $element['name'], $ngModel, $element['alias'], false);
+    }
+
+    /**
+     * Render the input element
+     *
+     * @param string $configContext
+     * @param array $typeConfig
+     * @param string $uniqueId Example unique field id: id="id-50eef582a7330e93b86b55ffed379965"
+     * @param string $attribute
+     * @param string $ngRestModel
+     * @param string $label
+     * @param boolean $elmni18n
+     * @return string The rendered element
+     */
+    public function renderElementPlugins($configContext, $typeConfig, $uniqueId, $attribute, $ngRestModel, $label, $elmni18n)
+    {
+        $args = $typeConfig['args'];
+        $args['renderContext'] = $this;
+        $obj = NgRest::createPluginObject($typeConfig['class'], $attribute, $label, $elmni18n, $args);
+        $method = 'render'.ucfirst($configContext);
+        $html = $obj->$method($uniqueId, $ngRestModel);
+
+        // parsed the element output content to a string
+        $content = is_array($html) ? implode(" ", $html) : $html;
+
+        // wrapp a new tag around fields which are required.
+        if ($configContext !== self::TYPE_LIST) {
+            $isRequired = $this->getModel()->isAttributeRequired($attribute);
+            if ($isRequired) {
+                $content = '<span class="bold-form-label">'.$content.'</span>';
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Get the ngRestModel string for a certain attribute
+     *
+     * @param string $configContext
+     * @param string $attribute
+     * @return string
+     */
+    public function ngModelString($configContext, $attribute)
+    {
+        return $configContext == self::TYPE_LIST ? 'item.'.$attribute : 'data.'.$configContext.'.'.$attribute;
+    }
+
+    /**
+     * Generate the ngrest model for an i18n field
+     *
+     * @param string $configContext
+     * @param string $attribute
+     * @param string $lang
+     * @return string
+     */
+    public function i18nNgModelString($configContext, $attribute, $lang)
+    {
+        $context = $configContext == self::TYPE_LIST ? "item." : "data.{$configContext}.";
+        return $context . $attribute.'[\''.$lang.'\']';
+    }
+
+    /**
+     * generate the field help button which is placed next to the element.
+     *
+     * @param array $element
+     * @param string $configContext
+     * @return string
+     */
+    private function createFieldHelpButton(array $element, $configContext)
+    {
+        if ($configContext !== self::TYPE_LIST) {
+            return '<span ng-if="getFieldHelp(\''.$element['name'].'\')" class="help-button btn btn-icon btn-help" tooltip tooltip-expression="getFieldHelp(\''.$element['name'].'\')" tooltip-position="left"></span>';
+        }
+    }
     
-    private $_langs;
-
-    public function getLangs()
-    {
-        if ($this->_langs === null) {
-            $this->_langs = Lang::getQuery();
-        }
-
-        return $this->_langs;
-    }
-
-    private $_defaultLangShortCode;
-
-    public function getDefaultLangShortCode()
-    {
-        if ($this->_defaultLangShortCode === null) {
-            $lang = Lang::getDefault();
-            $this->_defaultLangShortCode = $lang['short_code'];
-        }
-
-        return $this->_defaultLangShortCode;
-    }
-
+    /**
+     * Generate an array for every group withing the given pointer elemenets.
+     * 
+     * If there is no group defintion, it will generate a "default" group.
+     *
+     * @param [type] $pointerElements
+     * @return array
+     */
     private function evalGroupFields($pointerElements)
     {
         if (!$pointerElements) {
@@ -507,98 +622,5 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         
         
         return array_merge($groups, $this->getConfig()->getAttributeGroups());
-    }
-    
-    public function forEachGroups($pointer)
-    {
-        $groups = $this->evalGroupFields($this->config->getPointer($pointer));
-
-        $data = [];
-        
-        foreach ($groups as $group) {
-            $data[] = [
-                'fields' => $this->config->getFields($pointer, $group[0]),
-                'name' => $group[1],
-                'collapsed' => (isset($group['collapsed'])) ? (bool) $group['collapsed'] : false,
-                'is_default' => (isset($group['is_default'])) ? (bool) $group['is_default'] : false,
-            ];
-        }
-        
-        return $data;
-    }
-
-    /**
-     * Create element for given element and config pointer context.
-     *
-     * @param array $element
-     * @param string $configContext list,create,update
-     * @return array
-     */
-    public function createElements($element, $configContext)
-    {
-        if ($element['i18n'] && $configContext !== self::TYPE_LIST) {
-            $i = 0;
-            $return = [];
-            foreach ($this->getLangs() as $lang) {
-                if ($i == 0) {
-                    $return[] = [
-                        'html' => '<div class="form-i18n" ng-class="{\'has-field-help\': getFieldHelp(\''.$element['name'].'\')}">
-                                       ' . $this->createFieldHelpButton($element, $configContext) . '
-                                       <label class="form-i18n-label">
-                                        ' . $element['alias'] . '
-                                       </label>
-                                           <div class="row">',
-                    ];
-                }
-                $ngModel = $this->i18nNgModelString($configContext, $element['name'], $lang['short_code']);
-                $id = 'id-'.md5($ngModel.$lang['short_code']);
-                // anzahl cols durch anzahl sprachen
-                $return[] = [
-                    'html' => '<div class="col" ng-show="AdminLangService.isInSelection(\''.$lang['short_code'].'\')">'.$this->renderElementPlugins($configContext, $element['type'], $id, $element['name'], $ngModel, $element['alias'], true).'<span class="flag flag-'.$lang['short_code'].' form-col-flag"><span class="flag-fallback">'.$lang['short_code'].'</span></span></div>',
-                ];
-
-                ++$i;
-            }
-            $return[] = ['html' => '</div><!-- /row --> </div><!-- /i18n -->'];
-
-            return $return;
-        }
-
-        $ngModel = $this->ngModelString($configContext, $element['name']);
-        $id = 'id-'.md5($ngModel);
-
-        return [
-            [
-                'html' => $this->createFieldHelpButton($element, $configContext) . $this->renderElementPlugins($configContext, $element['type'], $id, $element['name'], $ngModel, $element['alias'], false),
-            ],
-        ];
-    }
-
-    private function createFieldHelpButton(array $element, $configContext)
-    {
-        if ($configContext !== self::TYPE_LIST) {
-            return '<span ng-if="getFieldHelp(\''.$element['name'].'\')" class="help-button btn btn-icon btn-help" tooltip tooltip-expression="getFieldHelp(\''.$element['name'].'\')" tooltip-position="left"></span>';
-        }
-    }
-    
-    private function renderElementPlugins($configContext, $typeConfig, $elmnId, $elmnName, $elmnModel, $elmnAlias, $elmni18n)
-    {
-        $args = $typeConfig['args'];
-        $args['renderContext'] = $this;
-        $obj = NgRest::createPluginObject($typeConfig['class'], $elmnName, $elmnAlias, $elmni18n, $args);
-        $method = 'render'.ucfirst($configContext);
-        $html = $obj->$method($elmnId, $elmnModel);
-
-        return is_array($html) ? implode(" ", $html) : $html;
-    }
-
-    public function ngModelString($configContext, $fieldId)
-    {
-        return ($configContext == self::TYPE_LIST) ? 'item.'.$fieldId : 'data.'.$configContext.'.'.$fieldId;
-    }
-
-    private function i18nNgModelString($configContext, $fieldId, $lang)
-    {
-        return 'data.'.$configContext.'.'.$fieldId.'[\''.$lang.'\']';
     }
 }

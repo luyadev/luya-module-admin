@@ -23,9 +23,7 @@ use luya\admin\Module;
 
                 <?php foreach ($group['fields'] as $field => $fieldItem): ?>
                     <div ng-if="!checkIfFieldExistsInParentRelation('<?= $field; ?>')">
-                        <?php foreach ($this->context->createElements($fieldItem, $renderer) as $element): ?>
-                            <?= $element['html']; ?>
-                        <?php endforeach; ?>
+                        <?= $this->context->generatePluginHtml($fieldItem, $renderer); ?>
                     </div>
                     <div ng-if="checkIfFieldExistsInParentRelation('<?= $field; ?>')" ng-init="<?= $this->context->ngModelString($renderer, $field); ?>=checkIfFieldExistsInParentRelation('<?= $field; ?>')"></div>
                 <?php endforeach; ?>

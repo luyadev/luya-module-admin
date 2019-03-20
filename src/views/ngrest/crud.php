@@ -165,9 +165,9 @@ $this->beginBody();
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) { continue; } $i++; ?>
-                                <?php foreach ($this->context->createElements($item, RenderCrud::TYPE_LIST) as $element): ?>
-                                     <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>"><?= $element['html']; ?></td>
-                                 <?php endforeach; ?>
+                                <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
+                                    <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
+                                </td>
                              <?php endforeach; ?>
                             <td class="crud-buttons-column" ng-hide="isLocked(config.tableName, item[config.pk])">
                                 <?php if (count($this->context->getButtons()) > 0): ?>
