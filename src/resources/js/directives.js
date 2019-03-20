@@ -3031,9 +3031,15 @@
                 $scope.folderDeleteForm = false;
 
                 $scope.folderDeleteConfirmForm = false;
-                
+
                 $scope.updateFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name });
+                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name }).then(function(transport) {
+                        AdminToastService.success(i18n['js_dir_manager_rename_success']);
+                    });
+                };
+
+                $scope.cancelFolderEdit = function(folder, oldName) {
+                    folder.name = oldName;
                 };
                 
                 $scope.deleteFolder = function(folder) {
