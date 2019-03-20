@@ -9,6 +9,7 @@
         "../js/scheduler.js"
     ],
     "css" : [
+        "../../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.css",
         "../scss/admin.scss"
     ]
 }
