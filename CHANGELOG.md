@@ -17,6 +17,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#267](https://github.com/luyadev/luya-module-admin/pull/267) ToggleStatus plugin initValue=1 not displayed at frontend
 + [#62](https://github.com/luyadev/luya-module-admin/issues/62) Two-digit display of minutes in datetime fields.
 + [#239](https://github.com/luyadev/luya-module-admin/issues/239) Hide i18n flags when no i18n field is configured, also hide in list view as its not possible to toggle in this context.
 + [#273](https://github.com/luyadev/luya-module-admin/issues/273) Fixed a bug where canceling of the folder renaming where not restoring the old folder name.

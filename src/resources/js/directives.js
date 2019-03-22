@@ -1517,7 +1517,7 @@
                             '</div>' +
                             '<div class="form-side">' +
                                 '<div class="form-check">' +
-                                    '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" />' +
+                                    '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
                                     '<label for="{{id}}"></label>' +
                                 '</div>' +
                             '</div>' +
