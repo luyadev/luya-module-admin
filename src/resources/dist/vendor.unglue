@@ -17,8 +17,7 @@
         "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.js"
     ],
     "options": {
-        "js": {
-            "babel": false
-        }
+        "babel": false,
+        "compress": false
     }
 }
