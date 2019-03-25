@@ -59,12 +59,6 @@
     "config": {
         "platform": {
             "php": "7.0"
-        },
-        "fxp-asset" : {
-            "pattern-skip-version": "(-build|-patch)",
-             "installer-paths": {
-                "bower-asset-library": "vendor/bower"
-            }
         }
     },
     "repositories": [
