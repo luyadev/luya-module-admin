@@ -19,7 +19,7 @@ class ModelClassTest extends AdminTestCase
         $this->setupModelClass(static::STRING_TYPE);
         $modelClass = $this->modelClass;
 
-        $this->assertSame('admin_user', $modelClass::tableName());
+        $this->assertSame('{{%admin_user}}', $modelClass::tableName());
         $this->assertSame('api-admin-user', $modelClass::ngRestApiEndpoint());
     }
 
@@ -28,7 +28,7 @@ class ModelClassTest extends AdminTestCase
         $this->setupModelClass(static::OBJECT_TYPE);
         $modelClass = $this->modelClass;
 
-        $this->assertSame('admin_user', $modelClass::tableName());
+        $this->assertSame('{{%admin_user}}', $modelClass::tableName());
         $this->assertSame('api-admin-user', $modelClass::ngRestApiEndpoint());
     }
 
