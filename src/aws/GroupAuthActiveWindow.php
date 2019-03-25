@@ -63,10 +63,10 @@ class GroupAuthActiveWindow extends ActiveWindow
             }
         }
 
-        Yii::$app->db->createCommand()->delete('admin_group_auth', ['group_id' => $this->getItemId()])->execute();
+        Yii::$app->db->createCommand()->delete('{{%admin_group_auth}}', ['group_id' => $this->getItemId()])->execute();
 
         foreach ($safeCopy as $authId => $options) {
-            Yii::$app->db->createCommand()->insert('admin_group_auth', [
+            Yii::$app->db->createCommand()->insert('{{%admin_group_auth}}', [
                 'group_id' => $this->getItemId(),
                 'auth_id' => $authId,
                 'crud_create' => (isset($options['create']) && $options['create'] == 1) ? 1 : 0,
@@ -96,7 +96,7 @@ class GroupAuthActiveWindow extends ActiveWindow
      */
     private function getAuthData()
     {
-        $data = (new Query())->select(['*'])->from('admin_auth')->orderBy(['module_name' => SORT_ASC, 'alias_name' => SORT_ASC])->all();
+        $data = (new Query())->select(['*'])->from('{{%admin_auth}}')->orderBy(['module_name' => SORT_ASC, 'alias_name' => SORT_ASC])->all();
         
         array_walk($data, function (&$item, $key) {
             try {
@@ -114,7 +114,7 @@ class GroupAuthActiveWindow extends ActiveWindow
      */
     private function getRightsData()
     {
-        $query = (new \yii\db\Query())->select('*')->from('admin_group_auth')->where(['group_id' => $this->getItemId()])->all();
+        $query = (new \yii\db\Query())->select('*')->from('{{%admin_group_auth}}')->where(['group_id' => $this->getItemId()])->all();
 
         $subs = [];
 

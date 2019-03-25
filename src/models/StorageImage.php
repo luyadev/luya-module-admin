@@ -27,7 +27,7 @@ final class StorageImage extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_storage_image';
+        return '{{%admin_storage_image}}';
     }
 
     /**

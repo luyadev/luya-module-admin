@@ -7,7 +7,7 @@ class m150304_152238_admin_storage_file extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_storage_file', [
+        $this->createTable('{{%admin_storage_file}}', [
             'id' => $this->primaryKey(),
             'is_hidden' => $this->boolean()->defaultValue(false),
             'folder_id' => $this->integer(11)->defaultValue(0),
@@ -31,6 +31,6 @@ class m150304_152238_admin_storage_file extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_storage_file');
+        $this->dropTable('{{%admin_storage_file}}');
     }
 }

@@ -7,7 +7,7 @@ class m150304_152256_admin_storage_image extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_storage_image', [
+        $this->createTable('{{%admin_storage_image}}', [
             'id' => $this->primaryKey(),
             'file_id' => $this->integer(11),
             'filter_id' => $this->integer(11),
@@ -18,6 +18,6 @@ class m150304_152256_admin_storage_image extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_storage_image');
+        $this->dropTable('{{%admin_storage_image}}');
     }
 }

@@ -40,7 +40,7 @@ final class UserLogin extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_user_login';
+        return '{{%admin_user_login}}';
     }
     
     /**

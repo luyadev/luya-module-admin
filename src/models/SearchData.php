@@ -33,7 +33,7 @@ final class SearchData extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_search_data';
+        return '{{%admin_search_data}}';
     }
 
     /**

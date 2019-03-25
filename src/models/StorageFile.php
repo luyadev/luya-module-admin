@@ -77,7 +77,7 @@ final class StorageFile extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_storage_file';
+        return '{{%admin_storage_file}}';
     }
     
     /**

@@ -69,7 +69,7 @@ class StorageController extends RestController
                 $folders[$key]['subfolder'] = Yii::$app->storage->getFolder($folder->id)->hasChild();
             }
             return $folders;
-        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']));
+        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM {{%admin_storage_folder}} WHERE is_deleted=false']));
     }
     
     /**

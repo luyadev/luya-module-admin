@@ -25,7 +25,7 @@ class QueueLog extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_queue_log';
+        return '{{%admin_queue_log}}';
     }
 
     /**

@@ -36,7 +36,7 @@ final class Config extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_config';
+        return '{{%admin_config}}';
     }
 
     /**

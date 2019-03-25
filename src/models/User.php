@@ -197,7 +197,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function tableName()
     {
-        return 'admin_user';
+        return '{{%admin_user}}';
     }
 
     /**
@@ -378,7 +378,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function getGroups()
     {
-        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('admin_user_group', ['user_id' => 'id']);
+        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('{{%admin_user_group}}', ['user_id' => 'id']);
     }
 
     /**
@@ -475,7 +475,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findIdentity($id)
     {
-        return static::find()->joinWith(['userLogins ul'])->andWhere(['admin_user.id' => $id, 'is_destroyed' => false, 'is_api_user' => false, 'ip' => Yii::$app->request->userIP])->one();
+        return static::find()->joinWith(['userLogins ul'])->andWhere(['{{%admin_user}}.id' => $id, 'is_destroyed' => false, 'is_api_user' => false, 'ip' => Yii::$app->request->userIP])->one();
     }
 
     /**

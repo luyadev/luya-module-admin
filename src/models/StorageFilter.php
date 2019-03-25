@@ -25,7 +25,7 @@ final class StorageFilter extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_storage_filter';
+        return '{{%admin_storage_filter}}';
     }
 
     /**

@@ -25,7 +25,7 @@ final class TagRelation extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_tag_relation';
+        return '{{%admin_tag_relation}}';
     }
 
     /**

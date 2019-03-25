@@ -7,7 +7,7 @@ class m141104_114809_admin_user extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_user', [
+        $this->createTable('{{%admin_user}}', [
             'id' => $this->primaryKey(),
             'firstname' => $this->string(255),
             'lastname' => $this->string(255),
@@ -26,6 +26,6 @@ class m141104_114809_admin_user extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_user');
+        $this->dropTable('{{%admin_user}}');
     }
 }

@@ -28,7 +28,7 @@ class ProxyBuild extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_proxy_build';
+        return '{{%admin_proxy_build}}';
     }
 
     /**

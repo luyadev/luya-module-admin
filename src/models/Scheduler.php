@@ -26,7 +26,7 @@ class Scheduler extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_scheduler';
+        return '{{%admin_scheduler}}';
     }
 
     /**
