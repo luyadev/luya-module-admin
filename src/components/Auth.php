@@ -223,9 +223,9 @@ class Auth extends \yii\base\Component
                 'route' => $route,
                 'api' => 0,
             ])->execute();
-        } else {
-            throw new Exception("Error while inserting/updating auth ROUTE '$route' with name '$name' in module '$moduleName'.");
         }
+        
+        throw new Exception("Error while inserting/updating auth ROUTE '$route' with name '$name' in module '$moduleName'.");
     }
 
     /**
@@ -250,12 +250,12 @@ class Auth extends \yii\base\Component
                 'alias_name' => $name,
                 'module_name' => $moduleName,
                 'is_crud' => true,
-                'route' => 0,
+                'route' => null,
                 'api' => $apiEndpoint,
             ])->execute();
-        } else {
-            throw new Exception("Error while inserting/updating auth API '$apiEndpoint' with name '$name' in module '$moduleName'.");
         }
+            
+        throw new Exception("Error while inserting/updating auth API '$apiEndpoint' with name '$name' in module '$moduleName'.");
     }
 
     /**

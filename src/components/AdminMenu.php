@@ -72,7 +72,7 @@ class AdminMenu extends \yii\base\Component
      *                               [alias] => menu_access_item_user
      *                               [route] => admin/user/index
      *                               [icon] => person
-     *                               [permssionApiEndpoint] => api-admin-user
+     *                               [permissionApiEndpoint] => api-admin-user
      *                               [permissionIsRoute] =>
      *                               [permissionIsApi] => 1
      *                               [searchModelClass] =>
@@ -82,7 +82,7 @@ class AdminMenu extends \yii\base\Component
      *                               [alias] => menu_access_item_group
      *                               [route] => admin/group/index
      *                               [icon] => group
-     *                               [permssionApiEndpoint] => api-admin-group
+     *                               [permissionApiEndpoint] => api-admin-group
      *                               [permissionIsRoute] =>
      *                               [permissionIsApi] => 1
      *                               [searchModelClass] =>
@@ -195,7 +195,7 @@ class AdminMenu extends \yii\base\Component
                                 }
                             } elseif ($groupItemEntry['permissionIsApi']) {
                                 // when true, set permissionGranted to true
-                                if (Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permssionApiEndpoint'])) {
+                                if (Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint'])) {
                                     $permissionGranted = true;
                                 }
                             } else {
@@ -211,6 +211,7 @@ class AdminMenu extends \yii\base\Component
             }
             
             try {
+                // check if a translation exists, otherwise use alias instead.
                 $alias = Yii::t($item['moduleId'], $item['alias'], [], Yii::$app->language);
             } catch (\Exception $err) {
                 $alias = $item['alias'];
@@ -266,7 +267,7 @@ class AdminMenu extends \yii\base\Component
                             continue;
                         }
                     } elseif ($groupItemEntry['permissionIsApi']) {
-                        if (!Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permssionApiEndpoint'])) {
+                        if (!Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint'])) {
                             unset($data['groups'][$groupName]['items'][$groupItemKey]);
                             continue;
                         }
@@ -341,7 +342,7 @@ class AdminMenu extends \yii\base\Component
     {
         $items = $this->getItems();
         
-        $key = array_search($api, array_column($items, 'permssionApiEndpoint'));
+        $key = array_search($api, array_column($items, 'permissionApiEndpoint'));
         
         if ($key !== false) {
             return $items[$key];

@@ -74,7 +74,7 @@ class MenuController extends RestController
                 ->leftJoin('{{%admin_user}}', '{{%admin_ngrest_log}}.user_id = {{%admin_user}}.id')
                 ->orderBy('timestamp_create DESC')
                 ->limit(30)
-                ->where('api=:api and user_id!=0', [':api' => $access['permssionApiEndpoint']])->all();
+                ->where('api=:api and user_id!=0', [':api' => $access['permissionApiEndpoint']])->all();
             foreach ($data as $row) {
                 $date = mktime(0, 0, 0, date('n', $row['timestamp_create']), date('j', $row['timestamp_create']), date('Y', $row['timestamp_create']));
                 if ($row['is_update']) {

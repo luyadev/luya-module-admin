@@ -40,7 +40,7 @@ class AuthImporter extends Importer
         $toClean = Yii::$app->auth->prepareCleanup($data);
         if (count($toClean) > 0) {
             foreach ($toClean as $rule) {
-                $this->addLog('old auth rule: "'.$rule['alias_name'].'" in module '.$rule['module_name'].' will be automaticaly deleted.');
+                $this->addLog('Deleted old menu auth rule "'.$rule['alias_name'].'" in module '.$rule['module_name'].'.');
             }
 
             Yii::$app->auth->executeCleanup($toClean);

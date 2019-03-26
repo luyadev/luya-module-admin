@@ -144,7 +144,7 @@ class SelectRelationActiveQuery extends Plugin
         }
         
         // @todo what about: admin/
-        return 'admin/'.$menu['permssionApiEndpoint'];
+        return 'admin/'.$menu['permissionApiEndpoint'];
     }
     
     /**

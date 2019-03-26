@@ -46,7 +46,11 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     /**
      * @var array The available options for itemApi and itemRoute.
      */
-    protected static $options = ['hiddenInMenu'];
+    protected static $options = [
+        'hiddenInMenu', // whether the current menu should be hidden in the menu or not
+        'contextField', // a context field name which is used to generate the pool
+        'contextValue', // a context value for the given context field to generate the pool
+    ];
     
     /**
      * @var \luya\base\AdminModuleInterface The context on what the menu is running.
@@ -170,7 +174,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'alias' => $name,
             'route' => $route,
             'icon' => $icon,
-            'permssionApiEndpoint' => $apiEndpoint,
+            'permissionApiEndpoint' => $apiEndpoint,
             'permissionIsRoute' => false,
             'permissionIsApi' => true,
             'searchModelClass' => false,
@@ -198,7 +202,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'alias' => $name,
             'route' => $route,
             'icon' => $icon,
-            'permssionApiEndpoint' => null,
+            'permissionApiEndpoint' => null,
             'permissionIsRoute' => true,
             'permissionIsApi' => false,
             'searchModelClass' => $searchModelClass,

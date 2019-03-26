@@ -73,7 +73,7 @@ class SearchController extends RestController
 
         foreach (Yii::$app->adminmenu->getItems() as $api) {
             if ($api['permissionIsApi']) {
-                $ctrl = $module->createController($api['permssionApiEndpoint']);
+                $ctrl = $module->createController($api['permissionApiEndpoint']);
                 $controller = $ctrl[0];
                 $data = $this->transformGenericSearchToData($controller->model->genericSearch($query));
                 if (count($data) > 0) {
