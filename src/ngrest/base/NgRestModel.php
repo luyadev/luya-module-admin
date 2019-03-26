@@ -111,7 +111,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      * {@inheritdoc}
      *
-     * @return \luya\admin\ngrest\base\NgRestActiveQuery
+     * @return NgRestActiveQuery
      */
     public static function find()
     {
@@ -126,23 +126,63 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function isI18n($fieldName)
     {
-        return in_array($fieldName, $this->i18n) ? true : false;
+        return in_array($fieldName, $this->i18n);
     }
 
     /**
-     * Define an array with filters you can select from the crud list.
+     * Define an array with filters you can select from the CRUD list.
      *
      * ```php
      * return [
-     *     'deleted' => self::ngRestFind()->where(['is_deleted' => 0]),
-     *     'year2016' => self::ngRestFind()->where(['between', 'date', 2015, 2016]),
+     *     'deleted' => self::ngRestFind()->andWhere(['is_deleted' => 0]),
+     *     'year2016' => self::ngRestFind()->andWhere(['between', 'date', 2015, 2016]),
      * ];
      * ```
+     * 
+     * > Keep in mind to use andWhere() otherwise an existing where() condition could be overriden.
      *
-     * @return array Return an array where key is the name and value is the find() condition for the filters.
+     * @return array Return an array where key is the name and value is the ngRestFind() condition for the filters.
      * @since 1.0.0
      */
     public function ngRestFilters()
+    {
+        return [];
+    }
+
+    /**
+     * Define data pools.
+     * 
+     * > The difference between ngRestFilters() and ngRestPools() are that the pool identifer must be provided in the menu component and is not visisble in the
+     * > UI, its like a filter but for developers. It will also pass the pool identifier to sub/relation calls for further usage.
+     * 
+     * A data pool can be used to retrieve only a certain type of data. The identifier for the pool is passed trough all sub relation
+     * calls and if this certain identifer as defined as pool, it will also take the pool data in this model.
+     * 
+     * An example of a pool defintion inside a table with cars.
+     * 
+     * ```php
+     * return [
+     *     'poolAudi' => ['car_company' => 'Audi'],
+     *     'poolBMW' => ['car_company' => 'BMW'],
+     * ];
+     * ```
+     * 
+     * If this pool identifier is defined in the menu, all subrelation calls will recieve the certain identifer. Thefore you could have a model which provides
+     * parts for the "car" (example above) which also integratres this pool defintion, so only those parts are returned in the relations call with the pool id:
+     * 
+     * ```php
+     * return [
+     *     'poolAudi' => ['manufactory_company' => 'Audi'],
+     *     'poolBMW' => ['manufactory_company' => 'BMW'],
+     * ];
+     * ```
+     *
+     * So the identifier `poolAudi` or `poolBMW` would be passed to the "parts" tabel and would only return all parts for the given manufactory company.
+     * 
+     * @return array
+     * @since 2.0.0
+     */
+    public function ngRestPools()
     {
         return [];
     }
@@ -263,15 +303,17 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * + see [[yii\db\ActiveRecord::find()]]
+     * + 
      * 
-     * > This method will taken for all internal *NOT API USER* related calls.
+     * > This method will taken for all internal *NOT API USER* related calls. So assuming an API user makes request to the APi
+     * > it will use find() instead of ngRestFind(). If a logged in user will make a request to an API it will take ngRestFind().
      *
-     * @return yii\db\ActiveQuery
+     * @see {{yii\db\ActiveRecord::find()}}
+     * @return NgRestActiveQuery
      */
     public static function ngRestFind()
     {
-        return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+        return new NgRestActiveQuery(get_called_class());
     }
 
     /**

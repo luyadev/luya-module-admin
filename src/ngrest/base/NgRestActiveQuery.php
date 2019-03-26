@@ -41,11 +41,26 @@ class NgRestActiveQuery extends ActiveQuery
      *
      * @param string $field The field (attribute) name which is cased with {{luya\admin\ngrest\base\NgRestModel::$i18n}}
      * @param string $value The value to compare within the json string.
-     * @return \luya\admin\ngrest\base\NgRestActiveQuery
+     * @return NgRestActiveQuery
      */
     public function i18nWhere($field, $value)
     {
         $lang = Yii::$app->composition->langShortCode;
         return $this->andWhere(["JSON_EXTRACT({$field}, \"$.{$lang}\")" => $value]);
+    }
+
+    /**
+     * Where condition with json values.
+     *
+     * @param string $operator
+     * @param string $field
+     * @param string $key
+     * @param string|integer $value
+     * @return NgRestActiveQuery
+     * @since 2.0.0
+     */  
+    public function jsonWhere($operator, $field, $key, $value)
+    {
+        return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
     }
 }
