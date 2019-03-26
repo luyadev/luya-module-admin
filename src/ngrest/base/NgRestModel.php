@@ -134,8 +134,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * ```php
      * return [
-     *     'deleted' => self::find()->where(['is_deleted' => 0]),
-     *     'year2016' => self::find()->where(['between', 'date', 2015, 2016]),
+     *     'deleted' => self::ngRestFind()->where(['is_deleted' => 0]),
+     *     'year2016' => self::ngRestFind()->where(['between', 'date', 2015, 2016]),
      * ];
      * ```
      *
