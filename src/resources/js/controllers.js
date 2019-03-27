@@ -135,7 +135,7 @@
 		$scope.exportResponse = false;
 
 		$scope.generateExport = function() {
-			$http.post($scope.config.apiEndpoint + '/export', $scope.exportdata).then(function(response) {
+			$http.post($scope.config.apiEndpoint + '/export?' + $scope.config.apiExportQueryString, $scope.exportdata).then(function(response) {
 				$scope.exportResponse = response.data;
 			});
 		};

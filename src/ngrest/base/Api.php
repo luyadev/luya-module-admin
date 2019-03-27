@@ -215,6 +215,8 @@ class Api extends RestActiveController
      * Prepare the NgRest List Query.
      *
      * > This will call the `ngRestFind()` method of the model.
+     * 
+     * Use in list, export
      *
      * @see {{prepareIndexQuery()}}
      * @return \yii\db\ActiveQuery
@@ -661,9 +663,10 @@ class Api extends RestActiveController
                 break;
         }
         
-        $tempData = ExportHelper::$type($this->model->find()->select($fields), $fields, (bool) $header);
+        $query = $this->prepareListQuery()->select($fields);
+        $tempData = ExportHelper::$type($query, $fields, (bool) $header);
         
-        $key = uniqid('ngre', true);
+        $key = uniqid('ngrestexport', true);
         
         $store = FileHelper::writeFile('@runtime/'.$key.'.tmp', $tempData);
         
@@ -676,8 +679,17 @@ class Api extends RestActiveController
             Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.' . $extension);
             Yii::$app->session->set('tempNgRestFileMime', $mime);
             Yii::$app->session->set('tempNgRestFileKey', $key);
+
+            $url = Url::toRoute(['/'.$route], true);
+            $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
+
+            if (StringHelper::contains('?', $url)) {
+                $route = $url . "&" . $param;
+            } else {
+                $route = $url . "?" . $param;
+            }
             return [
-                'url' => Url::toRoute(['/'.$route, 'key' => base64_encode($key)]),
+                'url' => $route,
             ];
         }
         
