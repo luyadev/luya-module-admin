@@ -433,6 +433,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         
         array_unique($fields);
         $query['fields'] = implode(",", $fields);
+
+        if (Yii::$app->request->get('pool')) {
+            $query['pool'] = Yii::$app->request->get('pool');
+        }
+
         // return url decoded string from http_build_query
         return http_build_query($query, '', '&');
     }

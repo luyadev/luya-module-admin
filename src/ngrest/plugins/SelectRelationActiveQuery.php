@@ -170,7 +170,7 @@ class SelectRelationActiveQuery extends Plugin
             $this->writeAttribute($event, $this->emptyListValue);
         } else {
             $model = $this->_query->modelClass;
-            $row = $model::find()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
+            $row = $model::ngRestFind()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
 
             if (!empty($row)) {
                 $row = array_map (function($fieldValue, $fieldName) use ($model) {

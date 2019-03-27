@@ -9,6 +9,8 @@ use yii\base\InvalidCallException;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+use yii\db\ActiveQuery;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
 use luya\helpers\ExportHelper;
@@ -17,12 +19,9 @@ use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
 use luya\admin\ngrest\NgRest;
-use yii\web\NotFoundHttpException;
-use yii\db\ActiveQuery;
-use luya\helpers\ArrayHelper;
-use luya\admin\ngrest\base\actions\IndexAction;
-use luya\helpers\StringHelper;
 use luya\admin\ngrest\Config;
+use luya\helpers\ArrayHelper;
+use luya\helpers\StringHelper;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -55,7 +54,8 @@ class Api extends RestActiveController
     public $pagination = ['defaultPageSize' => 25];
     
     /**
-     * @var string When a filter model is provided filter is enabled trough json request body, works only for index,list
+     * @var string When a filter model is provided filter is enabled trough json request body, works only for index and list.
+     * @see https://luya.io/guide/ngrest-api#filtering
      * @see https://www.yiiframework.com/doc/guide/2.0/en/output-data-providers#filtering-data-providers-using-data-filters
      * @since 1.2.2
      */
@@ -224,7 +224,26 @@ class Api extends RestActiveController
     {
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
-        return $modelClass::ngRestFind()->with($this->getWithRelation('list'));
+
+        $find = $modelClass::ngRestFind();
+
+        // check if a pool id is requested:
+        $this->appendPoolWhereCondition($find);
+
+        return $find->with($this->getWithRelation('list'));
+    }
+
+    /**
+     * Append the pool where condition to a given query.
+     * 
+     * If the pool identifier is not found, an exception will be thrown.
+     *
+     * @param ActiveQuery $query
+     * @since 2.0.0
+     */
+    private function appendPoolWhereCondition(ActiveQuery $query)
+    {
+        $query->inPool(Yii::$app->request->get('pool'));
     }
     
     /**
@@ -302,6 +321,8 @@ class Api extends RestActiveController
     private $_model;
 
     /**
+     * Get the ngrest model object (unloaded).
+     * 
      * @return NgRestModel
      * @throws InvalidConfigException
      */
@@ -371,11 +392,13 @@ class Api extends RestActiveController
     {
         $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
 
-        // If its not an api user the internal ngrest methods are used to find items.
-        if (!Yii::$app->adminuser->identity->is_api_user) {
-            $findModelInstance = $modelClass::ngRestFind();
-        } else {
+        // If an api user the internal find methods are used to find items.
+        if (Yii::$app->adminuser->identity->is_api_user) {
+            // api calls will always use the "original" find method which is based on yii2 guide the best approach to hide given data by default.
             $findModelInstance = $modelClass::find();
+        } else {
+            // if its an admin user which is browsing the ui the internal ngRestFind method is used.
+            $findModelInstance = $modelClass::ngRestFind();
         }
 
         return $findModelInstance->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
@@ -510,6 +533,8 @@ class Api extends RestActiveController
             $find->with($this->getWithRelation('relation-call'));
         }
 
+        $this->appendPoolWhereCondition($find);
+
         $targetModel = Yii::createObject(['class' => $relation->getTargetModel()]);
 
         if ($query) {
@@ -556,6 +581,8 @@ class Api extends RestActiveController
                 $find->andWhere(['in', $model->tableName() . '.' . $pkName, $searchQuery]);
             }
         }
+
+        $this->appendPoolWhereCondition($find);
         
         return new ActiveDataProvider([
             'query' => $find,
