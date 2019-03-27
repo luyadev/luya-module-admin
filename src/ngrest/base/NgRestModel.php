@@ -162,8 +162,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * 
      * ```php
      * return [
-     *     'poolAudi' => ['brand' => 'Audi'],
-     *     'poolBMW' => ['brand' => 'BMW'],
+     *     'poolAudi' => ['car_brand' => 'Audi'],
+     *     'poolBMW' => ['car_brand' => 'BMW'],
      * ];
      * ```
      * 
@@ -172,8 +172,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * 
      * ```php
      * return [
-     *     'poolAudi' => ['brand' => 'Audi'],
-     *     'poolBMW' => ['brand' => 'BMW'],
+     *     'poolAudi' => ['parts_brand' => 'Audi'],
+     *     'poolBMW' => ['parts_brand' => 'BMW'],
      * ];
      * ```
      *
