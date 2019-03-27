@@ -152,32 +152,32 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      * Define data pools.
      * 
-     * > The difference between ngRestFilters() and ngRestPools() are that the pool identifer must be provided in the menu component and is not visisble in the
-     * > UI, its like a filter but for developers. It will also pass the pool identifier to sub/relation calls for further usage.
+     * > The difference between ngRestFilters() and ngRestPools() is that the pool identifer must be provided in the menu component and is not visible in the
+     * > UI, it is like an invisible filter, only available to developers.
      * 
-     * A data pool can be used to retrieve only a certain type of data. The identifier for the pool is passed trough all sub relation
-     * calls and if this certain identifer as defined as pool, it will also take the pool data in this model.
+     * A data pool can be used to retrieve only a subset of data. The identifier for the pool is passed trough to all subrelation
+     * calls. Related models will filter their data by the same pool identifier, if configured accordingly.
      * 
-     * An example of a pool defintion inside a table with cars.
+     * The following is an example of a pool identifier for a table with cars:
      * 
      * ```php
      * return [
-     *     'poolAudi' => ['car_company' => 'Audi'],
-     *     'poolBMW' => ['car_company' => 'BMW'],
+     *     'poolAudi' => ['brand' => 'Audi'],
+     *     'poolBMW' => ['brand' => 'BMW'],
      * ];
      * ```
      * 
-     * If this pool identifier is defined in the menu, all subrelation calls will recieve the certain identifer. Thefore you could have a model which provides
-     * parts for the "car" (example above) which also integratres this pool defintion, so only those parts are returned in the relations call with the pool id:
+     * If the pool identifier is defined in the menu, all subrelation calls will receive the identifer. Thefore, in the above example, you could have a model for
+     * car parts that only returns parts with the same pool identifier in relation calls:
      * 
      * ```php
      * return [
-     *     'poolAudi' => ['manufactory_company' => 'Audi'],
-     *     'poolBMW' => ['manufactory_company' => 'BMW'],
+     *     'poolAudi' => ['brand' => 'Audi'],
+     *     'poolBMW' => ['brand' => 'BMW'],
      * ];
      * ```
      *
-     * So the identifier `poolAudi` or `poolBMW` would be passed to the "parts" tabel and would only return all parts for the given manufactory company.
+     * The identifiers `poolAudi` and `poolBMW` are passed to the `parts` table to only return parts for the given car brand.
      * 
      * @return array
      * @since 2.0.0
