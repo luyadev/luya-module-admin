@@ -384,7 +384,7 @@
 		/*** PAGINIATION ***/
 
         $scope.$watch('pager.currentPage', function(newVal, oldVal) {
-            if (newVal != oldVal && newValue != null) {
+            if (newVal != oldVal && newVal != null) {
 				$scope.loadList($scope.pager.currentPage);
             }
         });
