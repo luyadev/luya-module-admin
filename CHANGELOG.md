@@ -30,6 +30,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#236](https://github.com/luyadev/luya-module-admin/issues/236) Added multiple menu entries and CRUD view for same models (data pools).
 + [#228](https://github.com/luyadev/luya-module-admin/issues/228) New `sortField` attribute option for plugins.
 + [#94](https://github.com/luyadev/luya-module-admin/issues/94) Required CRUD fields are now highlight as bold text.
 + [#277](https://github.com/luyadev/luya-module-admin/issues/277) Using [unglue.io](https://unglue.io) to compile admin resources.

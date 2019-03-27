@@ -63,4 +63,25 @@ class NgRestActiveQuery extends ActiveQuery
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
     }
+
+    /**
+     * Add the pool where condition if a pool is given.
+     *
+     * @param string $pool
+     * @return NgRestActiveQuery
+     * @since 2.0.0
+     */
+    public function inPool($pool = null)
+    {
+        if (empty($pool)) {
+            return $this;
+        }
+        $model = Yii::createObject($this->modelClass);
+
+        if (!array_key_exists($pool, $model->ngRestPools())) {
+            throw new InvalidConfigException("The requested pool identifier '{$pool}' does not exist in the ngRestPools() definition.");
+        }
+
+        return $this->andWhere($model->ngRestPools()[$pool]);
+    }
 }

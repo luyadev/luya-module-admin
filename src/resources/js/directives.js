@@ -637,7 +637,13 @@
 
     			$scope.toggleWindow = function() {
     				if ($scope.input.showWindow) {
-    					var url = $scope.api+'/?inline=1';
+
+                        if ($scope.api.indexOf('?') > -1) {
+                            var url = $scope.api+'&inline=1';
+                        } else {
+                            var url = $scope.api+'?inline=1';
+                        }
+
     					var modelSelection = parseInt($scope.modelSelection);
     					if (modelSelection) {
     						url = url + '&modelSelection=' + $scope.modelSetter;
@@ -688,8 +694,15 @@
     			"id": "@id"
     		},
     		controller: ['$scope', function($scope) {
-    			$scope.content = null;
-    			$http.get($scope.api+'/?inline=1&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
+                $scope.content = null;
+                
+                if ($scope.api.indexOf('?') > -1) {
+                    var url = $scope.api+'&inline=1';
+                } else {
+                    var url = $scope.api+'?inline=1';
+                }
+
+    			$http.get(url + '&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
 					$scope.content = $sce.trustAsHtml(response.data);
     			});
     		}],

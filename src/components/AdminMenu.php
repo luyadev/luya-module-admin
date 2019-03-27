@@ -226,6 +226,7 @@ class AdminMenu extends \yii\base\Component
                 'alias' => $alias,
                 'icon' => $item['icon'],
                 'searchModelClass' => $item['searchModelClass'],
+
             ];
         }
 
@@ -280,7 +281,14 @@ class AdminMenu extends \yii\base\Component
                         $alias = $data['groups'][$groupName]['items'][$groupItemKey]['alias'];
                     }
                     
+                    // if a pool is available, the route will be modified by appending the pool param
+                    $pool = AdminMenuBuilder::getOptionValue($groupItemEntry, 'pool', null);
+                    if ($pool) {
+                        $data['groups'][$groupName]['items'][$groupItemKey]['route'] = $data['groups'][$groupName]['items'][$groupItemKey]['route'] . '?pool='.$pool;
+                    }
+
                     $data['groups'][$groupName]['items'][$groupItemKey]['hiddenInMenu'] = AdminMenuBuilder::getOptionValue($groupItemEntry, 'hiddenInMenu', false);
+                    $data['groups'][$groupName]['items'][$groupItemKey]['pool'] = AdminMenuBuilder::getOptionValue($groupItemEntry, 'pool', null);
                     $data['groups'][$groupName]['items'][$groupItemKey]['alias'] = $alias;
                 }
                 
@@ -338,16 +346,14 @@ class AdminMenu extends \yii\base\Component
      * @param string $api The Api Endpoint
      * @return array|boolean
      */
-    public function getApiDetail($api)
+    public function getApiDetail($api, $pool = null)
     {
         $items = $this->getItems();
         
-        $key = array_search($api, array_column($items, 'permissionApiEndpoint'));
-        
-        if ($key !== false) {
-            return $items[$key];
+        if ($pool) {
+            $items = ArrayHelper::searchColumns($items, 'pool', $pool);
         }
-        
-        return false;
+        $items = array_values($items); // reset keys to fix isset error
+        return ArrayHelper::searchColumn($items, 'permissionApiEndpoint', $api);
     }
 }

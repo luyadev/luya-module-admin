@@ -439,7 +439,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function createCrudLoaderTag($ngrestModelClass, $ngRestModelSelectMode = null, array $options = [])
     {
-        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint());
+        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint(), Yii::$app->request->get('pool'));
         
         if ($menu) {
             if ($ngRestModelSelectMode) {

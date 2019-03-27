@@ -486,7 +486,7 @@
 
 		$scope.initServiceAndConfig = function() {
 			var deferred = $q.defer();
-			$http.get($scope.config.apiEndpoint + '/services').then(function(serviceResponse) {
+			$http.get($scope.config.apiEndpoint + '/services?' + $scope.config.apiServicesQueryString).then(function(serviceResponse) {
 				$scope.service = serviceResponse.data.service;
 				$scope.serviceResponse = serviceResponse.data;
 				$scope.evalSettings(serviceResponse.data._settings);

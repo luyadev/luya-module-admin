@@ -9,6 +9,8 @@ use yii\base\InvalidCallException;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+use yii\db\ActiveQuery;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
 use luya\helpers\ExportHelper;
@@ -17,12 +19,9 @@ use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
 use luya\admin\ngrest\NgRest;
-use yii\web\NotFoundHttpException;
-use yii\db\ActiveQuery;
-use luya\helpers\ArrayHelper;
-use luya\admin\ngrest\base\actions\IndexAction;
-use luya\helpers\StringHelper;
 use luya\admin\ngrest\Config;
+use luya\helpers\ArrayHelper;
+use luya\helpers\StringHelper;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -234,14 +233,17 @@ class Api extends RestActiveController
         return $find->with($this->getWithRelation('list'));
     }
 
+    /**
+     * Append the pool where condition to a given query.
+     * 
+     * If the pool identifier is not found, an exception will be thrown.
+     *
+     * @param ActiveQuery $query
+     * @since 2.0.0
+     */
     private function appendPoolWhereCondition(ActiveQuery $query)
     {
-        $modelClass = $this->modelClass;
-        // check if a pool id is requested:
-        $pool = $pool = Yii::$app->request->get('pool');
-        if (!empty($pool) && array_key_exists($pool, $modelClass::ngRestPools())) {
-            $query->andWhere($modelClass::ngRestPools()[$pool]);
-        }
+        $query->inPool(Yii::$app->request->get('pool'));
     }
     
     /**

@@ -21,6 +21,7 @@ class RenderCrudView extends View
         $config = [
             'apiListQueryString' => $this->context->apiQueryString('list'),
             'apiUpdateQueryString' => $this->context->apiQueryString('update'),
+            'apiServicesQueryString' =>  $this->context->apiQueryString('services'),
             'apiEndpoint' => $this->context->getApiEndpoint(),
             'list' => $this->context->getFields('list'),
             'create' => $this->context->getFields('create'),

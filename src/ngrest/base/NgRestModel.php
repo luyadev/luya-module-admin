@@ -179,6 +179,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * The identifiers `poolAudi` and `poolBMW` are passed to the `parts` table to only return parts for the given car brand.
      * 
+     * > The pool condition is threaded as where condition, the above example would be `where(['car_brand' => 'BMW'])`. Only hash format expression with "equal" operators are allowed.
+     * 
      * @return array
      * @since 2.0.0
      */
