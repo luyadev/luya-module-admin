@@ -77,6 +77,13 @@ class Controller extends \luya\admin\base\Controller
      * + ng-href: 'katalogadmin/produkt/xml-download' (an example if you like to use yii response sendContentAsFile)
      */
     public $globalButtons = [];
+
+    /**
+     * @var string|array|\luya\admin\ngrest\render\RenderCrudInterface
+     *
+     * @since 2.0
+     */
+    public $renderCrud = RenderCrud::class;
     
     /**
      * @inheritdoc
@@ -130,7 +137,7 @@ class Controller extends \luya\admin\base\Controller
         }
         
         // generate crud renderer
-        $crud = new RenderCrud();
+        $crud = Yii::createObject($this->renderCrud);
         $crud->setModel($this->model);
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);

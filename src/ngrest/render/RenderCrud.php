@@ -32,6 +32,26 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     const TYPE_UPDATE = 'update';
 
+    /**
+     * @var string The view file for create and update form rendering. Aliases are supported.
+     * By default the location for this file is the viewPath {@see getViewPath()}
+     *
+     * @since 2.0
+     */
+    public $crudFormView = '_crudform';
+
+    /**
+     * @var string The view file for active window form rendering. Aliases are supported.
+     * By default the location for this file is the viewPath {@see getViewPath()}
+     *
+     * @since 2.0
+     */
+    public $awFormView = '_awform';
+
+    /**
+     * @var \luya\admin\ngrest\render\RenderCrudView The view object for crud interface rendering.
+     * It may be set as a full classname, config array or object {@see setView()} {@see getView()}
+     */
     private $_view;
 
     /**
@@ -41,13 +61,23 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     public function getView()
     {
-        if ($this->_view === null) {
-            $this->_view = new RenderCrudView();
-        }
-
         return $this->_view;
     }
     
+    /**
+     * Sets the view object
+     *
+     * @since 2.0
+     */
+    public function setView($value)
+    {
+        if (is_a($value, RenderCrudView::class)) {
+            $this->_view = $value;
+        } else {
+            $this->_view = Yii::createObject($value);
+        }
+    }
+
     /**
      * @inheritdoc
      */

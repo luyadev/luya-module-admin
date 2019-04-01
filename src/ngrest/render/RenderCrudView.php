@@ -18,7 +18,26 @@ class RenderCrudView extends View
 {
     public function registerAngularControllerScript()
     {
-        $config = [
+        $config = $this->getAngularControllerConfig();
+
+        $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {
+			$.extend(this, $controller(\'CrudController\', { $scope : $scope }));
+			$scope.config = '.Json::htmlEncode($config).'
+	    }]);';
+
+        $this->registerJs($client, self::POS_BEGIN);
+    }
+
+    /**
+     * Returns the config array for Angular controller
+     *
+     * @return array
+     * 
+     * @since 2.0
+     */
+    protected function getAngularControllerConfig()
+    {
+        return [
             'apiListQueryString' => $this->context->apiQueryString('list'),
             'apiUpdateQueryString' => $this->context->apiQueryString('update'),
             'apiServicesQueryString' => $this->context->apiQueryString('services'),
@@ -46,12 +65,5 @@ class RenderCrudView extends View
             'relations' => $this->context->getConfig()->getRelations(),
             'pools' => $this->context->getModel()->ngRestPools(),
         ];
-        
-        $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {
-			$.extend(this, $controller(\'CrudController\', { $scope : $scope }));
-			$scope.config = '.Json::htmlEncode($config).'
-	    }]);';
-        
-        $this->registerJs($client, self::POS_BEGIN);
     }
 }
