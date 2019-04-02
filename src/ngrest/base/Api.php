@@ -494,7 +494,8 @@ class Api extends RestActiveController
         foreach ($config->getPointerPlugins('list') as $plugin) {
             $sortAttributes = ArrayHelper::merge($plugin->getSortField(), $sortAttributes);
         }
-        return array_unique($sortAttributes);
+
+        return $sortAttributes;
     }
     
     /**
