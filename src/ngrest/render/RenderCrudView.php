@@ -44,7 +44,7 @@ class RenderCrudView extends View
             'saveCallback' => $this->context->getConfig()->getOption('saveCallback') ? new JsExpression($this->context->getConfig()->getOption('saveCallback')) : false,
             'relationCall' => $this->context->getRelationCall(),
             'relations' => $this->context->getConfig()->getRelations(),
-            'pools' => $this->context->getModel()->ngRestPools(),
+            'pools' => $this->context->getActivePoolConfig(),
         ];
         
         $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {

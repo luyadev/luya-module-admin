@@ -105,4 +105,12 @@ interface RenderCrudInterface
      * @return boolean Whether current user can update items.
      */
     public function canDelete();
+
+    /**
+     * Returns the pool config array for the current active pool if any.
+     *
+     * @return array
+     * @since 2.0.0
+     */
+    public function getActivePoolConfig();
 }

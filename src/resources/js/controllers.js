@@ -286,10 +286,16 @@
 		};
 
 		/**
-		 * Check if a field exists in the parents relation list, if yes hide the field
-		 * for the given form and return the relation call value instead in order to auto store those.
+		 * Check if a field exists in the parents relation list or in a pool config, if yes hide the field
+		 * for the given form and return the relation call or pool config value instead in order to auto store those.
 		 */
-		$scope.checkIfFieldExistsInParentRelation = function(field) {
+		$scope.checkIfFieldExistsInPopulateCondition = function(field) {
+			// check if value existing in pool config
+			var pools = $scope.config.pools;
+			if (pools.hasOwnProperty(field)) {
+				return pools[field];
+			}
+
 			// this call is relation call, okay check for the parent relation definition
 			if ($scope.config.relationCall) {
 				var relations = $scope.$parent.$parent.config.relations;

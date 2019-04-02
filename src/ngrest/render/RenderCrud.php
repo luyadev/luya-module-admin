@@ -406,6 +406,16 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getActivePoolConfig()
+    {
+        $pools = $this->getModel()->ngRestPools();
+        $pool = Yii::$app->request->get('pool');
+        return isset($pools[$pool]) ? $pools[$pool] : [];
+    }
+
+    /**
      * Generate the api query string for a certain context type
      *
      * @param string $type
