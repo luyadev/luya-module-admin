@@ -59,10 +59,12 @@ final class StorageFilter extends NgRestModel
     {
         $log = [];
         foreach (StorageImage::find()->where(['filter_id' => $this->id])->all() as $img) {
-            $image = Yii::$app->storage->getImage($img->id);
+            $source = $img->serverSource;
+            $image = $img->delete();
             
-            $log[$image->serverSource] = $img->deleteSource();
+            $log[$source] = $image;
         }
+        
         return $log;
     }
     
