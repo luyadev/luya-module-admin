@@ -124,6 +124,10 @@ $this->beginBody();
                     </div>
                     <?php endif; ?>
                 </div>
+
+                <div ng-if="config.tagFilter" class="mt-3">
+                    Tags Filter:
+                </div>
             </div>
             <?php if ($relationCall && $canCreate && $config->getPointer('create')): ?>
             <button type="button" class="btn btn-add ml-3 mt-3" ng-click="switchTo(1)">
