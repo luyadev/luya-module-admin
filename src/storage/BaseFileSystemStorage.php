@@ -676,7 +676,8 @@ abstract class BaseFileSystemStorage extends Component
 
         $content = $file->getContent();
 
-        if (empty($content)) {
+        // it seems the content can not be found.
+        if ($content === false) {
             return false;
         }
 
@@ -723,7 +724,9 @@ abstract class BaseFileSystemStorage extends Component
         $image->filter_id = $filterId;
         $image->resolution_height = $resolution['height'];
         $image->resolution_width = $resolution['width'];
-        $image->save();
+        if (!$image->save()) {
+            return false;
+        }
 
         return $image;
     }
