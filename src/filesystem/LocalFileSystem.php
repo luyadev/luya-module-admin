@@ -137,7 +137,7 @@ class LocalFileSystem extends BaseFileSystemStorage
      */
     public function fileSystemContent($fileName)
     {
-        return file_get_contents($this->fileServerPath($fileName));
+        return FileHelper::getFileContent($this->fileServerPath($fileName));
     }
 
     /**

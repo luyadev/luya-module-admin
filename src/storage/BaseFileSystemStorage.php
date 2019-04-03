@@ -674,7 +674,13 @@ abstract class BaseFileSystemStorage extends Component
         $fromTempFile = tempnam(sys_get_temp_dir(), 'fromFile');
         $fromTempFile.= $fileName;
 
-        $writeFile = FileHelper::writeFile($fromTempFile, $file->getContent());
+        $content = $file->getContent();
+
+        if (empty($content)) {
+            return false;
+        }
+
+        $writeFile = FileHelper::writeFile($fromTempFile, $content);
 
         // unable to write the temp file
         if (!$writeFile) {
