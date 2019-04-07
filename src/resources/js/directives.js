@@ -3327,3 +3327,45 @@
             template: '<rzslider rz-slider-model="1" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
         };
     });
+
+    /**
+     * Themes
+     */
+    zaa.directive("themesManager", function() {
+        return {
+            restrict : 'E',
+            transclude : false,
+            scope : {
+                allowSelection : '@selection',
+                onlyImages : '@onlyImages'
+            },
+            controller : [
+                '$scope', '$http', '$filter', '$timeout', '$q', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags',
+                function($scope, $http, $filter, $timeout, $q, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
+
+                    // ServiceFoldersData inheritance
+
+                    $scope.foldersData = ServiceFoldersData.data;
+
+                    $scope.storeFileCaption = function(fileDetail) {
+                        $http.post('admin/api-admin-storage/filemanager-update-caption', {'id': fileDetail.id, 'captionsText' : fileDetail.captionArray, 'pageId': $scope.currentPageId}).then(function(transport) {
+                            // @TODO i18n
+                            AdminToastService.success('Captions has been updated');
+                        });
+                    }
+
+                    $scope.selectedFileFromParent = null;
+
+                    $scope.init = function() {
+                        if ($scope.$parent.fileinfo) {
+                            $scope.selectedFileFromParent = $scope.$parent.fileinfo;
+                            $scope.changeCurrentFolderId($scope.selectedFileFromParent.folder_id, true);
+                        }
+                    }
+
+                    $scope.init();
+
+                }],
+            templateUrl : 'themesManager'
+        }
+    });
