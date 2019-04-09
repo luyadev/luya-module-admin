@@ -21,9 +21,9 @@ class ClientTableTest extends AdminTestCase
     
         Yii::$app->controller = new ProxyController('proxyctrl', $this->app);
         $build = new ClientBuild(Yii::$app->controller, [
-            'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest', 'rows' => []]]],
+            'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest', 'rows' => 0]]],
         ]);
-        $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => []]);
+        $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => 0]);
     
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('PDOStatement::execute(): MySQL server has gone away');
