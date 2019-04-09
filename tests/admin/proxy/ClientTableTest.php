@@ -13,7 +13,6 @@ class ClientTableTest extends AdminTestCase
 {
     /**
      * @throws \yii\db\Exception
-     * @expectedException \yii\db\Exception
      */
     public function testSyncDataWithConnectionLost()
     {
@@ -26,7 +25,7 @@ class ClientTableTest extends AdminTestCase
         $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => 0]);
     
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('Error while sending QUERY packet. PID=\d+ The SQL being executed was: SET FOREIGN_KEY_CHECKS = 1;');
+        $this->expectExceptionMessageRegExp('#Error while sending QUERY packet. PID=\d+\nThe SQL being executed was: SET FOREIGN_KEY_CHECKS = 1;#');
         $table->syncData();
     }
 }
