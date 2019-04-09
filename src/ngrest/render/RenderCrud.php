@@ -36,6 +36,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * @var string The view file for create and update form rendering. Aliases are supported.
      * By default the location for this file is the viewPath {@see getViewPath()}
      *
+     * **IMPORTANT NOTE.** You *can* use this property to customize the form, but only if you know you're doing.
+     * This approach **is discouraged** by LUYA maintainers. One of the strongest arguments for the LUYA admin is that you can
+     * run composer update and you get fresh updates, improvments UI fixes, new button s, etc. - if you override the view files a next update
+     * can break the application, as there's no backward compatibility guarantee in view files and UI-controllers.
+     *
      * @since 2.0
      */
     public $crudFormView = '_crudform';
@@ -43,6 +48,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * @var string The view file for active window form rendering. Aliases are supported.
      * By default the location for this file is the viewPath {@see getViewPath()}
+     *
+     * **NOT RECOMMENDED** to override {@see `crudFormView`}
      *
      * @since 2.0
      */
@@ -55,19 +62,18 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     private $_view;
 
     /**
-     * Returns the current view object.
-     *
-     * @return \luya\admin\ngrest\render\RenderCrudView
+     * @inheritdoc
      */
     public function getView()
     {
+        if ($this->_view === null) {
+            $this->_view = new RenderCrudView();
+        }
         return $this->_view;
     }
     
     /**
-     * Sets the view object
-     *
-     * @since 2.0
+     * @inheritdoc
      */
     public function setView($value)
     {

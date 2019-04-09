@@ -105,4 +105,22 @@ interface RenderCrudInterface
      * @return boolean Whether current user can update items.
      */
     public function canDelete();
+
+    /**
+     * Get crud render view object
+     *
+     * @return \luya\admin\ngrest\render\RenderCrudView
+     *
+     * @since 2.0
+     */
+    public function getView();
+
+    /**
+     * Set crud render view object
+     *
+     * @param \luya\admin\ngrest\render\RenderCrudView|string|array $view Object, classname string or Yii object config array
+     * 
+     * @since 2.0
+     */
+    public function setView($view);
 }
