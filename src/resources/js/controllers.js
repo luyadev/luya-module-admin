@@ -490,6 +490,12 @@
 			return row[$scope.config.pk];
 		};
 
+		$scope.tagsFilterIds = [];
+
+		$scope.filterByTag = function(tagId) {
+			$scope.tagsFilterIds.push(tagId);
+		};
+
 		$scope.initServiceAndConfig = function() {
 			var deferred = $q.defer();
 			$http.get($scope.config.apiEndpoint + '/services?' + $scope.config.apiServicesQueryString).then(function(serviceResponse) {
@@ -573,6 +579,11 @@
 			var query = $scope.config.searchQuery;
 			if (query) {
 				url = url + '&query=' + query;
+			}
+
+			var ids = $scope.tagsFilterIds.join(',');
+			if (ids) {
+				url = url + '&tags=' + ids;
 			}
 			
 			return url;

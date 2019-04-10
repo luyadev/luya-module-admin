@@ -22,6 +22,8 @@ use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\Config;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
+use luya\helpers\ObjectHelper;
+use luya\admin\traits\TaggableTrait;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -231,6 +233,14 @@ class Api extends RestActiveController
 
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
+
+        // add tags condition
+        $tagIds = Yii::$app->request->get('tags');
+        if ($tagIds) {
+            $subQuery = clone $find;
+            $inQuery = $subQuery->joinWith(['tags tags'])->andWhere(['tags.id' => array_unique(explode(",", $tagIds))])->select(['pk_id']);
+            $find->andWhere(['in', $modelClass::primaryKey(), $inQuery]);
+        }
 
         return $find->with($this->getWithRelation('list'));
     }
@@ -443,8 +453,17 @@ class Api extends RestActiveController
         }
         
         $modelClass = $this->modelClass;
+
+        // check if taggable exists, if yes return all used tags for the 
+        if (ObjectHelper::isTraitInstanceOf($this->model, TaggableTrait::class)) {
+            $tags = $this->model->findTags();
+        } else {
+            $tags = false;
+        }
+
         return [
             'service' => $this->model->getNgRestServices(),
+            '_tags' => $tags,
             '_hints' => $this->model->attributeHints(),
             '_settings' => $settings,
             '_locked' => [
