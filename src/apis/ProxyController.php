@@ -2,10 +2,12 @@
 
 namespace luya\admin\apis;
 
+use luya\admin\Module;
 use Yii;
 use luya\rest\Controller;
 use luya\admin\models\ProxyMachine;
 use yii\db\Connection;
+use yii\di\Instance;
 use yii\web\ForbiddenHttpException;
 use yii\db\Query;
 use luya\admin\models\ProxyBuild;
@@ -24,6 +26,8 @@ use yii\web\NotFoundHttpException;
  * 3. Table request estimated data write to $config
  * 4. Generate Build.
  * 5. Send build identifier to the client.
+ *
+ * @property Module $module
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -45,7 +49,7 @@ class ProxyController extends Controller
 
     public function beforeAction($action)
     {
-        $this->db = Yii::$app->get($this->module->proxyConnectionName);
+        $this->db = Instance::ensure($this->module->proxyConnectionName, Connection::className());
 
         return parent::beforeAction($action);
     }

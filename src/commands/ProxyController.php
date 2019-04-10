@@ -119,13 +119,18 @@ class ProxyController extends Command
      * @var integer Number of requests collected until they are written to the database.
      */
     public $syncRequestsCount = 10;
+    
+    /**
+     * @var string Database connection name. Default is `\luya\admin\Module::$proxyConnectionName`
+     */
+    public $db = null;
 
     /**
      * @inheritdoc
      */
     public function options($actionID)
     {
-        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount']);
+        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount', 'db']);
     }
 
     /**
@@ -143,6 +148,10 @@ class ProxyController extends Command
      */
     public function actionSync()
     {
+        if ($this->db === null) {
+            $this->db = $this->module->proxyConnectionName;
+        }
+        
         if ($this->url === null) {
             $url = Config::get(self::CONFIG_VAR_URL);
 
@@ -189,7 +198,7 @@ class ProxyController extends Command
             $this->verbosePrint($curl->response);
             $response = Json::decode($curl->response);
             $build = new ClientBuild($this, [
-                'db' => Yii::$app->get($this->module->proxyConnectionName),
+                'db' => $this->db,
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
                 'syncRequestsCount' => (int)$this->syncRequestsCount,

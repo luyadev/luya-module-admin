@@ -7,6 +7,8 @@ use luya\console\Command;
 use yii\base\InvalidConfigException;
 use luya\helpers\StringHelper;
 use yii\base\BaseObject;
+use yii\db\Connection;
+use yii\di\Instance;
 
 /**
  * Admin Proxy Build.
@@ -47,6 +49,8 @@ class ClientBuild extends BaseObject
 
     public $syncRequestsCount;
     
+    public $buildConfig;
+    
     private $_optionTable;
     
     public function setOptionTable($table)
@@ -65,36 +69,36 @@ class ClientBuild extends BaseObject
     {
         $this->command = $command;
         parent::__construct($config);
-
-        if (!$this->db) {
-            $this->db = Yii::$app->db;
-        }
     }
     
     public function init()
     {
         parent::init();
-        
-        if ($this->_buildConfig === null) {
-            throw new InvalidConfigException("build config can not be empty!");
+    
+        if ($this->db) {
+            $this->db = Instance::ensure($this->db, Connection::class);
+        } else {
+            $this->db = Yii::$app->db;
         }
+        
+        $this->initBuildConfig();
     }
     
-    private $_buildConfig;
-
-    public function setBuildConfig(array $config)
+    public function initBuildConfig()
     {
-        $this->_buildConfig = $config;
-
-        foreach ($config['tables'] as $tableName => $tableConfig) {
+        if ($this->buildConfig === null) {
+            throw new InvalidConfigException("build config can not be empty!");
+        }
+        
+        foreach ($this->buildConfig['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
                 if ($this->isSkippableTable($tableName, $this->optionTable)) {
                     continue;
                 }
             }
-
+        
             $schema = $this->db->getTableSchema($tableName);
-
+        
             if ($schema !== null) {
                 $this->_tables[$tableName] = new ClientTable($this, $tableConfig, ['db' => $this->db]);
             }
