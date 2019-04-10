@@ -492,8 +492,24 @@
 
 		$scope.tagsFilterIds = [];
 
-		$scope.filterByTag = function(tagId) {
-			$scope.tagsFilterIds.push(tagId);
+		$scope.isTagFilterActive = function(tagId) {
+			if ($scope.tagsFilterIds.indexOf(tagId) == -1) {
+				return false;
+			}
+
+			return true;
+		};
+
+		$scope.toggleTagFilter = function(tagId) {
+
+			var index = $scope.tagsFilterIds.indexOf(tagId);
+			if (index == -1) {
+				$scope.tagsFilterIds.push(tagId);
+			} else {
+				$scope.tagsFilterIds.splice(index, 1);
+			}
+
+			$scope.loadList();
 		};
 
 		$scope.initServiceAndConfig = function() {
