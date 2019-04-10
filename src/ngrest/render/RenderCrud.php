@@ -36,7 +36,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * @var string The view file for create and update form rendering. Aliases are supported.
      * By default the location for this file is the viewPath {@see getViewPath()}
      *
-     * **IMPORTANT NOTE.** You *can* use this property to customize the form, but only if you know you're doing.
+     * **IMPORTANT NOTE.** You *can* use this property to customize the form, but only if you know what you're doing.
      * This approach **is discouraged** by LUYA maintainers. One of the strongest arguments for the LUYA admin is that you can
      * run composer update and you get fresh updates, improvments UI fixes, new button s, etc. - if you override the view files a next update
      * can break the application, as there's no backward compatibility guarantee in view files and UI-controllers.
@@ -71,6 +71,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if ($this->_view === null) {
             $this->_view = new RenderCrudView();
         }
+
         return $this->_view;
     }
     
