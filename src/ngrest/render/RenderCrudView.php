@@ -33,7 +33,7 @@ class RenderCrudView extends View
      *
      * @return array
      * 
-     * @since 2.0
+     * @since 2.0.0
      */
     protected function getAngularControllerConfig()
     {

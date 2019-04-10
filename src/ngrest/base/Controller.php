@@ -106,7 +106,7 @@ class Controller extends \luya\admin\base\Controller
      *
      * For more information {@see \luya\admin\ngrest\render\RenderCrud} {@see \luya\admin\ngrest\render\RenderCrudView}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     public $renderCrud = RenderCrud::class;
     

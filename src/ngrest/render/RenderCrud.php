@@ -41,7 +41,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * run composer update and you get fresh updates, improvments UI fixes, new button s, etc. - if you override the view files a next update
      * can break the application, as there's no backward compatibility guarantee in view files and UI-controllers.
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     public $crudFormView = '_crudform';
 
@@ -51,7 +51,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      *
      * **NOT RECOMMENDED** to override {@see `crudFormView`}
      *
-     * @since 2.0
+     * @since 2.0.0
      */
     public $awFormView = '_awform';
 
@@ -62,7 +62,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     private $_view;
 
     /**
-     * @inheritdoc
+     * Returns the current view object.
+     *
+     * @return \luya\admin\ngrest\render\RenderCrudView
      */
     public function getView()
     {
@@ -73,7 +75,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
     
     /**
-     * @inheritdoc
+     * Set crud render view object
+     *
+     * @param \luya\admin\ngrest\render\RenderCrudView|string|array $view Object, classname string or Yii object config array
+     *
+     * @since 2.0.0
      */
     public function setView($value)
     {
