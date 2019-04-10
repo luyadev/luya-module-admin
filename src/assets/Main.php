@@ -19,15 +19,15 @@ class Main extends \luya\web\Asset
      * @inheritdoc
      */
     public $css = [
-        'dist/css/admin.css'
+        'dist/main.css'
     ];
 
     /**
      * @inheritdoc
      */
     public $js = [
-        'dist/js/main.js',
-        'dist/js/main.uglified.js',
+        'dist/vendor.js',
+        'dist/main.js',
     ];
 
     /**

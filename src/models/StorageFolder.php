@@ -24,7 +24,7 @@ final class StorageFolder extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_storage_folder';
+        return '{{%admin_storage_folder}}';
     }
     
     /**

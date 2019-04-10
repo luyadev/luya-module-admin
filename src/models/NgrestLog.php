@@ -31,7 +31,7 @@ class NgrestLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_ngrest_log';
+        return '{{%admin_ngrest_log}}';
     }
     
     /**

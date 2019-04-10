@@ -12,16 +12,28 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.
 + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
-+ [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration.
++ [#140](https://github.com/luyadev/luya-module-admin/issues/140) Generic Scheduler with Yii Queue integration. The queue is triggered by fake job (frontend) or via cronjob console command.
++ [#61](https://github.com/luyadev/luya-module-admin/issues/61) The `initvalue` attribute of Select plugins is now by default `null` instead of `0`. This is needed cause the require validator won't handle `0` as empty until you configure `isEmpty` option.
++ [#260](https://github.com/luyadev/luya-module-admin/issues/260) All tables and queries include database prefix option `{{%}}`.
++ [#104](https://github.com/luyadev/luya-module-admin/issues/104) NgRestModel behaviors are attached in constructor instead of behaviors() method.
 
 ### Fixed
 
++ [#278](https://github.com/luyadev/luya-module-admin/pull/278) ToggleStatus plugin initValue=1 not displayed at frontend
++ [#62](https://github.com/luyadev/luya-module-admin/issues/62) Two-digit display of minutes in datetime fields.
++ [#239](https://github.com/luyadev/luya-module-admin/issues/239) Hide i18n flags when no i18n field is configured, also hide in list view as its not possible to toggle in this context.
++ [#273](https://github.com/luyadev/luya-module-admin/issues/273) Fixed a bug where canceling of the folder renaming where not restoring the old folder name.
 + [#258](https://github.com/luyadev/luya-module-admin/issues/258) NgRest Crud search with pagination problem fixed. 
 + [#226](https://github.com/luyadev/luya-module-admin/issues/226) Fixed search indicator
 + [#267](https://github.com/luyadev/luya-module-admin/pull/267) I18n::decodeFindActive returned empty value for explicitly selected lang
++ [#275](https://github.com/luyadev/luya-module-admin/issues/275) Search for file IDs in file manager.
 
 ### Added
 
++ [#236](https://github.com/luyadev/luya-module-admin/issues/236) Added multiple menu entries and CRUD view for same models (data pools).
++ [#228](https://github.com/luyadev/luya-module-admin/issues/228) New `sortField` attribute option for plugins.
++ [#94](https://github.com/luyadev/luya-module-admin/issues/94) Required CRUD fields are now highlight as bold text.
++ [#277](https://github.com/luyadev/luya-module-admin/issues/277) Using [unglue.io](https://unglue.io) to compile admin resources.
 + [#205](https://github.com/luyadev/luya-module-admin/issues/205) CRUD search works now in filters and relation calls, sorting and pagination works in searching.
 + [#216](https://github.com/luyadev/luya-module-admin/issues/216) File manager file detail view provides option to tag files.
 + [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields

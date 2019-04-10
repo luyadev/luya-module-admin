@@ -6,7 +6,7 @@ class m150615_094744_admin_user_login extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_user_login', [
+        $this->createTable('{{%admin_user_login}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'timestamp_create' => $this->integer(11)->notNull(),
@@ -17,6 +17,6 @@ class m150615_094744_admin_user_login extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_user_login');
+        $this->dropTable('{{%admin_user_login}}');
     }
 }

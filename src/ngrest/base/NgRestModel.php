@@ -67,14 +67,16 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     public $i18n = [];
 
     protected $ngRestServiceArray = [];
-    
+
     /**
-     * @inheritdoc
+     * Attach behaviors at constructor to prevent override them with call of behaviors() at subclass model.
+     *
+     * @param array $config
      */
-    public function behaviors()
+    public function __construct($config = [])
     {
-        return [
-            'NgRestEventBehvaior' => [
+        $this->attachBehaviors([
+            'NgRestEventBehavior' => [
                 'class' => NgRestEventBehavior::className(),
                 'plugins' => $this->getNgRestConfig()->getPlugins(),
             ],
@@ -82,7 +84,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 'class' => LogBehavior::className(),
                 'api' => static::ngRestApiEndpoint(),
             ],
-        ];
+        ]);
+        return parent::__construct($config);
     }
     
     /**
@@ -108,7 +111,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      * {@inheritdoc}
      *
-     * @return \luya\admin\ngrest\base\NgRestActiveQuery
+     * @return NgRestActiveQuery
      */
     public static function find()
     {
@@ -123,23 +126,65 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function isI18n($fieldName)
     {
-        return in_array($fieldName, $this->i18n) ? true : false;
+        return in_array($fieldName, $this->i18n);
     }
 
     /**
-     * Define an array with filters you can select from the crud list.
+     * Define an array with filters you can select from the CRUD list.
      *
      * ```php
      * return [
-     *     'deleted' => self::find()->where(['is_deleted' => 0]),
-     *     'year2016' => self::find()->where(['between', 'date', 2015, 2016]),
+     *     'deleted' => self::ngRestFind()->andWhere(['is_deleted' => 0]),
+     *     'year2016' => self::ngRestFind()->andWhere(['between', 'date', 2015, 2016]),
      * ];
      * ```
+     * 
+     * > Keep in mind to use andWhere() otherwise an existing where() condition could be overriden.
      *
-     * @return array Return an array where key is the name and value is the find() condition for the filters.
+     * @return array Return an array where key is the name and value is the ngRestFind() condition for the filters.
      * @since 1.0.0
      */
     public function ngRestFilters()
+    {
+        return [];
+    }
+
+    /**
+     * Define data pools.
+     * 
+     * > The difference between ngRestFilters() and ngRestPools() is that the pool identifer must be provided in the menu component and is not visible in the
+     * > UI, it is like an invisible filter, only available to developers.
+     * 
+     * A data pool can be used to retrieve only a subset of data. The identifier for the pool is passed trough to all subrelation
+     * calls. Related models will filter their data by the same pool identifier, if configured accordingly.
+     * 
+     * The following is an example of a pool identifier for a table with cars:
+     * 
+     * ```php
+     * return [
+     *     'poolAudi' => ['car_brand' => 'Audi'],
+     *     'poolBMW' => ['car_brand' => 'BMW'],
+     * ];
+     * ```
+     * 
+     * If the pool identifier is defined in the menu, all subrelation calls will receive the identifer. Thefore, in the above example, you could have a model for
+     * car parts that only returns parts with the same pool identifier in relation calls:
+     * 
+     * ```php
+     * return [
+     *     'poolAudi' => ['parts_brand' => 'Audi'],
+     *     'poolBMW' => ['parts_brand' => 'BMW'],
+     * ];
+     * ```
+     *
+     * The identifiers `poolAudi` and `poolBMW` are passed to the `parts` table to only return parts for the given car brand.
+     * 
+     * > The pool condition is threaded as where condition, the above example would be `where(['car_brand' => 'BMW'])`. Only hash format expression with "equal" operators are allowed.
+     * 
+     * @return array
+     * @since 2.0.0
+     */
+    public function ngRestPools()
     {
         return [];
     }
@@ -260,15 +305,17 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * + see [[yii\db\ActiveRecord::find()]]
+     * + 
      * 
-     * > This method will taken for all internal *NOT API USER* related calls.
+     * > This method will taken for all internal *NOT API USER* related calls. So assuming an API user makes request to the APi
+     * > it will use find() instead of ngRestFind(). If a logged in user will make a request to an API it will take ngRestFind().
      *
-     * @return yii\db\ActiveQuery
+     * @see {{yii\db\ActiveRecord::find()}}
+     * @return NgRestActiveQuery
      */
     public static function ngRestFind()
     {
-        return Yii::createObject(ActiveQuery::className(), [get_called_class()]);
+        return new NgRestActiveQuery(get_called_class());
     }
 
     /**

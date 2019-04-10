@@ -637,7 +637,13 @@
 
     			$scope.toggleWindow = function() {
     				if ($scope.input.showWindow) {
-    					var url = $scope.api+'/?inline=1';
+
+                        if ($scope.api.indexOf('?') > -1) {
+                            var url = $scope.api+'&inline=1';
+                        } else {
+                            var url = $scope.api+'?inline=1';
+                        }
+
     					var modelSelection = parseInt($scope.modelSelection);
     					if (modelSelection) {
     						url = url + '&modelSelection=' + $scope.modelSetter;
@@ -688,8 +694,15 @@
     			"id": "@id"
     		},
     		controller: ['$scope', function($scope) {
-    			$scope.content = null;
-    			$http.get($scope.api+'/?inline=1&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
+                $scope.content = null;
+                
+                if ($scope.api.indexOf('?') > -1) {
+                    var url = $scope.api+'&inline=1';
+                } else {
+                    var url = $scope.api+'?inline=1';
+                }
+
+    			$http.get(url + '&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
 					$scope.content = $sce.trustAsHtml(response.data);
     			});
     		}],
@@ -1517,7 +1530,7 @@
                             '</div>' +
                             '<div class="form-side">' +
                                 '<div class="form-check">' +
-                                    '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" />' +
+                                    '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
                                     '<label for="{{id}}"></label>' +
                                 '</div>' +
                             '</div>' +
@@ -1653,8 +1666,8 @@
             			var datep = new Date(n*1000);
             			$scope.pickerPreselect = datep;
             			$scope.date = $filter('date')(datep, 'dd.MM.yyyy');
-            			$scope.hour = $filter('date')(datep, 'H');
-            			$scope.min = $filter('date')(datep, 'm');
+            			$scope.hour = $filter('date')(datep, 'HH');
+            			$scope.min = $filter('date')(datep, 'mm');
             		} else {
             			$scope.date = null;
             			$scope.model = null;
@@ -1687,7 +1700,7 @@
         						}
 
 		        				var en = res[1] + "/" + res[0] + "/" + res[2] + " " + $scope.hour + ":" + $scope.min;
-		        				$scope.model = (Date.parse(en)/1000);
+                                $scope.model = (Date.parse(en)/1000);
 		        				$scope.datePickerToggler = false;
             				}
             			}
@@ -1802,7 +1815,7 @@
             			var res = n.split(".");
             			if (res.length == 3) {
             				if (res[2].length == 4) {
-            					var en = res[1] + "/" + res[0] + "/" + res[2];
+                                var en = res[1] + "/" + res[0] + "/" + res[2];
 		        				$scope.model = (Date.parse(en)/1000);
 		        				$scope.datePickerToggler = false;
             				}
@@ -3031,9 +3044,15 @@
                 $scope.folderDeleteForm = false;
 
                 $scope.folderDeleteConfirmForm = false;
-                
+
                 $scope.updateFolder = function(folder) {
-                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name });
+                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name }).then(function(transport) {
+                        AdminToastService.success(i18n['js_dir_manager_rename_success']);
+                    });
+                };
+
+                $scope.cancelFolderEdit = function(folder, oldName) {
+                    folder.name = oldName;
                 };
                 
                 $scope.deleteFolder = function(folder) {

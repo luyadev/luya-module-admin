@@ -137,7 +137,7 @@ class SetupController extends \luya\console\Command
         $salt = Yii::$app->security->generateRandomString();
         $pw = Yii::$app->security->generatePasswordHash($this->password.$salt);
     
-        $this->insert('admin_user', [
+        $this->insert('{{%admin_user}}', [
             'title' => 1,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -147,21 +147,21 @@ class SetupController extends \luya\console\Command
             'is_deleted' => false,
         ]);
     
-        $this->insert('admin_group', [
+        $this->insert('{{%admin_group}}', [
             'name' => 'Administrator',
             'text' => 'Administrator Accounts have full access to all Areas and can create, update and delete all data records.',
         ]);
     
-        $this->insert('admin_user_group', [
+        $this->insert('{{%admin_user_group}}', [
             'user_id' => 1,
             'group_id' => 1,
         ]);
     
         // get the api-admin-user and api-admin-group auth rights
-        $data = (new Query())->select(['id'])->from('admin_auth')->all();
+        $data = (new Query())->select(['id'])->from('{{%admin_auth}}')->all();
         
         foreach ($data as $item) {
-            $this->insert('admin_group_auth', [
+            $this->insert('{{%admin_group_auth}}', [
                 'group_id' => 1,
                 'auth_id' => $item['id'],
                 'crud_create' => 1,
@@ -170,7 +170,7 @@ class SetupController extends \luya\console\Command
             ]);
         }
     
-        $this->insert('admin_lang', [
+        $this->insert('{{%admin_lang}}', [
             'name' => $this->langName,
             'short_code' => $this->langShortCode,
             'is_default' => true,
@@ -235,7 +235,7 @@ class SetupController extends \luya\console\Command
         }
         $groupId = $this->select('Select Group the user should belong to:', $groupSelect);
 
-        $this->insert('admin_user_group', [
+        $this->insert('{{%admin_user_group}}', [
             'user_id' => $user->id,
             'group_id' => $groupId,
         ]);

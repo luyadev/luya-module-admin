@@ -4,7 +4,7 @@ namespace luya\admin\ngrest\base;
 
 use Yii;
 use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
+use luya\helpers\StringHelper;
 use yii\base\ViewContextInterface;
 use luya\Exception;
 use luya\helpers\Url;
@@ -151,7 +151,14 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
             Yii::$app->session->set('tempNgRestFileName', $fileName);
             Yii::$app->session->set('tempNgRestFileKey', $key);
             Yii::$app->session->set('tempNgRestFileMime', $mimeType);
-            return Url::toRoute(['/'.$route, 'key' => base64_encode($key), 'time' => time()], true);
+            $url = Url::toRoute(['/'.$route], true);
+            $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
+
+            if (StringHelper::contains('?', $url)) {
+                return $url . "&" . $param;
+            } else {
+                return $url . "?" . $param;
+            }
         }
         
         return false;

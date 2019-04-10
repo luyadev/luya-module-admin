@@ -31,8 +31,8 @@ return [
     'layout_debug_table_key' => 'Name',
     'layout_debug_table_value' => 'Wert',
     'layout_filemanager_save_dir' => 'Speichern?',
-    'layout_filemanager_remove_dir' => 'Verzeichnis löschen?',
-    'layout_filemanager_remove_dir_not_empty' => 'Möchten Sie das Verzeichnis "%folderName%" mit %count% Dateien löschen?',
+    'layout_filemanager_remove_dir' => 'Ordner löschen?',
+    'layout_filemanager_remove_dir_not_empty' => 'Möchten Sie den Ordner "%folderName%" mit %count% Dateien löschen?',
     'layout_filemanager_remove_selected_files' => 'Markierte Dateien löschen',
     'layout_filemanager_move_selected_files' => 'Verschieben nach',
     'layout_filemanager_upload_error' => 'Fehler beim Hochladen der Datei',
@@ -254,7 +254,7 @@ return [
 
     'ngrest_button_delete' => 'Löschen',
     'js_dir_manager_rm_file_confirm_title' => 'Datei löschen',
-    'js_dir_manager_rm_folder_confirm_title' => 'Verzeichnis löschen',
+    'js_dir_manager_rm_folder_confirm_title' => 'Ordner löschen',
     'link_dir_target' => 'Link-Ziel',
     'link_dir_target_same' => 'Gleiches Fenster',
     'link_dir_target_blank' => 'Neues Fenster',
@@ -391,5 +391,6 @@ return [
     'js_scheduler_title_completed' => 'Ausgeführt',
     'js_scheduler_table_newvalue' => 'Neuer Wert',
     'js_scheduler_table_timestamp' => 'Ausführungszeit',
+    'js_dir_manager_rename_success' => 'Der Ordner wurde erfolgreich umbenannt.',
 
 ];

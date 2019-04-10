@@ -38,6 +38,12 @@ use luya\admin\helpers\Angular;
  */
 abstract class Plugin extends Component implements TypesInterface
 {
+    const CREATE_CONTEXT_PREFIX = 'create.';
+
+    const UPDATE_CONTEXT_RPEFXI = 'update.';
+
+    const LIST_CONTEXT_PREFIX = 'item.';
+
     /**
      * @var string The name of the field corresponding to the ActiveRecord (also known as fieldname)
      */
@@ -52,6 +58,13 @@ abstract class Plugin extends Component implements TypesInterface
      * @var boolean Whether the plugin is in i18n context or not.
      */
     public $i18n = false;
+
+    /**
+     * @var boolean Whether this column should be hidden in the list. If the column is hidden in the list the data will be loaded from the api and can
+     * be used by other fields, but its not visible in list view.
+     * @since 2.0.0
+     */
+    public $hideInList = false;
 
     /**
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
@@ -156,6 +169,15 @@ abstract class Plugin extends Component implements TypesInterface
      * 'sortField' => 'field_name_inside_the_table'
      * ```
      * 
+     * which is equals to
+     * 
+     * ```php
+     * 'sortField' => [
+     *    'asc' => ['field_name_inside_the_table' => SORT_ASC],
+     *    'desc' => ['field_name_inside_the_table' => SORT_DESC],
+     * ]
+     * ```
+     * 
      * A very common scenario when define sortField is when display a value from a relation, therefore you need to prepare the data provider
      * inside the API in order to **join** the relation (joinWith(['relationName])) aftewards you can use the table name
      * 
@@ -172,6 +194,7 @@ abstract class Plugin extends Component implements TypesInterface
      * 'sortField' => false,
      * ```
      * 
+     * @see https://www.yiiframework.com/doc/api/2.0/yii-data-sort#$attributes-detail
      * @since 2.0.0
      */
     public function setSortField($field)
@@ -194,13 +217,18 @@ abstract class Plugin extends Component implements TypesInterface
         }
 
         if ($this->_sortField) {
-            $field = array();
-            $field[$this->name] = $this->_sortField;
-        } else {
-            $field = $this->name;
-        }
+            // 
+            if (is_array($this->_sortField)) {
+                return [$this->name => $this->_sortField];
+            } 
 
-        return (array) $field;
+            return [$this->name => [
+                'asc' => [$this->_sortField => SORT_ASC],
+                'desc' => [$this->_sortField => SORT_DESC]
+            ]];
+        }
+        
+        return [$this->name];
     }
 
     /**
@@ -338,6 +366,24 @@ abstract class Plugin extends Component implements TypesInterface
         
         return implode(".", $parts);
     }
+
+    /**
+     * Preprends the context name for a certain ng model.
+     * 
+     * As the angular attributes have different names in different contexts, this will append the correct context.
+     *
+     * ```php
+     * $this->appendFieldNgModelContext('myfieldname', self::LIST_CONTEXT_PREFIX);
+     * ```
+     * 
+     * @param string $field
+     * @param string $context
+     * @return string
+     */
+    protected function appendFieldNgModelContext($field, $context)
+    {
+        return $context . ltrim($field, '.');
+    }
     
     /**
      * Get the ng-show condition from a given ngModel context.
@@ -408,7 +454,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function createCrudLoaderTag($ngrestModelClass, $ngRestModelSelectMode = null, array $options = [])
     {
-        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint());
+        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint(), Yii::$app->request->get('pool'));
         
         if ($menu) {
             if ($ngRestModelSelectMode) {

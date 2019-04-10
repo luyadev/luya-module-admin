@@ -21,6 +21,8 @@ class RenderCrudView extends View
         $config = [
             'apiListQueryString' => $this->context->apiQueryString('list'),
             'apiUpdateQueryString' => $this->context->apiQueryString('update'),
+            'apiServicesQueryString' => $this->context->apiQueryString('services'),
+            'apiExportQueryString' => $this->context->apiQueryString('export'),
             'apiEndpoint' => $this->context->getApiEndpoint(),
             'list' => $this->context->getFields('list'),
             'create' => $this->context->getFields('create'),
@@ -42,6 +44,7 @@ class RenderCrudView extends View
             'saveCallback' => $this->context->getConfig()->getOption('saveCallback') ? new JsExpression($this->context->getConfig()->getOption('saveCallback')) : false,
             'relationCall' => $this->context->getRelationCall(),
             'relations' => $this->context->getConfig()->getRelations(),
+            'pools' => $this->context->getActivePoolConfig(),
         ];
         
         $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {

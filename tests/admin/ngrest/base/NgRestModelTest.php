@@ -23,13 +23,22 @@ class NgRestModelTest extends AdminTestCase
         $this->assertSame($scenes['restcreate'], $scenes['restcreate']);
     }
     
+    public function testBehaviorIsAttached()
+    {
+        $model = new TestNgRestModel();
+        $behaviors = $model->getBehaviors();
+    
+        $this->assertArrayHasKey('NgRestEventBehavior', $behaviors);
+        $this->assertArrayHasKey('LogBehavior', $behaviors);
+    }
+
     public function testGenericSearchFields()
     {
         $model = new TagFixture();
         $model->load();
         $tag = $model->getModel('tag1');
         
-        $this->assertSame(['admin_tag.id', 'admin_tag.name'], $tag->genericSearchFields());
+        $this->assertSame(['{{%admin_tag}}.id', '{{%admin_tag}}.name'], $tag->genericSearchFields());
     }
     
     public function testGenericSearch()

@@ -135,7 +135,7 @@
 		$scope.exportResponse = false;
 
 		$scope.generateExport = function() {
-			$http.post($scope.config.apiEndpoint + '/export', $scope.exportdata).then(function(response) {
+			$http.post($scope.config.apiEndpoint + '/export?' + $scope.config.apiExportQueryString, $scope.exportdata).then(function(response) {
 				$scope.exportResponse = response.data;
 			});
 		};
@@ -286,16 +286,20 @@
 		};
 
 		/**
-		 * Check if a field exists in the parents relation list, if yes hide the field
-		 * for the given form and return the relation call value instead in order to auto store those.
+		 * Check if a field exists in the parents relation list or in a pool config, if yes hide the field
+		 * for the given form and return the relation call or pool config value instead in order to auto store those.
 		 */
-		$scope.checkIfFieldExistsInParentRelation = function(field) {
-			// this call is relation call, okay check for the parent relation defition
+		$scope.checkIfFieldExistsInPopulateCondition = function(field) {
+			// check if value existing in pool config
+			var pools = $scope.config.pools;
+			if (pools.hasOwnProperty(field)) {
+				return pools[field];
+			}
+
+			// this call is relation call, okay check for the parent relation definition
 			if ($scope.config.relationCall) {
 				var relations = $scope.$parent.$parent.config.relations;
-
 				var definition = relations[parseInt($scope.config.relationCall.arrayIndex)];
-
 				var linkDefintion = definition.relationLink;
 
 				if (linkDefintion !== null && linkDefintion.hasOwnProperty(field)) {
@@ -386,7 +390,7 @@
 		/*** PAGINIATION ***/
 
         $scope.$watch('pager.currentPage', function(newVal, oldVal) {
-            if (newVal != oldVal) {
+            if (newVal != oldVal && newVal != null) {
 				$scope.loadList($scope.pager.currentPage);
             }
         });
@@ -488,7 +492,7 @@
 
 		$scope.initServiceAndConfig = function() {
 			var deferred = $q.defer();
-			$http.get($scope.config.apiEndpoint + '/services').then(function(serviceResponse) {
+			$http.get($scope.config.apiEndpoint + '/services?' + $scope.config.apiServicesQueryString).then(function(serviceResponse) {
 				$scope.service = serviceResponse.data.service;
 				$scope.serviceResponse = serviceResponse.data;
 				$scope.evalSettings(serviceResponse.data._settings);
@@ -577,13 +581,6 @@
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
 			if (parseInt($scope.config.filter) == 0) {
-
-				/*
-				if ($scope.config.searchQuery) {
-					return $scope.generateSearchPromise($scope.config.searchQuery, pageId);
-				}
-				*/
-				
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);
 					url = url + '&arrayIndex=' + $scope.config.relationCall.arrayIndex + '&id=' + $scope.config.relationCall.id + '&modelClass=' + $scope.config.relationCall.modelClass;

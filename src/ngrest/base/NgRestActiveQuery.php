@@ -41,11 +41,47 @@ class NgRestActiveQuery extends ActiveQuery
      *
      * @param string $field The field (attribute) name which is cased with {{luya\admin\ngrest\base\NgRestModel::$i18n}}
      * @param string $value The value to compare within the json string.
-     * @return \luya\admin\ngrest\base\NgRestActiveQuery
+     * @return NgRestActiveQuery
      */
     public function i18nWhere($field, $value)
     {
         $lang = Yii::$app->composition->langShortCode;
         return $this->andWhere(["JSON_EXTRACT({$field}, \"$.{$lang}\")" => $value]);
+    }
+
+    /**
+     * Where condition with json values.
+     *
+     * @param string $operator
+     * @param string $field
+     * @param string $key
+     * @param string|integer $value
+     * @return NgRestActiveQuery
+     * @since 2.0.0
+     */  
+    public function jsonWhere($operator, $field, $key, $value)
+    {
+        return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
+    }
+
+    /**
+     * Add the pool where condition if a pool is given.
+     *
+     * @param string $pool
+     * @return NgRestActiveQuery
+     * @since 2.0.0
+     */
+    public function inPool($pool = null)
+    {
+        if (empty($pool)) {
+            return $this;
+        }
+        $model = Yii::createObject($this->modelClass);
+
+        if (!array_key_exists($pool, $model->ngRestPools())) {
+            throw new InvalidConfigException("The requested pool identifier '{$pool}' does not exist in the ngRestPools() definition.");
+        }
+
+        return $this->andWhere($model->ngRestPools()[$pool]);
     }
 }

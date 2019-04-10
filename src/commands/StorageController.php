@@ -80,7 +80,7 @@ class StorageController extends Command
      */
     public function actionCleanupImageTable()
     {
-        $rows = Yii::$app->db->createCommand('SELECT file_id, filter_id, COUNT(*) as count FROM admin_storage_image GROUP BY file_id, filter_id HAVING COUNT(*) > 1')->queryAll();
+        $rows = Yii::$app->db->createCommand('SELECT file_id, filter_id, COUNT(*) as count FROM {{%admin_storage_image}} GROUP BY file_id, filter_id HAVING COUNT(*) > 1')->queryAll();
         
         if (empty($rows)) {
             return $this->outputInfo("no dublications has been detected.");
@@ -94,7 +94,7 @@ class StorageController extends Command
         if ($this->confirm("Do you want to delte the duplicated files in the image storage table?")) {
             foreach ($rows as $key => $row) {
                 // get the lowest entrie
-                $keep = Yii::$app->db->createCommand('SELECT id FROM admin_storage_image WHERE file_id=:fileId AND filter_id=:filterId ORDER BY id LIMIT 1', [
+                $keep = Yii::$app->db->createCommand('SELECT id FROM {{%admin_storage_image}} WHERE file_id=:fileId AND filter_id=:filterId ORDER BY id LIMIT 1', [
                     ':fileId' => $row['file_id'],
                     ':filterId' => $row['filter_id'],
                 ])->queryOne();
@@ -104,7 +104,7 @@ class StorageController extends Command
                     continue;
                 }
                 
-                $remove = Yii::$app->db->createCommand()->delete('admin_storage_image', 'file_id=:fileId AND filter_id=:filterId AND id!=:id', [
+                $remove = Yii::$app->db->createCommand()->delete('{{%admin_storage_image}}', 'file_id=:fileId AND filter_id=:filterId AND id!=:id', [
                     ':fileId' => $row['file_id'],
                     ':filterId' => $row['filter_id'],
                     ':id' => $keep['id'],

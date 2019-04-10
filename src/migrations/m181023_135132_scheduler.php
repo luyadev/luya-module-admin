@@ -12,7 +12,7 @@ class m181023_135132_scheduler extends Migration
      */
     public function safeUp()
     {
-        $this->createTable("admin_queue", [
+        $this->createTable("{{%admin_queue}}", [
             'id' => $this->primaryKey(),
             'channel' => $this->string()->notNull(),
             'job' => $this->binary()->notNull(),
@@ -25,11 +25,11 @@ class m181023_135132_scheduler extends Migration
             'done_at' => $this->integer(),
         ]);
 
-        $this->createIndex('channel', 'admin_queue', 'channel');
-        $this->createIndex('reserved_at', 'admin_queue', 'reserved_at');
-        $this->createIndex('priority', 'admin_queue', 'priority');
+        $this->createIndex('channel', '{{%admin_queue}}', 'channel');
+        $this->createIndex('reserved_at', '{{%admin_queue}}', 'reserved_at');
+        $this->createIndex('priority', '{{%admin_queue}}', 'priority');
 
-        $this->createTable('admin_queue_log', [
+        $this->createTable('{{%admin_queue_log}}', [
             'id' => $this->primaryKey(),
             'queue_id' => $this->integer()->notNull(),
             'title' => $this->string(),
@@ -39,9 +39,9 @@ class m181023_135132_scheduler extends Migration
             'is_error' => $this->boolean()->defaultValue(false),
         ]);
 
-        $this->createIndex('queue_id', 'admin_queue_log', 'queue_id');
+        $this->createIndex('queue_id', '{{%admin_queue_log}}', 'queue_id');
         
-        $this->createTable('admin_scheduler', [
+        $this->createTable('{{%admin_scheduler}}', [
             'id' => $this->primaryKey(),
             'model_class' => $this->string()->notNull(),
             'primary_key' => $this->string()->notNull(),
@@ -59,8 +59,8 @@ class m181023_135132_scheduler extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable("admin_queue");
-        $this->dropTable('admin_queue_log');
-        $this->dropTable('admin_scheduler');
+        $this->dropTable("{{%admin_queue}}");
+        $this->dropTable('{{%admin_queue_log}}');
+        $this->dropTable('{{%admin_scheduler}}');
     }
 }

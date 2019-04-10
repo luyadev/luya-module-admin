@@ -9,17 +9,13 @@ use luya\admin\models\Config;
 use yii\base\Application;
 
 /**
- * CMS Bootstrap.
- *
- * The CMS bootstrap class injects the cms specific url rules
- *
- * + {{luya\cms\frontend\components\RouteBehaviorUrlRule}}
- * + {{luya\cms\frontend\components\CatchAllUrlRule}}
- *
- * And changes the behavior if an exception appears in order to redirect users to a custom cms page.
+ * Admin Bootstrap
+ * 
+ * The main purpose of this Bootstrap files is to have an option to run the queue command
+ * trough a "fake cronjob".
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.0
+ * @since 2.0.0
  */
 final class Bootstrap implements BootstrapInterface
 {
@@ -33,6 +29,11 @@ final class Bootstrap implements BootstrapInterface
         $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
     }
 
+    /**
+     * Evaluate whether the current queue job should be run or not.
+     *
+     * @param \yii\base\Event $event
+     */
     public function runQueueJob($event)
     {
         if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {

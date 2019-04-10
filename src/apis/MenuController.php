@@ -3,6 +3,7 @@
 namespace luya\admin\apis;
 
 use Yii;
+use yii\db\Query;
 use luya\admin\Module;
 use luya\admin\base\RestController;
 use luya\admin\models\UserOnline;
@@ -67,7 +68,13 @@ class MenuController extends RestController
 
         $log = [];
         foreach ($accessList as $access) {
-            $data = (new \yii\db\Query())->select(['timestamp_create', 'user_id', 'admin_ngrest_log.id', 'is_update', 'is_delete', 'is_insert', 'admin_user.firstname', 'admin_user.lastname'])->from('admin_ngrest_log')->leftJoin('admin_user', 'admin_ngrest_log.user_id = admin_user.id')->orderBy('timestamp_create DESC')->limit(30)->where('api=:api and user_id!=0', [':api' => $access['permssionApiEndpoint']])->all();
+            $data = (new Query())
+                ->select(['timestamp_create', 'user_id', 'admin_ngrest_log.id', 'is_update', 'is_delete', 'is_insert', 'admin_user.firstname', 'admin_user.lastname'])
+                ->from('{{%admin_ngrest_log}}')
+                ->leftJoin('{{%admin_user}}', '{{%admin_ngrest_log}}.user_id = {{%admin_user}}.id')
+                ->orderBy('timestamp_create DESC')
+                ->limit(30)
+                ->where('api=:api and user_id!=0', [':api' => $access['permissionApiEndpoint']])->all();
             foreach ($data as $row) {
                 $date = mktime(0, 0, 0, date('n', $row['timestamp_create']), date('j', $row['timestamp_create']), date('Y', $row['timestamp_create']));
                 if ($row['is_update']) {

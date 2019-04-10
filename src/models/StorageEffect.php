@@ -24,7 +24,7 @@ final class StorageEffect extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_storage_effect';
+        return '{{%admin_storage_effect}}';
     }
 
     /**

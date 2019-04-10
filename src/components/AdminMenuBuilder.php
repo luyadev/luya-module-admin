@@ -46,7 +46,10 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     /**
      * @var array The available options for itemApi and itemRoute.
      */
-    protected static $options = ['hiddenInMenu'];
+    protected static $options = [
+        'hiddenInMenu', // whether the current menu should be hidden in the menu or not
+        'pool', // a context field name which is used to generate the pool
+    ];
     
     /**
      * @var \luya\base\AdminModuleInterface The context on what the menu is running.
@@ -166,20 +169,41 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
      */
     public function itemApi($name, $route, $icon, $apiEndpoint, array $options = [])
     {
-        $this->_menu[$this->_pointers['node']]['groups'][$this->_pointers['group']]['items'][] = [
+        $item = [
             'alias' => $name,
             'route' => $route,
             'icon' => $icon,
-            'permssionApiEndpoint' => $apiEndpoint,
+            'permissionApiEndpoint' => $apiEndpoint,
             'permissionIsRoute' => false,
             'permissionIsApi' => true,
             'searchModelClass' => false,
             'options' => $this->verifyOptions($options),
         ];
+
+        $this->_menu[$this->_pointers['node']]['groups'][$this->_pointers['group']]['items'][] = $item;
     
-        $this->_permissionApis[] = ['api' => $apiEndpoint, 'alias' => $name];
+        $this->_permissionApis[] = ['api' => $apiEndpoint, 'alias' => $name, 'pool' => $this->getOptionValue($item, 'pool', null)];
     
         return $this;
+    }
+
+    /**
+     * Generate a permission for an API with a Pool
+     *
+     * @param string $name
+     * @param string $route
+     * @param string $icon
+     * @param string $apiEndpoint
+     * @param string $pool
+     * @param array $options
+     * @return AdminMenuBuilder
+     * @since 2.0.0
+     */
+    public function itemPoolApi($name, $route, $icon, $apiEndpoint, $pool, array $options = [])
+    {
+        return $this->itemApi($name, $route, $icon, $apiEndpoint, array_merge($options, [
+            'pool' => $pool,
+        ]));
     }
     
     /**
@@ -198,7 +222,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'alias' => $name,
             'route' => $route,
             'icon' => $icon,
-            'permssionApiEndpoint' => null,
+            'permissionApiEndpoint' => null,
             'permissionIsRoute' => true,
             'permissionIsApi' => false,
             'searchModelClass' => $searchModelClass,
@@ -253,6 +277,6 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             return $defaultValue;
         }
         
-        return (isset($item['options'][$optionName])) ? $item['options'][$optionName] : $defaultValue;
+        return isset($item['options'][$optionName]) ? $item['options'][$optionName] : $defaultValue;
     }
 }

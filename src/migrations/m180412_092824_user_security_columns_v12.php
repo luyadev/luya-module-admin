@@ -22,10 +22,10 @@ class m180412_092824_user_security_columns_v12 extends Migration
         $this->dropIfExists('login_attempt');
         $this->dropIfExists('login_attempt_lock_expiration');
         
-        $this->addColumn('admin_user', 'email_verification_token', $this->string(40));
-        $this->addColumn('admin_user', 'email_verification_token_timestamp', $this->integer());
-        $this->addColumn('admin_user', 'login_attempt', $this->integer());
-        $this->addColumn('admin_user', 'login_attempt_lock_expiration', $this->integer());
+        $this->addColumn('{{%admin_user}}', 'email_verification_token', $this->string(40));
+        $this->addColumn('{{%admin_user}}', 'email_verification_token_timestamp', $this->integer());
+        $this->addColumn('{{%admin_user}}', 'login_attempt', $this->integer());
+        $this->addColumn('{{%admin_user}}', 'login_attempt_lock_expiration', $this->integer());
     }
 
     /**
@@ -35,10 +35,10 @@ class m180412_092824_user_security_columns_v12 extends Migration
     {
         $this->dropIfExists('email_verification_token_expiration');
         
-        $this->dropColumn('admin_user', 'email_verification_token');
-        $this->dropColumn('admin_user', 'email_verification_token_timestamp');
-        $this->dropColumn('admin_user', 'login_attempt');
-        $this->dropColumn('admin_user', 'login_attempt_lock_expiration');
+        $this->dropColumn('{{%admin_user}}', 'email_verification_token');
+        $this->dropColumn('{{%admin_user}}', 'email_verification_token_timestamp');
+        $this->dropColumn('{{%admin_user}}', 'login_attempt');
+        $this->dropColumn('{{%admin_user}}', 'login_attempt_lock_expiration');
     }
     
     /**
@@ -48,7 +48,7 @@ class m180412_092824_user_security_columns_v12 extends Migration
      */
     private function hasColumn($name)
     {
-        return $this->db->schema->getTableSchema('admin_user')->getColumn($name);
+        return $this->db->schema->getTableSchema('{{%admin_user}}')->getColumn($name);
     }
     
     /**
@@ -59,7 +59,7 @@ class m180412_092824_user_security_columns_v12 extends Migration
     private function dropIfExists($name)
     {
         if ($this->hasColumn($name)) {
-            $this->dropColumn('admin_user', $name);
+            $this->dropColumn('{{%admin_user}}', $name);
         }
     }
 }

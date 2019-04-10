@@ -13,7 +13,7 @@ class m181113_120432_user_index extends Migration
     public function safeUp()
     {
         // admin_user
-        $this->createIndex('index_api_last_activity_id', 'admin_user', ['api_last_activity', 'id']);
+        $this->createIndex('index_api_last_activity_id', '{{%admin_user}}', ['api_last_activity', 'id']);
     }
 
     /**
@@ -21,6 +21,6 @@ class m181113_120432_user_index extends Migration
      */
     public function safeDown()
     {
-        $this->dropIndex('index_api_last_activity_id', 'admin_user');
+        $this->dropIndex('index_api_last_activity_id', '{{%admin_user}}');
     }
 }

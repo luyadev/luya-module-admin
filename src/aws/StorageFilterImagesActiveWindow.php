@@ -39,6 +39,11 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
         return 'Image Filters';
     }
     
+    public function getTitle()
+    {
+        return $this->model->name;
+    }
+
     /**
      * @inheritdoc
      */
@@ -53,8 +58,10 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
      */
     public function callbackRemove()
     {
-        $this->model->removeImageSources();
+        $log = $this->model->removeImageSources();
+
+        Yii::$app->storage->flushArrays();
         
-        return $this->sendSuccess("Removed image filter {this->model->name} versions.");
+        return $this->sendSuccess("Removed ".count($log)." images for filter {$this->model->name}");
     }
 }

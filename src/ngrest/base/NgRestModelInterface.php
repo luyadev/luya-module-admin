@@ -2,6 +2,9 @@
 
 namespace luya\admin\ngrest\base;
 
+use yii\db\ActiveRecordInterface;
+
+
 /**
  * Interface For NgRest Model.
  *
@@ -10,7 +13,7 @@ namespace luya\admin\ngrest\base;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-interface NgRestModelInterface
+interface NgRestModelInterface extends ActiveRecordInterface
 {
     /**
      * Defines the base inline configuration for the current Model.

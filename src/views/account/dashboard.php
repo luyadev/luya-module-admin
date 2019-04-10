@@ -3,14 +3,12 @@ use luya\admin\Module;
 
 ?>
 <div class="luya-content" ng-controller="AccountController">
-    <h1>
-        <span><span ng-bind="profile.firstname"></span> <span ng-bind="profile.lastname"></span></span>
-    </h1>
     <div class="row">
         <div class="col-md-4">
+
+            <p class="lead"><?= Module::t('mode_user_personal_info') ?></p>
             <div class="card">
                 <div class="card-body">
-                	<h2><?= Module::t('mode_user_personal_info') ?></h2>
                     <form ng-submit="changePersonData(profile)">
                         <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
                         <zaa-text autocomplete="given-name" fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
@@ -32,9 +30,9 @@ use luya\admin\Module;
             </div>
         </div>
         <div class="col-md-4">
+            <p class="lead"><?= Module::t('mode_user_password'); ?></p>
             <div class="card">
                 <div class="card-body">
-                    <h2><?= Module::t('mode_user_password'); ?></h2>
                     <form ng-submit="changePassword()">
                         <zaa-password autocomplete="current-password" fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
                         <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
@@ -45,9 +43,9 @@ use luya\admin\Module;
             </div>
         </div>
         <div class="col-md-4">
+            <p class="lead"><?= Module::t('settings_general') ?></p>
             <div class="card">
                 <div class="card-body">
-                    <h2><?= Module::t('settings_general') ?></h2>
                     <div class="form-group form-side-by-side">
                         <div class="form-side form-side-label">
                             <label for="lang-changer"><?= Module::t('layout_rightbar_languagelabel')?></label>

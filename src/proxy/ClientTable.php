@@ -149,7 +149,7 @@ class ClientTable extends BaseObject
      * @throws \yii\db\Exception
      * @since 1.2.1
      */
-    private function prepare()
+    protected function prepare()
     {
         $sqlMode = null;
 
@@ -175,7 +175,7 @@ class ClientTable extends BaseObject
      * @throws \yii\db\Exception
      * @since 1.2.1
      */
-    private function cleanup($sqlMode)
+    protected function cleanup($sqlMode)
     {
         if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
             Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();

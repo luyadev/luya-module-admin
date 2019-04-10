@@ -7,7 +7,7 @@ class m150323_132625_admin_group_auth extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_group_auth', [
+        $this->createTable('{{%admin_group_auth}}', [
             'group_id' => $this->integer(11),
             'auth_id' => $this->integer(11),
             'crud_create' => $this->smallInteger(4),
@@ -18,6 +18,6 @@ class m150323_132625_admin_group_auth extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_group_auth');
+        $this->dropTable('{{%admin_group_auth}}');
     }
 }

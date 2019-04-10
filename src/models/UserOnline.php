@@ -28,7 +28,7 @@ final class UserOnline extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_user_online';
+        return '{{%admin_user_online}}';
     }
     
     /**

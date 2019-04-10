@@ -25,7 +25,7 @@ final class StorageFilter extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_storage_filter';
+        return '{{%admin_storage_filter}}';
     }
 
     /**
@@ -59,10 +59,12 @@ final class StorageFilter extends NgRestModel
     {
         $log = [];
         foreach (StorageImage::find()->where(['filter_id' => $this->id])->all() as $img) {
-            $image = Yii::$app->storage->getImage($img->id);
+            $source = $img->serverSource;
+            $image = $img->delete();
             
-            $log[$image->serverSource] = $img->deleteSource();
+            $log[$source] = $image;
         }
+        
         return $log;
     }
     
@@ -91,13 +93,12 @@ final class StorageFilter extends NgRestModel
      * @return boolean
      */
     public function applyFilterChain($source, $fileSavePath)
-    {
+    {   
         $loadFrom = $source;
-        //$loadFrom = $file->getServerSource();
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter
-            $response = $chain->applyFilter($loadFrom, $fileSavePath);
+            $chain->applyFilter($loadFrom, $fileSavePath);
             // override load from path for next iteration (if any).
             $loadFrom = $fileSavePath;
         }

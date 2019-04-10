@@ -23,9 +23,10 @@ abstract class Select extends Plugin
 
     /**
      * @var integer|string If an init value is available which is matching with the select data, you can not reset the model to null. So initvalue ensures
-     * that a value must be selected, or selects your initvalue by default.
+     * that a value must be selected, or selects your initvalue by default. Since version 2.0 the default value is `null` instead of `0` otherwise the common
+     * rule setup for those attributes won't handle the required field correctly until you set `isEmpty` option in the validator config.
      */
-    public $initValue = 0;
+    public $initValue = null;
     
     /**
      * @var string This value will be displayed in the ngrest list overview if the given value is empty(). In order to turn off this behavior set `emptyListValue` to false.

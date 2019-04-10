@@ -22,12 +22,10 @@ use luya\admin\Module;
             <?php endif; ?>
 
                 <?php foreach ($group['fields'] as $field => $fieldItem): ?>
-                    <div ng-if="!checkIfFieldExistsInParentRelation('<?= $field; ?>')">
-                        <?php foreach ($this->context->createElements($fieldItem, $renderer) as $element): ?>
-                            <?= $element['html']; ?>
-                        <?php endforeach; ?>
+                    <div ng-if="!checkIfFieldExistsInPopulateCondition('<?= $field; ?>')">
+                        <?= $this->context->generatePluginHtml($fieldItem, $renderer); ?>
                     </div>
-                    <div ng-if="checkIfFieldExistsInParentRelation('<?= $field; ?>')" ng-init="<?= $this->context->ngModelString($renderer, $field); ?>=checkIfFieldExistsInParentRelation('<?= $field; ?>')"></div>
+                    <div ng-if="checkIfFieldExistsInPopulateCondition('<?= $field; ?>')" ng-init="<?= $this->context->ngModelString($renderer, $field); ?>=checkIfFieldExistsInPopulateCondition('<?= $field; ?>')"></div>
                 <?php endforeach; ?>
 
             <?php if (!$group['is_default']): ?>

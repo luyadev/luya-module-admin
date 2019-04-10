@@ -29,7 +29,7 @@ class <?= $className; ?> extends NgRestModel
      */
     public static function tableName()
     {
-        return '<?= $dbTableName; ?>';
+        return '{{%<?= $dbTableName; ?>}}';
     }
 
     /**

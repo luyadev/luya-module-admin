@@ -177,7 +177,7 @@ use luya\admin\helpers\Angular;
 </script>
 
 <script type="text/ng-template" id="reverseFolders">
-    <div class="folders-folder" ng-init="editFolderLabel = false" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove, 'folders-folder--undeletable': folder.subfolder}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
+    <div class="folders-folder" ng-init="editFolderLabel = false; oldFolder = folder.name" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove, 'folders-folder--undeletable': folder.subfolder}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
 
         <div class="folder-left">
             <button class="folder-toggler" ng-click="toggleFolderItem(folder)" ng-if="folder.subfolder == true">
@@ -208,7 +208,7 @@ use luya\admin\helpers\Angular;
 
         <div class="folder-right folder-action-edit">
             <button class="folder-button folder-button--save" ng-click="updateFolder(folder); editFolderLabel=!editFolderLabel"><i class="material-icons">check</i></button>
-            <button class="folder-button folder-button--abort" ng-click="editFolderLabel=!editFolderLabel;"><i class="material-icons">cancel</i></button>
+            <button class="folder-button folder-button--abort" ng-click="cancelFolderEdit(folder, oldFolder); editFolderLabel=!editFolderLabel;"><i class="material-icons">cancel</i></button>
         </div>
 
         <div class="folder-right folder-action-move-to">
