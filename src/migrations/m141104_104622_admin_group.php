@@ -7,7 +7,7 @@ class m141104_104622_admin_group extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_group', [
+        $this->createTable('{{%admin_group}}', [
             'id' => 'pk',
             'name' => $this->string(255)->notNull(),
             'text' => $this->text(),
@@ -17,6 +17,6 @@ class m141104_104622_admin_group extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_group');
+        $this->dropTable('{{%admin_group}}');
     }
 }

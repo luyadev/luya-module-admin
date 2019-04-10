@@ -94,7 +94,7 @@ abstract class Filter extends BaseObject implements FilterInterface
                 'identifier' => static::identifier(),
             ]);
             $model->insert(false);
-            $this->addLog("added new filter '".static::identifier()."' to database.");
+            $this->addLog("Added new filter '".static::identifier()."' with id '{$model->id}'.");
         }
 
         return $model;

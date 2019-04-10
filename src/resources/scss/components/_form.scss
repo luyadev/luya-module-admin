@@ -106,6 +106,10 @@ textarea {
     display: none;
 }
 
+.bold-form-label .form-side-label label {
+    font-weight: bold;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
     clear: left;

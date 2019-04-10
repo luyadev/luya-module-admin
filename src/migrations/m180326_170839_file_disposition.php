@@ -12,7 +12,7 @@ class m180326_170839_file_disposition extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('admin_storage_file', 'inline_disposition', $this->boolean()->defaultValue(false));
+        $this->addColumn('{{%admin_storage_file}}', 'inline_disposition', $this->boolean()->defaultValue(false));
     }
 
     /**
@@ -20,6 +20,6 @@ class m180326_170839_file_disposition extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('admin_storage_file', 'inline_disposition');
+        $this->dropColumn('{{%admin_storage_file}}', 'inline_disposition');
     }
 }

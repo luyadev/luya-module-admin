@@ -7,7 +7,7 @@ class m150309_142652_admin_storage_filter_chain extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_storage_filter_chain', [
+        $this->createTable('{{%admin_storage_filter_chain}}', [
             'id' => $this->primaryKey(),
             'sort_index' => $this->integer(11),
             'filter_id' => $this->integer(11),
@@ -18,6 +18,6 @@ class m150309_142652_admin_storage_filter_chain extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_storage_filter_chain');
+        $this->dropTable('{{%admin_storage_filter_chain}}');
     }
 }

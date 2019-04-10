@@ -4,10 +4,9 @@ use yii\db\Migration;
 
 class m160915_081618_create_admin_logger_table extends Migration
 {
-    // Use safeUp/safeDown to run migration code within a transaction
     public function safeUp()
     {
-        $this->createTable('admin_logger', [
+        $this->createTable('{{%admin_logger}}', [
             'id' => $this->primaryKey(),
             'time' => $this->integer()->notNull(),
             'message' => $this->text()->notNull(),
@@ -27,6 +26,6 @@ class m160915_081618_create_admin_logger_table extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_logger');
+        $this->dropTable('{{%admin_logger}}');
     }
 }

@@ -46,7 +46,7 @@ final class StorageFilterChain extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_storage_filter_chain';
+        return '{{%admin_storage_filter_chain}}';
     }
 
     /**

@@ -49,7 +49,7 @@ class SortRelationModel extends SortRelation
         }
         $data = [];
         
-        foreach ($class::find()->orderBy([$this->labelField => SORT_ASC])->all() as $item) {
+        foreach ($class::ngRestFind()->orderBy([$this->labelField => SORT_ASC])->all() as $item) {
             $label = $item->{$this->labelField};
         
             if (is_array($label)) {
@@ -78,7 +78,7 @@ class SortRelationModel extends SortRelation
                 $ids[] = $key['value'];
             }
             $class = $this->modelClass;
-            $this->writeAttribute($event, $class::find()->where(['in', 'id', $ids])->all());
+            $this->writeAttribute($event, $class::ngRestFind()->where(['in', 'id', $ids])->all());
         }
     }
 }

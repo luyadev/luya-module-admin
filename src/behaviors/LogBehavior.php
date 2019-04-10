@@ -84,7 +84,7 @@ class LogBehavior extends Behavior
     public function eventAfterDelete($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
+            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
@@ -107,7 +107,7 @@ class LogBehavior extends Behavior
     public function eventAfterInsert($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
+            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
@@ -130,7 +130,7 @@ class LogBehavior extends Behavior
     public function eventAfterUpdate($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('admin_ngrest_log', [
+            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,

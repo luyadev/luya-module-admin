@@ -77,7 +77,7 @@ final class StorageFile extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_storage_file';
+        return '{{%admin_storage_file}}';
     }
     
     /**
@@ -163,6 +163,17 @@ final class StorageFile extends ActiveRecord
     public function getSource()
     {
         return Yii::$app->storage->fileAbsoluteHttpPath($this->name_new_compound);
+    }
+
+    /**
+     * Get the content of the file
+     *
+     * @return string|stream
+     * @since 2.0
+     */
+    public function getContent()
+    {
+        return Yii::$app->storage->fileSystemContent($this->name_new_compound);   
     }
 
     /**
@@ -273,6 +284,33 @@ final class StorageFile extends ActiveRecord
         if ($image) {
             return ['source' => $image->source];
         }
+    }
+
+    /**
+     * Get an image for a given filter id of the current file
+     *
+     * @param integer $filterId The filter id.
+     * @param boolean $checkImagesRelation If enabled the current relation `getImages()` will be used to check whether the file exists inside or not. This should only used when you preload this
+     * relation:
+     * ```php
+     * foreach (StorageFile::find()->where(['id', [1,3,4,5]])->with(['images'])->all() as $file) {
+     *     var_dump($file->imageFilter(1));
+     * }
+     * ```
+     * @return StorageImage
+     * @since 2.0.0
+     */
+    public function imageFilter($filterId, $checkImagesRelation = true)
+    {
+        if ($checkImagesRelation) {
+            foreach ($this->images as $image) {
+                if ($image->filter_id == $filterId) {
+                    return $image;
+                }
+            }
+        }
+
+        return Yii::$app->storage->createImage($this->id, $filterId);
     }
 
     /**

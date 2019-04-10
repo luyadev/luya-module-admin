@@ -12,7 +12,7 @@ class m180527_225613_user_login_ipv6 extends Migration
      */
     public function safeUp()
     {
-        $this->alterColumn('admin_user_login', 'ip', $this->string(45)->notNull());
+        $this->alterColumn('{{%admin_user_login}}', 'ip', $this->string(45)->notNull());
     }
 
     /**
@@ -20,6 +20,6 @@ class m180527_225613_user_login_ipv6 extends Migration
      */
     public function safeDown()
     {
-        $this->alterColumn('admin_user_login', 'ip', $this->string(15)->notNull());
+        $this->alterColumn('{{%admin_user_login}}', 'ip', $this->string(15)->notNull());
     }
 }

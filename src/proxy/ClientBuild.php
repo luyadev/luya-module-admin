@@ -148,7 +148,10 @@ class ClientBuild extends BaseObject
     }
 
     private $_tables = [];
-
+    
+    /**
+     * @return ClientTable[]
+     */
     public function getTables()
     {
         return $this->_tables;

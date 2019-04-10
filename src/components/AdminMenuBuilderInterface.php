@@ -35,7 +35,7 @@ interface AdminMenuBuilderInterface
      *                               [alias] => menu_access_item_user
      *                               [route] => admin/user/index
      *                               [icon] => person
-     *                               [permssionApiEndpoint] => api-admin-user
+     *                               [permissionApiEndpoint] => api-admin-user
      *                               [permissionIsRoute] =>
      *                               [permissionIsApi] => 1
      *                               [searchModelClass] =>
@@ -45,7 +45,7 @@ interface AdminMenuBuilderInterface
      *                               [alias] => menu_access_item_group
      *                               [route] => admin/group/index
      *                               [icon] => group
-     *                               [permssionApiEndpoint] => api-admin-group
+     *                               [permissionApiEndpoint] => api-admin-group
      *                               [permissionIsRoute] =>
      *                               [permissionIsApi] => 1
      *                               [searchModelClass] =>

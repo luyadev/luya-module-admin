@@ -389,4 +389,5 @@ return [
     'js_scheduler_title_completed' => 'Completed',
     'js_scheduler_table_newvalue' => 'New value',
     'js_scheduler_table_timestamp' => 'Execution Time',
+    'js_dir_manager_rename_success' => 'The folder has been renamed successfully.',
 ];

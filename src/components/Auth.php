@@ -4,6 +4,7 @@ namespace luya\admin\components;
 
 use Yii;
 use luya\Exception;
+use luya\admin\models\Auth as AuthModel;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
@@ -51,10 +52,10 @@ class Auth extends \yii\base\Component
         if ($this->_permissionTable === null) {
             $this->_permissionTable = (new Query())
                 ->select(['*'])
-                ->from('admin_user_group')
-                ->innerJoin('admin_group_auth', 'admin_user_group.group_id=admin_group_auth.group_id')
-                ->innerJoin('admin_auth', 'admin_group_auth.auth_id = admin_auth.id')
-                ->where(['admin_user_group.user_id' => $userId])
+                ->from('{{%admin_user_group}}')
+                ->innerJoin('{{%admin_group_auth}}', '{{%admin_user_group}}.group_id={{%admin_group_auth}}.group_id')
+                ->innerJoin('{{%admin_auth}}', '{{%admin_group_auth}}.auth_id = {{%admin_auth}}.id')
+                ->where(['{{%admin_user_group}}.user_id' => $userId])
                 ->all();
         }
         
@@ -205,27 +206,22 @@ class Auth extends \yii\base\Component
      * @param string $route The route which is an identifier.
      * @param string $name A readable name for the route to display in the permissions system.
      * @throws \luya\Exception
-     * @return number
+     * @return integer
      */
     public function addRoute($moduleName, $route, $name)
     {
-        $handler = (new Query())->select('COUNT(*) AS count')->from('admin_auth')->where(['route' => $route])->one();
-        if ($handler['count'] == 1) {
-            return Yii::$app->db->createCommand()->update('admin_auth', [
-                'alias_name' => $name,
-                'module_name' => $moduleName,
-            ], ['route' => $route])->execute();
-        } elseif ($handler['count'] == 0) {
-            return Yii::$app->db->createCommand()->insert('admin_auth', [
-                'alias_name' => $name,
-                'module_name' => $moduleName,
-                'is_crud' => false,
-                'route' => $route,
-                'api' => 0,
-            ])->execute();
-        } else {
-            throw new Exception("Error while inserting/updating auth ROUTE '$route' with name '$name' in module '$moduleName'.");
+        $model = AuthModel::find()->where(['route' => $route])->one();
+
+        if (!$model) {
+            $model = new AuthModel();
         }
+
+        $model->alias_name = $name;
+        $model->module_name = $moduleName;
+        $model->route = $route;
+        $model->save();
+
+        return $model->id;
     }
 
     /**
@@ -234,28 +230,30 @@ class Auth extends \yii\base\Component
      * @param string $moduleName The name of the module where the route is located.
      * @param string $apiEndpoint An API endpoint name like `admin-user-group` which is an identifier.
      * @param string $name A readable name for the api to display in the permission system.
-     * @throws \luya\Exception
-     * @return number
+     * @param string $pool
+     * @return integer
      */
-    public function addApi($moduleName, $apiEndpoint, $name)
+    public function addApi($moduleName, $apiEndpoint, $name, $pool = null)
     {
-        $handler = (new Query())->select('COUNT(*) AS count')->from('admin_auth')->where(['api' => $apiEndpoint])->one();
-        if ($handler['count'] == 1) {
-            return Yii::$app->db->createCommand()->update('admin_auth', [
-                'alias_name' => $name,
-                'module_name' => $moduleName,
-            ], ['api' => $apiEndpoint])->execute();
-        } elseif ($handler['count'] == 0) {
-            return Yii::$app->db->createCommand()->insert('admin_auth', [
-                'alias_name' => $name,
-                'module_name' => $moduleName,
-                'is_crud' => true,
-                'route' => 0,
-                'api' => $apiEndpoint,
-            ])->execute();
-        } else {
-            throw new Exception("Error while inserting/updating auth API '$apiEndpoint' with name '$name' in module '$moduleName'.");
+        $where = ['api' => $apiEndpoint];
+        if (!empty($pool)) {
+            $where['pool'] = $pool;
         }
+
+        $model = AuthModel::find()->where($where)->one();
+
+        if (!$model) {
+            $model = new AuthModel();
+        }
+
+        $model->alias_name = $name;
+        $model->module_name = $moduleName;
+        $model->pool = $pool;
+        $model->api = $apiEndpoint;
+        $model->is_crud = 1;
+        $model->save();
+
+        return $model->id;
     }
 
     /**
@@ -271,7 +269,7 @@ class Auth extends \yii\base\Component
             'apis' => [],
         ];
         // get all auth data
-        foreach ((new Query())->select('*')->from('admin_auth')->all() as $item) {
+        foreach ((new Query())->select('*')->from('{{%admin_auth}}')->all() as $item) {
             // allocate if its an api or route. More differences?
             if (empty($item['api'])) {
                 $data['routes'][] = $item;
@@ -299,23 +297,9 @@ class Auth extends \yii\base\Component
      * @param array $data array with key apis and routes
      * @return array
      */
-    public function prepareCleanup(array $data)
+    public function prepareCleanup(array $ids)
     {
-        $toCleanup = [];
-        foreach ($data as $type => $items) {
-            switch ($type) {
-                case 'apis':
-                    $q = (new Query())->select('*')->from('admin_auth')->where(['not in', 'api', $items])->andWhere(['is_crud' => true])->all();
-                    $toCleanup = ArrayHelper::merge($q, $toCleanup);
-                    break;
-                case 'routes':
-                    $q = (new Query())->select('*')->from('admin_auth')->where(['not in', 'route', $items])->andWhere(['is_crud' => false])->all();
-                    $toCleanup = ArrayHelper::merge($q, $toCleanup);
-                    break;
-            }
-        }
-
-        return $toCleanup;
+        return AuthModel::find()->where(['not in', 'id', $ids])->asArray()->all();
     }
 
     /**
@@ -327,8 +311,8 @@ class Auth extends \yii\base\Component
     public function executeCleanup(array $data)
     {
         foreach ($data as $rule) {
-            Yii::$app->db->createCommand()->delete('admin_auth', 'id=:id', ['id' => $rule['id']])->execute();
-            Yii::$app->db->createCommand()->delete('admin_group_auth', 'auth_id=:id', ['id' => $rule['id']])->execute();
+            Yii::$app->db->createCommand()->delete('{{%admin_auth}}', 'id=:id', ['id' => $rule['id']])->execute();
+            Yii::$app->db->createCommand()->delete('{{%admin_group_auth}}', 'auth_id=:id', ['id' => $rule['id']])->execute();
         }
 
         return true;

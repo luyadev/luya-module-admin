@@ -290,7 +290,7 @@ abstract class BaseFileSystemStorage extends Component
     public function getFilesArray()
     {
         if ($this->_filesArray === null) {
-            $this->_filesArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_file')->select(['id', 'is_hidden', 'is_deleted', 'folder_id', 'name_original', 'name_new', 'name_new_compound', 'mime_type', 'extension', 'hash_name', 'hash_file', 'upload_timestamp', 'file_size', 'upload_user_id', 'caption'])->indexBy('id'), self::CACHE_KEY_FILE);
+            $this->_filesArray = $this->getQueryCacheHelper((new Query())->from('{{%admin_storage_file}}')->select(['id', 'is_hidden', 'is_deleted', 'folder_id', 'name_original', 'name_new', 'name_new_compound', 'mime_type', 'extension', 'hash_name', 'hash_file', 'upload_timestamp', 'file_size', 'upload_user_id', 'caption'])->indexBy('id'), self::CACHE_KEY_FILE);
         }
 
         return $this->_filesArray;
@@ -331,7 +331,7 @@ abstract class BaseFileSystemStorage extends Component
     public function getImagesArray()
     {
         if ($this->_imagesArray === null) {
-            $this->_imagesArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_image')->select(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'])->indexBy('id'), self::CACHE_KEY_IMAGE);
+            $this->_imagesArray = $this->getQueryCacheHelper((new Query())->from('{{%admin_storage_image}}')->select(['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height'])->indexBy('id'), self::CACHE_KEY_IMAGE);
         }
 
         return $this->_imagesArray;
@@ -649,6 +649,8 @@ abstract class BaseFileSystemStorage extends Component
     /**
      * Just creating the image based on input informations without usage of storage files or images list.
      *
+     * @param integer $fileId The id of the file to create  filter of
+     * @param integer $filterId The filter id to apply on the given file.
      * @since 1.2.2.1
      * @return \luya\admin\models\StorageImage|false Returns the storage image model on success, otherwise false.
      */
@@ -666,26 +668,37 @@ abstract class BaseFileSystemStorage extends Component
         if (!$file) {
             return false;
         }
-
         // create the new image name
         $fileName = $filterId.'_'.$file->name_new_compound;
 
+        $fromTempFile = tempnam(sys_get_temp_dir(), 'fromFile');
+        $fromTempFile.= $fileName;
+
+        $content = $file->getContent();
+
+        // it seems the content can not be found.
+        if ($content === false) {
+            return false;
+        }
+
+        $writeFile = FileHelper::writeFile($fromTempFile, $content);
+
+        // unable to write the temp file
+        if (!$writeFile) {
+            return false;
+        }
+
         // create a temp file
-        $tempFile = tempnam(sys_get_temp_dir(), 'prefix');
+        $tempFile = tempnam(sys_get_temp_dir(), 'destFile');
         $tempFile.= $fileName;
 
         // there is no filter, which means we create an image version for a given file.
         if (empty($filterId)) {
-            @copy($file->serverSource, $tempFile);
+            @copy($fromTempFile, $tempFile);
         } else {
             $filter = StorageFilter::findOne($filterId);
-
-            if (!$filter) {
-                throw new Exception("Could not find the provided filter id '$filterId'.");
-            }
-
-            if (!$filter->applyFilterChain($file->serverSource, $tempFile)) {
-                throw new Exception("Unable to create and save image '".$tempFile."'.");
+            if (!$filter || !$filter->applyFilterChain($fromTempFile, $tempFile)) {
+                return false;
             }
         }
 
@@ -693,6 +706,7 @@ abstract class BaseFileSystemStorage extends Component
         // now copy the file to the storage system
         $this->fileSystemSaveFile($tempFile, $fileName);
         unlink($tempFile);
+        unlink($fromTempFile);
 
         $this->flushImageArray();
 
@@ -710,7 +724,9 @@ abstract class BaseFileSystemStorage extends Component
         $image->filter_id = $filterId;
         $image->resolution_height = $resolution['height'];
         $image->resolution_width = $resolution['width'];
-        $image->save();
+        if (!$image->save()) {
+            return false;
+        }
 
         return $image;
     }
@@ -728,11 +744,11 @@ abstract class BaseFileSystemStorage extends Component
     {
         if ($this->_foldersArray === null) {
             $query = (new Query())
-                ->from('admin_storage_folder as folder')
+                ->from('{{%admin_storage_folder}} as folder')
                 ->select(['folder.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(file.id) filesCount'])
                 ->where(['folder.is_deleted' => false])
                 ->orderBy(['name' => 'ASC'])
-                ->leftJoin('admin_storage_file as file', 'folder.id=file.folder_id AND file.is_deleted = 0')
+                ->leftJoin('{{%admin_storage_file}} as file', 'folder.id=file.folder_id AND file.is_deleted = 0')
                 ->groupBy(['folder.id'])
                 ->indexBy(['id']);
 
@@ -829,7 +845,7 @@ abstract class BaseFileSystemStorage extends Component
     public function getFiltersArray()
     {
         if ($this->_filtersArray === null) {
-            $this->_filtersArray = $this->getQueryCacheHelper((new Query())->from('admin_storage_filter')->select(['id', 'identifier', 'name'])->indexBy('identifier')->orderBy(['name' => SORT_ASC]), self::CACHE_KEY_FILTER);
+            $this->_filtersArray = $this->getQueryCacheHelper((new Query())->from('{{%admin_storage_filter}}')->select(['id', 'identifier', 'name'])->indexBy('identifier')->orderBy(['name' => SORT_ASC]), self::CACHE_KEY_FILTER);
         }
 
         return $this->_filtersArray;

@@ -25,7 +25,7 @@ final class Property extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'admin_property';
+        return '{{%admin_property}}';
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace luya\admin\ngrest\plugins;
 
-;
+use Yii;
 use yii\db\ActiveRecordInterface;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
@@ -211,7 +211,7 @@ class SelectModel extends Select
         
         $class = $this->modelClass;
         
-        $query = $class::find();
+        $query = $class::ngRestFind()->inPool(Yii::$app->request->get('pool'));
         if ($this->where) {
             $query->where($this->where);
         }

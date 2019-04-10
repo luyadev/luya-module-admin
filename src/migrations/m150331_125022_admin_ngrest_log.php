@@ -6,7 +6,7 @@ class m150331_125022_admin_ngrest_log extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('admin_ngrest_log', [
+        $this->createTable('{{%admin_ngrest_log}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(11)->notNull(),
             'timestamp_create' => $this->integer(11)->notNull(),
@@ -20,6 +20,6 @@ class m150331_125022_admin_ngrest_log extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('admin_ngrest_log');
+        $this->dropTable('{{%admin_ngrest_log}}');
     }
 }

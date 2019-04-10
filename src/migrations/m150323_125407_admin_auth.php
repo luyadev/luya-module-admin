@@ -7,7 +7,7 @@ class m150323_125407_admin_auth extends Migration
 {
     public function up()
     {
-        $this->createTable('admin_auth', [
+        $this->createTable('{{%admin_auth}}', [
             'id' => $this->primaryKey(),
             'alias_name' => $this->string(60)->notNull(),
             'module_name' => $this->string(60)->notNull(),
@@ -19,6 +19,6 @@ class m150323_125407_admin_auth extends Migration
 
     public function down()
     {
-        $this->dropTable('admin_auth');
+        $this->dropTable('{{%admin_auth}}');
     }
 }

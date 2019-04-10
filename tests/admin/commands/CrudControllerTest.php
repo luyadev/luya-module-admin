@@ -49,7 +49,7 @@ class CrudControllerTest extends AdminTestCase
         $ctrl = new CrudController('id', Yii::$app);
     
         $this->generateAdminUserSchema();
-        $testShema = Yii::$app->db->getTableSchema('admin_user', true);
+        $testShema = Yii::$app->db->getTableSchema('{{%admin_user}}', true);
         $ctrl->moduleName = 'crudmodulefolderadmin';
         
         
@@ -64,7 +64,7 @@ class CrudControllerTest extends AdminTestCase
         $ctrl = new CrudController('id', Yii::$app);
         
         $this->generateAdminUserSchema();
-        $testShema = Yii::$app->db->getTableSchema('admin_user', true);
+        $testShema = Yii::$app->db->getTableSchema('{{%admin_user}}', true);
         
         $this->assertNotNull($testShema);
         $this->assertSame(3, count($ctrl->generateRules($testShema)));
@@ -152,7 +152,7 @@ class TestModel extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_user';
+        return '{{%admin_user}}';
     }
 
     /**
@@ -237,7 +237,7 @@ EOT;
             'file\\namespace',
             'TestModel',
             'api-endpoint-name',
-            Yii::$app->db->getTableSchema('admin_user', true),
+            Yii::$app->db->getTableSchema('{{%admin_user}}', true),
             true
         );
         $this->assertSame($model, $c);
@@ -276,7 +276,7 @@ EOT;
             'file\\namespace',
             'TestModel',
             'api-endpoint-name',
-            Yii::$app->db->getTableSchema('admin_lang', true),
+            Yii::$app->db->getTableSchema('{{%admin_lang}}', true),
             false
         );
         
@@ -306,7 +306,7 @@ class TestModel extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_lang';
+        return '{{%admin_lang}}';
     }
 
     /**

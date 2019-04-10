@@ -29,7 +29,7 @@ final class Group extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_group';
+        return '{{%admin_group}}';
     }
     
     /**

@@ -25,6 +25,12 @@ use luya\admin\models\Config;
  */
 class CommonController extends RestController
 {
+    /**
+     * @event Event A global event which is triggered after flush cash.
+     * @since 2.0.0
+     */
+    const EVENT_FLUSH_CACHE = 'flushCache';
+
     use CacheableTrait;
     
     /**
@@ -180,6 +186,8 @@ class CommonController extends RestController
         $user = Yii::$app->adminuser->identity;
         $user->updateAttributes(['force_reload' => false]);
     
+        Yii::$app->trigger(self::EVENT_FLUSH_CACHE);
+
         return true;
     }
     

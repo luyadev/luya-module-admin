@@ -63,7 +63,7 @@ final class Lang extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_lang';
+        return '{{%admin_lang}}';
     }
     
     /**

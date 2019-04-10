@@ -69,7 +69,7 @@ class StorageController extends RestController
                 $folders[$key]['subfolder'] = Yii::$app->storage->getFolder($folder->id)->hasChild();
             }
             return $folders;
-        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM admin_storage_folder WHERE is_deleted=false']));
+        }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM {{%admin_storage_folder}} WHERE is_deleted=false']));
     }
     
     /**
@@ -85,7 +85,11 @@ class StorageController extends RestController
             ->with(['images.file']);
 
         if (!empty($search)) {
-            $query->andFilterWhere(['or', ['like', 'name_original', $search], ['like', 'caption', $search]]);
+            $query->andFilterWhere(['or', 
+                ['like', 'name_original', $search],
+                ['like', 'caption', $search],
+                ['=', 'id', $search],
+            ]);
         } else {
             $query->andWhere(['folder_id' => $folderId]);
         }
@@ -292,25 +296,27 @@ class StorageController extends RestController
     /**
      * Upload an image to the filemanager.
      *
-     * @return array
+     * @return array An array with
+     * - error: Whether an error occured or not.
+     * - id: The id of the image
+     * - image: The image object (since 2.0)
      */
     public function actionImageFilter()
     {
         $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        try {
-            $create = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null), true);
-            if ($create) {
-                return [
-                    'error' => false,
-                    'id' => $create->id,
-                ];
-            }
-        } catch (Exception $err) {
-            return $this->sendArrayError([
-                'error' => true,
-                'message' => Module::t('api_storage_image_upload_error'),
-            ]);
+        $image = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null));
+        if ($image) {
+            return [
+                'error' => false,
+                'id' => $image->id,
+                'image' => $image
+            ];
         }
+
+        return $this->sendArrayError([
+            'error' => true,
+            'message' => Module::t('api_storage_image_upload_error', ['error' => 'Unable to create the filter for the given image. Maybe the file source is not readable.']),
+        ]);
     }
     
     /**

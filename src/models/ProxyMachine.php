@@ -43,7 +43,7 @@ class ProxyMachine extends NgRestModel
      */
     public static function tableName()
     {
-        return 'admin_proxy_machine';
+        return '{{%admin_proxy_machine}}';
     }
     
     /**
