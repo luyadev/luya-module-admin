@@ -5,6 +5,8 @@ namespace luya\admin\ngrest\render;
 use luya\web\View;
 use yii\helpers\Json;
 use yii\web\JsExpression;
+use luya\helpers\ObjectHelper;
+use luya\admin\traits\TaggableTrait;
 
 /**
  * The View renderer for RenderCrud class.
@@ -45,6 +47,7 @@ class RenderCrudView extends View
             'relationCall' => $this->context->getRelationCall(),
             'relations' => $this->context->getConfig()->getRelations(),
             'pools' => $this->context->getActivePoolConfig(),
+            'tagFilter' => ObjectHelper::isTraitInstanceOf($this->context->getModel(), TaggableTrait::class),
         ];
         
         $client = 'zaa.bootstrap.register(\''.$this->context->config->getHash().'\', [\'$scope\', \'$controller\', function($scope, $controller) {
