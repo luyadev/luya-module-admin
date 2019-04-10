@@ -25,6 +25,7 @@ class UserFixture extends ActiveFixture
                 'email' => 'john@luya.io',
                 'password' => 'nohash',
                 'is_deleted' => 0,
+                'is_api_user' => 0,
             ],
             'user2' => [
                 'id' => 2,
@@ -34,6 +35,7 @@ class UserFixture extends ActiveFixture
                 'email' => 'jane@luya.io',
                 'password' => 'nohash',
                 'is_deleted' => 0,
+                'is_api_user' => 0,
             ]
         ];
     }

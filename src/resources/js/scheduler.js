@@ -40,6 +40,14 @@ zaa.directive("luyaSchedule", function() {
             $scope.showDatepicker = false;
             $scope.modalPositionClass = "";
 
+            $scope.$watch('showDatepicker', function(newValue) {
+                if (newValue === 0) {
+                    // disable the schedule checkbox, ensure to reset the timestamp.
+                    var date = new Date();
+                    $scope.timestamp = date.getTime() / 1000;
+                }
+            });
+
             $scope.toggleWindow = function() {
                 $scope.isVisible = !$scope.isVisible;
 
