@@ -2,13 +2,11 @@
 
 namespace luya\admin\proxy;
 
-use Yii;
 use luya\console\Command;
 use yii\base\InvalidConfigException;
 use luya\helpers\StringHelper;
 use yii\base\BaseObject;
 use yii\db\Connection;
-use yii\di\Instance;
 
 /**
  * Admin Proxy Build.
@@ -49,8 +47,6 @@ class ClientBuild extends BaseObject
 
     public $syncRequestsCount;
     
-    public $buildConfig;
-    
     private $_optionTable;
     
     public function setOptionTable($table)
@@ -65,40 +61,37 @@ class ClientBuild extends BaseObject
         return $this->_optionTable;
     }
     
-    public function __construct(Command $command, array $config = [])
+    public function __construct(Command $command, Connection $db, array $config = [])
     {
         $this->command = $command;
+        $this->db = $db;
         parent::__construct($config);
     }
     
     public function init()
     {
         parent::init();
-    
-        if ($this->db) {
-            $this->db = Instance::ensure($this->db, Connection::class);
-        } else {
-            $this->db = Yii::$app->db;
-        }
         
-        $this->initBuildConfig();
-    }
-    
-    public function initBuildConfig()
-    {
-        if ($this->buildConfig === null) {
+        if ($this->_buildConfig === null) {
             throw new InvalidConfigException("build config can not be empty!");
         }
-        
-        foreach ($this->buildConfig['tables'] as $tableName => $tableConfig) {
+    }
+    
+    private $_buildConfig;
+
+    public function setBuildConfig(array $config)
+    {
+        $this->_buildConfig = $config;
+
+        foreach ($config['tables'] as $tableName => $tableConfig) {
             if (!empty($this->optionTable)) {
                 if ($this->isSkippableTable($tableName, $this->optionTable)) {
                     continue;
                 }
             }
-        
+
             $schema = $this->db->getTableSchema($tableName);
-        
+
             if ($schema !== null) {
                 $this->_tables[$tableName] = new ClientTable($this, $tableConfig, ['db' => $this->db]);
             }

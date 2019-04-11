@@ -2,8 +2,9 @@
 
 namespace luya\admin\commands;
 
-use Yii;
 use Curl\Curl;
+use yii\db\Connection;
+use yii\di\Instance;
 use yii\helpers\Json;
 use luya\admin\models\Config;
 use luya\admin\proxy\ClientBuild;
@@ -149,7 +150,7 @@ class ProxyController extends Command
     public function actionSync()
     {
         if ($this->db === null) {
-            $this->db = $this->module->proxyConnectionName;
+            $this->db = Instance::ensure($this->module->proxyConnectionName, Connection::class);
         }
         
         if ($this->url === null) {
@@ -197,8 +198,7 @@ class ProxyController extends Command
 
             $this->verbosePrint($curl->response);
             $response = Json::decode($curl->response);
-            $build = new ClientBuild($this, [
-                'db' => $this->db,
+            $build = new ClientBuild($this, $this->db, [
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
                 'syncRequestsCount' => (int)$this->syncRequestsCount,
