@@ -37,7 +37,7 @@ class ClientBuildTest extends AdminTestCase
     public function testIsNotSkippableTable()
     {
         $ctrl = new ProxyController('proxyctrl', $this->app);
-        $build = new ClientBuild($ctrl, [
+        $build = new ClientBuild($ctrl, $this->app->db, [
             'buildConfig' => ['tables' => []],
         ]);
     
