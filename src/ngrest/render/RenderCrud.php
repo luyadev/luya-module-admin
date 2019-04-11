@@ -79,16 +79,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * Set crud render view object
      *
      * @param \luya\admin\ngrest\render\RenderCrudView|string|array $view Object, classname string or Yii object config array
-     *
      * @since 2.0.0
      */
     public function setView($value)
     {
-        if (is_a($value, RenderCrudView::class)) {
-            $this->_view = $value;
-        } else {
-            $this->_view = Yii::createObject($value);
-        }
+        $this->_view = \yii\di\Instance::ensure($value, '\yii\base\View');
     }
 
     /**

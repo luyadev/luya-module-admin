@@ -32,7 +32,6 @@ class RenderCrudView extends View
      * Returns the config array for Angular controller
      *
      * @return array
-     * 
      * @since 2.0.0
      */
     protected function getAngularControllerConfig()
