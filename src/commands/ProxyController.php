@@ -128,7 +128,7 @@ class ProxyController extends Command
     /**
      * @var string Database connection name. Default is `\luya\admin\Module::$proxyDbConnection`
      */
-    public $db = null;
+    public $db = 'db';
 
     /**
      * @inheritdoc
