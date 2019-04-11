@@ -46,12 +46,12 @@ class ProxyController extends Controller
     protected $ignoreTables = [
         'migration', 'admin_proxy_build', 'admin_proxy_machine',
     ];
-
-    public function beforeAction($action)
+    
+    public function init()
     {
-        $this->db = Instance::ensure($this->module->proxyConnectionName, Connection::className());
-
-        return parent::beforeAction($action);
+        $this->db = Instance::ensure($this->db, Connection::className());
+    
+        parent::init();
     }
 
     /**

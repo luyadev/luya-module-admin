@@ -160,7 +160,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var string The component/connection name from application.
      * @since 2.0.0
      */
-    public $proxyConnectionName = 'db';
+    public $proxyDbConnection = 'db';
 
     /**
      * @var integer The number of rows which should be transferd for each request.

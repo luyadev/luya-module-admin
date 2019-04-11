@@ -2,7 +2,9 @@
 
 namespace luya\admin\commands;
 
+use Yii;
 use Curl\Curl;
+use luya\admin\Module;
 use yii\db\Connection;
 use yii\di\Instance;
 use yii\helpers\Json;
@@ -64,6 +66,8 @@ use luya\console\Command;
  * ./vendor/bin/luya admin/proxy/clear
  * ```
  *
+ * @property Module $module
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -122,7 +126,7 @@ class ProxyController extends Command
     public $syncRequestsCount = 10;
     
     /**
-     * @var string Database connection name. Default is `\luya\admin\Module::$proxyConnectionName`
+     * @var string Database connection name. Default is `\luya\admin\Module::$proxyDbConnection`
      */
     public $db = null;
 
@@ -149,10 +153,8 @@ class ProxyController extends Command
      */
     public function actionSync()
     {
-        if ($this->db === null) {
-            $this->db = Instance::ensure($this->module->proxyConnectionName, Connection::class);
-        }
-        
+        $this->db = Instance::ensure($this->db, Connection::class);
+    
         if ($this->url === null) {
             $url = Config::get(self::CONFIG_VAR_URL);
 
