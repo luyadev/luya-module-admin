@@ -1144,16 +1144,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.15",
+            "version": "1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "8cbcaace84d20d4357b830519abf55c669d4298e"
+                "reference": "a9b9f441b00f2a0e98b58bf09e73b11e8c04b07a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8cbcaace84d20d4357b830519abf55c669d4298e",
-                "reference": "8cbcaace84d20d4357b830519abf55c669d4298e",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/a9b9f441b00f2a0e98b58bf09e73b11e8c04b07a",
+                "reference": "a9b9f441b00f2a0e98b58bf09e73b11e8c04b07a",
                 "shasum": ""
             },
             "require": {
@@ -1197,7 +1197,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-02-19T12:18:46+00:00"
+            "time": "2019-04-01T09:00:32+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -1265,16 +1265,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.13.3",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "0818dd2acb3ac1324e8af802b77de45514c2d785"
+                "reference": "c6d0b6e5522cd284ae3f98c9afa14a992671d118"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/0818dd2acb3ac1324e8af802b77de45514c2d785",
-                "reference": "0818dd2acb3ac1324e8af802b77de45514c2d785",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/c6d0b6e5522cd284ae3f98c9afa14a992671d118",
+                "reference": "c6d0b6e5522cd284ae3f98c9afa14a992671d118",
                 "shasum": ""
             },
             "require": {
@@ -1309,7 +1309,7 @@
                 "module",
                 "php"
             ],
-            "time": "2018-11-17T12:24:14+00:00"
+            "time": "2019-03-31T19:02:17+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3215,16 +3215,16 @@
         },
         {
             "name": "theseer/tokenizer",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
-                "reference": "cb2f008f3f05af2893a87208fe6a6c4985483f8b"
+                "reference": "1c42705be2b6c1de5904f8afacef5895cab44bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/cb2f008f3f05af2893a87208fe6a6c4985483f8b",
-                "reference": "cb2f008f3f05af2893a87208fe6a6c4985483f8b",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/1c42705be2b6c1de5904f8afacef5895cab44bf8",
+                "reference": "1c42705be2b6c1de5904f8afacef5895cab44bf8",
                 "shasum": ""
             },
             "require": {
@@ -3251,7 +3251,7 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
-            "time": "2017-04-07T12:08:54+00:00"
+            "time": "2019-04-04T09:56:43+00:00"
         },
         {
             "name": "twbs/bootstrap",

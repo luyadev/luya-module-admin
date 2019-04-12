@@ -490,6 +490,28 @@
 			return row[$scope.config.pk];
 		};
 
+		$scope.tagsFilterIds = [];
+
+		$scope.isTagFilterActive = function(tagId) {
+			if ($scope.tagsFilterIds.indexOf(tagId) == -1) {
+				return false;
+			}
+
+			return true;
+		};
+
+		$scope.toggleTagFilter = function(tagId) {
+
+			var index = $scope.tagsFilterIds.indexOf(tagId);
+			if (index == -1) {
+				$scope.tagsFilterIds.push(tagId);
+			} else {
+				$scope.tagsFilterIds.splice(index, 1);
+			}
+
+			$scope.loadList();
+		};
+
 		$scope.initServiceAndConfig = function() {
 			var deferred = $q.defer();
 			$http.get($scope.config.apiEndpoint + '/services?' + $scope.config.apiServicesQueryString).then(function(serviceResponse) {
@@ -573,6 +595,11 @@
 			var query = $scope.config.searchQuery;
 			if (query) {
 				url = url + '&query=' + query;
+			}
+
+			var ids = $scope.tagsFilterIds.join(',');
+			if (ids) {
+				url = url + '&tags=' + ids;
 			}
 			
 			return url;
