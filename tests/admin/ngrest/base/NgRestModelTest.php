@@ -6,9 +6,46 @@ use admintests\AdminTestCase;
 use admintests\data\fixtures\TagFixture;
 use admintests\data\models\TestNgRestModel;
 use admintests\data\models\TestNewNotationNgRestModel;
+use luya\admin\models\Tag;
+use luya\testsuite\fixtures\NgRestModelFixture;
+use luya\admin\models\Lang;
 
 class NgRestModelTest extends AdminTestCase
 {
+    public function testI18nAttributeMethods()
+    {
+        $lang = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'English',
+                    'short_code' => 'en',
+                    'is_default' => 1,
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+
+        $lang->getModel('id1');
+
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Tag::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'name',
+                    'translation' => '{"de":"Deutsch", "en": "English"}',
+                ]
+            ]
+        ]);
+
+        $model = $fixture->getModel('id1');
+
+        $this->assertSame('English', $model->i18nAttributeValue('translation'));
+    }
+    
+/*
     public function testScenarios()
     {
         $model = new TagFixture();
@@ -22,7 +59,7 @@ class NgRestModelTest extends AdminTestCase
         $this->assertSame($scenes['default'], $scenes['restupdate']);
         $this->assertSame($scenes['restcreate'], $scenes['restcreate']);
     }
-    
+
     public function testBehaviorIsAttached()
     {
         $model = new TestNgRestModel();
@@ -47,7 +84,7 @@ class NgRestModelTest extends AdminTestCase
         $model->load();
         $tag = $model->getModel('tag1');
         $results = $tag->genericSearch('John');
-        /** @var $results \yii\db\ActiveQuery */
+        
         $this->assertSame('john', $results->one()->name);
     }
     
@@ -89,4 +126,5 @@ class NgRestModelTest extends AdminTestCase
         
         $this->assertSame($oldArray, $newArray);
     }
+    */
 }
