@@ -156,7 +156,7 @@ class SelectModel extends Select
         
         $values = [];
         foreach ($defintion as $field) {
-            $data = $model->$field;
+            $data = $model->i18nAttributeValue($field);
             
             if (is_array($data)) {
                 $data = reset($data);

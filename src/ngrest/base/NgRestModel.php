@@ -13,6 +13,7 @@ use luya\admin\ngrest\Config;
 use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\base\RestActiveController;
 use yii\db\conditions\OrCondition;
+use luya\admin\helpers\I18n;
 
 /**
  * NgRest Model.
@@ -121,12 +122,51 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      * Whether a field is i18n or not.
      *
-     * @param string $fieldName The name of the field which is
+     * @param string $attributeName The name of the field which is
      * @return boolean
      */
-    public function isI18n($fieldName)
+    public function isI18n($attributeName)
     {
-        return in_array($fieldName, $this->i18n);
+        return in_array($attributeName, $this->i18n);
+    }
+
+    /**
+     * Checks whether given attribute is in the list of i18n fields, if so
+     * the field value will be decoded and the value for the current active
+     * language is returned.
+     * 
+     * If the attribute is not in the list of attributes values, the value of the attribute is returned. So
+     * its also safe to use this function when dealing with none i18n fields.
+     * 
+     * @param string $attributeName The attribute of the ActiveRecord to check and return its decoded i18n value.
+     * @return string A json decoded value from an i18n field.
+     * @since 2.0.0
+     */
+    public function i18nAttributeValue($attributeName)
+    {
+        if ($this->isI18n($attributeName)) {
+            return I18n::decodeFindActive($this->{$attributeName});
+        }
+
+        return $this->{$attributeName};
+    }
+
+    /**
+     * Returns the decoded i18n value for a set of attributes.
+     * 
+     * @param array $attributes An array with attributes to return its value
+     * @return An array with where the key is the attribute name and value is the decoded i18n value
+     * @see {{luya\admin\ngrest\base\NgRestModel::i18nAttributeValue()}}.
+     * @since 2.0.0
+     */
+    public function i18nAttributesValue(array $attributes)
+    {
+        $values = [];
+        foreach ($attributes as $attribute) {
+            $values[$attribute] = $this->i18nAttributeValue($attribute);
+        }
+
+        return $values;
     }
 
     /**
