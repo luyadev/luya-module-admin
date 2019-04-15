@@ -14,6 +14,7 @@ class NgRestModelTest extends AdminTestCase
 {
     public function testI18nAttributeMethods()
     {
+        /*
         $lang = new NgRestModelFixture([
             'modelClass' => Lang::class,
             'fixtureData' => [
@@ -29,6 +30,7 @@ class NgRestModelTest extends AdminTestCase
 
         $lang->getModel('id1');
 
+        */
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,
             'fixtureData' => [
@@ -45,7 +47,6 @@ class NgRestModelTest extends AdminTestCase
         $this->assertSame('English', $model->i18nAttributeValue('translation'));
     }
     
-/*
     public function testScenarios()
     {
         $model = new TagFixture();
@@ -126,5 +127,4 @@ class NgRestModelTest extends AdminTestCase
         
         $this->assertSame($oldArray, $newArray);
     }
-    */
 }
