@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\render;
 
 use Yii;
+use yii\di\Instance;
 use luya\admin\components\Auth;
 use luya\admin\models\Lang;
 use luya\admin\ngrest\NgRest;
@@ -83,7 +84,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     public function setView($value)
     {
-        $this->_view = \yii\di\Instance::ensure($value, '\yii\base\View');
+        $this->_view = Instance::ensure($value, '\yii\base\View');
     }
 
     /**
