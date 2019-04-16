@@ -17,8 +17,8 @@ class NgRestModelTest extends AdminTestCase
         $lang = new NgRestModelFixture([
             'modelClass' => Lang::class,
             'fixtureData' => [
-                'id1' => [
-                    'id' => 1,
+                'id10' => [
+                    'id' => 10,
                     'name' => 'English',
                     'short_code' => 'en',
                     'is_default' => 1,
@@ -26,8 +26,6 @@ class NgRestModelTest extends AdminTestCase
                 ]
             ]
         ]);
-
-        $lang->rebuild();
 
         $lang->getModel('id1');
 
@@ -42,9 +40,10 @@ class NgRestModelTest extends AdminTestCase
             ]
         ]);
 
-        $fixture->rebuild();
-
         $model = $fixture->getModel('id1');
+
+        $lang->cleanup();
+        $fixture->cleanup();
 
         $this->assertSame('English', $model->i18nAttributeValue('translation'));
     }
@@ -78,7 +77,7 @@ class NgRestModelTest extends AdminTestCase
         $model->load();
         $tag = $model->getModel('tag1');
         
-        $this->assertSame(['{{%admin_tag}}.id', '{{%admin_tag}}.name'], $tag->genericSearchFields());
+        $this->assertSame(['{{%admin_tag}}.id', '{{%admin_tag}}.name', '{{%admin_tag}}.translation'], $tag->genericSearchFields());
     }
     
     public function testGenericSearch()
