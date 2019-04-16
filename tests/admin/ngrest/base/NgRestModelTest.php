@@ -6,47 +6,9 @@ use admintests\AdminTestCase;
 use admintests\data\fixtures\TagFixture;
 use admintests\data\models\TestNgRestModel;
 use admintests\data\models\TestNewNotationNgRestModel;
-use luya\admin\models\Tag;
-use luya\testsuite\fixtures\NgRestModelFixture;
-use luya\admin\models\Lang;
 
 class NgRestModelTest extends AdminTestCase
 {
-    public function testI18nAttributeMethods()
-    {
-        $lang = new NgRestModelFixture([
-            'modelClass' => Lang::class,
-            'fixtureData' => [
-                'id10' => [
-                    'id' => 10,
-                    'name' => 'English',
-                    'short_code' => 'en',
-                    'is_default' => 1,
-                    'is_deleted' => 0,
-                ]
-            ]
-        ]);
-
-        $lang->getModel('id1');
-
-        $fixture = new NgRestModelFixture([
-            'modelClass' => Tag::class,
-            'fixtureData' => [
-                'id1' => [
-                    'id' => 1,
-                    'name' => 'name',
-                    'translation' => '{"de":"Deutsch", "en": "English"}',
-                ]
-            ]
-        ]);
-
-        $model = $fixture->getModel('id1');
-
-        $lang->cleanup();
-        $fixture->cleanup();
-
-        $this->assertSame('English', $model->i18nAttributeValue('translation'));
-    }
     
     public function testScenarios()
     {

@@ -32,6 +32,10 @@ return [
             'password' => DB_PASS,
             'charset' => 'utf8',
         ],
+        'sqlite' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'sqlite::memory:',
+        ],
         'storage' => [
             'class' => 'luya\admin\filesystem\DummyFileSystem'
         ]

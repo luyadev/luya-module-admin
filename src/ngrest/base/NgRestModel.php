@@ -3,17 +3,16 @@
 namespace luya\admin\ngrest\base;
 
 use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-
+use yii\db\conditions\OrCondition;
+use yii\base\InvalidConfigException;
+use luya\helpers\Json;
+use luya\admin\helpers\I18n;
 use luya\admin\behaviors\LogBehavior;
 use luya\admin\base\GenericSearchInterface;
 use luya\admin\ngrest\Config;
 use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\base\RestActiveController;
-use yii\db\conditions\OrCondition;
-use luya\admin\helpers\I18n;
 
 /**
  * NgRest Model.
@@ -144,8 +143,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function i18nAttributeValue($attributeName)
     {
-        if ($this->isI18n($attributeName)) {
-            return I18n::decodeFindActive($this->{$attributeName});
+        $value = $this->{$attributeName};
+        if ($this->isI18n($attributeName) && Json::isJson($value)) {
+            return I18n::decodeFindActive($value);
         }
 
         return $this->{$attributeName};
