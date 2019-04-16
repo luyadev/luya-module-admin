@@ -77,6 +77,38 @@ class Controller extends \luya\admin\base\Controller
      * + ng-href: 'katalogadmin/produkt/xml-download' (an example if you like to use yii response sendContentAsFile)
      */
     public $globalButtons = [];
+
+    /**
+     * @var string|array|\luya\admin\ngrest\render\RenderCrudInterface
+     *
+     * You can customize crud rendering using this property. To do so you may use standard `\luya\admin\ngrest\render\RenderCrud`, but customize
+     * it's `view` property. In this case you may simply omit the `class` key, like this:
+     *
+     * ```
+     * public $renderCrud = [
+     *     'view' => '\mymodule\admin\render\MyCustomCrudView',
+     * ];
+     * ```
+     *
+     * Or you can override `\luya\admin\ngrest\render\RenderCrud` with your custom class, let say `MyCustomCrud`, and provide it within `class` key.
+     * 
+     * ```
+     * public $renderCrud = [
+     *    'class' => '\mymodule\admin\render\MyCustomCrud',
+     *    'view' => '\mymodule\admin\render\MyCustomCrudView',
+     * ];
+     * ```
+     *
+     * If you omit the `view` property, then `\luya\admin\ngrest\render\RenderCrudView` class object will be used.
+     * 
+     * Possibly, you may need to do something very exotic (may be risky, though). In such case you'll need to create your
+     * implementation of `\luya\admin\ngrest\render\RenderCrudInterface`.
+     *
+     * For more information {@see \luya\admin\ngrest\render\RenderCrud} {@see \luya\admin\ngrest\render\RenderCrudView}
+     *
+     * @since 2.0.0
+     */
+    public $renderCrud = RenderCrud::class;
     
     /**
      * @inheritdoc
@@ -87,6 +119,9 @@ class Controller extends \luya\admin\base\Controller
         
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
+        }
+        if (is_array($this->renderCrud) && empty($this->renderCrud['class'])) {
+            $this->renderCrud['class'] = RenderCrud::class;
         }
     }
     
@@ -130,7 +165,7 @@ class Controller extends \luya\admin\base\Controller
         }
         
         // generate crud renderer
-        $crud = new RenderCrud();
+        $crud = Yii::createObject($this->renderCrud);
         $crud->setModel($this->model);
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);
