@@ -12,9 +12,11 @@ use luya\admin\models\Lang;
 
 class NgRestModelTest extends AdminTestCase
 {
+    /**
+    * @runInSeparateProcess
+    */
     public function testI18nAttributeMethods()
     {
-        /*
         $lang = new NgRestModelFixture([
             'modelClass' => Lang::class,
             'fixtureData' => [
@@ -30,7 +32,6 @@ class NgRestModelTest extends AdminTestCase
 
         $lang->getModel('id1');
 
-        */
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,
             'fixtureData' => [
