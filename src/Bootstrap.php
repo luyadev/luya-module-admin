@@ -26,7 +26,10 @@ final class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
+        // boot the queue job only if enabled.
+        if ($app->getModule('admin')->autoBootstrapQueue) {
+            $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
+        }
     }
 
     /**

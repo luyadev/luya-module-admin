@@ -165,6 +165,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var integer The expiration timeout for a proxy build in seconds. Default value is 1800 seconds which is 30 minutes.
      */
     public $proxyExpirationTime = 6200;
+
+    /**
+     * @var boolean If enabled, the admin bootstrap process will check whether the queue job was runing within the last 30min or not. If you are not setting up any cronjob to run
+     * the scheduler and you need to rely on the queue/scheulder system you enable this property which will then do a "dummy frontend user cronjob". So on every request it will
+     * check wehther to run queue or not. By default this is disabled in order to prevent to have more memory and datbase usage.
+     * @since 2.0.0
+     */
+    public $autoBootstrapQueue = false;
     
     /**
      * @var array A configuration array with all tags shipped by default with the admin module.
