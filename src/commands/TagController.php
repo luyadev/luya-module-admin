@@ -33,6 +33,17 @@ class TagController extends Command
                 $i++;
                 $tableName = TaggableTrait::cleanBaseTableName($relation->table_name);
                 if ($relation->table_name !== $tableName) {
+
+                    // if the new name exists already as combination, we can just delete the old one.
+                    /*
+                    // maybe use configuration option to delete entries by default.
+                    if (TagRelation::find()->where(['table_name' => $tableName, 'pk_id' => $relation->pk_id, 'tag_id' => $relation->tag_id])->exists()) {
+                        $relation->delete();
+                        $fixed++;
+                        continue;
+                    }
+                    */
+
                     $relation->table_name = $tableName;
                     if ($relation->save()) {
                         $fixed++;
