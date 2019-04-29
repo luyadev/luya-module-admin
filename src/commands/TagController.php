@@ -27,22 +27,25 @@ class TagController extends Command
         $batch = TagRelation::find()->batch();
         $i = 0;
         $fixed = 0;
+        $errors = 0;
         foreach ($batch as $rows) {
             foreach ($rows as $relation) {
                 $i++;
                 $tableName = TaggableTrait::cleanBaseTableName($relation->table_name);
                 if ($relation->table_name !== $tableName) {
-                    $relation->updateAttributes([
-                        'table_name' => $tableName,
-                    ]);
-                    $fixed++;
+                    $relation->table_name = $tableName;
+                    if ($relation->save()) {
+                        $fixed++;
+                    } else {
+                        $errors++;
+                    }
                 }
 
                 unset($tableName, $relation);
             }
         }
 
-        return $this->outputSuccess("{$i} items checked and {$fixed} items fixed.");
+        return $this->outputSuccess("{$i} items checked and {$fixed} items fixed with {$errors} errors.");
     }
 
     /**
