@@ -44,8 +44,19 @@ trait TaggableTrait
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('{{%admin_tag_relation}}', ['pk_id' => 'id'], function ($query) {
-            $query->andWhere(['table_name' => static::tableName()]);
+            $query->andWhere(['table_name' => static::cleanBaseTableName(static::tableName())]);
         });
+    }
+
+    /**
+     * Remove brackes from the table name, this makes sure the table name also works if the db prefix changes.
+     *
+     * @return string
+     * @since 2.0.0
+     */
+    public static function cleanBaseTableName($tableName)
+    {
+        return str_replace(['{{%', '}}'], '', $tableName);
     }
     
     /**
@@ -55,6 +66,6 @@ trait TaggableTrait
      */
     public static function findTags()
     {
-        return Tag::findRelationsTable(static::tableName());
+        return Tag::findRelationsTable(static::cleanBaseTableName(static::tableName()));
     }
 }

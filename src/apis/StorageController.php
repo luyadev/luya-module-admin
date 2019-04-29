@@ -18,10 +18,9 @@ use luya\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use luya\admin\models\StorageImage;
-use luya\admin\file\Item;
-use luya\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use luya\admin\models\TagRelation;
+use luya\admin\traits\TaggableTrait;
 
 /**
  * Filemanager and Storage API.
@@ -120,7 +119,7 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given file to toggle the tag.");
         }
     
-        $relation = TagRelation::find()->where(['table_name' => StorageFile::tableName(), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
+        $relation = TagRelation::find()->where(['table_name' => TaggableTrait::cleanBaseTableName(StorageFile::tableName()), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
 
         if ($relation) {
             $relation->delete();
@@ -129,7 +128,7 @@ class StorageController extends RestController
         }
 
         $model = new TagRelation();
-        $model->table_name = StorageFile::tableName();
+        $model->table_name = TaggableTrait::cleanBaseTableName(StorageFile::tableName());
         $model->pk_id = $fileId;
         $model->tag_id = $tagId;
 
