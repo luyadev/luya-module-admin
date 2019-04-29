@@ -82,7 +82,11 @@ use luya\admin\helpers\Angular;
                 <div ng-switch-when="2">
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="material-icons">link</i></div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="material-icons">link</i>
+                                </div>
+                            </div>
                             <input type="text" class="form-control" ng-model="data.value" placeholder="http://">
                         </div>
                         <small class="form-text text-muted"><?= Admin::t('view_index_redirect_external_link_help'); ?></small>

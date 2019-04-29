@@ -96,11 +96,15 @@ $this->beginBody();
                 <div class="row mt-2">
                     <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-addon" ng-hide="config.searchQuery">
-                                <i class="material-icons">search</i>
+                            <div class="input-group-prepend" ng-hide="config.searchQuery">
+                                <div class="input-group-text">
+                                    <i class="material-icons">search</i>
+                                </div>
                             </div>
-                            <span class="input-group-addon" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
-                                <i class="material-icons">clear</i>
+                            <span class="input-group-prepend" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
+                                <div class="input-group-text">
+                                    <i class="material-icons">clear</i>
+                                </div>
                             </span>
                             <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
                         </div>
@@ -139,7 +143,9 @@ $this->beginBody();
                 <table class="table table-hover table-align-middle table-striped mt-0">
                     <thead class="thead-default">
                         <tr>
-                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) { continue; } ?>
+                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) {
+    continue;
+} ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
                                     <?php if ($config->getDefaultOrderField() && $this->context->isSortable($item)): ?>
@@ -169,7 +175,9 @@ $this->beginBody();
                             </td>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
-                            <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) { continue; } $i++; ?>
+                            <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) {
+    continue;
+} $i++; ?>
                                 <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
                                 </td>

@@ -1618,8 +1618,10 @@
                             '<div class="form-side">' +
 
                                 '<div class="input-group mb-3">' +
-                                    '<div class="input-group-addon">' +
-                                        '<i class="material-icons">search</i>' +
+                                    '<div class="input-group-prepend">' +
+                                        '<div class="input-group-text">' +
+                                            '<i class="material-icons">search</i>' +
+                                        '</div>' +        
                                     '</div>' +
                                     '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="'+i18n['ngrest_crud_search_text']+'">' +
 
@@ -1755,20 +1757,26 @@
                             '<div class="form-side form-inline datepicker-wrapper">' +
                                 '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                                         '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
-                                        '<div class="input-group-addon" ng-click="toggleDatePicker()">' +
-                                            '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
-                                            '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                                        '<div class="input-group-append" ng-click="toggleDatePicker()">' +
+                                            '<div class="input-group-text">' +
+                                                '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
+                                                '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                                            '</div>' + 
                                         '</div>' +
                                 '</datepicker>' +
             	                '<div ng-show="model!=null && date!=null" class="hour-selection">' +
                                     '<div class="input-group">' +
-                                        '<div class="input-group-addon">' +
-                                            '<i class="material-icons">access_time</i>' +
+                                        '<div class="input-group-prepend">' +
+                                            '<div class="input-group-text">' +
+                                                '<i class="material-icons">access_time</i>' +
+                                            '</div>' +
                                         '</div>' +
                                         '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
                                     '</div>' +
                                     '<div class="input-group">' +
-                                        '<div class="input-group-addon zaa-datetime-time-colon">:</div>' +
+                                        '<div class="input-group-prepend zaa-datetime-time-colon">' +
+                                            '<div class="input-group-text">:</div>' +
+                                        '</div>' +
                                         '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
                                     '</div>' +
             	                '</div>' +
@@ -1867,9 +1875,11 @@
                             '<div class="form-side datepicker-wrapper">' +
                                 '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                                     '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
-                                    '<div class="input-group-addon" ng-click="toggleDatePicker()">' +
-                                        '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
-                                        '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                                    '<div class="input-group-append" ng-click="toggleDatePicker()">' +
+                                        '<div class="input-group-text">' +
+                                            '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
+                                            '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</datepicker>' +
                                 '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
