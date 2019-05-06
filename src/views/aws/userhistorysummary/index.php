@@ -31,7 +31,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			<div class="card-header">
 				<?= Module::t('aw_userhistorysummary_userdata'); ?>
 		 	 </div>
-			  	<div class="table-responsive-wrapper p-2">
+			  	<div class="table-responsive p-2">
 					<table class="table table-sm pb-0 mb-0">
 						<tr>
 							<td><?= Module::t('mode_user_title'); ?></td>
@@ -72,7 +72,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			<div class="card-header">
 				<?= Module::t('aw_userhistorysummary_customsettings'); ?>
 			</div>
-			<div class="table-responsive-wrapper p-2">
+			<div class="table-responsive p-2">
 				<table class="table table-sm pb-0 mb-0">
 					<thead>
 						<tr>
@@ -138,7 +138,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			    <?php endif; ?>
 			    </li>
 			    <li class="list-group-item p-2" style="background-color:#f1f1f1" ng-show="hiddenElement<?= $log->id; ?>">
-					<div class="table-responsive-wrapper">
+					<div class="table-responsive">
 			    	<table class="table table-bordered">
 			    		<thead>
 			    			<tr>

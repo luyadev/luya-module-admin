@@ -81,38 +81,3 @@
 .table-hover tbody tr:hover {
     background-color: rgba(0, 0, 0, .15);
 }
-
-// Copied from bootstrap to show table-responsive earlier
-
-.table-responsive {
-
-    @media (max-width: $reponsive-table-breakpoint) {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        //-ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
-
-        // Prevent double border on horizontal scroll due to use of `display: block;`
-        &.table-bordered {
-            border: 0;
-        }
-    }
-}
-
-.table-responsive-wrapper {
-    display: block;
-    overflow: hidden;
-    overflow-x: auto;
-    width: 100%;
-    &::-webkit-scrollbar {
-        display: none; // Safari and Chrome
-    }
-    -ms-overflow-style: none; // IE 10+
-
-    table,
-    .table-responsive {
-        display: table;
-        overflow: hidden;
-        width: 100%;
-    }
-}

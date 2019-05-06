@@ -139,7 +139,7 @@ $this->beginBody();
             </button>
             <?php endif; ?>
             <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
-            <div class="table-responsive-wrapper">
+            <div class="table-responsive">
                 <table class="table table-hover table-align-middle table-striped mt-0">
                     <thead class="thead-default">
                         <tr>

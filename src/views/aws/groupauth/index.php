@@ -13,7 +13,7 @@ use luya\admin\Module;
                 <span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>
                 {{ name }}
             </div>
-            <div class="table-responsive-wrapper" ng-show="groupVisibility">
+            <div class="table-responsive" ng-show="groupVisibility">
                 <table class="table m-0 p-0">
                     <thead>
                         <tr>
