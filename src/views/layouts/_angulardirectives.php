@@ -358,7 +358,7 @@ use luya\admin\helpers\Angular;
                             ng-class="{ 'clickable selectable' : allowSelection == 'false', 'filemanager-file-selected': selectedFileFromParent && selectedFileFromParent.id == file.id, 'filemanager-file-detail-open': fileDetail.id === file.id}"
                         >
                             <th scope="row" ng-click="toggleSelection(file)">
-                                <div class="form-check" ng-class="{'form-check-active': inSelection(file)}">
+                                <div class="form-check filemanager-toggle-selection" ng-class="{'form-check-active': inSelection(file)}">
                                     <input type="checkbox" ng-checked="inSelection(file)" class="form-check-input">
                                     <label></label>
                                 </div>
@@ -372,8 +372,8 @@ use luya\admin\helpers\Angular;
                             <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
                             <td class="text-right">
-                                <button type="button" class="btn btn-sm" ng-click="openFileDetail(file)">
-                                    <i class="material-icons">zoom_in</i>
+                                <button type="button" class="btn btn-icon btn-sm filemanager-info-btn" ng-click="openFileDetail(file)">
+                                    <i class="material-icons">info</i>
                                 </button>
                             </td>
                         </tr>
