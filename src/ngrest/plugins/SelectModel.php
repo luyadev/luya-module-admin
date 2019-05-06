@@ -238,7 +238,7 @@ class SelectModel extends Select
     {
         return [
             $this->createCrudLoaderTag($this->modelClass, $ngModel),
-            $this->createFormTag('zaa-select', $id, $ngModel, ['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')]),
+            $this->createFormTag('zaa-select', $id, $ngModel, array_filter(['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')])),
         ];
     }
     

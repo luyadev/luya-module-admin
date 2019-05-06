@@ -58,10 +58,10 @@ abstract class Select extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag(self::TYPE_SELECT, $id, $ngModel, [
+        return $this->createFormTag(self::TYPE_SELECT, $id, $ngModel, array_filter([
             'initvalue' => $this->initValue,
             'options' => $this->getServiceName('selectdata'),
-        ]);
+        ]));
     }
 
     /**
