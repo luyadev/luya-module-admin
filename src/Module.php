@@ -175,6 +175,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $autoBootstrapQueue = false;
     
     /**
+     * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
+     * when opening the file url, in order to enable inline disposition (will try to display the file in the browser) set true.
+     * > This property will only have an effect when uploading new files and won't work for existing uploaded files or a general default behavior.
+     * @since 2.0.0
+     */
+    public $fileDefaultInlineDisposition = false;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [

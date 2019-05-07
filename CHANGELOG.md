@@ -31,6 +31,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#225](https://github.com/luyadev/luya-module-admin/issues/225) Added configuration for default behavior with inline disposition when uploading new files.
 + [#289](https://github.com/luyadev/luya-module-admin/issues/289) Added new input field methods checkbox, checkboxList, radioList, imageUpload, fileUpload, date and datetime picker.
 + [#283](https://github.com/luyadev/luya-module-admin/pull/283) The possibility to extend standard ngrest crud views
 + [#236](https://github.com/luyadev/luya-module-admin/issues/236) Added multiple menu entries and CRUD view for same models (data pools).

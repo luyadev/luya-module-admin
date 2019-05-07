@@ -20,7 +20,7 @@ use luya\Exception;
 class LocalFileSystem extends BaseFileSystemStorage
 {
     private $_httpPath;
-    
+
     /**
      * @var string The name of the folder which is used to storage the data inside the @webroot directory.
      */

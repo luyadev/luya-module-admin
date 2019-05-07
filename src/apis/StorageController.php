@@ -21,6 +21,8 @@ use luya\admin\models\StorageImage;
 use yii\data\ActiveDataProvider;
 use luya\admin\models\TagRelation;
 use luya\admin\traits\TaggableTrait;
+use luya\admin\storage\BaseFileSystemStorage;
+use luya\admin\events\FileEvent;
 
 /**
  * Filemanager and Storage API.
@@ -256,6 +258,9 @@ class StorageController extends RestController
         $model->attributes = $post;
         
         if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
+
+            Yii::$app->storage->trigger(BaseFileSystemStorage::FILE_UPDATE_EVENT, new FileEvent(['file' => $model]));
+            
             $this->flushApiCache($model->folder_id, $pageId);
             return $model;
         }

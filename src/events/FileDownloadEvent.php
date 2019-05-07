@@ -10,7 +10,13 @@ namespace luya\admin\events;
  */
 class FileDownloadEvent extends \yii\base\Event
 {
+    /**
+     * {@inheritDoc}
+     */
     public $isValid = true;
     
+    /**
+     * @var \luya\admin\file\Item $file The file to handle
+     */
     public $file;
 }
