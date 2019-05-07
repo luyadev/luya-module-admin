@@ -105,8 +105,16 @@ abstract class BaseFileSystemStorage extends Component
 {
     use CacheableTrait;
     
+    /**
+     * @var string This event is triggered when the storage file model is updating, for example when change the disposition.
+     * @since 2.0.0
+     */
     const FILE_UPDATE_EVENT = 'onFileUpdate';
 
+    /**
+     * @var string This event is triggered when a new file is uploaded to the file system.
+     * @since 2.0.0
+     */
     const FILE_SAVE_EVENT = 'onFileSave';
 
     /**
