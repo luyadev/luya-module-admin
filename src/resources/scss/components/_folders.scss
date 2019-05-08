@@ -81,6 +81,10 @@ $icon-line-height: $icon-font-size + 5px;
     display: block;
     padding-right: 4px;
 
+    &.is-active {
+        font-weight:bold;
+    }
+
     .folders-folder--edit & {
         opacity: 0;
     }

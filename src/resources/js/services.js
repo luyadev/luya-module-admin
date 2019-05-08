@@ -105,7 +105,7 @@ zaa.factory("ServiceFoldersData", ['$http', '$q', '$rootScope', function($http, 
 
 $scope.folderId = ServiceFoldersDirecotryId.folderId;
 					
-$scope.$on('FoldersDirectoryId', function(event, folderId) {
+$scope.$on('service:FoldersDirectoryId', function(event, folderId) {
 	$scope.folderId = folderId;
 });
 

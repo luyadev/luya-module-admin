@@ -376,7 +376,7 @@ return [
     'active_button_duplicate_success' => 'Eine Kopie wurde erstellt.',
     'active_button_duplicate_error' => 'Beim Duplizieren trat ein Fehler auf: {message}',
 
-// 1.3
+// 2.0
 
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
@@ -392,5 +392,7 @@ return [
     'js_scheduler_table_newvalue' => 'Neuer Wert',
     'js_scheduler_table_timestamp' => 'Ausführungszeit',
     'js_dir_manager_rename_success' => 'Der Ordner wurde erfolgreich umbenannt.',
+    'layout_filemanager_search_no_results' => 'Es wurden keine Dateien gefunden für <strong>{{searchQuery}}</strong>.',
+    'layout_filemanager_empty_folder' => 'Dieses Verzeichnis enthält keine Dateien.',
 
 ];

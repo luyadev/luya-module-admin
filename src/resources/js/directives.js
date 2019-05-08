@@ -2732,8 +2732,8 @@
                 onlyImages : '@onlyImages'
             },
             controller : [
-            	'$scope', '$http', '$filter', '$timeout', '$q', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 
-            	function($scope, $http, $filter, $timeout, $q, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
+            	'$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 
+            	function($scope, $http, $filter, $timeout, $rootScope, $q, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
 
                 // ServiceFoldersData inheritance
 
@@ -2765,9 +2765,39 @@
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function(folderId) {
                 	if (folderId !== undefined) {
+                        // generate the current pare info based on folder
+                        $scope.generateFolderInheritance(folderId);
                 		$scope.getFilesForPageAndFolder(folderId, 1);
                 	}
                 });
+
+                $scope.folderInheritance = [];
+
+                $scope.generateFolderInheritance = function(folderId) {
+                    $scope.folderInheritance = [];
+                    $scope.findFolderInheritance(folderId);
+                }
+
+                $scope.findFolderInheritance = function(folderId) {
+                    if ($scope.foldersData.hasOwnProperty(folderId)) {
+                        var parent = $scope.foldersData[folderId];
+                        $scope.folderInheritance.push(parent);
+                        if (parent && parent.parentId) {
+                            $scope.findFolderInheritance(parent.parentId);
+                        }
+                    }
+                }
+
+                $scope.hasFolderActiveChild = function(folderId) {
+                    var value = false;
+                    angular.forEach($scope.folderInheritance, function(item) {
+                        if (item.id == folderId) {
+                            value = true;
+                        }
+                    });
+
+                    return value;
+                }
 
                 $scope.$watch('currentPageId', function(pageId, oldPageId) {
                     if (pageId !== undefined && pageId != oldPageId) {
@@ -2784,10 +2814,9 @@
                 	});
                 };
 
-                $scope.createUrl = function(folderId, pageId, sortField, search)
-                {
+                $scope.createUrl = function(folderId, pageId, sortField, search) {
                     return 'admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + sortField + '&search=' + search;
-                }
+                };
 
                 $scope.filesResponseToVars = function(response) {
                     $scope.filesData = response.data;
@@ -2803,13 +2832,13 @@
                 
                 $scope.getFilesForCurrentPage = function() {
                 	return $scope.getFilesForPageAndFolder($scope.currentFolderId, $scope.currentPageId);
-                }
+                };
                 
                 // ServiceFolderId
 
                 $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
 
-                $scope.$on('FoldersDirectoryId', function(event, folderId) {
+                $rootScope.$on('service:FoldersDirectoryId', function(event, folderId) {
                 	$scope.currentFolderId = folderId;
                 });
 
@@ -2988,10 +3017,12 @@
                 	if (!newFolderName) {
                 		return;
                 	}
-                    $http.post('admin/api-admin-storage/folder-create', { folderName : newFolderName , parentFolderId : $scope.currentFolderId }).then(function() {
-                        $scope.foldersDataReload().then(function() {
+                    $http.post('admin/api-admin-storage/folder-create', { folderName : newFolderName , parentFolderId : $scope.currentFolderId }).then(function(response) {
+                        var folderId = response.data;
+                        $scope.foldersDataReload().then(function(response) {
                             $scope.folderFormToggler();
                             $scope.newFolderName = null;
+                            $scope.changeCurrentFolderId(folderId);
                         })
                     });
                 };
@@ -3004,20 +3035,22 @@
 
                 $scope.searchQuery = '';
                 $scope.searchPromise = null;
+                $scope.searchLoading = false;
                 
                 $scope.runSearch = function() {
                     if ($scope.searchQuery.length > 0) {
+                        $scope.searchLoading = true;
+                        cfpLoadingBar.start();
                         $timeout.cancel($scope.searchPromise);
                         $scope.searchPromise = $timeout(function() {
-                            $scope.getFilesForCurrentPage();
-                            /*
-                            $http.get('admin/api-admin-storage/search?query=' + $scope.searchQuery).then(function(response) {
-                                $scope.filesResponseToVars(response);
+                            $scope.getFilesForCurrentPage().then(function() {
+                                $scope.searchLoading = false;
                             });
-                            */
                         }, 1000);
                     } else {
-                        $scope.getFilesForCurrentPage();
+                        $scope.getFilesForCurrentPage().then(function() {
+                            $scope.searchLoading = false;
+                        });
                     }
                 };
 
