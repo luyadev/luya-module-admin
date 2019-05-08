@@ -3334,10 +3334,20 @@
                 pageCount: '='
             },
             controller: ['$scope', '$timeout', function($scope, $timeout) {
+                $scope.sliderPage = 1;
+                $scope.userInputPage = 1;
+
                 // Watch for pageCOunt changes and refresh ceil value for slider
                 $scope.$watch('pageCount', function(newValue) {
                     if (newValue !== undefined) {
                         $scope.sliderOptions.ceil = newValue;
+                    }
+                });
+                $scope.$watch('userInputPage', function(newValue, oldValue) {
+                    if(newValue >= $scope.sliderOptions.floor && newValue <= $scope.sliderOptions.ceil) {
+                        $scope.sliderPage = newValue;
+                        $scope.currentPage = newValue;
+                        $scope.$broadcast('rzSliderForceRender'); // Probably not the best idea, but for now it works.
                     }
                 });
 
@@ -3358,14 +3368,21 @@
                     onEnd: function(sliderId, modelValue) {
                         // Update the currentPage once the user stopped dragging (or on click)
                         $scope.currentPage = modelValue;
+                        $scope.userInputPage = modelValue;
                     } 
                 };
 
                 $timeout(function() {
-                    $scope.$broadcast('rzSliderForceRender')
+                    $scope.$broadcast('rzSliderForceRender');
                 });
 
             }],
-            template: '<rzslider rz-slider-model="1" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>',
+            template: '<rzslider rz-slider-model="sliderPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>' +
+                    '<div class="input-group mt-2" style="max-width: 150px" ng-show="sliderOptions.ceil >= 30">' +
+                        '<div class="input-group-prepend">' +
+                            '<div class="input-group-text">Seite</div>' +
+                        '</div>' +
+                        '<input class="form-control" ng-model="userInputPage" type="number" min="{{sliderOptions.floor}}" max="{{sliderOptions.ceil}}" />' +
+                    '</div>',
         };
     });
