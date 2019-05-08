@@ -9,6 +9,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Changed
 
++ [#293](https://github.com/luyadev/luya-module-admin/issues/293) Added new request log table for api calls in order to make metrics about request, this must be enabled in the admin area.
 + [#46](https://github.com/luyadev/luya-module-admin/issues/46) Updated bootstrap to 4.3.1.
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.

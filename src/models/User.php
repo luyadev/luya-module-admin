@@ -40,6 +40,7 @@ use luya\validators\StrengthValidator;
  * @property integer $email_verification_token_timestamp
  * @property integer $login_attempt
  * @property integer $login_attempt_lock_expiration
+ * @property boolean $is_request_logger_enabled
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -145,6 +146,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'email' => 'text',
             'password' => 'password',
             'login_attempt_lock_expiration' => 'datetime',
+            'is_request_logger_enabled' => 'toggleStatus',
         ];
     }
     
@@ -176,7 +178,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return [
             ['list', ['title', 'firstname', 'lastname', 'email', 'lastloginTimestamp']],
             ['create', ['title', 'firstname', 'lastname', 'email', 'password']],
-            ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration']],
+            ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration', 'is_request_logger_enabled']],
             ['delete', true],
         ];
     }
@@ -223,7 +225,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email'], 'unique', 'except' => ['login']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
-            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user'], 'integer'],
+            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled'], 'integer'],
             [['email_verification_token'], 'string', 'length' => 40],
             [['password'], StrengthValidator::class, 'when' => function () {
                 return Module::getInstance()->strongPasswordPolicy;
@@ -255,8 +257,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function scenarios()
     {
         return [
-            'restcreate' => ['title', 'firstname', 'lastname', 'email', 'password'],
-            'restupdate' => ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration'],
+            'restcreate' => ['title', 'firstname', 'lastname', 'email', 'password', 'is_request_logger_enabled'],
+            'restupdate' => ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration', 'is_request_logger_enabled'],
             'changepassword' => ['password', 'password_salt'],
             'login' => ['email', 'password', 'force_reload'],
             'securelayer' => ['secure_token'],

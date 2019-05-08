@@ -212,6 +212,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
         'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
+        'api-admin-userrequest' => 'luya\admin\apis\UserRequestController',
     ];
 
     /**
