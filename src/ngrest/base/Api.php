@@ -356,7 +356,7 @@ class Api extends RestActiveController
      *
      * If not found a NotFoundHttpException will be thrown.
      *
-     * @params integer|string $id The id to performe the findOne() method.
+     * @param integer|string $id The id to performe the findOne() method.
      * @throws NotFoundHttpException
      * @return \luya\admin\ngrest\base\NgRestModel
      */
@@ -375,20 +375,22 @@ class Api extends RestActiveController
     /**
      * Find the model for a given class and id.
      *
-     * @param [type] $modelClass
-     * @param [type] $id
-     * @return void
+     * @param string $modelClass the full qualified path to the model
+     * @param string $id The id which is a string, for example 1 or for composite keys its 1,4
+     * @param string $relationContext The name of the context, which is actually the action like `searach` or `index`.
+     * @return yii\db\ActiveRecord|boolean
      */
     public function findModelClassObject($modelClass, $id, $relationContext)
     {
+        // returns an array with the names of the primary keys
         $keys = $modelClass::primaryKey();
         if (count($keys) > 1) {
             $values = explode(',', $id);
             if (count($keys) === count($values)) {
-                return $this->findModelFromCondition(array_combine($keys, $values), $keys, $modelClass, $relationContext);
+                return $this->findModelFromCondition($values, $keys, $modelClass, $relationContext);
             }
         } elseif ($id !== null) {
-            return $this->findModelFromCondition($id, $keys, $modelClass, $relationContext);
+            return $this->findModelFromCondition([$id], $keys, $modelClass, $relationContext);
         }
 
         return false;
@@ -397,13 +399,16 @@ class Api extends RestActiveController
     /**
      * This equals to the ActieRecord::findByCondition which is sadly a protected method.
      *
+     * @param array $values An array with values for the given primary keys
+     * @param array $keys An array holding all primary keys
+     * @param string $modelClass The full qualified namespace to the model
+     * @param string $relationContext The name of the context like "search", "index", "list". Its acutally the action name
      * @since 1.2.3
      * @return yii\db\ActiveRecord
      */
-    protected function findModelFromCondition($condition, $primaryKey, $modelClass, $relationContext)
+    protected function findModelFromCondition(array $values, array $keys, $modelClass, $relationContext)
     {
-        $condition = [$primaryKey[0] => is_array($condition) ? array_values($condition) : $condition];
-
+        $condition = array_combine($keys, $values);
         // If an api user the internal find methods are used to find items.
         if (Yii::$app->adminuser->identity->is_api_user) {
             // api calls will always use the "original" find method which is based on yii2 guide the best approach to hide given data by default.
