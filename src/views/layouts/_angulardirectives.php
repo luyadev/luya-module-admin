@@ -276,12 +276,12 @@ use luya\admin\helpers\Angular;
                     <li class="breadcrumb-item"><a ng-click="changeCurrentFolderId(0)"><?= Admin::t('layout_filemanager_root_dir'); ?></a></li>
                     <li class="breadcrumb-item" ng-repeat="fo in folderInheritance | reverse"><a ng-click="changeCurrentFolderId(fo.id)">{{ fo.name }}</a></li>
                 </ol>
-                <div class="table-responsive" ng-if="filesData.length > 0">
+                <div class="table-responsive" ng-show="filesData.length > 0">
                     <table class="table table-hover table-striped table-align-middle mt-2">
                         <thead class="thead-default">
                             <tr>
                                 <th>
-                                    <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()" tooltip tooltip-position="right">
+                                    <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()">
                                         <i class="material-icons">done_all</i>
                                     </span>
                                 </th>
