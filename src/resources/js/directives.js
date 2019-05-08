@@ -3380,7 +3380,7 @@
             template: '<rzslider rz-slider-model="sliderPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>' +
                     '<div class="input-group mt-2" style="max-width: 150px" ng-show="sliderOptions.ceil >= 30">' +
                         '<div class="input-group-prepend">' +
-                            '<div class="input-group-text">Seite</div>' +
+                            '<div class="input-group-text">' + i18n['js_pagination_page'] + '</div>' +
                         '</div>' +
                         '<input class="form-control" ng-model="userInputPage" type="number" min="{{sliderOptions.floor}}" max="{{sliderOptions.ceil}}" />' +
                     '</div>',
