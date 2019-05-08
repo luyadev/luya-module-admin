@@ -360,7 +360,11 @@ class StorageController extends RestController
                 
                 if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
                     foreach (StorageImage::find()->where(['file_id' => $file->id])->all() as $img) {
-                        $removal = Storage::removeImage($img->id, false);
+                        // remove the source
+                        if ($img->deleteSource()) {
+                            // recreate image filters
+                            $img->imageFilter($img->filter_id, false);
+                        }
                     }
                     
                     // calculate new file files based on new file

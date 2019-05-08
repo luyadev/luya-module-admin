@@ -20,6 +20,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#294](https://github.com/luyadev/luya-module-admin/issues/294) Fixed bug when replace a file with images.
 + [#291](https://github.com/luyadev/luya-module-admin/issues/291) Fixed search and sub folder behavior in file manager.
 + [#278](https://github.com/luyadev/luya-module-admin/pull/278) ToggleStatus plugin initValue=1 not displayed at frontend
 + [#62](https://github.com/luyadev/luya-module-admin/issues/62) Two-digit display of minutes in datetime fields.
