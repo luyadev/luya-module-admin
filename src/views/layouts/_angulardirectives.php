@@ -363,11 +363,11 @@ use luya\admin\helpers\Angular;
                                     <label></label>
                                 </div>
                             </th>
-                            <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
+                            <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
                                 <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}" /></span>
                                 <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                             </td>
-                            <td ng-click="toggleSelection(file)">{{file.name_original | truncateMiddle: 50}}</td>
+                            <td ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-text="{{file.id}}">{{file.name_original | truncateMiddle: 50}}</td>
                             <td ng-click="toggleSelection(file)">{{file.extension}}</td>
                             <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
                             <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
