@@ -277,7 +277,7 @@ use luya\admin\helpers\Angular;
                     <li class="breadcrumb-item" ng-repeat="fo in folderInheritance | reverse"><a ng-click="changeCurrentFolderId(fo.id)">{{ fo.name }}</a></li>
                 </ol>
                 <div class="table-responsive" ng-show="filesData.length > 0">
-                    <table class="table table-hover table-striped table-align-middle mt-2">
+                    <table class="table table-hover table-striped table-align-middle">
                         <thead class="thead-default">
                             <tr>
                                 <th>

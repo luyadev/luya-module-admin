@@ -283,7 +283,7 @@ zaa.directive("luyaSchedule", function() {
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive">' +
-                                                '<table class="table table-hover table-align-middle mb-0">' +
+                                                '<table class="table table-hover table-align-middle">' +
                                                     '<thead>' +
                                                         '<tr>' +
                                                             '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +
@@ -310,7 +310,7 @@ zaa.directive("luyaSchedule", function() {
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
                                             '<div class="table-responsive">' +
-                                                '<table class="table table-hover table-align-middle mb-0">' +
+                                                '<table class="table table-hover table-align-middle">' +
                                                     '<thead>' +
                                                         '<tr>' +
                                                             '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +

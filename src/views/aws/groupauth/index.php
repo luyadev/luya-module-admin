@@ -14,7 +14,7 @@ use luya\admin\Module;
                 {{ name }}
             </div>
             <div class="table-responsive" ng-show="groupVisibility">
-                <table class="table m-0 p-0">
+                <table class="table p-0">
                     <thead>
                         <tr>
                             <th class="w-25">

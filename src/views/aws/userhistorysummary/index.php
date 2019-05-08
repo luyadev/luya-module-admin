@@ -32,7 +32,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 				<?= Module::t('aw_userhistorysummary_userdata'); ?>
 		 	 </div>
 			  	<div class="table-responsive p-2">
-					<table class="table table-sm pb-0 mb-0">
+					<table class="table table-sm pb-0">
 						<tr>
 							<td><?= Module::t('mode_user_title'); ?></td>
 							<td><?= $model->getTitleNamed(); ?></td>
@@ -73,7 +73,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 				<?= Module::t('aw_userhistorysummary_customsettings'); ?>
 			</div>
 			<div class="table-responsive p-2">
-				<table class="table table-sm pb-0 mb-0">
+				<table class="table table-sm pb-0">
 					<thead>
 						<tr>
 							<th><?= Module::t('aw_userhistorysummary_customsettings_key'); ?></th>

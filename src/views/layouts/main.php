@@ -213,7 +213,7 @@ $this->beginPage()
                         </div>
                         <div class="card-body p-2">
                             <div class="table-responsive">
-                                <table class="table table-hover table-align-middle mb-0">
+                                <table class="table table-hover table-align-middle">
                                     <thead>
                                         <tr ng-repeat="row in item.data | limitTo:1">
                                             <th ng-hide="!item.hideFields.indexOf(k)" ng-repeat="(k,v) in row">{{k}}</th>

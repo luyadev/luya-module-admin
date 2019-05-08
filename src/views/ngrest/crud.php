@@ -140,7 +140,7 @@ $this->beginBody();
             <?php endif; ?>
             <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
             <div class="table-responsive">
-                <table class="table table-hover table-align-middle table-striped mt-0">
+                <table class="table table-hover table-align-middle table-striped">
                     <thead class="thead-default">
                         <tr>
                             <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) {
