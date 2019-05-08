@@ -18,6 +18,10 @@
     thead {
         transition: .2s background-color ease-in-out;
     }
+
+    .table-responsive & {
+        margin: 0;
+    }
 }
 
 .table-align-middle {

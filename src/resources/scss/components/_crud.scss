@@ -129,13 +129,13 @@
     }
 
     &:before {
-        bottom: -30px;
+        bottom: 0;
         content: '';
         display: block;
-        left: -40px;
+        left: 0;
         position: absolute;
         right: 0;
-        top: -30px;
+        top: 0;
     }
 }
 
