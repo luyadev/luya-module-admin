@@ -20,7 +20,7 @@ class UserRequestBehavior extends ActionFilter
      */
     private function hasUserEnabled()
     {
-        return Yii::$app->adminuser->identity->is_request_logger_enabled;
+        return Yii::$app->adminuser->isGuest ? false : Yii::$app->adminuser->identity->is_request_logger_enabled;
     }
 
     /**
