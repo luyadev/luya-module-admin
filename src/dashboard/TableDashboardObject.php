@@ -26,5 +26,5 @@ class TableDashboardObject extends BasicDashboardObject
     /**
      * @inheritdoc
      */
-    public $outerTemplate = '<div class="card-header">{{title}}</div><div class="card-body"><div class="table-responsive-wrapper"><table class="table table-hover">{{template}}</table></div></div>';
+    public $outerTemplate = '<div class="card-header">{{title}}</div><div class="card-body"><div class="table-responsive"><table class="table table-hover">{{template}}</table></div></div>';
 }

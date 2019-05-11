@@ -10,6 +10,7 @@ use yii\web\ForbiddenHttpException;
 use luya\rest\ActiveController;
 use luya\admin\Module as AdminModule;
 use yii\base\InvalidConfigException;
+use luya\admin\behaviors\UserRequestBehavior;
 
 /**
  * Base class for Rest Active Controllers.
@@ -33,6 +34,19 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
         $this->jsonCruft = AdminModule::getInstance()->jsonCruft;
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors[] = [
+            'class' => UserRequestBehavior::class,
+        ];
+
+        return $behaviors;
+    }
+
     /**
      * Get the current user auth object.
      *

@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\render;
 
 use Yii;
+use yii\di\Instance;
 use luya\admin\components\Auth;
 use luya\admin\models\Lang;
 use luya\admin\ngrest\NgRest;
@@ -32,6 +33,33 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     const TYPE_UPDATE = 'update';
 
+    /**
+     * @var string The view file for create and update form rendering. Aliases are supported.
+     * By default the location for this file is the viewPath {@see getViewPath()}
+     *
+     * **IMPORTANT NOTE.** You *can* use this property to customize the form, but only if you know what you're doing.
+     * This approach **is discouraged** by LUYA maintainers. One of the strongest arguments for the LUYA admin is that you can
+     * run composer update and you get fresh updates, improvments UI fixes, new button s, etc. - if you override the view files a next update
+     * can break the application, as there's no backward compatibility guarantee in view files and UI-controllers.
+     *
+     * @since 2.0.0
+     */
+    public $crudFormView = '_crudform';
+
+    /**
+     * @var string The view file for active window form rendering. Aliases are supported.
+     * By default the location for this file is the viewPath {@see getViewPath()}
+     *
+     * **NOT RECOMMENDED** to override {@see `crudFormView`}
+     *
+     * @since 2.0.0
+     */
+    public $awFormView = '_awform';
+
+    /**
+     * @var \luya\admin\ngrest\render\RenderCrudView The view object for crud interface rendering.
+     * It may be set as a full classname, config array or object {@see setView()} {@see getView()}
+     */
     private $_view;
 
     /**
@@ -48,6 +76,17 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $this->_view;
     }
     
+    /**
+     * Set crud render view object
+     *
+     * @param \luya\admin\ngrest\render\RenderCrudView|string|array $view Object, classname string or Yii object config array
+     * @since 2.0.0
+     */
+    public function setView($value)
+    {
+        $this->_view = Instance::ensure($value, '\yii\base\View');
+    }
+
     /**
      * @inheritdoc
      */

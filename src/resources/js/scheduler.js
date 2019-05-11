@@ -282,8 +282,8 @@ zaa.directive("luyaSchedule", function() {
                                             '<i class="material-icons">alarm</i>&nbsp;<span> ' + i18n['js_scheduler_title_upcoming'] + '</span><span class="badge badge-secondary float-right">{{logs.upcoming.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
-                                            '<div class="table-responsive-wrapper">' +
-                                                '<table class="table table-hover table-align-middle mb-0">' +
+                                            '<div class="table-responsive">' +
+                                                '<table class="table table-hover table-align-middle">' +
                                                     '<thead>' +
                                                         '<tr>' +
                                                             '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +
@@ -309,8 +309,8 @@ zaa.directive("luyaSchedule", function() {
                                             '<i class="material-icons">alarm_on</i>&nbsp;<span> ' + i18n['js_scheduler_title_completed'] + '</span><span class="badge badge-secondary float-right">{{logs.archived.length}}</span>' +
                                         '</div>'  +
                                         '<div class="card-body p-2">' +
-                                            '<div class="table-responsive-wrapper">' +
-                                                '<table class="table table-hover table-align-middle mb-0">' +
+                                            '<div class="table-responsive">' +
+                                                '<table class="table table-hover table-align-middle">' +
                                                     '<thead>' +
                                                         '<tr>' +
                                                             '<th>' + i18n['js_scheduler_table_newvalue'] + '</th>' +

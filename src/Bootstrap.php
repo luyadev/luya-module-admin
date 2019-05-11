@@ -26,7 +26,12 @@ final class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
+        /** @var \luya\admin\Module $admin */
+        $admin = $app->getModule('admin');
+        // boot the queue job only if enabled and module available.
+        if ($admin && $admin->autoBootstrapQueue) {
+            $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
+        }
     }
 
     /**

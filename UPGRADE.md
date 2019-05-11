@@ -4,6 +4,7 @@ This document will help you upgrading from a LUYA admin module version into anot
 
 ## from 1.2 to 2.0 (in progress)
 
++ The `table-responsive-wrapper` class got removed and replaced by the Bootstrap version of responsive tables: https://getbootstrap.com/docs/4.3/content/tables/#responsive-tables. Make sure to update your Markup accordingly.
 + Change version constraint as we follow semver (from `~1.2` to `^2.0`)
 + Change the ngRestRelation `apiEndpoint` to `targetModel`. From `'apiEndpoint' => Sale::ngRestApiEndpoint()` to `'targetModel' => Sale::class` inside of `ngRestRelations()`.
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes and methods haven been removed.

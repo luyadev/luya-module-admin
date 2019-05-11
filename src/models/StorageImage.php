@@ -180,16 +180,7 @@ final class StorageImage extends ActiveRecord
      */
     public function deleteSource()
     {
-        $image = Yii::$app->storage->getImage($this->id);
-        if ($image) {
-            if (!Yii::$app->storage->fileSystemDeleteFile($image->systemFileName)) {
-                return false; // unable to unlink image
-            }
-        } else {
-            return false; // image not even found
-        }
-        
-        return true;
+        return Yii::$app->storage->fileSystemDeleteFile($this->filter_id . '_' . $this->file->name_new_compound);
     }
 
     public function getImages()

@@ -6,7 +6,7 @@ use admintests\AdminTestCase;
 use admintests\data\mocks\proxy\ClientTableMock;
 use luya\admin\proxy\ClientBuild;
 use luya\admin\commands\ProxyController;
-use yii\db\Exception;
+use luya\Exception;
 use Yii;
 
 class ClientTableTest extends AdminTestCase
@@ -25,7 +25,7 @@ class ClientTableTest extends AdminTestCase
         $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => 0]);
     
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('#Error while sending QUERY packet. PID=\d+\nThe SQL being executed was: SET FOREIGN_KEY_CHECKS = 1;#');
+        $this->expectExceptionMessageRegExp('#Connection lost. Server has gone away?#');
         $table->syncData();
     }
 }

@@ -5,6 +5,7 @@ namespace luya\admin\proxy;
 use Curl\Curl;
 use Yii;
 use yii\base\BaseObject;
+use yii\db\Exception;
 use yii\helpers\Console;
 use yii\helpers\Json;
 
@@ -187,7 +188,13 @@ class ClientTable extends BaseObject
      */
     protected function cleanup($sqlMode)
     {
-        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
+        if ($this->db->db->schema instanceof \yii\db\mysql\Schema) {
+            try {
+                $this->db->createCommand('SELECT CONNECTION_ID()')->execute();
+            } catch (Exception $ex) {
+                throw new \luya\Exception('Connection lost. Server has gone away?');
+            }
+
             $this->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
             $this->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
 

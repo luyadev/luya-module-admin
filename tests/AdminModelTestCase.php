@@ -15,8 +15,16 @@ class AdminModelTestCase extends WebApplicationTestCase
                 'db' => [
                     'class' => 'yii\db\Connection',
                     'dsn' => 'sqlite::memory:',
+                ],
+                'storage' => [
+                    'class' => 'luya\admin\filesystem\DummyFileSystem'
                 ]
-            ]
+            ],
+            'modules' => [
+                'admin' => [
+                    'class' => 'luya\admin\Module',
+                ],
+            ],
         ];
     }
 }

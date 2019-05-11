@@ -149,6 +149,120 @@ class ActiveWindowFormField extends BaseObject
     }
     
     /**
+     * Checkbox input
+     * 
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function checkbox()
+    {
+        $this->element = Angular::checkbox('{model}', '{label}', [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Checkbox list input
+     * 
+     * @param array $data The items
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function checkboxList(array $data)
+    {
+        $this->element = Angular::checkboxArray('{model}', '{label}', $data, [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * radio list input
+     * 
+     * @param array $data The items
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function radioList(array $data)
+    {
+        $this->element = Angular::radio('{model}', '{label}', $data, [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * image upload
+     * 
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function imageUpload()
+    {
+        $this->element = Angular::imageUpload('{model}', '{label}', [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * file upload
+     * 
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function fileUpload()
+    {
+        $this->element = Angular::fileUpload('{model}', '{label}', [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * date picker
+     * 
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function datePicker()
+    {
+        $this->element = Angular::date('{model}', '{label}', [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * date time picker
+     * 
+     * @return ActiveField
+     * @since 2.0.0
+     */
+    public function datetimePicker()
+    {
+        $this->element = Angular::datetime('{model}', '{label}', [
+            'fieldid' => $this->form->getFieldId($this->attribute),
+            'ng-init' => '{initValue}',
+        ]);
+
+        return $this;
+    }
+
+    /**
      * Render the template based on input values of $parts.
      *
      * @return string

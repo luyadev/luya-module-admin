@@ -371,7 +371,7 @@ return [
     'active_button_duplicate_success' => 'Kopia została utworzona.',
     'active_button_duplicate_error' => 'Błąd podczas tworzenia kopii: {message}',
 
-// 1.3
+// 2.0
 
     'model_tag_translation' => 'Tłumaczenie',
     'model_tag_translation_hint' => 'Opcjonalne tłumaczenie dla tagu w danym języku. Pozwala to przypisać i wypisać ten sam znacznik na stronach wielojęzycznych.',
@@ -387,4 +387,6 @@ return [
     'js_scheduler_table_newvalue' => 'New value',
     'js_scheduler_table_timestamp' => 'Execution Time',
     'js_dir_manager_rename_success' => 'The folder has been renamed successfully.',
+    'layout_filemanager_search_no_results' => 'No files were found for <strong>{{searchQuery}}</strong>.',
+    'layout_filemanager_empty_folder' => 'This directory contains no files.',
 ];

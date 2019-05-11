@@ -6,8 +6,10 @@ use luya\admin\Module;
     <div class="row">
         <div class="col-md-8">
             <div class="input-group mb-3">
-                <div class="input-group-addon">
-                    <i class="material-icons">search</i>
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="material-icons">search</i>
+                    </div>
                 </div>
                 <input class="form-control" type="text" ng-model="searchString" placeholder="Enter search term...">
             </div>
@@ -22,8 +24,10 @@ use luya\admin\Module;
             <form method="post" ng-submit="saveTag()">
                 <div class="form-group mb-2">
                     <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="material-icons">add</i>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="material-icons">add</i>
+                            </div>
                         </div>
                         <input class="form-control" maxlength="255" ng-model="newTagName" type="text" />
                     </div>

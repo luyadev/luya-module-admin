@@ -506,6 +506,7 @@ DROP TABLE IF EXISTS `admin_tag`;
 CREATE TABLE `admin_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(120) NOT NULL,
+  `translation` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

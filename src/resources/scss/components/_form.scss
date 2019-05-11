@@ -1,8 +1,5 @@
 $label-width: 200px !default;
 
-.form-control {
-}
-
 .form-group {
     margin-bottom: 25px;
     position: relative;
@@ -23,9 +20,7 @@ textarea {
 
 .form-check {
     @include clearfix;
-    .form-check-input + label {
-        padding-left: 25px;
-    }
+    padding-left: 0;
 
     user-select: none;
 }

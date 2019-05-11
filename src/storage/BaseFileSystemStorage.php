@@ -17,7 +17,9 @@ use luya\traits\CacheableTrait;
 use luya\web\Request;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
+use luya\admin\Module;
 use yii\helpers\VarDumper;
+use luya\admin\events\FileEvent;
 
 /**
  * Storage Container for reading, saving and holding files.
@@ -103,6 +105,18 @@ abstract class BaseFileSystemStorage extends Component
 {
     use CacheableTrait;
     
+    /**
+     * @var string This event is triggered when the storage file model is updating, for example when change the disposition.
+     * @since 2.0.0
+     */
+    const FILE_UPDATE_EVENT = 'onFileUpdate';
+
+    /**
+     * @var string This event is triggered when a new file is uploaded to the file system.
+     * @since 2.0.0
+     */
+    const FILE_SAVE_EVENT = 'onFileSave';
+
     /**
      * Return the http path for a given file on the file system.
      *
@@ -505,7 +519,7 @@ abstract class BaseFileSystemStorage extends Component
 
         $fileHash = FileHelper::md5sum($fileSource);
 
-        $newName = implode([$fileData['secureFileName'].'_'.$fileData['hashName'], $fileData['extension']], '.');
+        $newName = implode('.', [$fileData['secureFileName'].'_'.$fileData['hashName'], $fileData['extension']]);
 
         if (!$this->fileSystemSaveFile($fileSource, $newName)) {
             return false;
@@ -525,10 +539,12 @@ abstract class BaseFileSystemStorage extends Component
             'is_deleted' => false,
             'file_size' => $fileData['fileSize'],
             'caption' => null,
+            'inline_disposition' => (int) Module::getInstance()->fileDefaultInlineDisposition,
         ]);
 
         if ($model->validate()) {
             if ($model->save()) {
+                $this->trigger(self::FILE_SAVE_EVENT, new FileEvent(['file' => $model]));
                 $this->deleteHasCache(self::CACHE_KEY_FILE);
                 $this->_filesArray[$model->id] = $model->toArray();
                 return $this->getFile($model->id);

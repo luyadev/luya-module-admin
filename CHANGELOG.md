@@ -9,6 +9,8 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Changed
 
++ [#293](https://github.com/luyadev/luya-module-admin/issues/293) Added new request log table for api calls in order to make metrics about request, this must be enabled in the admin area.
++ [#46](https://github.com/luyadev/luya-module-admin/issues/46) Updated bootstrap to 4.3.1.
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
 + [#261](https://github.com/luyadev/luya-module-admin/issues/261) Add ngRestFind() for none $is_api_user Users.
 + [#210](https://github.com/luyadev/luya-module-admin/issues/210) New tag translation option.
@@ -19,6 +21,8 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#294](https://github.com/luyadev/luya-module-admin/issues/294) Fixed bug when replace a file with images.
++ [#291](https://github.com/luyadev/luya-module-admin/issues/291) Fixed search and sub folder behavior in file manager.
 + [#278](https://github.com/luyadev/luya-module-admin/pull/278) ToggleStatus plugin initValue=1 not displayed at frontend
 + [#62](https://github.com/luyadev/luya-module-admin/issues/62) Two-digit display of minutes in datetime fields.
 + [#239](https://github.com/luyadev/luya-module-admin/issues/239) Hide i18n flags when no i18n field is configured, also hide in list view as its not possible to toggle in this context.
@@ -30,6 +34,10 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#288](https://github.com/luyadev/luya-module-admin/issues/288) Filemanager add file id in tooltip.
++ [#225](https://github.com/luyadev/luya-module-admin/issues/225) Added configuration for default behavior with inline disposition when uploading new files.
++ [#289](https://github.com/luyadev/luya-module-admin/issues/289) Added new input field methods checkbox, checkboxList, radioList, imageUpload, fileUpload, date and datetime picker.
++ [#283](https://github.com/luyadev/luya-module-admin/pull/283) The possibility to extend standard ngrest crud views
 + [#236](https://github.com/luyadev/luya-module-admin/issues/236) Added multiple menu entries and CRUD view for same models (data pools).
 + [#228](https://github.com/luyadev/luya-module-admin/issues/228) New `sortField` attribute option for plugins.
 + [#94](https://github.com/luyadev/luya-module-admin/issues/94) Required CRUD fields are now highlight as bold text.
