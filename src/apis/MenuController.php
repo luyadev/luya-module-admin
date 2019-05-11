@@ -79,6 +79,7 @@ class MenuController extends RestController
             'and',
             ['in', 'api', array_Keys($accessList)],
             ['!=', 'user_id', 0],
+            ['=', 'is_api_user', 0],
         ])->all();
 
         foreach ($data as $row) {
