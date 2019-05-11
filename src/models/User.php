@@ -14,6 +14,7 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
+use luya\admin\aws\ApiRequestInsightActiveWindow;
 
 /**
  * User Model represents all Administration Users.
@@ -191,6 +192,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return [
             ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
             ['class' => ChangePasswordActiveWindow::class, 'label' => false],
+            ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
     }
 

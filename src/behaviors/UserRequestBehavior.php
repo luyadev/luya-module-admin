@@ -41,6 +41,7 @@ class UserRequestBehavior extends ActionFilter
         if ($this->owner->userAuthClass() && $this->hasUserEnabled()) {
             $time = microtime(true) - $this->_startTime;
             $request = new UserRequest();
+            $request->detachBehavior('LogBehavior');
             $request->timestamp = time();
             $request->user_id = Yii::$app->adminuser->id;
             $request->response_time = round($time * 1000);

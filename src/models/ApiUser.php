@@ -5,6 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\aws\ApiOverviewActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
+use luya\admin\aws\ApiRequestInsightActiveWindow;
 
 /**
  * User Model represents all Administration Users.
@@ -130,6 +131,7 @@ final class ApiUser extends User
         return [
             ['class' => ApiOverviewActiveWindow::class, 'label' => false],
             ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+            ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
     }
 }
