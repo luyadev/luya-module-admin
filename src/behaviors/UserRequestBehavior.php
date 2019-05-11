@@ -37,7 +37,8 @@ class UserRequestBehavior extends ActionFilter
      */
     public function afterAction($action, $result)
     {
-        if ($this->hasUserEnabled()) {
+        // check if the owner controller has enabled userAuthntification && adminuser is not guest.
+        if ($this->owner->userAuthClass() && $this->hasUserEnabled()) {
             $time = microtime(true) - $this->_startTime;
             $request = new UserRequest();
             $request->timestamp = time();
