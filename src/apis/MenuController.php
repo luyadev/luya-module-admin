@@ -54,47 +54,53 @@ class MenuController extends RestController
             return [];
         }
         
-        foreach ($data['groups'] as $groupkey => $groupvalue) {
+        foreach ($data['groups'] as $groupvalue) {
             foreach ($groupvalue['items'] as $row) {
                 if ($row['permissionIsApi']) {
                     try {
                         $row['alias'] = Yii::t($data['moduleId'], $row['alias'], [], Yii::$app->language);
                     } catch (\Exception $e) {
+                        // not translation found, use original alias name
                     }
-                    $accessList[] = $row;
+                    $accessList[$row['permissionApiEndpoint']] = $row;
                 }
             }
         }
 
         $log = [];
-        foreach ($accessList as $access) {
-            $data = (new Query())
-                ->select(['timestamp_create', 'user_id', 'admin_ngrest_log.id', 'is_update', 'is_delete', 'is_insert', 'admin_user.firstname', 'admin_user.lastname'])
-                ->from('{{%admin_ngrest_log}}')
-                ->leftJoin('{{%admin_user}}', '{{%admin_ngrest_log}}.user_id = {{%admin_user}}.id')
-                ->orderBy('timestamp_create DESC')
-                ->limit(30)
-                ->where('api=:api and user_id!=0', [':api' => $access['permissionApiEndpoint']])->all();
-            foreach ($data as $row) {
-                $date = mktime(0, 0, 0, date('n', $row['timestamp_create']), date('j', $row['timestamp_create']), date('Y', $row['timestamp_create']));
-                if ($row['is_update']) {
-                    $message = Module::t('dashboard_log_message_edit', ['container' => $access['alias']]);
-                } elseif ($row['is_insert']) {
-                    $message = Module::t('dashboard_log_message_add', ['container' => $access['alias']]);
-                } elseif ($row['is_delete']) {
-                    $message = Module::t('dashboard_log_message_delete', ['container' => $access['alias']]);
-                }
-                $log[$date][] = [
-                    'name' => $row['firstname'].' '.$row['lastname'],
-                    'is_update' => $row['is_update'],
-                    'is_insert' => $row['is_insert'],
-                    'is_delete' => $row['is_delete'],
-                    'timestamp' => $row['timestamp_create'],
-                    'alias' => $access['alias'],
-                    'message' => $message,
-                    'icon' => $access['icon'],
-                ];
+
+        $data = (new Query())
+        ->select(['timestamp_create', 'api', 'user_id', 'admin_ngrest_log.id', 'is_update', 'is_delete', 'is_insert', 'admin_user.firstname', 'admin_user.lastname'])
+        ->from('{{%admin_ngrest_log}}')
+        ->leftJoin('{{%admin_user}}', '{{%admin_ngrest_log}}.user_id = {{%admin_user}}.id')
+        ->orderBy(['timestamp_create' => SORT_DESC])
+        ->limit(100)
+        ->where([
+            'and',
+            ['in', 'api', array_Keys($accessList)],
+            ['!=', 'user_id', 0],
+        ])->all();
+
+        foreach ($data as $row) {
+            $api = $accessList[$row['api']];
+            $date = mktime(0, 0, 0, date('n', $row['timestamp_create']), date('j', $row['timestamp_create']), date('Y', $row['timestamp_create']));
+            if ($row['is_update']) {
+                $message = Module::t('dashboard_log_message_edit', ['container' => $api['alias']]);
+            } elseif ($row['is_insert']) {
+                $message = Module::t('dashboard_log_message_add', ['container' => $api['alias']]);
+            } elseif ($row['is_delete']) {
+                $message = Module::t('dashboard_log_message_delete', ['container' => $api['alias']]);
             }
+            $log[$date][] = [
+                'name' => $row['firstname'].' '.$row['lastname'],
+                'is_update' => $row['is_update'],
+                'is_insert' => $row['is_insert'],
+                'is_delete' => $row['is_delete'],
+                'timestamp' => $row['timestamp_create'],
+                'alias' => $api['alias'],
+                'message' => $message,
+                'icon' => $api['icon'],
+            ];
         }
 
         $array = [];
