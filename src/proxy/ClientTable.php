@@ -178,13 +178,13 @@ class ClientTable extends BaseObject
      */
     protected function cleanup($sqlMode)
     {
-        try {
-            Yii::$app->db->createCommand('SELECT CONNECTION_ID()')->execute();
-        } catch (Exception $ex) {
-            throw new \luya\Exception('Connection lost. Server has gone away?');
-        }
-        
         if (Yii::$app->db->schema instanceof \yii\db\mysql\Schema) {
+            try {
+                Yii::$app->db->createCommand('SELECT CONNECTION_ID()')->execute();
+            } catch (Exception $ex) {
+                throw new \luya\Exception('Connection lost. Server has gone away?');
+            }
+
             Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
             Yii::$app->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
 
