@@ -12,7 +12,7 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
     $scope.load(1);
 }]);
 </script>
-<div class="row" ng-controller="InlineController">
+<div ng-controller="InlineController">
 <p>The request logger is currently activ: <b><?= Yii::$app->formatter->asBoolean($isEnabled); ?></b></p>
 <p>Total logged request: <?= $count; ?></p>
 <table class="table table-bordered table-hover table-striped table-sm">
