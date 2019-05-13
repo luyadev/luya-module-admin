@@ -41,7 +41,7 @@ zaa.bootstrap.register('<?= $angularCrudControllerName; ?>', ['$scope', '$contro
     };
 }]);
 </script>
-<div ng-controller="<?= $angularCrudControllerName; ?>">
+<span ng-controller="<?= $angularCrudControllerName; ?>">
     <button ng-show="!buttonHidden" ng-click='sendButton("<?= $callbackName; ?>", <?= $callbackArgumentsJson; ?>)' class="<?= $buttonClass; ?>" type="button"><?= $buttonNameValue; ?></button>
     <a ng-href="{{linkHref}}" ng-show="!linkHrefHidden" class="<?= $linkClass; ?>"><?= $linkLabel; ?></a>
-</div>
+</span>
