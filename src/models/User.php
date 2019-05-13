@@ -179,7 +179,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return [
             ['list', ['title', 'firstname', 'lastname', 'email', 'lastloginTimestamp']],
             ['create', ['title', 'firstname', 'lastname', 'email', 'password']],
-            ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration', 'is_request_logger_enabled']],
+            ['update', ['title', 'firstname', 'lastname', 'email', 'login_attempt_lock_expiration']],
             ['delete', true],
         ];
     }
@@ -190,8 +190,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestActiveWindows()
     {
         return [
-            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
             ['class' => ChangePasswordActiveWindow::class, 'label' => false],
+            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
             ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
     }

@@ -118,7 +118,7 @@ final class ApiUser extends User
     public function ngRestScopes()
     {
         return [
-            [['list', 'update', 'create'], ['firstname', 'lastname', 'email', 'is_request_logger_enabled']],
+            [['list', 'update', 'create'], ['firstname', 'lastname', 'email']],
             [['delete'], true],
         ];
     }
