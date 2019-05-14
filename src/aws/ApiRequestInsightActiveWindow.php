@@ -52,10 +52,15 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
         ]);
     }
 
-    public function callbackData($page = 1)
+    public function callbackData($page = 1, $query = null)
     {
+        $find = UserRequest::find()->where(['user_id' => $this->model->id]);
+
+        if ($query) {
+            $find->andFilterWhere(['like', 'request_url', $query]);
+        }
         return new ActiveDataProvider([
-            'query' => UserRequest::find()->where(['user_id' => $this->model->id]),
+            'query' => $find,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
             'pagination' => [
                 'page' => $page,

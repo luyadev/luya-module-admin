@@ -4,7 +4,7 @@ use luya\admin\Module;
 
 ?>
 <script>
-zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
+zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar', function($scope, $timeout, cfpLoadingBar) {
 
     // data table
 
@@ -19,8 +19,21 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
         }
     });
 
-    $scope.load = function(page) {
-        $scope.$parent.sendActiveWindowCallback('data', {page:page}).then(function(response) {
+    $scope.queryPromise;
+    $scope.query = '';
+
+    $scope.$watch('query', function(n, o) {
+        if (n !== o) {
+            $timeout.cancel($scope.queryPromise);
+            cfpLoadingBar.start();
+            $scope.queryPromise = $timeout(function() {
+                $scope.load(0, n);
+            }, 1000);
+        }
+    })
+
+    $scope.load = function(page, query) {
+        $scope.$parent.sendActiveWindowCallback('data', {page:page, query:query}).then(function(response) {
             $scope.data = response.data;
             $scope.pageCount = response.headers('X-Pagination-Page-Count');
             $scope.dataCount = response.headers('X-Pagination-Total-Count');
@@ -32,6 +45,7 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
     $scope.insights = {};
 
     $scope.loadInsights = function(page) {
+        $scope.query = '';
         $scope.$parent.sendActiveWindowCallback('insight').then(function(response) {
             $scope.insights = response.data;
             $scope.load(page);
@@ -62,6 +76,14 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
                 <span ng-show="insights.max">Max {{insights.max}} ms</span>
             </span>
         </p>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="material-icons">search</i>
+                    </div>
+                </div>
+                <input class="form-control" ng-model="query" type="text">
+            </div>
             <table class="table table-bordered table-hover table-striped table-sm small">
                 <thead>
                     <tr>
