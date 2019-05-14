@@ -259,6 +259,6 @@ class SelectModel extends Select
      */
     public function __destruct()
     {
-        self::flushDataInstances();
+        static::flushDataInstances();
     }
 }
