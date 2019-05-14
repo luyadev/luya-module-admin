@@ -1,5 +1,7 @@
 <?php
 use luya\admin\ngrest\aw\CallbackButtonWidget;
+use luya\admin\Module;
+
 ?>
 <script>
 zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
@@ -41,30 +43,32 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
 </script>
 <div ng-controller="InlineController">
     <p class="alert alert-warning">
-        This feature is mainly used to get insights for a given API. Its not recommend to enable this function over a long time as it can collect a lot of data which can slow down your application.
+        <?= Module::t('aw_requestinsight_warning'); ?>
+       
     </p>
     <?php if($isEnabled): ?>
-    <p class="alert alert-danger">The request logger is currently active!</p>
+    <p class="alert alert-danger"><?= Module::t('aw_requestinsight_logger_active'); ?></p>
     <?php endif; ?>
-    <?= CallbackButtonWidget::widget(['callback' => 'toggle', 'label' => $isEnabled ? '<i class="material-icons">clear</i> Disable Logger' : '<i class="material-icons">check</i> Enable Logger', 'options' => ['reloadWindowOnSuccess' => true]]); ?>
-    <?= CallbackButtonWidget::widget(['callback' => 'delete', 'label' => '<i class="material-icons">delete</i> Delete Data', 'angularCallbackFunction' => 'function() { $scope.load(1); };']); ?>
-    <button type="button" class="btn" ng-click="loadInsights(0)"><i class="material-icons">refresh</i> Fetch data</button>
+    <?= CallbackButtonWidget::widget(['callback' => 'toggle', 'label' => $isEnabled ? '<i class="material-icons">clear</i> ' . Module::t('aw_requestinsight_btn_disable') : '<i class="material-icons">check</i> ' . Module::t('aw_requestinsight_btn_enable'), 'options' => ['reloadWindowOnSuccess' => true]]); ?>
+    <?= CallbackButtonWidget::widget(['callback' => 'delete', 'label' => '<i class="material-icons">delete</i> ' . Module::t('aw_requestinsight_btn_clear'), 'angularCallbackFunction' => 'function() { $scope.loadInsights(0); };']); ?>
+    <button type="button" class="btn" ng-click="loadInsights(0)"><i class="material-icons">refresh</i> <?= Module::t('aw_requestinsight_btn_fetch'); ?></button>
     </p>
     <div class="row">
         <div class="col-7">
-        <p class="lead">Requests
-        <span class="small small float-right text-muted">
-        <span>Ø {{insights.avarage}} ms /</span>
-        <span>Min {{insights.min}} ms /</span>
-        <span>Max {{insights.max}} ms</span>
-</span></p>
+        <p class="lead"><?= Module::t('aw_requestinsight_request_label'); ?>
+            <span class="small small float-right text-muted">
+                <span ng-show="insights.avarage">Ø {{insights.avarage}} ms /</span>
+                <span ng-show="insights.min">Min {{insights.min}} ms /</span>
+                <span ng-show="insights.max">Max {{insights.max}} ms</span>
+            </span>
+        </p>
             <table class="table table-bordered table-hover table-striped table-sm small">
                 <thead>
                     <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Url</th>
-                        <th scope="col">Time</th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_date'); ?></th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_type'); ?></th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_url'); ?></th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_time'); ?></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in data" title="{{item.request_url}}">
@@ -76,16 +80,16 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
                     </td>
                 </tr>
             </table>
-            <p class="text-muted small">{{data.length}} of {{dataCount}} Requests</p>
+            <p class="text-muted small"><?= Module::t('aw_requestinsight_data_pagination'); ?></p>
             <pagination current-page="page" page-count="pageCount"></pagination>
         </div>
         <div class="col-5">
-            <p class="lead">Top requested Url</p>
+            <p class="lead"><?= Module::t('aw_requestinsight_top_request_label'); ?></p>
             <table class="table table-bordered table-hover table-striped table-sm small">
                 <thead>
                     <tr>
-                        <th scope="col">Url</th>
-                        <th scope="col">Count</th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_url'); ?></th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_count'); ?></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in insights.counted" title="{{item.request_url}}">
@@ -93,12 +97,12 @@ zaa.bootstrap.register('InlineController', ['$scope', function($scope,) {
                     <td>{{item.count }}</td>
                 </tr>
             </table>
-            <p class="lead">Longest response time</p>
+            <p class="lead"><?= Module::t('aw_requestinsight_longest_response_label'); ?></p>
             <table class="table table-bordered table-hover table-striped table-sm small">
                 <thead>
                     <tr>
-                        <th scope="col">Url</th>
-                        <th scope="col">Time</th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_url'); ?></th>
+                        <th scope="col"><?= Module::t('aw_requestinsight_col_time'); ?></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in insights.slowest" title="{{item.request_url}}">

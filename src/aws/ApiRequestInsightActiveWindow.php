@@ -5,6 +5,7 @@ namespace luya\admin\aws;
 use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\models\UserRequest;
 use yii\data\ActiveDataProvider;
+use luya\admin\Module;
 
 class ApiRequestInsightActiveWindow extends ActiveWindow
 {
@@ -20,7 +21,7 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'Request Insight';
+        return Module::t('aw_requestinsight_default_label');
     }
 
     /**
@@ -31,6 +32,11 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
     public function defaultIcon()
     {
         return 'assessment';
+    }
+
+    public function getTitle()
+    {
+        return $this->model->firstname . ' ' . $this->model->lastname;
     }
 
     /**
@@ -65,10 +71,13 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
         if ($this->model->updateAttributes([
             'is_request_logger_enabled' => $status,
         ])) {
-            return $this->sendSuccess("Enabled/Disabled");
+            if ($status) {
+                return $this->sendSuccess(Module::t('aw_requestinsight_toggle_logger_enabled'));
+            }
+            return $this->sendSuccess(Module::t('aw_requestinsight_toggle_logger_disabled'));
         }
 
-        return $this->sendError("Error while enabling request logger.");
+        return $this->sendError(Module::t('aw_requestinsight_toggle_error'));
     }
 
     public function callbackInsight()
@@ -86,6 +95,6 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
     {
         UserRequest::deleteAll(['user_id' => $this->model->id]);
 
-        return $this->sendSuccess("Data has been removed.");
+        return $this->sendSuccess(Module::t('aw_requestinsight_cleared'));
     }
 }
