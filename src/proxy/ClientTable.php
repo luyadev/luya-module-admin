@@ -5,6 +5,7 @@ namespace luya\admin\proxy;
 use Curl\Curl;
 use Yii;
 use yii\base\BaseObject;
+use yii\db\Connection;
 use yii\db\Exception;
 use yii\helpers\Console;
 use yii\helpers\Json;
@@ -26,10 +27,10 @@ class ClientTable extends BaseObject
     private $_data;
     
     /**
-     * @var \yii\db\Connection
+     * @var Connection
      * @since 2.0.0
      */
-    public $db;
+    private $db;
 
     /**
      * @var \luya\admin\proxy\ClientBuild
@@ -48,16 +49,34 @@ class ClientTable extends BaseObject
         parent::__construct($config);
 
         if (!$this->db) {
-            $this->db = Yii::$app->db;
+            $this->setDb(Yii::$app->db);
         }
     }
-
+    
+    /**
+     * @return Connection|null
+     * @since 2.0.0
+     */
+    public function getDb()
+    {
+        return $this->db;
+    }
+    
+    /**
+     * @param Connection $db
+     * @since 2.0.0
+     */
+    public function setDb(Connection $db)
+    {
+        $this->db = $db;
+    }
+    
     private $_schema;
 
     public function getSchema()
     {
         if ($this->_schema === null) {
-            $this->_schema = $this->db->getTableSchema($this->getName());
+            $this->_schema = $this->getDb()->getTableSchema($this->getName());
         }
 
         return $this->_schema;
@@ -142,7 +161,7 @@ class ClientTable extends BaseObject
         $sqlMode = $this->prepare();
 
         try {
-            $this->db->createCommand()->truncateTable($this->getName())->execute();
+            $this->getDb()->createCommand()->truncateTable($this->getName())->execute();
 
             $this->syncDataInternal();
         } finally {
@@ -164,12 +183,12 @@ class ClientTable extends BaseObject
     {
         $sqlMode = null;
 
-        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
-            $this->db->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-            $this->db->createCommand('SET UNIQUE_CHECKS = 0;')->execute();
+        if ($this->getDb()->schema instanceof \yii\db\mysql\Schema) {
+            $this->getDb()->createCommand('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+            $this->getDb()->createCommand('SET UNIQUE_CHECKS = 0;')->execute();
 
-            $sqlMode = $this->db->createCommand('SELECT @@SQL_MODE;')->queryScalar();
-            $this->db->createCommand('SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
+            $sqlMode = $this->getDb()->createCommand('SELECT @@SQL_MODE;')->queryScalar();
+            $this->getDb()->createCommand('SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";')->execute();
         }
 
         return $sqlMode;
@@ -188,18 +207,18 @@ class ClientTable extends BaseObject
      */
     protected function cleanup($sqlMode)
     {
-        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
+        if ($this->getDb()->schema instanceof \yii\db\mysql\Schema) {
             try {
-                $this->db->createCommand('SELECT CONNECTION_ID()')->execute();
+                $this->getDb()->createCommand('SELECT CONNECTION_ID()')->execute();
             } catch (Exception $ex) {
                 throw new \luya\Exception('Connection lost. Server has gone away?');
             }
 
-            $this->db->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-            $this->db->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
+            $this->getDb()->createCommand('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+            $this->getDb()->createCommand('SET UNIQUE_CHECKS = 1;')->execute();
 
             if ($sqlMode !== null) {
-                $this->db->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
+                $this->getDb()->createCommand('SET SQL_MODE=:sqlMode;', [':sqlMode' => $sqlMode])->execute();
             }
         }
     }
@@ -283,7 +302,7 @@ class ClientTable extends BaseObject
      */
     private function insertData($data)
     {
-        $inserted = $this->db->createCommand()->batchInsert(
+        $inserted = $this->getDb()->createCommand()->batchInsert(
             $this->getName(),
             $this->cleanUpBatchInsertFields($this->getFields()),
             $this->cleanUpMatchRow($data)

@@ -37,8 +37,10 @@ class ClientTransfer extends BaseObject
                 }
             }
         }
-
-        $this->build->command->outputInfo('Using local database ' . $this->build->db->createCommand('SELECT DATABASE()')->queryScalar());
+    
+        if ($this->build->db->schema instanceof \yii\db\mysql\Schema) {
+            $this->build->command->outputInfo('Using local database ' . $this->build->db->createCommand('SELECT DATABASE()')->queryScalar());
+        }
 
         foreach ($this->build->getTables() as $name => $table) {
             $table->syncData();
