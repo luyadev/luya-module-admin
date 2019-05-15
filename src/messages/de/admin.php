@@ -414,6 +414,6 @@ return [
     'aw_requestinsight_toggle_error' => 'Error while enabling Request Insight.',
     'aw_requestinsight_cleared' => 'Data has been cleared.',
     'aw_requestinsight_default_label' => 'Request Insight',
-    'login_noscript_error' => 'Sie müssen Javascript aktivieren um das LUYA CMS zu verwenden.',
+    'login_noscript_error' => 'Sie müssen Javascript aktivieren um LUYA zu verwenden.',
     'login_browsehappy' => 'Sie verwenden einen <strong>veralteten</strong> Browser. Bitte <a href="https://browsehappy.com/?locale=de_de" target="_blank">aktualisieren Sie Ihren Browser</a> um Ihre Sicherheit zu erhöhen.',
 ];
