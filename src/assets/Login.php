@@ -20,7 +20,7 @@ class Login extends \luya\web\Asset
      */
     public $css = [
         'dist/main.css',
-        'css/login.css',
+        'dist/login.css',
     ];
 
     /**
