@@ -15068,339 +15068,834 @@ Raphael.colorwheel = function (target, color_wheel_size, no_segments) {
       };
     }];
   });
-}();/*!
- * Angular Datepicker v2.1.23
- *
- * Released by 720kb.net under the MIT license
- * www.opensource.org/licenses/MIT
- *
- * 2017-06-28
- */
-!function (e, a) {
-  "use strict";
+}();/*global angular document navigator*/
+(function withAngular(angular, navigator) {
+  'use strict';
 
-  var t = function () {
-    if (a.userAgent && (a.userAgent.match(/Android/i) || a.userAgent.match(/webOS/i) || a.userAgent.match(/iPhone/i) || a.userAgent.match(/iPad/i) || a.userAgent.match(/iPod/i) || a.userAgent.match(/BlackBerry/i) || a.userAgent.match(/Windows Phone/i))) return !0;
+  var A_DAY_IN_MILLISECONDS = 86400000,
+      isMobile = function isMobile() {
+    if (navigator.userAgent && (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i))) {
+      return true;
+    }
   }(),
-      n = function n(e, a, _n) {
-    return _n && (t = !1), t ? ['<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-mobile-item _720kb-datepicker-calendar-month">', '<select ng-model="month" title="{{ dateMonthTitle }}" ng-change="selectedMonthHandle(month)">', '<option ng-repeat="item in months" ng-selected="item === month" ng-disabled=\'!isSelectableMaxDate(item + " " + day + ", " + year) || !isSelectableMinDate(item + " " + day + ", " + year)\' ng-value="$index + 1" value="$index + 1">', "{{ item }}", "</option>", "</select>", "</div>", "</div>", '<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-mobile-item _720kb-datepicker-calendar-month">', '<select ng-model="mobileYear" title="{{ dateYearTitle }}" ng-change="setNewYear(mobileYear)">', '<option ng-repeat="item in paginationYears track by $index" ng-selected="year === item" ng-disabled="!isSelectableMinYear(item) || !isSelectableMaxYear(item)" ng-value="item" value="item">', "{{ item }}", "</option>", "</select>", "</div>", "</div>"] : ['<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-left">', '<a class="_720kb-datepicker-calendar-month-button" href="javascript:void(0)" ng-class="{\'_720kb-datepicker-item-hidden\': !willPrevMonthBeSelectable()}" ng-click="prevMonth()" title="{{ buttonPrevTitle }}">', e, "</a>", "</div>", '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-calendar-month">', "{{month}}&nbsp;", '<a href="javascript:void(0)" ng-click="paginateYears(year); showYearsPagination = !showYearsPagination;">', "<span>", "{{year}}", "<i ng-class=\"{'_720kb-datepicker-calendar-header-closed-pagination': !showYearsPagination, '_720kb-datepicker-calendar-header-opened-pagination': showYearsPagination}\"></i>", "</span>", "</a>", "</div>", '<div class="_720kb-datepicker-calendar-header-right">', '<a class="_720kb-datepicker-calendar-month-button" ng-class="{\'_720kb-datepicker-item-hidden\': !willNextMonthBeSelectable()}" href="javascript:void(0)" ng-click="nextMonth()" title="{{ buttonNextTitle }}">', a, "</a>", "</div>", "</div>"];
+      generateMonthAndYearHeader = function generateMonthAndYearHeader(prevButton, nextButton, preventMobile) {
+    if (preventMobile) {
+      isMobile = false;
+    }
+
+    if (isMobile) {
+      return ['<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-mobile-item _720kb-datepicker-calendar-month">', '<select ng-model="month" title="{{ dateMonthTitle }}" ng-change="selectedMonthHandle(month)">', '<option ng-repeat="item in months" ng-selected="item === month" ng-disabled=\'!isSelectableMaxDate(item + " " + day + ", " + year) || !isSelectableMinDate(item + " " + day + ", " + year)\' ng-value="$index + 1" value="$index + 1">', '{{ item }}', '</option>', '</select>', '</div>', '</div>', '<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-mobile-item _720kb-datepicker-calendar-month">', '<select ng-model="mobileYear" title="{{ dateYearTitle }}" ng-change="setNewYear(mobileYear)">', '<option ng-repeat="item in paginationYears track by $index" ng-selected="year === item" ng-disabled="!isSelectableMinYear(item) || !isSelectableMaxYear(item)" ng-value="item" value="item">', '{{ item }}', '</option>', '</select>', '</div>', '</div>'];
+    }
+
+    return ['<div class="_720kb-datepicker-calendar-header">', '<div class="_720kb-datepicker-calendar-header-left">', '<a class="_720kb-datepicker-calendar-month-button" href="javascript:void(0)" ng-class="{\'_720kb-datepicker-item-hidden\': !willPrevMonthBeSelectable()}" ng-click="prevMonth()" title="{{ buttonPrevTitle }}">', prevButton, '</a>', '</div>', '<div class="_720kb-datepicker-calendar-header-middle _720kb-datepicker-calendar-month">', '{{month}}&nbsp;', '<a href="javascript:void(0)" ng-click="paginateYears(year); showYearsPagination = !showYearsPagination;">', '<span>', '{{year}}', '<i ng-class="{\'_720kb-datepicker-calendar-header-closed-pagination\': !showYearsPagination, \'_720kb-datepicker-calendar-header-opened-pagination\': showYearsPagination}"></i>', '</span>', '</a>', '</div>', '<div class="_720kb-datepicker-calendar-header-right">', '<a class="_720kb-datepicker-calendar-month-button" ng-class="{\'_720kb-datepicker-item-hidden\': !willNextMonthBeSelectable()}" href="javascript:void(0)" ng-click="nextMonth()" title="{{ buttonNextTitle }}">', nextButton, '</a>', '</div>', '</div>'];
   },
-      i = function i(e, a) {
-    return ['<div class="_720kb-datepicker-calendar-header" ng-show="showYearsPagination">', '<div class="_720kb-datepicker-calendar-years-pagination">', '<a ng-class="{\'_720kb-datepicker-active\': y === year, \'_720kb-datepicker-disabled\': !isSelectableMaxYear(y) || !isSelectableMinYear(y)}" href="javascript:void(0)" ng-click="setNewYear(y)" ng-repeat="y in paginationYears track by $index">', "{{y}}", "</a>", "</div>", '<div class="_720kb-datepicker-calendar-years-pagination-pages">', '<a href="javascript:void(0)" ng-click="paginateYears(paginationYears[0])" ng-class="{\'_720kb-datepicker-item-hidden\': paginationYearsPrevDisabled}">', e, "</a>", '<a href="javascript:void(0)" ng-click="paginateYears(paginationYears[paginationYears.length -1 ])" ng-class="{\'_720kb-datepicker-item-hidden\': paginationYearsNextDisabled}">', a, "</a>", "</div>", "</div>"];
+      generateYearsPaginationHeader = function generateYearsPaginationHeader(prevButton, nextButton) {
+    return ['<div class="_720kb-datepicker-calendar-header" ng-show="showYearsPagination">', '<div class="_720kb-datepicker-calendar-years-pagination">', '<a ng-class="{\'_720kb-datepicker-active\': y === year, \'_720kb-datepicker-disabled\': !isSelectableMaxYear(y) || !isSelectableMinYear(y)}" href="javascript:void(0)" ng-click="setNewYear(y)" ng-repeat="y in paginationYears track by $index">', '{{y}}', '</a>', '</div>', '<div class="_720kb-datepicker-calendar-years-pagination-pages">', '<a href="javascript:void(0)" ng-click="paginateYears(paginationYears[0])" ng-class="{\'_720kb-datepicker-item-hidden\': paginationYearsPrevDisabled}">', prevButton, '</a>', '<a href="javascript:void(0)" ng-click="paginateYears(paginationYears[paginationYears.length -1 ])" ng-class="{\'_720kb-datepicker-item-hidden\': paginationYearsNextDisabled}">', nextButton, '</a>', '</div>', '</div>'];
   },
-      r = function r(e, a, t) {
-    var r = ['<div class="_720kb-datepicker-calendar {{datepickerClass}} {{datepickerID}}" ng-class="{\'_720kb-datepicker-forced-to-open\': checkVisibility()}" ng-blur="hideCalendar()">', "</div>"],
-        d = n(e, a, t),
-        l = i(e, a),
-        c = ['<div class="_720kb-datepicker-calendar-days-header">', '<div ng-repeat="d in daysInString">', "{{d}}", "</div>", "</div>"],
-        o = ['<div class="_720kb-datepicker-calendar-body">', '<a href="javascript:void(0)" ng-repeat="px in prevMonthDays" class="_720kb-datepicker-calendar-day _720kb-datepicker-disabled">', "{{px}}", "</a>", "<a href=\"javascript:void(0)\" ng-repeat=\"item in days\" ng-click=\"setDatepickerDay(item)\" ng-class=\"{'_720kb-datepicker-active': selectedDay === item && selectedMonth === monthNumber && selectedYear === year, '_720kb-datepicker-disabled': !isSelectableMinDate(year + '/' + monthNumber + '/' + item ) || !isSelectableMaxDate(year + '/' + monthNumber + '/' + item) || !isSelectableDate(monthNumber, year, item) || !isSelectableDay(monthNumber, year, item),'_720kb-datepicker-today': item === today.getDate() && monthNumber === (today.getMonth() + 1) && year === today.getFullYear() && !selectedDay}\" class=\"_720kb-datepicker-calendar-day\">", "{{item}}", "</a>", '<a href="javascript:void(0)" ng-repeat="nx in nextMonthDays" class="_720kb-datepicker-calendar-day _720kb-datepicker-disabled">', "{{nx}}", "</a>", "</div>"],
-        s = function s(e) {
-      r.splice(r.length - 1, 0, e);
+      generateDaysColumns = function generateDaysColumns() {
+    return ['<div class="_720kb-datepicker-calendar-days-header">', '<div ng-repeat="d in daysInString">', '{{d}}', '</div>', '</div>'];
+  },
+      generateDays = function generateDays() {
+    return ['<div class="_720kb-datepicker-calendar-body">', '<a href="javascript:void(0)" ng-repeat="px in prevMonthDays" class="_720kb-datepicker-calendar-day _720kb-datepicker-disabled">', '{{px}}', '</a>', '<a href="javascript:void(0)" ng-repeat="item in days" ng-click="setDatepickerDay(item)" ng-class="{\'_720kb-datepicker-active\': selectedDay === item && selectedMonth === monthNumber && selectedYear === year, \'_720kb-datepicker-disabled\': !isSelectableMinDate(year + \'/\' + monthNumber + \'/\' + item ) || !isSelectableMaxDate(year + \'/\' + monthNumber + \'/\' + item) || !isSelectableDate(monthNumber, year, item) || !isSelectableDay(monthNumber, year, item),\'_720kb-datepicker-today\': item === today.getDate() && monthNumber === (today.getMonth() + 1) && year === today.getFullYear()}" class="_720kb-datepicker-calendar-day">', '{{item}}', '</a>', '<a href="javascript:void(0)" ng-repeat="nx in nextMonthDays" class="_720kb-datepicker-calendar-day _720kb-datepicker-disabled">', '{{nx}}', '</a>', '</div>'];
+  },
+      generateHtmlTemplate = function generateHtmlTemplate(prevButton, nextButton, preventMobile) {
+    var toReturn = ['<div class="_720kb-datepicker-calendar {{datepickerClass}} {{datepickerID}}" ng-class="{\'_720kb-datepicker-forced-to-open\': checkVisibility()}" ng-blur="hideCalendar()">', '</div>'],
+        monthAndYearHeader = generateMonthAndYearHeader(prevButton, nextButton, preventMobile),
+        yearsPaginationHeader = generateYearsPaginationHeader(prevButton, nextButton),
+        daysColumns = generateDaysColumns(),
+        days = generateDays(),
+        iterator = function iterator(aRow) {
+      toReturn.splice(toReturn.length - 1, 0, aRow);
     };
 
-    return d.forEach(s), l.forEach(s), c.forEach(s), o.forEach(s), r.join("");
+    monthAndYearHeader.forEach(iterator);
+    yearsPaginationHeader.forEach(iterator);
+    daysColumns.forEach(iterator);
+    days.forEach(iterator);
+    return toReturn.join('');
   },
-      d = function d(a, n, i, _d, l, c) {
-    return {
-      restrict: "AEC",
-      scope: {
-        dateSet: "@",
-        dateMinLimit: "@",
-        dateMaxLimit: "@",
-        dateMonthTitle: "@",
-        dateYearTitle: "@",
-        buttonNextTitle: "@",
-        buttonPrevTitle: "@",
-        dateDisabledDates: "@",
-        dateEnabledDates: "@",
-        dateDisabledWeekdays: "@",
-        dateSetHidden: "@",
-        dateTyper: "@",
-        dateWeekStartDay: "@",
-        datepickerAppendTo: "@",
-        datepickerToggle: "@",
-        datepickerClass: "@",
-        datepickerShow: "@"
+      datepickerDirective = function datepickerDirective($window, $compile, $locale, $filter, $interpolate, $timeout) {
+    var linkingFunction = function linkingFunction($scope, element, attr) {
+      $scope.today = new Date(); //get child input
+
+      var selector = attr.selector,
+          thisInput = angular.element(selector ? element[0].querySelector('.' + selector) : element[0].children[0]),
+          theCalendar,
+          defaultPrevButton = '<b class="_720kb-datepicker-default-button">&lang;</b>',
+          defaultNextButton = '<b class="_720kb-datepicker-default-button">&rang;</b>',
+          prevButton = attr.buttonPrev || defaultPrevButton,
+          nextButton = attr.buttonNext || defaultNextButton,
+          dateFormat = attr.dateFormat //, dateMinLimit
+      //, dateMaxLimit
+      ,
+          dateDisabledDates = $scope.$eval($scope.dateDisabledDates),
+          dateEnabledDates = $scope.$eval($scope.dateEnabledDates),
+          dateDisabledWeekdays = $scope.$eval($scope.dateDisabledWeekdays),
+          date = new Date(),
+          isMouseOn = false,
+          isMouseOnInput = false,
+          preventMobile = typeof attr.datepickerMobile !== 'undefined' && attr.datepickerMobile !== 'false',
+          datetime = $locale.DATETIME_FORMATS,
+          pageDatepickers,
+          hours24h = 86400000,
+          htmlTemplate = generateHtmlTemplate(prevButton, nextButton, preventMobile),
+          n,
+          onClickOnWindow = function onClickOnWindow() {
+        if (!isMouseOn && !isMouseOnInput && theCalendar) {
+          $scope.hideCalendar();
+        }
       },
-      link: function link(o, s, m) {
-        var u,
-            b,
-            h,
-            y = m.selector,
-            p = e.element(y ? s[0].querySelector("." + y) : s[0].children[0]),
-            g = m.buttonPrev || '<b class="_720kb-datepicker-default-button">&lang;</b>',
-            M = m.buttonNext || '<b class="_720kb-datepicker-default-button">&rang;</b>',
-            k = m.dateFormat,
-            f = o.$eval(o.dateDisabledDates),
-            D = o.$eval(o.dateEnabledDates),
-            v = o.$eval(o.dateDisabledWeekdays),
-            N = new Date(),
-            S = !1,
-            w = !1,
-            x = void 0 !== m.datepickerMobile && "false" !== m.datepickerMobile,
-            Y = i.DATETIME_FORMATS,
-            T = r(g, M, x),
-            _ = function _() {
-          S || w || !u || o.hideCalendar();
-        },
-            L = function L(e, a) {
-          var t,
-              n,
-              i,
-              r,
-              d,
-              l = new Date(a, e, 0).getDate(),
-              c = new Date(a + "/" + e + "/1").getDay(),
-              s = new Date(a + "/" + e + "/" + l).getDay(),
-              m = [],
-              u = [];
+          setDaysInMonth = function setDaysInMonth(month, year) {
+        var i,
+            limitDate = new Date(year, month, 0).getDate(),
+            firstDayMonthNumber = new Date(year + '/' + month + '/' + 1).getDay(),
+            lastDayMonthNumber = new Date(year + '/' + month + '/' + limitDate).getDay(),
+            prevMonthDays = [],
+            nextMonthDays = [],
+            howManyNextDays,
+            howManyPreviousDays,
+            monthAlias,
+            dateWeekEndDay;
+        $scope.days = [];
+        $scope.dateWeekStartDay = $scope.validateWeekDay($scope.dateWeekStartDay);
+        dateWeekEndDay = ($scope.dateWeekStartDay + 6) % 7;
 
-          for (o.days = [], o.dateWeekStartDay = o.validateWeekDay(o.dateWeekStartDay), d = (o.dateWeekStartDay + 6) % 7, t = 1; t <= l; t += 1) {
-            o.days.push(t);
+        for (i = 1; i <= limitDate; i += 1) {
+          $scope.days.push(i);
+        } //get previous month days if first day in month is not first day in week
+
+
+        if (firstDayMonthNumber === $scope.dateWeekStartDay) {
+          //no need for it
+          $scope.prevMonthDays = [];
+        } else {
+          howManyPreviousDays = firstDayMonthNumber - $scope.dateWeekStartDay;
+
+          if (firstDayMonthNumber < $scope.dateWeekStartDay) {
+            howManyPreviousDays += 7;
+          } //get previous month
+
+
+          if (Number(month) === 1) {
+            monthAlias = 12;
+          } else {
+            monthAlias = month - 1;
+          } //return previous month days
+
+
+          for (i = 1; i <= new Date(year, monthAlias, 0).getDate(); i += 1) {
+            prevMonthDays.push(i);
+          } //attach previous month days
+
+
+          $scope.prevMonthDays = prevMonthDays.slice(-howManyPreviousDays);
+        } //get next month days if last day in month is not last day in week
+
+
+        if (lastDayMonthNumber === dateWeekEndDay) {
+          //no need for it
+          $scope.nextMonthDays = [];
+        } else {
+          howManyNextDays = 6 - lastDayMonthNumber + $scope.dateWeekStartDay;
+
+          if (lastDayMonthNumber < $scope.dateWeekStartDay) {
+            howManyNextDays -= 7;
+          } //get previous month
+          //return next month days
+
+
+          for (i = 1; i <= howManyNextDays; i += 1) {
+            nextMonthDays.push(i);
+          } //attach previous month days
+
+
+          $scope.nextMonthDays = nextMonthDays;
+        }
+      },
+          resetToMinDate = function resetToMinDate() {
+        $scope.month = $filter('date')(new Date($scope.dateMinLimit), 'MMMM');
+        $scope.monthNumber = Number($filter('date')(new Date($scope.dateMinLimit), 'MM'));
+        $scope.day = Number($filter('date')(new Date($scope.dateMinLimit), 'dd'));
+        $scope.year = Number($filter('date')(new Date($scope.dateMinLimit), 'yyyy'));
+        setDaysInMonth($scope.monthNumber, $scope.year);
+      },
+          resetToMaxDate = function resetToMaxDate() {
+        $scope.month = $filter('date')(new Date($scope.dateMaxLimit), 'MMMM');
+        $scope.monthNumber = Number($filter('date')(new Date($scope.dateMaxLimit), 'MM'));
+        $scope.day = Number($filter('date')(new Date($scope.dateMaxLimit), 'dd'));
+        $scope.year = Number($filter('date')(new Date($scope.dateMaxLimit), 'yyyy'));
+        setDaysInMonth($scope.monthNumber, $scope.year);
+      },
+          prevYear = function prevYear() {
+        $scope.year = Number($scope.year) - 1;
+      },
+          nextYear = function nextYear() {
+        $scope.year = Number($scope.year) + 1;
+      },
+          localDateTimestamp = function localDateTimestamp(rawDate, dateFormatDefinition) {
+        var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|MMMM|MMM|MM|M|dd?d?|yy?yy?y?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,
+            formatDate,
+            dateSplit,
+            m,
+            d,
+            y,
+            index,
+            el,
+            longName,
+            shortName;
+
+        for (index = 0; index < datetime.MONTH.length; index += 1) {
+          longName = datetime.MONTH[index];
+          shortName = datetime.SHORTMONTH[index];
+
+          if (rawDate.indexOf(longName) !== -1) {
+            rawDate = rawDate.replace(longName, index + 1);
+            break;
           }
 
-          if (c === o.dateWeekStartDay) o.prevMonthDays = [];else {
-            for (i = c - o.dateWeekStartDay, c < o.dateWeekStartDay && (i += 7), r = 1 === Number(e) ? 12 : e - 1, t = 1; t <= new Date(a, r, 0).getDate(); t += 1) {
-              m.push(t);
-            }
-
-            o.prevMonthDays = m.slice(-i);
+          if (rawDate.indexOf(shortName) !== -1) {
+            rawDate = rawDate.replace(shortName, index + 1);
+            break;
           }
-          if (s === d) o.nextMonthDays = [];else {
-            for (n = 6 - s + o.dateWeekStartDay, s < o.dateWeekStartDay && (n -= 7), t = 1; t <= n; t += 1) {
-              u.push(t);
-            }
-
-            o.nextMonthDays = u;
-          }
-        },
-            $ = function $() {
-          o.month = _d("date")(new Date(o.dateMinLimit), "MMMM"), o.monthNumber = Number(_d("date")(new Date(o.dateMinLimit), "MM")), o.day = Number(_d("date")(new Date(o.dateMinLimit), "dd")), o.year = Number(_d("date")(new Date(o.dateMinLimit), "yyyy")), L(o.monthNumber, o.year);
-        },
-            A = function A() {
-          o.month = _d("date")(new Date(o.dateMaxLimit), "MMMM"), o.monthNumber = Number(_d("date")(new Date(o.dateMaxLimit), "MM")), o.day = Number(_d("date")(new Date(o.dateMaxLimit), "dd")), o.year = Number(_d("date")(new Date(o.dateMaxLimit), "yyyy")), L(o.monthNumber, o.year);
-        },
-            P = function P() {
-          o.year = Number(o.year) - 1;
-        },
-            W = function W() {
-          o.year = Number(o.year) + 1;
-        },
-            E = function E(e, a) {
-          var t,
-              n,
-              i,
-              r,
-              d,
-              l,
-              c,
-              o,
-              s,
-              m = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|MMMM|MMM|MM|M|dd?d?|yy?yy?y?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
-
-          for (l = 0; l < Y.MONTH.length; l += 1) {
-            if (o = Y.MONTH[l], s = Y.SHORTMONTH[l], -1 !== e.indexOf(o)) {
-              e = e.replace(o, l + 1);
-              break;
-            }
-
-            if (-1 !== e.indexOf(s)) {
-              e = e.replace(s, l + 1);
-              break;
-            }
-          }
-
-          for (n = e.split(/\D/).filter(function (e) {
-            return e.length > 0;
-          }), t = a.match(m).filter(function (e) {
-            return null !== e.match(/^[a-zA-Z]+$/i);
-          }), l = 0; l < t.length; l += 1) {
-            switch (c = t[l], !0) {
-              case -1 !== c.indexOf("d"):
-                r = n[l - (t.length - n.length)];
-                break;
-
-              case -1 !== c.indexOf("M"):
-                i = n[l - (t.length - n.length)];
-                break;
-
-              case -1 !== c.indexOf("y"):
-                d = n[l - (t.length - n.length)];
-            }
-          }
-
-          return new Date(d + "/" + i + "/" + r);
-        },
-            H = function H() {
-          if (!o.isSelectableMinDate(o.year + "/" + o.monthNumber + "/" + o.day) || !o.isSelectableMaxDate(o.year + "/" + o.monthNumber + "/" + o.day)) return !1;
-          var e = new Date(o.year + "/" + o.monthNumber + "/" + o.day);
-          m.dateFormat ? p.val(_d("date")(e, k)) : p.val(e), p.triggerHandler("input"), p.triggerHandler("change");
-        },
-            O = {
-          add: function add(e, a) {
-            var t;
-            e.className.indexOf(a) > -1 || ((t = e.className.split(" ")).push(a), e.className = t.join(" "));
-          },
-          remove: function remove(e, a) {
-            var t, n;
-
-            if (-1 !== e.className.indexOf(a)) {
-              for (n = e.className.split(" "), t = 0; t < n.length; t += 1) {
-                if (n[t] === a) {
-                  n = n.slice(0, t).concat(n.slice(t + 1));
-                  break;
-                }
-              }
-
-              e.className = n.join(" ");
-            }
-          }
-        },
-            F = function F() {
-          b = a.document.getElementsByClassName("_720kb-datepicker-calendar"), e.forEach(b, function (e, a) {
-            b[a].classList ? b[a].classList.remove("_720kb-datepicker-open") : O.remove(b[a], "_720kb-datepicker-open");
-          }), u.classList ? (u.classList.add("_720kb-datepicker-open"), N = k ? E(p[0].value.toString(), k) : new Date(p[0].value.toString()), o.selectedMonth = Number(_d("date")(N, "MM")), o.selectedDay = Number(_d("date")(N, "dd")), o.selectedYear = Number(_d("date")(N, "yyyy"))) : O.add(u, "_720kb-datepicker-open"), o.today = new Date(), c(function () {
-            o.selectedDay ? (o.year = o.selectedYear, o.monthNumber = o.selectedMonth) : (o.year = o.today.getFullYear(), o.monthNumber = o.today.getMonth() + 1), o.month = _d("date")(new Date(o.year, o.monthNumber - 1), "MMMM"), L(o.monthNumber, o.year);
-          }, 0);
-        },
-            j = function j() {
-          return !!o.datepickerShow && (N = k ? E(p[0].value.toString(), k) : new Date(p[0].value.toString()), o.selectedMonth = Number(_d("date")(N, "MM")), o.selectedDay = Number(_d("date")(N, "dd")), o.selectedYear = Number(_d("date")(N, "yyyy")), o.$eval(o.datepickerShow));
-        },
-            I = o.$watch("dateSet", function (e) {
-          e && !isNaN(Date.parse(e)) && (N = new Date(e), o.month = _d("date")(N, "MMMM"), o.monthNumber = Number(_d("date")(N, "MM")), o.day = Number(_d("date")(N, "dd")), o.year = Number(_d("date")(N, "yyyy")), L(o.monthNumber, o.year), "true" !== o.dateSetHidden && H());
-        }),
-            C = o.$watch("dateMinLimit", function (e) {
-          e && $();
-        }),
-            B = o.$watch("dateMaxLimit", function (e) {
-          e && A();
-        }),
-            G = o.$watch("dateFormat", function (e) {
-          e && H();
-        }),
-            z = o.$watch("dateDisabledDates", function (e) {
-          e && (f = o.$eval(e), o.isSelectableDate(o.monthNumber, o.year, o.day) || (p.val(""), p.triggerHandler("input"), p.triggerHandler("change")));
-        }),
-            R = o.$watch("dateEnabledDates", function (e) {
-          e && (D = o.$eval(e), o.isSelectableDate(o.monthNumber, o.year, o.day) || (p.val(""), p.triggerHandler("input"), p.triggerHandler("change")));
-        });
-
-        for (o.nextMonth = function () {
-          12 === o.monthNumber ? (o.monthNumber = 1, W()) : o.monthNumber += 1, o.dateMaxLimit && (o.isSelectableMaxDate(o.year + "/" + o.monthNumber + "/" + o.days[0]) || A()), o.month = _d("date")(new Date(o.year, o.monthNumber - 1), "MMMM"), L(o.monthNumber, o.year), o.day = void 0;
-        }, o.willPrevMonthBeSelectable = function () {
-          var e = o.monthNumber,
-              a = o.year,
-              t = _d("date")(new Date(new Date(a + "/" + e + "/01").getTime() - 864e5), "dd");
-
-          return 1 === e ? (e = 12, a -= 1) : e -= 1, !(o.dateMinLimit && !o.isSelectableMinDate(a + "/" + e + "/" + t));
-        }, o.willNextMonthBeSelectable = function () {
-          var e = o.monthNumber,
-              a = o.year;
-          return 12 === e ? (e = 1, a += 1) : e += 1, !(o.dateMaxLimit && !o.isSelectableMaxDate(a + "/" + e + "/01"));
-        }, o.prevMonth = function () {
-          1 === o.monthNumber ? (o.monthNumber = 12, P()) : o.monthNumber -= 1, o.dateMinLimit && (o.isSelectableMinDate(o.year + "/" + o.monthNumber + "/" + o.days[o.days.length - 1]) || $()), o.month = _d("date")(new Date(o.year, o.monthNumber - 1), "MMMM"), L(o.monthNumber, o.year), o.day = void 0;
-        }, o.selectedMonthHandle = function (e) {
-          o.monthNumber = Number(_d("date")(new Date(e + "/01/2000"), "MM")), L(o.monthNumber, o.year), H();
-        }, o.setNewYear = function (e) {
-          if (t || (o.day = void 0), o.dateMaxLimit && o.year < Number(e)) {
-            if (!o.isSelectableMaxYear(e)) return;
-          } else if (o.dateMinLimit && o.year > Number(e) && !o.isSelectableMinYear(e)) return;
-
-          o.paginateYears(e), o.showYearsPagination = !1, c(function () {
-            o.year = Number(e), L(o.monthNumber, o.year);
-          }, 0);
-        }, o.hideCalendar = function () {
-          u.classList ? u.classList.remove("_720kb-datepicker-open") : O.remove(u, "_720kb-datepicker-open");
-        }, o.setDatepickerDay = function (e) {
-          o.isSelectableDay(o.monthNumber, o.year, e) && o.isSelectableDate(o.monthNumber, o.year, e) && o.isSelectableMaxDate(o.year + "/" + o.monthNumber + "/" + e) && o.isSelectableMinDate(o.year + "/" + o.monthNumber + "/" + e) && (o.day = Number(e), o.selectedDay = o.day, o.selectedMonth = o.monthNumber, o.selectedYear = o.year, H(), m.hasOwnProperty("dateRefocus") && p[0].focus(), o.hideCalendar());
-        }, o.paginateYears = function (e) {
-          var a,
-              n = [],
-              i = 10,
-              r = 10;
-
-          for (o.paginationYears = [], t && (i = 50, r = 50, o.dateMinLimit && o.dateMaxLimit && (i = (e = new Date(o.dateMaxLimit).getFullYear()) - new Date(o.dateMinLimit).getFullYear(), r = 1)), a = i; a > 0; a -= 1) {
-            n.push(Number(e) - a);
-          }
-
-          for (a = 0; a < r; a += 1) {
-            n.push(Number(e) + a);
-          }
-
-          "true" === o.dateTyper && p.on("keyup blur", function () {
-            if (p[0].value && p[0].value.length && p[0].value.length > 0) try {
-              (N = k ? E(p[0].value.toString(), k) : new Date(p[0].value.toString())).getFullYear() && !isNaN(N.getDay()) && !isNaN(N.getMonth()) && o.isSelectableDay(N.getMonth(), N.getFullYear(), N.getDay()) && o.isSelectableDate(N.getMonth(), N.getFullYear(), N.getDay()) && o.isSelectableMaxDate(N) && o.isSelectableMinDate(N) && o.$apply(function () {
-                o.month = _d("date")(N, "MMMM"), o.monthNumber = Number(_d("date")(N, "MM")), o.day = Number(_d("date")(N, "dd")), 4 === N.getFullYear().toString().length && (o.year = Number(_d("date")(N, "yyyy"))), L(o.monthNumber, o.year);
-              });
-            } catch (e) {
-              return e;
-            }
-          }), o.dateMaxLimit && n && n.length && !o.isSelectableMaxYear(Number(n[n.length - 1]) + 1) ? o.paginationYearsNextDisabled = !0 : o.paginationYearsNextDisabled = !1, o.dateMinLimit && n && n.length && !o.isSelectableMinYear(Number(n[0]) - 1) ? o.paginationYearsPrevDisabled = !0 : o.paginationYearsPrevDisabled = !1, o.paginationYears = n;
-        }, o.isSelectableDay = function (e, a, t) {
-          var n = 0;
-          if (v && v.length > 0) for (n; n <= v.length; n += 1) {
-            if (v[n] === new Date(e + "/" + t + "/" + a).getDay()) return !1;
-          }
-          return !0;
-        }, o.isSelectableDate = function (e, a, t) {
-          var n = 0;
-          if (f && f.length > 0) for (n; n <= f.length; n += 1) {
-            if (new Date(f[n]).getTime() === new Date(e + "/" + t + "/" + a).getTime()) return !1;
-          }
-
-          if (D) {
-            for (n; n <= D.length; n += 1) {
-              if (new Date(D[n]).getTime() === new Date(e + "/" + t + "/" + a).getTime()) return !0;
-            }
-
-            return !1;
-          }
-
-          return !0;
-        }, o.isSelectableMinDate = function (e) {
-          return !(o.dateMinLimit && new Date(o.dateMinLimit) && new Date(e).getTime() < new Date(o.dateMinLimit).getTime());
-        }, o.isSelectableMaxDate = function (e) {
-          return !(o.dateMaxLimit && new Date(o.dateMaxLimit) && new Date(e).getTime() > new Date(o.dateMaxLimit).getTime());
-        }, o.isSelectableMaxYear = function (e) {
-          return !(o.dateMaxLimit && e > new Date(o.dateMaxLimit).getFullYear());
-        }, o.isSelectableMinYear = function (e) {
-          return !(o.dateMinLimit && e < new Date(o.dateMinLimit).getFullYear());
-        }, o.validateWeekDay = function (e) {
-          var a = Number(e, 10);
-          return (!a || a < 0 || a > 6) && (a = 0), a;
-        }, T = T.replace(/{{/g, l.startSymbol()).replace(/}}/g, l.endSymbol()), o.dateMonthTitle = o.dateMonthTitle || "Select month", o.dateYearTitle = o.dateYearTitle || "Select year", o.buttonNextTitle = o.buttonNextTitle || "Next", o.buttonPrevTitle = o.buttonPrevTitle || "Prev", o.month = _d("date")(N, "MMMM"), o.monthNumber = Number(_d("date")(N, "MM")), o.day = Number(_d("date")(N, "dd")), o.dateWeekStartDay = o.validateWeekDay(o.dateWeekStartDay), o.dateMaxLimit ? o.year = Number(_d("date")(new Date(o.dateMaxLimit), "yyyy")) : o.year = Number(_d("date")(N, "yyyy")), o.months = Y.MONTH, o.daysInString = [], h = o.dateWeekStartDay; h <= o.dateWeekStartDay + 6; h += 1) {
-          o.daysInString.push(h % 7);
         }
 
-        o.daysInString = o.daysInString.map(function (e) {
-          return _d("date")(new Date(new Date("06/08/2014").valueOf() + 864e5 * e), "EEE");
-        }), o.datepickerAppendTo && -1 !== o.datepickerAppendTo.indexOf(".") ? (o.datepickerID = "datepicker-id-" + new Date().getTime() + (Math.floor(6 * Math.random()) + 8), e.element(document.getElementsByClassName(o.datepickerAppendTo.replace(".", ""))[0]).append(n(e.element(T))(o, function (a) {
-          u = e.element(a)[0];
-        }))) : o.datepickerAppendTo && -1 !== o.datepickerAppendTo.indexOf("#") ? (o.datepickerID = "datepicker-id-" + new Date().getTime() + (Math.floor(6 * Math.random()) + 8), e.element(document.getElementById(o.datepickerAppendTo.replace("#", ""))).append(n(e.element(T))(o, function (a) {
-          u = e.element(a)[0];
-        }))) : o.datepickerAppendTo && "body" === o.datepickerAppendTo ? (o.datepickerID = "datepicker-id-" + (new Date().getTime() + (Math.floor(6 * Math.random()) + 8)), e.element(document).find("body").append(n(e.element(T))(o, function (a) {
-          u = e.element(a)[0];
-        }))) : (p.after(n(e.element(T))(o)), u = s[0].querySelector("._720kb-datepicker-calendar")), function () {
-          return !o.datepickerToggle || o.$eval(o.datepickerToggle);
-        }() && p.on("focus click focusin", function () {
-          w = !0, S || w || !u ? F() : o.hideCalendar();
-        }), p.on("focusout blur", function () {
-          w = !1;
-        }), e.element(u).on("mouseenter", function () {
-          S = !0;
-        }), e.element(u).on("mouseleave", function () {
-          S = !1;
-        }), e.element(u).on("focusin", function () {
-          S = !0;
-        }), e.element(a).on("click focus focusin", _), (o.dateMinLimit && !o.isSelectableMinYear(o.year) || !o.isSelectableMinDate(o.year + "/" + o.monthNumber + "/" + o.day)) && $(), (o.dateMaxLimit && !o.isSelectableMaxYear(o.year) || !o.isSelectableMaxDate(o.year + "/" + o.monthNumber + "/" + o.day)) && A(), o.paginateYears(o.year), L(o.monthNumber, o.year), o.checkVisibility = j, o.$on("$destroy", function () {
-          I(), C(), B(), G(), z(), R(), p.off("focus click focusout blur"), e.element(u).off("mouseenter mouseleave focusin"), e.element(a).off("click focus focusin", _);
+        dateSplit = rawDate.split(/\D/).filter(function dateSplitFilter(item) {
+          return item.length > 0;
+        });
+        formatDate = dateFormatDefinition.match(formattingTokens).filter(function fromatDateFilter(item) {
+          return item.match(/^[a-zA-Z]+$/i) !== null;
+        });
+
+        for (index = 0; index < formatDate.length; index += 1) {
+          el = formatDate[index];
+
+          switch (true) {
+            case el.indexOf('d') !== -1:
+              {
+                d = dateSplit[index - (formatDate.length - dateSplit.length)];
+                break;
+              }
+
+            case el.indexOf('M') !== -1:
+              {
+                m = dateSplit[index - (formatDate.length - dateSplit.length)];
+                break;
+              }
+
+            case el.indexOf('y') !== -1:
+              {
+                y = dateSplit[index - (formatDate.length - dateSplit.length)];
+                break;
+              }
+
+            default:
+              {
+                break;
+              }
+          }
+        }
+
+        return new Date(y + '/' + m + '/' + d);
+      },
+          setInputValue = function setInputValue() {
+        if ($scope.isSelectableMinDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day) && $scope.isSelectableMaxDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day)) {
+          var modelDate = new Date($scope.year + '/' + $scope.monthNumber + '/' + $scope.day);
+
+          if (attr.dateFormat) {
+            thisInput.val($filter('date')(modelDate, dateFormat));
+          } else {
+            thisInput.val(modelDate);
+          }
+
+          thisInput.triggerHandler('input');
+          thisInput.triggerHandler('change'); //just to be sure;
+        } else {
+          return false;
+        }
+      },
+          classHelper = {
+        'add': function add(ele, klass) {
+          var classes;
+
+          if (ele.className.indexOf(klass) > -1) {
+            return;
+          }
+
+          classes = ele.className.split(' ');
+          classes.push(klass);
+          ele.className = classes.join(' ');
+        },
+        'remove': function remove(ele, klass) {
+          var i, classes;
+
+          if (ele.className.indexOf(klass) === -1) {
+            return;
+          }
+
+          classes = ele.className.split(' ');
+
+          for (i = 0; i < classes.length; i += 1) {
+            if (classes[i] === klass) {
+              classes = classes.slice(0, i).concat(classes.slice(i + 1));
+              break;
+            }
+          }
+
+          ele.className = classes.join(' ');
+        }
+      },
+          showCalendar = function showCalendar() {
+        //lets hide all the latest instances of datepicker
+        pageDatepickers = $window.document.getElementsByClassName('_720kb-datepicker-calendar');
+        angular.forEach(pageDatepickers, function forEachDatepickerPages(value, key) {
+          if (pageDatepickers[key].classList) {
+            pageDatepickers[key].classList.remove('_720kb-datepicker-open');
+          } else {
+            classHelper.remove(pageDatepickers[key], '_720kb-datepicker-open');
+          }
+        });
+
+        if (theCalendar.classList) {
+          theCalendar.classList.add('_720kb-datepicker-open');
+
+          if (dateFormat) {
+            date = localDateTimestamp(thisInput[0].value.toString(), dateFormat);
+          } else {
+            date = new Date(thisInput[0].value.toString());
+          }
+
+          $scope.selectedMonth = Number($filter('date')(date, 'MM'));
+          $scope.selectedDay = Number($filter('date')(date, 'dd'));
+          $scope.selectedYear = Number($filter('date')(date, 'yyyy'));
+        } else {
+          classHelper.add(theCalendar, '_720kb-datepicker-open');
+        }
+
+        $scope.today = new Date();
+        $timeout(function timeoutForYears() {
+          if ($scope.selectedDay) {
+            $scope.year = $scope.selectedYear;
+            $scope.monthNumber = $scope.selectedMonth;
+          } else {
+            $scope.year = $scope.today.getFullYear();
+            $scope.monthNumber = $scope.today.getMonth() + 1;
+          }
+
+          $scope.month = $filter('date')(new Date($scope.year, $scope.monthNumber - 1), 'MMMM');
+          setDaysInMonth($scope.monthNumber, $scope.year);
+        }, 0);
+      },
+          checkToggle = function checkToggle() {
+        if (!$scope.datepickerToggle) {
+          return true;
+        }
+
+        return $scope.$eval($scope.datepickerToggle);
+      },
+          checkVisibility = function checkVisibility() {
+        if (!$scope.datepickerShow) {
+          return false;
+        }
+
+        if (dateFormat) {
+          date = localDateTimestamp(thisInput[0].value.toString(), dateFormat);
+        } else {
+          date = new Date(thisInput[0].value.toString());
+        }
+
+        $scope.selectedMonth = Number($filter('date')(date, 'MM'));
+        $scope.selectedDay = Number($filter('date')(date, 'dd'));
+        $scope.selectedYear = Number($filter('date')(date, 'yyyy'));
+        return $scope.$eval($scope.datepickerShow);
+      },
+          unregisterDataSetWatcher = $scope.$watch('dateSet', function dateSetWatcher(newValue) {
+        if (newValue && !isNaN(Date.parse(newValue))) {
+          date = new Date(newValue);
+          $scope.month = $filter('date')(date, 'MMMM'); //december-November like
+
+          $scope.monthNumber = Number($filter('date')(date, 'MM')); // 01-12 like
+
+          $scope.day = Number($filter('date')(date, 'dd')); //01-31 like
+
+          $scope.year = Number($filter('date')(date, 'yyyy')); //2014 like
+
+          setDaysInMonth($scope.monthNumber, $scope.year);
+
+          if ($scope.dateSetHidden !== 'true') {
+            setInputValue();
+          }
+        }
+      }),
+          unregisterDateMinLimitWatcher = $scope.$watch('dateMinLimit', function dateMinLimitWatcher(newValue) {
+        if (newValue) {
+          resetToMinDate();
+        }
+      }),
+          unregisterDateMaxLimitWatcher = $scope.$watch('dateMaxLimit', function dateMaxLimitWatcher(newValue) {
+        if (newValue) {
+          resetToMaxDate();
+        }
+      }),
+          unregisterDateFormatWatcher = $scope.$watch('dateFormat', function dateFormatWatcher(newValue) {
+        if (newValue) {
+          setInputValue();
+        }
+      }),
+          unregisterDateDisabledDatesWatcher = $scope.$watch('dateDisabledDates', function dateDisabledDatesWatcher(newValue) {
+        if (newValue) {
+          dateDisabledDates = $scope.$eval(newValue);
+
+          if (!$scope.isSelectableDate($scope.monthNumber, $scope.year, $scope.day)) {
+            thisInput.val('');
+            thisInput.triggerHandler('input');
+            thisInput.triggerHandler('change'); //just to be sure;
+          }
+        }
+      }),
+          unregisterDateEnabledDatesWatcher = $scope.$watch('dateEnabledDates', function dateEnabledDatesWatcher(newValue) {
+        if (newValue) {
+          dateEnabledDates = $scope.$eval(newValue);
+
+          if (!$scope.isSelectableDate($scope.monthNumber, $scope.year, $scope.day)) {
+            thisInput.val('');
+            thisInput.triggerHandler('input');
+            thisInput.triggerHandler('change'); //just to be sure;
+          }
+        }
+      });
+
+      $scope.nextMonth = function nextMonth() {
+        if ($scope.monthNumber === 12) {
+          $scope.monthNumber = 1; //its happy new year
+
+          nextYear();
+        } else {
+          $scope.monthNumber += 1;
+        } //check if max date is ok
+
+
+        if ($scope.dateMaxLimit) {
+          if (!$scope.isSelectableMaxDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.days[0])) {
+            resetToMaxDate();
+          }
+        } //set next month
+
+
+        $scope.month = $filter('date')(new Date($scope.year, $scope.monthNumber - 1), 'MMMM'); //reinit days
+
+        setDaysInMonth($scope.monthNumber, $scope.year); //deactivate selected day
+
+        $scope.day = undefined;
+      };
+
+      $scope.willPrevMonthBeSelectable = function willPrevMonthBeSelectable() {
+        var monthNumber = $scope.monthNumber,
+            year = $scope.year,
+            prevDay = $filter('date')(new Date(new Date(year + '/' + monthNumber + '/01').getTime() - hours24h), 'dd'); //get last day in previous month
+
+        if (monthNumber === 1) {
+          monthNumber = 12;
+          year = year - 1;
+        } else {
+          monthNumber -= 1;
+        }
+
+        if ($scope.dateMinLimit) {
+          if (!$scope.isSelectableMinDate(year + '/' + monthNumber + '/' + prevDay)) {
+            return false;
+          }
+        }
+
+        return true;
+      };
+
+      $scope.willNextMonthBeSelectable = function willNextMonthBeSelectable() {
+        var monthNumber = $scope.monthNumber,
+            year = $scope.year;
+
+        if (monthNumber === 12) {
+          monthNumber = 1;
+          year += 1;
+        } else {
+          monthNumber += 1;
+        }
+
+        if ($scope.dateMaxLimit) {
+          if (!$scope.isSelectableMaxDate(year + '/' + monthNumber + '/01')) {
+            return false;
+          }
+        }
+
+        return true;
+      };
+
+      $scope.prevMonth = function managePrevMonth() {
+        if ($scope.monthNumber === 1) {
+          $scope.monthNumber = 12; //its happy new year
+
+          prevYear();
+        } else {
+          $scope.monthNumber -= 1;
+        } //check if min date is ok
+
+
+        if ($scope.dateMinLimit) {
+          if (!$scope.isSelectableMinDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.days[$scope.days.length - 1])) {
+            resetToMinDate();
+          }
+        } //set next month
+
+
+        $scope.month = $filter('date')(new Date($scope.year, $scope.monthNumber - 1), 'MMMM'); //reinit days
+
+        setDaysInMonth($scope.monthNumber, $scope.year); //deactivate selected day
+
+        $scope.day = undefined;
+      };
+
+      $scope.selectedMonthHandle = function manageSelectedMonthHandle(selectedMonthNumber) {
+        $scope.monthNumber = Number($filter('date')(new Date(selectedMonthNumber + '/01/2000'), 'MM'));
+        setDaysInMonth($scope.monthNumber, $scope.year);
+        setInputValue();
+      };
+
+      $scope.setNewYear = function setNewYear(year) {
+        //deactivate selected day
+        if (!isMobile) {
+          $scope.day = undefined;
+        }
+
+        if ($scope.dateMaxLimit && $scope.year < Number(year)) {
+          if (!$scope.isSelectableMaxYear(year)) {
+            return;
+          }
+        } else if ($scope.dateMinLimit && $scope.year > Number(year)) {
+          if (!$scope.isSelectableMinYear(year)) {
+            return;
+          }
+        }
+
+        $scope.paginateYears(year);
+        $scope.showYearsPagination = false;
+        $timeout(function timeoutForYears() {
+          $scope.year = Number(year);
+          setDaysInMonth($scope.monthNumber, $scope.year);
+        }, 0);
+      };
+
+      $scope.hideCalendar = function hideCalendar() {
+        if (theCalendar.classList) {
+          theCalendar.classList.remove('_720kb-datepicker-open');
+        } else {
+          classHelper.remove(theCalendar, '_720kb-datepicker-open');
+        }
+      };
+
+      $scope.setDatepickerDay = function setDatepickerDay(day) {
+        if ($scope.isSelectableDay($scope.monthNumber, $scope.year, day) && $scope.isSelectableDate($scope.monthNumber, $scope.year, day) && $scope.isSelectableMaxDate($scope.year + '/' + $scope.monthNumber + '/' + day) && $scope.isSelectableMinDate($scope.year + '/' + $scope.monthNumber + '/' + day)) {
+          $scope.day = Number(day);
+          $scope.selectedDay = $scope.day;
+          $scope.selectedMonth = $scope.monthNumber;
+          $scope.selectedYear = $scope.year;
+          setInputValue();
+
+          if (attr.hasOwnProperty('dateRefocus')) {
+            thisInput[0].focus();
+          }
+
+          $scope.hideCalendar();
+        }
+      };
+
+      $scope.paginateYears = function paginateYears(startingYear) {
+        var i,
+            theNewYears = [],
+            daysToPrepend = 10,
+            daysToAppend = 10;
+        $scope.paginationYears = [];
+
+        if (isMobile) {
+          daysToPrepend = 50;
+          daysToAppend = 50;
+
+          if ($scope.dateMinLimit && $scope.dateMaxLimit) {
+            startingYear = new Date($scope.dateMaxLimit).getFullYear();
+            daysToPrepend = startingYear - new Date($scope.dateMinLimit).getFullYear();
+            daysToAppend = 1;
+          }
+        }
+
+        for (i = daysToPrepend; i > 0; i -= 1) {
+          theNewYears.push(Number(startingYear) - i);
+        }
+
+        for (i = 0; i < daysToAppend; i += 1) {
+          theNewYears.push(Number(startingYear) + i);
+        } //date typing in input date-typer
+
+
+        if ($scope.dateTyper === 'true') {
+          thisInput.on('keyup blur', function onTyping() {
+            if (thisInput[0].value && thisInput[0].value.length && thisInput[0].value.length > 0) {
+              try {
+                if (dateFormat) {
+                  date = localDateTimestamp(thisInput[0].value.toString(), dateFormat);
+                } else {
+                  date = new Date(thisInput[0].value.toString());
+                }
+
+                if (date.getFullYear() && !isNaN(date.getDay()) && !isNaN(date.getMonth()) && $scope.isSelectableDay(date.getMonth(), date.getFullYear(), date.getDay()) && $scope.isSelectableDate(date.getMonth(), date.getFullYear(), date.getDay()) && $scope.isSelectableMaxDate(date) && $scope.isSelectableMinDate(date)) {
+                  $scope.$apply(function applyTyping() {
+                    $scope.month = $filter('date')(date, 'MMMM'); //december-November like
+
+                    $scope.monthNumber = Number($filter('date')(date, 'MM')); // 01-12 like
+
+                    $scope.day = Number($filter('date')(date, 'dd')); //01-31 like
+
+                    if (date.getFullYear().toString().length === 4) {
+                      $scope.year = Number($filter('date')(date, 'yyyy')); //2014 like
+                    }
+
+                    setDaysInMonth($scope.monthNumber, $scope.year);
+                  });
+                }
+              } catch (e) {
+                return e;
+              }
+            }
+          });
+        } //check range dates
+
+
+        if ($scope.dateMaxLimit && theNewYears && theNewYears.length && !$scope.isSelectableMaxYear(Number(theNewYears[theNewYears.length - 1]) + 1)) {
+          $scope.paginationYearsNextDisabled = true;
+        } else {
+          $scope.paginationYearsNextDisabled = false;
+        }
+
+        if ($scope.dateMinLimit && theNewYears && theNewYears.length && !$scope.isSelectableMinYear(Number(theNewYears[0]) - 1)) {
+          $scope.paginationYearsPrevDisabled = true;
+        } else {
+          $scope.paginationYearsPrevDisabled = false;
+        }
+
+        $scope.paginationYears = theNewYears;
+      };
+
+      $scope.isSelectableDay = function isSelectableDay(monthNumber, year, day) {
+        var i = 0;
+
+        if (dateDisabledWeekdays && dateDisabledWeekdays.length > 0) {
+          for (i; i <= dateDisabledWeekdays.length; i += 1) {
+            if (dateDisabledWeekdays[i] === new Date(monthNumber + '/' + day + '/' + year).getDay()) {
+              return false;
+            }
+          }
+        }
+
+        return true;
+      };
+
+      $scope.isSelectableDate = function isSelectableDate(monthNumber, year, day) {
+        var i = 0;
+
+        if (dateDisabledDates && dateDisabledDates.length > 0) {
+          for (i; i <= dateDisabledDates.length; i += 1) {
+            if (new Date(dateDisabledDates[i]).getTime() === new Date(monthNumber + '/' + day + '/' + year).getTime()) {
+              return false;
+            }
+          }
+        }
+
+        if (dateEnabledDates) {
+          for (i; i <= dateEnabledDates.length; i += 1) {
+            if (new Date(dateEnabledDates[i]).getTime() === new Date(monthNumber + '/' + day + '/' + year).getTime()) {
+              return true;
+            }
+          }
+
+          return false;
+        }
+
+        return true;
+      };
+
+      $scope.isSelectableMinDate = function isSelectableMinDate(aDate) {
+        //if current date
+        if (!!$scope.dateMinLimit && !!new Date($scope.dateMinLimit) && new Date(aDate).getTime() < new Date($scope.dateMinLimit).getTime()) {
+          return false;
+        }
+
+        return true;
+      };
+
+      $scope.isSelectableMaxDate = function isSelectableMaxDate(aDate) {
+        //if current date
+        if (!!$scope.dateMaxLimit && !!new Date($scope.dateMaxLimit) && new Date(aDate).getTime() > new Date($scope.dateMaxLimit).getTime()) {
+          return false;
+        }
+
+        return true;
+      };
+
+      $scope.isSelectableMaxYear = function isSelectableMaxYear(year) {
+        if (!!$scope.dateMaxLimit && year > new Date($scope.dateMaxLimit).getFullYear()) {
+          return false;
+        }
+
+        return true;
+      };
+
+      $scope.isSelectableMinYear = function isSelectableMinYear(year) {
+        if (!!$scope.dateMinLimit && year < new Date($scope.dateMinLimit).getFullYear()) {
+          return false;
+        }
+
+        return true;
+      };
+
+      $scope.validateWeekDay = function isValidWeekDay(weekDay) {
+        var validWeekDay = Number(weekDay, 10); // making sure that the given option is valid
+
+        if (!validWeekDay || validWeekDay < 0 || validWeekDay > 6) {
+          validWeekDay = 0;
+        }
+
+        return validWeekDay;
+      }; // respect previously configured interpolation symbols.
+
+
+      htmlTemplate = htmlTemplate.replace(/{{/g, $interpolate.startSymbol()).replace(/}}/g, $interpolate.endSymbol());
+      $scope.dateMonthTitle = $scope.dateMonthTitle || 'Select month';
+      $scope.dateYearTitle = $scope.dateYearTitle || 'Select year';
+      $scope.buttonNextTitle = $scope.buttonNextTitle || 'Next';
+      $scope.buttonPrevTitle = $scope.buttonPrevTitle || 'Prev';
+      $scope.month = $filter('date')(date, 'MMMM'); //december-November like
+
+      $scope.monthNumber = Number($filter('date')(date, 'MM')); // 01-12 like
+
+      $scope.day = Number($filter('date')(date, 'dd')); //01-31 like
+
+      $scope.dateWeekStartDay = $scope.validateWeekDay($scope.dateWeekStartDay);
+
+      if ($scope.dateMaxLimit) {
+        $scope.year = Number($filter('date')(new Date($scope.dateMaxLimit), 'yyyy')); //2014 like
+      } else {
+        $scope.year = Number($filter('date')(date, 'yyyy')); //2014 like
+      }
+
+      $scope.months = datetime.MONTH;
+      $scope.daysInString = [];
+
+      for (n = $scope.dateWeekStartDay; n <= $scope.dateWeekStartDay + 6; n += 1) {
+        $scope.daysInString.push(n % 7);
+      }
+
+      $scope.daysInString = $scope.daysInString.map(function mappingFunc(el) {
+        return $filter('date')(new Date(new Date('06/08/2014').valueOf() + A_DAY_IN_MILLISECONDS * el), 'EEE');
+      }); //create the calendar holder and append where needed
+
+      if ($scope.datepickerAppendTo && $scope.datepickerAppendTo.indexOf('.') !== -1) {
+        $scope.datepickerID = 'datepicker-id-' + new Date().getTime() + (Math.floor(Math.random() * 6) + 8);
+        angular.element(document.getElementsByClassName($scope.datepickerAppendTo.replace('.', ''))[0]).append($compile(angular.element(htmlTemplate))($scope, function afterCompile(el) {
+          theCalendar = angular.element(el)[0];
+        }));
+      } else if ($scope.datepickerAppendTo && $scope.datepickerAppendTo.indexOf('#') !== -1) {
+        $scope.datepickerID = 'datepicker-id-' + new Date().getTime() + (Math.floor(Math.random() * 6) + 8);
+        angular.element(document.getElementById($scope.datepickerAppendTo.replace('#', ''))).append($compile(angular.element(htmlTemplate))($scope, function afterCompile(el) {
+          theCalendar = angular.element(el)[0];
+        }));
+      } else if ($scope.datepickerAppendTo && $scope.datepickerAppendTo === 'body') {
+        $scope.datepickerID = 'datepicker-id-' + (new Date().getTime() + (Math.floor(Math.random() * 6) + 8));
+        angular.element(document).find('body').append($compile(angular.element(htmlTemplate))($scope, function afterCompile(el) {
+          theCalendar = angular.element(el)[0];
+        }));
+      } else {
+        thisInput.after($compile(angular.element(htmlTemplate))($scope)); //get the calendar as element
+
+        theCalendar = element[0].querySelector('._720kb-datepicker-calendar');
+      } //if datepicker-toggle="" is not present or true by default
+
+
+      if (checkToggle()) {
+        thisInput.on('focus click focusin', function onFocusAndClick() {
+          isMouseOnInput = true;
+
+          if (!isMouseOn && !isMouseOnInput && theCalendar) {
+            $scope.hideCalendar();
+          } else {
+            showCalendar();
+          }
         });
       }
+
+      thisInput.on('focusout blur', function onBlurAndFocusOut() {
+        isMouseOnInput = false;
+      }); //some tricky dirty events to fire if click is outside of the calendar and show/hide calendar when needed
+
+      angular.element(theCalendar).on('mouseenter', function onMouseEnter() {
+        isMouseOn = true;
+      });
+      angular.element(theCalendar).on('mouseleave', function onMouseLeave() {
+        isMouseOn = false;
+      });
+      angular.element(theCalendar).on('focusin', function onCalendarFocus() {
+        isMouseOn = true;
+      });
+      angular.element($window).on('click focus focusin', onClickOnWindow); //check always if given range of dates is ok
+
+      if ($scope.dateMinLimit && !$scope.isSelectableMinYear($scope.year) || !$scope.isSelectableMinDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day)) {
+        resetToMinDate();
+      }
+
+      if ($scope.dateMaxLimit && !$scope.isSelectableMaxYear($scope.year) || !$scope.isSelectableMaxDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day)) {
+        resetToMaxDate();
+      } //datepicker boot start
+
+
+      $scope.paginateYears($scope.year);
+      setDaysInMonth($scope.monthNumber, $scope.year);
+      $scope.checkVisibility = checkVisibility;
+      $scope.$on('$destroy', function unregisterListener() {
+        unregisterDataSetWatcher();
+        unregisterDateMinLimitWatcher();
+        unregisterDateMaxLimitWatcher();
+        unregisterDateFormatWatcher();
+        unregisterDateDisabledDatesWatcher();
+        unregisterDateEnabledDatesWatcher();
+        thisInput.off('focus click focusout blur');
+        angular.element(theCalendar).off('mouseenter mouseleave focusin');
+        angular.element($window).off('click focus focusin', onClickOnWindow);
+      });
+    };
+
+    return {
+      'restrict': 'AEC',
+      'scope': {
+        'dateSet': '@',
+        'dateMinLimit': '@',
+        'dateMaxLimit': '@',
+        'dateMonthTitle': '@',
+        'dateYearTitle': '@',
+        'buttonNextTitle': '@',
+        'buttonPrevTitle': '@',
+        'dateDisabledDates': '@',
+        'dateEnabledDates': '@',
+        'dateDisabledWeekdays': '@',
+        'dateSetHidden': '@',
+        'dateTyper': '@',
+        'dateWeekStartDay': '@',
+        'datepickerAppendTo': '@',
+        'datepickerToggle': '@',
+        'datepickerClass': '@',
+        'datepickerShow': '@'
+      },
+      'link': linkingFunction
     };
   };
 
-  e.module("720kb.datepicker", []).directive("datepicker", ["$window", "$compile", "$locale", "$filter", "$interpolate", "$timeout", d]);
-}(angular, navigator);/**
+  angular.module('720kb.datepicker', []).directive('datepicker', ['$window', '$compile', '$locale', '$filter', '$interpolate', '$timeout', datepickerDirective]);
+})(angular, navigator);/**
  * State-based routing for AngularJS
  * @version v0.4.3
  * @link http://angular-ui.github.com/

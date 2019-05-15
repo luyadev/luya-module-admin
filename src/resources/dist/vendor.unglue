@@ -3,7 +3,7 @@
         "../../../vendor/bower-asset/angular/angular.min.js",
         "../vendorlibs/ng-colorwheel/ng-colorwheel.js",
         "../../../vendor/bower-asset/angular-loading-bar/build/loading-bar.min.js",
-        "../../../vendor/bower-asset/angularjs-datepicker/dist/angular-datepicker.min.js",
+        "../vendorlibs/angularjs-datepicker/angular-datepicker.js",
         "../../../vendor/bower-asset/ui-router/release/angular-ui-router.js",
         "../../../vendor/bower-asset/ng-file-upload/ng-file-upload-shim.min.js",
         "../../../vendor/bower-asset/ng-file-upload/ng-file-upload.min.js",
