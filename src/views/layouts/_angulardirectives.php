@@ -82,7 +82,11 @@ use luya\admin\helpers\Angular;
                 <div ng-switch-when="2">
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="material-icons">link</i></div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="material-icons">link</i>
+                                </div>
+                            </div>
                             <input type="text" class="form-control" ng-model="data.value" placeholder="http://">
                         </div>
                         <small class="form-text text-muted"><?= Admin::t('view_index_redirect_external_link_help'); ?></small>
@@ -178,46 +182,38 @@ use luya\admin\helpers\Angular;
 
 <script type="text/ng-template" id="reverseFolders">
     <div class="folders-folder" ng-init="editFolderLabel = false; oldFolder = folder.name" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove, 'folders-folder--undeletable': folder.subfolder}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
-
         <div class="folder-left">
             <button class="folder-toggler" ng-click="toggleFolderItem(folder)" ng-if="folder.subfolder == true">
                 <i class="material-icons" ng-if="folder.toggle_open">keyboard_arrow_down</i>
                 <i class="material-icons" ng-if="!folder.toggle_open">keyboard_arrow_right</i>
             </button>
         </div>
-
         <div class="folder-middle">
             <span ng-click="changeCurrentFolderId(folder.id)">
                 <div class="folder-icon">
                     <i class="material-icons" ng-if="currentFolderId == folder.id">folder</i>
                     <i class="material-icons" ng-if="currentFolderId != folder.id">folder_open</i>
                 </div>
-
-                <div class="folder-label">{{folder.name }}</div>
+                <div class="folder-label" ng-class="{'is-active' : hasFolderActiveChild(folder.id)}">{{folder.name }}</div>
             </span>
-
             <div class="folder-edit">
                 <input class="folder-edit-input" ng-model="folder.name" type="text" />
             </div>
         </div>
-
         <div class="folder-right folder-action-default">
             <button class="folder-button folder-button--edit" ng-click="editFolderLabel=!editFolderLabel;"><i class="material-icons">edit</i></button>
             <button class="folder-button folder-button--delete" ng-hide="folder.subfolder || folder.filesCount > 0" ng-click="deleteFolder(folder)"><i class="material-icons">delete</i></button>
         </div>
-
         <div class="folder-right folder-action-edit">
             <button class="folder-button folder-button--save" ng-click="updateFolder(folder); editFolderLabel=!editFolderLabel"><i class="material-icons">check</i></button>
             <button class="folder-button folder-button--abort" ng-click="cancelFolderEdit(folder, oldFolder); editFolderLabel=!editFolderLabel;"><i class="material-icons">cancel</i></button>
         </div>
-
         <div class="folder-right folder-action-move-to">
             <button class="folder-button folder-button--move-to" ng-click="moveFilesTo(folder.id)"><i class="material-icons">subdirectory_arrow_left</i></button>
         </div>
-
     </div>
     <ul class="folders" ng-show="folder.subfolder === true && folder.toggle_open==1">
-        <li class="folders-folder-item" ng-class="{'is-active' : currentFolderId == folder.id, 'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:folder.id" ng-include="'reverseFolders'"></li>
+        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:folder.id" ng-include="'reverseFolders'"></li>
     </ul>
 </script>
 
@@ -251,7 +247,7 @@ use luya\admin\helpers\Angular;
                         </span>
                     </div>
                     <ul class="folders">
-                        <li class="folders-folder-item" ng-class="{'is-active' : currentFolderId == folder.id, 'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:0" ng-include="'reverseFolders'"></li>
+                        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:0" ng-include="'reverseFolders'"></li>
                     </ul>
                 </li>
             </ul>
@@ -261,122 +257,125 @@ use luya\admin\helpers\Angular;
         <div class="filemanager-files">
             <div class="filemanager-file-actions">
                 <div class="filemanager-file-actions-left" ng-class="{'filemanager-file-actions-left-spacing': selectedFiles.length > 0}">
-
                     <div spellcheck="false" class="btn btn-icon btn-upload filemanager-upload-file" ngf-enable-firefox-paste="true" ngf-drag-over-class="'dragover'" ngf-drop ngf-select ngf-multiple="true" ng-model="uploadingfiles">
                         <?= Admin::t('layout_filemanager_upload_files'); ?>
                     </div>
-
                     <input class="filemanager-search" type="text" ng-change="runSearch()" ng-model="searchQuery" placeholder="<?= Admin::t('layout_filemanager_search_text') ?>" />
-
                 </div>
-
                 <div class="filemanager-file-actions-right" ng-show="selectedFiles.length > 0">
-
                     <button class="btn btn-icon btn-move" ng-class="{'btn-move-active' : showFoldersToMove}" ng-click="showFoldersToMove=!showFoldersToMove">
                        <?= Admin::t('layout_filemanager_move_selected_files'); ?>
                     </button>
-
                     <button type="button" class="btn btn-icon btn-delete" ng-click="removeFiles()">
                         <?= Admin::t('layout_filemanager_remove_selected_files'); ?> ({{selectedFiles.length}})
                     </button>
-
                 </div>
             </div>
             <div class="filemanager-files-table">
-                <div class="table-responsive-wrapper">
-                <table class="table table-hover table-striped table-align-middle mt-4">
-                    <thead class="thead-default">
-                        <tr>
-                            <th>
-                                <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()" tooltip tooltip-position="right">
-                                    <i class="material-icons">done_all</i>
-                                </span>
-                            </th>
-                            <th></th><!-- image thumbnail / file icon -->
-                            <th>
-                                <span ng-if="sortField!='name_original' && sortField!='-name_original'" ng-click="changeSortField('-name_original')"><?= Admin::t('layout_filemanager_col_name'); ?></span>    
-                                <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-name_original')">
-                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_up</i>
+                <ol class="breadcrumb small mb-0 mt-3" ng-show="!searchQuery">
+                    <li class="breadcrumb-item"><a ng-click="changeCurrentFolderId(0)"><?= Admin::t('layout_filemanager_root_dir'); ?></a></li>
+                    <li class="breadcrumb-item" ng-repeat="fo in folderInheritance | reverse"><a ng-click="changeCurrentFolderId(fo.id)">{{ fo.name }}</a></li>
+                </ol>
+                <div class="table-responsive" ng-show="filesData.length > 0">
+                    <table class="table table-hover table-striped table-align-middle">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>
+                                    <span ng-hide="allowSelection == 'true'" class="filemanager-check-all" ng-click="toggleSelectionAll()">
+                                        <i class="material-icons">done_all</i>
+                                    </span>
+                                </th>
+                                <th></th><!-- image thumbnail / file icon -->
+                                <th>
+                                    <span ng-if="sortField!='name_original' && sortField!='-name_original'" ng-click="changeSortField('-name_original')"><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                    <div class="table-sorter-wrapper is-active">
+                                        <div ng-if="sortField=='name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-name_original')">
+                                            <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </div>
+                                        <div ng-if="sortField=='-name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('name_original')">
+                                            <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </div>
                                     </div>
-                                    <div ng-if="sortField=='-name_original'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('name_original')">
-                                        <span><?= Admin::t('layout_filemanager_col_name'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_down</i>
+                                </th>
+                                <th>
+                                    <span ng-if="sortField!='extension' && sortField!='-extension'" ng-click="changeSortField('-extension')"><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                    <div class="table-sorter-wrapper is-active">
+                                        <div ng-if="sortField=='extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-extension')">
+                                            <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </div>
+                                        <div ng-if="sortField=='-extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('extension')">
+                                            <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
-                            <th>
-                                <span ng-if="sortField!='extension' && sortField!='-extension'" ng-click="changeSortField('-extension')"><?= Admin::t('layout_filemanager_col_type'); ?></span>    
-                                <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-extension')">
-                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_up</i>
+                                </th>
+                                <th>
+                                    <span ng-if="sortField!='upload_timestamp' && sortField!='-upload_timestamp'" ng-click="changeSortField('-upload_timestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                    <div class="table-sorter-wrapper is-active">
+                                        <div ng-if="sortField=='upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-upload_timestamp')">
+                                            <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </div>
+                                        <div ng-if="sortField=='-upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('upload_timestamp')">
+                                            <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </div>
                                     </div>
-                                    <div ng-if="sortField=='-extension'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('extension')">
-                                        <span><?= Admin::t('layout_filemanager_col_type'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_down</i>
+                                </th>
+                                <th>
+                                    <span ng-if="sortField!='file_size' && sortField!='-file_size'" ng-click="changeSortField('-file_size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                    <div class="table-sorter-wrapper is-active">
+                                        <div ng-if="sortField=='file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-file_size')">
+                                            <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </div>
+                                        <div ng-if="sortField=='-file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('file_size')">
+                                            <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
-                            <th>
-                                <span ng-if="sortField!='upload_timestamp' && sortField!='-upload_timestamp'" ng-click="changeSortField('-upload_timestamp')"><?= Admin::t('layout_filemanager_col_date'); ?></span>    
-                                <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-upload_timestamp')">
-                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_up</i>
+                                </th>
+                                <th class="tab-padding-right text-right filemanager-actions-column"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ng-repeat="file in filesData" class="filemanager-file"
+                                ng-class="{ 'clickable selectable' : allowSelection == 'false', 'filemanager-file-selected': selectedFileFromParent && selectedFileFromParent.id == file.id, 'filemanager-file-detail-open': fileDetail.id === file.id}"
+                            >
+                                <th scope="row" ng-click="toggleSelection(file)">
+                                    <div class="form-check filemanager-toggle-selection" ng-class="{'form-check-active': inSelection(file)}">
+                                        <input type="checkbox" ng-checked="inSelection(file)" class="form-check-input">
+                                        <label></label>
                                     </div>
-                                    <div ng-if="sortField=='-upload_timestamp'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('upload_timestamp')">
-                                        <span><?= Admin::t('layout_filemanager_col_date'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_down</i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <span ng-if="sortField!='file_size' && sortField!='-file_size'" ng-click="changeSortField('-file_size')"><?= Admin::t('layout_filemanager_col_size'); ?></span>    
-                                <div class="table-sorter-wrapper is-active">
-                                    <div ng-if="sortField=='file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('-file_size')">
-                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_up</i>
-                                    </div>
-                                    <div ng-if="sortField=='-file_size'" class="table-sorter table-sorter-up is-sorting" ng-click="changeSortField('file_size')">
-                                        <span><?= Admin::t('layout_filemanager_col_size'); ?></span>    
-                                        <i class="material-icons">keyboard_arrow_down</i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="tab-padding-right text-right filemanager-actions-column"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            ng-repeat="file in filesData" class="filemanager-file"
-                            ng-class="{ 'clickable selectable' : allowSelection == 'false', 'filemanager-file-selected': selectedFileFromParent && selectedFileFromParent.id == file.id, 'filemanager-file-detail-open': fileDetail.id === file.id}"
-                        >
-                            <th scope="row" ng-click="toggleSelection(file)">
-                                <div class="form-check" ng-class="{'form-check-active': inSelection(file)}">
-                                    <input type="checkbox" ng-checked="inSelection(file)" class="form-check-input">
-                                    <label></label>
-                                </div>
-                            </th>
-                            <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
-                                <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}" /></span>
-                                <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
-                            </td>
-                            <td ng-click="toggleSelection(file)">{{file.name_original | truncateMiddle: 50}}</td>
-                            <td ng-click="toggleSelection(file)">{{file.extension}}</td>
-                            <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
-                            <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
-                            <td class="text-right">
-                                <button type="button" class="btn btn-sm" ng-click="openFileDetail(file)">
-                                    <i class="material-icons">zoom_in</i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </th>
+                                <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
+                                    <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}" /></span>
+                                    <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
+                                </td>
+                                <td ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-text="{{file.id}}">{{file.name_original | truncateMiddle: 50}}</td>
+                                <td ng-click="toggleSelection(file)">{{file.extension}}</td>
+                                <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
+                                <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-sm filemanager-info-btn" ng-click="openFileDetail(file)">
+                                        <i class="material-icons">info</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
+                <div class="text-center mt-4" ng-show="filesData.length == 0">
+                    <p ng-show="searchQuery && !searchLoading"><?= Admin::t('layout_filemanager_search_no_results'); ?></p>
+                    <p ng-show="!searchQuery" class="mb-4 text-muted"><?= Admin::t('layout_filemanager_empty_folder'); ?></p>
+                    <div ng-show="!searchQuery" spellcheck="false" class="btn btn-outline-success p-4" ngf-enable-firefox-paste="true" ngf-drag-over-class="'dragover'" ngf-drop ngf-select ngf-multiple="true" ng-model="uploadingfiles">
+                        <i class="material-icons">file_upload</i> <?= Admin::t('layout_filemanager_upload_files'); ?>
+                    </div>
+                </div>
                 <div class="filemanager-pagination">
                     <pagination current-page="currentPageId" page-count="pageCount"></pagination>
                 </div>

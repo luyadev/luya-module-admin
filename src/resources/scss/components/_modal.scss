@@ -39,9 +39,11 @@
     color: $gray-500;
     cursor: pointer;
     font-size: 14px;
-    left: -35px;
+    left: -20px;
     line-height: 1.5rem;
     padding-right: 10px;
     position: absolute;
     top: 0;
+    top: 50%;
+    transform: translate(0, -50%);
 }

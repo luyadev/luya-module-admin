@@ -4,6 +4,7 @@ namespace luya\admin\models;
 
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
+use luya\admin\traits\TaggableTrait;
 
 /**
  * This is the model class for table "admin_tag".
@@ -116,7 +117,11 @@ final class Tag extends NgRestModel
      */
     public static function findRelations($tableName, $pkId)
     {
-        return self::find()->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')->where(['pk_id' => $pkId, 'table_name' => $tableName])->indexBy('name')->all();
+        return self::find()
+            ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
+            ->where(['pk_id' => $pkId, 'table_name' => TaggableTrait::cleanBaseTableName($tableName)])
+            ->indexBy('name')
+            ->all();
     }
     
     /**
@@ -127,7 +132,12 @@ final class Tag extends NgRestModel
      */
     public static function findRelationsTable($tableName)
     {
-        return self::find()->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')->distinct()->where(['table_name' => $tableName])->indexBy('name')->all();
+        return self::find()
+            ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
+            ->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])
+            ->indexBy('name')
+            ->distinct()
+            ->all();
     }
     
     /**

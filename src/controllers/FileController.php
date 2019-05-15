@@ -17,15 +17,20 @@ use yii\web\NotFoundHttpException;
  */
 class FileController extends \luya\web\Controller
 {
+    /**
+     * File Download Action.
+     *
+     * @param integer $id
+     * @param string $hash
+     * @param string $fileName
+     * @return \yii\web\Response
+     */
     public function actionDownload($id, $hash, $fileName)
     {
         // find file in file query
         $fileData = Yii::$app->storage->findFile(['id' => $id, 'hash_name' => $hash, 'is_deleted' => false]);
-        
         // proceed when file exists
         if ($fileData && $fileData->fileExists) {
-            // get file source from storage system
-            $fileSourcePath = $fileData->serverSource;
             // verify again against database to add counter
             $model = StorageFile::findOne($fileData->id);
             // proceed when model exists
@@ -35,7 +40,7 @@ class FileController extends \luya\web\Controller
                 Yii::$app->trigger(Module::EVENT_BEFORE_FILE_DOWNLOAD, $event);
                 
                 if (!$event->isValid) {
-                    throw new BadRequestHttpException('Unable to performe this request due to access restrictions.');
+                    throw new BadRequestHttpException('Unable to perform this file download request due to access restrictions.');
                 }
                 
                 // update the model count stats
@@ -49,6 +54,6 @@ class FileController extends \luya\web\Controller
         }
         
         // throw not found http exception, will not trigger error api transfer.
-        throw new NotFoundHttpException("Unable to find requested file.");
+        throw new NotFoundHttpException("Unable to find requested file '{$fileName}'.");
     }
 }

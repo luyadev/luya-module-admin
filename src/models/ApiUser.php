@@ -5,6 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\aws\ApiOverviewActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
+use luya\admin\aws\ApiRequestInsightActiveWindow;
 
 /**
  * User Model represents all Administration Users.
@@ -27,6 +28,7 @@ use luya\admin\aws\UserHistorySummaryActiveWindow;
  * @property integer $api_rate_limit
  * @property string $api_allowed_ips
  * @property integer $api_last_activity
+ * @property boolean $is_request_logger_enabled
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.1.0
@@ -93,6 +95,7 @@ final class ApiUser extends User
             [['firstname', 'lastname', 'email'], 'required'],
             [['email'], 'email'],
             [['email', 'auth_token'], 'unique'],
+            [['is_request_logger_enabled'], 'integer'],
         ];
     }
     
@@ -105,6 +108,7 @@ final class ApiUser extends User
             'firstname' => 'text',
             'email' => 'text',
             'lastname' => 'text',
+            'is_request_logger_enabled' => 'toggleStatus',
         ];
     }
     
@@ -127,6 +131,7 @@ final class ApiUser extends User
         return [
             ['class' => ApiOverviewActiveWindow::class, 'label' => false],
             ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+            ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
     }
 }

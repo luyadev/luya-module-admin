@@ -23,7 +23,7 @@
 	"require-dev" : {
         "luyadev/luya-testsuite" : "~1.0.11",
         "php-coveralls/php-coveralls": "^1.0",
-        "twbs/bootstrap": "v4.0.0-beta",
+        "twbs/bootstrap": "~4.3.0",
         "bower-asset/angular" : "^1.7",
         "bower-asset/angular-loading-bar" : "^0.9",
         "bower-asset/angularjs-datepicker" : "^2.0",

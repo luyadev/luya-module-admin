@@ -212,8 +212,8 @@ $this->beginPage()
                             <i class="material-icons">{{item.menuItem.icon}}</i>&nbsp;<span>{{item.menuItem.alias}}</span><span class="badge badge-secondary float-right">{{item.data.length}}</span>
                         </div>
                         <div class="card-body p-2">
-                            <div class="table-responsive-wrapper">
-                                <table class="table table-hover table-align-middle mb-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-align-middle">
                                     <thead>
                                         <tr ng-repeat="row in item.data | limitTo:1">
                                             <th ng-hide="!item.hideFields.indexOf(k)" ng-repeat="(k,v) in row">{{k}}</th>
@@ -252,7 +252,7 @@ $this->beginPage()
         <div class="debug-panel debug-panel-network" ng-class="{'debug-panel-network-open': debugDetail}" ng-if="debugTab==1">
             <div class="debug-network-items pr-3">
                 <p class="lead">Requests ({{AdminDebugBar.data.length}})<button type="button" ng-click="AdminDebugBar.clear()" class="btn btn-icon mb-3 btn-sm float-right">Clear list <i class="material-icons">clear</i></button></p>
-                <div class="table-responsive-wrapper">
+                <div class="table-responsive">
                     <table class="table table-striped table-sm table-hover table-bordered">
                         <thead>
                             <tr>
@@ -271,7 +271,7 @@ $this->beginPage()
             </div>
             <div class="debug-network-detail" ng-show="debugDetail">
                 
-                <div class="table-responsive-wrapper">
+                <div class="table-responsive">
                     <p class="lead">Request<button type="button" ng-click="closeDebugDetail()" class="btn btn-icon mb-3 btn-sm float-right">close <i class="material-icons">close</i></button></p>
                     <table class="table table-striped table-bordered">
                         <tr>
@@ -309,7 +309,7 @@ $this->beginPage()
             </div>
         </div>
         <div class="debug-panel" ng-if="debugTab==2">
-            <div class="table-responsive-wrapper">
+            <div class="table-responsive">
                 <table class="table table-striped table-sm table-bordered">
                     <thead>
                     <tr>
@@ -336,7 +336,7 @@ $this->beginPage()
             </div>
         </div>
         <div class="debug-panel" ng-if="debugTab==3">
-            <div class="table-responsive-wrapper">
+            <div class="table-responsive">
                 <div ng-repeat="(packageName, package) in packages" class="mb-3">
                     <p class="lead">{{ packageName }}</p>
                     <table class="table table-striped table-sm table-bordered">

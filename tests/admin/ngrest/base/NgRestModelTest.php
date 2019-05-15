@@ -9,6 +9,7 @@ use admintests\data\models\TestNewNotationNgRestModel;
 
 class NgRestModelTest extends AdminTestCase
 {
+    
     public function testScenarios()
     {
         $model = new TagFixture();
@@ -22,7 +23,7 @@ class NgRestModelTest extends AdminTestCase
         $this->assertSame($scenes['default'], $scenes['restupdate']);
         $this->assertSame($scenes['restcreate'], $scenes['restcreate']);
     }
-    
+
     public function testBehaviorIsAttached()
     {
         $model = new TestNgRestModel();
@@ -38,7 +39,7 @@ class NgRestModelTest extends AdminTestCase
         $model->load();
         $tag = $model->getModel('tag1');
         
-        $this->assertSame(['{{%admin_tag}}.id', '{{%admin_tag}}.name'], $tag->genericSearchFields());
+        $this->assertSame(['{{%admin_tag}}.id', '{{%admin_tag}}.name', '{{%admin_tag}}.translation'], $tag->genericSearchFields());
     }
     
     public function testGenericSearch()
@@ -47,7 +48,7 @@ class NgRestModelTest extends AdminTestCase
         $model->load();
         $tag = $model->getModel('tag1');
         $results = $tag->genericSearch('John');
-        /** @var $results \yii\db\ActiveQuery */
+        
         $this->assertSame('john', $results->one()->name);
     }
     

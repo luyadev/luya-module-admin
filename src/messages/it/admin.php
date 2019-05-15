@@ -363,7 +363,7 @@ return [
     'active_button_duplicate_success' => 'A copy has been created.',
     'active_button_duplicate_error' => 'Error while creating the copy: {message}',
 
-// 1.3
+// 2.0
 
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
@@ -379,4 +379,26 @@ return [
     'js_scheduler_table_newvalue' => 'New value',
     'js_scheduler_table_timestamp' => 'Execution Time',
     'js_dir_manager_rename_success' => 'The folder has been renamed successfully.',
+    'layout_filemanager_search_no_results' => 'No files were found for <strong>{{searchQuery}}</strong>.',
+    'layout_filemanager_empty_folder' => 'This directory contains no files.',
+    'aw_requestinsight_warning' => 'This feature is mainly used to get insights into a given API. It\'s not recommended to enable it over a long period of time as it can collect lots of data and slow down your application.',
+    'aw_requestinsight_logger_active' => 'The Request Insight is currently active!',
+    'aw_requestinsight_btn_disable' => 'Disable Insight',
+    'aw_requestinsight_btn_enable' => 'Enable Insight',
+    'aw_requestinsight_btn_clear' => 'Clear Data',
+    'aw_requestinsight_btn_fetch' => 'Fetch Data',
+    'aw_requestinsight_request_label' => 'Requests',
+    'aw_requestinsight_col_date' => 'Date',
+    'aw_requestinsight_col_type' => 'Type',
+    'aw_requestinsight_col_url' => 'URL',
+    'aw_requestinsight_col_time' => 'Time',
+    'aw_requestinsight_col_count' => 'Count',
+    'aw_requestinsight_top_request_label' => 'Top Requested URLs',
+    'aw_requestinsight_longest_response_label' => 'URLs with Longest Response Time',
+    'aw_requestinsight_data_pagination' => '{{data.length}} of {{dataCount}} requests',
+    'aw_requestinsight_toggle_logger_enabled' => 'Insight is enabled.',
+    'aw_requestinsight_toggle_logger_disabled' => 'Insight is disabled.',
+    'aw_requestinsight_toggle_error' => 'Error while enabling Request Insight.',
+    'aw_requestinsight_cleared' => 'Data has been cleared.',
+    'aw_requestinsight_default_label' => 'Request Insight',
 ];

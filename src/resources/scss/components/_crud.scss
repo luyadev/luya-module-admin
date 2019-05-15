@@ -14,7 +14,7 @@
 }
 
 .crud-counter {
-    color: color('gray');
+    color: color('gray-dark');
     display: block;
     font-size: 12px;
     font-weight: 300;
@@ -129,13 +129,13 @@
     }
 
     &:before {
-        bottom: -30px;
+        bottom: 0;
         content: '';
         display: block;
-        left: -40px;
+        left: 0;
         position: absolute;
         right: 0;
-        top: -30px;
+        top: 0;
     }
 }
 
@@ -208,7 +208,6 @@
 .crud-pagination {
     display: block;
     margin: 25px 0 10px;
-    max-width: 650px;
     padding: 0 17px;
     width: 100%;
 }
