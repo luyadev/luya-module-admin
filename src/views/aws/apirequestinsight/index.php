@@ -56,12 +56,10 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
 }]);
 </script>
 <div ng-controller="InlineController">
-    <p class="alert alert-warning">
-        <?= Module::t('aw_requestinsight_warning'); ?>
-       
-    </p>
     <?php if($isEnabled): ?>
-    <p class="alert alert-danger"><?= Module::t('aw_requestinsight_logger_active'); ?></p>
+        <p class="alert alert-danger"><?= Module::t('aw_requestinsight_logger_active'); ?></p>
+    <?php else: ?>
+        <p class="alert alert-info"><?= Module::t('aw_requestinsight_warning'); ?></p>
     <?php endif; ?>
     <?= CallbackButtonWidget::widget(['callback' => 'toggle', 'label' => $isEnabled ? '<i class="material-icons">clear</i> ' . Module::t('aw_requestinsight_btn_disable') : '<i class="material-icons">check</i> ' . Module::t('aw_requestinsight_btn_enable'), 'options' => ['reloadWindowOnSuccess' => true]]); ?>
     <?= CallbackButtonWidget::widget(['callback' => 'delete', 'label' => '<i class="material-icons">delete</i> ' . Module::t('aw_requestinsight_btn_clear'), 'angularCallbackFunction' => 'function() { $scope.loadInsights(0); };']); ?>
@@ -84,7 +82,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
                 </div>
                 <input class="form-control" ng-model="query" type="text">
             </div>
-            <table class="table table-bordered table-hover table-striped table-sm small">
+            <table class="table table-bordered table-hover table-striped small">
                 <thead>
                     <tr>
                         <th scope="col"><?= Module::t('aw_requestinsight_col_date'); ?></th>
@@ -97,7 +95,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
                     <td>{{ item.timestamp * 1000 | date:'short'}}</td>
                     <td>{{ item.request_method }}</td>
                     <td>{{ item.request_url | truncate: 100: '...'}}</small></td>
-                    <td ng-class="{'text-success': item.response_time <= insights.avarage, 'text-danger': item.response_time > insights.avarage}">
+                    <td class="text-nowrap" ng-class="{'text-success': item.response_time <= insights.avarage, 'text-danger': item.response_time > insights.avarage}">
                         {{ item.response_time }} ms
                     </td>
                 </tr>
@@ -107,7 +105,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
         </div>
         <div class="col-5">
             <p class="lead"><?= Module::t('aw_requestinsight_top_request_label'); ?></p>
-            <table class="table table-bordered table-hover table-striped table-sm small">
+            <table class="table table-bordered table-hover table-striped small">
                 <thead>
                     <tr>
                         <th scope="col"><?= Module::t('aw_requestinsight_col_url'); ?></th>
@@ -116,11 +114,11 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
                 </thead>
                 <tr ng-repeat="item in insights.counted" title="{{item.request_url}}">
                     <td>{{item.request_url | truncate: 100: '...'}}</td>
-                    <td>{{item.count }}</td>
+                    <td class="text-nowrap">{{item.count }}</td>
                 </tr>
             </table>
             <p class="lead"><?= Module::t('aw_requestinsight_longest_response_label'); ?></p>
-            <table class="table table-bordered table-hover table-striped table-sm small">
+            <table class="table table-bordered table-hover table-striped small">
                 <thead>
                     <tr>
                         <th scope="col"><?= Module::t('aw_requestinsight_col_url'); ?></th>
@@ -129,7 +127,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
                 </thead>
                 <tr ng-repeat="item in insights.slowest" title="{{item.request_url}}">
                     <td>{{item.request_url | truncate: 100: '...'}}</td>
-                    <td>{{ item.response_time }} ms</td>
+                    <td class="text-nowrap">{{ item.response_time }} ms</td>
                 </tr>
             </table>
         </div>
