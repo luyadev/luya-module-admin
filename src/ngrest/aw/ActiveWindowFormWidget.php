@@ -77,6 +77,12 @@ class ActiveWindowFormWidget extends Widget
      * @var array This config options are automaticcally are used when creating a field based on the `fieldClass`.
      */
     public $fieldConfig = [];
+
+    /**
+     * @var string The name of the controller, if not defined it will generate an generic name based on date and widget id.
+     * @since 2.0.0
+     */
+    public $controllerName;
     
     /**
      * @inheritdoc
@@ -98,7 +104,7 @@ class ActiveWindowFormWidget extends Widget
      * @param string $attribute The name of the field (which also will sent to the callback as this name)
      * @param string $label Optional Label
      * @param array $options
-     * @return \luya\admin\ngrest\aw\ActiveField
+     * @return \luya\admin\ngrest\aw\ActiveWindowFormField
      */
     public function field($attribute, $label = null, $options = [])
     {
@@ -146,7 +152,7 @@ class ActiveWindowFormWidget extends Widget
         // do we have option params for the button
         $params = (array_key_exists('params', $this->options)) ? $this->options['params'] : [];
         // create the angular controller name
-        $controller = 'Controller'.Inflector::camelize($this->id) . Inflector::camelize($this->callback) . time();
+        $controller = $this->controllerName ? $this->controllerName : 'Controller'.Inflector::camelize($this->id) . Inflector::camelize($this->callback) . time();
         // render and return the view with the specific params
         return $this->render('@admin/views/aws/base/_callbackForm', [
             'angularCrudControllerName' => $controller,

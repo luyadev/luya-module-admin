@@ -10,7 +10,6 @@ use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\db\ActiveQuery;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
 use luya\helpers\ExportHelper;
@@ -24,6 +23,7 @@ use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
 use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
+use yii\db\ActiveQueryInterface;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -250,10 +250,10 @@ class Api extends RestActiveController
      * 
      * If the pool identifier is not found, an exception will be thrown.
      *
-     * @param ActiveQuery $query
+     * @param ActiveQueryInterface $query
      * @since 2.0.0
      */
-    private function appendPoolWhereCondition(ActiveQuery $query)
+    private function appendPoolWhereCondition(ActiveQueryInterface $query)
     {
         $query->inPool(Yii::$app->request->get('pool'));
     }
@@ -552,15 +552,14 @@ class Api extends RestActiveController
 
         $find = $relation->getDataProvider();
         
-        if ($find instanceof ActiveQuery && !$find->multiple) {
+        if ($find instanceof ActiveQueryInterface && !$find->multiple) {
             throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
         }
         
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
+            $this->appendPoolWhereCondition($find);
         }
-
-        $this->appendPoolWhereCondition($find);
 
         $targetModel = Yii::createObject(['class' => $relation->getTargetModel()]);
 

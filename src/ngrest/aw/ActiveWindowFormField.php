@@ -265,9 +265,10 @@ class ActiveWindowFormField extends BaseObject
     /**
      * Render the template based on input values of $parts.
      *
-     * @return string
+     * @return string The rendered field element.
+     * @since 2.0.0
      */
-    private function render()
+    public function render()
     {
         if (empty($this->element)) {
             $this->textInput();
@@ -287,7 +288,7 @@ class ActiveWindowFormField extends BaseObject
             $this->parts['{label}'],
             $this->parts['{initValue}'],
             $this->getNgModel(),
-        ], $this->element);
+        ], $this->element) . PHP_EOL;
     }
     
     /**

@@ -5,6 +5,7 @@ namespace luya\admin\aws;
 use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\models\UserRequest;
 use yii\data\ActiveDataProvider;
+use luya\admin\Module;
 
 class ApiRequestInsightActiveWindow extends ActiveWindow
 {
@@ -20,7 +21,7 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
      */
     public function defaultLabel()
     {
-        return 'Request Insight';
+        return Module::t('aw_requestinsight_default_label');
     }
 
     /**
@@ -33,6 +34,11 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
         return 'assessment';
     }
 
+    public function getTitle()
+    {
+        return $this->model->firstname . ' ' . $this->model->lastname;
+    }
+
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      *
@@ -43,15 +49,57 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
         return $this->render('index', [
             'model' => $this->model,
             'isEnabled' => $this->model->is_request_logger_enabled,
-            'count' => UserRequest::find()->where(['user_id' => $this->model->id])->count(),
         ]);
     }
 
-    public function callbackData($page = 1)
+    public function callbackData($page = 1, $query = null)
     {
+        $find = UserRequest::find()->where(['user_id' => $this->model->id]);
+
+        if ($query) {
+            $find->andFilterWhere(['like', 'request_url', $query]);
+        }
         return new ActiveDataProvider([
-            'query' => UserRequest::find()->where(['user_id' => $this->model->id]),
-            'sort' => ['defaultOrder' => ['timestamp' => SORT_DESC]]
+            'query' => $find,
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+            'pagination' => [
+                'page' => $page,
+                'pageSize' => 23,
+            ]
         ]);
+    }
+
+    public function callbackToggle()
+    {
+        $status = !$this->model->is_request_logger_enabled;
+
+        if ($this->model->updateAttributes([
+            'is_request_logger_enabled' => $status,
+        ])) {
+            if ($status) {
+                return $this->sendSuccess(Module::t('aw_requestinsight_toggle_logger_enabled'));
+            }
+            return $this->sendSuccess(Module::t('aw_requestinsight_toggle_logger_disabled'));
+        }
+
+        return $this->sendError(Module::t('aw_requestinsight_toggle_error'));
+    }
+
+    public function callbackInsight()
+    {
+        return [
+            'avarage' => UserRequest::find()->select(['response_time'])->where(['user_id' => $this->model->id])->average('response_time'),
+            'max' => UserRequest::find()->select(['response_time'])->where(['user_id' => $this->model->id])->max('response_time'),
+            'min' => UserRequest::find()->select(['response_time'])->where(['user_id' => $this->model->id])->min('response_time'),
+            'counted' => UserRequest::find()->select(['request_url', 'count' => 'count(*)'])->where(['user_id' => $this->model->id])->orderBy(['count' => SORT_DESC])->groupBy(['request_url'])->asArray()->limit(10)->all(),
+            'slowest' => UserRequest::find()->select(['request_url', 'response_time'])->where(['user_id' => $this->model->id])->orderBy(['response_time' => SORT_DESC])->distinct()->asArray()->limit(10)->all(),
+        ];
+    }
+
+    public function callbackDelete()
+    {
+        UserRequest::deleteAll(['user_id' => $this->model->id]);
+
+        return $this->sendSuccess(Module::t('aw_requestinsight_cleared'));
     }
 }
