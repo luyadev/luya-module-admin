@@ -126,7 +126,7 @@ class ProxyController extends Command
     public $syncRequestsCount = 10;
     
     /**
-     * @var string Database connection (component name) where the data will be stored. Default is 'db'.
+     * @var string Database connection (component name) where the data will be stored.
      */
     public $db = 'db';
 
