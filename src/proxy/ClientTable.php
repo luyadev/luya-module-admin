@@ -188,7 +188,7 @@ class ClientTable extends BaseObject
      */
     protected function cleanup($sqlMode)
     {
-        if ($this->db->db->schema instanceof \yii\db\mysql\Schema) {
+        if ($this->db->schema instanceof \yii\db\mysql\Schema) {
             try {
                 $this->db->createCommand('SELECT CONNECTION_ID()')->execute();
             } catch (Exception $ex) {
