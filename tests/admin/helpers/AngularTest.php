@@ -21,8 +21,8 @@ class AngularTest extends AdminTestCase
 
     public function testSortRelationArrayDirective()
     {
-        $this->assertSame('<zaa-sort-relation-array model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'])->render());
-        $this->assertSame('<zaa-sort-relation-array classAtr="value" model="the-model" label="the-label" options=\'{"sourceData":{"foo":"bar"}}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'], ['classAtr' => 'value'])->render());
+        $this->assertSame('<zaa-sort-relation-array model="the-model" label="the-label" options=\'{"sourceData":[{"foo":"bar"}]}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'])->render());
+        $this->assertSame('<zaa-sort-relation-array classAtr="value" model="the-model" label="the-label" options=\'{"sourceData":[{"foo":"bar"}]}\' fieldid="the-model-zaa-sort-relation-array" fieldname="the-model"></zaa-sort-relation-array>', Angular::sortRelationArray('the-model', 'the-label', ['foo' => 'bar'], ['classAtr' => 'value'])->render());
     }
 
     public function testCheckbox()
