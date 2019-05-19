@@ -141,7 +141,7 @@ class Angular
      */
     public static function sortRelationArray($ngModel, $label, array $sourceData, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => [$sourceData]], $options);
+        return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => [static::optionsArrayInput($sourceData)]], $options);
     }
         
     /**
