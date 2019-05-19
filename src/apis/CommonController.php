@@ -26,7 +26,7 @@ use luya\admin\models\Config;
 class CommonController extends RestController
 {
     /**
-     * @event Event A global event which is triggered after flush cash.
+     * @event Event A global event which is triggered after the admin flush cache (reload) button is clicked.
      * @since 2.0.0
      */
     const EVENT_FLUSH_CACHE = 'flushCache';
