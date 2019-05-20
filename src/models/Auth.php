@@ -14,7 +14,7 @@ use Yii;
  * @property string $route
  * @property string $api
  * @property string $pool
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */

@@ -97,11 +97,11 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
     /**
      * Check if the current user have given permissions type.
-     * 
+     *
      * ```php
      * $this->can(Auth::CAN_UPDATE);
      * ```
-     * 
+     *
      * If the user has no permission to update a forbidden http exception is thrown.
      *
      * @param integer $type

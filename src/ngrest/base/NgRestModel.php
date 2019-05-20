@@ -133,10 +133,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * Checks whether given attribute is in the list of i18n fields, if so
      * the field value will be decoded and the value for the current active
      * language is returned.
-     * 
+     *
      * If the attribute is not in the list of attributes values, the value of the attribute is returned. So
      * its also safe to use this function when dealing with none i18n fields.
-     * 
+     *
      * @param string $attributeName The attribute of the ActiveRecord to check and return its decoded i18n value.
      * @return string A json decoded value from an i18n field.
      * @since 2.0.0
@@ -153,7 +153,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Returns the decoded i18n value for a set of attributes.
-     * 
+     *
      * @param array $attributes An array with attributes to return its value
      * @return An array with where the key is the attribute name and value is the decoded i18n value
      * @see {{luya\admin\ngrest\base\NgRestModel::i18nAttributeValue()}}.
@@ -178,7 +178,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *     'year2016' => self::ngRestFind()->andWhere(['between', 'date', 2015, 2016]),
      * ];
      * ```
-     * 
+     *
      * > Keep in mind to use andWhere() otherwise an existing where() condition could be overriden.
      *
      * @return array Return an array where key is the name and value is the ngRestFind() condition for the filters.
@@ -191,25 +191,25 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Define data pools.
-     * 
+     *
      * > The difference between ngRestFilters() and ngRestPools() is that the pool identifer must be provided in the menu component and is not visible in the
      * > UI, it is like an invisible filter, only available to developers.
-     * 
+     *
      * A data pool can be used to retrieve only a subset of data. The identifier for the pool is passed trough to all subrelation
      * calls. Related models will filter their data by the same pool identifier, if configured accordingly.
-     * 
+     *
      * The following is an example of a pool identifier for a table with cars:
-     * 
+     *
      * ```php
      * return [
      *     'poolAudi' => ['car_brand' => 'Audi'],
      *     'poolBMW' => ['car_brand' => 'BMW'],
      * ];
      * ```
-     * 
+     *
      * If the pool identifier is defined in the menu, all subrelation calls will receive the identifer. Thefore, in the above example, you could have a model for
      * car parts that only returns parts with the same pool identifier in relation calls:
-     * 
+     *
      * ```php
      * return [
      *     'poolAudi' => ['parts_brand' => 'Audi'],
@@ -218,9 +218,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * ```
      *
      * The identifiers `poolAudi` and `poolBMW` are passed to the `parts` table to only return parts for the given car brand.
-     * 
+     *
      * > The pool condition is threaded as where condition, the above example would be `where(['car_brand' => 'BMW'])`. Only hash format expression with "equal" operators are allowed.
-     * 
+     *
      * @return array
      * @since 2.0.0
      */
@@ -345,8 +345,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * + 
-     * 
+     * +
+     *
      * > This method will taken for all internal *NOT API USER* related calls. So assuming an API user makes request to the APi
      * > it will use find() instead of ngRestFind(). If a logged in user will make a request to an API it will take ngRestFind().
      *

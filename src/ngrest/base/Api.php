@@ -217,7 +217,7 @@ class Api extends RestActiveController
      * Prepare the NgRest List Query.
      *
      * > This will call the `ngRestFind()` method of the model.
-     * 
+     *
      * Use in list, export
      *
      * @see {{prepareIndexQuery()}}
@@ -247,7 +247,7 @@ class Api extends RestActiveController
 
     /**
      * Append the pool where condition to a given query.
-     * 
+     *
      * If the pool identifier is not found, an exception will be thrown.
      *
      * @param ActiveQueryInterface $query
@@ -334,7 +334,7 @@ class Api extends RestActiveController
 
     /**
      * Get the ngrest model object (unloaded).
-     * 
+     *
      * @return NgRestModel
      * @throws InvalidConfigException
      */
@@ -459,7 +459,7 @@ class Api extends RestActiveController
         
         $modelClass = $this->modelClass;
 
-        // check if taggable exists, if yes return all used tags for the 
+        // check if taggable exists, if yes return all used tags for the
         if (ObjectHelper::isTraitInstanceOf($this->model, TaggableTrait::class)) {
             $tags = $this->model->findTags();
         } else {
@@ -507,7 +507,7 @@ class Api extends RestActiveController
 
     /**
      * Generate an array of sortable attribute defintions from a ngrest config object.
-     * 
+     *
      * @param Config $config The Ngrest Config object
      * @return array
      * @since 2.0.0

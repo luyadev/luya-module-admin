@@ -91,7 +91,7 @@ class Controller extends \luya\admin\base\Controller
      * ```
      *
      * Or you can override `\luya\admin\ngrest\render\RenderCrud` with your custom class, let say `MyCustomCrud`, and provide it within `class` key.
-     * 
+     *
      * ```
      * public $renderCrud = [
      *    'class' => '\mymodule\admin\render\MyCustomCrud',
@@ -100,7 +100,7 @@ class Controller extends \luya\admin\base\Controller
      * ```
      *
      * If you omit the `view` property, then `\luya\admin\ngrest\render\RenderCrudView` class object will be used.
-     * 
+     *
      * Possibly, you may need to do something very exotic (may be risky, though). In such case you'll need to create your
      * implementation of `\luya\admin\ngrest\render\RenderCrudInterface`.
      *

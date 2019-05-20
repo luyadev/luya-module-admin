@@ -39,7 +39,7 @@ interface NgRestRelationInterface
 
     /**
      * Get the target model class path.
-     *  
+     *
      * @return string
      * @since 2.0.0
      */

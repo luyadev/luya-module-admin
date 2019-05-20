@@ -93,7 +93,7 @@ final class StorageFilter extends NgRestModel
      * @return boolean
      */
     public function applyFilterChain($source, $fileSavePath)
-    {   
+    {
         $loadFrom = $source;
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {

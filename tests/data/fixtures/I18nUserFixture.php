@@ -21,4 +21,3 @@ class I18nUserFixture extends UserFixture
         return $data;
     }
 }
-

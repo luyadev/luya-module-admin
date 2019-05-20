@@ -11,7 +11,7 @@ use yii\db\Query;
 
 /**
  * Tags Controller.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */

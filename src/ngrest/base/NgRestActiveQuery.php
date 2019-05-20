@@ -58,7 +58,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @param string|integer $value
      * @return NgRestActiveQuery
      * @since 2.0.0
-     */  
+     */
     public function jsonWhere($operator, $field, $key, $value)
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);

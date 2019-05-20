@@ -79,7 +79,7 @@ class CommonController extends RestController
 
     /**
      * Remove a job for a given ID.
-     * 
+     *
      * @return boolean
      * @since 2.0.0
      */

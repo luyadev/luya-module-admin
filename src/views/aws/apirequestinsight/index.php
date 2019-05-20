@@ -56,7 +56,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
 }]);
 </script>
 <div ng-controller="InlineController">
-    <?php if($isEnabled): ?>
+    <?php if ($isEnabled): ?>
         <p class="alert alert-danger"><?= Module::t('aw_requestinsight_logger_active'); ?></p>
     <?php else: ?>
         <p class="alert alert-info"><?= Module::t('aw_requestinsight_warning'); ?></p>

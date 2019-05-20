@@ -1,5 +1,6 @@
 <?php
 use luya\helpers\Inflector;
+
 ?>
 <div class="form-i18n" ng-class="{'has-field-help': getFieldHelp('<?= $element['name']; ?>')}">
     <?= $helpButtonHtml; ?>

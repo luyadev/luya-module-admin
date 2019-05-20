@@ -86,7 +86,7 @@ class StorageController extends RestController
             ->with(['images.file']);
 
         if (!empty($search)) {
-            $query->andFilterWhere(['or', 
+            $query->andFilterWhere(['or',
                 ['like', 'name_original', $search],
                 ['like', 'caption', $search],
                 ['=', 'id', $search],
@@ -258,7 +258,6 @@ class StorageController extends RestController
         $model->attributes = $post;
         
         if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
-
             Yii::$app->storage->trigger(BaseFileSystemStorage::FILE_UPDATE_EVENT, new FileEvent(['file' => $model]));
             
             $this->flushApiCache($model->folder_id, $pageId);

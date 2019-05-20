@@ -150,7 +150,7 @@ class ActiveWindowFormField extends BaseObject
     
     /**
      * Checkbox input
-     * 
+     *
      * @return ActiveField
      * @since 2.0.0
      */
@@ -166,7 +166,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * Checkbox list input
-     * 
+     *
      * @param array $data The items
      * @return ActiveField
      * @since 2.0.0
@@ -183,7 +183,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * radio list input
-     * 
+     *
      * @param array $data The items
      * @return ActiveField
      * @since 2.0.0
@@ -200,7 +200,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * image upload
-     * 
+     *
      * @return ActiveField
      * @since 2.0.0
      */
@@ -216,7 +216,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * file upload
-     * 
+     *
      * @return ActiveField
      * @since 2.0.0
      */
@@ -232,7 +232,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * date picker
-     * 
+     *
      * @return ActiveField
      * @since 2.0.0
      */
@@ -248,7 +248,7 @@ class ActiveWindowFormField extends BaseObject
 
     /**
      * date time picker
-     * 
+     *
      * @return ActiveField
      * @since 2.0.0
      */

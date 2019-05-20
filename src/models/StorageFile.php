@@ -173,7 +173,7 @@ final class StorageFile extends ActiveRecord
      */
     public function getContent()
     {
-        return Yii::$app->storage->fileSystemContent($this->name_new_compound);   
+        return Yii::$app->storage->fileSystemContent($this->name_new_compound);
     }
 
     /**

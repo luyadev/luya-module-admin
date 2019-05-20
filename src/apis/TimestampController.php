@@ -37,7 +37,7 @@ class TimestampController extends RestController
         }
 
         // run internal worker
-        $this->getOrSetHasCache(['timestamp', 'queue', 'run'], function() {
+        $this->getOrSetHasCache(['timestamp', 'queue', 'run'], function () {
             Yii::$app->adminqueue->run(false);
             Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
         }, 60*5);
