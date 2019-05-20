@@ -14,6 +14,7 @@ use yii\helpers\Json;
  * Admin Proxy comands Sync Database.
  *
  * @property \yii\db\TableSchema $schema Schema object
+ * @property Connection $db Database connection. By default `Yii::$app->db` will be used.
  *
  * @author Basil Suter <basil@nadar.io>
  * @author Bennet Klarhölter <boehsermoe@me.com>
@@ -27,16 +28,10 @@ class ClientTable extends BaseObject
     private $_data;
     
     /**
-     * @var Connection
-     * @since 2.0.0
-     */
-    private $db;
-
-    /**
      * @var \luya\admin\proxy\ClientBuild
      */
     public $build;
-
+    
     /**
      * @param ClientBuild $build
      * @param array $data
@@ -47,11 +42,13 @@ class ClientTable extends BaseObject
         $this->build = $build;
         $this->_data = $data;
         parent::__construct($config);
-
-        if (!$this->db) {
-            $this->setDb(Yii::$app->db);
-        }
     }
+    
+    /**
+     * @var Connection
+     * @since 2.0.0
+     */
+    private $_db;
     
     /**
      * @return Connection|null
@@ -59,16 +56,17 @@ class ClientTable extends BaseObject
      */
     public function getDb()
     {
-        return $this->db;
+        return $this->_db ? $this->_db : Yii::$app->db;
     }
     
     /**
-     * @param Connection $db
+     * @param Connection $_db
+     *
      * @since 2.0.0
      */
-    public function setDb(Connection $db)
+    public function setDb(Connection $_db)
     {
-        $this->db = $db;
+        $this->_db = $_db;
     }
     
     private $_schema;
