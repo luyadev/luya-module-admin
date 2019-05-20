@@ -2,11 +2,11 @@
 
 namespace luya\admin\proxy;
 
-use Yii;
 use luya\console\Command;
 use yii\base\InvalidConfigException;
 use luya\helpers\StringHelper;
 use yii\base\BaseObject;
+use yii\db\Connection;
 
 /**
  * Admin Proxy Build.
@@ -16,6 +16,12 @@ use yii\base\BaseObject;
  */
 class ClientBuild extends BaseObject
 {
+    /**
+     * @var \yii\db\Connection
+     * @since 2.0.0
+     */
+    public $db;
+
     /**
      * @var \luya\console\Command $command object
      */
@@ -55,9 +61,10 @@ class ClientBuild extends BaseObject
         return $this->_optionTable;
     }
     
-    public function __construct(Command $command, array $config = [])
+    public function __construct(Command $command, Connection $db, array $config = [])
     {
         $this->command = $command;
+        $this->db = $db;
         parent::__construct($config);
     }
     
@@ -83,10 +90,10 @@ class ClientBuild extends BaseObject
                 }
             }
 
-            $schema = Yii::$app->db->getTableSchema($tableName);
+            $schema = $this->db->getTableSchema($tableName);
 
             if ($schema !== null) {
-                $this->_tables[$tableName] = new ClientTable($this, $tableConfig);
+                $this->_tables[$tableName] = new ClientTable($this, $tableConfig, ['db' => $this->db]);
             }
         }
     }

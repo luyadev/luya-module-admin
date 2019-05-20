@@ -19,7 +19,7 @@ class ClientTableTest extends AdminTestCase
         $this->app->db->createCommand('CREATE TABLE IF NOT EXISTS temp_synctest LIKE admin_user')->execute();
     
         Yii::$app->controller = new ProxyController('proxyctrl', $this->app);
-        $build = new ClientBuild(Yii::$app->controller, [
+        $build = new ClientBuild(Yii::$app->controller, $this->app->db, [
             'buildConfig' => ['tables' => ['temp_synctest' => ['name' => 'temp_synctest', 'rows' => 0]]],
         ]);
         $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => 0]);

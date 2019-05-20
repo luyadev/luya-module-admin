@@ -155,7 +155,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.0
      */
     public $userIdleTimeout = 1800;
-    
+
+    /**
+     * @var string The component/connection name from application.
+     * @since 2.0.0
+     */
+    public $proxyDbConnection = 'db';
+
     /**
      * @var integer The number of rows which should be transferd for each request.
      */
@@ -237,7 +243,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'admin' => 'admin.php',
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */
