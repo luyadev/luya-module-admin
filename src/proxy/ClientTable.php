@@ -56,7 +56,11 @@ class ClientTable extends BaseObject
      */
     public function getDb()
     {
-        return $this->_db ? $this->_db : Yii::$app->db;
+        if (!$this->_db) {
+            $this->setDb(Yii::$app->db);
+        }
+        
+        return $this->_db;
     }
     
     /**
