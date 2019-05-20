@@ -51,7 +51,7 @@ class ClientTable extends BaseObject
     private $_db;
     
     /**
-     * @return Connection|null
+     * @return Connection
      * @since 2.0.0
      */
     public function getDb()
@@ -60,13 +60,13 @@ class ClientTable extends BaseObject
     }
     
     /**
-     * @param Connection $_db
+     * @param Connection $db
      *
      * @since 2.0.0
      */
-    public function setDb(Connection $_db)
+    public function setDb(Connection $db)
     {
-        $this->_db = $_db;
+        $this->_db = $db;
     }
     
     private $_schema;
