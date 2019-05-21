@@ -17,7 +17,7 @@ use Imagine\Image\ManipulatorInterface;
  * @property int $filter_id
  * @property int $effect_id
  * @property string $effect_json_values
- * @property \luya\admin\models\StorageEffect $effect
+ * @property StorageEffect $effect
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -36,9 +36,14 @@ final class StorageFilterChain extends ActiveRecord
             'required' => ['width', 'height'],
             'options' => ['mode' => ManipulatorInterface::THUMBNAIL_OUTBOUND, 'saveOptions' => []]
         ],
-        'watermark' => [], // TODO: provide watermark definition
-        'text' => [], // TODO: provide text definition
-        'frame' => [], // TODO: provide frame definition
+        'watermark' => [
+            'required' => ['image'],
+            'options' => ['start' => [0, 0]],
+        ],
+        'text' => [
+            'required' => ['text', 'fontFile'],
+            'options' => ['start' => [0, 0]],
+        ],
     ];
     
     /**
@@ -119,8 +124,7 @@ final class StorageFilterChain extends ActiveRecord
         }
         
         switch ($imagineEffectName) {
-            
-            // apply crop effect
+            // apply crop
             case FilterInterface::EFFECT_CROP:
                 // run imagine crop method
                 $image = Image::crop($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
@@ -128,12 +132,22 @@ final class StorageFilterChain extends ActiveRecord
                 Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
                 break;
                 
-            // apply thumbnail effect
+            // apply thumbnail
             case FilterInterface::EFFECT_THUMBNAIL:
                 // run imagine thumbnail method
                 $image = Image::thumbnail($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
                 // try to auto rotate based on exif data
                 Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
+                break;
+
+            // apply watermark
+            case FilterInterface::EFFECT_WATERMARK:
+                $image = Image::watermark($loadFromPath, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
+                break;
+
+            // apply text
+            case FilterInterface::EFFECT_TEXT:
+                $image = Image::text($loadFromPath, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
                 break;
         }
     }
@@ -210,13 +224,4 @@ final class StorageFilterChain extends ActiveRecord
     {
         return array_key_exists($key, $this->effect_json_values) ? $this->effect_json_values[$key] : false;
     }
-    
-    /**
-     * Get the value from an effect for a given param.
-     *
-     * If the the is no value, try to return the defaultValue from options definition.
-     *
-     * @param string $name
-     * @return string|array|number[]|boolean
-     */
 }

@@ -10,27 +10,37 @@ namespace luya\admin\base;
  */
 interface FilterInterface
 {
-    
     /**
-     * Resize-Effect.
+     * @var string Thumbnail mode inset
      */
-    //const EFFECT_RESIZE = 'resize';
-    
-    
-    
     const THUMBNAIL_MODE_INSET = 'inset';
     
+    /**
+     * @var string Thumbnail mode outbound
+     */
     const THUMBNAIL_MODE_OUTBOUND = 'outbound';
     
     /**
-     * Thumbnail-Effect.
+     * @var string Thumbnail effect
      */
     const EFFECT_THUMBNAIL = 'thumbnail';
     
     /**
-     * Crop-Effect.
+     * @var string Crop Effect
      */
     const EFFECT_CROP = 'crop';
+
+    /**
+     * @var string Watermark Effect
+     * @since 2.0.0
+     */
+    const EFFECT_WATERMARK = 'watermark';
+
+    /**
+     * @var string Text Effect
+     * @since 2.0.0
+     */
+    const EFFECT_TEXT = 'text';
     
     /**
      * Unique identifier name for the effect, no special chars allowed.
