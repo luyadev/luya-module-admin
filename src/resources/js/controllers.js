@@ -347,12 +347,33 @@
 			});
 		};
 
+		$scope.highlightPkValue = null;
+
+		$scope.highlightTimeout = 5000;
+
+		/**
+		 * Check whether this item (row) is currently highlihted or not.
+		 */
+		$scope.isRowHighlighted = function(item) {
+			var pkValue = $scope.getRowPrimaryValue(item);
+			if (pkValue == $scope.highlightPkValue) {
+				return true;
+			}
+
+			return false;
+		};
+
 		$scope.submitUpdate = function () {
 			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_update']);
 				$scope.loadList();
 				$scope.applySaveCallback();
 				$scope.switchTo(0, true);
+				$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
+				$timeout(function() {
+					$scope.highlightPkValue = null;
+				}, $scope.highlightTimeout);
+
 			}, function(response) {
 				$scope.printErrors(response.data);
 			});
@@ -365,6 +386,10 @@
 				$scope.applySaveCallback();
 				$scope.switchTo(0, true);
 				$scope.resetData();
+				$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
+				$timeout(function() {
+					$scope.highlightPkValue = null;
+				}, $scope.highlightTimeout);
 			}, function(data) {
 				$scope.printErrors(data.data);
 			});
