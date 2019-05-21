@@ -231,6 +231,14 @@ class Api extends RestActiveController
 
         $find = $modelClass::ngRestFind();
 
+        // find the latest primary key value and store into row notifications user auth table
+        /*
+        $orderBy = [];
+        foreach ($modelClass::primaryKey() as $pkName) {
+            $orderBy[$pkName] = SORT_DESC;
+        }
+        $latestPk = $find->select($modelClass::primaryKey())->orderBy($orderBy)->asArray()->limit(1)->one();
+        */
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
 
