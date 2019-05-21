@@ -17,7 +17,8 @@ class m190521_145029_admin_user_notification extends Migration
             'user_id' => $this->integer()->notNull(),
             'auth_id' => $this->integer()->notNull(),
             'is_muted' => $this->boolean()->defaultValue(false),
-            'latest_pk_value' => $this->string(),
+            'model_latest_pk_value' => $this->string(),
+            'model_class' => $this->string(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ]);

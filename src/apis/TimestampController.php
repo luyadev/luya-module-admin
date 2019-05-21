@@ -7,6 +7,7 @@ use luya\admin\models\UserOnline;
 use luya\admin\base\RestController;
 use luya\traits\CacheableTrait;
 use luya\admin\models\Config;
+use luya\admin\models\UserAuthNotification;
 
 /**
  * Timestamp API, refreshes the UserOnline system of the administration area.
@@ -52,18 +53,6 @@ class TimestampController extends RestController
         
         Yii::$app->session->set('__lastKeyStroke', $lastKeyStroke);
         
-        // if developer is enabled, check if vendor has changed and run the required commands and force reload
-        // @TODO: its a concept
-        /*
-        if (!YII_ENV_PROD) {
-            $config = (int) Config::get(Config::CONFIG_INSTALLER_VENDOR_TIMESTAMP, null);
-            $ts = Yii::$app->packageInstaller->timestamp;
-            if ($config !== $ts) {
-                // run migration and import process for developer usage.
-            }
-        }
-        */
-        
         // get the stroke-dashoffset for the given user, this indicates the time he is idling
         // stroke-dashoffset="88px" = 0 // which means 0 percent of time has elapsed
         // stroke-dashoffset="0px" => 100 // which means 100 percent of time has elpased, auto logout will redirect the user
@@ -76,6 +65,7 @@ class TimestampController extends RestController
         
         // return users, verify force reload.
         $data = [
+            'notifications' => $this->getAuthNotifications(),
             'lastKeyStroke' => $lastKeyStroke,
             'idleSeconds' => $seconds,
             'idleTimeRelative' => round(($this->module->userIdleTimeout-$seconds) / 60),
@@ -87,5 +77,21 @@ class TimestampController extends RestController
         ];
         
         return $data;
+    }
+
+    /**
+     * Returns an array with auth_id as key and value is the diff notification count.
+     * 
+     * @return array An array with key auth_id and value diff count
+     * @since 2.0.0
+     */
+    private function getAuthNotifications()
+    {
+        $diff = [];
+        foreach (UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id])->all() as $uan) {
+            $diff[$uan->auth_id] = $uan->getDiffCount();
+        }
+
+        return $diff;
     }
 }

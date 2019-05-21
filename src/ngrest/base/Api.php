@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
+use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\models\UserOnline;
@@ -24,6 +25,7 @@ use luya\helpers\StringHelper;
 use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveQueryInterface;
+use luya\admin\models\UserAuthNotification;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -232,13 +234,23 @@ class Api extends RestActiveController
         $find = $modelClass::ngRestFind();
 
         // find the latest primary key value and store into row notifications user auth table
-        /*
-        $orderBy = [];
-        foreach ($modelClass::primaryKey() as $pkName) {
-            $orderBy[$pkName] = SORT_DESC;
+        $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
+        
+        $notificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+
+        if ($notificationModel) {
+            $notificationModel->model_latest_pk_value = $pkValue;
+            $notificationModel->model_class = $modelClass::className();
+            $notificationModel->save();
+        } else {
+            $notificationModel = new UserAuthNotification();
+            $notificationModel->auth_id = $this->authId;
+            $notificationModel->user_id = Yii::$app->adminuser->id;
+            $notificationModel->model_latest_pk_value = $pkValue;
+            $notificationModel->model_class = $modelClass::className();
+            $notificationModel->save();
         }
-        $latestPk = $find->select($modelClass::primaryKey())->orderBy($orderBy)->asArray()->limit(1)->one();
-        */
+        
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
 

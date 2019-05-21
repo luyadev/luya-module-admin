@@ -34,6 +34,7 @@ use luya\admin\Module;
                             <span class="modulenav-label">
                                 {{sub.alias}}
                             </span>
+                            <span ng-show="hasSubUnreadNotificaton(sub)" class="float-right badge badge-pill badge-primary">{{ hasSubUnreadNotificaton(sub) }}</span>
                         </span>
                     </li>
                 </ul>

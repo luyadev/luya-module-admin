@@ -162,19 +162,19 @@ class Auth extends \yii\base\Component
      * @param integer $userId
      * @param string $apiEndpoint As defined in the Module.php like (api-admin-user) which is a unique identifiere
      * @param integer|string $typeVerification The CONST number provided from CAN_*
-     * @return bool
+     * @return boolean|integer return false or the auth id, if this a can view request also bool is returned
      */
     public function matchApi($userId, $apiEndpoint, $typeVerification = false)
     {
         $groups = $this->getApiTable($userId, $apiEndpoint);
 
         if ($typeVerification === false || $typeVerification === self::CAN_VIEW) {
-            return (count($groups) > 0) ? true : false;
+            return (count($groups) > 0) ? current($groups)['id'] : false;
         }
 
         foreach ($groups as $row) {
             if ($this->permissionVerify($typeVerification, $this->permissionWeight($row['crud_create'], $row['crud_update'], $row['crud_delete']))) {
-                return true;
+                return $row['id'];
             }
         }
 
@@ -186,14 +186,14 @@ class Auth extends \yii\base\Component
      *
      * @param integer $userId The user id from admin users
      * @param string $route The route to test.
-     * @return boolean
+     * @return boolean|integer returns false or the id of the auth
      */
     public function matchRoute($userId, $route)
     {
         $groups = $this->getRouteTable($userId, $route);
         
         if (is_array($groups) && count($groups) > 0) {
-            return true;
+            return current($groups)['id'];
         }
 
         return false;

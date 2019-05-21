@@ -96,6 +96,12 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     }
 
     /**
+     * @var integer Contains the id of the current running auth id
+     * @since 2.0.0
+     */
+    protected $authId;
+
+    /**
      * Check if the current user have given permissions type.
      *
      * ```php
@@ -115,9 +121,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             throw new InvalidConfigException("Invalid type of permission check.");
         }
 
-        $can = Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type);
+        $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type);
 
-        if (!$can) {
+        if (!$this->authId) {
             throw new ForbiddenHttpException("User is unable to access the API due to insufficient permissions.");
         }
 

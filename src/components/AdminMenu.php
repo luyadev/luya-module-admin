@@ -172,6 +172,7 @@ class AdminMenu extends \yii\base\Component
                 }
             }
 
+            $authIds = [];
             // this item does have groups
             if (isset($item['groups'])) {
                 $permissionGranted = false;
@@ -180,22 +181,24 @@ class AdminMenu extends \yii\base\Component
                 foreach ($item['groups'] as $groupName => $groupItem) {
                     if (count($groupItem['items'])  > 0) {
                         if ($permissionGranted) {
-                            continue;
+                            //continue;
                         }
 
                         foreach ($groupItem['items'] as $groupItemEntry) {
                             // a previous entry already has solved the question if the permission is granted
                             if ($permissionGranted) {
-                                continue;
+                                //continue;
                             }
                             if ($groupItemEntry['permissionIsRoute']) {
                                 // when true, set permissionGranted to true
-                                if (Yii::$app->auth->matchRoute($this->getUserId(), $groupItemEntry['route'])) {
+                                if (($id = Yii::$app->auth->matchRoute($this->getUserId(), $groupItemEntry['route']))) {
+                                    $authIds[] = $id;
                                     $permissionGranted = true;
                                 }
                             } elseif ($groupItemEntry['permissionIsApi']) {
                                 // when true, set permissionGranted to true
-                                if (Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint'])) {
+                                if (($id = Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint']))) {
+                                    $authIds[] = $id;
                                     $permissionGranted = true;
                                 }
                             } else {
@@ -221,6 +224,7 @@ class AdminMenu extends \yii\base\Component
             $responseData[] = [
                 'moduleId' => $item['moduleId'],
                 'id' => $item['id'],
+                'authIds' => $authIds,
                 'template' => $item['template'],
                 'routing' => $item['routing'],
                 'alias' => $alias,
@@ -263,12 +267,14 @@ class AdminMenu extends \yii\base\Component
                 }
                 foreach ($groupItem['items'] as $groupItemKey => $groupItemEntry) {
                     if ($groupItemEntry['permissionIsRoute']) {
-                        if (!Yii::$app->auth->matchRoute($this->getUserId(), $groupItemEntry['route'])) {
+                        $id = Yii::$app->auth->matchRoute($this->getUserId(), $groupItemEntry['route']);
+                        if (!$id) {
                             unset($data['groups'][$groupName]['items'][$groupItemKey]);
                             continue;
                         }
                     } elseif ($groupItemEntry['permissionIsApi']) {
-                        if (!Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint'])) {
+                        $id = Yii::$app->auth->matchApi($this->getUserId(), $groupItemEntry['permissionApiEndpoint']);
+                        if (!$id) {
                             unset($data['groups'][$groupName]['items'][$groupItemKey]);
                             continue;
                         }
@@ -290,6 +296,7 @@ class AdminMenu extends \yii\base\Component
                     $data['groups'][$groupName]['items'][$groupItemKey]['hiddenInMenu'] = AdminMenuBuilder::getOptionValue($groupItemEntry, 'hiddenInMenu', false);
                     $data['groups'][$groupName]['items'][$groupItemKey]['pool'] = AdminMenuBuilder::getOptionValue($groupItemEntry, 'pool', null);
                     $data['groups'][$groupName]['items'][$groupItemKey]['alias'] = $alias;
+                    $data['groups'][$groupName]['items'][$groupItemKey]['authId'] = $id;
                 }
                 
                 // if there are no items for this group, unset the group from the data array
