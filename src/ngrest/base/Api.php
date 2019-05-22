@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
+use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\models\UserOnline;
@@ -24,6 +25,7 @@ use luya\helpers\StringHelper;
 use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveQueryInterface;
+use luya\admin\models\UserAuthNotification;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -231,6 +233,24 @@ class Api extends RestActiveController
 
         $find = $modelClass::ngRestFind();
 
+        // find the latest primary key value and store into row notifications user auth table
+        $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
+        
+        $notificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+
+        if ($notificationModel) {
+            $notificationModel->model_latest_pk_value = $pkValue;
+            $notificationModel->model_class = $modelClass::className();
+            $notificationModel->save();
+        } else {
+            $notificationModel = new UserAuthNotification();
+            $notificationModel->auth_id = $this->authId;
+            $notificationModel->user_id = Yii::$app->adminuser->id;
+            $notificationModel->model_latest_pk_value = $pkValue;
+            $notificationModel->model_class = $modelClass::className();
+            $notificationModel->save();
+        }
+        
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
 
@@ -466,16 +486,47 @@ class Api extends RestActiveController
             $tags = false;
         }
 
+        $notificationMuteState = false;
+
+        $userAuthNotificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+        if ($userAuthNotificationModel) {
+            $notificationMuteState = $userAuthNotificationModel->is_muted;
+        }
+
         return [
             'service' => $this->model->getNgRestServices(),
+            '_authId' => $this->authId,
             '_tags' => $tags,
             '_hints' => $this->model->attributeHints(),
             '_settings' => $settings,
+            '_notifcation_mute_state' => $notificationMuteState,
             '_locked' => [
                 'data' => UserOnline::find()->select(['lock_pk', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->joinWith('user as u')->where(['lock_table' => $modelClass::tableName()])->createCommand()->queryAll(),
                 'userId' => Yii::$app->adminuser->id,
             ],
         ];
+    }
+
+    public function actionToggleNotification()
+    {
+        $this->checkAccess('toggle-notification');
+        $newMuteState = Yii::$app->request->getBodyParam('mute');
+
+        $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+
+        if ($model) {
+            $model->is_muted = (int) $newMuteState;
+            $model->save();
+        } else {
+            $model = new UserAuthNotification();
+            $model->is_muted = (int) $newMuteState;
+            $model->auth_id = $this->authId;
+            $model->user_id = Yii::$app->adminuser->id;
+            $model->model_class = $this->modelClass;
+
+        }
+
+        return $model;
     }
     
     /**

@@ -80,6 +80,7 @@ $this->beginPage()
                             <span class="mainnav-label">
                                 {{item.alias}}
                             </span>
+                            <span ng-show="hasUnreadNotificaton(item)" class="mainnav-notification-badge"></span>
                         </span>
                     </li>
                 </ul>

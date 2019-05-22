@@ -543,10 +543,21 @@
 				$scope.service = serviceResponse.data.service;
 				$scope.serviceResponse = serviceResponse.data;
 				$scope.evalSettings(serviceResponse.data._settings);
+
+				if ($scope.$parent.notifications && $scope.$parent.notifications.hasOwnProperty($scope.serviceResponse._authId)) {
+					delete $scope.$parent.notifications[$scope.serviceResponse._authId];
+				}
+
 				deferred.resolve();
 			});
 
 			return deferred.promise;
+		};
+
+		$scope.toggleNotificationMute = function() {
+			$http.post($scope.config.apiEndpoint + '/toggle-notification', {'mute': !$scope.serviceResponse._notifcation_mute_state}).then(function(response) {
+				$scope.initServiceAndConfig();
+			});
 		};
 
 		$scope.getFieldHelp = function(fieldName) {
@@ -958,6 +969,14 @@
 			})
 		};
 
+		$scope.hasSubUnreadNotificaton = function(item) {
+			if ($scope.$parent.notifications && $scope.$parent.notifications.hasOwnProperty(item.authId)) {
+				return $scope.$parent.notifications[item.authId];
+			}
+
+			return 0;
+		};
+
 		$scope.$on('topMenuClick', function(e) {
 			$scope.currentItem = null;
 		});
@@ -1101,9 +1120,12 @@
 			$scope.lastKeyStroke = Date.now();
 		});
 
+		$scope.notifications = [];
+
 		(function tick(){
 			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
+				$scope.notifications = response.data.notifications;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {
 					$scope.visibleAdminReloadDialog = true;
 					AdminToastService.confirm(i18n['js_admin_reload'], i18n['layout_btn_reload'], function() {
@@ -1155,6 +1177,18 @@
 		$scope.searchResponse = null;
 
 		$scope.searchPromise = null;
+
+		$scope.hasUnreadNotificaton = function(item) {
+			var authIds = item.authIds;
+			var count = 0;
+			angular.forEach(authIds, function(value) {
+				if (value && $scope.notifications.hasOwnProperty(value)) {
+					count = count + parseInt($scope.notifications[value]);
+				}
+			});
+
+			return count;
+		};
 
 		$scope.$watch(function() { return $scope.searchQuery}, function(n, o) {
 			if (n !== o) {

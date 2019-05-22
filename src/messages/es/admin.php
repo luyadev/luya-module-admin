@@ -395,4 +395,6 @@ return [
     'aw_requestinsight_default_label' => 'Request Insight',
     'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
     'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
+    'crud_notification_enable' => 'Enable Notification',
+    'crud_notification_disable' => 'Disable Notification',
 ];

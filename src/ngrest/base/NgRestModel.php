@@ -117,6 +117,22 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         return new NgRestActiveQuery(get_called_class());
     }
+
+    /**
+     * Get an array with the latest primary key value.
+     * 
+     * @return array An array with latest primary key value, for example [10] or if composite keys [10,4]
+     * @since 2.0.0
+     */
+    public static function findLatestPrimaryKeyValue()
+    {
+        $orderBy = [];
+        foreach (static::primaryKey() as $pkName) {
+            $orderBy[$pkName] = SORT_DESC;
+        }
+
+        return self::ngRestFind()->select(static::primaryKey())->orderBy($orderBy)->asArray()->limit(1)->column();
+    }
     
     /**
      * Whether a field is i18n or not.

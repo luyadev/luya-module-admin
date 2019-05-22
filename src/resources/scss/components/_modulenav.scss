@@ -7,9 +7,9 @@
     width: 100%;
 
     @media (min-width: $mobile-nav-breakpoint) {
+        background: transparent;
         display: block;
         padding: 0;
-        background: transparent;
     }
 }
 
@@ -98,6 +98,15 @@
     margin-left: 3px;
 }
 
+.modulenav-notification-badge {
+    @extend .badge;
+    @extend .badge-info;
+
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
 .modulenav-mobile {
     background: $gray-400;
     color: theme-color(dark);
@@ -110,11 +119,10 @@
     }
 
     &-hidden {
-
+        display: none;
         @media (min-width: $mobile-nav-breakpoint) {
             display: block;
         }
-        display: none;
     }
 }
 
@@ -129,6 +137,5 @@
     left: 10px;
     position: absolute;
     top: 50%;
-
     transform: translateY(-50%);
 }

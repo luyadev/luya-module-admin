@@ -36,6 +36,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#240](https://github.com/luyadev/luya-module-admin/issues/240) New notification system for visited CRUD views.
 + [#213](https://github.com/luyadev/luya-module-admin/issues/213) Added noscript message and <=IE9 warning.
 + [#288](https://github.com/luyadev/luya-module-admin/issues/288) Filemanager add file id in tooltip.
 + [#225](https://github.com/luyadev/luya-module-admin/issues/225) Added configuration for default behavior with inline disposition when uploading new files.
