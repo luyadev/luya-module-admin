@@ -262,7 +262,7 @@
     top: 50%;
     transform: translateY(-50%);
     transition: background-color .25s ease-in-out, min-height .2s ease-in-out;
-    width: 16px;;
+    width: 16px;
 
     i {
         color: map-get($grays, 100);
@@ -345,7 +345,7 @@
         th {
             border-bottom: 1px solid map-get($grays, 100);
             line-height: 20px;
-            margin-bottom: 15px;;
+            margin-bottom: 15px;
         }
 
         th, td {
