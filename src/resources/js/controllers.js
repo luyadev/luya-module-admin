@@ -544,7 +544,7 @@
 				$scope.serviceResponse = serviceResponse.data;
 				$scope.evalSettings(serviceResponse.data._settings);
 
-				if ($scope.$parent.notifications.hasOwnProperty($scope.serviceResponse._authId)) {
+				if ($scope.$parent.notifications && $scope.$parent.notifications.hasOwnProperty($scope.serviceResponse._authId)) {
 					delete $scope.$parent.notifications[$scope.serviceResponse._authId];
 				}
 
@@ -970,7 +970,7 @@
 		};
 
 		$scope.hasSubUnreadNotificaton = function(item) {
-			if ($scope.$parent.notifications.hasOwnProperty(item.authId)) {
+			if ($scope.$parent.notifications && $scope.$parent.notifications.hasOwnProperty(item.authId)) {
 				return $scope.$parent.notifications[item.authId];
 			}
 

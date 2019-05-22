@@ -182,7 +182,7 @@ $this->beginBody();
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
-                                <td ng-class="{'table-success':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
+                                <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
                                 </td>
                              <?php endforeach; ?>
