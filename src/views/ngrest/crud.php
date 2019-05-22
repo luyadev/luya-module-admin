@@ -39,10 +39,10 @@ $this->beginBody();
                             </a>
                             <a class="dropdown-item" ng-click="toggleNotificationMute()">
                                 <span ng-show="serviceResponse._notifcation_mute_state">
-                                    <i class="material-icons">visibility_off</i><span>Notifications Disabled</span>
+                                    <i class="material-icons">visibility</i><span><?= Module::t('crud_notification_enable'); ?></span>
                                 </span>
                                 <span ng-show="!serviceResponse._notifcation_mute_state">
-                                    <i class="material-icons">visibility</i><span>Notifications Enabled</span>
+                                    <i class="material-icons">visibility_off</i><span><?= Module::t('crud_notification_disable'); ?></span>
                                 </span>
                             </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
