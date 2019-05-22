@@ -10,12 +10,12 @@
     width: 100%;
 
     @media (min-width: $mobile-nav-breakpoint) {
-
-        position: relative;
         display: flex;
         flex: 0 0 $mainnav-width;
         flex-direction: column;
         height: 100%;
+        position: relative;
+        user-select: none;
         width: $mainnav-width;
 
         .mainnav-tooltip-big-wrapper {
@@ -34,7 +34,6 @@
                 visibility: visible;
             }
         }
-        user-select: none;
     }
 }
 
@@ -67,13 +66,12 @@
 
 .mainnav-modules {
     flex: 1 0;
-
+    -ms-overflow-style: none; // IE 10+
     overflow-y: auto;
     //overflow: -moz-scrollbars-none; // Firefox
     &::-webkit-scrollbar {
         display: none; // Safari and Chrome
     }
-    -ms-overflow-style: none; // IE 10+
 }
 
 .mainnav-static {
@@ -118,8 +116,9 @@
 
         .mainnav-small &:after {
             @include label-background;
+
             border-radius: $border-radius;
-            content: "";
+            content: '';
             height: 0;
             left: 50%;
             position: absolute;
@@ -143,6 +142,7 @@
     &:active,
     &:focus {
         @include label-background;
+
         color: map-get($grays, 100);
         text-decoration: none;
 
@@ -234,6 +234,19 @@
     }
 }
 
+.mainnav-notification-badge {
+    background-color: map-get($theme-colors, 'info');
+    border-radius: 50%;
+    display: block;
+    height: 8px;
+    left: 24px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 7px;
+    width: 8px;
+}
+
 .mainnav-toggler {
     background-color: map-get($grays, 700);
     border: none;
@@ -248,12 +261,12 @@
     right: -8px;
     top: 50%;
     transform: translateY(-50%);
-    transition: background-color .25s ease-in-out, min-height .2s ease-in-out;;
-    width: 16px;
+    transition: background-color .25s ease-in-out, min-height .2s ease-in-out;
+    width: 16px;;
 
     i {
-        color: map-get($grays, 100);;
-        transition: transform .25s ease-in-out, color .25s ease-in-out
+        color: map-get($grays, 100);
+        transition: transform .25s ease-in-out, color .25s ease-in-out;;
     }
 
     &:hover {
@@ -262,7 +275,6 @@
     }
 
     &-open {
-
         i {
             transform: rotate(180deg);
         }
@@ -318,7 +330,7 @@
         border-style: solid;
         border-width: 5px 5px 5px 0;
         bottom: 18px;
-        content: "";
+        content: '';
         left: 25px;
         position: absolute;
 
@@ -331,9 +343,9 @@
         color: map-get($grays, 100);
 
         th {
-            border-bottom: 1px solid map-get($grays, 100);;
+            border-bottom: 1px solid map-get($grays, 100);
             line-height: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 15px;;
         }
 
         th, td {
@@ -347,7 +359,6 @@
                 padding-right: 0;
             }
         }
-
     }
 
     ul, &-menu {
@@ -382,7 +393,6 @@
 
                 &:hover, &-active {
                     text-decoration: none;
-
                 }
             }
 

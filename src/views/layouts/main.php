@@ -79,8 +79,8 @@ $this->beginPage()
                             <i class="mainnav-icon material-icons">{{item.icon}}</i>
                             <span class="mainnav-label">
                                 {{item.alias}}
-                                <span ng-show="hasUnreadNotificaton(item)" class="badge badge-pill badge-primary float-right">{{ hasUnreadNotificaton(item) }}</span>
                             </span>
+                            <span ng-show="hasUnreadNotificaton(item)" class="mainnav-notification-badge"></span>
                         </span>
                     </li>
                 </ul>
