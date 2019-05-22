@@ -543,10 +543,21 @@
 				$scope.service = serviceResponse.data.service;
 				$scope.serviceResponse = serviceResponse.data;
 				$scope.evalSettings(serviceResponse.data._settings);
+
+				if ($scope.$parent.notifications.hasOwnProperty($scope.serviceResponse._authId)) {
+					delete $scope.$parent.notifications[$scope.serviceResponse._authId];
+				}
+
 				deferred.resolve();
 			});
 
 			return deferred.promise;
+		};
+
+		$scope.toggleNotificationMute = function() {
+			$http.post($scope.config.apiEndpoint + '/toggle-notification', {'mute': !$scope.serviceResponse._notifcation_mute_state}).then(function(response) {
+				$scope.initServiceAndConfig();
+			});
 		};
 
 		$scope.getFieldHelp = function(fieldName) {

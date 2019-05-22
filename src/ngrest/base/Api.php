@@ -486,16 +486,47 @@ class Api extends RestActiveController
             $tags = false;
         }
 
+        $notificationMuteState = false;
+
+        $userAuthNotificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+        if ($userAuthNotificationModel) {
+            $notificationMuteState = $userAuthNotificationModel->is_muted;
+        }
+
         return [
             'service' => $this->model->getNgRestServices(),
+            '_authId' => $this->authId,
             '_tags' => $tags,
             '_hints' => $this->model->attributeHints(),
             '_settings' => $settings,
+            '_notifcation_mute_state' => $notificationMuteState,
             '_locked' => [
                 'data' => UserOnline::find()->select(['lock_pk', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->joinWith('user as u')->where(['lock_table' => $modelClass::tableName()])->createCommand()->queryAll(),
                 'userId' => Yii::$app->adminuser->id,
             ],
         ];
+    }
+
+    public function actionToggleNotification()
+    {
+        $this->checkAccess('toggle-notification');
+        $newMuteState = Yii::$app->request->getBodyParam('mute');
+
+        $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+
+        if ($model) {
+            $model->is_muted = (int) $newMuteState;
+            $model->save();
+        } else {
+            $model = new UserAuthNotification();
+            $model->is_muted = (int) $newMuteState;
+            $model->auth_id = $this->authId;
+            $model->user_id = Yii::$app->adminuser->id;
+            $model->model_class = $this->modelClass;
+
+        }
+
+        return $model;
     }
     
     /**

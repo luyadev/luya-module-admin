@@ -61,8 +61,6 @@ class TimestampController extends RestController
         $offsetPercent = round((81/100) * $percentage);
         $strokeOffset = 81 - $offsetPercent;
         
-        
-        
         // return users, verify force reload.
         $data = [
             'notifications' => $this->getAuthNotifications(),
@@ -88,7 +86,7 @@ class TimestampController extends RestController
     private function getAuthNotifications()
     {
         $diff = [];
-        foreach (UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id])->all() as $uan) {
+        foreach (UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'is_muted' => false])->all() as $uan) {
             $diff[$uan->auth_id] = $uan->getDiffCount();
         }
 

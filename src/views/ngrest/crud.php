@@ -37,6 +37,14 @@ $this->beginBody();
                             <a class="dropdown-item" ng-click="toggleExportModal()">
                                 <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn'); ?></span>
                             </a>
+                            <a class="dropdown-item" ng-click="toggleNotificationMute()">
+                                <span ng-show="serviceResponse._notifcation_mute_state">
+                                    <i class="material-icons">visibility_off</i><span>Notifications Disabled</span>
+                                </span>
+                                <span ng-show="!serviceResponse._notifcation_mute_state">
+                                    <i class="material-icons">visibility</i><span>Notifications Enabled</span>
+                                </span>
+                            </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
                                 <?= $button; ?>
                             <?php endforeach; ?>

@@ -71,6 +71,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             case 'filter':
             case 'export':
             case 'list':
+            case 'toggle-notification':
                 $type = Auth::CAN_VIEW;
                 break;
             case 'create':
