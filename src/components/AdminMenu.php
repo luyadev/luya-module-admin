@@ -165,7 +165,7 @@ class AdminMenu extends \yii\base\Component
             // check if this is an entrie with a permission
             if ($item['permissionIsRoute']) {
                 // verify if the permission is provided for this user:
-                // if the permission is granted will write inti $responseData,
+                // if the permission is granted will write in $responseData,
                 // if not we continue;
                 if (!Yii::$app->auth->matchRoute($this->getUserId(), $item['permissionRoute'])) {
                     continue;
@@ -179,16 +179,8 @@ class AdminMenu extends \yii\base\Component
 
                 // see if the groups has items
                 foreach ($item['groups'] as $groupName => $groupItem) {
-                    if (count($groupItem['items'])  > 0) {
-                        if ($permissionGranted) {
-                            //continue;
-                        }
-
+                    if (count($groupItem['items']) > 0) {
                         foreach ($groupItem['items'] as $groupItemEntry) {
-                            // a previous entry already has solved the question if the permission is granted
-                            if ($permissionGranted) {
-                                //continue;
-                            }
                             if ($groupItemEntry['permissionIsRoute']) {
                                 // when true, set permissionGranted to true
                                 if (($id = Yii::$app->auth->matchRoute($this->getUserId(), $groupItemEntry['route']))) {
@@ -208,6 +200,7 @@ class AdminMenu extends \yii\base\Component
                     }
                 }
 
+                // skip menu stack for this item
                 if (!$permissionGranted) {
                     continue;
                 }
@@ -230,7 +223,6 @@ class AdminMenu extends \yii\base\Component
                 'alias' => $alias,
                 'icon' => $item['icon'],
                 'searchModelClass' => $item['searchModelClass'],
-
             ];
         }
 
