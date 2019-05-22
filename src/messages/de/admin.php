@@ -418,4 +418,7 @@ return [
     'login_browsehappy' => 'Sie verwenden einen <strong>veralteten</strong> Browser. Bitte <a href="https://browsehappy.com/?locale=de_de" target="_blank">aktualisieren Sie Ihren Browser</a> um Ihre Sicherheit zu erhöhen.',
     'crud_notification_enable' => 'Benachrichtigung aktivieren',
     'crud_notification_disable' => 'Benachrichtigung deaktivieren',
+    'admin_button_execute' => '"{label}" ausgeführt',
+    'layout_btn_reload_admin' => 'Admin&nbsp;aktualisieren',
+    'layout_btn_reload_cache' => 'Cache&nbsp;Leeren',
 ];

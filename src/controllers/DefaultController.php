@@ -123,4 +123,9 @@ class DefaultController extends Controller
         }
         return '<span style="color:red;">'.Module::t('debug_state_off').'</span>';
     }
+
+    public function reloadButtonArray()
+    {
+        return $this->module->reloadButtons;
+    }
 }

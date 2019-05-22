@@ -87,11 +87,34 @@ $this->beginPage()
             </div>
             <div class="mainnav-static mainnav-static--bottom" ng-class="{'mainnav-hidden': !isOpen}">
                 <ul class="mainnav-list">
-                    <li class="mainnav-entry" tooltip tooltip-text="<?= Admin::t('layout_btn_reload'); ?>" tooltip-position="right" tooltip-disabled="isHover">
-                        <span class="mainnav-link" ng-click="reload()">
+                    <li class="mainnav-entry">
+                        <span class="mainnav-link">
                             <i class="mainnav-icon material-icons">refresh</i>
                             <span class="mainnav-label">
                                 <?= Admin::t('layout_btn_reload'); ?>
+                            </span>
+                            <span class="mainnav-tooltip-big-wrapper">
+                                <span class="mainnav-tooltip-big">
+                                    <ul class="mainnav-tooltip-big-menu">
+                                        <li class="mainnav-tooltip-big-menu-item" ng-click="reload(false)">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
+                                                <i class="material-icons">refresh</i> <?= Admin::t('layout_btn_reload_admin'); ?>
+                                            </span>
+                                        </li>
+                                        <li class="mainnav-tooltip-big-menu-item" ng-click="reload()">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
+                                                <i class="material-icons">layers_clear</i> <?= Admin::t('layout_btn_reload_cache'); ?>
+                                            </span>
+                                        </li>
+                                        <?php foreach ($this->context->reloadButtonArray() as $key => $button): ?>
+                                        <li class="mainnav-tooltip-big-menu-item" ng-click="reloadButtonCall(<?= $key; ?>)">
+                                            <span class="mainnav-tooltip-big-menu-item-link">
+                                                <i class="material-icons"><?= $button->icon; ?></i> <?= $button->label; ?>
+                                            </span>
+                                        </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </span>
                             </span>
                         </span>
                     </li>
@@ -271,7 +294,6 @@ $this->beginPage()
                 </div>
             </div>
             <div class="debug-network-detail" ng-show="debugDetail">
-                
                 <div class="table-responsive">
                     <p class="lead">Request<button type="button" ng-click="closeDebugDetail()" class="btn btn-icon mb-3 btn-sm float-right">close <i class="material-icons">close</i></button></p>
                     <table class="table table-striped table-bordered">

@@ -4,6 +4,7 @@ namespace luya\admin\apis;
 
 use Yii;
 use luya\traits\CacheableTrait;
+use luya\admin\Module;
 use luya\admin\models\Property;
 use luya\admin\models\Lang;
 use luya\admin\models\Tag;
@@ -13,6 +14,7 @@ use luya\admin\models\Scheduler;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use luya\admin\models\Config;
+use yii\web\NotFoundHttpException;
 
 /**
  * Common Admin API Tasks.
@@ -32,6 +34,30 @@ class CommonController extends RestController
     const EVENT_FLUSH_CACHE = 'flushCache';
 
     use CacheableTrait;
+
+    /**
+     * Run the callback function of a reload button configure in {{luya\admin\Module::$reloadButtons}}
+     *
+     * @param integer|string $key The array key from reload buttons array
+     * @return array Returns an array with response, button and message
+     * @since 2.0.0
+     */
+    public function actionReloadButtonCall($key)
+    {
+        $button = array_key_exists($key, $this->module->reloadButtons) ? $this->module->reloadButtons[$key] : false;
+
+        if (!$button) {
+            throw new NotFoundHttpException("Unable to find the given reload button.");
+        }
+
+        $response = call_user_func($button->callback, $button);
+
+        return [
+            'response' => $response,
+            'button' => $button,
+            'message' => $button->response ? $button->response : Module::t('admin_button_execute', ['label' => $button->originalLabel]),
+        ];
+    }
     
     /**
      * Get all log entries for a given scheulder model with primary key.

@@ -1002,8 +1002,8 @@
 	});
 
 	zaa.controller("LayoutMenuController", [
-		'$scope', '$document', '$http', '$state', '$location', '$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService',
-		function ($scope, $document, $http, $state, $location, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
+		'$scope', '$document', '$http', '$state','$timeout', '$window', '$filter', 'HtmlStorage', 'CacheReloadService', 'AdminDebugBar', 'LuyaLoading', 'AdminToastService', 'AdminClassService',
+		function ($scope, $document, $http, $state, $timeout, $window, $filter, HtmlStorage, CacheReloadService, AdminDebugBar, LuyaLoading, AdminToastService, AdminClassService) {
 
 		$scope.AdminClassService = AdminClassService;
 
@@ -1015,6 +1015,21 @@
 
 		$scope.reload = function() {
 			CacheReloadService.reload();
+		};
+
+		$scope.reload = function(cache) {
+			if (cache == false) {		
+				$window.location.reload();
+			} else {
+				
+				CacheReloadService.reload();
+			}
+		};
+
+		$scope.reloadButtonCall = function(key) {
+			$http.get('admin/api-admin-common/reload-button-call?key=' + key).then(function(response) {
+				AdminToastService.success(response.data.message);
+			});
 		};
 
 		/* Main nav sidebar toggler */
