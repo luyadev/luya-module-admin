@@ -22,6 +22,7 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#302](https://github.com/luyadev/luya-module-admin/issues/302) Updated spacing for luya-subnav + content.
 + [#245](https://github.com/luyadev/luya-module-admin/issues/245) Fixed highlight of rows after update and new insert in CRUD.
 + [#294](https://github.com/luyadev/luya-module-admin/issues/294) Fixed bug when replace a file with images.
 + [#291](https://github.com/luyadev/luya-module-admin/issues/291) Fixed search and sub folder behavior in file manager.
