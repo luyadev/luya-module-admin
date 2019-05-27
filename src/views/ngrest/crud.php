@@ -217,8 +217,7 @@ $this->beginBody();
                     </tbody>
                 </table>
             </div>
-
-            <div ng-show="data.list.length == 0" class="alert"><?= Module::t('ngrest_crud_empty_row'); ?></div>
+            <div ng-show="data.listArray.length == 0" class="p-3 text-muted"><?= Module::t('ngrest_crud_empty_row'); ?></div>
 
             <div class="crud-pagination-wrapper">
                 <div class="crud-pagination">
