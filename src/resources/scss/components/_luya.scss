@@ -110,10 +110,6 @@
     &::-webkit-scrollbar {
         display: none; // Safari and Chrome
     }
-
-    &-cmsadmin {
-        padding: 0;
-    }
     
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 1 1;
