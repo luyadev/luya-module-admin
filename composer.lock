@@ -1126,16 +1126,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.17",
+            "version": "1.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "cb60abb6a65912088feeabfd7bd9e3a472be2f72"
+                "reference": "8aec9d5dc32f5c9363989e55dcef825214b783e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/cb60abb6a65912088feeabfd7bd9e3a472be2f72",
-                "reference": "cb60abb6a65912088feeabfd7bd9e3a472be2f72",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8aec9d5dc32f5c9363989e55dcef825214b783e5",
+                "reference": "8aec9d5dc32f5c9363989e55dcef825214b783e5",
                 "shasum": ""
             },
             "require": {
@@ -1179,7 +1179,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-04-23T08:27:34+00:00"
+            "time": "2019-05-27T10:05:39+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -1247,22 +1247,22 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.16",
+            "version": "1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "6cd02a52c053a4ee3f843488aba65a29e3be3fc3"
+                "reference": "a509ada5495cce4b249ba8485b762164e30c533c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/6cd02a52c053a4ee3f843488aba65a29e3be3fc3",
-                "reference": "6cd02a52c053a4ee3f843488aba65a29e3be3fc3",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/a509ada5495cce4b249ba8485b762164e30c533c",
+                "reference": "a509ada5495cce4b249ba8485b762164e30c533c",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "^2.0 || ^1.0",
                 "luyadev/luya-core": "^1.0",
-                "luyadev/luya-module-admin": "^1.0",
+                "luyadev/luya-module-admin": "^1.0|^2.0",
                 "luyadev/luya-module-cms": "^1.0",
                 "phpunit/phpunit": "^6.0",
                 "twig/twig": "^1.0"
@@ -1291,7 +1291,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-04-16T09:19:28+00:00"
+            "time": "2019-05-27T09:47:28+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3122,7 +3122,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
