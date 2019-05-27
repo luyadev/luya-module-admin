@@ -63,7 +63,7 @@
     }
 
     @media (min-width: $mobile-nav-breakpoint) {
-        padding-left: $content-padding-x;
+        padding-left: $content-padding-x * 2;
     }
 }
 

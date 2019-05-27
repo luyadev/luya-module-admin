@@ -114,11 +114,7 @@
     &-cmsadmin {
         padding: 0;
     }
-
-    .luya-subnav + & {
-        padding-left: 0;
-    }
-
+    
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 1 1;
         height: 100%;
