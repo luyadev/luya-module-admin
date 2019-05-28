@@ -1406,7 +1406,7 @@ zaa.directive("zaaSelect", function() {
             $scope.valueExistsInOptions = function(value) {
                 var exists = false;
                 angular.forEach($scope.options, function(item) {
-                    if (value == item.value) {
+                    if (value == item[$scope.optionsvalue]) {
                         exists = true;
                     }
                 });
