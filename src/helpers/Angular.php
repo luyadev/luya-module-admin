@@ -116,7 +116,7 @@ class Angular
     public static function optionsFilter(array $array)
     {
         return array_filter($array, function($value) {
-            if (is_null($value) || $value == '' || $value === false) {
+            if (is_null($value) || $value === '' || $value === false) {
                 return false;
             }
 
