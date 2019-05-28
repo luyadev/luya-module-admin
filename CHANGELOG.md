@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#305](https://github.com/luyadev/luya-module-admin/issues/305) Fixed bug with module context in Api Users overview Active Window.
 + [#304](https://github.com/luyadev/luya-module-admin/issues/304) Hide tags title in file manager detail when no tags available.
 + [#303](https://github.com/luyadev/luya-module-admin/issues/303) Show message if a crud view has no entries yet.
 

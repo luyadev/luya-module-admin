@@ -47,11 +47,13 @@ class ProxyController extends Controller
         'migration', 'admin_proxy_build', 'admin_proxy_machine',
     ];
     
+    /**
+     * {@inheritDoc}
+     */
     public function init()
     {
-        $this->db = Instance::ensure($this->module->proxyDbConnection, Connection::class);
-    
         parent::init();
+        $this->db = Instance::ensure($this->module->proxyDbConnection, Connection::class);
     }
 
     /**
