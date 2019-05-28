@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.1 (in progress)
 
+### Changed
+
++ [#309](https://github.com/luyadev/luya-module-admin/issues/309) Updated Material Design Icons to v47
+
 ### Fixed
 
 + [#306](https://github.com/luyadev/luya-module-admin/issues/306) Fixed bug zaaSelect directive in checking if a values exists in optinos.
