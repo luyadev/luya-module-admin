@@ -2859,20 +2859,9 @@ zaa.directive("storageFileManager", function() {
                     LuyaLoading.stop();
                     if (response.status == 200) {
                         $scope.getFilesForCurrentPage().then(function() {
-                            
-                            //$scope.openFileDetail($scope.fileDetail, true);
-                            
-                            var fileref = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
-                            var random = (new Date()).toString();
-                            if (fileref.isImage) {
-                                fileref.createThumbnail.source = fileref.createThumbnail.source + "?cb=" + random;
-                                fileref.createThumbnailMedium.source = fileref.createThumbnailMedium.source + "?cb=" + random;
-                            }
-                            $scope.fileDetail = fileref;
-                            
-                            // @TODO TRANSLATION
-                            AdminToastService.success('the file has been replaced successfull.');
+                            AdminToastService.success(i18n['js_dir_manager_file_replace_ok']);
                         });
+                        $scope.openFileDetail($scope.fileDetail, true);
                     }
                 }, function() {
                     LuyaLoading.stop();

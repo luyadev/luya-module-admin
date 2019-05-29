@@ -420,4 +420,8 @@ return [
     'admin_button_execute' => '"{label}" executed',
     'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
     'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+
+// 2.0.1
+
+    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
 ];
