@@ -656,6 +656,8 @@ class Api extends RestActiveController
         $this->checkAccess('filter');
         
         $model = $this->model;
+
+        $this->handleNotifications($this->modelClass, $this->authId);
         
         $filterName = Html::encode($filterName);
         
