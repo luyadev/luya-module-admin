@@ -7,10 +7,11 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Changed
 
-+ [#309](https://github.com/luyadev/luya-module-admin/issues/309) Updated Material Design Icons to v47
++ [#309](https://github.com/luyadev/luya-module-admin/issues/309) Updated Material Design Icons to v47.
 
 ### Fixed
 
++ [#311](https://github.com/luyadev/luya-module-admin/issues/311) Fix problem with findOne() inside Active Windows.
 + [#306](https://github.com/luyadev/luya-module-admin/issues/306) Fixed bug zaaSelect directive in checking if a values exists in optinos.
 + [#305](https://github.com/luyadev/luya-module-admin/issues/305) Fixed bug with module context in Api Users overview Active Window.
 + [#304](https://github.com/luyadev/luya-module-admin/issues/304) Hide tags title in file manager detail when no tags available.

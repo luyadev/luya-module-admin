@@ -375,6 +375,18 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
+     * The a single object from a primary key defintion.
+     *
+     * @param string $condition The condition for primary keys like `1,23` or `1`.
+     * @return NgRestActiveQuery
+     * @since 2.0.1
+     */
+    public static function ngRestByPrimaryKeyOne($condition)
+    {
+        return static::ngRestFind()->byPrimaryKey($condition)->one();
+    }
+
+    /**
      * Search trough the whole table as ajax fallback when pagination is enabled.
      *
      * This method is used when the angular crud view switches to a pages view and a search term is entered into
