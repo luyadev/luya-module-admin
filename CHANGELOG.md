@@ -11,6 +11,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#310](https://github.com/luyadev/luya-module-admin/issues/310) Fixed bug with double brackets in user history summary Active Window.
 + [#311](https://github.com/luyadev/luya-module-admin/issues/311) Fix problem with findOne() inside Active Windows.
 + [#306](https://github.com/luyadev/luya-module-admin/issues/306) Fixed bug zaaSelect directive in checking if a values exists in optinos.
 + [#305](https://github.com/luyadev/luya-module-admin/issues/305) Fixed bug with module context in Api Users overview Active Window.
