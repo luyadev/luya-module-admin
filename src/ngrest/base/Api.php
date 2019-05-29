@@ -232,25 +232,9 @@ class Api extends RestActiveController
         $modelClass = $this->modelClass;
 
         $find = $modelClass::ngRestFind();
-
-        // find the latest primary key value and store into row notifications user auth table
-        $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
         
-        $notificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+        $this->handleNotifications($modelClass, $this->authId);
 
-        if ($notificationModel) {
-            $notificationModel->model_latest_pk_value = $pkValue;
-            $notificationModel->model_class = $modelClass::className();
-            $notificationModel->save();
-        } else {
-            $notificationModel = new UserAuthNotification();
-            $notificationModel->auth_id = $this->authId;
-            $notificationModel->user_id = Yii::$app->adminuser->id;
-            $notificationModel->model_latest_pk_value = $pkValue;
-            $notificationModel->model_class = $modelClass::className();
-            $notificationModel->save();
-        }
-        
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
 
@@ -263,6 +247,35 @@ class Api extends RestActiveController
         }
 
         return $find->with($this->getWithRelation('list'));
+    }
+
+    /**
+     * Add new notification or update to latest primary key if exists
+     *
+     * @param string $modelClass
+     * @param integer $authId
+     * @return boolean
+     * @since 2.0.1
+     */
+    protected function handleNotifications($modelClass, $authId)
+    {
+        // find the latest primary key value and store into row notifications user auth table
+        $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
+        
+        $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $authId])->one();
+
+        if ($model) {
+            $model->model_latest_pk_value = $pkValue;
+            $model->model_class = $modelClass::className();
+            return $model->save();
+        }
+
+        $model = new UserAuthNotification();
+        $model->auth_id = $authId;
+        $model->user_id = Yii::$app->adminuser->id;
+        $model->model_latest_pk_value = $pkValue;
+        $model->model_class = $modelClass::className();
+        return $model->save();
     }
 
     /**
