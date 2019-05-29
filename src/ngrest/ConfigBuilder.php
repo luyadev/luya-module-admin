@@ -26,7 +26,7 @@ class ConfigBuilder implements ConfigBuilderInterface
 
     protected $config = [];
 
-    private $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
+    private $_pointersMap = ['list', 'create', 'update', 'delete', 'filter', 'aw', 'options'];
     
     public function __construct($ngRestModelClass)
     {

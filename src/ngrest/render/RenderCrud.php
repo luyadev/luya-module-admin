@@ -30,6 +30,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     const TYPE_UPDATE = 'update';
 
+    const TYPE_FILTER = 'filter';
+
     private $_view;
 
     /**

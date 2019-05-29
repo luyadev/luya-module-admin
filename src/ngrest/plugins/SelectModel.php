@@ -121,12 +121,12 @@ class SelectModel extends Select
 
         $instanceName = implode(",", $keys);
         
-        if (!isset(static::$_dataInstance[$instanceName])) {
+        if (!isset(self::$_dataInstance[$instanceName])) {
             $queryData = $query->all();
-            static::$_dataInstance[$instanceName] = $queryData;
+            self::$_dataInstance[$instanceName] = $queryData;
         }
         
-        return static::$_dataInstance[$instanceName];
+        return self::$_dataInstance[$instanceName];
     }
     
     /**
@@ -134,7 +134,7 @@ class SelectModel extends Select
      */
     private static function flushDataInstances()
     {
-        static::$_dataInstance = [];
+        self::$_dataInstance = [];
     }
     
     /**
