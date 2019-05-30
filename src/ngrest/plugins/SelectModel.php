@@ -7,6 +7,7 @@ use yii\db\ActiveRecordInterface;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
 use yii\db\ActiveQuery;
+use luya\admin\helpers\Angular;
 
 /**
  * DropDown Select
@@ -238,7 +239,7 @@ class SelectModel extends Select
     {
         return [
             $this->createCrudLoaderTag($this->modelClass, $ngModel),
-            $this->createFormTag('zaa-select', $id, $ngModel, array_filter(['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')])),
+            $this->createFormTag('zaa-select', $id, $ngModel, Angular::optionsFilter(['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')])),
         ];
     }
     

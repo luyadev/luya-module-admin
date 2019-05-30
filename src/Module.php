@@ -14,6 +14,7 @@ use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\filesystem\LocalFileSystem;
+use luya\admin\base\ReloadButton;
 
 /**
  * Admin Module.
@@ -30,6 +31,9 @@ use luya\admin\filesystem\LocalFileSystem;
  * ]
  * ```
  *
+ * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
+ * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -155,7 +159,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.0
      */
     public $userIdleTimeout = 1800;
-    
+
+    /**
+     * @var string The component/connection name from application.
+     * @since 2.0.0
+     */
+    public $proxyDbConnection = 'db';
+
     /**
      * @var integer The number of rows which should be transferd for each request.
      */
@@ -237,7 +247,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'admin' => 'admin.php',
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -310,7 +320,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'js_dir_no_selection', 'js_dir_image_upload_ok', 'js_dir_image_filter_error', 'js_dir_upload_wait', 'js_dir_manager_upload_image_ok', 'js_dir_manager_rm_file_confirm', 'js_dir_manager_rm_file_ok', 'js_zaa_server_proccess',
             'ngrest_select_no_selection', 'js_ngrest_toggler_success', 'js_filemanager_count_files_overlay', 'js_link_set_value', 'js_link_not_set', 'js_link_change_value', 'aws_changepassword_succes', 'js_account_update_profile_success', 'layout_filemanager_remove_dir_not_empty',
             'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title', 'ngrest_crud_search_text', 'js_dir_manager_rm_folder_confirm_title', 'js_pagination_page', 'js_dir_manager_rename_success',
-            'js_scheduler_show_datepicker', 'js_scheduler_new_value', 'js_scheduler_time', 'js_scheduler_save', 'js_scheduler_title_upcoming', 'js_scheduler_title_completed', 'js_scheduler_table_newvalue', 'js_scheduler_table_timestamp',
+            'js_scheduler_show_datepicker', 'js_scheduler_new_value', 'js_scheduler_time', 'js_scheduler_save', 'js_scheduler_title_upcoming', 'js_scheduler_title_completed', 'js_scheduler_table_newvalue', 'js_scheduler_table_timestamp', 'js_dir_manager_file_replace_ok',
         ];
     }
     
@@ -344,6 +354,59 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         $this->_jsTranslations = $translations;
     }
     
+    private $_reloadButtons = [];
+
+    /**
+     * Set an array of relaod buttons with a callback function to run on click.
+     * 
+     * Every array item needs at least:
+     * 
+     * + label: The label which is displayed in the mnu
+     * + icon: A material icon value from https://material.io/tools/icons/
+     * + callback: A php callable function which is executed when clicking the button.
+     * 
+     * ```php
+     * 'reloadButtons' => [
+     *     ['label' => 'Clear Frontpage Cache', 'icon' => 'clear', 'callback' => function($button) {
+     *         (new \Curl\Curl())->get('https://luya/clear/this/cache');
+     *     }]
+     * ]
+     * ```
+     * 
+     * The first paramter of the callback function is the ReloadButton object itself, this allwos you to
+     * change the response message.
+     * 
+     * ```php
+     * 'callback' => function(\luya\admin\base\ReloadButton $button) {
+     *     // do something
+     *     // ...
+     * 
+     *     // change response (success) message.
+     *     $button->response = 'Running this button was a full success!';
+     * }
+     * ```
+     * 
+     * @param array $buttons
+     * @since 2.0.0
+     */
+    public function setReloadButtons(array $buttons)
+    {
+        foreach ($buttons as $buttonConfig) {
+            $this->_reloadButtons[] = new ReloadButton($buttonConfig);
+        }
+    }
+    
+    /**
+     * Return array with {{luya\admin\base\ReloadButton}} objects
+     *
+     * @return array
+     * @since 2.0.0
+     */
+    public function getReloadButtons()
+    {
+        return $this->_reloadButtons;
+    }
+
     /**
      * Get the admin module interface menu.
      *

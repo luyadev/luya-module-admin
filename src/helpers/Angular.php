@@ -107,6 +107,24 @@ class Angular
     }
 
     /**
+     * Filter empty values like `null`, `''` and false but keep 0, as its common to use 0 as default value.
+     *
+     * @param array $array Filter empty values from array, but keep integer values.
+     * @return array An array with filtered values.
+     * @since 2.0.1
+     */
+    public static function optionsFilter(array $array)
+    {
+        return array_filter($array, function($value) {
+            if (is_null($value) || $value === '' || $value === false) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    /**
      * Create a Angular Directive tag based on the name.
      *
      * ```php
@@ -141,7 +159,7 @@ class Angular
      */
     public static function sortRelationArray($ngModel, $label, array $sourceData, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => $sourceData], $options);
+        return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => static::optionsArrayInput($sourceData)], $options);
     }
         
     /**

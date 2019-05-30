@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\helpers\StringHelper;
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\helpers\Angular;
 
 /**
  * Base class for select dropdowns via Array or Model.
@@ -58,7 +59,7 @@ abstract class Select extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag(self::TYPE_SELECT, $id, $ngModel, array_filter([
+        return $this->createFormTag(self::TYPE_SELECT, $id, $ngModel, Angular::optionsFilter([
             'initvalue' => $this->initValue,
             'options' => $this->getServiceName('selectdata'),
         ]));

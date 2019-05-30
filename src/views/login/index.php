@@ -75,3 +75,13 @@ $spinner = Svg::widget([
         </li>
     </ul>
 </div>
+
+<noscript>
+    <div class="login-noscript">
+        <p><?= Module::t('login_noscript_error');?></p>
+    </div>
+</noscript>
+
+<!--[if IE]>
+    <div class="login-browsehappy"><p><?= Module::t('login_browsehappy');?></p></div>
+<![endif]-->

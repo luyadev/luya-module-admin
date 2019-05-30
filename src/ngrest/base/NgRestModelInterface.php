@@ -4,7 +4,6 @@ namespace luya\admin\ngrest\base;
 
 use yii\db\ActiveRecordInterface;
 
-
 /**
  * Interface For NgRest Model.
  *

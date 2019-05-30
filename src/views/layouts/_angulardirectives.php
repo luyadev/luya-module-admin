@@ -352,8 +352,8 @@ use luya\admin\helpers\Angular;
                                         <label></label>
                                     </div>
                                 </th>
-                                <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-image-url="{{file.createThumbnailMedium.source}}" tooltip-disabled="!file.isImage">
-                                    <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}" /></span>
+                                <td class="text-center" ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-image-url="{{file.createThumbnailMedium.source}}?{{file.upload_timestamp}}" tooltip-disabled="!file.isImage">
+                                    <span ng-if="file.isImage"><img class="responsive-img filmanager-thumb" ng-src="{{file.createThumbnail.source}}?{{file.upload_timestamp}}" /></span>
                                     <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                                 </td>
                                 <td ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-text="{{file.id}}">{{file.name_original | truncateMiddle: 50}}</td>
@@ -387,7 +387,7 @@ use luya\admin\helpers\Angular;
     <div class="file-detail-view" ng-class="{'open': fileDetail}">
 
         <div class="file-detail-view-head">
-            <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}" target="_blank">Download</a>
+            <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
             <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
@@ -409,10 +409,10 @@ use luya\admin\helpers\Angular;
         <div ng-if="fileDetail.isImage" class="mt-3 text-center">
             <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
                 <div class="text-center">
-                    <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}" />
+                    <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}?{{fileDetailFull.upload_timestamp}}" />
                 </div>
             </modal>
-            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}" />
+            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}?{{fileDetailFull.upload_timestamp}}" />
         </div>
         <table class="table table-striped table-hover table-align-middle mt-3">
             <tbody>
@@ -473,7 +473,7 @@ use luya\admin\helpers\Angular;
             <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
         </form>
 
-        <h5 class="mb-3 mt-4"><?= Admin::t('menu_system_item_tags'); ?></h5>
+        <h5 ng-show="tags.length > 0" class="mb-3 mt-4"><?= Admin::t('menu_system_item_tags'); ?></h5>
         <span style="font-size:15px;" 
             ng-repeat="tag in tags"
             ng-click="saveTagRelation(tag, fileDetailFull)"

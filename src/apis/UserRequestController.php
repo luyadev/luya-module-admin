@@ -4,8 +4,8 @@ namespace luya\admin\apis;
 
 /**
  * User Request Controller.
- * 
- * File has been created with `crud/create` command. 
+ *
+ * File has been created with `crud/create` command.
  */
 class UserRequestController extends \luya\admin\ngrest\base\Api
 {

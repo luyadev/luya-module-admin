@@ -30,7 +30,7 @@ use luya\admin\helpers\Angular;
  * + onListFind: The model is populated for the Admin Table list view where you can see all your items and click the edit/delete icons.
  * + onExpandFind: Equals to onFind but only for the view api of the model, which means the data which is used for edit.
  * + onSave: Before Update / Create of the new data set.
- * 
+ *
  * @property string|array $sortField Sort field defintion (since 2.0.0)
  *
  * @author Basil Suter <basil@nadar.io>
@@ -155,45 +155,45 @@ abstract class Plugin extends Component implements TypesInterface
      * Setter method for sortField
      *
      * @param string|array $field A sort field definition, this can be either a string `firstname` or an array with a defintion or multiple defintions
-     * 
+     *
      * ```php
      * 'sortField' => [
      *     'asc' => ['fist_name' => SORT_ASC, 'last_name' => SORT_ASC],
      *     'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
-     * ] 
+     * ]
      * ```
-     * 
+     *
      * Or you have an ngrest attribute which does not exists in the database, so you can define the original sorting attribute:
-     * 
+     *
      * ```php
      * 'sortField' => 'field_name_inside_the_table'
      * ```
-     * 
+     *
      * which is equals to
-     * 
+     *
      * ```php
      * 'sortField' => [
      *    'asc' => ['field_name_inside_the_table' => SORT_ASC],
      *    'desc' => ['field_name_inside_the_table' => SORT_DESC],
      * ]
      * ```
-     * 
+     *
      * A very common scenario when define sortField is when display a value from a relation, therefore you need to prepare the data provider
      * inside the API in order to **join** the relation (joinWith(['relationName])) aftewards you can use the table name
-     * 
+     *
      * ```php
      * 'sortField' => [
      *      'asc' => ['city_table.name' => SORT_ASC],
      *      'desc' => ['city_table.name' => SORT_DESC],
      * ]
      * ```
-     * 
+     *
      * There are situations you might turn of the sorting for the given attribute therefore just sortfield to false:
-     * 
+     *
      * ```php
      * 'sortField' => false,
      * ```
-     * 
+     *
      * @see https://www.yiiframework.com/doc/api/2.0/yii-data-sort#$attributes-detail
      * @since 2.0.0
      */
@@ -204,7 +204,7 @@ abstract class Plugin extends Component implements TypesInterface
 
     /**
      * Getter method for a sortField defintion.
-     * 
+     *
      * If no sortField definition has been set, the plugin attribute name is used.
      *
      * @return array
@@ -217,10 +217,10 @@ abstract class Plugin extends Component implements TypesInterface
         }
 
         if ($this->_sortField) {
-            // 
+            //
             if (is_array($this->_sortField)) {
                 return [$this->name => $this->_sortField];
-            } 
+            }
 
             return [$this->name => [
                 'asc' => [$this->_sortField => SORT_ASC],
@@ -369,13 +369,13 @@ abstract class Plugin extends Component implements TypesInterface
 
     /**
      * Preprends the context name for a certain ng model.
-     * 
+     *
      * As the angular attributes have different names in different contexts, this will append the correct context.
      *
      * ```php
      * $this->appendFieldNgModelContext('myfieldname', self::LIST_CONTEXT_PREFIX);
      * ```
-     * 
+     *
      * @param string $field
      * @param string $context
      * @return string

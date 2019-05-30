@@ -17,9 +17,20 @@ datepicker {
     width: 100%;
 }
 
+._720kb-datepicker-calendar-header {
+    background-color: map_get($grays, 600) !important;
+}
+
+._720kb-datepicker-calendar-days-header {
+    background-color: map_get($grays, 400) !important;
+}
+
 ._720kb-datepicker-calendar {
     margin-top: 40px;
     margin-left: 0;
+    border-radius: 0px;
+    border:1px solid map_get($grays, 600);
+    box-shadow: $modal-content-box-shadow-sm-up;
 }
 
 ._720kb-datepicker-active {
@@ -27,7 +38,7 @@ datepicker {
     color: color(white) !important;
 }
 
-._720kb-datepicker-calendar-day._720kb-datepicker-today {
-    background-color: theme-color(primary) !important;
+._720kb-datepicker-calendar-day._720kb-datepicker-today:not(._720kb-datepicker-active) {
+    background-color: $gray-500 !important;
     color: color(white) !important;
 }

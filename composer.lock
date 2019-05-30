@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e64c076b596d42b4695ab8b505884b4c",
+    "content-hash": "e5c0f3aa97dd636eb7893380ad4100bf",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -17,8 +17,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "shasum": null
+                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -30,17 +29,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "3.3.1",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "9e8ec3d10fad04748176144f108d7355662ae75e"
+                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/9e8ec3d10fad04748176144f108d7355662ae75e",
-                "reference": "9e8ec3d10fad04748176144f108d7355662ae75e",
-                "shasum": null
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
+                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "type": "bower-asset",
             "license": [
@@ -58,8 +56,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "shasum": null
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "type": "bower-asset"
         },
@@ -74,8 +71,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
-                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
-                "shasum": null
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "require": {
                 "bower-asset/jquery": ">=1.8"
@@ -353,21 +349,21 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.18",
+            "version": "2.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "b80830c5f8c221b8bd6a830c5b2f45544f82c4d7"
+                "reference": "3e74c7338dd83cea6ffc6f5c25202b9f2f271f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b80830c5f8c221b8bd6a830c5b2f45544f82c4d7",
-                "reference": "b80830c5f8c221b8bd6a830c5b2f45544f82c4d7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3e74c7338dd83cea6ffc6f5c25202b9f2f271f89",
+                "reference": "3e74c7338dd83cea6ffc6f5c25202b9f2f271f89",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/inputmask": "~3.2.2 | ~3.3.5",
-                "bower-asset/jquery": "3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
+                "bower-asset/jquery": "3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
                 "bower-asset/punycode": "1.3.*",
                 "bower-asset/yii2-pjax": "~2.0.1",
                 "cebe/markdown": "~1.0.0 | ~1.1.0 | ~1.2.0",
@@ -449,7 +445,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-04-16T14:27:26+00:00"
+            "time": "2019-05-21T16:01:16+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -646,8 +642,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular/bower-angular/zipball/56690b5e545ad36d04e369a65171de1adbe3ce64",
-                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64",
-                "shasum": null
+                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64"
             },
             "type": "bower-asset",
             "license": [
@@ -665,8 +660,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/a8m/angular-filter/zipball/8285ffda674181667ef1ddc32b92b7d6bd6c3711",
-                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711",
-                "shasum": null
+                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711"
             },
             "require": {
                 "bower-asset/angular": ">=1.4.3"
@@ -687,32 +681,12 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/chieffancypants/angular-loading-bar/zipball/d734873e52ded18fa27d67f52272ae43267dfd63",
-                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63",
-                "shasum": null
+                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63"
             },
             "require": {
                 "bower-asset/angular": ">=1.2.9,<2.0.0"
             },
             "type": "bower-asset"
-        },
-        {
-            "name": "bower-asset/angularjs-datepicker",
-            "version": "2.1.23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/720kb/angular-datepicker.git",
-                "reference": "12b53a4088c68c2905f05f000dbbcbb3cb50a974"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/720kb/angular-datepicker/zipball/12b53a4088c68c2905f05f000dbbcbb3cb50a974",
-                "reference": "12b53a4088c68c2905f05f000dbbcbb3cb50a974",
-                "shasum": null
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
         },
         {
             "name": "bower-asset/angularjs-slider",
@@ -725,8 +699,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular-slider/angularjs-slider/zipball/9190f65f4ab8517896da3e9fb9b5d525ec04f843",
-                "reference": "9190f65f4ab8517896da3e9fb9b5d525ec04f843",
-                "shasum": null
+                "reference": "9190f65f4ab8517896da3e9fb9b5d525ec04f843"
             },
             "type": "bower-asset",
             "license": [
@@ -744,8 +717,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/lancedikson/bowser/zipball/1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
-                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
-                "shasum": null
+                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786"
             },
             "type": "bower-asset",
             "license": [
@@ -763,8 +735,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
-                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e",
-                "shasum": null
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
             },
             "type": "bower-asset"
         },
@@ -779,8 +750,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/flow.js/zipball/aadc5a72b1414d87ed1aa3563b30209f9b1f7773",
-                "reference": "aadc5a72b1414d87ed1aa3563b30209f9b1f7773",
-                "shasum": null
+                "reference": "aadc5a72b1414d87ed1aa3563b30209f9b1f7773"
             },
             "type": "bower-asset"
         },
@@ -795,8 +765,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/danialfarid/angular-file-upload-bower/zipball/4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
-                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
-                "shasum": null
+                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5"
             },
             "require": {
                 "bower-asset/angular": ">1.2.0"
@@ -817,8 +786,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/ng-flow/zipball/fbf246e1839ee2c4586a82e9132651c498946ed2",
-                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2",
-                "shasum": null
+                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "require": {
                 "bower-asset/angular": "~1",
@@ -873,8 +841,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
-                "reference": "425d39571c91121e504dea4984b873306a60361f",
-                "shasum": null
+                "reference": "425d39571c91121e504dea4984b873306a60361f"
             },
             "type": "bower-asset",
             "license": [
@@ -892,8 +859,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular-ui/ui-router/zipball/ef38bc78495ec7719dcd6876886cf5a27420f330",
-                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330",
-                "shasum": null
+                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330"
             },
             "require": {
                 "bower-asset/angular": ">=1.0.8,<2.0.0"
@@ -1110,16 +1076,16 @@
         },
         {
             "name": "luyadev/luya-composer",
-            "version": "1.0.4.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-composer.git",
-                "reference": "2e80ae60066ba53c131a25b0b088a607dc226dc6"
+                "reference": "4d9d1cb15346ff0cbbc3dfebeed9d5bb4013380e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-composer/zipball/2e80ae60066ba53c131a25b0b088a607dc226dc6",
-                "reference": "2e80ae60066ba53c131a25b0b088a607dc226dc6",
+                "url": "https://api.github.com/repos/luyadev/luya-composer/zipball/4d9d1cb15346ff0cbbc3dfebeed9d5bb4013380e",
+                "reference": "4d9d1cb15346ff0cbbc3dfebeed9d5bb4013380e",
                 "shasum": ""
             },
             "require": {
@@ -1156,20 +1122,20 @@
                 "composer",
                 "luya"
             ],
-            "time": "2018-12-24T09:18:03+00:00"
+            "time": "2019-05-14T05:37:27+00:00"
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.17",
+            "version": "1.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "cb60abb6a65912088feeabfd7bd9e3a472be2f72"
+                "reference": "8aec9d5dc32f5c9363989e55dcef825214b783e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/cb60abb6a65912088feeabfd7bd9e3a472be2f72",
-                "reference": "cb60abb6a65912088feeabfd7bd9e3a472be2f72",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8aec9d5dc32f5c9363989e55dcef825214b783e5",
+                "reference": "8aec9d5dc32f5c9363989e55dcef825214b783e5",
                 "shasum": ""
             },
             "require": {
@@ -1213,7 +1179,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-04-23T08:27:34+00:00"
+            "time": "2019-05-27T10:05:39+00:00"
         },
         {
             "name": "luyadev/luya-module-cms",
@@ -1281,22 +1247,22 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.16",
+            "version": "1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "6cd02a52c053a4ee3f843488aba65a29e3be3fc3"
+                "reference": "a509ada5495cce4b249ba8485b762164e30c533c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/6cd02a52c053a4ee3f843488aba65a29e3be3fc3",
-                "reference": "6cd02a52c053a4ee3f843488aba65a29e3be3fc3",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/a509ada5495cce4b249ba8485b762164e30c533c",
+                "reference": "a509ada5495cce4b249ba8485b762164e30c533c",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "^2.0 || ^1.0",
                 "luyadev/luya-core": "^1.0",
-                "luyadev/luya-module-admin": "^1.0",
+                "luyadev/luya-module-admin": "^1.0|^2.0",
                 "luyadev/luya-module-cms": "^1.0",
                 "phpunit/phpunit": "^6.0",
                 "twig/twig": "^1.0"
@@ -1325,7 +1291,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-04-16T09:19:28+00:00"
+            "time": "2019-05-27T09:47:28+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1591,16 +1557,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "94fd0001232e47129dd3504189fa1c7225010d08"
+                "reference": "bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/94fd0001232e47129dd3504189fa1c7225010d08",
-                "reference": "94fd0001232e47129dd3504189fa1c7225010d08",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c",
+                "reference": "bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c",
                 "shasum": ""
             },
             "require": {
@@ -1638,7 +1604,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-30T07:14:17+00:00"
+            "time": "2019-04-30T17:48:53+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3156,7 +3122,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -3425,16 +3391,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.40.0",
+            "version": "v1.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "2ba4eaf6b0649760a2cdbc0ada19486f9c1b4125"
+                "reference": "575cd5028362da591facde1ef5d7b94553c375c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2ba4eaf6b0649760a2cdbc0ada19486f9c1b4125",
-                "reference": "2ba4eaf6b0649760a2cdbc0ada19486f9c1b4125",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/575cd5028362da591facde1ef5d7b94553c375c9",
+                "reference": "575cd5028362da591facde1ef5d7b94553c375c9",
                 "shasum": ""
             },
             "require": {
@@ -3449,7 +3415,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.40-dev"
+                    "dev-master": "1.41-dev"
                 }
             },
             "autoload": {
@@ -3487,7 +3453,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-04-28T06:54:53+00:00"
+            "time": "2019-05-14T11:59:08+00:00"
         },
         {
             "name": "unglue/client",

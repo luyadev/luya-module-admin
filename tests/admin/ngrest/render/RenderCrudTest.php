@@ -3,7 +3,8 @@
 namespace admintests\admin\ngrest\render;
 
 use admintests\AdminTestCase;
-use luya\admin\ngrest\render\{RenderCrud,RenderCrudView};
+use luya\admin\ngrest\render\RenderCrud;
+use luya\admin\ngrest\render\RenderCrudView;
 
 class RenderCrudTest extends AdminTestCase
 {

@@ -1,0 +1,93 @@
+// Custom styles / style-overrides for the login page
+
+@import 'variables/colors';
+
+.card {
+    margin-top: 100px;
+}
+
+.btn {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.preloader-wrapper.login__spinner {
+    height: 20px;
+    margin-left: 10px;
+    margin-right: 4px;
+    margin-top: 8px;
+    width: 20px;
+
+    .spinner-layer {
+        border-color: #fff !important;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.login__success {
+    padding: 50px 0 44px 0;
+    text-align: center;
+}
+
+.login__success-icon {
+    font-size: 14rem;
+}
+
+form .row {
+    margin-bottom: 20px;
+}
+
+.login-noscript {
+    background-color: $luya;
+    color: $white;
+    left: 50%;
+    min-width: 320px;
+    padding: 125px 50px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    @media (min-width: 593px) {
+        min-width: 593px;
+    }
+
+    p {
+        display: block;
+        font-size: 1.3rem;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.login-browsehappy {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    p {
+        display: inline-block;
+        margin: 0;
+        padding: 25px;
+        background-color: #FFE65C;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    @media (min-width: 800px) and (min-height: 430px) {
+        display: block;
+    }
+    @media (min-width: 500px) and (min-height: 500px) {
+        display: block;
+    }
+    @media (max-width: 800px) and (min-height: 730px) {
+        display: block;
+    }
+}

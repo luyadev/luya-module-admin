@@ -2,7 +2,11 @@
 
 namespace luya\admin\commands;
 
+use Yii;
 use Curl\Curl;
+use luya\admin\Module;
+use yii\db\Connection;
+use yii\di\Instance;
 use yii\helpers\Json;
 use luya\admin\models\Config;
 use luya\admin\proxy\ClientBuild;
@@ -62,6 +66,8 @@ use luya\console\Command;
  * ./vendor/bin/luya admin/proxy/clear
  * ```
  *
+ * @property Module $module
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -118,13 +124,18 @@ class ProxyController extends Command
      * @var integer Number of requests collected until they are written to the database.
      */
     public $syncRequestsCount = 10;
+    
+    /**
+     * @var string Database connection (component name) where the data will be stored.
+     */
+    public $db = 'db';
 
     /**
      * @inheritdoc
      */
     public function options($actionID)
     {
-        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount']);
+        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount', 'db']);
     }
 
     /**
@@ -142,6 +153,8 @@ class ProxyController extends Command
      */
     public function actionSync()
     {
+        $this->db = Instance::ensure($this->db, Connection::class);
+    
         if ($this->url === null) {
             $url = Config::get(self::CONFIG_VAR_URL);
 
@@ -187,7 +200,7 @@ class ProxyController extends Command
 
             $this->verbosePrint($curl->response);
             $response = Json::decode($curl->response);
-            $build = new ClientBuild($this, [
+            $build = new ClientBuild($this, $this->db, [
                 'optionStrict' => $this->strict,
                 'optionTable' => $this->table,
                 'syncRequestsCount' => (int)$this->syncRequestsCount,

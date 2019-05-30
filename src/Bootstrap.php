@@ -10,7 +10,7 @@ use yii\base\Application;
 
 /**
  * Admin Bootstrap
- * 
+ *
  * The main purpose of this Bootstrap files is to have an option to run the queue command
  * trough a "fake cronjob".
  *
@@ -43,7 +43,7 @@ final class Bootstrap implements BootstrapInterface
     {
         if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {
             // use cache to ensure this will run only every 30min
-            $this->getOrSetHasCache(['admin', 'bootstrap', 'queue'], function() {
+            $this->getOrSetHasCache(['admin', 'bootstrap', 'queue'], function () {
                 $timestamp = Config::get(Config::CONFIG_QUEUE_TIMESTAMP);
                 // if last execution has NOT been done previously (maybe trough a cronjob)
                 if ((time() - $timestamp) > (60*25)) {

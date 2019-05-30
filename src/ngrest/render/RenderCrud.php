@@ -516,7 +516,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     /**
      * Short hand method to get all active windows (if available).
-     * 
+     *
      * @return array
      */
     public function getActiveWindows()
@@ -556,18 +556,17 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     public function generatePluginHtml(array $element, $configContext)
     {
         if ($element['i18n'] && $configContext !== self::TYPE_LIST) {
-
             return $this->view->render('_crudform_i18n_pluginhtml', [
                 'element' => $element,
                 'configContext' => $configContext,
                 'languages' => Lang::getQuery(),
                 'helpButtonHtml' => $this->createFieldHelpButton($element, $configContext),
             ]);
-        }   
+        }
 
         $ngModel = $this->ngModelString($configContext, $element['name']);
 
-        return $this->createFieldHelpButton($element, $configContext) . 
+        return $this->createFieldHelpButton($element, $configContext) .
             $this->renderElementPlugins($configContext, $element['type'], Inflector::slug($ngModel), $element['name'], $ngModel, $element['alias'], false);
     }
 
@@ -647,7 +646,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     
     /**
      * Generate an array for every group withing the given pointer elemenets.
-     * 
+     *
      * If there is no group defintion, it will generate a "default" group.
      *
      * @param [type] $pointerElements

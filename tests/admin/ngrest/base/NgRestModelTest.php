@@ -9,7 +9,6 @@ use admintests\data\models\TestNewNotationNgRestModel;
 
 class NgRestModelTest extends AdminTestCase
 {
-    
     public function testScenarios()
     {
         $model = new TagFixture();

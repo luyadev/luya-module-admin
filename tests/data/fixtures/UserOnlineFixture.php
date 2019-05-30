@@ -25,4 +25,3 @@ class UserOnlineFixture extends ActiveFixture
         ];
     }
 }
-    

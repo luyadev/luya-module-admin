@@ -56,6 +56,11 @@ class ApiOverviewActiveWindow extends ActiveWindow
         ]);
     }
     
+    /**
+     * Returns an array with available endpoints and the corresponding actions.
+     * 
+     * @return array An array with the api or controller as key.
+     */
     protected function getAvailableApiEndpoints()
     {
         $data = [];
@@ -82,15 +87,15 @@ class ApiOverviewActiveWindow extends ActiveWindow
         
         foreach ($maps as $key => $value) {
             if (!isset($data[$key])) {
-                $ctrl = Yii::createObject($value['class'], [$key, $this]);
-                
+                // create the controller object with the module object as context
+                $controller = Yii::createObject($value['class'], [$key, $value['module']]);
                 $data[$key] = [
                     'api' => $key,
                     'crud_create' => false,
                     'crud_update' => false,
                     'crud_delete' => false,
                     'permission' => false,
-                    'actions' => $this->getActions($ctrl),
+                    'actions' => $this->getActions($controller),
                 ];
             }
         }
@@ -102,6 +107,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
     
     /**
      * Returns all available actions of the specified controller.
+     * 
      * @param \yii\base\Controller $controller the controller instance
      * @return array all available action IDs.
      */
@@ -119,6 +125,9 @@ class ApiOverviewActiveWindow extends ActiveWindow
         return array_unique($actions);
     }
     
+    /**
+     * Replace the current token with a new one
+     */
     public function callbackReplaceToken()
     {
         $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->model->password_salt);

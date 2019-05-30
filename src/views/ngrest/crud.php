@@ -37,6 +37,14 @@ $this->beginBody();
                             <a class="dropdown-item" ng-click="toggleExportModal()">
                                 <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn'); ?></span>
                             </a>
+                            <a class="dropdown-item" ng-click="toggleNotificationMute()">
+                                <span ng-show="serviceResponse._notifcation_mute_state">
+                                    <i class="material-icons">visibility</i><span><?= Module::t('crud_notification_enable'); ?></span>
+                                </span>
+                                <span ng-show="!serviceResponse._notifcation_mute_state">
+                                    <i class="material-icons">visibility_off</i><span><?= Module::t('crud_notification_disable'); ?></span>
+                                </span>
+                            </a>
                             <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
                                 <?= $button; ?>
                             <?php endforeach; ?>
@@ -143,9 +151,7 @@ $this->beginBody();
                 <table class="table table-hover table-align-middle table-striped">
                     <thead class="thead-default">
                         <tr>
-                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) {
-    continue;
-} ?>
+                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
                                     <?php if ($config->getDefaultOrderField() && $this->context->isSortable($item)): ?>
@@ -175,10 +181,8 @@ $this->beginBody();
                             </td>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
-                            <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)) {
-    continue;
-} $i++; ?>
-                                <td <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
+                            <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
+                                <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
                                 </td>
                              <?php endforeach; ?>
@@ -213,8 +217,7 @@ $this->beginBody();
                     </tbody>
                 </table>
             </div>
-
-            <div ng-show="data.list.length == 0" class="alert"><?= Module::t('ngrest_crud_empty_row'); ?></div>
+            <div ng-show="data.listArray.length == 0" class="p-3 text-muted"><?= Module::t('ngrest_crud_empty_row'); ?></div>
 
             <div class="crud-pagination-wrapper">
                 <div class="crud-pagination">

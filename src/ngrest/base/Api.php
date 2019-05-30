@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
+use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\models\UserOnline;
@@ -24,6 +25,7 @@ use luya\helpers\StringHelper;
 use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveQueryInterface;
+use luya\admin\models\UserAuthNotification;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -217,7 +219,7 @@ class Api extends RestActiveController
      * Prepare the NgRest List Query.
      *
      * > This will call the `ngRestFind()` method of the model.
-     * 
+     *
      * Use in list, export
      *
      * @see {{prepareIndexQuery()}}
@@ -230,6 +232,8 @@ class Api extends RestActiveController
         $modelClass = $this->modelClass;
 
         $find = $modelClass::ngRestFind();
+        
+        $this->handleNotifications($modelClass, $this->authId);
 
         // check if a pool id is requested:
         $this->appendPoolWhereCondition($find);
@@ -246,8 +250,37 @@ class Api extends RestActiveController
     }
 
     /**
+     * Add new notification or update to latest primary key if exists
+     *
+     * @param string $modelClass
+     * @param integer $authId
+     * @return boolean
+     * @since 2.0.1
+     */
+    protected function handleNotifications($modelClass, $authId)
+    {
+        // find the latest primary key value and store into row notifications user auth table
+        $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
+        
+        $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $authId])->one();
+
+        if ($model) {
+            $model->model_latest_pk_value = $pkValue;
+            $model->model_class = $modelClass::className();
+            return $model->save();
+        }
+
+        $model = new UserAuthNotification();
+        $model->auth_id = $authId;
+        $model->user_id = Yii::$app->adminuser->id;
+        $model->model_latest_pk_value = $pkValue;
+        $model->model_class = $modelClass::className();
+        return $model->save();
+    }
+
+    /**
      * Append the pool where condition to a given query.
-     * 
+     *
      * If the pool identifier is not found, an exception will be thrown.
      *
      * @param ActiveQueryInterface $query
@@ -334,7 +367,7 @@ class Api extends RestActiveController
 
     /**
      * Get the ngrest model object (unloaded).
-     * 
+     *
      * @return NgRestModel
      * @throws InvalidConfigException
      */
@@ -459,23 +492,54 @@ class Api extends RestActiveController
         
         $modelClass = $this->modelClass;
 
-        // check if taggable exists, if yes return all used tags for the 
+        // check if taggable exists, if yes return all used tags for the
         if (ObjectHelper::isTraitInstanceOf($this->model, TaggableTrait::class)) {
             $tags = $this->model->findTags();
         } else {
             $tags = false;
         }
 
+        $notificationMuteState = false;
+
+        $userAuthNotificationModel = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+        if ($userAuthNotificationModel) {
+            $notificationMuteState = $userAuthNotificationModel->is_muted;
+        }
+
         return [
             'service' => $this->model->getNgRestServices(),
+            '_authId' => $this->authId,
             '_tags' => $tags,
             '_hints' => $this->model->attributeHints(),
             '_settings' => $settings,
+            '_notifcation_mute_state' => $notificationMuteState,
             '_locked' => [
                 'data' => UserOnline::find()->select(['lock_pk', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->joinWith('user as u')->where(['lock_table' => $modelClass::tableName()])->createCommand()->queryAll(),
                 'userId' => Yii::$app->adminuser->id,
             ],
         ];
+    }
+
+    public function actionToggleNotification()
+    {
+        $this->checkAccess('toggle-notification');
+        $newMuteState = Yii::$app->request->getBodyParam('mute');
+
+        $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
+
+        if ($model) {
+            $model->is_muted = (int) $newMuteState;
+            $model->save();
+        } else {
+            $model = new UserAuthNotification();
+            $model->is_muted = (int) $newMuteState;
+            $model->auth_id = $this->authId;
+            $model->user_id = Yii::$app->adminuser->id;
+            $model->model_class = $this->modelClass;
+
+        }
+
+        return $model;
     }
     
     /**
@@ -507,7 +571,7 @@ class Api extends RestActiveController
 
     /**
      * Generate an array of sortable attribute defintions from a ngrest config object.
-     * 
+     *
      * @param Config $config The Ngrest Config object
      * @return array
      * @since 2.0.0
@@ -592,6 +656,8 @@ class Api extends RestActiveController
         $this->checkAccess('filter');
         
         $model = $this->model;
+
+        $this->handleNotifications($this->modelClass, $this->authId);
         
         $filterName = Html::encode($filterName);
         

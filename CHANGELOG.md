@@ -3,12 +3,28 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 2.0 (in progress)
+## 2.0.1 (29. May 2019)
+
+### Changed
+
++ [#309](https://github.com/luyadev/luya-module-admin/issues/309) Updated Material Design Icons to v47.
+
+### Fixed
+
++ [#310](https://github.com/luyadev/luya-module-admin/issues/310) Fixed bug with double brackets in user history summary Active Window.
++ [#311](https://github.com/luyadev/luya-module-admin/issues/311) Fix problem with findOne() inside Active Windows.
++ [#306](https://github.com/luyadev/luya-module-admin/issues/306) Fixed bug zaaSelect directive in checking if a values exists in optinos.
++ [#305](https://github.com/luyadev/luya-module-admin/issues/305) Fixed bug with module context in Api Users overview Active Window.
++ [#304](https://github.com/luyadev/luya-module-admin/issues/304) Hide tags title in file manager detail when no tags available.
++ [#303](https://github.com/luyadev/luya-module-admin/issues/303) Show message if a crud view has no entries yet.
+
+## 2.0.0 (27. May 2019)
 
 This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
 
 ### Changed
 
++ [#263](https://github.com/luyadev/luya-module-admin/issues/263) Moved angularjs-datepicker from vendor to vendorlibs. Fixed the "today" issue & updated colors.
 + [#293](https://github.com/luyadev/luya-module-admin/issues/293) Added new request log table for api calls in order to make metrics about request, this must be enabled in the admin area.
 + [#46](https://github.com/luyadev/luya-module-admin/issues/46) Updated bootstrap to 4.3.1.
 + [#268](https://github.com/luyadev/luya-module-admin/issues/268) Deprecated classes, methods and properties has been removed.
@@ -21,6 +37,8 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Fixed
 
++ [#302](https://github.com/luyadev/luya-module-admin/issues/302) Updated spacing for luya-subnav + content.
++ [#245](https://github.com/luyadev/luya-module-admin/issues/245) Fixed highlight of rows after update and new insert in CRUD.
 + [#294](https://github.com/luyadev/luya-module-admin/issues/294) Fixed bug when replace a file with images.
 + [#291](https://github.com/luyadev/luya-module-admin/issues/291) Fixed search and sub folder behavior in file manager.
 + [#278](https://github.com/luyadev/luya-module-admin/pull/278) ToggleStatus plugin initValue=1 not displayed at frontend
@@ -34,6 +52,9 @@ This release contains new migrations and requires to run the `migrate` command a
 
 ### Added
 
++ [#300](https://github.com/luyadev/luya-module-admin/issues/300) Added new reload button option and split cache and window reload buttons into two.
++ [#240](https://github.com/luyadev/luya-module-admin/issues/240) New notification system for visited CRUD views.
++ [#213](https://github.com/luyadev/luya-module-admin/issues/213) Added noscript message and <=IE9 warning.
 + [#288](https://github.com/luyadev/luya-module-admin/issues/288) Filemanager add file id in tooltip.
 + [#225](https://github.com/luyadev/luya-module-admin/issues/225) Added configuration for default behavior with inline disposition when uploading new files.
 + [#289](https://github.com/luyadev/luya-module-admin/issues/289) Added new input field methods checkbox, checkboxList, radioList, imageUpload, fileUpload, date and datetime picker.
@@ -47,6 +68,7 @@ This release contains new migrations and requires to run the `migrate` command a
 + [#259](https://github.com/luyadev/luya-module-admin/pull/259) SelectRelationActiveQuery supports related i18n label fields
 + [#253](https://github.com/luyadev/luya-module-admin/pull/253) Added command action to reset password for users via cli.
 + [#270](https://github.com/luyadev/luya-module-admin/pull/270) Custom date format for date plugin in listing.
++ [#271](https://github.com/luyadev/luya-module-admin/pull/271) Proxy with different database connection.
 
 ## 1.2.3 (21. November 2018)
 

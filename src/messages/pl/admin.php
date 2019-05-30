@@ -409,4 +409,15 @@ return [
     'aw_requestinsight_toggle_error' => 'Error while enabling Request Insight.',
     'aw_requestinsight_cleared' => 'Data has been cleared.',
     'aw_requestinsight_default_label' => 'Request Insight',
+    'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
+    'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
+    'crud_notification_enable' => 'Enable Notification',
+    'crud_notification_disable' => 'Disable Notification',
+    'admin_button_execute' => '"{label}" executed',
+    'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
+    'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+
+// 2.0.1
+
+    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
 ];

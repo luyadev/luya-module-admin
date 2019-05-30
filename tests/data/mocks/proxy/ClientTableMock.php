@@ -13,10 +13,8 @@ class ClientTableMock extends ClientTable
             // provoke sql error on later cleanup
             Yii::$app->db->createCommand('KILL (SELECT CONNECTION_ID());')->execute();
         } catch (\Throwable $ex) {
-        
         }
         
         parent::cleanup($sqlMode);
     }
-    
 }

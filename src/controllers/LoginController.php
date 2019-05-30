@@ -4,7 +4,9 @@ namespace luya\admin\controllers;
 
 use Yii;
 use yii\web\Response;
-use yii\filters\HttpCache;;
+use yii\filters\HttpCache;
+
+;
 use luya\helpers\Url;
 use luya\admin\models\LoginForm;
 use luya\admin\Module;

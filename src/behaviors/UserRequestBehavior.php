@@ -15,7 +15,7 @@ class UserRequestBehavior extends ActionFilter
 
     /**
      * Whether request log is enabled or not.
-     * 
+     *
      * @return boolean
      */
     private function hasUserEnabled()

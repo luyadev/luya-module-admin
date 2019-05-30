@@ -64,7 +64,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     public function getModel()
     {
         if ($this->_model === null && $this->ngRestModelClass !== null) {
-            $this->_model = call_user_func_array([$this->ngRestModelClass, 'findOne'], $this->itemIds);
+            $this->_model = call_user_func_array([$this->ngRestModelClass, 'ngRestByPrimaryKeyOne'], $this->itemIds);
         }
         
         return $this->_model;

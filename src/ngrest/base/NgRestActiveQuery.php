@@ -58,7 +58,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @param string|integer $value
      * @return NgRestActiveQuery
      * @since 2.0.0
-     */  
+     */
     public function jsonWhere($operator, $field, $key, $value)
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
@@ -83,5 +83,28 @@ class NgRestActiveQuery extends ActiveQuery
         }
 
         return $this->andWhere($model->ngRestPools()[$pool]);
+    }
+
+    /**
+     * Find by primary key condition
+     *
+     * @param string|array $condition
+     * @return NgRestActiveQuery
+     * @since 2.0.1
+     */
+    public function byPrimaryKey($condition)
+    {
+        $modelClass = $this->modelClass;
+        $keys = $modelClass::primaryKey();
+        $values = explode(',', $condition);
+        if (count($keys) > 1) {
+            if (count($keys) === count($values)) {
+                $condition = array_combine($keys, $values);
+            }
+        } else {
+            $condition = array_combine($keys, $values);
+        }
+
+        return $this->andWhere($condition);
     }
 }

@@ -6,9 +6,9 @@ use yii\base\BaseObject;
 
 /**
  * Angular Object from the Angular Helper methods.
- * 
+ *
  * This object allows you to customize field informations by chaining methods.
- * 
+ *
  * @since 2.0.0
  * @author Basil Suter <basil@nadar.io>
  */

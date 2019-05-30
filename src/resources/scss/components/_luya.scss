@@ -41,7 +41,6 @@
     }
 
     &-small {
-
         @media (min-width: $mobile-nav-breakpoint) {
             width: $mainnav-width-small;
         }
@@ -66,6 +65,7 @@
     color: color('gray-dark');
     display: flex;
     flex-direction: column;
+    -ms-overflow-style: none; // IE 10+
     overflow-y: auto;
     // overflow: -moz-scrollbars-none; // Firefox
     width: 100%;
@@ -76,8 +76,6 @@
     .cmsnav {
         padding: $content-padding-y $content-padding-x;
     }
-
-    -ms-overflow-style: none; // IE 10+
 
     @media (min-width: $mobile-nav-breakpoint) {
         align-items: stretch;
@@ -112,17 +110,13 @@
     &::-webkit-scrollbar {
         display: none; // Safari and Chrome
     }
-
-    &-cmsadmin {
-        padding: 0;
-    }
-
+    
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 1 1;
         height: 100%;
-        overflow-y: auto;
         //overflow: -moz-scrollbars-none; // Firefox
         -ms-overflow-style: none; // IE 10+
+        overflow-y: auto;
 
         .luya-subnav.overlaying + & {
             padding-left: 50px;

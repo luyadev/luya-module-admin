@@ -5,7 +5,7 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\jobs\ScheduleJob;
 use luya\helpers\StringHelper;
-use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\ngrest\base\NgRestModelInterface;
 
 /**
  * This is the model class for table "admin_scheduler".
@@ -94,7 +94,7 @@ class Scheduler extends \yii\db\ActiveRecord
     {
         $model = new $class();
 
-        if (!$model instanceof NgRestModel) {
+        if (!$model instanceof NgRestModelInterface) {
             return false;
         }
 
