@@ -44,7 +44,7 @@ class NgRestActiveQuery extends ActiveQuery
      *
      * @param string $field The field (attribute) name which is cased with {{luya\admin\ngrest\base\NgRestModel::$i18n}}
      * @param string $value The value to compare within the json string
-     * @param string $operator The operator which should be used for the where condition, by default its "EQUALS" or "=" {@since 2.0.1.1}
+     * @param string $operator The operator which should be used for the where condition, by default its "EQUALS" or "=" {@since 2.0.2}
      * @return NgRestActiveQuery
      */
     public function i18nWhere($field, $value, $operator = '=')

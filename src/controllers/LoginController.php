@@ -32,7 +32,7 @@ class LoginController extends Controller
 
     /**
      * @var string A path to an image which should be display on the login screen, if not set no images is displayed.
-     * @since 2.0.1.1
+     * @since 2.0.2
      */
     public $backgroundImage;
 
