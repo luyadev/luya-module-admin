@@ -687,7 +687,7 @@ abstract class BaseFileSystemStorage extends Component
         // create the new image name
         $fileName = $filterId.'_'.$file->name_new_compound;
 
-        $fromTempFile = tempnam(sys_get_temp_dir(), 'fromFile');
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'fromFile'); // @see https://www.php.net/manual/de/function.tempnam.php#120451 & https://github.com/luyadev/luya-module-admin/issues/316
         $fromTempFile.= $fileName;
 
         $content = $file->getContent();
@@ -705,7 +705,7 @@ abstract class BaseFileSystemStorage extends Component
         }
 
         // create a temp file
-        $tempFile = tempnam(sys_get_temp_dir(), 'destFile');
+        $tempFile = @tempnam(sys_get_temp_dir(), 'destFile'); // @see https://www.php.net/manual/de/function.tempnam.php#120451 & https://github.com/luyadev/luya-module-admin/issues/316
         $tempFile.= $fileName;
 
         // there is no filter, which means we create an image version for a given file.
