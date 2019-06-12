@@ -7,8 +7,16 @@ $spinner = Svg::widget([
     'cssClass' => 'svg-spinner',
     'file' => 'login/spinner.svg'
 ]);
-
 ?>
+<?php if ($backgroundImage): ?>
+<style type="text/css">
+body {
+    background-image: url('<?= $backgroundImage; ?>');
+    background-size: cover;
+    background-position: 50% 50%;
+}
+</style>
+<?php endif; ?>
 <div class="login-frame">
     <div class="login-logo">
         <?= Svg::widget([

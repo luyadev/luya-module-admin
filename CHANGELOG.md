@@ -10,6 +10,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#314](https://github.com/luyadev/luya-module-admin/issues/314) Fixed bug where schedule coult not find items when override default ActiveRecord find() method.
 + [#316](https://github.com/luyadev/luya-module-admin/issues/316) Fixed a bug where tempnam() throws a php notice since php 7.1 and higher.
 
+### Added
+
++ [#315](https://github.com/luyadev/luya-module-admin/issues/315) Added property for login controller in order to display an background image on the login screen.
+
 ## 2.0.1 (29. May 2019)
 
 ### Changed

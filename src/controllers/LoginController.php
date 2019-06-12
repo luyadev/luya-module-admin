@@ -31,6 +31,12 @@ class LoginController extends Controller
     public $layout = '@admin/views/layouts/nosession';
 
     /**
+     * @var string A path to an image which should be display on the login screen, if not set no images is displayed.
+     * @since 2.0.1.1
+     */
+    public $backgroundImage;
+
+    /**
      * {@inheritDoc}
      * @see \luya\admin\base\Controller::getRules()
      */
@@ -88,7 +94,9 @@ class LoginController extends Controller
     
         UserOnline::clearList($this->module->userIdleTimeout);
         
-        return $this->render('index');
+        return $this->render('index', [
+            'backgroundImage' => $this->backgroundImage,
+        ]);
     }
     
     /**
