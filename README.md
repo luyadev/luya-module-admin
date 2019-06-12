@@ -30,7 +30,7 @@ Administration Interface based on [AngularJs](https://angularjs.org/), [Bootstra
 For the installation of modules Composer is required.
 
 ```sh
-composer require luyadev/luya-module-admin:~1.2.0
+composer require luyadev/luya-module-admin:^2.0
 ```
 
 ### Configuration 
@@ -73,5 +73,4 @@ You can now login to your Administration Interface by adding the admin module in
 
 ## Developers
 
-If you want to contribute, make sure to read the following guidelines: https://luya.io/guide/luya-guideline  
-The guidelines will help you understand our coding standards and how to work with our GULP Workflow to compile SCSS and JS.
+If you want to contribute, make sure to read the following guidelines: https://luya.io/guide/luya-guideline.
