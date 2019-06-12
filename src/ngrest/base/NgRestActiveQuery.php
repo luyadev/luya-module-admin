@@ -5,8 +5,8 @@ namespace luya\admin\ngrest\base;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
-use luya\helpers\ArrayHelper;
 use yii\base\InvalidConfigException;
+use luya\helpers\ArrayHelper;
 
 /**
  * NgRest Active Query.
@@ -49,8 +49,7 @@ class NgRestActiveQuery extends ActiveQuery
      */
     public function i18nWhere($field, $value, $operator = '=')
     {
-        $lang = Yii::$app->composition->langShortCode;
-        return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$lang}\")", $value]);
+        return $this->jsonWhere($operator, $field, Yii::$app->composition->langShortCode, $value);
     }
 
     /**
