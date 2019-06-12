@@ -25,7 +25,6 @@ class QueueLogBehavior extends Behavior
      */
     public $owner;
 
-
     /**
      * @inheritdoc
      */
@@ -59,7 +58,7 @@ class QueueLogBehavior extends Behavior
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
-            $log->updateAttributes(['run_timestamp' => time()]);
+            $log->updateAttributes(['run_timestamp' => time(), 'title' => $this->getExecTitle($event)]);
         }
     }
 
@@ -71,7 +70,7 @@ class QueueLogBehavior extends Behavior
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
-            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => false]);
+            $log->updateAttributes(['end_timestamp' => time(), 'title' => $this->getExecTitle($event), 'is_error' => false]);
         }
     }
 
@@ -83,13 +82,12 @@ class QueueLogBehavior extends Behavior
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
-            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => true]);
+            $log->updateAttributes(['end_timestamp' => time(), 'title' => $this->getExecTitle($event), 'is_error' => true]);
         }
     }
     /**
      * @param JobEvent $event
      * @return string
-     * @since 2.0.2
      */
     protected function getJobTitle(JobEvent $event)
     {
@@ -99,7 +97,6 @@ class QueueLogBehavior extends Behavior
     /**
      * @param ExecEvent $event
      * @return string
-     * @since 2.0.2
      */
     protected function getExecTitle(ExecEvent $event)
     {

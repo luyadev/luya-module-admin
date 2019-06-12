@@ -75,7 +75,7 @@ class QueueLog extends NgRestModel
             'push_timestamp' => 'datetime',
             'run_timestamp' => 'datetime',
             'end_timestamp' => 'datetime',
-            'is_error' => 'toggleStatus',
+            'is_error' => ['toggleStatus', 'interactive' => false],
         ];
     }
 

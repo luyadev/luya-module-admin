@@ -6,6 +6,7 @@ use Yii;
 use luya\admin\jobs\ScheduleJob;
 use luya\helpers\StringHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
+use luya\Exception;
 
 /**
  * This is the model class for table "admin_scheduler".
@@ -64,24 +65,26 @@ class Scheduler extends \yii\db\ActiveRecord
      *
      * This method is execute by the queue job.
      *
-     * @return void
+     * @return integer The number of affected and changed rows.
+     * @throws Exception
      */
     public function triggerJob()
     {
-        try {
-            $class = $this->model_class;
-            $model = $class::findOne($this->primary_key);
+        $class = $this->model_class;
+        $model = $class::ngRestFind()->byPrimaryKey($this->primary_key)->one();
 
-            if ($model) {
-                $oldValue = $model->{$this->target_attribute_name};
-                $model->{$this->target_attribute_name} = StringHelper::typeCast($this->new_attribute_value);
-                $model->save(true, [$this->target_attribute_name]);
-
+        if ($model) {
+            $oldValue = $model->{$this->target_attribute_name};
+            $model->{$this->target_attribute_name} = StringHelper::typeCast($this->new_attribute_value);
+            
+            if ($model->save(true, [$this->target_attribute_name])) {
                 return $this->updateAttributes(['old_attribute_value' => $oldValue, 'is_done' => true]);
             }
-        } catch (\Exception $err) {
-            $this->delete();
+
+            throw new Exception("The scheduler could not save the new value for model '{$this->model_class}' with primary key '{$this->primary_key}'.");
         }
+
+        throw new Exception("The Scheduler could not find the the model with primary key '{$this->primary_key}' for model '{$this->model_class}'.");
     }
 
     /**

@@ -1,0 +1,91 @@
+<?php
+
+namespace admintests\admin\ngrest\base;
+
+use luya\admin\ngrest\base\NgRestActiveQuery;
+use luya\admin\models\User;
+use luya\admin\models\TagRelation;
+use luya\testsuite\fixtures\NgRestModelFixture;
+use admintests\AdminModelTestCase;
+use luya\admin\models\Lang;
+
+class NgRestActiveQueryTest extends AdminModelTestCase
+{
+    public function testJsonWhere()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+
+        $query = new NgRestActiveQuery(User::class);
+        $this->assertSame([
+            '>=',
+            'JSON_EXTRACT(jsonfield, "$.key")',
+            'value'
+        ], $query->jsonWhere('>=', 'jsonfield', 'key', 'value')->where);
+    }
+
+    public function testI18nWhere()
+    {
+        new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+
+        $query = new NgRestActiveQuery(Lang::class);
+        $this->assertSame([
+            '=',
+            'JSON_EXTRACT(key, "$.en")',
+            'value'
+        ], $query->i18nWhere('key', 'value')->where);
+    }
+
+    public function testInPool()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+
+        $query = new NgRestActiveQuery(User::class);
+
+        $this->assertSame(null, $query->inPool()->where);
+
+        $this->expectException("yii\base\InvalidConfigException");
+        $query->inPool('notexisting');
+    }
+
+    public function testFindByPrimaryKey()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+
+        $query = new NgRestActiveQuery(User::class);
+        $this->assertSame(['id' => 1], $query->byPrimaryKey(1)->where);
+        
+        $query = new NgRestActiveQuery(User::class);
+        $this->assertSame(['id' => 1], $query->byPrimaryKey([1])->where);
+
+       new NgRestModelFixture([
+            'modelClass' => TagRelation::class,
+            'primaryKey' => ['tag_id' => 'int(11)', 'table_name' => 'int(11)', 'pk_id' => 'int(11)', 'PRIMARY KEY (tag_id, table_name, pk_id)'],
+        ]);
+
+        $query = new NgRestActiveQuery(TagRelation::class);
+        $this->assertSame(['tag_id' => 1, 'table_name' => 'name', 'pk_id' => 3], $query->byPrimaryKey("1,name,3")->where);
+        
+        $query = new NgRestActiveQuery(TagRelation::class);
+        $this->assertSame(['tag_id' => 1, 'table_name' => 'name', 'pk_id' => 3], $query->byPrimaryKey([1,'name',3])->where);
+
+    }
+
+    public function testFailingFindByPrimaryKey()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+        $query = new NgRestActiveQuery(User::class);
+        $this->expectException("yii\db\Exception");
+        $this->assertSame(['and', ['id' => '1'], ['id' => '1']], $query->byPrimaryKey("1,2")->where);
+        $this->assertSame(['and', ['id' => '1'], ['id' => '1']], $query->byPrimaryKey([1,2])->where);
+    }
+}

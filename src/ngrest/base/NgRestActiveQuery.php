@@ -4,6 +4,9 @@ namespace luya\admin\ngrest\base;
 
 use Yii;
 use yii\db\ActiveQuery;
+use yii\db\Exception;
+use luya\helpers\ArrayHelper;
+use yii\base\InvalidConfigException;
 
 /**
  * NgRest Active Query.
@@ -40,18 +43,25 @@ class NgRestActiveQuery extends ActiveQuery
      * > Keep in mind this only works with mysql version 5.7 and above.
      *
      * @param string $field The field (attribute) name which is cased with {{luya\admin\ngrest\base\NgRestModel::$i18n}}
-     * @param string $value The value to compare within the json string.
+     * @param string $value The value to compare within the json string
+     * @param string $operator The operator which should be used for the where condition, by default its "EQUALS" or "=" {@since 2.0.1.1}
      * @return NgRestActiveQuery
      */
-    public function i18nWhere($field, $value)
+    public function i18nWhere($field, $value, $operator = '=')
     {
         $lang = Yii::$app->composition->langShortCode;
-        return $this->andWhere(["JSON_EXTRACT({$field}, \"$.{$lang}\")" => $value]);
+        return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$lang}\")", $value]);
     }
 
     /**
      * Where condition with json values.
      *
+     * ```
+     * jsonWhere(['=', 'json_values', 'key', 'value']);
+     * ```
+     * 
+     * > Keep in mind this only works with mysql version 5.7 and above.
+     * 
      * @param string $operator
      * @param string $field
      * @param string $key
@@ -76,6 +86,7 @@ class NgRestActiveQuery extends ActiveQuery
         if (empty($pool)) {
             return $this;
         }
+
         $model = Yii::createObject($this->modelClass);
 
         if (!array_key_exists($pool, $model->ngRestPools())) {
@@ -86,7 +97,26 @@ class NgRestActiveQuery extends ActiveQuery
     }
 
     /**
-     * Find by primary key condition
+     * Add a where condition for the current model primary key.
+     * 
+     * ```php
+     * MyModel::ngRestFind()->byPrimaryKey(1);
+     * 
+     * // equals to if primary key field is id
+     * 
+     * MyModel::ngRestFind()->andWhere(['id' => 1]);
+     * ```
+     * 
+     * Composite keys
+     * 
+     * ```php
+     * MyModel::ngRestFind()->byPrimaryKey("1,14");
+     * // or
+     * MyModel::ngRerstFind()->byPrimaryKey([1,14]);
+     * 
+     * // equals to if composite primary key would be user_id and group_id
+     * MyModel::ngRestFind()->andWhere(['user_id' => 1, 'group_id' => 14]);
+     * ```
      *
      * @param string|array $condition
      * @return NgRestActiveQuery
@@ -96,15 +126,12 @@ class NgRestActiveQuery extends ActiveQuery
     {
         $modelClass = $this->modelClass;
         $keys = $modelClass::primaryKey();
-        $values = explode(',', $condition);
-        if (count($keys) > 1) {
-            if (count($keys) === count($values)) {
-                $condition = array_combine($keys, $values);
-            }
-        } else {
-            $condition = array_combine($keys, $values);
+        $values = is_array($condition) ? array_values($condition) : explode(',', $condition);
+
+        if (count($keys) !== count($values)) {
+            throw new Exception("The number of primary key condition values must be equals the number of primary keys ".count($keys)." available for this model.");
         }
 
-        return $this->andWhere($condition);
+        return $this->andWhere(array_combine($keys, ArrayHelper::typeCast($values)));
     }
 }
