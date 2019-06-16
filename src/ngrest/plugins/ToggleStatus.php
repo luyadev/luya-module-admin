@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\Module;
 
 /**
  * Create toggle checkbox for a given field.
@@ -24,6 +25,14 @@ use luya\admin\ngrest\base\Plugin;
  */
 class ToggleStatus extends Plugin
 {
+    /**
+     * If enabled the status tag will transform into an interactive schedling overlay.
+     *
+     * @var boolean
+     * @since 2.0.3
+     */
+    public $scheduling = false;
+
     /**
      * @var string|integer The value which shoud be picked for angular true state
      */
@@ -65,10 +74,28 @@ class ToggleStatus extends Plugin
     public $interactive = true;
     
     /**
+     * Get the options for a scheduler returned as array.
+     *
+     * @return array
+     * @since 2.0.3
+     */
+    private function getSchedulerValuesAsArray()
+    {
+        return [
+            $this->falseValue => Module::t('status_false'),
+            $this->trueValue => Module::t('status_true'),
+        ];
+    }
+
+    /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
+        if ($this->scheduling && $this->renderContext->canUpdate()) {
+            return $this->createSchedulerListTag($ngModel, $this->getSchedulerValuesAsArray(), 'item');
+        }
+
         if (!$this->interactive || !$this->renderContext->canUpdate()) {
             return [
                 $this->createTag('i', $this->trueIcon, ['ng-if' => "$ngModel == $this->trueValue", 'class' => $this->trueClass]),
@@ -95,6 +122,13 @@ class ToggleStatus extends Plugin
      */
     public function renderUpdate($id, $ngModel)
     {
+        if ($this->scheduling && $this->renderContext->canUpdate()) {
+            return [
+                '<div class="crud-loader-tag">' . $this->createSchedulerListTag($ngModel, $this->getSchedulerValuesAsArray(), 'data.update', ['only-icon' => 1]) . '</div>',
+                $this->renderCreate($id, $ngModel),
+            ];
+        }
+
         return $this->renderCreate($id, $ngModel);
     }
 }
