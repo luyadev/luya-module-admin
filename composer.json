@@ -21,7 +21,7 @@
         "flowjs/flow-php-server": "^1.0"
 	},
 	"require-dev" : {
-        "luyadev/luya-testsuite" : "~1.0.11",
+        "luyadev/luya-testsuite" : "^1.0.11",
         "php-coveralls/php-coveralls": "^1.0",
         "twbs/bootstrap": "~4.3.0",
         "bower-asset/angular" : "^1.7",
