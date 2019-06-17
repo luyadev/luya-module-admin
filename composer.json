@@ -21,7 +21,7 @@
         "flowjs/flow-php-server": "^1.0"
 	},
 	"require-dev" : {
-        "luyadev/luya-testsuite" : "^1.0",
+        "luyadev/luya-testsuite" : "~1.0.11",
         "twbs/bootstrap": "~4.3.0",
         "bower-asset/angular" : "^1.7",
         "bower-asset/angular-loading-bar" : "^0.9",
@@ -47,14 +47,14 @@
         }
     },
     "extra": {
+        "branch-alias": {		
+            "dev-master": "2.0.x-dev"		
+        },
         "luya" : {
         	"bootstrap": ["\\luya\\admin\\Bootstrap"]
         }
     },
     "config": {
-        "branch-alias": {	
-            "dev-master": "2.0.x-dev"	
-        },
         "platform": {
             "php": "7.0"
         }
