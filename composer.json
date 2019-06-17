@@ -52,6 +52,9 @@
         }
     },
     "config": {
+        "branch-alias": {	
+            "dev-master": "2.0.x-dev"	
+        },
         "platform": {
             "php": "7.0"
         }
