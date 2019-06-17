@@ -425,4 +425,9 @@ return [
 // 2.0.1
 
     'js_dir_manager_file_replace_ok' => 'Die Datei wurde erfolgreich ersetzt.',
+
+// 2.0.3
+
+    'status_true' => 'Ja',
+    'status_false' => 'Nein',
 ];

@@ -426,6 +426,6 @@ return [
 
 // 2.0.3
 
-    'status_true' => 'Enabled',
-    'status_false' => 'Disabled'
+    'status_true' => 'Yes',
+    'status_false' => 'No',
 ];
