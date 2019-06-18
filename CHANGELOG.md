@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.0.3
+
++ [#318](https://github.com/luyadev/luya-module-admin/issues/318) Enable scheduling for toggleStatus ngrest plugin.
+
 ## 2.0.2 (13. June 2019)
 
 ### Fixed

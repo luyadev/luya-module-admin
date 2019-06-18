@@ -22,7 +22,6 @@
 	},
 	"require-dev" : {
         "luyadev/luya-testsuite" : "~1.0.11",
-        "php-coveralls/php-coveralls": "^1.0",
         "twbs/bootstrap": "~4.3.0",
         "bower-asset/angular" : "^1.7",
         "bower-asset/angular-loading-bar" : "^0.9",
@@ -44,12 +43,13 @@
 	},
 	"autoload-dev" : {
         "psr-4" : {
-            "admintests\\" : "tests/"
+            "admintests\\" : "tests/",
+            "luya\\admin\\tests\\" : "tests/"
         }
     },
-    "extra": {	
-        "branch-alias": {	
-            "dev-master": "2.0.x-dev"	
+    "extra": {
+        "branch-alias": {		
+            "dev-master": "2.0.x-dev"		
         },
         "luya" : {
         	"bootstrap": ["\\luya\\admin\\Bootstrap"]

@@ -423,4 +423,9 @@ return [
 // 2.0.1
 
     'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
+
+// 2.0.3
+
+    'status_true' => 'Yes',
+    'status_false' => 'No',
 ];
