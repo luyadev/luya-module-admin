@@ -2274,7 +2274,7 @@ zaa.directive("zaaMultipleInputs", function() {
                         if (len == 0) {
                             $scope.model[key] = {};
                         }
-                    })
+                    });
                 }
             };
 
@@ -2331,6 +2331,68 @@ zaa.directive("zaaMultipleInputs", function() {
                                     '</div>' +
                                 '</div>' +
                                 '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+        }
+    }
+});
+
+/**
+ * Generates a json OBJECT (!) with a key and a value for the given key. Its like a flat json.
+ * 
+ * ```js
+ * <zaa-json-object model="mymodel" label="Key Value Input" />
+ * ```
+ * @since 2.0.3
+ */
+zaa.directive("zaaJsonObject", function() {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "options": "=",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid",
+        },
+        controller: ['$scope', function($scope) {
+            $scope.$watch('model', function(n) {
+                if (n === undefined || n === null) {
+                    $scope.model = {};
+                }
+            });
+
+            $scope.add = function(key) {
+                $scope.model[key] = '';
+            };
+
+            $scope.remove = function(key) {
+                delete $scope.model[key];
+            };
+        }],
+        template: function() {
+            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                        '<div class="form-side form-side-label">' +
+                            '<label>{{label}}</label>' +
+                        '</div>' +
+                        '<div class="form-side">' +
+                            '<div class="list zaa-json-array">' +
+                                '<div ng-repeat="(key,value) in model" class="list-item">' +
+                                    '<div class="input-group">' +
+                                        '<div class="input-group-prepend">' +
+                                            '<div class="input-group-text">{{key}}</div>' +
+                                        '</div>' +
+                                        '<input class="form-control" type="text" ng-model="model[key]" />' +
+                                    '</div>' +
+                                    '<div class="list-buttons">' +
+                                        '<div class="btn-group" role="group">' +
+                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<input type="text" ng-model="newKey" placeholder="New Key" class="form-control" />' + 
+                                '<button ng-click="add(newKey);newKey=null;" type="button" class="btn btn-sm btn-success float-right"><i class="material-icons">add</i></button>' +
                             '</div>' +
                         '</div>' +
                     '</div>';

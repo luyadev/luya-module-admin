@@ -5,6 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.3
 
+### Added
+
++ [#312](https://github.com/luyadev/luya-module-admin/issues/312) New zaa directive `zaa-json-object` in order to generate a json object with key value pairing.
 + [#318](https://github.com/luyadev/luya-module-admin/issues/318) Enable scheduling for toggleStatus ngrest plugin.
 
 ## 2.0.2 (13. June 2019)
