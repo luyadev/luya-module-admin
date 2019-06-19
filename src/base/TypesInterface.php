@@ -181,4 +181,10 @@ interface TypesInterface
      * @since 1.2.1
      */
     const TYPE_READONLY = 'zaa-readonly';
+
+    /**
+     * @var string A a flat json object creating directive lets you define key and value and store as object instead of array.
+     * @since 2.0.3
+     */
+    const TYPE_JSON_OBJECT = 'zaa-json-object';
 }
