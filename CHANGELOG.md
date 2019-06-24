@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.3
 
+### Fixed
+
++ [#317](https://github.com/luyadev/luya-module-admin/issues/317) Fixed bug with flickering of data list after update item on a certain page.
+
 ### Added
 
 + [#325](https://github.com/luyadev/luya-module-admin/issues/325) Added Angular::schedule() helper to build scheduler tag for a given attribute.

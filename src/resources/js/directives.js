@@ -3376,8 +3376,8 @@ zaa.directive('pagination', function () {
             pageCount: '='
         },
         controller: ['$scope', '$timeout', function($scope, $timeout) {
-            $scope.sliderPage = 1;
-            $scope.userInputPage = 1;
+            $scope.sliderPage = $scope.currentPage;
+            $scope.userInputPage = $scope.currentPage;
 
             // Watch for pageCOunt changes and refresh ceil value for slider
             $scope.$watch('pageCount', function(newValue) {
@@ -3387,8 +3387,8 @@ zaa.directive('pagination', function () {
             });
             $scope.$watch('userInputPage', function(newValue, oldValue) {
                 if(newValue >= $scope.sliderOptions.floor && newValue <= $scope.sliderOptions.ceil) {
-                    $scope.sliderPage = newValue;
-                    $scope.currentPage = newValue;
+                    $scope.sliderPage = parseInt(newValue);
+                    $scope.currentPage = parseInt(newValue);
                     $scope.$broadcast('rzSliderForceRender'); // Probably not the best idea, but for now it works.
                 }
             });
@@ -3409,8 +3409,8 @@ zaa.directive('pagination', function () {
                 },
                 onEnd: function(sliderId, modelValue) {
                     // Update the currentPage once the user stopped dragging (or on click)
-                    $scope.currentPage = modelValue;
-                    $scope.userInputPage = modelValue;
+                    $scope.currentPage = parseInt(modelValue);
+                    $scope.userInputPage = parseInt(modelValue);
                 } 
             };
 

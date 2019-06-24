@@ -366,13 +366,14 @@
 		$scope.submitUpdate = function () {
 			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_update']);
-				$scope.loadList();
-				$scope.applySaveCallback();
-				$scope.switchTo(0, true);
-				$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
-				$timeout(function() {
-					$scope.highlightPkValue = null;
-				}, $scope.highlightTimeout);
+				$scope.loadList($scope.pager.currentPage).then(function() {
+					$scope.applySaveCallback();
+					$scope.switchTo(0, true);
+					$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
+					$timeout(function() {
+						$scope.highlightPkValue = null;
+					}, $scope.highlightTimeout);
+				});
 
 			}, function(response) {
 				$scope.printErrors(response.data);
@@ -382,14 +383,15 @@
 		$scope.submitCreate = function() {
 			$http.post($scope.config.apiEndpoint, angular.toJson($scope.data.create, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_success']);
-				$scope.loadList();
-				$scope.applySaveCallback();
-				$scope.switchTo(0, true);
-				$scope.resetData();
-				$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
-				$timeout(function() {
-					$scope.highlightPkValue = null;
-				}, $scope.highlightTimeout);
+				$scope.loadList().then(function() {
+					$scope.applySaveCallback();
+					$scope.switchTo(0, true);
+					$scope.resetData();
+					$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
+					$timeout(function() {
+						$scope.highlightPkValue = null;
+					}, $scope.highlightTimeout);
+				});
 			}, function(data) {
 				$scope.printErrors(data.data);
 			});
@@ -414,23 +416,26 @@
 
 		/*** PAGINIATION ***/
 
-        $scope.$watch('pager.currentPage', function(newVal, oldVal) {
-            if (newVal != oldVal && newVal != null) {
-				$scope.loadList($scope.pager.currentPage);
-            }
-        });
-
-        $scope.pager = {
+		$scope.pager = {
 			'currentPage': 1,
 			'pageCount': 1,
 			'perPage': 0,
 			'totalItems': 0,
 		};
 
+
+        $scope.$watch('pager.currentPage', function(newVal, oldVal) {
+			if (newVal === oldVal || newVal == undefined || newVal == null) {
+				// do nothing
+			} else {
+				$scope.loadList(newVal);
+			}
+        }, true);
+
 		$scope.setPagination = function(currentPage, pageCount, perPage, totalItems) {
 			$scope.totalRows = totalItems;
 			$scope.pager = {
-				'currentPage': currentPage,
+				'currentPage': parseInt(currentPage),
 				'pageCount': pageCount,
 				'perPage': perPage,
 				'totalItems': totalItems,
@@ -570,9 +575,9 @@
 
 		$scope.loadList = function(pageId) {
 			if (pageId == undefined && $scope.pager) {
-				$scope.reloadCrudList($scope.pager.currentPage);
+				return $scope.reloadCrudList($scope.pager.currentPage)
 			} else {
-				$scope.reloadCrudList(pageId);
+				return $scope.reloadCrudList(pageId);
 			}
 		};
 
@@ -643,6 +648,8 @@
 		
 		// this method is also used withing after save/update events in order to retrieve current selecter filter data.
 		$scope.reloadCrudList = function(pageId) {
+			var deferred = $q.defer();
+
 			if (parseInt($scope.config.filter) == 0 || $scope.config.filter === null) {
 				if ($scope.config.relationCall) {
 					var url = $scope.generateUrlWithParams('relation-call', pageId);
@@ -654,6 +661,7 @@
 				}
 				
 				$http.get(url).then(function(response) {
+					deferred.resolve(response);
 					$scope.parseResponseQueryToListArray(response);
 				});
 			} else {
@@ -661,8 +669,11 @@
 				url = url + '&filterName=' + $scope.config.filter;
 				$http.get(url).then(function(response) {
 					$scope.parseResponseQueryToListArray(response);
+					deferred.resolve(response);
 				});
 			}
+
+			return deferred.promise;
 		};
 
 		$scope.service = false;
