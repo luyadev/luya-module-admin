@@ -475,25 +475,16 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * The scheduler tag allows you to change the given field value based on input values for a given field if a model is ailable.
      *
-     * ```
-     * <luya-schedule value="{{currentValueOfTheEntity}}" model-class="luya\admin\models\User" attribute-name="is_deleted" attribute-values="{0:'Not Deleted',1:'Deleted'}"
-     * ```
-     *
-     * @param [type] $ngModel
-     * @param [type] $values
-     * @return void
+     * @param string $ngModel The string to 
+     * @param array $values An array with values to display
+     * @param string $dataRow The data row context (item)
+     * @param array $options `only-icon` => 1
+     * @return string
      * @since 2.0.0
      */
-    public function createSchedulerListTag($ngModel, $values, $dataRow, array $options = [])
+    public function createSchedulerListTag($ngModel, array $values, $dataRow, array $options = [])
     {
-        return $this->createTag('luya-schedule', null, array_merge([
-            'value' => $ngModel,
-            'model-class' => get_class($this->renderContext->getModel()),
-            'title' => $this->alias,
-            'attribute-name' => $this->name,
-            'attribute-values' => Angular::optionsArrayInput($values),
-            'primary-key-value' => 'getRowPrimaryValue('.$dataRow.')',
-        ], $options));
+        return Angular::schedule($ngModel, $this->alias, 'getRowPrimaryValue('.$dataRow.')', $values, get_class($this->renderContext->getModel()), $this->name, $options)->render();
     }
     
     // EVENTS

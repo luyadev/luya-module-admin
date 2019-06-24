@@ -34,4 +34,11 @@ class AngularTest extends AdminTestCase
     {
         $this->assertSame('<zaa-checkbox-array model="model" label="label" options=\'{"items":[{"label":1,"value":0}]}\' fieldid="model-zaa-checkbox-array" fieldname="model"></zaa-checkbox-array>', Angular::checkboxArray('model', 'label', [0 => 1])->render());
     }
+
+    public function testSchedule()
+    {
+        $this->assertSame('<luya-schedule value="model" title="label" model-class="path/to/model" attribute-name="attribute_name" attribute-values=\'[{"label":"Off","value":0},{"label":"On","value":1}]\' primary-key-value="pkvalue"></luya-schedule>', Angular::schedule('model', 'label', 'pkvalue', [0 => 'Off', 1 => 'On'], 'path/to/model', 'attribute_name')->render());
+        $this->assertSame('<luya-schedule value="model" title="xyz" model-class="path/to/model" attribute-name="attribute_name" attribute-values=\'[{"label":"Off","value":0},{"label":"On","value":1}]\' primary-key-value="pkvalue"></luya-schedule>', Angular::schedule('model', 'label', 'pkvalue', [0 => 'Off', 1 => 'On'], 'path/to/model', 'attribute_name', ['title' => 'xyz'])->render());
+        $this->assertSame('<luya-schedule value="model" title="label" model-class="path/to/model" attribute-name="attribute_name" attribute-values=\'[{"label":"Off","value":0},{"label":"On","value":1}]\' primary-key-value="pkvalue" only-icon="1"></luya-schedule>', Angular::schedule('model', 'label', 'pkvalue', [0 => 'Off', 1 => 'On'], 'path/to/model', 'attribute_name', ['only-icon' => 1])->render());
+    }
 }

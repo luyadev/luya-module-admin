@@ -145,6 +145,37 @@ class Angular
     {
         return Html::tag(Inflector::camel2id($name), null, $options);
     }
+
+    /**
+     * Generate the LUYA admin scheduler tag.
+     * 
+     * ```php
+     * Angular::schedule('data.is_online', 'Online Status', 1, [0 => 'No', 1 => 'Yes'], 'path/to/model', 'is_online');
+     * ```
+     *
+     * @param string $ngModel The angular model to read the data from.
+     * @param string $label
+     * @param string $primaryKeyValue The primary key value like `1` or `1,3` for composite keys
+     * @param array $values An array with values to schedule.
+     * @param string $modelClass The full class path of the model implementing NgRestModelInterface.
+     * @param string $attributeName The name of the attribute inside the model to change the value. This is commonly the same as $ngModel.
+     * @return AngularObject
+     * @since 2.0.3
+     */
+    public static function schedule($ngModel, $label, $primaryKeyValue, array $values, $modelClass, $attributeName, array $options = [])
+    {
+        return new AngularObject([
+            'type' => 'luya-schedule',
+            'options' => array_merge([
+                'value' => $ngModel,
+                'model-class' => $modelClass,
+                'title' => $label,
+                'attribute-name' => $attributeName,
+                'attribute-values' => Angular::optionsArrayInput($values),
+                'primary-key-value' => $primaryKeyValue,
+            ], $options)
+        ]);
+    }
     
     /**
      * Sort Relation Array.

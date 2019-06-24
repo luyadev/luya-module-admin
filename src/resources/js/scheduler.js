@@ -1,21 +1,29 @@
-/**
- * LUYA Admin scheduler
- *
- * @since 1.3.0
- */
-
  /**
-  *
+  * LUYA admin scheduler directive.
+  * 
+  * The scheduler directive will turn any field into an interactive scheduling system.
+  * 
   * ```
   * <luya-schedule
   *     value="{{currentValueOfTheEntity}}"
   *     primary-key-value="{{primaryKeyModelValue}}"
   *     model-class="luya\admin\models\User"
   *     attribute-name="is_deleted"
-  *     title="A title"
+  *     title="Deleted Title"
   *     attribute-values="[{"label":"Draft","value":0},{"label":"Archived","value":2},{"label":"Published","value":1}]"
   * />
   * ```
+  * 
+  * + value: Its a two-way binding name of field which contains the value
+  * + attribute-values: Its a two-way binding name of field which contains the current values to schedule and display based on an array with label and value key.
+  * + primary-key-value: Its a two-way binding mame of field which contains the current primary key. Composite keys must be seperated by commans like `1,3`.
+  * + model-class: The path to the model class which must impelement NgRestModelInterface
+  * + attribute-name: The name of the attribute which should be scheduled.
+  * + title: The title of the attribute, like the label.
+  * 
+  * > Keep in mind to enable the queue fake cronjob or enable a cronjob which runs the queue command.
+  * 
+  * @since 2.0
   */
 zaa.directive("luyaSchedule", function() {
     return {

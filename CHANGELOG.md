@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Added
 
++ [#325](https://github.com/luyadev/luya-module-admin/issues/325) Added Angular::schedule() helper to build scheduler tag for a given attribute.
 + [#312](https://github.com/luyadev/luya-module-admin/issues/312) New zaa directive `zaa-json-object` in order to generate a json object with key value pairing.
 + [#318](https://github.com/luyadev/luya-module-admin/issues/318) Enable scheduling for toggleStatus ngrest plugin.
 

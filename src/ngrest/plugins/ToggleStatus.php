@@ -26,9 +26,8 @@ use luya\admin\Module;
 class ToggleStatus extends Plugin
 {
     /**
-     * If enabled the status tag will transform into an interactive schedling overlay.
-     *
-     * @var boolean
+     * @var boolean If enabled the list tag will transform into an interactive scheduling overlay. Keep in mind to turn on the queue system in order to enable time based scheduling
+     * @see {{luya\admin\Module::$autoBootstrapQueue}}
      * @since 2.0.3
      */
     public $scheduling = false;
