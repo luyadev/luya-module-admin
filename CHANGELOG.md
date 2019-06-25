@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#321](https://github.com/luyadev/luya-module-admin/issues/321) Dump none scalar values in user summary active window.
 + [#317](https://github.com/luyadev/luya-module-admin/issues/317) Fixed bug with flickering of data list after update item on a certain page.
 
 ### Added
