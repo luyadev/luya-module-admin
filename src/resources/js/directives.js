@@ -2358,6 +2358,9 @@ zaa.directive("zaaJsonObject", function () {
         },
         controller: ['$scope', function ($scope) {
             $scope.$watch('model', function (n) {
+                if (angular.isArray(n)) {
+                    $scope.model = {};
+                }
                 if (n === undefined || n === null) {
                     $scope.model = {};
                 }
@@ -2392,7 +2395,7 @@ zaa.directive("zaaJsonObject", function () {
                 '</div>' +
                 '</div>' +
                 '<div class="input-group">' +
-                    '<input type="text" class="form-control" placeholder="New key" aria-label="New key" ng-model="newKey">' +
+                    '<input type="text" class="form-control" placeholder="'+i18n['js_jsonobject_newkey']+'" aria-label="'+i18n['js_jsonobject_newkey']+'" ng-model="newKey">' +
                     '<div class="input-group-append">' +
                         '<button class="btn btn-sm btn-success" type="button" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></button>' +
                     '</div>' +

@@ -430,4 +430,5 @@ return [
 
     'status_true' => 'Ja',
     'status_false' => 'Nein',
+    'js_jsonobject_newkey' => 'Neuer Schlüssel Name',
 ];
