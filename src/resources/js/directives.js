@@ -10,7 +10,7 @@
  * Where data is a variable bound by angular! So it a variable from angular $scope.data
  * 
  */
-zaa.directive('echarts', [function() {
+zaa.directive('echarts', [function () {
     return {
         scope: {
             id: "@",
@@ -20,21 +20,21 @@ zaa.directive('echarts', [function() {
         restrict: 'E',
         template: '<div style="min-height:300px;height:auto;width:100%;"></div>',
         replace: true,
-        controller : ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
             if ($scope.theme) {
                 $scope.theme = 'macarons';
             }
         }],
-        link: function($scope) {
+        link: function ($scope) {
             // generate echars document
             var echartElement = echarts.init(document.getElementById($scope.id), $scope.theme);
-            $scope.$watch('data', function(n) {
+            $scope.$watch('data', function (n) {
                 if (n && n != undefined) {
                     echartElement.setOption(angular.fromJson(n));
                 }
             });
             // ensure resize happens
-            angular.element(window).bind('resize', function(){
+            angular.element(window).bind('resize', function () {
                 echartElement.resize();
             });
         }
@@ -102,7 +102,7 @@ zaa.directive("linkObjectToString", function () {
                 '<span ng-if="link.type==3"><storage-file-display file-id="{{link.value}}"></storage-file-display></span>' +
                 '<span ng-if="link.type==4">{{link.value}}</span>' +
                 '<span ng-if="link.type==5">{{link.value}}</span>' +
-            '</span>';
+                '</span>';
         }
     }
 });
@@ -167,28 +167,28 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
             var defaultPosition = 'right';
 
             var positions = {
-                top: function() {
+                top: function () {
                     var bcr = element[0].getBoundingClientRect();
                     return {
                         top: bcr.top - scope.pop.outerHeight(),
                         left: (bcr.left + (bcr.width / 2)) - (scope.pop.outerWidth() / 2),
                     }
                 },
-                bottom: function() {
+                bottom: function () {
                     var bcr = element[0].getBoundingClientRect();
                     return {
                         top: bcr.top + bcr.height,
                         left: (bcr.left + (bcr.width / 2)) - (scope.pop.outerWidth() / 2),
                     }
                 },
-                right: function() {
+                right: function () {
                     var bcr = element[0].getBoundingClientRect();
                     return {
                         top: (bcr.top + (bcr.height / 2)) - (scope.pop.outerHeight() / 2),
                         left: bcr.left + bcr.width
                     }
                 },
-                left: function() {
+                left: function () {
                     var bcr = element[0].getBoundingClientRect();
                     return {
                         top: (bcr.top + (bcr.height / 2)) - (scope.pop.outerHeight() / 2),
@@ -197,9 +197,9 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
                 }
             };
 
-            var onScroll = function() {
+            var onScroll = function () {
                 var offset = {};
-                if(typeof positions[scope.tooltipPosition] === 'function') {
+                if (typeof positions[scope.tooltipPosition] === 'function') {
                     offset = positions[scope.tooltipPosition]();
                 } else {
                     offset = positions[defaultPosition]();
@@ -221,32 +221,32 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
             element.on('mouseenter', function () {
 
                 // Generate tooltip HTML for the first time
-                if(!scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
+                if (!scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
                     if (scope.tooltipExpression) {
                         scope.tooltipText = scope.tooltipExpression;
                     }
 
-                    var html =  '<div class="tooltip tooltip-' + (scope.tooltipPosition || defaultPosition) + (scope.tooltipImageUrl ? ' tooltip-image' : '') + '" role="tooltip">' +
-                                    '<div class="tooltip-arrow"></div>' +
-                                    '<div class="tooltip-inner">' +
-                                    (scope.tooltipText ? ('<span class="tooltip-text">' + scope.tooltipText +  '</span>') : '') +
-                                    '</div>' +
-                                '</div>';
+                    var html = '<div class="tooltip tooltip-' + (scope.tooltipPosition || defaultPosition) + (scope.tooltipImageUrl ? ' tooltip-image' : '') + '" role="tooltip">' +
+                        '<div class="tooltip-arrow"></div>' +
+                        '<div class="tooltip-inner">' +
+                        (scope.tooltipText ? ('<span class="tooltip-text">' + scope.tooltipText + '</span>') : '') +
+                        '</div>' +
+                        '</div>';
 
                     var $html = $(html);
 
-                    if(scope.tooltipImageUrl) {
+                    if (scope.tooltipImageUrl) {
                         var image = new Image();
-                        image.onload = function() {
+                        image.onload = function () {
                             onScroll();
                         };
                         image.src = scope.tooltipImageUrl;
                         $html.find('.tooltip-inner').append(image);
                     }
 
-                    if(scope.tooltipPreviewUrl) {
-                        $http.get(scope.tooltipPreviewUrl).then(function(response) {
-                            $html.find('.tooltip-inner').append('<div class="tooltip-preview">'+response.data+'</div>');
+                    if (scope.tooltipPreviewUrl) {
+                        $http.get(scope.tooltipPreviewUrl).then(function (response) {
+                            $html.find('.tooltip-inner').append('<div class="tooltip-preview">' + response.data + '</div>');
                         });
                     }
 
@@ -257,7 +257,7 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
                 }
 
                 // If tooltip shall be display...
-                if(scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
+                if (scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
 
                     // ..check position
                     onScroll();
@@ -274,13 +274,13 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
             element.on('mouseleave', function () {
                 element.parents().off('scroll', onScroll);
 
-                if(scope.pop) {
+                if (scope.pop) {
                     scope.pop.hide();
                 }
             });
 
-            scope.$on('$destroy', function() {
-                if(scope.pop) {
+            scope.$on('$destroy', function () {
+                if (scope.pop) {
                     scope.pop.remove();
                 }
             });
@@ -564,7 +564,7 @@ zaa.directive('insertPasteListener', ['$rootScope', function ($rootScope) {
     * > the ng-if is visible.
     *
     */
-zaa.directive("modal", ['$timeout', function($timeout) {
+zaa.directive("modal", ['$timeout', function ($timeout) {
     return {
         restrict: "E",
         scope: {
@@ -574,8 +574,8 @@ zaa.directive("modal", ['$timeout', function($timeout) {
         replace: true,
         transclude: true,
         templateUrl: "modal",
-        controller : ['$scope', 'AdminClassService', function($scope, AdminClassService) {
-            $scope.$watch('isModalHidden', function(n, o) {
+        controller: ['$scope', 'AdminClassService', function ($scope, AdminClassService) {
+            $scope.$watch('isModalHidden', function (n, o) {
                 if (n !== o) {
                     if (n) { // is hidden
                         AdminClassService.modalStackRemove();
@@ -586,13 +586,13 @@ zaa.directive("modal", ['$timeout', function($timeout) {
             });
 
             /* ESC Key will close ALL modals, therefore we ensure the correct spaces */
-            $scope.escModal = function() {
+            $scope.escModal = function () {
                 $scope.isModalHidden = true;
                 AdminClassService.modalStackRemoveAll();
             };
         }],
         link: function (scope, element) {
-            scope.$on('$destroy', function() {
+            scope.$on('$destroy', function () {
                 element.remove();
             });
             angular.element(document.body).append(element);
@@ -609,37 +609,37 @@ zaa.directive("modal", ['$timeout', function($timeout) {
  * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
  * ```
  */
-zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
+zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
     return {
         restrict: "E",
         replace: true,
         transclude: false,
         scope: {
             "api": "@",
-            "alias" : "@",
-            "modelSelection" : "@",
+            "alias": "@",
+            "modelSelection": "@",
             "modelSetter": "="
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
 
-            $scope.input = { showWindow : true};
+            $scope.input = { showWindow: true };
 
             $scope.content = null;
 
-            $scope.toggleWindow = function() {
+            $scope.toggleWindow = function () {
                 if ($scope.input.showWindow) {
 
                     if ($scope.api.indexOf('?') > -1) {
-                        var url = $scope.api+'&inline=1';
+                        var url = $scope.api + '&inline=1';
                     } else {
-                        var url = $scope.api+'?inline=1';
+                        var url = $scope.api + '?inline=1';
                     }
 
                     var modelSelection = parseInt($scope.modelSelection);
                     if (modelSelection) {
                         url = url + '&modelSelection=' + $scope.modelSetter;
                     }
-                    $http.get(url).then(function(response) {
+                    $http.get(url).then(function (response) {
                         $scope.content = $sce.trustAsHtml(response.data);
                         $scope.input.showWindow = false;
                     });
@@ -649,7 +649,7 @@ zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
                 }
             };
 
-            $scope.$watch('input.showWindow', function(n, o) {
+            $scope.$watch('input.showWindow', function (n, o) {
                 if (n !== o && n == 1) {
                     $scope.$parent.loadService();
                 }
@@ -659,12 +659,12 @@ zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
              * @param integer $value contains the primary key
              * @param array $row contains the full row from the crud loader model in order to display data.
              */
-            $scope.setModelValue = function(value, row) {
+            $scope.setModelValue = function (value, row) {
                 $scope.modelSetter = value;
                 $scope.toggleWindow();
             };
         }],
-        template: function() {
+        template: function () {
             return '<div class="crud-loader-tag"><button ng-click="toggleWindow()" type="button" class="btn btn-info btn-icon"><i class="material-icons">playlist_add</i></button><modal is-modal-hidden="input.showWindow" modal-title="{{alias}}"><div class="modal-body" compile-html ng-bind-html="content"></modal></div>';
         }
     }
@@ -673,7 +673,7 @@ zaa.directive("crudLoader", ['$http', '$sce', function($http, $sce) {
 /**
  * Directive to load curd relations.
  */
-zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
+zaa.directive("crudRelationLoader", ['$http', '$sce', function ($http, $sce) {
     return {
         restrict: "E",
         replace: true,
@@ -681,23 +681,23 @@ zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
         scope: {
             "api": "@api",
             "arrayIndex": "@arrayIndex",
-            "modelClass" : "@modelClass",
+            "modelClass": "@modelClass",
             "id": "@id"
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
             $scope.content = null;
-            
+
             if ($scope.api.indexOf('?') > -1) {
-                var url = $scope.api+'&inline=1';
+                var url = $scope.api + '&inline=1';
             } else {
-                var url = $scope.api+'?inline=1';
+                var url = $scope.api + '?inline=1';
             }
 
-            $http.get(url + '&relation='+$scope.id+'&arrayIndex='+$scope.arrayIndex+'&modelClass='+$scope.modelClass).then(function(response) {
+            $http.get(url + '&relation=' + $scope.id + '&arrayIndex=' + $scope.arrayIndex + '&modelClass=' + $scope.modelClass).then(function (response) {
                 $scope.content = $sce.trustAsHtml(response.data);
             });
         }],
-        template: function() {
+        template: function () {
             return '<div compile-html ng-bind-html="content"></div>';
         }
     }
@@ -714,7 +714,7 @@ zaa.directive("crudRelationLoader", ['$http', '$sce', function($http, $sce) {
  * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="mymodel"></zaa-injector>
  * ```
  */
-zaa.directive("zaaInjector", ['$compile', function($compile) {
+zaa.directive("zaaInjector", ['$compile', function ($compile) {
     return {
         restrict: "E",
         replace: true,
@@ -730,7 +730,7 @@ zaa.directive("zaaInjector", ['$compile', function($compile) {
             "initvalue": "@initvalue",
             "autocomplete": "@autocomplete"
         },
-        link: function($scope, $element) {
+        link: function ($scope, $element) {
             var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" autocomplete="{{autocomplete}}" model="model" label="{{label}}" i18n="{{grid}}" />'))($scope);
             $element.replaceWith(elmn);
         },
@@ -760,7 +760,7 @@ zaa.directive("zaaInjector", ['$compile', function($compile) {
  * }
  * ```
  */
-zaa.directive("zaaSortRelationArray", function() {
+zaa.directive("zaaSortRelationArray", function () {
     return {
         restrict: "E",
         scope: {
@@ -770,7 +770,7 @@ zaa.directive("zaaSortRelationArray", function() {
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        controller: ['$scope', '$filter', function($scope, $filter) {
+        controller: ['$scope', '$filter', function ($scope, $filter) {
 
             $scope.searchString;
 
@@ -778,63 +778,63 @@ zaa.directive("zaaSortRelationArray", function() {
 
             $scope.dropdownOpen = false;
 
-            $scope.$watch(function() { return $scope.model }, function(n, o) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
                 if (n == undefined) {
                     $scope.model = [];
                 }
             });
 
-            $scope.$watch(function() { return $scope.options }, function(n, o) {
+            $scope.$watch(function () { return $scope.options }, function (n, o) {
                 if (n !== undefined && n !== null) {
                     $scope.sourceData = n.sourceData;
                 }
             })
 
-            $scope.getSourceOptions = function() {
+            $scope.getSourceOptions = function () {
                 return $scope.sourceData;
             };
 
-            $scope.getModelItems = function() {
+            $scope.getModelItems = function () {
                 return $scope.model;
             }
 
-            $scope.addToModel = function(option) {
+            $scope.addToModel = function (option) {
 
                 var match = false;
 
-                angular.forEach($scope.model, function(value, key) {
+                angular.forEach($scope.model, function (value, key) {
                     if (value.value == option.value) {
                         match = true;
                     }
                 });
 
                 if (!match) {
-                    $scope.model.push({'value': option.value, 'label': option.label});
+                    $scope.model.push({ 'value': option.value, 'label': option.label });
                 }
             };
 
-            $scope.removeFromModel = function(key) {
+            $scope.removeFromModel = function (key) {
                 $scope.model.splice(key, 1);
             }
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             }
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             };
 
-            $scope.elementInModel = function(item) {
+            $scope.elementInModel = function (item) {
                 var match = false;
 
-                angular.forEach($scope.model, function(value, key) {
+                angular.forEach($scope.model, function (value, key) {
                     if (value.value == item.value) {
                         match = true;
                     }
@@ -843,36 +843,36 @@ zaa.directive("zaaSortRelationArray", function() {
                 return !match;
             }
         }],
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                 '<div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div>' +
                 '<div class="form-side">' +
-                        '<div class="list">' +
-                            '<div class="list-item" ng-repeat="(key, item) in getModelItems() track by key">' +
-                                '<div class="list-buttons">' +
-                                    '<i ng-show="!$first" ng-click="moveUp(key)" class="material-icons" style="transform: rotate(270deg);">play_arrow</i>' +
-                                    '<i ng-show="!$last" ng-click="moveDown(key)" class="material-icons" style="transform: rotate(90deg);">play_arrow</i>' +
-                                '</div>' +
+                '<div class="list">' +
+                '<div class="list-item" ng-repeat="(key, item) in getModelItems() track by key">' +
+                '<div class="list-buttons">' +
+                '<i ng-show="!$first" ng-click="moveUp(key)" class="material-icons" style="transform: rotate(270deg);">play_arrow</i>' +
+                '<i ng-show="!$last" ng-click="moveDown(key)" class="material-icons" style="transform: rotate(90deg);">play_arrow</i>' +
+                '</div>' +
 
-                                '<span>{{item.label}}</span>' +
+                '<span>{{item.label}}</span>' +
 
-                                '<div class="float-right">' +
-                                    '<i ng-click="removeFromModel(key)" class="material-icons">delete</i>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="list-item" ng-show="sourceData.length != model.length">' +
-                                '<input class="form-control" type="search" ng-model="searchString" ng-focus="dropdownOpen = true" />' +
-                                '<ul class="list-group">' +
-                                    '<li class="list-group-item list-group-item-action" ng-repeat="option in getSourceOptions() | filter:searchString" ng-show="dropdownOpen && elementInModel(option)" ng-click="addToModel(option)">' +
-                                        '<i class="material-icons">add_circle</i><span>{{ option.label }}</span>' +
-                                    '</li>' +
-                                '</ul>' +
-                                '<div class="list-chevron">' +
-                                    '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="dropdownOpen">arrow_drop_up</i>' +
-                                    '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="!dropdownOpen">arrow_drop_down</i>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
+                '<div class="float-right">' +
+                '<i ng-click="removeFromModel(key)" class="material-icons">delete</i>' +
+                '</div>' +
+                '</div>' +
+                '<div class="list-item" ng-show="sourceData.length != model.length">' +
+                '<input class="form-control" type="search" ng-model="searchString" ng-focus="dropdownOpen = true" />' +
+                '<ul class="list-group">' +
+                '<li class="list-group-item list-group-item-action" ng-repeat="option in getSourceOptions() | filter:searchString" ng-show="dropdownOpen && elementInModel(option)" ng-click="addToModel(option)">' +
+                '<i class="material-icons">add_circle</i><span>{{ option.label }}</span>' +
+                '</li>' +
+                '</ul>' +
+                '<div class="list-chevron">' +
+                '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="dropdownOpen">arrow_drop_up</i>' +
+                '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="!dropdownOpen">arrow_drop_down</i>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
                 '</div>';
         }
     }
@@ -881,7 +881,7 @@ zaa.directive("zaaSortRelationArray", function() {
 /**
  * <zaa-link model="linkinfo" />
  */
-zaa.directive("zaaLink", ['$filter', function($filter){
+zaa.directive("zaaLink", ['$filter', function ($filter) {
     return {
         restrict: "E",
         scope: {
@@ -891,8 +891,8 @@ zaa.directive("zaaLink", ['$filter', function($filter){
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        controller: ['$scope', function($scope) {
-            $scope.unset = function() {
+        controller: ['$scope', function ($scope) {
+            $scope.unset = function () {
                 $scope.model = false;
                 $scope.data.model = null;
             };
@@ -902,55 +902,55 @@ zaa.directive("zaaLink", ['$filter', function($filter){
                 model: null
             };
 
-            $scope.$watch('model', function(n, o) {
+            $scope.$watch('model', function (n, o) {
                 if (n) {
                     $scope.data.model = n;
                 }
             }, true);
 
-            $scope.$watch('data.model', function(n, o) {
+            $scope.$watch('data.model', function (n, o) {
                 if (n) {
                     $scope.model = n;
                 }
             }, true);
-            
-            $scope.isEmpty = function(value) {
+
+            $scope.isEmpty = function (value) {
                 if (value) {
                     return $filter('isEmpty')(value);
                 }
-                
+
                 return true;
             };
         }],
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><labelfor="{{id}}">{{label}}</label></div><div class="form-side">' +
                 '<div ng-if="!isEmpty(data.model)">' +
-                    '<div class="link-selector">' +
-                        '<div class="link-selector-actions">' +
-                            '<div class="link-selector-btn btn btn-secondary" ng-click="data.modalState=0">' +
-                                '<i class="material-icons left">insert_link</i>' +
-                                '<span>' + i18n['js_link_change_value'] + '</span>' +
-                            '</div>' +
-                            '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
-                        '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
-                    '</div>' +
+                '<div class="link-selector">' +
+                '<div class="link-selector-actions">' +
+                '<div class="link-selector-btn btn btn-secondary" ng-click="data.modalState=0">' +
+                '<i class="material-icons left">insert_link</i>' +
+                '<span>' + i18n['js_link_change_value'] + '</span>' +
+                '</div>' +
+                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
+                '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
+                '</div>' +
                 '</div>' +
                 '<div ng-if="isEmpty(data.model)">' +
-                    '<div class="link-selector">' +
-                        '<div class="link-selector-actions">' +
-                            '<div class="link-selector__btn btn btn-secondary" ng-click="data.modalState=0">' +
-                                '<i class="material-icons left">insert_link</i>' +
-                                '<span>'+i18n['js_link_set_value']+'</span>' +
-                            '</div>' +
-                            '<span style="margin-left:10px;">'+i18n['js_link_not_set']+'</span>' +
-                        '</div>' +
-                    '</div>' +
+                '<div class="link-selector">' +
+                '<div class="link-selector-actions">' +
+                '<div class="link-selector__btn btn btn-secondary" ng-click="data.modalState=0">' +
+                '<i class="material-icons left">insert_link</i>' +
+                '<span>' + i18n['js_link_set_value'] + '</span>' +
                 '</div>' +
-                '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">'+
-                    '<update-form-redirect data="data.model"></update-form-redirect>' +
-                    '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">'+i18n['js_link_set_value']+'</button></form>' +
-                '</modal>'+
-            '</div></div>';
+                '<span style="margin-left:10px;">' + i18n['js_link_not_set'] + '</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">' +
+                '<update-form-redirect data="data.model"></update-form-redirect>' +
+                '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">' + i18n['js_link_set_value'] + '</button></form>' +
+                '</modal>' +
+                '</div></div>';
         }
     }
 }]);
@@ -960,39 +960,39 @@ zaa.directive("zaaLink", ['$filter', function($filter){
  *
  * If a listener attribute is provided i will take the information from there.
  */
-zaa.directive("zaaSlug", function() {
+zaa.directive("zaaSlug", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
             "options": "=",
-            "listener" : "=",
+            "listener": "=",
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        controller: ['$scope', '$filter', function($scope, $filter) {
-            
-            $scope.$watch('listener', function(n, o) {
+        controller: ['$scope', '$filter', function ($scope, $filter) {
+
+            $scope.$watch('listener', function (n, o) {
                 if (n !== undefined) {
                     $scope.model = $filter('slugify')(n);
                 }
             });
-            
-            $scope.$watch('model', function(n, o) {
-                if (n!=o) {
+
+            $scope.$watch('model', function (n, o) {
+                if (n != o) {
                     $scope.model = $filter('slugify')(n);
                 }
             });
-            
+
         }],
-        template:function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" /></div></div>';
         }
     }
 });
 
-zaa.directive("zaaColor", function() {
+zaa.directive("zaaColor", function () {
     return {
         restrict: "E",
         scope: {
@@ -1002,26 +1002,26 @@ zaa.directive("zaaColor", function() {
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        controller: ['$scope', function($scope) {
-            function getTextColor(){
-                if(typeof $scope.model === 'undefined') {
+        controller: ['$scope', function ($scope) {
+            function getTextColor() {
+                if (typeof $scope.model === 'undefined') {
                     return '#000';
                 }
 
                 var hex = $scope.model;
 
-                if(typeof $scope.model === 'string') {
+                if (typeof $scope.model === 'string') {
                     hex = hex.substr(1);
                 }
 
-                if(hex.length === 3) {
+                if (hex.length === 3) {
                     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-                    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
                         return r + r + g + g + b + b;
                     });
                 }
 
-                if(hex.length === 6) {
+                if (hex.length === 6) {
                     var r = parseInt(hex.substr(0, 2), 16);
                     var g = parseInt(hex.substr(2, 2), 16);
                     var b = parseInt(hex.substr(4, 2), 16);
@@ -1034,29 +1034,29 @@ zaa.directive("zaaColor", function() {
 
             $scope.textColor = getTextColor();
 
-            $scope.$watch(function() { return $scope.model; }, function(n, o) {
+            $scope.$watch(function () { return $scope.model; }, function (n, o) {
                 $scope.textColor = getTextColor();
             });
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label for="{{id}}">{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="colorwheel">' +
-                                '<div class="colorwheel-background" style="background-color: {{model}};">' +
-                                    '<input class="colorwheel-input" type="text" ng-model="model" style="color: {{textColor}}; border-color: {{textColor}};" maxlength="7" />' +
-                                '</div>' +
-                                '<div class="colorwheel-wheel"><div ng-colorwheel="{ size: 150, segments: 120 }" ng-model="model"></div></div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="colorwheel">' +
+                '<div class="colorwheel-background" style="background-color: {{model}};">' +
+                '<input class="colorwheel-input" type="text" ng-model="model" style="color: {{textColor}}; border-color: {{textColor}};" maxlength="7" />' +
+                '</div>' +
+                '<div class="colorwheel-wheel"><div ng-colorwheel="{ size: 150, segments: 120 }" ng-model="model"></div></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaWysiwyg", function() {
+zaa.directive("zaaWysiwyg", function () {
     return {
         restrict: "E",
         scope: {
@@ -1066,13 +1066,13 @@ zaa.directive("zaaWysiwyg", function() {
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        template: function() {
+        template: function () {
             return '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig>';
         }
     }
 });
 
-zaa.directive("zaaNumber", function() {
+zaa.directive("zaaNumber", function () {
     return {
         restrict: "E",
         scope: {
@@ -1082,26 +1082,26 @@ zaa.directive("zaaNumber", function() {
             "i18n": "@i18n",
             "id": "@fieldid",
             "placeholder": "@placeholder",
-            "initvalue" : "@initvalue"
-        }, 
-        link: function($scope) {
-            $scope.$watch(function() { return $scope.model }, function(n, o) {
+            "initvalue": "@initvalue"
+        },
+        link: function ($scope) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
                 if (n == undefined) {
                     $scope.model = parseInt($scope.initvalue);
                 }
-                if(angular.isNumber($scope.model)) {
+                if (angular.isNumber($scope.model)) {
                     $scope.isValid = true;
                 } else {
                     $scope.isValid = false;
                 }
             })
-        }, template: function() {
+        }, template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="number" min="0" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" /></div></div>';
         }
     }
 });
 
-zaa.directive("zaaDecimal", function() {
+zaa.directive("zaaDecimal", function () {
     return {
         restrict: "E",
         scope: {
@@ -1111,24 +1111,24 @@ zaa.directive("zaaDecimal", function() {
             "i18n": "@i18n",
             "id": "@fieldid",
             "placeholder": "@placeholder"
-        }, 
-        controller: ['$scope', function($scope) {
+        },
+        controller: ['$scope', function ($scope) {
             if ($scope.options === null) {
                 $scope.steps = 0.01;
             } else {
                 $scope.steps = $scope.options['steps'];
             }
-        }], 
-        link: function($scope) {
-            $scope.$watch(function() { return $scope.model }, function(n, o) {
-                if(angular.isNumber($scope.model)) {
+        }],
+        link: function ($scope) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
+                if (angular.isNumber($scope.model)) {
                     $scope.isValid = true;
                 } else {
                     $scope.isValid = false;
                 }
             })
         },
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="number" min="0" step="{{steps}}" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" /></div></div>';
         }
     }
@@ -1137,7 +1137,7 @@ zaa.directive("zaaDecimal", function() {
 /**
  * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>" />
  */
-zaa.directive("zaaText", function(){
+zaa.directive("zaaText", function () {
     return {
         restrict: "E",
         scope: {
@@ -1147,9 +1147,9 @@ zaa.directive("zaaText", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
             "placeholder": "@placeholder",
-            "autocomplete" : "@autocomplete"
+            "autocomplete": "@autocomplete"
         },
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" /></div></div>';
         }
     }
@@ -1160,15 +1160,15 @@ zaa.directive("zaaText", function(){
  * 
  * @since 1.2.1
  */
-zaa.directive("zaaReadonly", function() {
+zaa.directive("zaaReadonly", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
-            "label" : "@label",
-            "i18n" : "@i18n"
+            "label": "@label",
+            "i18n": "@i18n"
         },
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label>{{label}}</label></div><div class="form-side"><span class="text-muted">{{model}}</span></div></div>';
         }
     }
@@ -1184,25 +1184,25 @@ zaa.directive("zaaReadonly", function() {
  * ```
  * 
  */
-zaa.directive("zaaAsyncValue", function(){
+zaa.directive("zaaAsyncValue", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
-            "api" : "@",
-            "fields" : "=",
+            "api": "@",
+            "fields": "=",
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid"
         },
-        controller: ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+        controller: ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
 
-            $scope.resetValue = function() {
+            $scope.resetValue = function () {
                 $scope.model = 0;
                 $scope.value = null;
             };
         }],
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><async-value model="model" api="{{api}}" fields="fields"  ng-show="model" /><button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button></div></div>';
         }
     }
@@ -1217,22 +1217,22 @@ zaa.directive("zaaAsyncValue", function(){
  * 
  * @since 1.2.2
  */
-zaa.directive("asyncValue", function() {
+zaa.directive("asyncValue", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
-            "api" : "@",
-            "fields" : "="
+            "api": "@",
+            "fields": "="
         },
-        controller: ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
-            $timeout(function() {
-                $scope.$watch('model', function(n, o) {
+        controller: ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+            $timeout(function () {
+                $scope.$watch('model', function (n, o) {
                     if (n) {
                         $scope.value = '';
-                        $http.get($scope.api + "/" + n + "?fields=" + $scope.fields.join()).then(function(response) {
+                        $http.get($scope.api + "/" + n + "?fields=" + $scope.fields.join()).then(function (response) {
                             $scope.value;
-                            angular.forEach(response.data, function(value) {
+                            angular.forEach(response.data, function (value) {
                                 if (value) {
                                     $scope.value = $scope.value + value + " ";
                                 }
@@ -1242,7 +1242,7 @@ zaa.directive("asyncValue", function() {
                 });
             });
         }],
-        template: function() {
+        template: function () {
             return '<span ng-bind="value"></span>';
         }
     }
@@ -1251,7 +1251,7 @@ zaa.directive("asyncValue", function() {
 /**
  * Generate a textarea input.
  */
-zaa.directive("zaaTextarea", function(){
+zaa.directive("zaaTextarea", function () {
     return {
         restrict: "E",
         scope: {
@@ -1262,7 +1262,7 @@ zaa.directive("zaaTextarea", function(){
             "id": "@fieldid",
             "placeholder": "@placeholder"
         },
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><textarea id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" auto-grow placeholder="{{placeholder}}"></textarea></div></div>';
         }
     }
@@ -1271,7 +1271,7 @@ zaa.directive("zaaTextarea", function(){
 /**
  * Generate a password input.
  */
-zaa.directive("zaaPassword", function(){
+zaa.directive("zaaPassword", function () {
     return {
         restrict: "E",
         scope: {
@@ -1282,7 +1282,7 @@ zaa.directive("zaaPassword", function(){
             "id": "@fieldid",
             "autocomplete": "@autocomplete"
         },
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><input id="{{id}}" ng-model="model" type="password" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" /></div></div>';
         }
     }
@@ -1291,7 +1291,7 @@ zaa.directive("zaaPassword", function(){
 /**
  * <zaa-radio model="model" options="[{label:'foo', value: 'bar'}, {...}]">
  */
-zaa.directive("zaaRadio", function() {
+zaa.directive("zaaRadio", function () {
     return {
         restrict: "E",
         scope: {
@@ -1302,25 +1302,25 @@ zaa.directive("zaaRadio", function() {
             "id": "@fieldid",
             "initvalue": "@initvalue"
         },
-        controller: ['$scope', function($scope) {
-            $scope.setModelValue = function(value) {
+        controller: ['$scope', function ($scope) {
+            $scope.setModelValue = function (value) {
                 $scope.model = value;
             };
         }],
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label for="{{id}}">{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div ng-repeat="(key, item) in options" class="form-check">'+
-                                '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
-                                '<label class="form-check-label" for="{{id}}_{{key}}">' +
-                                    '{{item.label}}' +
-                                '</label>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>';
+                '<div class="form-side form-side-label">' +
+                '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div ng-repeat="(key, item) in options" class="form-check">' +
+                '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                '<label class="form-check-label" for="{{id}}_{{key}}">' +
+                '{{item.label}}' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     };
 });
@@ -1347,20 +1347,20 @@ zaa.directive("zaaRadio", function() {
     * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id" />
     * ```
     */
-zaa.directive("zaaSelect", function() {
+zaa.directive("zaaSelect", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
             "options": "=",
-            "optionsvalue" : "@optionsvalue",
-            "optionslabel" : "@optionslabel",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
             "initvalue": "@initvalue"
         },
-        controller: ['$scope', '$timeout', '$rootScope', function($scope, $timeout, $rootScope) {
+        controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
 
             /* default scope values */
 
@@ -1374,20 +1374,20 @@ zaa.directive("zaaSelect", function() {
                 $scope.optionslabel = 'label';
             }
 
-            if (angular.isNumber($scope.model)){
+            if (angular.isNumber($scope.model)) {
                 $scope.model = typeCastValue($scope.model);
             }
 
             /* listeners */
 
-            $scope.$on('closeAllSelects', function() {
+            $scope.$on('closeAllSelects', function () {
                 if ($scope.isOpen) {
                     $scope.closeSelect();
                 }
             });
 
-            $timeout(function(){
-                $scope.$watch(function() { return $scope.model }, function(n, o) {
+            $timeout(function () {
+                $scope.$watch(function () { return $scope.model }, function (n, o) {
                     if (n == undefined || n == null || n == '') {
                         if (angular.isNumber($scope.initvalue)) {
                             $scope.initvalue = typeCastValue($scope.initvalue);
@@ -1403,9 +1403,9 @@ zaa.directive("zaaSelect", function() {
 
             /* methods */
 
-            $scope.valueExistsInOptions = function(value) {
+            $scope.valueExistsInOptions = function (value) {
                 var exists = false;
-                angular.forEach($scope.options, function(item) {
+                angular.forEach($scope.options, function (item) {
                     if (value == item[$scope.optionsvalue]) {
                         exists = true;
                     }
@@ -1413,25 +1413,25 @@ zaa.directive("zaaSelect", function() {
                 return exists;
             };
 
-            $scope.toggleIsOpen = function() {
+            $scope.toggleIsOpen = function () {
                 if (!$scope.isOpen) {
                     $rootScope.$broadcast('closeAllSelects');
                 }
                 $scope.isOpen = !$scope.isOpen;
             };
 
-            $scope.closeSelect = function() {
+            $scope.closeSelect = function () {
                 $scope.isOpen = 0;
             };
 
-            $scope.setModelValue = function(option) {
+            $scope.setModelValue = function (option) {
                 $scope.model = option[$scope.optionsvalue];
                 $scope.closeSelect();
             };
 
-            $scope.getSelectedLabel = function() {
+            $scope.getSelectedLabel = function () {
                 var defaultLabel = i18n['ngrest_select_no_selection'];
-                angular.forEach($scope.options, function(item) {
+                angular.forEach($scope.options, function (item) {
                     if ($scope.model == item[$scope.optionsvalue]) {
                         defaultLabel = item[$scope.optionslabel];
                     }
@@ -1440,7 +1440,7 @@ zaa.directive("zaaSelect", function() {
                 return defaultLabel;
             };
 
-            $scope.hasSelectedValue = function() {
+            $scope.hasSelectedValue = function () {
                 var modelValue = $scope.model;
 
                 if ($scope.valueExistsInOptions(modelValue) && modelValue != $scope.initvalue) {
@@ -1450,34 +1450,34 @@ zaa.directive("zaaSelect", function() {
                 return false;
             };
         }],
-        template: function() {
+        template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label for="{{id}}">{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="zaaselect" ng-class="{\'open\':isOpen, \'selected\':hasSelectedValue()}">' +
-                                '<select class="zaaselect-select" ng-model="model">' +
-                                    '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
-                                '</select>' +
-                                '<div class="zaaselect-selected">' +
-                                    '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
-                                    '<i class="material-icons zaaselect-clear-icon" ng-click="model=initvalue">clear</i>' +
-                                    '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
-                                '</div>' +
-                                '<div class="zaaselect-dropdown">' +
-                                    '<div class="zaaselect-search">' +
-                                        '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
-                                    '</div>' +
-                                    '<div class="zaaselect-overflow">' +
-                                        '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
-                                            '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                '<div class="form-side form-side-label">' +
+                '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="zaaselect" ng-class="{\'open\':isOpen, \'selected\':hasSelectedValue()}">' +
+                '<select class="zaaselect-select" ng-model="model">' +
+                '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
+                '</select>' +
+                '<div class="zaaselect-selected">' +
+                '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
+                '<i class="material-icons zaaselect-clear-icon" ng-click="model=initvalue">clear</i>' +
+                '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
+                '</div>' +
+                '<div class="zaaselect-dropdown">' +
+                '<div class="zaaselect-search">' +
+                '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
+                '</div>' +
+                '<div class="zaaselect-overflow">' +
+                '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
+                '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -1485,7 +1485,7 @@ zaa.directive("zaaSelect", function() {
 /**
  * options = {'true-value' : 1, 'false-value' : 0};
  */
-zaa.directive("zaaCheckbox", function() {
+zaa.directive("zaaCheckbox", function () {
     return {
         restrict: "E",
         scope: {
@@ -1496,8 +1496,8 @@ zaa.directive("zaaCheckbox", function() {
             "label": "@label",
             "initvalue": "@initvalue"
         },
-        controller: ['$scope', '$timeout', function($scope, $timeout) {
-            if ($scope.options === null || $scope.options === undefined) {
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
+            if ($scope.options === null || $scope.options === undefined) {
                 $scope.valueTrue = 1;
                 $scope.valueFalse = 0;
             } else {
@@ -1505,27 +1505,27 @@ zaa.directive("zaaCheckbox", function() {
                 $scope.valueFalse = $scope.options['false-value'];
             }
 
-            $scope.init = function() {
+            $scope.init = function () {
                 if ($scope.model == undefined && $scope.model == null) {
                     $scope.model = typeCastValue($scope.initvalue);
                 }
             };
-            $timeout(function() {
+            $timeout(function () {
                 $scope.init();
             })
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label for="{{id}}">{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="form-check">' +
-                                '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
-                                '<label for="{{id}}"></label>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="form-check">' +
+                '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
+                '<label for="{{id}}"></label>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -1537,7 +1537,7 @@ zaa.directive("zaaCheckbox", function() {
  * 
  * @param preselect boolean if enable all models will be selected by default.
  */
-zaa.directive("zaaCheckboxArray", function(){
+zaa.directive("zaaCheckboxArray", function () {
     return {
         restrict: "E",
         scope: {
@@ -1546,23 +1546,23 @@ zaa.directive("zaaCheckboxArray", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
             "label": "@label",
-            "preselect" : "@preselect"
+            "preselect": "@preselect"
         },
-        controller: ['$scope', '$filter', function($scope, $filter) {
+        controller: ['$scope', '$filter', function ($scope, $filter) {
 
             if ($scope.model == undefined) {
                 $scope.model = [];
             }
 
-            $scope.preselectOptionValuesToModel = function(options) {
-                angular.forEach(options, function(value) {
-                    $scope.model.push({'value': value.value});
+            $scope.preselectOptionValuesToModel = function (options) {
+                angular.forEach(options, function (value) {
+                    $scope.model.push({ 'value': value.value });
                 });
             };
-            
+
             $scope.searchString = '';
 
-            $scope.$watch('options', function(n, o) {
+            $scope.$watch('options', function (n, o) {
                 if (n != undefined && n.hasOwnProperty('items')) {
                     $scope.optionitems = $filter('orderBy')(n.items, 'label');
                     if ($scope.preselect) {
@@ -1571,7 +1571,7 @@ zaa.directive("zaaCheckboxArray", function(){
                 }
             });
 
-            $scope.filtering = function() {
+            $scope.filtering = function () {
                 $scope.optionitems = $filter('filter')($scope.options.items, $scope.searchString);
             }
 
@@ -1586,10 +1586,10 @@ zaa.directive("zaaCheckboxArray", function(){
                         return;
                     }
                 }
-                $scope.model.push({'value': value.value});
+                $scope.model.push({ 'value': value.value });
             }
 
-            $scope.isChecked = function(item) {
+            $scope.isChecked = function (item) {
                 for (var i in $scope.model) {
                     if ($scope.model[i]["value"] == item.value) {
                         return true;
@@ -1598,33 +1598,33 @@ zaa.directive("zaaCheckboxArray", function(){
                 return false;
             }
         }],
-        link: function(scope) {
+        link: function (scope) {
             scope.random = Math.random().toString(36).substring(7);
         },
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label for="{{id}}">{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
 
-                            '<div class="input-group mb-3">' +
-                                '<div class="input-group-prepend">' +
-                                    '<div class="input-group-text">' +
-                                        '<i class="material-icons">search</i>' +
-                                    '</div>' +        
-                                '</div>' +
-                                '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="'+i18n['ngrest_crud_search_text']+'">' +
+                '<div class="input-group mb-3">' +
+                '<div class="input-group-prepend">' +
+                '<div class="input-group-text">' +
+                '<i class="material-icons">search</i>' +
+                '</div>' +
+                '</div>' +
+                '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
 
-                                '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
-                            '</div>' +
+                '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
+                '</div>' +
 
-                            '<div class="form-check" ng-repeat="(k, item) in optionitems track by k">' +
-                                '<input type="checkbox" class="form-check-input" ng-checked="isChecked(item)" id="{{random}}_{{k}}" ng-click="toggleSelection(item)" />' +
-                                '<label for="{{random}}_{{k}}">{{item.label}}</label>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                '<div class="form-check" ng-repeat="(k, item) in optionitems track by k">' +
+                '<input type="checkbox" class="form-check-input" ng-checked="isChecked(item)" id="{{random}}_{{k}}" ng-click="toggleSelection(item)" />' +
+                '<label for="{{random}}_{{k}}">{{item.label}}</label>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -1637,7 +1637,7 @@ zaa.directive("zaaCheckboxArray", function(){
  *
  * resetable: 1/0, This will enable or disable the ability to press the reset (set to null) button. use integer value
  */
-zaa.directive("zaaDatetime", function() {
+zaa.directive("zaaDatetime", function () {
     return {
         restrict: "E",
         scope: {
@@ -1646,17 +1646,17 @@ zaa.directive("zaaDatetime", function() {
             "label": "@label",
             "id": "@fieldid",
             "i18n": "@i18n",
-            "resetable" : "@resetable",
+            "resetable": "@resetable",
         },
-        controller: ['$scope', '$filter', function($scope, $filter) {
+        controller: ['$scope', '$filter', function ($scope, $filter) {
 
-            $scope.isNumeric = function(num) {
+            $scope.isNumeric = function (num) {
                 return !isNaN(num)
             }
 
-            $scope.$watch(function() { return $scope.model }, function(n, o) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
                 if (n != null && n != undefined) {
-                    var datep = new Date(n*1000);
+                    var datep = new Date(n * 1000);
                     $scope.pickerPreselect = datep;
                     $scope.date = $filter('date')(datep, 'dd.MM.yyyy');
                     $scope.hour = $filter('date')(datep, 'HH');
@@ -1667,12 +1667,12 @@ zaa.directive("zaaDatetime", function() {
                 }
             });
 
-            $scope.refactor = function(n) {
-                if (!$scope.isNumeric($scope.hour) || $scope.hour == '') {
+            $scope.refactor = function (n) {
+                if (!$scope.isNumeric($scope.hour) || $scope.hour == '') {
                     $scope.hour = "0";
                 }
 
-                if (!$scope.isNumeric($scope.min)  || $scope.min == '') {
+                if (!$scope.isNumeric($scope.min) || $scope.min == '') {
                     $scope.min = "0";
                 }
 
@@ -1693,34 +1693,34 @@ zaa.directive("zaaDatetime", function() {
                             }
 
                             var en = res[1] + "/" + res[0] + "/" + res[2] + " " + $scope.hour + ":" + $scope.min;
-                            $scope.model = (Date.parse(en)/1000);
+                            $scope.model = (Date.parse(en) / 1000);
                             $scope.datePickerToggler = false;
                         }
                     }
                 }
             }
 
-            $scope.$watch(function() { return $scope.date }, function(n, o) {
+            $scope.$watch(function () { return $scope.date }, function (n, o) {
                 if (n != o && n != undefined && n != null) {
                     $scope.refactor(n);
                 }
             });
 
-            $scope.autoRefactor = function() {
+            $scope.autoRefactor = function () {
                 $scope.refactor($scope.date);
             };
 
             $scope.datePickerToggler = false;
 
-            $scope.toggleDatePicker = function() {
+            $scope.toggleDatePicker = function () {
                 $scope.datePickerToggler = !$scope.datePickerToggler;
             };
 
-            $scope.openDatePicker = function() {
+            $scope.openDatePicker = function () {
                 $scope.datePickerToggler = true;
             };
 
-            $scope.closeDatePicker = function() {
+            $scope.closeDatePicker = function () {
                 $scope.datePickerToggler = false;
             };
 
@@ -1728,11 +1728,11 @@ zaa.directive("zaaDatetime", function() {
 
             $scope.min = "0";
 
-            $scope.reset = function() {
+            $scope.reset = function () {
                 $scope.model = null;
             };
 
-            $scope.getIsResetable = function() {
+            $scope.getIsResetable = function () {
                 if ($scope.resetable) {
                     return parseInt($scope.resetable);
                 }
@@ -1740,40 +1740,40 @@ zaa.directive("zaaDatetime", function() {
                 return true;
             };
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side zaa-datetime" ng-class="{\'input--hide-label\': i18n, \'input--with-time\': model!=null && date!=null}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side form-inline datepicker-wrapper">' +
-                            '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
-                                    '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
-                                    '<div class="input-group-append" ng-click="toggleDatePicker()">' +
-                                        '<div class="input-group-text">' +
-                                            '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
-                                            '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
-                                        '</div>' + 
-                                    '</div>' +
-                            '</datepicker>' +
-                            '<div ng-show="model!=null && date!=null" class="hour-selection">' +
-                                '<div class="input-group">' +
-                                    '<div class="input-group-prepend">' +
-                                        '<div class="input-group-text">' +
-                                            '<i class="material-icons">access_time</i>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
-                                '</div>' +
-                                '<div class="input-group">' +
-                                    '<div class="input-group-prepend zaa-datetime-time-colon">' +
-                                        '<div class="input-group-text">:</div>' +
-                                    '</div>' +
-                                    '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
-                                '</div>' +
-                            '</div>' +
-                            '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side zaa-datetime" ng-class="{\'input--hide-label\': i18n, \'input--with-time\': model!=null && date!=null}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side form-inline datepicker-wrapper">' +
+                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
+                '<div class="input-group-append" ng-click="toggleDatePicker()">' +
+                '<div class="input-group-text">' +
+                '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
+                '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                '</div>' +
+                '</div>' +
+                '</datepicker>' +
+                '<div ng-show="model!=null && date!=null" class="hour-selection">' +
+                '<div class="input-group">' +
+                '<div class="input-group-prepend">' +
+                '<div class="input-group-text">' +
+                '<i class="material-icons">access_time</i>' +
+                '</div>' +
+                '</div>' +
+                '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
+                '</div>' +
+                '<div class="input-group">' +
+                '<div class="input-group-prepend zaa-datetime-time-colon">' +
+                '<div class="input-group-text">:</div>' +
+                '</div>' +
+                '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
+                '</div>' +
+                '</div>' +
+                '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -1781,7 +1781,7 @@ zaa.directive("zaaDatetime", function() {
 /**
  * resetable: whether rest button is enabled or not.
  */
-zaa.directive("zaaDate", function() {
+zaa.directive("zaaDate", function () {
     return {
         restrict: "E",
         scope: {
@@ -1790,14 +1790,14 @@ zaa.directive("zaaDate", function() {
             "label": "@label",
             "id": "@fieldid",
             "i18n": "@i18n",
-            "resetable" : "@resetable"
+            "resetable": "@resetable"
         },
-        controller: ['$scope', '$filter', function($scope, $filter) {
+        controller: ['$scope', '$filter', function ($scope, $filter) {
 
-            $scope.$watch(function() { return $scope.model }, function(n, o) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
 
                 if (n != null && n != undefined) {
-                    var datep = new Date(n*1000);
+                    var datep = new Date(n * 1000);
                     $scope.pickerPreselect = datep;
                     $scope.date = $filter('date')(datep, 'dd.MM.yyyy');
                 } else {
@@ -1806,7 +1806,7 @@ zaa.directive("zaaDate", function() {
                 }
             });
 
-            $scope.refactor = function(n) {
+            $scope.refactor = function (n) {
                 if (n == 'Invalid Date' || n == "") {
                     $scope.date = null;
                     $scope.model = null;
@@ -1815,42 +1815,42 @@ zaa.directive("zaaDate", function() {
                     if (res.length == 3) {
                         if (res[2].length == 4) {
                             var en = res[1] + "/" + res[0] + "/" + res[2];
-                            $scope.model = (Date.parse(en)/1000);
+                            $scope.model = (Date.parse(en) / 1000);
                             $scope.datePickerToggler = false;
                         }
                     }
                 }
             }
 
-            $scope.$watch(function() { return $scope.date }, function(n, o) {
+            $scope.$watch(function () { return $scope.date }, function (n, o) {
                 if (n != o && n != undefined && n != null) {
                     $scope.refactor(n);
                 }
             });
 
-            $scope.autoRefactor = function() {
+            $scope.autoRefactor = function () {
                 $scope.refactor($scope.date);
             };
 
             $scope.datePickerToggler = false;
 
-            $scope.toggleDatePicker = function() {
+            $scope.toggleDatePicker = function () {
                 $scope.datePickerToggler = !$scope.datePickerToggler;
             };
 
-            $scope.openDatePicker = function() {
+            $scope.openDatePicker = function () {
                 $scope.datePickerToggler = true;
             };
 
-            $scope.closeDatePicker = function() {
+            $scope.closeDatePicker = function () {
                 $scope.datePickerToggler = false;
             };
 
-            $scope.reset = function() {
+            $scope.reset = function () {
                 $scope.model = null;
             };
 
-            $scope.getIsResetable = function() {
+            $scope.getIsResetable = function () {
                 if ($scope.resetable) {
                     return parseInt($scope.resetable);
                 }
@@ -1858,29 +1858,29 @@ zaa.directive("zaaDate", function() {
                 return true;
             };
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side zaa-date" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side datepicker-wrapper">' +
-                            '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
-                                '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
-                                '<div class="input-group-append" ng-click="toggleDatePicker()">' +
-                                    '<div class="input-group-text">' +
-                                        '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
-                                        '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</datepicker>' +
-                            '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side zaa-date" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side datepicker-wrapper">' +
+                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
+                '<div class="input-group-append" ng-click="toggleDatePicker()">' +
+                '<div class="input-group-text">' +
+                '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
+                '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
+                '</div>' +
+                '</div>' +
+                '</datepicker>' +
+                '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaTable", function() {
+zaa.directive("zaaTable", function () {
     return {
         restrict: "E",
         scope: {
@@ -1890,24 +1890,24 @@ zaa.directive("zaaTable", function() {
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
 
             if ($scope.model == undefined) {
-                $scope.model = [{0:''}];
+                $scope.model = [{ 0: '' }];
             }
 
-            $scope.addColumn = function() {
+            $scope.addColumn = function () {
                 var len = 0;
                 for (var o in $scope.model[0]) {
                     len++;
                 }
 
-                for(var i in $scope.model) {
-                        $scope.model[i][len] = '';
+                for (var i in $scope.model) {
+                    $scope.model[i][len] = '';
                 }
             }
 
-            $scope.addRow = function() {
+            $scope.addRow = function () {
                 var elmn = $scope.model[0];
                 var ins = {};
                 for (var i in elmn) {
@@ -1917,10 +1917,10 @@ zaa.directive("zaaTable", function() {
                 $scope.model.push(ins);
             }
 
-            $scope.removeColumn = function(key) {
+            $scope.removeColumn = function (key) {
                 for (var i in $scope.model) {
                     var item = $scope.model[i];
-                    if(item instanceof Array) {
+                    if (item instanceof Array) {
                         item.splice(key, 1);
                     } else {
                         delete item[key];
@@ -1928,99 +1928,99 @@ zaa.directive("zaaTable", function() {
                 }
             }
 
-            $scope.moveLeft = function(index) {
+            $scope.moveLeft = function (index) {
                 index = parseInt(index);
                 for (var i in $scope.model) {
                     var oldValue = $scope.model[i][index];
-                    $scope.model[i][index] = $scope.model[i][index-1];
-                    $scope.model[i][index-1] = oldValue;
+                    $scope.model[i][index] = $scope.model[i][index - 1];
+                    $scope.model[i][index - 1] = oldValue;
                 }
             }
 
-            $scope.moveRight = function(index) {
+            $scope.moveRight = function (index) {
                 index = parseInt(index);
                 for (var i in $scope.model) {
                     var oldValue = $scope.model[i][index];
-                    $scope.model[i][index] = $scope.model[i][index+1];
-                    $scope.model[i][index+1] = oldValue;
+                    $scope.model[i][index] = $scope.model[i][index + 1];
+                    $scope.model[i][index + 1] = oldValue;
                 }
             }
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             }
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             }
 
-            $scope.removeRow = function(key) {
+            $scope.removeRow = function (key) {
                 $scope.model.splice(key, 1);
             }
 
-            $scope.showRightButton = function(index) {
+            $scope.showRightButton = function (index) {
                 if (parseInt(index) < Object.keys($scope.model[0]).length - 1) {
                     return true;
                 }
                 return false;
             }
-            $scope.showDownButton = function(index) {
+            $scope.showDownButton = function (index) {
                 if (parseInt(index) < Object.keys($scope.model).length - 1) {
                     return true;
                 }
                 return false;
             }
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label ng-if="label">{{label}}</label>' +
-                            '<label ng-if="!label">Table</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="zaa-table-wrapper">' +
-                                '<table class="zaa-table table table-bordered">' +
-                                    '<tbody>' +
-                                        '<tr>' +
-                                            '<th scope="col" width="35px"></th>' +
-                                            '<th scope="col" data-ng-repeat="(hk, hr) in model[0] track by hk" class="zaa-table-buttons">' +
-                                                '<div class="btn-group" role="group">' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveLeft(hk)" ng-if="hk > 0"><i class="material-icons">keyboard_arrow_left</i></button>' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveRight(hk)" ng-if="showRightButton(hk)"><i class="material-icons">keyboard_arrow_right</i></button>' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="removeColumn(hk)"><i class="material-icons">remove</i></button>' +
-                                                '</div>' +
-                                            '</th>' +
-                                        '</tr>' +
-                                        '<tr data-ng-repeat="(key, row) in model track by key">' +
-                                            '<td width="35px" scope="row" class="zaa-table-buttons">' +
-                                                '<div class="btn-group-vertical" role="group">' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                                                    '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="removeRow(key)"><i class="material-icons">remove</i></button>' +
-                                                '</div>' +
-                                            '</td>' +
-                                            '<td data-ng-repeat="(field,value) in row track by field">'+
-                                                '<textarea ng-model="model[key][field]" class="zaa-table__textarea"></textarea>'+
-                                            '</td>'+
-                                        '</tr>' +
-                                    '</tbody>' +
-                                '</table>' +
-                                '<button ng-click="addRow()" type="button" class="zaa-table-add-row btn btn-sm btn-success"><i class="material-icons">add</i></button>'+
-                                '<button ng-click="addColumn()" type="button" class="zaa-table-add-column btn btn-sm btn-success"><i class="material-icons">add</i></button>'+
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label ng-if="label">{{label}}</label>' +
+                '<label ng-if="!label">Table</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="zaa-table-wrapper">' +
+                '<table class="zaa-table table table-bordered">' +
+                '<tbody>' +
+                '<tr>' +
+                '<th scope="col" width="35px"></th>' +
+                '<th scope="col" data-ng-repeat="(hk, hr) in model[0] track by hk" class="zaa-table-buttons">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveLeft(hk)" ng-if="hk > 0"><i class="material-icons">keyboard_arrow_left</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveRight(hk)" ng-if="showRightButton(hk)"><i class="material-icons">keyboard_arrow_right</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="removeColumn(hk)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</th>' +
+                '</tr>' +
+                '<tr data-ng-repeat="(key, row) in model track by key">' +
+                '<td width="35px" scope="row" class="zaa-table-buttons">' +
+                '<div class="btn-group-vertical" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="removeRow(key)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</td>' +
+                '<td data-ng-repeat="(field,value) in row track by field">' +
+                '<textarea ng-model="model[key][field]" class="zaa-table__textarea"></textarea>' +
+                '</td>' +
+                '</tr>' +
+                '</tbody>' +
+                '</table>' +
+                '<button ng-click="addRow()" type="button" class="zaa-table-add-row btn btn-sm btn-success"><i class="material-icons">add</i></button>' +
+                '<button ng-click="addColumn()" type="button" class="zaa-table-add-column btn btn-sm btn-success"><i class="material-icons">add</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaFileUpload", function(){
+zaa.directive("zaaFileUpload", function () {
     return {
         restrict: "E",
         scope: {
@@ -2030,20 +2030,20 @@ zaa.directive("zaaFileUpload", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<storage-file-upload ng-model="model"></storage-file-upload>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<storage-file-upload ng-model="model"></storage-file-upload>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaImageUpload", function(){
+zaa.directive("zaaImageUpload", function () {
     return {
         restrict: "E",
         scope: {
@@ -2053,20 +2053,20 @@ zaa.directive("zaaImageUpload", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<storage-image-upload options="options" ng-model="model"></storage-image-upload>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<storage-image-upload options="options" ng-model="model"></storage-image-upload>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaImageArrayUpload", function(){
+zaa.directive("zaaImageArrayUpload", function () {
     return {
         restrict: "E",
         scope: {
@@ -2076,84 +2076,84 @@ zaa.directive("zaaImageArrayUpload", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        link: function(scope, element, attributes){
-            scope.$watch('model', function(newValue, oldValue) {
-                if(newValue.length >= 1) {
+        link: function (scope, element, attributes) {
+            scope.$watch('model', function (newValue, oldValue) {
+                if (newValue.length >= 1) {
                     $(element).removeClass('is-empty').addClass('is-not-empty');
                 } else {
                     $(element).removeClass('is-not-empty').addClass('is-empty');
                 }
             }, true);
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
             if ($scope.model == undefined) {
                 $scope.model = [];
             }
 
-            $scope.add = function() {
-                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
+            $scope.add = function () {
+                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
                     $scope.model = [];
                 }
-                $scope.model.push({ imageId : 0, caption : '' });
+                $scope.model.push({ imageId: 0, caption: '' });
             };
 
-            $scope.remove = function(key) {
+            $scope.remove = function (key) {
                 $scope.model.splice(key, 1);
             };
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             };
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             };
 
-            $scope.showDownButton = function(index) {
+            $scope.showDownButton = function (index) {
                 if (parseInt(index) < Object.keys($scope.model).length - 1) {
                     return true;
                 }
                 return false;
             };
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="list zaa-file-array-upload">' +
-                                '<p class="alert alert-info" ng-hide="model.length > 0">'+i18n['js_dir_no_selection']+'</p>' +
-                                '<div ng-repeat="(key,image) in model track by key" class="list-item">' +
-                                    '<div class="list-section">' +
-                                        '<div class="list-left">' +
-                                            '<storage-image-upload ng-model="image.imageId" options="options"></storage-image-upload>' +
-                                        '</div>' +
-                                        '<div class="list-right">' +
-                                            '<div class="form-group">' +
-                                                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
-                                                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="list-buttons">' +
-                                        '<div class="btn-group" role="group">' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="list zaa-file-array-upload">' +
+                '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
+                '<div ng-repeat="(key,image) in model track by key" class="list-item">' +
+                '<div class="list-section">' +
+                '<div class="list-left">' +
+                '<storage-image-upload ng-model="image.imageId" options="options"></storage-image-upload>' +
+                '</div>' +
+                '<div class="list-right">' +
+                '<div class="form-group">' +
+                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
+                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="list-buttons">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -2161,7 +2161,7 @@ zaa.directive("zaaImageArrayUpload", function(){
 /**
  * Multiple selection of files.
  */
-zaa.directive("zaaFileArrayUpload", function(){
+zaa.directive("zaaFileArrayUpload", function () {
     return {
         restrict: "E",
         scope: {
@@ -2171,79 +2171,79 @@ zaa.directive("zaaFileArrayUpload", function(){
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
+        controller: ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
 
             if ($scope.model == undefined) {
                 $scope.model = [];
             }
 
-            $scope.add = function() {
-                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
+            $scope.add = function () {
+                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
                     $scope.model = [];
                 }
-                $scope.model.push({ fileId : 0, caption : '' });
+                $scope.model.push({ fileId: 0, caption: '' });
             };
 
-            $scope.remove = function(key) {
+            $scope.remove = function (key) {
                 $scope.model.splice(key, 1);
             };
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             };
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             };
 
-            $scope.showDownButton = function(index) {
+            $scope.showDownButton = function (index) {
                 if (parseInt(index) < Object.keys($scope.model).length - 1) {
                     return true;
                 }
                 return false;
             };
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="list zaa-file-array-upload">' +
-                                '<p class="alert alert-info" ng-hide="model.length > 0">'+i18n['js_dir_no_selection']+'</p>' +
-                                '<div ng-repeat="(key,file) in model track by key" class="list-item">' +
-                                    '<div class="list-section" ng-if="file.hiddenStorageUploadSource">' +
-                                        '<a ng-href="{{file.hiddenStorageUploadSource}}" target="_blank" class="btn btn-primary">{{file.hiddenStorageUploadName}}</a>'+
-                                    '</div>' +
-                                    '<div class="list-section" ng-if="!file.hiddenStorageUploadSource">' +
-                                        '<div class="list-left">' +
-                                            '<storage-file-upload ng-model="file.fileId"></storage-file-upload>' +
-                                        '</div>' +
-                                        '<div class="list-right">' +
-                                            '<div class="form-group">' +
-                                                '<label for="{{file.id}}">' + i18n['js_dir_image_description'] + '</label>' +
-                                                '<textarea ng-model="file.caption" id="{{file.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="list-buttons"  ng-if="!file.hiddenStorageUploadSource">' +
-                                        '<div class="btn-group" role="group">' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                            '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="list zaa-file-array-upload">' +
+                '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
+                '<div ng-repeat="(key,file) in model track by key" class="list-item">' +
+                '<div class="list-section" ng-if="file.hiddenStorageUploadSource">' +
+                '<a ng-href="{{file.hiddenStorageUploadSource}}" target="_blank" class="btn btn-primary">{{file.hiddenStorageUploadName}}</a>' +
+                '</div>' +
+                '<div class="list-section" ng-if="!file.hiddenStorageUploadSource">' +
+                '<div class="list-left">' +
+                '<storage-file-upload ng-model="file.fileId"></storage-file-upload>' +
+                '</div>' +
+                '<div class="list-right">' +
+                '<div class="form-group">' +
+                '<label for="{{file.id}}">' + i18n['js_dir_image_description'] + '</label>' +
+                '<textarea ng-model="file.caption" id="{{file.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="list-buttons"  ng-if="!file.hiddenStorageUploadSource">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -2253,7 +2253,7 @@ zaa.directive("zaaFileArrayUpload", function(){
  *
  * @retunr array
  */
-zaa.directive("zaaMultipleInputs", function() {
+zaa.directive("zaaMultipleInputs", function () {
     return {
         restrict: "E",
         scope: {
@@ -2264,11 +2264,11 @@ zaa.directive("zaaMultipleInputs", function() {
             "id": "@fieldid",
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-            $scope.init = function() {
+            $scope.init = function () {
                 if ($scope.model == undefined || $scope.model == null) {
                     $scope.model = [];
                 } else {
-                    angular.forEach($scope.model, function(value, key) {
+                    angular.forEach($scope.model, function (value, key) {
                         var len = Object.keys(value).length;
                         /* issue #1519: if there are no keys, ensure the item is an object */
                         if (len == 0) {
@@ -2278,62 +2278,62 @@ zaa.directive("zaaMultipleInputs", function() {
                 }
             };
 
-            $scope.add = function() {
-                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
+            $scope.add = function () {
+                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
                     $scope.model = [];
                 }
 
                 $scope.model.push({});
             };
 
-            $scope.remove = function(key) {
+            $scope.remove = function (key) {
                 $scope.model.splice(key, 1);
             };
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             };
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             };
 
-            $scope.showDownButton = function(index) {
+            $scope.showDownButton = function (index) {
                 return parseInt(index) < Object.keys($scope.model).length - 1;
             };
 
-            $timeout(function() {
+            $timeout(function () {
                 $scope.init();
             });
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="list zaa-multiple-inputs">' +
-                                '<p class="alert alert-info" ng-hide="model.length > 0">'+i18n['js_dir_no_selection']+'</p>' +
-                                '<div ng-repeat="(msortKey,row) in model track by msortKey" class="list-item" ng-init="ensureRow(row)">' +
-                                    '<div ng-repeat="(mutliOptKey,opt) in options track by mutliOptKey"><zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector></div>' +
-                                    '<div class="list-buttons">' +
-                                        '<div class="btn-group" role="group">' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(msortKey)" ng-if="msortKey > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(msortKey)" ng-if="showDownButton(msortKey)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(msortKey)"><i class="material-icons">remove</i></button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="list zaa-multiple-inputs">' +
+                '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
+                '<div ng-repeat="(msortKey,row) in model track by msortKey" class="list-item" ng-init="ensureRow(row)">' +
+                '<div ng-repeat="(mutliOptKey,opt) in options track by mutliOptKey"><zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector></div>' +
+                '<div class="list-buttons">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(msortKey)" ng-if="msortKey > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(msortKey)" ng-if="showDownButton(msortKey)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(msortKey)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -2346,7 +2346,7 @@ zaa.directive("zaaMultipleInputs", function() {
  * ```
  * @since 2.0.3
  */
-zaa.directive("zaaJsonObject", function() {
+zaa.directive("zaaJsonObject", function () {
     return {
         restrict: "E",
         scope: {
@@ -2356,51 +2356,55 @@ zaa.directive("zaaJsonObject", function() {
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        controller: ['$scope', function($scope) {
-            $scope.$watch('model', function(n) {
+        controller: ['$scope', function ($scope) {
+            $scope.$watch('model', function (n) {
                 if (n === undefined || n === null) {
                     $scope.model = {};
                 }
             });
 
-            $scope.add = function(key) {
+            $scope.add = function (key) {
                 $scope.model[key] = '';
             };
 
-            $scope.remove = function(key) {
+            $scope.remove = function (key) {
                 delete $scope.model[key];
             };
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="list zaa-json-array">' +
-                                '<div ng-repeat="(key,value) in model" class="list-item">' +
-                                    '<div class="input-group">' +
-                                        '<div class="input-group-prepend">' +
-                                            '<div class="input-group-text">{{key}}</div>' +
-                                        '</div>' +
-                                        '<input class="form-control" type="text" ng-model="model[key]" />' +
-                                    '</div>' +
-                                    '<div class="list-buttons">' +
-                                        '<div class="btn-group" role="group">' +
-                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<input type="text" ng-model="newKey" placeholder="New Key" class="form-control" />' + 
-                                '<button ng-click="add(newKey);newKey=null;" type="button" class="btn btn-sm btn-success float-right"><i class="material-icons">add</i></button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="list zaa-json-array">' +
+                '<div ng-repeat="(key,value) in model" class="list-item">' +
+                '<div class="input-group">' +
+                '<div class="input-group-prepend">' +
+                '<div class="input-group-text">{{key}}</div>' +
+                '</div>' +
+                '<input class="form-control" type="text" ng-model="model[key]" />' +
+                '</div>' +
+                '<div class="list-buttons">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="input-group">' +
+                    '<input type="text" class="form-control" placeholder="New key" aria-label="New key" ng-model="newKey">' +
+                    '<div class="input-group-append">' +
+                        '<button class="btn btn-sm btn-success" type="button" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></button>' +
+                    '</div>' +
+                '</div>'+
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
 
-zaa.directive("zaaListArray", function() {
+zaa.directive("zaaListArray", function () {
     return {
         restrict: "E",
         scope: {
@@ -2410,59 +2414,59 @@ zaa.directive("zaaListArray", function() {
             "i18n": "@i18n",
             "id": "@fieldid",
         },
-        controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
+        controller: ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
 
-            $scope.init = function() {
+            $scope.init = function () {
                 if ($scope.model == undefined || $scope.model == null) {
                     $scope.model = [];
                 }
             };
 
-            $scope.add = function() {
-                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
+            $scope.add = function () {
+                if ($scope.model == null || $scope.model == '' || $scope.model == undefined) {
                     $scope.model = [];
                 }
-                $scope.model.push({ value : '' });
+                $scope.model.push({ value: '' });
                 $scope.setFocus();
             };
 
-            $scope.remove = function(key) {
+            $scope.remove = function (key) {
                 $scope.model.splice(key, 1);
             };
 
-            $scope.refactor = function(key, row) {
-                if (key !== ($scope.model.length -1)) {
+            $scope.refactor = function (key, row) {
+                if (key !== ($scope.model.length - 1)) {
                     if (row['value'] == "") {
                         $scope.remove(key);
                     }
                 }
             };
 
-            $scope.setFocus = function() {
-                $timeout(function() {
+            $scope.setFocus = function () {
+                $timeout(function () {
                     var input = $element.children('.list').children('.list__item:last-of-type').children('.list__left').children('input');
 
-                    if(input.length == 1) {
+                    if (input.length == 1) {
                         input[0].focus();
                     }
                 }, 50);
             };
 
-            $scope.moveUp = function(index) {
+            $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index-1];
-                $scope.model[index-1] = oldRow;
+                $scope.model[index] = $scope.model[index - 1];
+                $scope.model[index - 1] = oldRow;
             }
 
-            $scope.moveDown = function(index) {
+            $scope.moveDown = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
-                $scope.model[index] = $scope.model[index+1];
-                $scope.model[index+1] = oldRow;
+                $scope.model[index] = $scope.model[index + 1];
+                $scope.model[index + 1] = oldRow;
             }
 
-            $scope.showDownButton = function(index) {
+            $scope.showDownButton = function (index) {
                 if (parseInt(index) < Object.keys($scope.model).length - 1) {
                     return true;
                 }
@@ -2472,28 +2476,28 @@ zaa.directive("zaaListArray", function() {
             $scope.init();
 
         }],
-        template: function() {
-            return  '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                        '<div class="form-side form-side-label">' +
-                            '<label>{{label}}</label>' +
-                        '</div>' +
-                        '<div class="form-side">' +
-                            '<div class="list zaa-file-array-upload">' +
-                                '<p class="alert alert-info" ng-hide="model.length > 0">'+i18n['js_dir_no_selection']+'</p>' +
-                                '<div ng-repeat="(key,row) in model track by key" class="list-item">' +
-                                    '<input class="form-control list-input" type="text" ng-model="row.value" />' +
-                                    '<div class="list-buttons">' +
-                                        '<div class="btn-group" role="group">' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                '<label>{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">' +
+                '<div class="list zaa-file-array-upload">' +
+                '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
+                '<div ng-repeat="(key,row) in model track by key" class="list-item">' +
+                '<input class="form-control list-input" type="text" ng-model="row.value" />' +
+                '<div class="list-buttons">' +
+                '<div class="btn-group" role="group">' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         }
     }
 });
@@ -2501,13 +2505,13 @@ zaa.directive("zaaListArray", function() {
 
 
 
-zaa.directive('storageFileDisplay', function() {
+zaa.directive('storageFileDisplay', function () {
     return {
         restrict: 'E',
         scope: {
             fileId: '@fileId'
         },
-        controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
+        controller: ['$scope', '$filter', 'ServiceFilesData', function ($scope, $filter, ServiceFilesData) {
 
             // ServiceFilesData inheritance
 
@@ -2522,50 +2526,50 @@ zaa.directive('storageFileDisplay', function() {
             // controller
 
             $scope.fileId = 0;
-            
+
             $scope.fileinfo = null;
 
-            $scope.$watch('fileId', function(n, o) {
-                if (n == 0 || n == null || n == undefined) {
+            $scope.$watch('fileId', function (n, o) {
+                if (n == 0 || n == null || n == undefined) {
                     return;
                 }
-                ServiceFilesData.getFile(n).then(function(file) {
+                ServiceFilesData.getFile(n).then(function (file) {
                     $scope.fileinfo = file;
-                }, function() {
+                }, function () {
                     $scope.fileinfo = null;
                 });
             });
         }],
-        template: function() {
+        template: function () {
             return '<a ng-show="fileinfo" href="{{ fileinfo.source }}" target="_blank">{{ fileinfo.name_original }}</a>';
         }
     }
 });
 
-zaa.directive('storageImageCrudList', function() {
+zaa.directive('storageImageCrudList', function () {
     return {
         restrict: 'E',
         scope: {
             imageId: '@imageId'
         },
-        controller: ['$scope', 'ServiceImagesData', function($scope, ServiceImagesData) {
+        controller: ['$scope', 'ServiceImagesData', function ($scope, ServiceImagesData) {
             $scope.imageSrc = null;
 
-            $scope.$watch('imageId', function(n, o) {
+            $scope.$watch('imageId', function (n, o) {
                 if (n != o) {
                     $scope.imageSrc = null;
                 }
             });
 
-            $scope.$on('requestImageSourceReady', function() {
+            $scope.$on('requestImageSourceReady', function () {
                 // now access trough getImage of images service
                 if ($scope.imageId != 0) {
-                    ServiceImagesData.getImage($scope.imageId).then(function(response) {
+                    ServiceImagesData.getImage($scope.imageId).then(function (response) {
                         if (response.tinyCropImage) {
                             $scope.imageSrc = response.tinyCropImage.source;
                         } else {
                             // the thumbnail does not exists, try to force a new xhr request which should generate the thumbnail:
-                            ServiceImagesData.getImage($scope.imageId, true).then(function(r) {
+                            ServiceImagesData.getImage($scope.imageId, true).then(function (r) {
                                 if (r.tinyCropImage) {
                                     $scope.imageSrc = r.tinyCropImage.source;
                                 }
@@ -2575,21 +2579,21 @@ zaa.directive('storageImageCrudList', function() {
                 }
             });
         }],
-        template: function() {
+        template: function () {
             return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
         }
     }
 });
 
-zaa.directive('storageImageThumbnailDisplay', function() {
+zaa.directive('storageImageThumbnailDisplay', function () {
     return {
         restrict: 'E',
         scope: {
             imageId: '@imageId'
         },
-        controller: ['$scope', '$filter', 'ServiceImagesData', 'ServiceFilesData', function($scope, $filter, ServiceImagesData, ServiceFilesData) {
+        controller: ['$scope', '$filter', 'ServiceImagesData', 'ServiceFilesData', function ($scope, $filter, ServiceImagesData, ServiceFilesData) {
 
-            $scope.$watch('imageId', function(n, o) {
+            $scope.$watch('imageId', function (n, o) {
                 if (n != o) {
                     $scope.imageSrc = null;
                 }
@@ -2597,66 +2601,66 @@ zaa.directive('storageImageThumbnailDisplay', function() {
 
             // controller logic
 
-            $scope.$watch(function() { return $scope.imageId }, function(n, o) {
+            $scope.$watch(function () { return $scope.imageId }, function (n, o) {
                 if (n != undefined || n != null) {
-                    ServiceImagesData.getImage(n).then(function(response) {
+                    ServiceImagesData.getImage(n).then(function (response) {
                         $scope.imageSrc = response.tinyCropImage.source;
-                    }, function() {
-                        $scope.imageSrc = null;  
+                    }, function () {
+                        $scope.imageSrc = null;
                     });
                 }
             });
 
             $scope.imageSrc = null;
         }],
-        template: function() {
+        template: function () {
             return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
         }
     }
 });
 
-zaa.directive('storageFileUpload', function() {
+zaa.directive('storageFileUpload', function () {
     return {
-        restrict : 'E',
-        scope : {
-            ngModel : '='
+        restrict: 'E',
+        scope: {
+            ngModel: '='
         },
-        controller: ['$scope', '$filter', 'ServiceFilesData', function($scope, $filter, ServiceFilesData) {
-            
-            $scope.modal = {state: 1};
+        controller: ['$scope', '$filter', 'ServiceFilesData', function ($scope, $filter, ServiceFilesData) {
+
+            $scope.modal = { state: 1 };
 
             $scope.modalContainer = false;
 
             $scope.fileinfo = null;
 
-            $scope.select = function(fileId) {
+            $scope.select = function (fileId) {
                 $scope.toggleModal();
                 $scope.ngModel = fileId;
             };
 
-            $scope.reset = function() {
+            $scope.reset = function () {
                 $scope.ngModel = 0;
                 $scope.fileinfo = null;
             };
 
-            $scope.toggleModal = function() {
+            $scope.toggleModal = function () {
                 $scope.modalContainer = !$scope.modalContainer;
                 $scope.modal.state = !$scope.modal.state;
             };
 
-            $scope.$watch(function() { return $scope.ngModel }, function(n) {
-                if (n == null || n == undefined || !angular.isNumber(n)) {
+            $scope.$watch(function () { return $scope.ngModel }, function (n) {
+                if (n == null || n == undefined || !angular.isNumber(n)) {
                     return null;
                 }
-                
-                ServiceFilesData.getFile(n).then(function(response) {
+
+                ServiceFilesData.getFile(n).then(function (response) {
                     $scope.fileinfo = response;
-                }, function() {
+                }, function () {
                     $scope.fileinfo = null;
                 });
             });
         }],
-        templateUrl : 'storageFileUpload'
+        templateUrl: 'storageFileUpload'
     }
 });
 
@@ -2671,28 +2675,28 @@ zaa.directive('storageFileUpload', function() {
  * + filter can not find a file for id 0
  * + ngModel set to 0
  */
-zaa.directive('storageImageUpload', function() {
+zaa.directive('storageImageUpload', function () {
     return {
-        restrict : 'E',
-        scope : {
-            ngModel : '=',
-            options : '=',
+        restrict: 'E',
+        scope: {
+            ngModel: '=',
+            options: '=',
         },
-        controller : ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', 'ServiceFilesData', function($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService, ServiceFilesData) {
+        controller: ['$scope', '$http', '$filter', 'ServiceFiltersData', 'ServiceImagesData', 'AdminToastService', 'ServiceFilesData', function ($scope, $http, $filter, ServiceFiltersData, ServiceImagesData, AdminToastService, ServiceFilesData) {
 
             // ServiceFiltesrData inheritance
-            
+
             //$scope.ngModel = 0;
 
             $scope.filtersData = ServiceFiltersData.data;
 
-            $scope.$on('service:FiltersData', function(event, data) {
+            $scope.$on('service:FiltersData', function (event, data) {
                 $scope.filtersData = data;
             });
 
             // controller logic
 
-            $scope.noFilters = function() {
+            $scope.noFilters = function () {
                 if ($scope.options) {
                     return $scope.options.no_filter;
                 }
@@ -2709,20 +2713,20 @@ zaa.directive('storageImageUpload', function() {
             $scope.imageinfo = null;
 
             $scope.imageNotFoundError = false;
-            
+
             $scope.thumb = false;
-            
-            $scope.filterApply = function() {
+
+            $scope.filterApply = function () {
                 $scope.imageLoading = true;
-                ServiceFilesData.getFile($scope.fileId).then(function(response) {
-                    var images = $filter('filter')(response.images, {filter_id: $scope.filterId});
+                ServiceFilesData.getFile($scope.fileId).then(function (response) {
+                    var images = $filter('filter')(response.images, { filter_id: $scope.filterId });
                     // unable to find the image for the given filter, create the image for the filter
                     if (images.length == 0) {
-                        $http.post('admin/api-admin-storage/image-filter', { fileId : $scope.fileId, filterId : $scope.filterId}).then(function(uploadResponse) {
+                        $http.post('admin/api-admin-storage/image-filter', { fileId: $scope.fileId, filterId: $scope.filterId }).then(function (uploadResponse) {
                             $scope.ngModel = uploadResponse.data.id;
                             AdminToastService.success(i18n['js_dir_image_upload_ok']);
                             $scope.imageLoading = false;
-                        }, function(error) {
+                        }, function (error) {
                             AdminToastService.error(i18n['js_dir_image_filter_error']);
                             $scope.imageLoading = false;
                         });
@@ -2730,31 +2734,31 @@ zaa.directive('storageImageUpload', function() {
                         $scope.ngModel = images[0].id;
                         $scope.imageLoading = false;
                     }
-                }, function() {
+                }, function () {
                     $scope.imageinfo = null;
                     $scope.thumb = false;
                     $scope.ngModel = 0;
                 });
             };
 
-            $scope.changeFilter = function() {
+            $scope.changeFilter = function () {
                 $scope.filterApply();
             };
 
-            $scope.$watch(function() { return $scope.fileId }, function(n, o) {
-                
+            $scope.$watch(function () { return $scope.fileId }, function (n, o) {
+
                 if (n != null && n != undefined) {
                     $scope.filterApply();
                 }
             });
 
-            $scope.$watch(function() { return $scope.ngModel }, function(n, o) {
-                if (n != null && n != undefined && n != 0) {
-                    ServiceImagesData.getImage(n).then(function(response) {
+            $scope.$watch(function () { return $scope.ngModel }, function (n, o) {
+                if (n != null && n != undefined && n != 0) {
+                    ServiceImagesData.getImage(n).then(function (response) {
                         $scope.applyImageDetails(response);
                         $scope.fileId = response.file_id;
                         $scope.filterId = response.filter_id;
-                    }, function() {
+                    }, function () {
                         $scope.fileId = 0;
                         $scope.filterId = 0;
                         $scope.imageinfo = null;
@@ -2762,520 +2766,520 @@ zaa.directive('storageImageUpload', function() {
                     });
                 }
             });
-            
-            $scope.applyImageDetails = function(imageInfo) {
+
+            $scope.applyImageDetails = function (imageInfo) {
                 $scope.imageinfo = imageInfo;
                 $scope.thumb = imageInfo;
             };
 
         }],
-        templateUrl : 'storageImageUpload'
+        templateUrl: 'storageImageUpload'
     }
 });
 
 /**
  * FILE MANAGER DIR
  */
-zaa.directive("storageFileManager", function() {
+zaa.directive("storageFileManager", function () {
     return {
-        restrict : 'E',
-        transclude : false,
-        scope : {
-            allowSelection : '@selection',
-            onlyImages : '@onlyImages'
+        restrict: 'E',
+        transclude: false,
+        scope: {
+            allowSelection: '@selection',
+            onlyImages: '@onlyImages'
         },
-        controller : [
-            '$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 
-            function($scope, $http, $filter, $timeout, $rootScope, $q, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
+        controller: [
+            '$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags',
+            function ($scope, $http, $filter, $timeout, $rootScope, $q, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
 
-            // ServiceFoldersData inheritance
+                // ServiceFoldersData inheritance
 
-            $scope.foldersData = ServiceFoldersData.data;
+                $scope.foldersData = ServiceFoldersData.data;
 
-            $scope.$on('service:FoldersData', function(event, data) {
-                $scope.foldersData = data;
-            });
+                $scope.$on('service:FoldersData', function (event, data) {
+                    $scope.foldersData = data;
+                });
 
-            $scope.foldersDataReload = function() {
-                return ServiceFoldersData.load(true);
-            };
+                $scope.foldersDataReload = function () {
+                    return ServiceFoldersData.load(true);
+                };
 
-            // Service Tags
+                // Service Tags
 
-            $scope.tags = [];
+                $scope.tags = [];
 
-            ServiceAdminTags.load().then(function(response) {
-                $scope.tags = response;
-            });
+                ServiceAdminTags.load().then(function (response) {
+                    $scope.tags = response;
+                });
 
-            // ServiceFilesData inheritance
+                // ServiceFilesData inheritance
 
-            $scope.filesData = [];
-            $scope.totalFiles = 0;
-            $scope.pageCount = 0;
-            $scope.currentPageId = 1;
-            
-            // load files data for a given folder id
-            $scope.$watch('currentFolderId', function(folderId) {
-                if (folderId !== undefined) {
-                    // generate the current pare info based on folder
-                    $scope.generateFolderInheritance(folderId);
-                    $scope.getFilesForPageAndFolder(folderId, 1);
-                }
-            });
+                $scope.filesData = [];
+                $scope.totalFiles = 0;
+                $scope.pageCount = 0;
+                $scope.currentPageId = 1;
 
-            $scope.folderInheritance = [];
+                // load files data for a given folder id
+                $scope.$watch('currentFolderId', function (folderId) {
+                    if (folderId !== undefined) {
+                        // generate the current pare info based on folder
+                        $scope.generateFolderInheritance(folderId);
+                        $scope.getFilesForPageAndFolder(folderId, 1);
+                    }
+                });
 
-            $scope.generateFolderInheritance = function(folderId) {
                 $scope.folderInheritance = [];
-                $scope.findFolderInheritance(folderId);
-            }
 
-            $scope.findFolderInheritance = function(folderId) {
-                if ($scope.foldersData.hasOwnProperty(folderId)) {
-                    var parent = $scope.foldersData[folderId];
-                    $scope.folderInheritance.push(parent);
-                    if (parent && parent.parentId) {
-                        $scope.findFolderInheritance(parent.parentId);
+                $scope.generateFolderInheritance = function (folderId) {
+                    $scope.folderInheritance = [];
+                    $scope.findFolderInheritance(folderId);
+                }
+
+                $scope.findFolderInheritance = function (folderId) {
+                    if ($scope.foldersData.hasOwnProperty(folderId)) {
+                        var parent = $scope.foldersData[folderId];
+                        $scope.folderInheritance.push(parent);
+                        if (parent && parent.parentId) {
+                            $scope.findFolderInheritance(parent.parentId);
+                        }
                     }
                 }
-            }
 
-            $scope.hasFolderActiveChild = function(folderId) {
-                var value = false;
-                angular.forEach($scope.folderInheritance, function(item) {
-                    if (item.id == folderId) {
-                        value = true;
-                    }
-                });
-
-                return value;
-            }
-
-            $scope.$watch('currentPageId', function(pageId, oldPageId) {
-                if (pageId !== undefined && pageId != oldPageId) {
-                    $scope.getFilesForCurrentPage();
-                }
-            });
-
-            $scope.getFilesForPageAndFolder = function(folderId, pageId) {
-                return $q(function(resolve, reject) {
-                    $http.get($scope.createUrl(folderId, pageId, $scope.sortField, $scope.searchQuery)).then(function(response) {
-                        $scope.filesResponseToVars(response);
-                        return resolve(true);
-                    });
-                });
-            };
-
-            $scope.createUrl = function(folderId, pageId, sortField, search) {
-                return 'admin/api-admin-storage/data-files?folderId='+folderId+'&page='+pageId+'&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + sortField + '&search=' + search;
-            };
-
-            $scope.filesResponseToVars = function(response) {
-                $scope.filesData = response.data;
-                // meta
-                $scope.pageCount = response.headers('X-Pagination-Page-Count');
-                $scope.currentPageId = response.headers('X-Pagination-Current-Page');
-                $scope.totalFiles = response.headers('X-Pagination-Total-Count');
-            };
-
-            $scope.filesMetaToPagination = function(meta) {
-                $scope.pageCount = meta.totalPages;
-            };
-            
-            $scope.getFilesForCurrentPage = function() {
-                return $scope.getFilesForPageAndFolder($scope.currentFolderId, $scope.currentPageId);
-            };
-            
-            // ServiceFolderId
-
-            $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
-
-            $rootScope.$on('service:FoldersDirectoryId', function(event, folderId) {
-                $scope.currentFolderId = folderId;
-            });
-
-            $scope.foldersDirecotryIdReload = function() {
-                return ServiceFoldersDirecotryId.load(true);
-            }
-
-            // file replace logic
-
-            $scope.folderCountMessage = function(folder) {
-                return i18nParam('js_filemanager_count_files_overlay', {count: folder.filesCount});
-            }
-
-            $scope.errorMsg = null;
-
-            $scope.replaceFile = function(file, errorFiles) {
-                $scope.replaceFiled = file;
-                if (!file) {
-                    return;
-                }
-                LuyaLoading.start();
-
-                Upload.upload({
-                    url: 'admin/api-admin-storage/file-replace',
-                    data: {file: file, fileId: $scope.fileDetail.id, pageId: $scope.currentPageId}
-                }).then(function (response) {
-                    LuyaLoading.stop();
-                    if (response.status == 200) {
-                        $scope.getFilesForCurrentPage().then(function() {
-                            AdminToastService.success(i18n['js_dir_manager_file_replace_ok']);
-                        });
-                        $scope.openFileDetail($scope.fileDetail, true);
-                    }
-                }, function() {
-                    LuyaLoading.stop();
-                });
-            };
-
-            // upload logic
-
-            $scope.$watch('uploadingfiles', function (uploadingfiles) {
-                if (uploadingfiles != null) {
-                    $scope.uploadResults = 0;
-                    LuyaLoading.start(i18n['js_dir_upload_wait']);
-                    for (var i = 0; i < uploadingfiles.length; i++) {
-                        $scope.errorMsg = null;
-                        (function (uploadingfiles) {
-                            $scope.uploadUsingUpload(uploadingfiles);
-                        })(uploadingfiles[i]);
-                    }
-                }
-            });
-
-            $scope.$watch('uploadResults', function(n, o) {
-                if ($scope.uploadingfiles != null) {
-                    if (n == $scope.uploadingfiles.length && $scope.errorMsg == null) {
-                        $scope.getFilesForCurrentPage().then(function() {
-                            AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
-                            LuyaLoading.stop();
-                        });
-                    }
-                }
-            });
-
-            $scope.pasteUpload = function(e) {
-                for (var i = 0 ; i < e.originalEvent.clipboardData.items.length ; i++) {
-                    var item = e.originalEvent.clipboardData.items[i];
-                    if (item.kind == 'file') {
-                        LuyaLoading.start(i18n['js_dir_upload_wait']);
-                        Upload.upload({
-                            url: 'admin/api-admin-storage/files-upload',
-                            fields: {'folderId': $scope.currentFolderId},
-                            file: item.getAsFile()
-                        }).then(function(response) {
-                            if (response.data.upload) {
-                                $scope.getFilesForCurrentPage().then(function() {
-                                    AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
-                                    LuyaLoading.stop();
-                                });
-                            } else {
-                                AdminToastService.error(response.data.message);
-                                LuyaLoading.stop();
-                            }
-                        }, function(error) {
-                            AdminToastService.error(error.data.message);
-                            LuyaLoading.stop();
-                        });
-                    }
-                }
-            };
-
-            $scope.uploadUsingUpload = function(file) {
-                file.upload = Upload.upload({
-                    url: 'admin/api-admin-storage/files-upload',
-                    fields: {'folderId': $scope.currentFolderId},
-                    file: file
-                });
-
-                file.upload.then(function (response) {
-                    $timeout(function () {
-                        $scope.uploadResults++;
-                        file.processed = true;
-                        file.result = response.data;
-                        if (!file.result.upload) {
-                            AdminToastService.error(file.result.message);
-                            LuyaLoading.stop();
-                            $scope.errorMsg = true
+                $scope.hasFolderActiveChild = function (folderId) {
+                    var value = false;
+                    angular.forEach($scope.folderInheritance, function (item) {
+                        if (item.id == folderId) {
+                            value = true;
                         }
                     });
-                }, function (response) {
-                    file = response.data;
-                    AdminToastService.error(file.message);
-                    LuyaLoading.stop();
-                    $scope.errorMsg = true
-                });
 
-                file.upload.progress(function (evt) {
-                    file.processed = false;
-                    // Math.min is to fix IE which reports 200% sometimes
-                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                });
-            }
-
-            // selector logic
-
-            $scope.selectedFiles = [];
-
-            $scope.toggleSelectionAll = function() {
-                $scope.filesData.forEach(function(value, key) {
-                    $scope.toggleSelection(value);
-                });
-            }
-
-            $scope.toggleSelection = function(file) {
-                if ($scope.allowSelection == 'true') {
-                    // parent inject
-                    $scope.$parent.select(file.id);
-                    return;
+                    return value;
                 }
 
-                var i = $scope.selectedFiles.indexOf(file.id);
-                if (i > -1) {
-                    $scope.selectedFiles.splice(i, 1);
-                } else {
-                    $scope.selectedFiles.push(file.id);
-                }
-            };
-
-            $scope.inSelection = function(file) {
-                var response = $scope.selectedFiles.indexOf(file.id);
-
-                if (response != -1) {
-                    return true;
-                }
-
-                return false;
-            };
-
-            // folder add
-
-            $scope.showFolderForm = false;
-
-            $scope.createNewFolder = function(newFolderName) {
-                if (!newFolderName) {
-                    return;
-                }
-                $http.post('admin/api-admin-storage/folder-create', { folderName : newFolderName , parentFolderId : $scope.currentFolderId }).then(function(response) {
-                    var folderId = response.data;
-                    $scope.foldersDataReload().then(function(response) {
-                        $scope.folderFormToggler();
-                        $scope.newFolderName = null;
-                        $scope.changeCurrentFolderId(folderId);
-                    })
+                $scope.$watch('currentPageId', function (pageId, oldPageId) {
+                    if (pageId !== undefined && pageId != oldPageId) {
+                        $scope.getFilesForCurrentPage();
+                    }
                 });
-            };
 
-            $scope.folderFormToggler = function() {
-                $scope.showFolderForm = !$scope.showFolderForm;
-            };
+                $scope.getFilesForPageAndFolder = function (folderId, pageId) {
+                    return $q(function (resolve, reject) {
+                        $http.get($scope.createUrl(folderId, pageId, $scope.sortField, $scope.searchQuery)).then(function (response) {
+                            $scope.filesResponseToVars(response);
+                            return resolve(true);
+                        });
+                    });
+                };
 
-            // controller logic
+                $scope.createUrl = function (folderId, pageId, sortField, search) {
+                    return 'admin/api-admin-storage/data-files?folderId=' + folderId + '&page=' + pageId + '&expand=createThumbnail,createThumbnailMedium,isImage,sizeReadable&sort=' + sortField + '&search=' + search;
+                };
 
-            $scope.searchQuery = '';
-            $scope.searchPromise = null;
-            $scope.searchLoading = false;
-            
-            $scope.runSearch = function() {
-                if ($scope.searchQuery.length > 0) {
-                    $scope.searchLoading = true;
-                    cfpLoadingBar.start();
-                    $timeout.cancel($scope.searchPromise);
-                    $scope.searchPromise = $timeout(function() {
-                        $scope.getFilesForCurrentPage().then(function() {
+                $scope.filesResponseToVars = function (response) {
+                    $scope.filesData = response.data;
+                    // meta
+                    $scope.pageCount = response.headers('X-Pagination-Page-Count');
+                    $scope.currentPageId = response.headers('X-Pagination-Current-Page');
+                    $scope.totalFiles = response.headers('X-Pagination-Total-Count');
+                };
+
+                $scope.filesMetaToPagination = function (meta) {
+                    $scope.pageCount = meta.totalPages;
+                };
+
+                $scope.getFilesForCurrentPage = function () {
+                    return $scope.getFilesForPageAndFolder($scope.currentFolderId, $scope.currentPageId);
+                };
+
+                // ServiceFolderId
+
+                $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
+
+                $rootScope.$on('service:FoldersDirectoryId', function (event, folderId) {
+                    $scope.currentFolderId = folderId;
+                });
+
+                $scope.foldersDirecotryIdReload = function () {
+                    return ServiceFoldersDirecotryId.load(true);
+                }
+
+                // file replace logic
+
+                $scope.folderCountMessage = function (folder) {
+                    return i18nParam('js_filemanager_count_files_overlay', { count: folder.filesCount });
+                }
+
+                $scope.errorMsg = null;
+
+                $scope.replaceFile = function (file, errorFiles) {
+                    $scope.replaceFiled = file;
+                    if (!file) {
+                        return;
+                    }
+                    LuyaLoading.start();
+
+                    Upload.upload({
+                        url: 'admin/api-admin-storage/file-replace',
+                        data: { file: file, fileId: $scope.fileDetail.id, pageId: $scope.currentPageId }
+                    }).then(function (response) {
+                        LuyaLoading.stop();
+                        if (response.status == 200) {
+                            $scope.getFilesForCurrentPage().then(function () {
+                                AdminToastService.success(i18n['js_dir_manager_file_replace_ok']);
+                            });
+                            $scope.openFileDetail($scope.fileDetail, true);
+                        }
+                    }, function () {
+                        LuyaLoading.stop();
+                    });
+                };
+
+                // upload logic
+
+                $scope.$watch('uploadingfiles', function (uploadingfiles) {
+                    if (uploadingfiles != null) {
+                        $scope.uploadResults = 0;
+                        LuyaLoading.start(i18n['js_dir_upload_wait']);
+                        for (var i = 0; i < uploadingfiles.length; i++) {
+                            $scope.errorMsg = null;
+                            (function (uploadingfiles) {
+                                $scope.uploadUsingUpload(uploadingfiles);
+                            })(uploadingfiles[i]);
+                        }
+                    }
+                });
+
+                $scope.$watch('uploadResults', function (n, o) {
+                    if ($scope.uploadingfiles != null) {
+                        if (n == $scope.uploadingfiles.length && $scope.errorMsg == null) {
+                            $scope.getFilesForCurrentPage().then(function () {
+                                AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                                LuyaLoading.stop();
+                            });
+                        }
+                    }
+                });
+
+                $scope.pasteUpload = function (e) {
+                    for (var i = 0; i < e.originalEvent.clipboardData.items.length; i++) {
+                        var item = e.originalEvent.clipboardData.items[i];
+                        if (item.kind == 'file') {
+                            LuyaLoading.start(i18n['js_dir_upload_wait']);
+                            Upload.upload({
+                                url: 'admin/api-admin-storage/files-upload',
+                                fields: { 'folderId': $scope.currentFolderId },
+                                file: item.getAsFile()
+                            }).then(function (response) {
+                                if (response.data.upload) {
+                                    $scope.getFilesForCurrentPage().then(function () {
+                                        AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                                        LuyaLoading.stop();
+                                    });
+                                } else {
+                                    AdminToastService.error(response.data.message);
+                                    LuyaLoading.stop();
+                                }
+                            }, function (error) {
+                                AdminToastService.error(error.data.message);
+                                LuyaLoading.stop();
+                            });
+                        }
+                    }
+                };
+
+                $scope.uploadUsingUpload = function (file) {
+                    file.upload = Upload.upload({
+                        url: 'admin/api-admin-storage/files-upload',
+                        fields: { 'folderId': $scope.currentFolderId },
+                        file: file
+                    });
+
+                    file.upload.then(function (response) {
+                        $timeout(function () {
+                            $scope.uploadResults++;
+                            file.processed = true;
+                            file.result = response.data;
+                            if (!file.result.upload) {
+                                AdminToastService.error(file.result.message);
+                                LuyaLoading.stop();
+                                $scope.errorMsg = true
+                            }
+                        });
+                    }, function (response) {
+                        file = response.data;
+                        AdminToastService.error(file.message);
+                        LuyaLoading.stop();
+                        $scope.errorMsg = true
+                    });
+
+                    file.upload.progress(function (evt) {
+                        file.processed = false;
+                        // Math.min is to fix IE which reports 200% sometimes
+                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                    });
+                }
+
+                // selector logic
+
+                $scope.selectedFiles = [];
+
+                $scope.toggleSelectionAll = function () {
+                    $scope.filesData.forEach(function (value, key) {
+                        $scope.toggleSelection(value);
+                    });
+                }
+
+                $scope.toggleSelection = function (file) {
+                    if ($scope.allowSelection == 'true') {
+                        // parent inject
+                        $scope.$parent.select(file.id);
+                        return;
+                    }
+
+                    var i = $scope.selectedFiles.indexOf(file.id);
+                    if (i > -1) {
+                        $scope.selectedFiles.splice(i, 1);
+                    } else {
+                        $scope.selectedFiles.push(file.id);
+                    }
+                };
+
+                $scope.inSelection = function (file) {
+                    var response = $scope.selectedFiles.indexOf(file.id);
+
+                    if (response != -1) {
+                        return true;
+                    }
+
+                    return false;
+                };
+
+                // folder add
+
+                $scope.showFolderForm = false;
+
+                $scope.createNewFolder = function (newFolderName) {
+                    if (!newFolderName) {
+                        return;
+                    }
+                    $http.post('admin/api-admin-storage/folder-create', { folderName: newFolderName, parentFolderId: $scope.currentFolderId }).then(function (response) {
+                        var folderId = response.data;
+                        $scope.foldersDataReload().then(function (response) {
+                            $scope.folderFormToggler();
+                            $scope.newFolderName = null;
+                            $scope.changeCurrentFolderId(folderId);
+                        })
+                    });
+                };
+
+                $scope.folderFormToggler = function () {
+                    $scope.showFolderForm = !$scope.showFolderForm;
+                };
+
+                // controller logic
+
+                $scope.searchQuery = '';
+                $scope.searchPromise = null;
+                $scope.searchLoading = false;
+
+                $scope.runSearch = function () {
+                    if ($scope.searchQuery.length > 0) {
+                        $scope.searchLoading = true;
+                        cfpLoadingBar.start();
+                        $timeout.cancel($scope.searchPromise);
+                        $scope.searchPromise = $timeout(function () {
+                            $scope.getFilesForCurrentPage().then(function () {
+                                $scope.searchLoading = false;
+                            });
+                        }, 1000);
+                    } else {
+                        $scope.getFilesForCurrentPage().then(function () {
                             $scope.searchLoading = false;
                         });
-                    }, 1000);
-                } else {
-                    $scope.getFilesForCurrentPage().then(function() {
-                        $scope.searchLoading = false;
-                    });
-                }
-            };
+                    }
+                };
 
-            $scope.sortField = 'name_original';
+                $scope.sortField = 'name_original';
 
-            $scope.changeSortField = function(name) {
-                $scope.sortField = name;
-                $scope.getFilesForCurrentPage();
-            };
+                $scope.changeSortField = function (name) {
+                    $scope.sortField = name;
+                    $scope.getFilesForCurrentPage();
+                };
 
-            $scope.changeCurrentFolderId = function(folderId, noState) {
-                $scope.searchQuery = '';
-                var oldCurrentFolder = $scope.currentFolderId;
-                $scope.currentFolderId = folderId;
-                $scope.currentPageId = 1;
-                $scope.selectedFiles = [];
-                if (noState !== true && oldCurrentFolder != folderId) {
-                    ServiceFoldersDirecotryId.folderId = folderId;
-                    $http.post('admin/api-admin-common/save-filemanager-folder-state', {folderId : folderId}, {ignoreLoadingBar: true});
-                }
-            };
+                $scope.changeCurrentFolderId = function (folderId, noState) {
+                    $scope.searchQuery = '';
+                    var oldCurrentFolder = $scope.currentFolderId;
+                    $scope.currentFolderId = folderId;
+                    $scope.currentPageId = 1;
+                    $scope.selectedFiles = [];
+                    if (noState !== true && oldCurrentFolder != folderId) {
+                        ServiceFoldersDirecotryId.folderId = folderId;
+                        $http.post('admin/api-admin-common/save-filemanager-folder-state', { folderId: folderId }, { ignoreLoadingBar: true });
+                    }
+                };
 
-            $scope.toggleFolderItem = function(data) {
-                if (data.toggle_open == undefined) {
-                    data['toggle_open'] = 1;
-                } else {
-                    data['toggle_open'] = !data.toggle_open;
-                }
-                $http.post('admin/api-admin-common/filemanager-foldertree-history', {data : data}, {ignoreLoadingBar: true});
-            };
-
-            $scope.folderUpdateForm = false;
-
-            $scope.folderDeleteForm = false;
-
-            $scope.folderDeleteConfirmForm = false;
-
-            $scope.updateFolder = function(folder) {
-                $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, {name : folder.name }).then(function(transport) {
-                    AdminToastService.success(i18n['js_dir_manager_rename_success']);
-                });
-            };
-
-            $scope.cancelFolderEdit = function(folder, oldName) {
-                folder.name = oldName;
-            };
-            
-            $scope.deleteFolder = function(folder) {
-                $http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
-                    var isEmpty = transport.data.empty;
-                    var filesCount = transport.data.count;
-                    if (isEmpty) {
-                        $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function(transport) {
-                            $scope.foldersDataReload().then(function() {
-                                $scope.currentFolderId = 0;
-                            });
-                        });
+                $scope.toggleFolderItem = function (data) {
+                    if (data.toggle_open == undefined) {
+                        data['toggle_open'] = 1;
                     } else {
-                        AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', {folderName: folder.name, count: filesCount}), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name : folder.name }).then(function() {
-                                $scope.foldersDataReload().then(function() {
+                        data['toggle_open'] = !data.toggle_open;
+                    }
+                    $http.post('admin/api-admin-common/filemanager-foldertree-history', { data: data }, { ignoreLoadingBar: true });
+                };
+
+                $scope.folderUpdateForm = false;
+
+                $scope.folderDeleteForm = false;
+
+                $scope.folderDeleteConfirmForm = false;
+
+                $scope.updateFolder = function (folder) {
+                    $http.post('admin/api-admin-storage/folder-update?folderId=' + folder.id, { name: folder.name }).then(function (transport) {
+                        AdminToastService.success(i18n['js_dir_manager_rename_success']);
+                    });
+                };
+
+                $scope.cancelFolderEdit = function (folder, oldName) {
+                    folder.name = oldName;
+                };
+
+                $scope.deleteFolder = function (folder) {
+                    $http.post('admin/api-admin-storage/is-folder-empty?folderId=' + folder.id, { name: folder.name }).then(function (transport) {
+                        var isEmpty = transport.data.empty;
+                        var filesCount = transport.data.count;
+                        if (isEmpty) {
+                            $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name: folder.name }).then(function (transport) {
+                                $scope.foldersDataReload().then(function () {
                                     $scope.currentFolderId = 0;
-                                    $toast.close();
                                 });
                             });
-                        }]);
-                    }
-                });
-            };
+                        } else {
+                            AdminToastService.confirm(i18nParam('layout_filemanager_remove_dir_not_empty', { folderName: folder.name, count: filesCount }), i18n['js_dir_manager_rm_folder_confirm_title'], ['$timeout', '$toast', function ($timeout, $toast) {
+                                $http.post('admin/api-admin-storage/folder-delete?folderId=' + folder.id, { name: folder.name }).then(function () {
+                                    $scope.foldersDataReload().then(function () {
+                                        $scope.currentFolderId = 0;
+                                        $toast.close();
+                                    });
+                                });
+                            }]);
+                        }
+                    });
+                };
 
-            $scope.removeFiles = function() {
-                AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function($timeout, $toast) {
-                    $http.post('admin/api-admin-storage/filemanager-remove-files', {'ids' : $scope.selectedFiles, 'pageId': $scope.currentPageId, 'folderId': $scope.currentFolderId}).then(function(transport) {
-                        $scope.getFilesForCurrentPage().then(function() {
-                            $toast.close();
-                            AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
+                $scope.removeFiles = function () {
+                    AdminToastService.confirm(i18n['js_dir_manager_rm_file_confirm'], i18n['js_dir_manager_rm_file_confirm_title'], ['$timeout', '$toast', function ($timeout, $toast) {
+                        $http.post('admin/api-admin-storage/filemanager-remove-files', { 'ids': $scope.selectedFiles, 'pageId': $scope.currentPageId, 'folderId': $scope.currentFolderId }).then(function (transport) {
+                            $scope.getFilesForCurrentPage().then(function () {
+                                $toast.close();
+                                AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
+                                $scope.selectedFiles = [];
+                                $scope.closeFileDetail();
+                            });
+                        });
+                    }]);
+                }
+
+                $scope.moveFilesTo = function (folderId) {
+                    $http.post('admin/api-admin-storage/filemanager-move-files', { 'fileIds': $scope.selectedFiles, 'toFolderId': folderId, 'currentPageId': $scope.currentPageId, 'currentFolderId': $scope.currentFolderId }).then(function (transport) {
+                        $scope.getFilesForCurrentPage().then(function () {
                             $scope.selectedFiles = [];
-                            $scope.closeFileDetail();
+                            $scope.showFoldersToMove = false;
                         });
                     });
-                }]);
-            }
+                };
 
-            $scope.moveFilesTo = function(folderId) {
-                $http.post('admin/api-admin-storage/filemanager-move-files', {'fileIds' : $scope.selectedFiles, 'toFolderId' : folderId, 'currentPageId': $scope.currentPageId, 'currentFolderId': $scope.currentFolderId}).then(function(transport) {
-                    $scope.getFilesForCurrentPage().then(function() {
-                        $scope.selectedFiles = [];
-                        $scope.showFoldersToMove = false;
-                    });
-                });
-            };
+                /* file detail related stuff */
 
-            /* file detail related stuff */
-            
-            $scope.fileDetail = false;
-
-            $scope.showFoldersToMove = false;
-
-            $scope.largeImagePreviewState = true;
-            
-            $scope.fileDetailFull = false;
-            
-            $scope.nameEditMode = false;
-
-            $scope.fileDetailFolder = false;
-            
-            
-            $scope.openFileDetail = function(file, force) {
-                if ($scope.fileDetail.id == file.id && force !== true) {
-                    $scope.closeFileDetail();
-                } else {
-                    
-                    ServiceFilesData.getFile(file.id, force).then(function(responseFile) {
-                        $scope.fileDetailFull = responseFile;
-                        $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
-                    }, function() {
-
-                    });
-                    
-                    $scope.fileDetail = file;
-                }
-            };
-
-            $scope.saveTagRelation = function(tag, file) {
-                $http.post('admin/api-admin-storage/toggle-file-tag', {tagId: tag.id, fileId: file.id}).then(function(response) {
-                    $scope.fileDetailFull.tags = response.data;
-                });
-            };
-
-            $scope.fileHasTag = function(tag) {
-                var exists = false;
-                angular.forEach($scope.fileDetailFull.tags, function(value) {
-                    if (value.id == tag.id) {
-                        exists = true;
-                    }
-                });
-
-                return exists;
-            };
-            
-            $scope.updateFileData = function() {
-                $http.put('admin/api-admin-storage/file-update?id='+$scope.fileDetailFull.id+'&pageId='+$scope.currentPageId, $scope.fileDetailFull).then(function(response) {
-                    var file = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
-                    file.name = response.data.name_original;
-                    $scope.nameEditMode = false;
-                });
-            };
-
-            $scope.closeFileDetail = function() {
                 $scope.fileDetail = false;
+
+                $scope.showFoldersToMove = false;
+
+                $scope.largeImagePreviewState = true;
+
                 $scope.fileDetailFull = false;
+
                 $scope.nameEditMode = false;
-            };
-            
-            $scope.removeFile = function(detail) {
-                $scope.selectedFiles = [];
-                $scope.toggleSelection(detail);
-                $scope.removeFiles();
-            };
 
-            $scope.storeFileCaption = function(fileDetail) {
-                $http.post('admin/api-admin-storage/filemanager-update-caption', {'id': fileDetail.id, 'captionsText' : fileDetail.captionArray, 'pageId': $scope.currentPageId}).then(function(transport) {
-                    // @TODO i18n
-                    AdminToastService.success('Captions has been updated');
-                });
-            }
+                $scope.fileDetailFolder = false;
 
-            $scope.selectedFileFromParent = null;
 
-            $scope.init = function() {
-                if ($scope.$parent.fileinfo) {
-                    $scope.selectedFileFromParent = $scope.$parent.fileinfo;
-                    $scope.changeCurrentFolderId($scope.selectedFileFromParent.folder_id, true);
+                $scope.openFileDetail = function (file, force) {
+                    if ($scope.fileDetail.id == file.id && force !== true) {
+                        $scope.closeFileDetail();
+                    } else {
+
+                        ServiceFilesData.getFile(file.id, force).then(function (responseFile) {
+                            $scope.fileDetailFull = responseFile;
+                            $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
+                        }, function () {
+
+                        });
+
+                        $scope.fileDetail = file;
+                    }
+                };
+
+                $scope.saveTagRelation = function (tag, file) {
+                    $http.post('admin/api-admin-storage/toggle-file-tag', { tagId: tag.id, fileId: file.id }).then(function (response) {
+                        $scope.fileDetailFull.tags = response.data;
+                    });
+                };
+
+                $scope.fileHasTag = function (tag) {
+                    var exists = false;
+                    angular.forEach($scope.fileDetailFull.tags, function (value) {
+                        if (value.id == tag.id) {
+                            exists = true;
+                        }
+                    });
+
+                    return exists;
+                };
+
+                $scope.updateFileData = function () {
+                    $http.put('admin/api-admin-storage/file-update?id=' + $scope.fileDetailFull.id + '&pageId=' + $scope.currentPageId, $scope.fileDetailFull).then(function (response) {
+                        var file = $filter('findidfilter')($scope.filesData, $scope.fileDetail.id, true);
+                        file.name = response.data.name_original;
+                        $scope.nameEditMode = false;
+                    });
+                };
+
+                $scope.closeFileDetail = function () {
+                    $scope.fileDetail = false;
+                    $scope.fileDetailFull = false;
+                    $scope.nameEditMode = false;
+                };
+
+                $scope.removeFile = function (detail) {
+                    $scope.selectedFiles = [];
+                    $scope.toggleSelection(detail);
+                    $scope.removeFiles();
+                };
+
+                $scope.storeFileCaption = function (fileDetail) {
+                    $http.post('admin/api-admin-storage/filemanager-update-caption', { 'id': fileDetail.id, 'captionsText': fileDetail.captionArray, 'pageId': $scope.currentPageId }).then(function (transport) {
+                        // @TODO i18n
+                        AdminToastService.success('Captions has been updated');
+                    });
                 }
-            }
 
-            $scope.init();
+                $scope.selectedFileFromParent = null;
 
-        }],
-        templateUrl : 'storageFileManager'
+                $scope.init = function () {
+                    if ($scope.$parent.fileinfo) {
+                        $scope.selectedFileFromParent = $scope.$parent.fileinfo;
+                        $scope.changeCurrentFolderId($scope.selectedFileFromParent.folder_id, true);
+                    }
+                }
+
+                $scope.init();
+
+            }],
+        templateUrl: 'storageFileManager'
     }
 });
 
-zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeout) {
+zaa.directive("hasEnoughSpace", ['$window', '$timeout', function ($window, $timeout) {
     return {
         restrict: "A",
         scope: {
@@ -3285,7 +3289,7 @@ zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeo
         link: function (scope, element, attrs) {
             scope.elementWidth = 0;
 
-            var getElementOriginalWidth = function() {
+            var getElementOriginalWidth = function () {
                 var elementClone = element.clone().insertAfter(element);
 
                 elementClone.css({
@@ -3295,7 +3299,7 @@ zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeo
                     'visibility': 'hidden'
                 });
 
-                if(elementClone.css('display') === 'none') {
+                if (elementClone.css('display') === 'none') {
                     elementClone.css('display', scope.isFlexBox ? 'flex' : 'block');
                 }
 
@@ -3308,19 +3312,19 @@ zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeo
 
 
             function checkSize() {
-                $timeout(function() {
-                    if(!scope.elementOriginalWidth) {
+                $timeout(function () {
+                    if (!scope.elementOriginalWidth) {
                         scope.elementOriginalWidth = getElementOriginalWidth();
                     }
 
-                    if(element.hasClass('not-enough-space')) {
+                    if (element.hasClass('not-enough-space')) {
                         element.removeClass('not-enough-space');
                         element.addClass('has-enough-space');
                     }
 
                     var currentElementSpace = element.parent().outerWidth();
 
-                    if(currentElementSpace < scope.elementOriginalWidth) {
+                    if (currentElementSpace < scope.elementOriginalWidth) {
                         element.removeClass('has-enough-space').addClass('not-enough-space');
                     } else {
                         element.removeClass('not-enough-space').addClass('has-enough-space');
@@ -3328,12 +3332,12 @@ zaa.directive("hasEnoughSpace", ['$window', '$timeout', function($window, $timeo
                 });
             }
 
-            angular.element($window).on('resize', function() {
+            angular.element($window).on('resize', function () {
                 checkSize();
             });
 
-            scope.$watch('loadingCondition', function(n) {
-                if(n == true) {
+            scope.$watch('loadingCondition', function (n) {
+                if (n == true) {
                     checkSize();
                 }
             });
@@ -3349,13 +3353,13 @@ zaa.directive('activeClass', function () {
             activeClass: '@'
         },
         link: function (scope, element) {
-            element.on('mouseenter', function() {
+            element.on('mouseenter', function () {
                 element.addClass(scope.activeClass);
             });
-            element.on('mouseleave', function() {
+            element.on('mouseleave', function () {
                 element.removeClass(scope.activeClass);
             });
-            element.on('click', function() {
+            element.on('click', function () {
                 element.toggleClass(scope.activeClass);
             });
         }
@@ -3375,18 +3379,18 @@ zaa.directive('pagination', function () {
             currentPage: '=',
             pageCount: '='
         },
-        controller: ['$scope', '$timeout', function($scope, $timeout) {
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
             $scope.sliderPage = $scope.currentPage;
             $scope.userInputPage = $scope.currentPage;
 
             // Watch for pageCOunt changes and refresh ceil value for slider
-            $scope.$watch('pageCount', function(newValue) {
+            $scope.$watch('pageCount', function (newValue) {
                 if (newValue !== undefined) {
                     $scope.sliderOptions.ceil = newValue;
                 }
             });
-            $scope.$watch('userInputPage', function(newValue, oldValue) {
-                if(newValue >= $scope.sliderOptions.floor && newValue <= $scope.sliderOptions.ceil) {
+            $scope.$watch('userInputPage', function (newValue, oldValue) {
+                if (newValue >= $scope.sliderOptions.floor && newValue <= $scope.sliderOptions.ceil) {
                     $scope.sliderPage = parseInt(newValue);
                     $scope.currentPage = parseInt(newValue);
                     $scope.$broadcast('rzSliderForceRender'); // Probably not the best idea, but for now it works.
@@ -3407,24 +3411,24 @@ zaa.directive('pagination', function () {
                             return i18n['js_pagination_page'] + ' ' + value
                     }
                 },
-                onEnd: function(sliderId, modelValue) {
+                onEnd: function (sliderId, modelValue) {
                     // Update the currentPage once the user stopped dragging (or on click)
                     $scope.currentPage = parseInt(modelValue);
                     $scope.userInputPage = parseInt(modelValue);
-                } 
+                }
             };
 
-            $timeout(function() {
+            $timeout(function () {
                 $scope.$broadcast('rzSliderForceRender');
             });
 
         }],
         template: '<rzslider rz-slider-model="sliderPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>' +
-                '<div class="input-group mt-2" style="max-width: 150px" ng-show="sliderOptions.ceil >= 30">' +
-                    '<div class="input-group-prepend">' +
-                        '<div class="input-group-text">' + i18n['js_pagination_page'] + '</div>' +
-                    '</div>' +
-                    '<input class="form-control" ng-model="userInputPage" type="number" min="{{sliderOptions.floor}}" max="{{sliderOptions.ceil}}" />' +
-                '</div>',
+            '<div class="input-group mt-2" style="max-width: 150px" ng-show="sliderOptions.ceil >= 30">' +
+            '<div class="input-group-prepend">' +
+            '<div class="input-group-text">' + i18n['js_pagination_page'] + '</div>' +
+            '</div>' +
+            '<input class="form-control" ng-model="userInputPage" type="number" min="{{sliderOptions.floor}}" max="{{sliderOptions.ceil}}" />' +
+            '</div>',
     };
 });
