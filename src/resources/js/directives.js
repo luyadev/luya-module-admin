@@ -3425,55 +3425,68 @@ zaa.directive('pagination', function () {
             pageCount: '='
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-            $scope.sliderPage = $scope.currentPage;
-            $scope.userInputPage = $scope.currentPage;
+            $scope.pageNumberInputVal = $scope.currentPage;
 
-            // Watch for pageCOunt changes and refresh ceil value for slider
-            $scope.$watch('pageCount', function (newValue) {
-                if (newValue !== undefined) {
-                    $scope.sliderOptions.ceil = newValue;
-                }
-            });
-            $scope.$watch('userInputPage', function (newValue, oldValue) {
-                if (newValue >= $scope.sliderOptions.floor && newValue <= $scope.sliderOptions.ceil) {
-                    $scope.sliderPage = parseInt(newValue);
-                    $scope.currentPage = parseInt(newValue);
-                    $scope.$broadcast('rzSliderForceRender'); // Probably not the best idea, but for now it works.
-                }
-            });
+            $scope.$watch('currentPage', function(newVal) {
+                $scope.pageNumberInputVal = newVal;
+            })
+            $scope.$watch('pageNumberInputVal', function() {
+                // Set the input width (ato-grow)
+                $scope.inputWidth = 25 + (10 * ($scope.pageNumberInputVal.toString().length <= 0 ? 1 : $scope.pageNumberInputVal.toString().length))
+            })
 
-            $scope.sliderOptions = {
-                floor: 1,
-                ceil: $scope.pageCount,
-                translate: function (value, sliderId, label) {
-                    // Change the default label
-                    switch (label) {
-                        case 'floor':
-                            return value;
-                        case 'ceil':
-                            return value;
-                        default:
-                            return i18n['js_pagination_page'] + ' ' + value
+            var timeoutPromise = null;
+            $scope.pageNumberInputChange = function() {
+                if(timeoutPromise) {
+                    $timeout.cancel(timeoutPromise)
+                }
+
+                // Debounce
+                timeoutPromise = $timeout( function() {
+                    if(isNaN($scope.pageNumberInputVal)) {
+                        // Not a number, reset
+                        $scope.pageNumberInputVal = $scope.currentPage
+                    } else {
+                        // Input is number
+                        if(parseInt($scope.pageNumberInputVal) > parseInt($scope.pageCount) || parseInt($scope.pageNumberInputVal) <= 0) {
+                            // Out of range, reset
+                            $scope.pageNumberInputVal = $scope.currentPage
+                        } else {
+                            $scope.currentPage = $scope.pageNumberInputVal
+                        }
                     }
-                },
-                onEnd: function (sliderId, modelValue) {
-                    // Update the currentPage once the user stopped dragging (or on click)
-                    $scope.currentPage = parseInt(modelValue);
-                    $scope.userInputPage = parseInt(modelValue);
+                }, 500)
+            }
+
+            $scope.next = function() {
+                if($scope.currentPage < $scope.pageCount) {
+                    $scope.currentPage += 1;
                 }
-            };
-
-            $timeout(function () {
-                $scope.$broadcast('rzSliderForceRender');
-            });
-
+            }
+            $scope.prev = function() {
+                if($scope.currentPage > 1) {
+                    $scope.currentPage -= 1;
+                }
+            }
+            $scope.first = function() {
+                $scope.currentPage = 1;
+            }
+            $scope.last = function() {
+                $scope.currentPage = $scope.pageCount;
+            }
         }],
-        template: '<rzslider rz-slider-model="sliderPage" rz-slider-options="sliderOptions" ng-hide="pageCount<=1"></rzslider>' +
-            '<div class="input-group mt-2" style="max-width: 150px" ng-show="sliderOptions.ceil >= 30">' +
-            '<div class="input-group-prepend">' +
-            '<div class="input-group-text">' + i18n['js_pagination_page'] + '</div>' +
-            '</div>' +
-            '<input class="form-control" ng-model="userInputPage" type="number" min="{{sliderOptions.floor}}" max="{{sliderOptions.ceil}}" />' +
-            '</div>',
+        template: `
+            <div class="pagination" ng-show="pageCount > 1">
+                <button class="pagination-btn pagination-btn-first btn btn-icon btn-first-page" ng-click="first()" ng-disabled="currentPage == 1"></button>
+                <button class="pagination-btn pagination-btn-prev btn btn-icon btn-prev" ng-click="prev()" ng-disabled="currentPage == 1"></button>
+                <div class="pagination-page">
+                    <input ng-style="{'max-width': inputWidth + 'px'}" class="form-control pagination-input" type="text" ng-model="pageNumberInputVal" ng-change="pageNumberInputChange()" />
+                    <span class="pagination-delimiter">/</span>
+                    <span class="pagination-number-of-pages">{{pageCount}}</span>
+                </div>
+                <button class="pagination-btn pagination-btn-next btn btn-icon btn-next" ng-click="next()" ng-disabled="currentPage == pageCount"></button>
+                <button class="pagination-btn pagination-btn-last btn btn-icon btn-last-page" ng-click="last()" ng-disabled="currentPage == pageCount"></button>
+            </div>
+        `,
     };
 });

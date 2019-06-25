@@ -1,0 +1,31 @@
+.pagination {
+    display: block;
+}
+
+.pagination-page {
+    display: inline-block;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+
+.pagination-input {
+    display: inline-block;
+}
+
+.pagination-delimiter {
+    display: inline-block;
+    margin: 0 2px 0 4px;
+}
+
+.pagination-number-of-pages {
+    display: inline-block;
+}
+
+.pagination-btn {
+    font-size: 22px;
+
+    &::after {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

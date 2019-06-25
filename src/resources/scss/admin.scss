@@ -71,13 +71,6 @@
 @import "../../../vendor/twbs/bootstrap/scss/carousel";
 @import "../../../vendor/twbs/bootstrap/scss/utilities";
 
-
-// ==================================================
-// Import vendor CSS files
-// ==================================================
-
-@import "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.scss";
-
 // ==================================================
 // Base
 // ==================================================
@@ -129,7 +122,7 @@
 @import "components/tab";
 @import "components/nav";
 @import "components/ng-wig";
-@import "components/rzslider";
+@import "components/pagination";
 @import "components/table";
 @import "components/timeline";
 @import "components/toasts";
