@@ -257,7 +257,7 @@ $btns: (
         )
     ),
     'outline-move': (
-        'background-color': none,
+        'background-color': transparent,
         'border-color': theme-color('secondary'),
         'color': theme-color('secondary'),
         'icon': 'subdirectory_arrow_right',
@@ -266,13 +266,48 @@ $btns: (
             'border-color': theme-color('secondary'),
             'color': map-get($colors, white)
         )
+    ),
+    'prev': (
+        'background-color': transparent,
+        'border': none,
+        'color': theme-color('dark'),
+        'icon': 'chevron_left',
+        'hover': (
+            'background-color': rgba(theme-color('dark'), .1),
+        )
+    ),
+    'next': (
+        'background-color': transparent,
+        'border': none,
+        'color': theme-color('dark'),
+        'icon': 'chevron_right',
+        'hover': (
+            'background-color': rgba(theme-color('dark'), .1),
+        )
+    ),
+    'last-page': (
+        'background-color': transparent,
+        'border': none,
+        'color': theme-color('dark'),
+        'icon': 'last_page',
+        'hover': (
+            'background-color': rgba(theme-color('dark'), .1),
+        )
+    ),
+    'first-page': (
+        'background-color': transparent,
+        'border': none,
+        'color': theme-color('dark'),
+        'icon': 'first_page',
+        'hover': (
+            'background-color': rgba(theme-color('dark'), .1),
+        )
     )
 );
 
 .btn {
-
+    cursor: default;
     padding: 6px 10px 6px 10px;
-    cursor: pointer;
 
     .material-icons {
         vertical-align: middle;
@@ -284,7 +319,7 @@ $btns: (
         border-radius: 0;
     }
 
-    &:not([class*="outline-"]):not([class^="outline-"]):not([class*="btn-"]):not([class^="btn-"]) {
+    &:not([class*='outline-']):not([class^='outline-']):not([class*='btn-']):not([class^='btn-']) {
         background-color: map-get($colors, gray-light);
         color: $btn-color-dark;
     }
@@ -294,11 +329,12 @@ $btns: (
 
         &:after {
             @include material-icons;
-            position: absolute;
+
+            font-size: inherit;
             left: 8px;
+            position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: inherit;
         }
     }
 
@@ -306,9 +342,16 @@ $btns: (
         background-color: transparent;
     }
 
+    &:disabled {
+        cursor: not-allowed;
+    }
+
     &:hover,
     &-active {
-        &:not([class*=" btn-"]), &.btn-sm, &.btn-lg {
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+        &:not([class*=' btn-']), &.btn-sm, &.btn-lg {
             background-color: darken(map-get($colors, gray-light), 7.5%);
             border-color: darken(map-get($colors, gray-light), 10%);
             color: $btn-color-dark;
@@ -316,16 +359,19 @@ $btns: (
     }
 
     @each $iconName, $iconValues in $btns {
-
         // Generate background, border and color styles for all defined buttons in $btns map
         &-#{$iconName} {
             background-color: map-get($iconValues, 'background-color');
             border-color: map-get($iconValues, 'border-color');
             color: map-get($iconValues, 'color') !important;
 
+            &:not(:disabled):hover {
+                cursor: pointer;
+            }
+
             @if type-of( map-get($iconValues, 'hover') ) == 'map' {
                 $iconHoverValues: map-get($iconValues, 'hover');
-                &:hover,
+                &:not(:disabled):hover,
                 &.btn-active {
                     @if map-has-key($iconHoverValues, 'background-color') {
                         background-color: darken(map-get($iconHoverValues, 'background-color'), 7.5%);
@@ -343,8 +389,8 @@ $btns: (
                 padding-left: 30px;
 
                 &:empty {
-                    padding-top: 26px;
                     padding-left: 24px;
+                    padding-top: 26px;
                 }
 
                 &:after {
@@ -360,10 +406,10 @@ $btns: (
 // ==================================================
 
 .btn-link {
-    color: color(gray);
-    border-color: transparent;
-    padding: 2px;
     background: transparent;
+    border-color: transparent;
+    color: color(gray);
+    padding: 2px;
 
     &:hover {
         color: theme-color(primary);
@@ -384,9 +430,10 @@ $btns: (
 
 // Label outside of buttons
 .btn-label {
+    @include google-chrome-font-offset-fix;
+
     margin-left: 10px;
     vertical-align: middle;
-    @include google-chrome-font-offset-fix;
 }
 
 // Active state for move to button in file manager
@@ -394,4 +441,3 @@ $btns: (
 .btn-move-active {
     background: theme-color(primary);
 }
-

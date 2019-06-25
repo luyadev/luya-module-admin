@@ -33,7 +33,6 @@
         "bower-asset/angular-filter" : "~0.5.15",
         "bower-asset/bowser": "^1.9",
         "bower-asset/echarts": "~3.8.5",
-        "bower-asset/angularjs-slider": "~6.6.0",
 		"unglue/client": "^1.4.1"
 	},
 	"autoload" : {
