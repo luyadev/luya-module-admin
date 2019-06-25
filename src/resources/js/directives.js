@@ -600,6 +600,46 @@ zaa.directive("modal", ['$timeout', function ($timeout) {
     }
 }]);
 
+/**
+ * A transclude element for an collapsible (accordian similar) container.
+ * 
+ * Usage example:
+ * 
+ * ```
+ * <collapse-container title="Advanced Settings">
+ *  <h1>Title</h1>
+ *  <div>do stuff here ..</div>
+ * </collapse-container>
+ * ```
+ * 
+ * @since 2.0.3
+ */
+zaa.directive("collapseContainer", [function() {
+    return {
+        restrict: "E",
+        scope: {
+            "title" : "@"
+        },
+        replace: true,
+        transclude: true,
+        controller: ['$scope', function($scope) {
+            $scope.visible = false;
+            $scope.toggleVisibility = function() {
+                $scope.visible = !$scope.visible;
+            };
+        }],
+        template: function() {
+            return '<div class="card" ng-class="{\'card-closed\': !visible}">'+
+                '<div class="card-header" ng-click="toggleVisibility()">'+
+                    '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>'+
+                    '<span>{{title}}</span>'+
+                '</div>'+
+                '<div class="card-body" ng-transclude></div>'+
+            '</div>';
+        }
+    }
+}]);
+
 /* CRUD, FORMS & FILE MANAGER */
 
 /**
