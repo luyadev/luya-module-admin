@@ -267,13 +267,13 @@ class Angular
      *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
-     * @param array $data
+     * @param array|string $data If a string is given it will be taken as two-way bind condition, otherwise an array input will be correctly convereted.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * @return AngularObject
      */
-    public static function select($ngModel, $label, array $data, array $options = [])
+    public static function select($ngModel, $label, $data, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_SELECT, $ngModel, $label, self::optionsArrayInput($data), $options);
+        return self::injector(TypesInterface::TYPE_SELECT, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
     
     /**
@@ -289,13 +289,13 @@ class Angular
      *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
-     * @param array $data An array with data where the array key is what is stored in the model e.g. `[1 => 'Mrs', 2 => 'Mr']`
+     * @param array|string $data If a string is given it will be taken as two way binding value. An array with data where the array key is what is stored in the model e.g. `[1 => 'Mrs', 2 => 'Mr']`
      * @param array $options Additonal arguments to create the tag.
      * @return AngularObject
      */
     public static function radio($ngModel, $label, array $data, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_RADIO, $ngModel, $label, self::optionsArrayInput($data), $options);
+        return self::injector(TypesInterface::TYPE_RADIO, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
     
     /**
@@ -328,14 +328,14 @@ class Angular
      *
      * @param string $ngModel The name of the ng model which should be used for data binding.
      * @param string $label The label to display for the form input.
-     * @param array $data
+     * @param array|string $data If a string is given it will be taken as two-way bind condition, otherwise an array input will be correctly convereted.
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * + preselect: If true all entires from the checkbox will be preselect by default whether its update or add.
      * @return AngularObject
      */
-    public static function checkboxArray($ngModel, $label, array $data, array $options = [])
+    public static function checkboxArray($ngModel, $label, $data, array $options = [])
     {
-        return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => self::optionsArrayInput($data)], $options);
+        return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => is_scalar($data) ? $data : self::optionsArrayInput($data)], $options);
     }
     
     /**
