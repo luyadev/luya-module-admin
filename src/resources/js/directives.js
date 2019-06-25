@@ -600,6 +600,46 @@ zaa.directive("modal", ['$timeout', function ($timeout) {
     }
 }]);
 
+/**
+ * A transclude element for an collapsible (accordian similar) container.
+ * 
+ * Usage example:
+ * 
+ * ```
+ * <collapse-container title="Advanced Settings">
+ *  <h1>Title</h1>
+ *  <div>do stuff here ..</div>
+ * </collapse-container>
+ * ```
+ * 
+ * @since 2.0.3
+ */
+zaa.directive("collapseContainer", [function() {
+    return {
+        restrict: "E",
+        scope: {
+            "title" : "@"
+        },
+        replace: true,
+        transclude: true,
+        controller: ['$scope', function($scope) {
+            $scope.visible = false;
+            $scope.toggleVisibility = function() {
+                $scope.visible = !$scope.visible;
+            };
+        }],
+        template: function() {
+            return '<div class="card" ng-class="{\'card-closed\': !visible}">'+
+                '<div class="card-header" ng-click="toggleVisibility()">'+
+                    '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>'+
+                    '<span>{{title}}</span>'+
+                '</div>'+
+                '<div class="card-body" ng-transclude></div>'+
+            '</div>';
+        }
+    }
+}]);
+
 /* CRUD, FORMS & FILE MANAGER */
 
 /**
@@ -2358,6 +2398,9 @@ zaa.directive("zaaJsonObject", function () {
         },
         controller: ['$scope', function ($scope) {
             $scope.$watch('model', function (n) {
+                if (angular.isArray(n)) {
+                    $scope.model = {};
+                }
                 if (n === undefined || n === null) {
                     $scope.model = {};
                 }
@@ -2392,7 +2435,7 @@ zaa.directive("zaaJsonObject", function () {
                 '</div>' +
                 '</div>' +
                 '<div class="input-group">' +
-                    '<input type="text" class="form-control" placeholder="New key" aria-label="New key" ng-model="newKey">' +
+                    '<input type="text" class="form-control" placeholder="'+i18n['js_jsonobject_newkey']+'" aria-label="'+i18n['js_jsonobject_newkey']+'" ng-model="newKey">' +
                     '<div class="input-group-append">' +
                         '<button class="btn btn-sm btn-success" type="button" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></button>' +
                     '</div>' +
