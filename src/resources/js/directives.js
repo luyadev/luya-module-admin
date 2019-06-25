@@ -2789,8 +2789,8 @@ zaa.directive("storageFileManager", function () {
             onlyImages: '@onlyImages'
         },
         controller: [
-            '$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags',
-            function ($scope, $http, $filter, $timeout, $rootScope, $q, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
+            '$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'HtmlStorage', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags',
+            function ($scope, $http, $filter, $timeout, $rootScope, $q, HtmlStorage, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
 
                 // ServiceFoldersData inheritance
 
@@ -2817,16 +2817,22 @@ zaa.directive("storageFileManager", function () {
                 $scope.filesData = [];
                 $scope.totalFiles = 0;
                 $scope.pageCount = 0;
-                $scope.currentPageId = 1;
+                $scope.currentPageId = parseInt(HtmlStorage.getValue('filemanager.pageId', 1));
+
+                $scope.$watch('currentPageId', function (pageId, oldPageId) {
+                    if (pageId !== undefined && pageId != oldPageId) {
+                        $scope.getFilesForCurrentPage();
+                    }
+                }, true);
 
                 // load files data for a given folder id
-                $scope.$watch('currentFolderId', function (folderId) {
-                    if (folderId !== undefined) {
+                $scope.$watch('currentFolderId', function (folderId, oldFolderId) {
+                    if (folderId !== undefined && folderId != oldFolderId) {
                         // generate the current pare info based on folder
                         $scope.generateFolderInheritance(folderId);
                         $scope.getFilesForPageAndFolder(folderId, 1);
                     }
-                });
+                }, true);
 
                 $scope.folderInheritance = [];
 
@@ -2836,7 +2842,7 @@ zaa.directive("storageFileManager", function () {
                 }
 
                 $scope.findFolderInheritance = function (folderId) {
-                    if ($scope.foldersData.hasOwnProperty(folderId)) {
+                    if ($scope.foldersData && $scope.foldersData.hasOwnProperty(folderId)) {
                         var parent = $scope.foldersData[folderId];
                         $scope.folderInheritance.push(parent);
                         if (parent && parent.parentId) {
@@ -2856,15 +2862,13 @@ zaa.directive("storageFileManager", function () {
                     return value;
                 }
 
-                $scope.$watch('currentPageId', function (pageId, oldPageId) {
-                    if (pageId !== undefined && pageId != oldPageId) {
-                        $scope.getFilesForCurrentPage();
-                    }
-                });
-
                 $scope.getFilesForPageAndFolder = function (folderId, pageId) {
                     return $q(function (resolve, reject) {
                         $http.get($scope.createUrl(folderId, pageId, $scope.sortField, $scope.searchQuery)).then(function (response) {
+                            // store sortField
+                            HtmlStorage.setValue('filemanager.sortField', $scope.sortField);
+                            // store pageId
+                            HtmlStorage.setValue('filemanager.pageId', parseInt(pageId));
                             $scope.filesResponseToVars(response);
                             return resolve(true);
                         });
@@ -2879,7 +2883,7 @@ zaa.directive("storageFileManager", function () {
                     $scope.filesData = response.data;
                     // meta
                     $scope.pageCount = response.headers('X-Pagination-Page-Count');
-                    $scope.currentPageId = response.headers('X-Pagination-Current-Page');
+                    $scope.currentPageId = parseInt(response.headers('X-Pagination-Current-Page'));
                     $scope.totalFiles = response.headers('X-Pagination-Total-Count');
                 };
 
@@ -2894,10 +2898,6 @@ zaa.directive("storageFileManager", function () {
                 // ServiceFolderId
 
                 $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
-
-                $rootScope.$on('service:FoldersDirectoryId', function (event, folderId) {
-                    $scope.currentFolderId = folderId;
-                });
 
                 $scope.foldersDirecotryIdReload = function () {
                     return ServiceFoldersDirecotryId.load(true);
@@ -3099,7 +3099,7 @@ zaa.directive("storageFileManager", function () {
                     }
                 };
 
-                $scope.sortField = 'name_original';
+                $scope.sortField = HtmlStorage.getValue('filemanager.sortField', 'name_original');
 
                 $scope.changeSortField = function (name) {
                     $scope.sortField = name;
@@ -3187,6 +3187,8 @@ zaa.directive("storageFileManager", function () {
                         });
                     });
                 };
+
+                $scope.getFilesForCurrentPage();
 
                 /* file detail related stuff */
 
