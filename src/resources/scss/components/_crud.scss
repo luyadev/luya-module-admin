@@ -29,6 +29,10 @@
     position: relative;
     right: 0;
 
+    &-for-checkbox {
+        margin-top: -6px;
+    }
+
     .btn {
         padding: 6px 9px;
     }

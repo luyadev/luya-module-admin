@@ -123,7 +123,7 @@ class ToggleStatus extends Plugin
     {
         if ($this->scheduling && $this->renderContext->canUpdate()) {
             return [
-                '<div class="crud-loader-tag">' . $this->createSchedulerListTag($ngModel, $this->getSchedulerValuesAsArray(), 'data.update', ['only-icon' => 1]) . '</div>',
+                '<div class="crud-loader-tag crud-loader-tag-for-checkbox">' . $this->createSchedulerListTag($ngModel, $this->getSchedulerValuesAsArray(), 'data.update', ['only-icon' => 1]) . '</div>',
                 $this->renderCreate($id, $ngModel),
             ];
         }
