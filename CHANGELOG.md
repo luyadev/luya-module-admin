@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.3
 
+### Changed
+
++ [#326](https://github.com/luyadev/luya-module-admin/issues/236) Revamped pagination to provide a better user experience.
+
 ### Fixed
 
 + [#234](https://github.com/luyadev/luya-module-admin/issues/234) File manager stores page and sort field into local storage to retrieve later.
