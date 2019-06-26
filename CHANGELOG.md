@@ -49,7 +49,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.0 (27. May 2019)
 
-This release contains new migrations and requires to run the `migrate` command after updating. Check the [UPGRADE Document](UPGRADE.md).
+> This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 
 ### Changed
 
