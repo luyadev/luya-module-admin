@@ -16,9 +16,9 @@ use luya\admin\models\Config;
  * ./vendor/bin/luya admin/queue
  * ```
  * 
- * > As alternative to the admin/queue command you can enable {{luya\admin\Moudle::$autoBootstrapQueue}} "fake cronjob" behavior.
+ * > As alternative to the admin/queue command you can enable {{luya\admin\Module::$autoBootstrapQueue}} "fake cronjob" behavior.
  * 
- * @see {{luya\admin\Moudle::$autoBootstrapQueue}}
+ * @see {{luya\admin\Module::$autoBootstrapQueue}}
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */
