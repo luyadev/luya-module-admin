@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.0.4
+
++ [#328](https://github.com/luyadev/luya-module-admin/issues/328) Empty default selection for "new value" in scheduler overlay.
+ 
 ## 2.0.3 (25. June 2019)
 
 ### Changed

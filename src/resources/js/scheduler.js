@@ -38,7 +38,7 @@ zaa.directive("luyaSchedule", function() {
             onlyIcon: "@",
             title: "@"
         },
-        controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+        controller: ['$scope', '$http', '$timeout', 'AdminToastService', function($scope, $http, $timeout, AdminToastService) {
 
             // toggle window
 
@@ -124,7 +124,6 @@ zaa.directive("luyaSchedule", function() {
             var now = new Date().getTime() / 1000;
             $scope.latestId;
             $scope.timestamp = parseInt(now);
-            $scope.newvalue = $scope.value;
 
             $scope.saveNewJob = function() {
                 $http.post('admin/api-admin-common/scheduler-add', {
@@ -136,7 +135,8 @@ zaa.directive("luyaSchedule", function() {
                 }).then(function(response) {
                     $scope.latestId = response.data.id;
                     $scope.getLogTable();
-                    // post success message with admin toast
+                }, function(error) {
+                    AdminToastService.errorArray(error.data);
                 });
             };
 
