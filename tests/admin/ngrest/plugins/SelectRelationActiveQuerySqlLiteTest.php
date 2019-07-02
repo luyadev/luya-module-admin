@@ -11,9 +11,6 @@ use yii\base\Event;
 
 class SelectRelationActiveQueryTestSqlLite extends AdminModelTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testRelationLoad()
     {
         $user = new NgRestModelFixture([

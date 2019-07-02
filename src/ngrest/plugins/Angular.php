@@ -5,7 +5,7 @@ namespace luya\admin\ngrest\plugins;
 use luya\admin\ngrest\base\Plugin;
 
 /**
- * Renders Angular in List View.
+ * Render Angular Templates.
  *
  * If you want to directly apply angular code within forms, or the list you can use this plugin.
  *

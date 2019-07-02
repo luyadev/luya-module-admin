@@ -7,7 +7,6 @@ use luya\admin\ngrest\base\Plugin;
 use yii\db\ActiveQuery;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
-use luya\helpers\ArrayHelper;
 
 /**
  * Performance optimised select relation plugin.
@@ -119,6 +118,18 @@ class SelectRelationActiveQuery extends Plugin
         return $this->_query;
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        parent::init();
+
+        if (empty($this->labelField)) {
+            throw new InvalidConfigException("The labelField property can not be empty.");
+        }
+    }
+
     /**
      * @inheritdoc
      */
