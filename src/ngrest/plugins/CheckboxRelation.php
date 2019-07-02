@@ -205,7 +205,7 @@ class CheckboxRelation extends Plugin
     private function getOptionsData($event)
     {
         $items = [];
-        
+        $targetModel = new $this->model;
         foreach ($this->model->find()->asArray($this->asArray)->all() as $item) {
             if (is_callable($this->labelField, false)) {
                 $label = call_user_func($this->labelField, $item);
@@ -216,7 +216,7 @@ class CheckboxRelation extends Plugin
                 $array = ArrayHelper::filter($item, $this->labelField);
                 
                 foreach ($array as $key => $value) {
-                    if ($event->sender->isI18n($key)) {
+                    if ($targetModel->isI18n($key)) {
                         $array[$key] = I18n::decodeFindActive($value);
                     }
                 }
