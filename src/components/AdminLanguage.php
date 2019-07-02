@@ -2,6 +2,7 @@
 
 namespace luya\admin\components;
 
+use Yii;
 use yii\base\Component;
 use luya\admin\models\Lang;
 use luya\traits\CacheableTrait;
