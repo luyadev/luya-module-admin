@@ -25,12 +25,16 @@ return [
             'isAdmin' => true,
             'isConsoleRequest' => false
         ],
-        'db' => [
+        'dbold' => [
             'class' => 'yii\db\Connection',
             'dsn' => DB_DSN,
             'username' => DB_USER,
             'password' => DB_PASS,
             'charset' => 'utf8',
+        ],
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'sqlite::memory:',
         ],
         'sqlite' => [
             'class' => 'yii\db\Connection',

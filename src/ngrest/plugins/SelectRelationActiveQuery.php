@@ -7,6 +7,7 @@ use luya\admin\ngrest\base\Plugin;
 use yii\db\ActiveQuery;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
+use luya\helpers\ArrayHelper;
 
 /**
  * Performance optimised select relation plugin.
@@ -17,6 +18,7 @@ use yii\base\InvalidConfigException;
  * 'client_id' => [
  *     'class' => SelectRelationActiveQuery::class,
  *     'query' => $this->getClient(),
+ *     'relation' => 'client',
  *     'labelField' => ['client_number', 'firstname', 'lastname']
  * ],
  * ```
@@ -53,6 +55,20 @@ class SelectRelationActiveQuery extends Plugin
      * @since 1.2.2
      */
     public $asyncList = false;
+
+    /**
+     * @var string The name of the relation which should be used to load the data. For example if you have `getPerson()` the relation name would be `person`.
+     * In order to reduce sql queries you can eager load the given relation in {{luya\admin\ngrest\base\Api::prepareListQuery()}}:
+     * 
+     * ```php
+     * public function prepareListQuery()
+     * {
+     *     return parent::prepareListQuery()->with(['person']);
+     * }
+     * ```
+     * @since 2.0.4
+     */
+    public $relation;
     
     private $_labelField;
     
@@ -160,28 +176,52 @@ class SelectRelationActiveQuery extends Plugin
      */
     public function onListFind($event)
     {
+        // async list ignores the onListFind event
         if ($this->asyncList) {
             return;
         }
         
+        // ensure a value exists for the given field.
         $value = $event->sender->getAttribute($this->name);
         
+        // render empty list value
         if ($this->emptyListValue && empty($value)) {
-            $this->writeAttribute($event, $this->emptyListValue);
-        } else {
-            $model = $this->_query->modelClass;
-            $row = $model::ngRestFind()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
-
-            if (!empty($row)) {
-                $row = array_map(function ($fieldValue, $fieldName) use ($model) {
-                    if ((new $model)->isI18n($fieldName)) {
-                        return $this->i18nDecodedGetActive($this->i18nFieldDecode($fieldValue));
-                    }
-                    return $fieldValue;
-                }, $row, array_keys($row));
-            
-                $this->writeAttribute($event, implode(" ", $row));
-            }
+            return $this->writeAttribute($event, $this->emptyListValue);
         }
+
+        // if a relation is defined, take the relation to render the value
+        if ($this->relation) {
+            $model = $event->sender->{$this->relation};
+            // unable to find the model relation. Maybe an old entry
+            if (!$model) {
+                return;
+            }
+
+            $values = $model->toArray($this->labelField);
+            $row = [];
+            foreach ($this->labelField as $name) {
+                $row[] = $values[$name];
+            }
+
+            return $this->writeAttribute($event, implode(" ", $row));
+        }
+
+        // fallback solution to load relation by a query, not recommend.
+        $model = $this->_query->modelClass;
+        $row = $model::ngRestFind()->select($this->labelField)->where(['id' => $value])->asArray(true)->one();
+
+        // unable to find the given model
+        if (!$row) {
+            return;
+        }
+        
+        $row = array_map(function ($fieldValue, $fieldName) use ($model) {
+            if ((new $model)->isI18n($fieldName)) {
+                return $this->i18nDecodedGetActive($this->i18nFieldDecode($fieldValue));
+            }
+            return $fieldValue;
+        }, $row, array_keys($row));
+    
+        return $this->writeAttribute($event, implode(" ", $row));
     }
 }

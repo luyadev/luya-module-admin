@@ -5,8 +5,14 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.4
 
+### Changed
+
 + [#328](https://github.com/luyadev/luya-module-admin/issues/328) Empty default selection for "new value" in scheduler overlay.
  
+### Added
+
++ [#331](https://github.com/luyadev/luya-module-admin/issues/331) Add new `relation` property for SelectRelationActiveQuery.
+
 ## 2.0.3 (25. June 2019)
 
 ### Changed
