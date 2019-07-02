@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Changed
 
++ [#332](https://github.com/luyadev/luya-module-admin/issues/332) CheckboxRelationActiveQuery should **not** populate any relation data on find.
 + [#328](https://github.com/luyadev/luya-module-admin/issues/328) Empty default selection for "new value" in scheduler overlay.
  
 ### Added

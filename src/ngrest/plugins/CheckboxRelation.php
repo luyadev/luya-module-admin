@@ -259,7 +259,9 @@ class CheckboxRelation extends Plugin
      */
     public function onBeforeFind($event)
     {
-        $event->sender->{$this->name} = $this->getRelationData($event);
+        if (!$this->onlyRestScenarios) {
+            $event->sender->{$this->name} = $this->getRelationData($event);
+        }
     }
     
     private function getRelationData($event)
