@@ -4,6 +4,8 @@ namespace luya\admin\components;
 
 use yii\base\Component;
 use luya\admin\models\Lang;
+use luya\traits\CacheableTrait;
+use luya\helpers\ArrayHelper;
 
 /**
  * Admin Language Component.
@@ -21,6 +23,10 @@ use luya\admin\models\Lang;
  */
 class AdminLanguage extends Component
 {
+    use CacheableTrait;
+
+    const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
+
     /**
      * Containg the default language assoc array.
      *
@@ -37,13 +43,23 @@ class AdminLanguage extends Component
     
     /**
      * Get the array of the current active language (its not an AR object!)
+     * 
+     * Determines active language by:
+     * 
+     * 1. langShortCode of composite component
+     * 2. language which has is_default flag enabled.
      *
      * @return array
      */
     public function getActiveLanguage()
     {
         if ($this->_activeLanguage === null) {
-            $this->_activeLanguage = Lang::findActive();
+            $langShortCode = Yii::$app->composition->getKey('langShortCode');
+            if ($langShortCode) {
+                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanuages(), 'short_code', $langShortCode);
+            } else {
+                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanuages(), 'is_default', 1);
+            }
         }
         
         return $this->_activeLanguage;
@@ -71,13 +87,22 @@ class AdminLanguage extends Component
     
     /**
      * Get an array of all languages (its not an AR object!)
+     * 
+     * An Example response.
+     * 
+     * array(
+     *    'de' => ['name' => Deutsch', 'short_code' => 'de', 'is_default' => 1],
+     *    'en' => ['name' => English', 'short_code' => 'en', 'is_default' => 0],
+     * )
      *
-     * @return array
+     * @return array An array with languages indexed by the short code of the language.
      */
     public function getLanguages()
     {
         if ($this->_languages === null) {
-            $this->_languages = Lang::getQuery();
+            $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function() {
+                return Lang::getQuery();
+            });
         }
     
         return $this->_languages;
@@ -92,5 +117,10 @@ class AdminLanguage extends Component
     public function getLanguageByShortCode($shortCode)
     {
         return isset($this->getLanguages()[$shortCode]) ? $this->getLanguages()[$shortCode] : false;
+    }
+
+    public function clearCache()
+    {
+        return $this->deleteHasCache(self::CACHE_KEY_QUERY_ALL);
     }
 }

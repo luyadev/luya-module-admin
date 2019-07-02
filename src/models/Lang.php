@@ -41,6 +41,7 @@ final class Lang extends NgRestModel
             if ($this->is_default) {
                 self::updateAll(['is_default' => false]);
             }
+            Yii::$app->adminLanguage->clearCache();
         });
         
         $this->on(self::EVENT_BEFORE_UPDATE, function ($event) {
@@ -48,6 +49,7 @@ final class Lang extends NgRestModel
                 $this->markAttributeDirty('is_default');
                 self::updateAll(['is_default' => false]);
             }
+            Yii::$app->adminLanguage->clearCache();
         });
         
         $this->on(self::EVENT_BEFORE_DELETE, function ($event) {
@@ -55,6 +57,7 @@ final class Lang extends NgRestModel
                 $this->addError('is_default', Module::t('model_lang_delete_error_is_default'));
                 $event->isValid = false;
             }
+            Yii::$app->adminLanguage->clearCache();
         });
     }
     
@@ -76,6 +79,7 @@ final class Lang extends NgRestModel
             [['is_default', 'is_deleted'], 'boolean'],
             [['name'], 'string', 'max' => 255],
             [['short_code'], 'string', 'max' => 15],
+            [['short_code'], 'unique'],
         ];
     }
     
