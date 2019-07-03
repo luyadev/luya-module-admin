@@ -12,6 +12,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
  
 ### Added
 
++ [#333](https://github.com/luyadev/luya-module-admin/pull/333) Allow caching of language data until data is modified.
 + [#331](https://github.com/luyadev/luya-module-admin/issues/331) Add new `relation` property for SelectRelationActiveQuery.
 
 ## 2.0.3 (25. June 2019)

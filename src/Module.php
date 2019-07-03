@@ -179,7 +179,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * @var boolean If enabled, the admin bootstrap process will check whether the queue job was runing within the last 30min or not. If you are not setting up any cronjob to run
      * the scheduler and you need to rely on the queue/scheulder system you enable this property which will then do a "dummy frontend user cronjob". So on every request it will
-     * check weather to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue` 
+     * check whether to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue` 
      * command using {{luya\admin\commands\QueueController}}.
      * @since 2.0.0
      * @see {{luya\admin\commands\QueueController}}
