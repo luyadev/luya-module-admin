@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.0.4
 
+### Fixed
+
++ [#254](https://github.com/luyadev/luya-module-admin/issues/254) Do not reset imageArray when using createImage() this fixes a bug when using applyFilter inside a foreach.
+
 ### Changed
 
 + [#332](https://github.com/luyadev/luya-module-admin/issues/332) CheckboxRelationActiveQuery should **not** populate any relation data on find.

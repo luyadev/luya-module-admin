@@ -946,7 +946,6 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function flushImageArray()
     {
-        $this->_imagesArray = null;
         $this->deleteHasCache(self::CACHE_KEY_IMAGE);
     }
 
