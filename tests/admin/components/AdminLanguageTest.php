@@ -6,6 +6,7 @@ use admintests\AdminModelTestCase;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\Lang;
 use luya\admin\components\AdminLanguage;
+use luya\web\Composition;
 
 class AdminLanguageTest extends AdminModelTestCase
 {
@@ -43,6 +44,16 @@ class AdminLanguageTest extends AdminModelTestCase
         // !important: This will resolve english language because composite language is english, even when german is_default=1
         $this->assertSame(2, $component->getActiveId());
         $this->assertSame('en', $component->getActiveShortCode());
+    }
+
+    public function testEmptyCompositionLangShortCode()
+    {
+        $this->app->composition->setKey(Composition::VAR_LANG_SHORT_CODE, null);
+        $component = new AdminLanguage();
+        $data = $component->getLanguages();
+        // This will resolve is_default = 1 because lang short code is null
+        $this->assertSame(1, $component->getActiveId());
+        $this->assertSame('de', $component->getActiveShortCode());
     }
 
     public function testGetbyShortCode()
