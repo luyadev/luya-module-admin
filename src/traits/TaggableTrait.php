@@ -44,7 +44,7 @@ trait TaggableTrait
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('{{%admin_tag_relation}}', ['pk_id' => 'id'], function ($query) {
-            $query->andWhere(['table_name' => static::cleanBaseTableName(static::tableName())]);
+            $query->onCondition(['table_name' => static::cleanBaseTableName(static::tableName())]);
         });
     }
 
