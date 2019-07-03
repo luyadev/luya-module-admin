@@ -26,6 +26,10 @@ class AdminLanguage extends Component
 {
     use CacheableTrait;
 
+    /**
+     * @var string The cache key name
+     * @since 2.0.4
+     */
     const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
 
     /**
@@ -55,11 +59,11 @@ class AdminLanguage extends Component
     public function getActiveLanguage()
     {
         if ($this->_activeLanguage === null) {
-            $langShortCode = Yii::$app->composition->getKey('langShortCode');
+            $langShortCode = Yii::$app->composition->langShortCode;
             if ($langShortCode) {
-                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanuages(), 'short_code', $langShortCode);
+                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'short_code', $langShortCode);
             } else {
-                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanuages(), 'is_default', 1);
+                $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
             }
         }
         
@@ -120,6 +124,12 @@ class AdminLanguage extends Component
         return isset($this->getLanguages()[$shortCode]) ? $this->getLanguages()[$shortCode] : false;
     }
 
+    /**
+     * Clear the cache data for admin language
+     *
+     * @return boolean whether clearing was successfull or not.
+     * @since 2.0.4
+     */
     public function clearCache()
     {
         return $this->deleteHasCache(self::CACHE_KEY_QUERY_ALL);
