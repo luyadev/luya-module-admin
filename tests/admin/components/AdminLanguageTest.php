@@ -34,9 +34,6 @@ class AdminLanguageTest extends AdminModelTestCase
         ]); 
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetLanguages()
     {
         $component = new AdminLanguage();
@@ -46,5 +43,25 @@ class AdminLanguageTest extends AdminModelTestCase
         // !important: This will resolve english language because composite language is english, even when german is_default=1
         $this->assertSame(2, $component->getActiveId());
         $this->assertSame('en', $component->getActiveShortCode());
+    }
+
+    public function testGetbyShortCode()
+    {
+        $component = new AdminLanguage();
+        $this->assertSame([
+            'id' => "2",
+            'name' => 'English',
+            'short_code' => 'en',
+            'is_default' => "0",
+            'is_deleted' => "0",
+        ], $component->getLanguageByShortCode('en'));
+        $this->assertSame([
+            'id' => "1",
+            'name' => 'Deutsch',
+            'short_code' => 'de',
+            'is_default' => "1",
+            'is_deleted' => "0",
+        ], $component->getLanguageByShortCode('de'));
+        $this->assertFalse($component->clearCache()); // cache not defined... delete will faile
     }
 }
