@@ -28,5 +28,11 @@ class LangTest extends AdminModelTestCase
 
         $this->assertTrue($model->validate());
         $this->assertTrue($model->insert());
+
+        $model->short_code = 'en';
+        $model->is_default = 0;
+        $this->assertSame(1, $model->update());
+
+        $this->assertTrue($model->delete());
     }
 }

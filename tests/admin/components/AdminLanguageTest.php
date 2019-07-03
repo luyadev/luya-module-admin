@@ -51,7 +51,7 @@ class AdminLanguageTest extends AdminModelTestCase
         $this->app->composition->setKey(Composition::VAR_LANG_SHORT_CODE, null);
         $component = new AdminLanguage();
         $data = $component->getLanguages();
-        // This will resolve is_default = 1 because lang short code is null
+        // This will resolve is_default = 1 because lang short code is null.
         $this->assertSame(1, $component->getActiveId());
         $this->assertSame('de', $component->getActiveShortCode());
     }
