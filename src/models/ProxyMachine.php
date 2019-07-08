@@ -13,7 +13,7 @@ use luya\admin\traits\SoftDeleteTrait;
  *
  * @property integer $id
  * @property string $name
- * @property tring $identifier
+ * @property string $identifier
  * @property string $access_token
  * @property smallint $is_deleted
  * @property smallint $is_disabled
@@ -25,17 +25,27 @@ class ProxyMachine extends NgRestModel
 {
     use SoftDeleteTrait;
     
+    /**
+     * @inheritDoc
+     */
     public function init()
     {
         parent::init();
         
-        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'gernateIds']);
+        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'generateIdentifierAndToken']);
     }
     
-    public function gernateIds()
+    /**
+     * Generate the identifier and access token.
+     * 
+     * Only when creating a new record.
+     */
+    public function generateIdentifierAndToken()
     {
-        $this->identifier = uniqid('lcp');
-        $this->access_token = Yii::$app->security->generateRandomString(32);
+        if ($this->isNewRecord) {
+            $this->identifier = uniqid('lcp');
+            $this->access_token = str_replace(['-', '_'], rand(1,9), Yii::$app->security->generateRandomString(32));
+        }
     }
     
     /**
@@ -72,14 +82,6 @@ class ProxyMachine extends NgRestModel
             [['name', 'access_token', 'identifier'], 'string', 'max' => 255],
         ];
     }
-
-    /**
-     * @return array An array containing all field which can be lookedup during the admin search process.
-     */
-    public function genericSearchFields()
-    {
-        return ['name'];
-    }
     
     /**
      * @return string Defines the api endpoint for the angular calls
@@ -101,22 +103,16 @@ class ProxyMachine extends NgRestModel
             'is_disabled' => 'toggleStatus',
         ];
     }
-    
+
     /**
-     * Define the NgRestConfig for this model with the ConfigBuilder object.
-     *
-     * @param \luya\admin\ngrest\ConfigBuilder $config The current active config builder object.
-     * @return \luya\admin\ngrest\ConfigBuilder
+     * @inheritdoc
      */
-    public function ngRestConfig($config)
+    public function ngRestScopes()
     {
-        // define fields for types based from ngrestAttributeTypes
-        $this->ngRestConfigDefine($config, 'list', ['name', 'identifier', 'access_token', 'is_disabled']);
-        $this->ngRestConfigDefine($config, ['create'], ['name']);
-        
-        // enable or disable ability to delete;
-        $config->delete = true;
-        
-        return $config;
+        return [
+            [['list'], ['name', 'identifier', 'access_token', 'is_disabled']],
+            [['create', 'update'], ['name']],
+            [['delete'], true],
+        ];
     }
 }
