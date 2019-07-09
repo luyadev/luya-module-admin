@@ -28,7 +28,7 @@ class I18n
      */
     public static function encode($value)
     {
-        return (is_array($value)) ? Json::encode($value) : $value;
+        return is_array($value) ? Json::encode($value) : $value;
     }
     
     /**

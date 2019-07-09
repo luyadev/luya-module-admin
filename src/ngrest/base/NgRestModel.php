@@ -146,6 +146,44 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
+     * Returns the value for an i18n field before it was casted to the output for the current active language if empty.
+     *
+     * The main purpose of this method is to retrieve any value from this attribute event when the current value is empty.
+     * 
+     * The value is determined by:
+     * 
+     * 1. Is the the i18n casted value empty continue or return value.
+     * 2. If preffered language is given and a none empty value exists for the preferred language return the value or continue.
+     * 3. Foreach the array and return the first value which is not empty.
+     * 
+     * @param string $attributeName The attribute to return the fallback.
+     * @param string $preferredLanguage The prefered language short code name which should be checked whether it has a value or not.
+     * @return string|null
+     * @since 2.0.4
+     */
+    public function i18nAttributeFallbackValue($attributeName, $preferredLanguage = null)
+    {
+        $value = $this->{$attributeName};
+
+        if (empty($value) && $this->isI18n($attributeName)) {
+            // get the decoded value from old attribute value.
+            $array = I18n::decode($this->getOldAttribute($attributeName));
+
+            if ($preferredLanguage && isset($array[$preferredLanguage]) && !empty($array[$preferredLanguage])) {
+                return $array[$preferredLanguage];
+            }
+
+            foreach ($array as $value) {
+                if (!empty($value)) {
+                    return $value;
+                }
+            }
+        }
+
+        return $value;
+    }
+
+    /**
      * Checks whether given attribute is in the list of i18n fields, if so
      * the field value will be decoded and the value for the current active
      * language is returned.
