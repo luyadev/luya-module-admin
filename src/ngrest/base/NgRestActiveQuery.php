@@ -59,18 +59,42 @@ class NgRestActiveQuery extends ActiveQuery
      * jsonWhere(['=', 'json_values', 'key', 'value']);
      * ```
      * 
+     * Assuming you have a json value in the field `json_values` stored as objects, for example `{"key":"value", "key":"value2"}`
+     * 
      * > Keep in mind this only works with mysql version 5.7 and above.
      * 
-     * @param string $operator
-     * @param string $field
-     * @param string $key
-     * @param string|integer $value
+     * @param string $operator The operator to compare the value
+     * @param string $field The field which contains the json data
+     * @param string $key The key inside the json object to compare
+     * @param string|integer $value The value to compare against the key value.
      * @return NgRestActiveQuery
      * @since 2.0.0
      */
     public function jsonWhere($operator, $field, $key, $value)
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
+    }
+
+    /**
+     * Where condition for a field inside an array.
+     * 
+     * ```
+     * jsonWhere(['json_values', 'key', 'value']);
+     * ```
+     * 
+     * Assuming you have a json value in the field `json_values` stored as array with obejcts, for example `[{"key":"value"}, {"key":"value2"}]`.
+     * 
+     * > Keep in mind this only works with mysql version 5.7 and above.
+     *
+     * @param string $field The field which contains the json data
+     * @param string $key The key inside the json array object
+     * @param string|integer $value The value to compare against the key
+     * @return NgRestActiveQuery
+     * @since 2.0.4
+     */
+    public function jsonArrayWhere($field, $key, $value)
+    {
+        return $this->andWhere(['>', "JSON_CONTAINS(JSON_EXTRACT({$field}, \"$[*].{$key}\"), \"{$value}\")", 0]);
     }
 
     /**

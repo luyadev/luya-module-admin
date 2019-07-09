@@ -25,6 +25,20 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         ], $query->jsonWhere('>=', 'jsonfield', 'key', 'value')->where);
     }
 
+    public function testJsonArrayWhere()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+
+        $query = new NgRestActiveQuery(User::class);
+        $this->assertSame([
+            '>',
+            'JSON_CONTAINS(JSON_EXTRACT(jsonfield, "$[*].key"), "value")',
+            0
+        ], $query->jsonArrayWhere('jsonfield', 'key', 'value')->where);
+    }
+
     public function testI18nWhere()
     {
         new NgRestModelFixture([
