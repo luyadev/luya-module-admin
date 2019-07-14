@@ -209,6 +209,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-common' => 'luya\admin\apis\CommonController',
         'api-admin-remote' => 'luya\admin\apis\RemoteController',
         'api-admin-storage' => 'luya\admin\apis\StorageController',
+        'api-admin-themes' => 'luya\admin\apis\ThemesController',
         'api-admin-menu' => 'luya\admin\apis\MenuController',
         'api-admin-timestamp' => 'luya\admin\apis\TimestampController',
         'api-admin-search' => 'luya\admin\apis\SearchController',
@@ -436,7 +437,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
                 ->group('menu_group_contentproxy')
                     ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
-                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
+                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild')
+            ->nodeRoute('menu_node_themesmanager', 'invert_colors', 'admin/themes/index');
     }
 
     /**
