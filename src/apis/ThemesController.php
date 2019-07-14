@@ -34,6 +34,6 @@ class ThemesController extends RestController
      */
     public function actionIndex()
     {
-        return Yii::$app->themes->getThemes();
+        return Yii::$app->themeManager->getThemes();
     }
 }
