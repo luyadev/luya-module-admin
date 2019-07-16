@@ -3,7 +3,6 @@
 namespace luya\admin\tests\admin\aws;
 
 use luya\admin\aws\ApiOverviewActiveWindow;
-use admintests\AdminModelTestCase;
 use luya\testsuite\cases\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\apis\ApiUserController;
@@ -56,6 +55,7 @@ class ApiOverviewActiveWindowTest extends NgRestTestCase
         $this->app->getModule('admin')->controllerMap = [
             'foobar' => [
                 'class' => TestController::class,
+                'module' => $this->app->getModule('admin'),
             ]
         ];
 
