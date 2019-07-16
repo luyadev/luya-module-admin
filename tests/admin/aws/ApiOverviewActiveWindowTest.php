@@ -8,6 +8,7 @@ use luya\testsuite\cases\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\apis\ApiUserController;
 use luya\admin\controllers\ApiUserController as LuyaApiUserController;
+use luya\admin\tests\data\controllers\TestController;
 
 class ApiOverviewActiveWindowTest extends NgRestTestCase
 {
@@ -48,5 +49,22 @@ class ApiOverviewActiveWindowTest extends NgRestTestCase
 
         $this->assertTrue($this->app->auth->isInApiEndpointPermissionTable('api-admin-apiuser'));
         $this->assertFalse($this->app->auth->isInApiEndpointPermissionTable('api-admin-user'));
+    }
+
+    public function testExtraActions()
+    {
+        $this->app->getModule('admin')->controllerMap = [
+            'foobar' => [
+                'class' => TestController::class,
+            ]
+        ];
+
+        $w = $this->getWindow();
+
+        $r = $this->invokeMethod($w, 'getAvailableApiEndpoints');
+
+        $this->assertNotEmpty($w->index());
+
+        $this->assertNotEmpty($r['generic']);
     }
 }
