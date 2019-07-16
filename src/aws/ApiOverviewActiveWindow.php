@@ -115,6 +115,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function getActions($controller)
     {
+        // @TODO replace with ObjectHelper::getActions($controller); when released.
         $actions = array_keys($controller->actions());
         $class = new \ReflectionClass($controller);
         foreach ($class->getMethods() as $method) {
@@ -134,7 +135,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
     {
         $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->model->password_salt);
 
-        $this->model->updateAttributes([
+        return $this->model->updateAttributes([
             'auth_token' => $randomToken,
         ]);
     }
