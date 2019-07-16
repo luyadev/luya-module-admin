@@ -55,7 +55,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
             'groupsCount' => $this->model->getGroups()->count(),
         ]);
     }
-    
+
     /**
      * Returns an array with available endpoints and the corresponding actions.
      * 
@@ -64,9 +64,10 @@ class ApiOverviewActiveWindow extends ActiveWindow
     protected function getAvailableApiEndpoints()
     {
         $data = [];
-        
-        $fromPermission = Yii::$app->auth->getPermissionTableDistinct($this->model->id);
-        
+        $generic = [];
+        $userId = $this->model->id;
+        $fromPermission = Yii::$app->auth->getPermissionTableDistinct($userId);
+
         // get APIs from permission system
         foreach ($fromPermission as $permission) {
             if (!empty($permission['api'])) {
@@ -80,16 +81,16 @@ class ApiOverviewActiveWindow extends ActiveWindow
                 ];
             }
         }
-        
+
         // get missing apis from controller map
-        
+
         $maps = Yii::$app->getModule('admin')->controllerMap;
-        
+
         foreach ($maps as $key => $value) {
-            if (!isset($data[$key])) {
+            if (!isset($data[$key]) && !Yii::$app->auth->isInApiEndpointPermissionTable($key)) {
                 // create the controller object with the module object as context
                 $controller = Yii::createObject($value['class'], [$key, $value['module']]);
-                $data[$key] = [
+                $generic[$key] = [
                     'api' => $key,
                     'crud_create' => false,
                     'crud_update' => false,
@@ -99,12 +100,13 @@ class ApiOverviewActiveWindow extends ActiveWindow
                 ];
             }
         }
-        
+
         // sort and return
         ksort($data);
-        return $data;
+        ksort($generic);
+        return ['specific' => $data, 'generic' => $generic];
     }
-    
+
     /**
      * Returns all available actions of the specified controller.
      * 
@@ -124,14 +126,14 @@ class ApiOverviewActiveWindow extends ActiveWindow
         sort($actions);
         return array_unique($actions);
     }
-    
+
     /**
      * Replace the current token with a new one
      */
     public function callbackReplaceToken()
     {
         $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->model->password_salt);
-        
+
         $this->model->updateAttributes([
             'auth_token' => $randomToken,
         ]);

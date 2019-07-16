@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#334](https://github.com/luyadev/luya-module-admin/issues/334) Fixed bug where api overview does not display correct permission values for given API user.
 + [#254](https://github.com/luyadev/luya-module-admin/issues/254) Do not reset imageArray when using createImage() this fixes a bug when using applyFilter inside a foreach.
 
 ### Changed
