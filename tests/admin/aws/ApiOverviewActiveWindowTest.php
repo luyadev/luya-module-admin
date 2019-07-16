@@ -40,4 +40,13 @@ class ApiOverviewActiveWindowTest extends NgRestTestCase
     {
         $this->assertSame(1, $this->getWindow()->callbackReplaceToken());
     }
+
+    public function testApiEndpointList()
+    {
+        $list = $this->app->auth->getPermissionApiEndpointsTable();
+        $this->assertNotEmpty($list);
+
+        $this->assertTrue($this->app->auth->isInApiEndpointPermissionTable('api-admin-apiuser'));
+        $this->assertFalse($this->app->auth->isInApiEndpointPermissionTable('api-admin-user'));
+    }
 }
