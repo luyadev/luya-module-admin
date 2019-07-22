@@ -90,7 +90,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @param string $key The key inside the json array object
      * @param string|integer $value The value to compare against the key
      * @return NgRestActiveQuery
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public function jsonArrayWhere($field, $key, $value)
     {

@@ -216,7 +216,7 @@ abstract class Property extends Component implements TypesInterface
      * ```
      * 
      * @return string The {{Property::varName()}} wil be retunred.
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public static function identifier()
     {

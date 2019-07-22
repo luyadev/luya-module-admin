@@ -67,7 +67,7 @@ class Auth extends \yii\base\Component
      * Get all api endpoints as array with index by api endpoitn name
      *
      * @return array An array with all api endpoints from the permission system indexed by the api name.
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public function getPermissionApiEndpointsTable()
     {
@@ -83,7 +83,7 @@ class Auth extends \yii\base\Component
      *
      * @param string $apiEndpoint The api endpoint to validate.
      * @return boolean
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public function isInApiEndpointPermissionTable($apiEndpoint)
     {
