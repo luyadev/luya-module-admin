@@ -2,11 +2,11 @@
 
 namespace admintests\admin\proxy;
 
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use luya\admin\proxy\ClientBuild;
 use luya\admin\commands\ProxyController;
 
-class ClientBuildTest extends AdminTestCase
+class ClientBuildTest extends AdminConsoleTestCase
 {
     public function testIsSkippableTable()
     {

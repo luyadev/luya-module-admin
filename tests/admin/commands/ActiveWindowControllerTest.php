@@ -3,10 +3,10 @@
 namespace admintests\admin\commands;
 
 use Yii;
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use luya\admin\commands\ActiveWindowController;
 
-class ActiveWindowControllerTest extends AdminTestCase
+class ActiveWindowControllerTest extends AdminConsoleTestCase
 {
     public function testPhpViewRenderContent()
     {
