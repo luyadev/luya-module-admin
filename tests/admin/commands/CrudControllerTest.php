@@ -4,12 +4,12 @@ namespace admintests\admin\commands;
 
 use Yii;
 use luya\admin\commands\CrudController;
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use luya\testsuite\fixtures\ActiveRecordFixture;
 use luya\admin\models\User;
 use luya\admin\models\Lang;
 
-class CrudControllerTest extends AdminTestCase
+class CrudControllerTest extends AdminConsoleTestCase
 {
     public function getConfigArray()
     {

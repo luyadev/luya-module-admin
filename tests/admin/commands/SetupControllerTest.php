@@ -2,11 +2,11 @@
 
 namespace admintests\admin\commands;
 
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use luya\admin\commands\SetupController;
 use luya\console\Application;
 
-class SetupControllerTest extends AdminTestCase
+class SetupControllerTest extends AdminConsoleTestCase
 {
     public function testIndexAction()
     {

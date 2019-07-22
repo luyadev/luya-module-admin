@@ -2,14 +2,14 @@
 
 namespace admintests\admin\proxy;
 
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use admintests\data\mocks\proxy\ClientTableMock;
 use luya\admin\proxy\ClientBuild;
 use luya\admin\commands\ProxyController;
 use luya\Exception;
 use Yii;
 
-class ClientTableTest extends AdminTestCase
+class ClientTableTest extends AdminConsoleTestCase
 {
     /**
      * @throws \yii\db\Exception

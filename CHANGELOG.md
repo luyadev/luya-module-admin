@@ -17,6 +17,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
  
 ### Added
 
++ [#336](https://github.com/luyadev/luya-module-admin/pull/336) Added new identifier() method for page properties.
 + [#333](https://github.com/luyadev/luya-module-admin/pull/333) Allow caching of language data until data is modified.
 + [#331](https://github.com/luyadev/luya-module-admin/issues/331) Add new `relation` property for SelectRelationActiveQuery.
 
