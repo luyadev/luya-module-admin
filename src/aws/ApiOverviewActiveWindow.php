@@ -6,6 +6,7 @@ use Yii;
 use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
 use luya\helpers\Inflector;
+use luya\helpers\ObjectHelper;
 
 /**
  * Api Overview Active Window.
@@ -96,7 +97,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
                     'crud_update' => false,
                     'crud_delete' => false,
                     'permission' => false,
-                    'actions' => $this->getActions($controller),
+                    'actions' => ObjectHelper::getActions($controller),
                 ];
             }
         }
@@ -105,27 +106,6 @@ class ApiOverviewActiveWindow extends ActiveWindow
         ksort($data);
         ksort($generic);
         return ['specific' => $data, 'generic' => $generic];
-    }
-
-    /**
-     * Returns all available actions of the specified controller.
-     * 
-     * @param \yii\base\Controller $controller the controller instance
-     * @return array all available action IDs.
-     */
-    public function getActions($controller)
-    {
-        // @TODO replace with ObjectHelper::getActions($controller); when released.
-        $actions = array_keys($controller->actions());
-        $class = new \ReflectionClass($controller);
-        foreach ($class->getMethods() as $method) {
-            $name = $method->getName();
-            if ($name !== 'actions' && $method->isPublic() && !$method->isStatic() && strncmp($name, 'action', 6) === 0) {
-                $actions[] = Inflector::camel2id(substr($name, 6), '-', true);
-            }
-        }
-        sort($actions);
-        return array_unique($actions);
     }
 
     /**
