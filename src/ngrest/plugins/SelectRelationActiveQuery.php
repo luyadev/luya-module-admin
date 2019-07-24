@@ -65,7 +65,7 @@ class SelectRelationActiveQuery extends Plugin
      *     return parent::prepareListQuery()->with(['person']);
      * }
      * ```
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public $relation;
     

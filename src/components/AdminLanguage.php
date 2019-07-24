@@ -28,7 +28,7 @@ class AdminLanguage extends Component
 
     /**
      * @var string The cache key name
-     * @since 2.0.4
+     * @since 2.1.0
      */
     const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
 
@@ -128,7 +128,7 @@ class AdminLanguage extends Component
      * Clear the cache data for admin language
      *
      * @return boolean whether clearing was successfull or not.
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public function clearCache()
     {
