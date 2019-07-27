@@ -3,7 +3,6 @@
 namespace luya\admin\components;
 
 use Yii;
-use luya\Exception;
 use luya\admin\models\Auth as AuthModel;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -39,7 +38,7 @@ class Auth extends \yii\base\Component
      */
     const CAN_DELETE = 3;
     
-    private $_permissionTable;
+    private $_permissionTable = [];
     
     /**
      * Get all permissions entries for the given User.
@@ -49,8 +48,8 @@ class Auth extends \yii\base\Component
      */
     public function getPermissionTable($userId)
     {
-        if ($this->_permissionTable === null) {
-            $this->_permissionTable = (new Query())
+        if (!array_key_exists($userId, $this->_permissionTable)) {
+            $this->_permissionTable[$userId] = (new Query())
                 ->select(['*'])
                 ->from('{{%admin_user_group}}')
                 ->innerJoin('{{%admin_group_auth}}', '{{%admin_user_group}}.group_id={{%admin_group_auth}}.group_id')
@@ -59,7 +58,36 @@ class Auth extends \yii\base\Component
                 ->all();
         }
         
-        return $this->_permissionTable;
+        return $this->_permissionTable[$userId];
+    }
+
+    private $_endpoints;
+
+    /**
+     * Get all api endpoints as array with index by api endpoitn name
+     *
+     * @return array An array with all api endpoints from the permission system indexed by the api name.
+     * @since 2.1.0
+     */
+    public function getPermissionApiEndpointsTable()
+    {
+        if (!$this->_endpoints) {
+            $this->_endpoints = AuthModel::find()->andWhere(['not', ['api' => null]])->indexBy('api')->asArray()->all();
+        }
+
+        return $this->_endpoints;
+    }
+
+    /**
+     * Check if a given api endpoint is in the permission (auth) system available.
+     *
+     * @param string $apiEndpoint The api endpoint to validate.
+     * @return boolean
+     * @since 2.1.0
+     */
+    public function isInApiEndpointPermissionTable($apiEndpoint)
+    {
+        return array_key_exists($apiEndpoint, $this->getPermissionApiEndpointsTable());
     }
     
     /**

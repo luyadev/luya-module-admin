@@ -2,11 +2,11 @@
 
 namespace admintests\admin\commands;
 
-use admintests\AdminTestCase;
+use admintests\AdminConsoleTestCase;
 use luya\console\Application;
 use luya\admin\commands\FilterController;
 
-class FilterControllerTest extends AdminTestCase
+class FilterControllerTest extends AdminConsoleTestCase
 {
     public function testIndexAction()
     {

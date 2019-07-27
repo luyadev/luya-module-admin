@@ -159,7 +159,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @param string $attributeName The attribute to return the fallback.
      * @param string $preferredLanguage The prefered language short code name which should be checked whether it has a value or not.
      * @return string|null
-     * @since 2.0.4
+     * @since 2.1.0
      */
     public function i18nAttributeFallbackValue($attributeName, $preferredLanguage = null)
     {

@@ -3,10 +3,11 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 2.0.4
+## 2.1.0 (22. July 2019)
 
 ### Fixed
 
++ [#334](https://github.com/luyadev/luya-module-admin/issues/334) Fixed bug where api overview does not display correct permission values for given API user.
 + [#254](https://github.com/luyadev/luya-module-admin/issues/254) Do not reset imageArray when using createImage() this fixes a bug when using applyFilter inside a foreach.
 
 ### Changed
@@ -16,6 +17,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
  
 ### Added
 
++ [#336](https://github.com/luyadev/luya-module-admin/pull/336) Added new identifier() method for page properties.
 + [#333](https://github.com/luyadev/luya-module-admin/pull/333) Allow caching of language data until data is modified.
 + [#331](https://github.com/luyadev/luya-module-admin/issues/331) Add new `relation` property for SelectRelationActiveQuery.
 

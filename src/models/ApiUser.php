@@ -94,6 +94,7 @@ final class ApiUser extends User
         return [
             [['firstname', 'lastname', 'email'], 'required'],
             [['email'], 'email'],
+            [['password_salt'], 'string'],
             [['email', 'auth_token'], 'unique'],
             [['is_request_logger_enabled'], 'integer'],
         ];
