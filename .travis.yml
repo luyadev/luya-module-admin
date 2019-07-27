@@ -17,6 +17,9 @@ matrix:
   
 sudo: false
 
+services:
+  - mysql
+
 install:
   - travis_retry composer self-update && composer --version
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
