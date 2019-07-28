@@ -430,5 +430,4 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-	'menu_node_themesmanager' => 'Themes',
 ];
