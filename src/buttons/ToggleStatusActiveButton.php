@@ -2,6 +2,7 @@
 
 namespace luya\admin\buttons;
 
+use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveButton;
@@ -31,6 +32,10 @@ class ToggleStatusActiveButton extends ActiveButton
      * @var string The attribute which should set.
      */
     public $attribute;
+    
+    public $enableValue = true;
+    
+    public $disableValue = false;
     
     /**
      * @var bool Keep only one model with active status and disable all other entries.
@@ -78,24 +83,22 @@ class ToggleStatusActiveButton extends ActiveButton
         $transaction = $model::getDb()->beginTransaction();
         
         try {
-            $toggleStatus = !(bool)$model->getAttribute($this->attribute);
+            $newValue = $this->toggleValue($model->getAttribute($this->attribute));
     
             if ($this->uniqueStatus) {
-                $model::updateAll([$this->attribute => false]);
-                $saved = $toggleStatus ? $model->updateAttributes([$this->attribute => $toggleStatus]) : true;
+                $model::updateAll([$this->attribute => $this->disableValue]);
+                $model->updateAttributes([$this->attribute => $newValue]);
             } else {
-                $saved = $model->updateAttributes([$this->attribute => $toggleStatus]);
+                $model->updateAttributes([$this->attribute => $newValue]);
             }
             
             $transaction->commit();
 
-            if ($saved) {
-                $this->sendReloadEvent();
-                if ($toggleStatus) {
-                    return $this->sendSuccess(Module::t('active_button_togglestatus_enabled', ['modelName' => $model->{$this->modelNameAttribute}]));
-                } else {
-                    return $this->sendSuccess(Module::t('active_button_togglestatus_disabled', ['modelName' => $model->{$this->modelNameAttribute}]));
-                }
+            $this->sendReloadEvent();
+            if ($newValue) {
+                return $this->sendSuccess(Module::t('active_button_togglestatus_enabled', ['modelName' => $model->{$this->modelNameAttribute}]));
+            } else {
+                return $this->sendSuccess(Module::t('active_button_togglestatus_disabled', ['modelName' => $model->{$this->modelNameAttribute}]));
             }
         } catch (\Throwable $ex) {
             $transaction->rollBack();
@@ -103,5 +106,17 @@ class ToggleStatusActiveButton extends ActiveButton
         }
     
         return $this->sendError(Module::t('active_button_togglestatus_error'));
+    }
+    
+    private function toggleValue($value)
+    {
+        switch ($value) {
+            case $this->disableValue:
+                return $this->enableValue;
+            case $this->enableValue:
+                return $this->disableValue;
+            default:
+                throw new InvalidArgumentException("The value '$value' could not toggled.");
+        }
     }
 }
