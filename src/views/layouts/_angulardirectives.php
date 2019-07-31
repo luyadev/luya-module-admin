@@ -483,6 +483,4 @@ use luya\admin\helpers\Angular;
     </div>
 </script>
 
-
-
 <!-- /ANGULAR SCRIPTS -->
