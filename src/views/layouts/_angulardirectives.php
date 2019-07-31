@@ -484,18 +484,5 @@ use luya\admin\helpers\Angular;
 </script>
 
 
-<!-- themesManager -->
-<script type="text/ng-template" id="themesManager">
-    <div class="themes" >
-        fasdfasdf
-        <div class="themes-add">
-            <div class="btn btn-icon btn-success" ng-click="themesUpload()" >
-                <?= Admin::t('layout_themes_add_theme'); ?>
-            </div>
-        </div>
-    </div>
-</script>
-
-
 
 <!-- /ANGULAR SCRIPTS -->
