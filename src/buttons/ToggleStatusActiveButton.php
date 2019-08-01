@@ -33,16 +33,26 @@ class ToggleStatusActiveButton extends ActiveButton
      */
     public $attribute;
     
+    /**
+     * Value which will saved to the model as active status.
+     * @var mixed
+     */
     public $enableValue = true;
     
+    /**
+     * Value which will saved to the model as inactive status.
+     * @var mixed
+     */
     public $disableValue = false;
     
     /**
-     * @var bool Keep only one model with active status and disable all other entries.
+     * Keep only one model with active status and disable all other entries.
+     * @var bool
      */
     public $uniqueStatus = false;
     
     /**
+     * Attribute name for the success notification.
      * @var string
      */
     public $modelNameAttribute = 'id';
@@ -69,9 +79,9 @@ class ToggleStatusActiveButton extends ActiveButton
     public function init()
     {
         parent::init();
-
+        
         if (!$this->attribute) {
-            throw new InvalidConfigException("The attribute property can not be null.");
+            throw new InvalidConfigException("The attribute property must be set.");
         }
     }
 
@@ -108,6 +118,13 @@ class ToggleStatusActiveButton extends ActiveButton
         return $this->sendError(Module::t('active_button_togglestatus_error'));
     }
     
+    /**
+     * Return the opposite attribute value for $enableValue or $disableValue.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
     private function toggleValue($value)
     {
         switch ($value) {
