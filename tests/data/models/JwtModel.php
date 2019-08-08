@@ -9,6 +9,6 @@ class JwtModel extends Model implements JwtIdentityInterface
 {
     public static function loginByJwtToken($token)
     {
-        return true;
+        return $token;
     }
 }

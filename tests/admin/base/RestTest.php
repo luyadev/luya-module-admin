@@ -30,6 +30,17 @@ class RestTest extends NgRestTestCase
         $r = $this->runControllerAction($this->api, 'list');
         $this->assertTrue(is_array($r));
 
-        $this->assertSame('John', $this->api->authJwtUser('token', 'athMethod')->firstname);
+        $this->assertFalse($this->api->authJwtUser(false, 'athMethod'));
+        $this->assertSame('John', $this->api->authJwtUser(true, 'athMethod')->firstname);
+    }
+
+    public function testExceptionModel()
+    {
+        $this->app->getModule('admin')->jwtSecret = 'xyz';
+        $this->app->getModule('admin')->jwtApiUserEmail = $this->userFixture->getModel('user1')->email;
+        $this->app->getModule('admin')->jwtAuthModel = 'luya\admin\models\User';
+
+        $this->expectException('luya\Exception');
+        $this->api->authJwtUser(false, 'athMethod');
     }
 }
