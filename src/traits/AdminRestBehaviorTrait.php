@@ -70,7 +70,7 @@ trait AdminRestBehaviorTrait
     {
         $modelClass = Yii::createObject($this->_module->jwtAuthModel);
 
-        if (!ObjectHelper::isInstanceOf($modelClass, 'luya\admin\base\JwtIdentityInterface')) {
+        if (!ObjectHelper::isInstanceOf($modelClass, 'luya\admin\base\JwtIdentityInterface', false)) {
             throw new InvalidConfigException("The jwtAuthModel must implement the JwtIdentityInterface interface.");
         }
 

@@ -40,7 +40,7 @@ class RestTest extends NgRestTestCase
         $this->app->getModule('admin')->jwtApiUserEmail = $this->userFixture->getModel('user1')->email;
         $this->app->getModule('admin')->jwtAuthModel = 'luya\admin\models\User';
 
-        $this->expectException('luya\Exception');
+        $this->expectException('yii\base\InvalidConfigException');
         $this->api->authJwtUser(false, 'athMethod');
     }
 }
