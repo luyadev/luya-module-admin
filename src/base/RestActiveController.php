@@ -87,7 +87,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 $type = Auth::CAN_DELETE;
                 break;
             default:
-                throw new ForbiddenHttpException("Invalid REST API action call.");
+                throw new ForbiddenHttpException("Invalid REST API call for action '{$action}'.");
                 break;
         }
 
@@ -119,7 +119,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     public function can($type)
     {
         if (!in_array($type, [Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW])) {
-            throw new InvalidConfigException("Invalid type of permission check.");
+            throw new InvalidConfigException("Invalid type of permission call.");
         }
 
         $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type);
