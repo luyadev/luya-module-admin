@@ -11,7 +11,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
 {
     public $modelClass = Lang::class;
     
-    public function testHandle()
+    public function testHandleUniqueStatus()
     {
         $fixture = new NgRestModelFixture([
             'modelClass' => Lang::class,
@@ -53,5 +53,31 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         
         $modelEn->refresh();
         $this->assertFalse($modelEn->is_default, "English must not be default after toggle.");
+    }
+    
+    public function testHandleCustomValues()
+    {
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+    
+        /** @var Lang $model */
+        $model = $fixture->newModel;
+        $model->name = 'English';
+        $model->is_default = 'off';
+        
+        $button = new ToggleStatusActiveButton([
+            'attribute' => 'is_default',
+            'enableValue' => 'on',
+            'disableValue' => 'off',
+        ]);
+        
+        // toggle on
+        $result = $button->handle($model);
+        $this->assertEquals('on', $model->is_default, "Default value must be on");
+    
+        // toggle off
+        $result = $button->handle($model);
+        $this->assertEquals('off', $model->is_default, "Default value must be off");
     }
 }
