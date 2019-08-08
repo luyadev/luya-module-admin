@@ -7,7 +7,7 @@ use luya\admin\base\JwtIdentityInterface;
 
 class JwtModel extends Model implements JwtIdentityInterface
 {
-    public function loginByJwtToken($token)
+    public static function loginByJwtToken($token)
     {
         return true;
     }
