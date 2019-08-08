@@ -6,10 +6,23 @@ use luya\admin\buttons\ToggleStatusActiveButton;
 use luya\admin\models\Lang;
 use luya\admin\tests\NgRestTestCase;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
+use yii\base\UnknownPropertyException;
 
 class ToggleStatusActiveButtonTest extends NgRestTestCase
 {
     public $modelClass = Lang::class;
+    
+    public function testWrongConfiguration()
+    {
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage("The attribute property must be set.");
+        
+        $button = new ToggleStatusActiveButton([
+            'attribute' => '',
+        ]);
+    }
     
     public function testHandleNoneUnique()
     {
@@ -124,5 +137,57 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         $this->assertTrue($result['success']);
         $this->assertEquals('active_button_togglestatus_disabled', $result['message']);
         $this->assertEquals('off', $model->is_default, "Default value must be off");
+    }
+    
+    public function testInvalidValue()
+    {
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+    
+        /** @var Lang $model */
+        $model = $fixture->newModel;
+        $model->name = 'English';
+        $model->is_default = 1;
+    
+        $button = new ToggleStatusActiveButton([
+            'attribute' => 'is_default',
+            'enableValue' => 'on',
+            'disableValue' => 'off',
+        ]);
+    
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The value '1' could not toggled.");
+        $button->handle($model);
+    }
+    
+    public function testUnknownAttribute()
+    {
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+    
+        /** @var Lang $model */
+        $model = $fixture->newModel;
+        $model->name = 'English';
+        $model->is_default = 1;
+    
+        $button = new ToggleStatusActiveButton([
+            'attribute' => 'foo',
+        ]);
+    
+        $this->expectException(UnknownPropertyException::class);
+        $this->expectExceptionMessage("Setting unknown property: luya\admin\models\Lang::foo");
+        $button->handle($model);
+    }
+    
+    public function testLabelAndIcon()
+    {
+        $button = new ToggleStatusActiveButton([
+            'attribute' => 'foo',
+        ]);
+        
+        $this->assertEquals("active_button_togglestatus_label", $button->getDefaultLabel());
+        $this->assertEquals("toggle_on", $button->getDefaultIcon());
     }
 }
