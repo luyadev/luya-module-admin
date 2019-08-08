@@ -2,13 +2,13 @@
  * Directive to generate e chart diagrams.
  *
  * uses echarts.js component.
- * 
+ *
  * ```js
  * <echarts id="chart" data="data"></echarts>
  * ```
- * 
+ *
  * Where data is a variable bound by angular! So it a variable from angular $scope.data
- * 
+ *
  */
 zaa.directive('echarts', [function () {
     return {
@@ -43,9 +43,9 @@ zaa.directive('echarts', [function () {
 
 /**
  * Controller: $scope.content = $sce.trustAsHtml(response.data);
- * 
+ *
  * Usage:
- * 
+ *
  * ```
  * <div compile-html ng-bind-html="content | trustAsUnsafe"></div>
  * ```
@@ -70,7 +70,7 @@ zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) 
  * ```
  * <div zaa-esc="methodClosesThisDiv()" />
  * ```
- * 
+ *
  * @todo Rename this directive, as it should be prefixed with zaa.
  */
 zaa.directive("zaaEsc", ['$document', function ($document) {
@@ -602,16 +602,16 @@ zaa.directive("modal", ['$timeout', function ($timeout) {
 
 /**
  * A transclude element for an collapsible (accordian similar) container.
- * 
+ *
  * Usage example:
- * 
+ *
  * ```
  * <collapse-container title="Advanced Settings">
  *  <h1>Title</h1>
  *  <div>do stuff here ..</div>
  * </collapse-container>
  * ```
- * 
+ *
  * @since 2.0.3
  */
 zaa.directive("collapseContainer", [function() {
@@ -1197,7 +1197,7 @@ zaa.directive("zaaText", function () {
 
 /**
  * Returns a field which just returns the value from model, like a read only attribute.
- * 
+ *
  * @since 1.2.1
  */
 zaa.directive("zaaReadonly", function () {
@@ -1216,13 +1216,13 @@ zaa.directive("zaaReadonly", function () {
 
 /**
  * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
- * 
+ *
  * Generates a request to the corresponding model item view like the example above would request to:
- * 
+ *
  * ```
  * /admin/admin-users/{model}?fields=foo,bar
  * ```
- * 
+ *
  */
 zaa.directive("zaaAsyncValue", function () {
     return {
@@ -1250,11 +1250,11 @@ zaa.directive("zaaAsyncValue", function () {
 
 /**
  * Can be used to just fetch a value from an api async.
- * 
+ *
  * ```
  * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]" />
  * ```
- * 
+ *
  * @since 1.2.2
  */
 zaa.directive("asyncValue", function () {
@@ -1574,7 +1574,7 @@ zaa.directive("zaaCheckbox", function () {
  * options arg object:
  *
  * options.items[] = [{"value" : 1, "label" => 'Label for Value 1' }]
- * 
+ *
  * @param preselect boolean if enable all models will be selected by default.
  */
 zaa.directive("zaaCheckboxArray", function () {
@@ -2380,7 +2380,7 @@ zaa.directive("zaaMultipleInputs", function () {
 
 /**
  * Generates a json OBJECT (!) with a key and a value for the given key. Its like a flat json.
- * 
+ *
  * ```js
  * <zaa-json-object model="mymodel" label="Key Value Input" />
  * ```
@@ -2709,9 +2709,9 @@ zaa.directive('storageFileUpload', function () {
 
 /**
  * Sotrage Image Upload directive.
- * 
+ *
  * Call cycle when file directive implements the image directive:
- * 
+ *
  * + reset() in file directive
  * + reset set $scope.fileId = 0
  * + fileId watcher applys filter
@@ -3413,7 +3413,7 @@ zaa.directive('activeClass', function () {
 
 /**
  * Pagination directive
- * 
+ *
  * > Currently its not supported to change the current page value from outside the directive. therefore
  * > the pagination always starts on page 1
  */

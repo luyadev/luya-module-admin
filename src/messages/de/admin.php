@@ -431,4 +431,11 @@ return [
     'status_true' => 'Ja',
     'status_false' => 'Nein',
     'js_jsonobject_newkey' => 'Neuer Schlüssel Name',
+    
+// 2.2.0
+    
+    'active_button_togglestatus_label' => 'Toggle status',
+    'active_button_togglestatus_error' => 'Could not activated',
+    'active_button_togglestatus_enabled' => '{modelName} enabled',
+    'active_button_togglestatus_disabled' => '{modelName} disabled',
 ];
