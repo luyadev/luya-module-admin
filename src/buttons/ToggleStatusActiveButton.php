@@ -105,7 +105,7 @@ class ToggleStatusActiveButton extends ActiveButton
             $transaction->commit();
 
             $this->sendReloadEvent();
-            if ($newValue) {
+            if ($newValue == $this->enableValue) {
                 return $this->sendSuccess(Module::t('active_button_togglestatus_enabled', ['modelName' => $model->{$this->modelNameAttribute}]));
             } else {
                 return $this->sendSuccess(Module::t('active_button_togglestatus_disabled', ['modelName' => $model->{$this->modelNameAttribute}]));

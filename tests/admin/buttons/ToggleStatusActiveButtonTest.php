@@ -11,6 +11,47 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
 {
     public $modelClass = Lang::class;
     
+    public function testHandleNoneUnique()
+    {
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+    
+        /** @var Lang $modelEn */
+        $modelEn = $fixture->newModel;
+        $modelEn->short_code = 'en';
+        $modelEn->name = 'English';
+        $modelEn->is_default = 1;
+        $modelEn->insert(false);
+        $modelEn->refresh();
+    
+        $this->assertTrue($modelEn->is_default, "English must be default before toggle.");
+    
+        /** @var Lang $modelFr */
+        $modelFr = $fixture->newModel;
+        $modelFr->short_code = 'fr';
+        $modelFr->name = 'Francais';
+        $modelFr->is_default = 0;
+        $modelFr->insert(false);
+        $modelFr->refresh();
+    
+        $this->assertFalse($modelFr->is_default, "Francais must not be default before toggle.");
+    
+        $button = new ToggleStatusActiveButton([
+            'attribute' => 'is_default',
+        ]);
+        $result = $button->handle($modelFr);
+    
+        $this->assertTrue($result['success']);
+        $this->assertEquals('active_button_togglestatus_enabled', $result['message']);
+    
+        $modelFr->refresh();
+        $this->assertTrue($modelFr->is_default, "Francais must be default after toggle too.");
+    
+        $modelEn->refresh();
+        $this->assertTrue($modelEn->is_default, "English must be still default after toggle.");
+    }
+    
     public function testHandleUniqueStatus()
     {
         $fixture = new NgRestModelFixture([
@@ -37,7 +78,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         $modelFr->insert(false);
         $modelFr->refresh();
         
-        $this->assertFalse($modelFr->is_default, "Francais must be default before toggle.");
+        $this->assertFalse($modelFr->is_default, "Francais must not be default before toggle.");
         
         $button = new ToggleStatusActiveButton([
             'attribute' => 'is_default',
@@ -74,10 +115,14 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         
         // toggle on
         $result = $button->handle($model);
+        $this->assertTrue($result['success']);
+        $this->assertEquals('active_button_togglestatus_enabled', $result['message']);
         $this->assertEquals('on', $model->is_default, "Default value must be on");
     
         // toggle off
         $result = $button->handle($model);
+        $this->assertTrue($result['success']);
+        $this->assertEquals('active_button_togglestatus_disabled', $result['message']);
         $this->assertEquals('off', $model->is_default, "Default value must be off");
     }
 }
