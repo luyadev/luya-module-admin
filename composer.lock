@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abc553eefee53452e45a42e15d8bf6d7",
+    "content-hash": "383da29d62133c5ca48037c42e7fe2ec",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -17,7 +17,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
+                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
+                "shasum": null
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -38,7 +39,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
-                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
+                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -50,13 +52,14 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bestiejs/punycode.js.git",
+                "url": "https://github.com/bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
+                "shasum": null
             },
             "type": "bower-asset"
         },
@@ -71,7 +74,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
-                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
+                "shasum": null
             },
             "require": {
                 "bower-asset/jquery": ">=1.8"
@@ -297,6 +301,108 @@
                 "image processing"
             ],
             "time": "2017-05-16T10:31:22+00:00"
+        },
+        {
+            "name": "lcobucci/jwt",
+            "version": "3.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/jwt.git",
+                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/82be04b4753f8b7693b62852b7eab30f97524f9b",
+                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "mdanter/ecc": "~0.3.1",
+                "mikey179/vfsstream": "~1.5",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/php-invoker": "~1.1",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "suggest": {
+                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Otávio Cobucci Oblonczyk",
+                    "role": "Developer",
+                    "email": "lcobucci@gmail.com"
+                }
+            ],
+            "description": "A simple library to work with JSON Web Token and JSON Web Signature",
+            "keywords": [
+                "JWS",
+                "jwt"
+            ],
+            "time": "2018-11-11T12:22:26+00:00"
+        },
+        {
+            "name": "sizeg/yii2-jwt",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sizeg/yii2-jwt.git",
+                "reference": "75d68ae920e5232d7d121305990df6514817808f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sizeg/yii2-jwt/zipball/75d68ae920e5232d7d121305990df6514817808f",
+                "reference": "75d68ae920e5232d7d121305990df6514817808f",
+                "shasum": ""
+            },
+            "require": {
+                "lcobucci/jwt": "~3.2.0",
+                "php": ">=5.5.0",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sizeg\\jwt\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Dmitriy Demin",
+                    "email": "sizemail@gmail.com",
+                    "homepage": "https://sizeg.tk"
+                }
+            ],
+            "description": "JWT based on Icobucci",
+            "keywords": [
+                "jwt",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2018-12-21T02:43:35+00:00"
         },
         {
             "name": "symfony/process",
@@ -643,7 +749,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular/bower-angular/zipball/56690b5e545ad36d04e369a65171de1adbe3ce64",
-                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64"
+                "reference": "56690b5e545ad36d04e369a65171de1adbe3ce64",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -661,7 +768,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/a8m/angular-filter/zipball/8285ffda674181667ef1ddc32b92b7d6bd6c3711",
-                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711"
+                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711",
+                "shasum": null
             },
             "require": {
                 "bower-asset/angular": ">=1.4.3"
@@ -676,13 +784,14 @@
             "version": "0.9.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:chieffancypants/angular-loading-bar.git",
+                "url": "https://github.com/chieffancypants/angular-loading-bar.git",
                 "reference": "d734873e52ded18fa27d67f52272ae43267dfd63"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/chieffancypants/angular-loading-bar/zipball/d734873e52ded18fa27d67f52272ae43267dfd63",
-                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63"
+                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63",
+                "shasum": null
             },
             "require": {
                 "bower-asset/angular": ">=1.2.9,<2.0.0"
@@ -700,7 +809,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/lancedikson/bowser/zipball/1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
-                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786"
+                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -718,7 +828,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
-                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "shasum": null
             },
             "type": "bower-asset"
         },
@@ -733,7 +844,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/flow.js/zipball/538524c708153a3cb2358ff57b531a759b5236aa",
-                "reference": "538524c708153a3cb2358ff57b531a759b5236aa"
+                "reference": "538524c708153a3cb2358ff57b531a759b5236aa",
+                "shasum": null
             },
             "type": "bower-asset"
         },
@@ -748,7 +860,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/danialfarid/angular-file-upload-bower/zipball/4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
-                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5"
+                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
+                "shasum": null
             },
             "require": {
                 "bower-asset/angular": ">1.2.0"
@@ -769,7 +882,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/ng-flow/zipball/fbf246e1839ee2c4586a82e9132651c498946ed2",
-                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
+                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2",
+                "shasum": null
             },
             "require": {
                 "bower-asset/angular": "~1",
@@ -824,7 +938,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
-                "reference": "425d39571c91121e504dea4984b873306a60361f"
+                "reference": "425d39571c91121e504dea4984b873306a60361f",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -842,7 +957,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular-ui/ui-router/zipball/ef38bc78495ec7719dcd6876886cf5a27420f330",
-                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330"
+                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330",
+                "shasum": null
             },
             "require": {
                 "bower-asset/angular": ">=1.0.8,<2.0.0"

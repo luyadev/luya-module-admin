@@ -195,6 +195,30 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $fileDefaultInlineDisposition = false;
 
     /**
+     * Undocumented variable
+     *
+     * @var string
+     * @since 2.2.0
+     */
+    public $jwtSecret;
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     * @since 2.2.0
+     */
+    public $jwtApiUserEmail;
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     * @since 2.2.0
+     */
+    public $jwtAuthModel;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
@@ -470,7 +494,11 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior'
-            ]
+            ],
+            'jwt' => [
+                'class' => 'sizeg\jwt\Jwt',
+                'key' => $this->jwtSecret,
+            ],
         ];
     }
 
