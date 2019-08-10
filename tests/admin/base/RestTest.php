@@ -6,6 +6,7 @@ use luya\admin\tests\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\controllers\ApiUserController;
 use luya\admin\apis\ApiUserController as LuyaApiUserController;
+use Lcobucci\JWT\Token;
 
 class RestTest extends NgRestTestCase
 {
@@ -30,17 +31,21 @@ class RestTest extends NgRestTestCase
         $r = $this->runControllerAction($this->api, 'list');
         $this->assertTrue(is_array($r));
 
-        $this->assertFalse($this->api->authJwtUser(false, 'athMethod'));
-        $this->assertSame('John', $this->api->authJwtUser(true, 'athMethod')->firstname);
+
+        $token = (new Token(['alg' => 'none'], [], null, [false, false]));
+        $this->assertFalse($this->api->authJwtUser($token, 'athMethod'));
+        $token = (new Token(['alg' => 'none'], [], null, [true, true]));
+        $this->assertSame('John', $this->api->authJwtUser($token, 'athMethod')->firstname);
     }
 
     public function testExceptionModel()
     {
+        $token = (new Token(['alg' => 'none'], [], null, [false, false]));
         $this->app->getModule('admin')->jwtSecret = 'xyz';
         $this->app->getModule('admin')->jwtApiUserEmail = $this->userFixture->getModel('user1')->email;
         $this->app->getModule('admin')->jwtAuthModel = 'luya\admin\models\User';
 
         $this->expectException('yii\base\InvalidConfigException');
-        $this->api->authJwtUser(false, 'athMethod');
+        $this->api->authJwtUser($token, 'athMethod');
     }
 }

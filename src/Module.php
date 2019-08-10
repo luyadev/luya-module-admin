@@ -195,25 +195,20 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $fileDefaultInlineDisposition = false;
 
     /**
-     * Undocumented variable
-     *
-     * @var string
+     * @var string If present this secrete will be used to encode and decoded the jwt values.
      * @since 2.2.0
      */
     public $jwtSecret;
 
     /**
-     * Undocumented variable
-     *
-     * @var string
+     * @var string The email of the LUYA Admin API User which will taken to proxy the jwt requests. This is required
+     * as the permissions are set for api users.
      * @since 2.2.0
      */
     public $jwtApiUserEmail;
 
     /**
-     * Undocumented variable
-     *
-     * @var string
+     * @var string A path or configurable array definition to the class which implements {{luya\admin\base\JwtIdentityInterface}}.
      * @since 2.2.0
      */
     public $jwtAuthModel;
