@@ -491,7 +491,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior'
             ],
             'jwt' => [
-                'class' => 'sizeg\jwt\Jwt',
+                'class' => 'luya\admin\components\Jwt',
                 'key' => $this->jwtSecret,
             ],
         ];
