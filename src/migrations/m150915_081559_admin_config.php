@@ -9,8 +9,9 @@ class m150915_081559_admin_config extends Migration
         $this->createTable('{{%admin_config}}', [
             'name' => $this->string(80),
             'value' => $this->string(255)->notNull(),
-            'PRIMARY KEY(name)',
         ]);
+        
+        $this->addPrimaryKey('name', '{{%admin_config}}', 'name');
     }
 
     public function safeDown()
