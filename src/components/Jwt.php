@@ -2,6 +2,8 @@
 
 namespace luya\admin\components;
 
+use Yii;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 use sizeg\jwt\Jwt as BaseJwt;
 use yii\web\IdentityInterface;
 
@@ -52,16 +54,16 @@ class Jwt extends BaseJwt
     {
         // here you can put some credentials validation logic
         // so if it success we return token
-        $signer = new \Lcobucci\JWT\Signer\Hmac\Sha256();
+        $signer = new Sha256();
         
         $token = $this->getBuilder()
-            ->setIssuer(Yii::$app->request->hostInfo)// Configures the issuer (iss claim)
-            ->setAudience(Yii::$app->request->hostInfo)// Configures the audience (aud claim)
-            ->setId(Yii::$app->security->generatePasswordHash($user->getId()), true)// Configures the id (jti claim), replicating as a header item
-            ->setIssuedAt(time())// Configures the time that the token was issue (iat claim)
-            ->setExpiration(time() + $this->expireTime)// Configures the expiration time of the token (exp claim)
-            ->set('uid', $user->getId())// Configures a new claim, called "uid"
-            ->sign($signer, $this->key)// creates a signature using [[Jwt::$key]]
+            ->setIssuer(Yii::$app->request->hostInfo) // Configures the issuer (iss claim)
+            ->setAudience(Yii::$app->request->hostInfo) // Configures the audience (aud claim)
+            ->setId(Yii::$app->security->generatePasswordHash($user->getId()), true) // Configures the id (jti claim), replicating as a header item
+            ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
+            ->setExpiration(time() + $this->expireTime) // Configures the expiration time of the token (exp claim)
+            ->set('uid', $user->getId()) // Configures a new claim, called "uid"
+            ->sign($signer, $this->key ) // creates a signature using [[Jwt::$key]]
             ->getToken();
 
         return $token->__toString();
