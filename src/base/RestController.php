@@ -7,8 +7,6 @@ use luya\rest\UserBehaviorInterface;
 use luya\rest\Controller;
 use yii\web\ForbiddenHttpException;
 use luya\admin\models\UserOnline;
-use luya\admin\Module as AdminModule;
-use luya\admin\behaviors\UserRequestBehavior;
 use luya\admin\traits\AdminRestBehaviorTrait;
 
 /**

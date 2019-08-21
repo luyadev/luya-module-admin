@@ -1,12 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace luya\admin\tests\admin\base;
+
+error_reporting(E_ALL);
 
 use luya\admin\tests\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\controllers\ApiUserController;
 use luya\admin\apis\ApiUserController as LuyaApiUserController;
 use Lcobucci\JWT\Token;
+use luya\admin\tests\data\models\JwtModel;
 use yii\helpers\ArrayHelper;
 
 class RestTest extends NgRestTestCase
@@ -25,7 +29,9 @@ class RestTest extends NgRestTestCase
             'modules' => [
                 'admin' => [
                     'jwtSecret' => 'xyz',
-                    'jwtAuthModel' => 'luya\admin\tests\data\models\JwtModel',
+                    'jwtAuthModel' => [
+                        'class' => 'luya\admin\tests\data\models\JwtModel',
+                    ],
                 ]
             ]
         ]);
@@ -55,7 +61,8 @@ class RestTest extends NgRestTestCase
         $user = $this->api->authJwtUser($token, 'athMethod');
         $this->assertSame('John', $user->firstname);
 
-        $this->assertNotEmpty($this->app->jwt->generateToken($user));
+        $newUser = new JwtModel();
+        $this->assertNotEmpty($this->app->jwt->generateToken($newUser));
     }
 
     public function testExceptionModel()

@@ -46,7 +46,13 @@ interface JwtIdentityInterface extends Configurable
      *  
      * @see Discussion regarding storing the jwt token: https://stackoverflow.com/a/42765870/4611030  
      * @param Token $token
-     * @return boolean
+     * @return self
      */
     public static function loginByJwtToken(Token $token);
+
+    /**
+     * Returns an ID that can uniquely identify a user identity.
+     * @return string|int an ID that uniquely identifies a user identity.
+     */
+    public function getId();
 }
