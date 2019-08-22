@@ -88,7 +88,7 @@ class Jwt extends BaseJwt
         $token = $this->getBuilder()
             ->setIssuer(Yii::$app->request->hostInfo) // Configures the issuer (iss claim)
             ->setAudience(Yii::$app->request->hostInfo) // Configures the audience (aud claim)
-            ->setId(Yii::$app->security->generatePasswordHash($user->getId()), true) // Configures the id (jti claim), replicating as a header item
+            ->setId($user->getId(), true) // Configures the id (jti claim), replicating as a header item
             ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
             ->setExpiration(time() + $this->expireTime) // Configures the expiration time of the token (exp claim)
             ->set('uid', $user->getId()) // Configures a new claim, called "uid", this information can be retrieved later to identify the user
