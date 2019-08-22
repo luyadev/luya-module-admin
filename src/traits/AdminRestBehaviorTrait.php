@@ -67,10 +67,10 @@ trait AdminRestBehaviorTrait
         $methods = parent::getCompositeAuthMethods();
 
         if ($this->_module->jwtAuthModel && $this->_module->jwtApiUserEmail) {
-            $methods[] = [
-                'class' => 'sizeg\jwt\JwtHttpBearerAuth',
+            array_unshift($methods, [
+                'class' => 'luya\admin\base\JwtHttpBearerAuth',
                 'auth' => [$this, 'authJwtUser'],
-            ];
+            ]);
         }
 
         return $methods;
