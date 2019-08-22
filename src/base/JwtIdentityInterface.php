@@ -43,10 +43,12 @@ interface JwtIdentityInterface extends Configurable
      *     return User::findOne(['id' => $userId, 'jwt_access_token' => $jwtToken]);
      * }
      * ```
+     * 
+     * Return false if no user is found or login is incorrect.
      *  
      * @see Discussion regarding storing the jwt token: https://stackoverflow.com/a/42765870/4611030  
      * @param Token $token
-     * @return self
+     * @return self|boolean Return the user object which implements JwtIdentityInterface or false if not found and login is invalid.
      */
     public static function loginByJwtToken(Token $token);
 
