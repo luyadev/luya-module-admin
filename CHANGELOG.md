@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.2.0 (in progress)
 
+### Fixed
+
++ [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL
+
 ### Added
 
 + [#338](https://github.com/luyadev/luya-module-admin/pull/338) Toggle button for ngRestModel to switch between enable and disable status.
