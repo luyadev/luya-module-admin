@@ -16,12 +16,14 @@
 		"issues" : "https://github.com/luyadev/luya-module-admin/issues"
 	},
 	"require" : {
+        "luyadev/luya-core" : "dev-master",
         "yiisoft/yii2-imagine": "~2.1.0",
         "yiisoft/yii2-queue" : "~2.0.0",
-        "flowjs/flow-php-server": "^1.0"
+        "flowjs/flow-php-server": "^1.0",
+        "sizeg/yii2-jwt": "^1.2"
 	},
 	"require-dev" : {
-        "luyadev/luya-testsuite" : "~1.0.11",
+        "luyadev/luya-testsuite" : "^1.0",
         "twbs/bootstrap": "~4.3.0",
         "bower-asset/angular" : "^1.7",
         "bower-asset/angular-loading-bar" : "^0.9",

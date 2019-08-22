@@ -195,6 +195,25 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $fileDefaultInlineDisposition = false;
 
     /**
+     * @var string If present this secrete will be used to encode and decoded the jwt values.
+     * @since 2.2.0
+     */
+    public $jwtSecret;
+
+    /**
+     * @var string The email of the LUYA Admin API User which will taken to proxy the jwt requests. This is required
+     * as the permissions are set for api users.
+     * @since 2.2.0
+     */
+    public $jwtApiUserEmail;
+
+    /**
+     * @var string A path or configurable array definition to the class which implements {{luya\admin\base\JwtIdentityInterface}}.
+     * @since 2.2.0
+     */
+    public $jwtAuthModel;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
@@ -470,7 +489,11 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior'
-            ]
+            ],
+            'jwt' => [
+                'class' => 'luya\admin\components\Jwt',
+                'key' => $this->jwtSecret,
+            ],
         ];
     }
 

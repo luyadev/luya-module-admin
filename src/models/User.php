@@ -32,7 +32,7 @@ use luya\admin\aws\ApiRequestInsightActiveWindow;
  * @property integer $secure_token_timestamp
  * @property integer $force_reload
  * @property string $settings
- * @property \luya\admin\models\UserSetting $setting Setting object to store data.
+ * @property UserSetting $setting Setting object to store data.
  * @property integer $is_api_user
  * @property integer $api_rate_limit
  * @property string $api_allowed_ips
