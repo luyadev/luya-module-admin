@@ -68,7 +68,7 @@ trait AdminRestBehaviorTrait
 
         if ($this->_module->jwtAuthModel && $this->_module->jwtApiUserEmail) {
             array_unshift($methods, [
-                'class' => 'luya\admin\base\JwtHttpBearerAuth',
+                'class' => 'sizeg\jwt\JwtHttpBearerAuth',
                 'auth' => [$this, 'authJwtUser'],
             ]);
         }
