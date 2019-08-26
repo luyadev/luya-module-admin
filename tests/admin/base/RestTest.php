@@ -53,7 +53,6 @@ class RestTest extends NgRestTestCase
         $r = $this->runControllerAction($this->api, 'list');
         $this->assertTrue(is_array($r));
 
-
         $token = (new Token(['alg' => 'none'], [], null, [false, false]));
         $this->assertNull($this->api->authJwtUser($token, 'athMethod'));
         $token = (new Token(['alg' => 'none'], [], null, [true, true]));
@@ -74,5 +73,15 @@ class RestTest extends NgRestTestCase
 
         $this->expectException('yii\base\InvalidConfigException');
         $this->api->authJwtUser($token, 'athMethod');
+    }
+
+    public function testMisconfiguredJwtUser()
+    {
+        $token = (new Token(['alg' => 'none'], [], null, [1, 1]));
+        $this->app->getModule('admin')->jwtSecret = 'xyz';
+        $this->app->getModule('admin')->jwtApiUserEmail = 'notfound@luya.io';
+
+        $this->expectException('yii\base\InvalidConfigException');
+        $r = $this->api->authJwtUser($token, 'athMethod');
     }
 }
