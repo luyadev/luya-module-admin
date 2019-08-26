@@ -96,10 +96,18 @@ trait AdminRestBehaviorTrait
         // validation was success, now return the API user in terms of permissions:
         if ($auth && ObjectHelper::isInstanceOf($auth, JwtIdentityInterface::class, false)) {
             $this->jwtIdentity = $auth;
-            return ApiUser::find()->andWhere(['email' => $this->_module->jwtApiUserEmail, 'is_api_user' => true])->one();
+
+            // login the api user to the adminuser component.
+            $user = ApiUser::find()->andWhere(['email' => $this->_module->jwtApiUserEmail, 'is_api_user' => true])->one();
+
+            if (!$user) {
+                throw new InvalidConfigException("The jwt api user could not be found. Ensure `jwtApiUserEmail` is configured property.");
+            }
+
+            return $this->userAuthClass()->loginByAccessToken($user->auth_token, 'sizeg\jwt\JwtHttpBearerAuth');
         }
 
-        return false;
+        return null;
     }
 
     /**

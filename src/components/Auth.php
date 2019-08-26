@@ -6,6 +6,8 @@ use Yii;
 use luya\admin\models\Auth as AuthModel;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
+use yii\web\IdentityInterface;
 
 /**
  * Auth components gives informations about permissions, who can do what.
@@ -185,16 +187,40 @@ class Auth extends \yii\base\Component
     }
 
     /**
+     * Normalize the given input user id or identity interface to an id.
+     *
+     * @param integer|string|IdentityInterface $user
+     * @return integer The user id as int value
+     * @since 2.2.0
+     */
+    protected function normalizeIdentityOrId($user)
+    {
+        if (empty($user)) {
+            throw new ForbiddenHttpException("Unable to proceed this request as user identity can not be emtpy.");
+        }
+
+        if ($user instanceof IdentityInterface) {
+            return $user->getId();
+        }
+
+        if (is_scalar($user)) {
+            return $user;
+        }
+
+        throw new ForbiddenHttpException("The given input value for user noramlizer is invalid.");
+    }
+
+    /**
      * See if a User have rights to access this api.
      *
-     * @param integer $userId
+     * @param integer|IdentityInterface $userId
      * @param string $apiEndpoint As defined in the Module.php like (api-admin-user) which is a unique identifiere
      * @param integer|string $typeVerification The CONST number provided from CAN_*
      * @return boolean|integer return false or the auth id, if this a can view request also bool is returned
      */
     public function matchApi($userId, $apiEndpoint, $typeVerification = false)
     {
-        $groups = $this->getApiTable($userId, $apiEndpoint);
+        $groups = $this->getApiTable($this->normalizeIdentityOrId($userId), $apiEndpoint);
 
         if ($typeVerification === false || $typeVerification === self::CAN_VIEW) {
             return (count($groups) > 0) ? current($groups)['id'] : false;
@@ -212,13 +238,13 @@ class Auth extends \yii\base\Component
     /**
      * See if the user has permitted the provided route.
      *
-     * @param integer $userId The user id from admin users
+     * @param integer|IdentityInterface $userId The user id from admin users
      * @param string $route The route to test.
      * @return boolean|integer returns false or the id of the auth
      */
     public function matchRoute($userId, $route)
     {
-        $groups = $this->getRouteTable($userId, $route);
+        $groups = $this->getRouteTable($this->normalizeIdentityOrId($userId), $route);
         
         if (is_array($groups) && count($groups) > 0) {
             return current($groups)['id'];
