@@ -11,6 +11,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Added
 
++ [#340](https://github.com/luyadev/luya-module-admin/issues/340) Added new authentification system for JWT based on ApiUser. 
 + [#338](https://github.com/luyadev/luya-module-admin/pull/338) Toggle button for ngRestModel to switch between enable and disable status.
 
 ## 2.1.0 (22. July 2019)
