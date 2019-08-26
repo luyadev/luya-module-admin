@@ -57,10 +57,8 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
                 throw new ForbiddenHttpException("Invalid REST API call for action '{$action}'.");
                 break;
         }
-
-        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
         
-        $this->can($type);
+        return $this->can($type);
     }
 
     /**
@@ -89,11 +87,13 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             throw new InvalidConfigException("Invalid type of permission call.");
         }
 
-        $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, $type);
+        $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, $type);
 
         if (!$this->authId) {
             throw new ForbiddenHttpException("User is unable to access the API due to insufficient permissions.");
         }
+
+        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
 
         return true;
     }
@@ -106,10 +106,10 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      */
     public function checkEndpointAccess()
     {
-        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
-        
-        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity->id, $this->id, false)) {
+        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, false)) {
             throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
         }
+
+        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
     }
 }
