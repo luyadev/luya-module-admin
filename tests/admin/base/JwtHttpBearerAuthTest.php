@@ -58,4 +58,24 @@ class JwtHttpBearerAuthTest extends AdminTestCase
         };
         $this->assertTrue($filter->authenticate($this->app->adminuser, $this->app->request, $this->app->response));
     }
+
+    public function testInvalidToken()
+    {
+        $_SERVER['HTTP_Authorization'] = 'Bearer notenough.dots';
+        $filter = new JwtHttpBearerAuth();
+        $filter->validateToken = false;
+        $filter->verifyToken = false;
+        $this->assertNull($filter->authenticate($this->app->adminuser, $this->app->request, $this->app->response));
+    }
+
+    public function testUserModelAuth()
+    {
+        $_SERVER['HTTP_Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IjEifQ.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MCIsImF1ZCI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDgwIiwianRpIjoiMSIsImlhdCI6MTU2NjQ4MjAxMSwiZXhwIjoxNTY2NDg1NjExLCJ1aWQiOiIxIn0.587xedNWYrOeZeurcJkkG4_S1YPyczFEOE_zBnIuTMo';
+        $filter = new JwtHttpBearerAuth();
+        $filter->validateToken = false;
+        $filter->verifyToken = false;
+
+        $this->expectException('yii\base\InvalidArgumentException');
+        $this->assertTrue($filter->authenticate($this->app->adminuser, $this->app->request, $this->app->response));
+    }
 }

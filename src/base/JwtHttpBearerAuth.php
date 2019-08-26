@@ -55,8 +55,14 @@ class JwtHttpBearerAuth extends AuthMethod
      */
     public $auth;
 
+    /**
+     * @var boolean Whether the token should be validate.
+     */
     public $validateToken = true;
 
+    /**
+     * @var boolean Whether the token should be verified.
+     */
     public $verifyToken = true;
 
     /**
