@@ -55,6 +55,10 @@ class JwtHttpBearerAuth extends AuthMethod
      */
     public $auth;
 
+    public $validateToken = true;
+
+    public $verifyToken = true;
+
     /**
      * @inheritdoc
      */
@@ -103,6 +107,6 @@ class JwtHttpBearerAuth extends AuthMethod
      */
     public function loadToken($token)
     {
-        return Yii::$app->jwt->loadToken($token);
+        return Yii::$app->jwt->loadToken($token, $this->validateToken, $this->verifyToken);
     }
 }
