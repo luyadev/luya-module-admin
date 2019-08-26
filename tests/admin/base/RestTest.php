@@ -55,7 +55,7 @@ class RestTest extends NgRestTestCase
 
 
         $token = (new Token(['alg' => 'none'], [], null, [false, false]));
-        $this->assertFalse($this->api->authJwtUser($token, 'athMethod'));
+        $this->assertNull($this->api->authJwtUser($token, 'athMethod'));
         $token = (new Token(['alg' => 'none'], [], null, [true, true]));
 
         $user = $this->api->authJwtUser($token, 'athMethod');

@@ -195,10 +195,6 @@ class Auth extends \yii\base\Component
      */
     protected function normalizeIdentityOrId($user)
     {
-        if (empty($user)) {
-            throw new ForbiddenHttpException("Unable to proceed this request as user identity can not be emtpy.");
-        }
-
         if ($user instanceof IdentityInterface) {
             return $user->getId();
         }
@@ -207,7 +203,7 @@ class Auth extends \yii\base\Component
             return $user;
         }
 
-        throw new ForbiddenHttpException("The given input value for user noramlizer is invalid.");
+        return 0;
     }
 
     /**
@@ -223,7 +219,7 @@ class Auth extends \yii\base\Component
         $groups = $this->getApiTable($this->normalizeIdentityOrId($userId), $apiEndpoint);
 
         if ($typeVerification === false || $typeVerification === self::CAN_VIEW) {
-            return (count($groups) > 0) ? current($groups)['id'] : false;
+            return count($groups) > 0 ? current($groups)['id'] : false;
         }
 
         foreach ($groups as $row) {
