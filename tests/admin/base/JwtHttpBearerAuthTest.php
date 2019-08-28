@@ -13,10 +13,12 @@ class JwtHttpBearerAuthTest extends AdminTestCase
         $config = parent::getConfigArray();
 
         return ArrayHelper::merge($config, [
-            'modules' => [
-                'admin' => [
-                    'jwtSecret' => '3jlsdkfjlsdkjfsldjf',
-                    'jwtAuthModel' => [
+            'components' => [
+                'jwt' => [
+                    'class' => 'luya\admin\components\Jwt',
+                    'key' => '3jlsdkfjlsdkjfsldjf',
+                    'apiUserEmail' => 'foo@bar.com',
+                    'identityClass' => [
                         'class' => 'luya\admin\tests\data\models\JwtModel',
                     ],
                 ]
