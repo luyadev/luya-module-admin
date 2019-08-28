@@ -57,10 +57,6 @@ use luya\helpers\ObjectHelper;
  * }
  * ```
  * 
- * + replaced jwtApiUserEmail with apiUserEmail
- * + replaced jwtSecret with key
- * + replaced jwtAuthModel with identityClass
- * 
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.2
  */
