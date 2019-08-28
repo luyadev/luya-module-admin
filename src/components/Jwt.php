@@ -70,13 +70,11 @@ class Jwt extends BaseJwt
     /**
      * @var string The email of the LUYA Admin API User which will taken to proxy the jwt requests. This is required
      * as the permissions are set for api users.
-     * @since 2.2.0
      */
     public $apiUserEmail;
 
     /**
      * @var string A path or configurable array definition to the class which implements {{luya\admin\base\JwtIdentityInterface}}.
-     * @since 2.2.0
      */
     public $identityClass;
 
