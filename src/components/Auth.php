@@ -6,7 +6,6 @@ use Yii;
 use luya\admin\models\Auth as AuthModel;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
 use yii\web\IdentityInterface;
 
 /**
@@ -83,6 +82,8 @@ class Auth extends \yii\base\Component
     /**
      * Check if a given api endpoint is in the permission (auth) system available.
      *
+     * > This does not mean any given user has access to this endpoint.
+     * 
      * @param string $apiEndpoint The api endpoint to validate.
      * @return boolean
      * @since 2.1.0
@@ -161,7 +162,7 @@ class Auth extends \yii\base\Component
     /**
      * Verify a permission type against its calculated `weight`.
      *
-     * In order to calculate the permissions weight see {{\luya\admin\components\Auth::permissionWeight}}.
+     * In order to calculate the permissions weight see {{\luya\admin\components\Auth::permissionWeight()}}.
      *
      * @param string $type The type of permission (1,2,3 see constants)
      * @param integer $permissionWeight A weight of the permssions which is value between 1 - 9, see [[app-admin-module-permission.md]].

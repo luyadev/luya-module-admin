@@ -30,6 +30,8 @@ class UserController extends Api
      */
     public function actionSession()
     {
+        $this->canApiUserAccess();
+
         $user = Yii::$app->adminuser->identity;
         $session = [
             'packages' => [],
@@ -51,28 +53,14 @@ class UserController extends Api
     }
     
     /**
-     * Ensure whether the current user has an active email verification token or not.
-     *
-     * @param User $user The user object to evaluate.
-     * @return boolean
-     */
-    private function hasOpenEmailValidation(User $user)
-    {
-        $ts = $user->email_verification_token_timestamp;
-        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
      * Action to change the password for the given User.
      *
      * @return \luya\admin\models\UserChangePassword
      */
     public function actionChangePassword()
     {
+        $this->canApiUserAccess();
+
         $model = new UserChangePassword();
         $model->setUser(Yii::$app->adminuser->identity);
         $model->attributes = Yii::$app->request->bodyParams;
@@ -96,6 +84,8 @@ class UserController extends Api
      */
     public function actionChangeEmail()
     {
+        $this->canApiUserAccess();
+
         $token = Yii::$app->request->getBodyParam('token');
         $user = Yii::$app->adminuser->identity;
         
@@ -122,6 +112,8 @@ class UserController extends Api
      */
     public function actionSessionUpdate()
     {
+        $this->canApiUserAccess();
+
         $identity = Yii::$app->adminuser->identity;
         $user = clone Yii::$app->adminuser->identity;
         $user->attributes = Yii::$app->request->bodyParams;
@@ -161,6 +153,8 @@ class UserController extends Api
      */
     public function actionChangeSettings()
     {
+        $this->canApiUserAccess();
+        
         $params = Yii::$app->request->bodyParams;
         
         foreach ($params as $param => $value) {
@@ -168,5 +162,21 @@ class UserController extends Api
         }
         
         return true;
+    }
+
+    /**
+     * Ensure whether the current user has an active email verification token or not.
+     *
+     * @param User $user The user object to evaluate.
+     * @return boolean
+     */
+    private function hasOpenEmailValidation(User $user)
+    {
+        $ts = $user->email_verification_token_timestamp;
+        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
+            return true;
+        }
+        
+        return false;
     }
 }

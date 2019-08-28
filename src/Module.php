@@ -195,6 +195,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $fileDefaultInlineDisposition = false;
 
     /**
+     * @var boolean Defines whether Api Users can access a method which is not protected from the permission system.
+     * @since 2.2.0
+     */
+    public $apiUserAllowActionsWithoutPermissions = false;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
@@ -243,6 +249,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      */
     public $moduleMenus = [];
     
+    /**
+     * @inheritDoc
+     */
     public static function onLoad()
     {
         self::registerTranslation('admin*', '@admin/messages', [
