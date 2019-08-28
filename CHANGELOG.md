@@ -5,6 +5,10 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.2.0 (in progress)
 
+### Changed
+
++ [#358](https://github.com/luyadev/luya-module-admin/pull/358) Forbid the call of actions without permissions entrys when authorized as Api User.
+
 ### Fixed
 
 + [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL

@@ -56,6 +56,8 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 class RestController extends Controller implements UserBehaviorInterface
 {
     use AdminRestBehaviorTrait;
+
+    private $_permitted;
     
     /**
      * Shorthand method to check whether the current user exists for the given route, otherwise throw forbidden exception.
@@ -69,6 +71,7 @@ class RestController extends Controller implements UserBehaviorInterface
             throw new ForbiddenHttpException("Unable to access action '$route' due to insufficient permissions.");
         }
 
+        $this->_permitted = true;
         UserOnline::refreshUser($this->userAuthClass()->identity, $route);
     }
 
@@ -82,7 +85,9 @@ class RestController extends Controller implements UserBehaviorInterface
     {
         $action = parent::beforeAction($action);
 
-        $this->canApiUserAccess();
+        if (!$this->_permitted) {
+            $this->canApiUserAccess();
+        }
 
         return $action;
     }
