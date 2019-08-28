@@ -56,8 +56,43 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 class RestController extends Controller implements UserBehaviorInterface
 {
     use AdminRestBehaviorTrait;
-
-    private $_permitted;
+    
+    /**
+     * Returns the default permission route to check. By default this will return 
+     * the current route of the performed action.
+     *
+     * In order to override permission check use:
+     * 
+     * ```php
+     * public function permissionRoute($action)
+     * {
+     *      return 'my/custom/route';
+     * }
+     * ```
+     * 
+     * Or to switch routes for given actions use:
+     * 
+     * ```php
+     * public function permissionRoute($action)
+     * {
+     *      if ($action->id == 'my-index-action') {
+     *           return 'module/index/action';
+     *      }
+     * 
+     *      return 'module/index/another-action';
+     * }
+     * ```
+     * 
+     * Keep in mind this permission route check is mainly to determine if an action exists
+     * 
+     * @param \yii\base\Action $action
+     * @return string
+     * @since 2.2.0
+     */
+    public function permissionRoute($action)
+    {
+        return implode('/', [$action->controller->module->id, $action->controller->id, $action->id]);
+    }
     
     /**
      * Shorthand method to check whether the current user exists for the given route, otherwise throw forbidden exception.
@@ -71,7 +106,6 @@ class RestController extends Controller implements UserBehaviorInterface
             throw new ForbiddenHttpException("Unable to access action '$route' due to insufficient permissions.");
         }
 
-        $this->_permitted = true;
         UserOnline::refreshUser($this->userAuthClass()->identity, $route);
     }
 
@@ -80,12 +114,20 @@ class RestController extends Controller implements UserBehaviorInterface
      *
      * @param \yii\base\Action $action
      * @return boolean
+     * @since 2.2.0
      */
     public function beforeAction($action)
     {
         $action = parent::beforeAction($action);
 
-        if (!$this->_permitted) {
+        $route = $this->permissionRoute($action);
+
+        // check whether for the current route exists a permission entry
+        // if the permission entry exists, a checkRouteAccess() must be done.
+        // otherwise just check whether api user can access the api without permission entry.
+        if (Yii::$app->auth->isInRoutePermissionTable($route)) {
+            $this->checkRouteAccess($route);
+        } else {
             $this->canApiUserAccess();
         }
 

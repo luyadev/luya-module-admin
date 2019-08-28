@@ -30,8 +30,6 @@ class UserController extends Api
      */
     public function actionSession()
     {
-        $this->canApiUserAccess();
-
         $user = Yii::$app->adminuser->identity;
         $session = [
             'packages' => [],
@@ -59,8 +57,6 @@ class UserController extends Api
      */
     public function actionChangePassword()
     {
-        $this->canApiUserAccess();
-
         $model = new UserChangePassword();
         $model->setUser(Yii::$app->adminuser->identity);
         $model->attributes = Yii::$app->request->bodyParams;
@@ -84,8 +80,6 @@ class UserController extends Api
      */
     public function actionChangeEmail()
     {
-        $this->canApiUserAccess();
-
         $token = Yii::$app->request->getBodyParam('token');
         $user = Yii::$app->adminuser->identity;
         
@@ -112,8 +106,6 @@ class UserController extends Api
      */
     public function actionSessionUpdate()
     {
-        $this->canApiUserAccess();
-
         $identity = Yii::$app->adminuser->identity;
         $user = clone Yii::$app->adminuser->identity;
         $user->attributes = Yii::$app->request->bodyParams;
@@ -153,8 +145,6 @@ class UserController extends Api
      */
     public function actionChangeSettings()
     {
-        $this->canApiUserAccess();
-        
         $params = Yii::$app->request->bodyParams;
         
         foreach ($params as $param => $value) {

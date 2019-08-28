@@ -36,8 +36,6 @@ class TagController extends Api
      */
     public function actionTable($tableName)
     {
-        $this->canApiUserAccess();
-        
         return new ActiveDataProvider([
             'query' => Tag::find()->joinWith(['tagRelations'])->where(['table_name' => $tableName])->distinct(),
         ]);

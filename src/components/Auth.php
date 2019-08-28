@@ -92,7 +92,38 @@ class Auth extends \yii\base\Component
     {
         return array_key_exists($apiEndpoint, $this->getPermissionApiEndpointsTable());
     }
-    
+
+    private $_routes;
+
+    /**
+     * Get all api endpoints as array with index by api endpoitn name
+     *
+     * @return array An array with all api endpoints from the permission system indexed by the api name.
+     * @since 2.2.0
+     */
+    public function getPermissionRoutesTable()
+    {
+        if (!$this->_routes) {
+            $this->_routes = AuthModel::find()->andWhere(['not', ['route' => null]])->indexBy('route')->asArray()->all();
+        }
+
+        return $this->_routes;
+    }
+
+    /**
+     * Check if a given route exists in permission system.
+     * 
+     * > This does not mean any given user has access to this endpoint.
+     *
+     * @param string $route
+     * @return boolean
+     * @since 2.2.0
+     */
+    public function isInRoutePermissionTable($route)
+    {
+        return array_key_exists($route, $this->getPermissionRoutesTable());
+    }
+
     /**
      * Get the permission table for a user without doublicated entries.
      *

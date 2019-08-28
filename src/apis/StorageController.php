@@ -43,6 +43,11 @@ class StorageController extends RestController
      */
     const PERMISSION_ROUTE = 'admin/storage/index';
     
+    public function permissionRoute($action)
+    {
+        return self::PERMISSION_ROUTE;
+    }
+    
     // DATA READERS
 
     /**
@@ -52,8 +57,6 @@ class StorageController extends RestController
      */
     public function actionDataFolders()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         return $this->getOrSetHasCache('storageApiDataFolders', function () {
             $folders = [];
             foreach (Yii::$app->storage->findFolders() as $key => $folder) {
@@ -72,8 +75,6 @@ class StorageController extends RestController
      */
     public function actionDataFiles($folderId = 0, $search = null)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $query = StorageFile::find()
             ->select(['id', 'name_original', 'extension', 'upload_timestamp', 'file_size', 'mime_type'])
             ->where(['is_hidden' => false, 'is_deleted' => false])
@@ -104,8 +105,6 @@ class StorageController extends RestController
      */
     public function actionToggleFileTag()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $tagId = Yii::$app->request->getBodyParam('tagId');
         $fileId = Yii::$app->request->getBodyParam('fileId');
 
@@ -142,8 +141,6 @@ class StorageController extends RestController
      */
     public function actionFileInfo($id)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images', 'tags'])->one();
         
         if (!$model) {
@@ -164,8 +161,6 @@ class StorageController extends RestController
      */
     public function actionFile($id)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $model = StorageFile::find()->where(['id' => $id])->one();
 
         if (!$model) {
@@ -186,8 +181,6 @@ class StorageController extends RestController
      */
     public function actionImage($id)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
 
         if (!$model) {
@@ -206,8 +199,6 @@ class StorageController extends RestController
      */
     public function actionImageInfo($id)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         
         if (!$model) {
@@ -233,8 +224,6 @@ class StorageController extends RestController
      */
     public function actionImagesInfo()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $ids = Yii::$app->request->getBodyParam('ids', []);
         $ids = array_unique($ids);
         return new ActiveDataProvider([
@@ -252,8 +241,6 @@ class StorageController extends RestController
      */
     public function actionFileUpdate($id, $pageId = 0)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
         
         if (!$model) {
@@ -280,8 +267,6 @@ class StorageController extends RestController
      */
     public function actionFilemanagerUpdateCaption()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         $fileId = Yii::$app->request->post('id', false);
         $captionsText = Yii::$app->request->post('captionsText', false);
         $pageId = Yii::$app->request->post('pageId', 0);
@@ -312,7 +297,6 @@ class StorageController extends RestController
      */
     public function actionImageFilter()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
         $image = Yii::$app->storage->createImage(Yii::$app->request->post('fileId', null), Yii::$app->request->post('filterId', null));
         if ($image) {
             return [
@@ -335,8 +319,6 @@ class StorageController extends RestController
      */
     public function actionDataFilters()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         return Yii::$app->storage->filtersArray;
     }
     
@@ -347,8 +329,6 @@ class StorageController extends RestController
      */
     public function actionFileReplace()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         $fileId = Yii::$app->request->post('fileId', false);
         $pageId = Yii::$app->request->post('pageId', 0);
         Yii::warning('replace request for file id' . $fileId, __METHOD__);
@@ -441,8 +421,6 @@ class StorageController extends RestController
     */
     public function actionFilesUpload()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
@@ -474,8 +452,6 @@ class StorageController extends RestController
      */
     public function actionFilemanagerMoveFiles()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         $toFolderId = Yii::$app->request->post('toFolderId', 0);
         $fileIds = Yii::$app->request->post('fileIds', []);
         
@@ -497,7 +473,6 @@ class StorageController extends RestController
      */
     public function actionFilemanagerRemoveFiles()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
         $pageId = Yii::$app->request->post('pageId', 0);
         $folderId = Yii::$app->request->post('folderId', 0);
         foreach (Yii::$app->request->post('ids', []) as $id) {
@@ -517,8 +492,6 @@ class StorageController extends RestController
      */
     public function actionIsFolderEmpty($folderId)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-
         $count = StorageFile::find()->where(['folder_id' => $folderId, 'is_deleted' => false])->count();
         
         return [
@@ -540,8 +513,6 @@ class StorageController extends RestController
      */
     public function actionFolderDelete($folderId)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         // find all subfolders
         $matchingChildFolders = StorageFolder::find()->where(['parent_id' => $folderId])->asArray()->all();
         foreach ($matchingChildFolders as $matchingChildFolder) {
@@ -574,8 +545,6 @@ class StorageController extends RestController
      */
     public function actionFolderUpdate($folderId)
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         $model = StorageFolder::findOne($folderId);
         if (!$model) {
             return false;
@@ -594,8 +563,6 @@ class StorageController extends RestController
      */
     public function actionFolderCreate()
     {
-        $this->checkRouteAccess(self::PERMISSION_ROUTE);
-        
         $folderName = Yii::$app->request->post('folderName', null);
         $parentFolderId = Yii::$app->request->post('parentFolderId', 0);
         $response = Yii::$app->storage->addFolder($folderName, $parentFolderId);
