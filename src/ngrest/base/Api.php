@@ -611,6 +611,11 @@ class Api extends RestActiveController
     public function actionRelationCall($arrayIndex, $id, $modelClass, $query = null)
     {
         $modelClass = base64_decode($modelClass);
+
+        if (!class_exists($modelClass)) {
+            throw new InvalidCallException("Unable to find the given class \"$modelClass\".");
+        }
+        
         $model = $modelClass::findOne((int) $id);
         
         if (!$model) {
