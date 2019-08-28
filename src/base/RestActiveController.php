@@ -112,7 +112,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             // if the permission entry exists, a checkRouteAccess() must be done.
             // otherwise just check whether api user can access the api without permission entry.
             if (Yii::$app->auth->isInApiEndpointPermissionTable($this->id)) {
-                $this->checkAccess($action);
+                $this->checkAccess($action->id);
             } else {
                 $this->canApiUserAccess();
             }
