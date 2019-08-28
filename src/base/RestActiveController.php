@@ -99,6 +99,31 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     }
 
     /**
+     * Ensure the action of rest controllers can not viewed by api users by default.
+     *
+     * @param \yii\base\Action $action
+     * @return boolean
+     * @since 2.2.0
+     */
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            // check whether for the current route exists a permission entry
+            // if the permission entry exists, a checkRouteAccess() must be done.
+            // otherwise just check whether api user can access the api without permission entry.
+            if (Yii::$app->auth->isInApiEndpointPermissionTable($this->id)) {
+                $this->checkAccess($action);
+            } else {
+                $this->canApiUserAccess();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Checks if the current api endpoint exists in the list of accessables APIs.
      *
      * @throws ForbiddenHttpException

@@ -59,9 +59,11 @@ class ViewAction extends \yii\rest\ViewAction
     {
         $model = $this->findModel($id);
 
+        /*
         if ($this->checkAccess) {
             call_user_func($this->checkAccess, $this->id, $model);
         }
+        */
 
         if (!Yii::$app->adminuser->identity->is_api_user) {
             $modelClass = $this->modelClass;

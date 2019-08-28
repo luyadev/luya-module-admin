@@ -318,38 +318,38 @@ class Api extends RestActiveController
             'index' => [ // for casual api request behavior
                 'class' => 'luya\admin\ngrest\base\actions\IndexAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
                 'prepareActiveDataQuery' => [$this, 'prepareIndexQuery'],
                 'dataFilter' => $this->getDataFilter(),
             ],
             'list' => [ // for ngrest list
                 'class' => 'luya\admin\ngrest\base\actions\IndexAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
                 'prepareActiveDataQuery' => [$this, 'prepareListQuery'],
                 'dataFilter' => $this->getDataFilter(),
             ],
             'view' => [
                 'class' => 'luya\admin\ngrest\base\actions\ViewAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
             ],
             'create' => [
                 'class' => 'luya\admin\ngrest\base\actions\CreateAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->createScenario,
             ],
             'update' => [
                 'class' => 'luya\admin\ngrest\base\actions\UpdateAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->updateScenario,
             ],
             'delete' => [
                 'class' => 'luya\admin\ngrest\base\actions\DeleteAction',
                 'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
+                //'checkAccess' => [$this, 'checkAccess'],
             ],
             'options' => [
                 'class' => 'yii\rest\OptionsAction',
@@ -469,8 +469,6 @@ class Api extends RestActiveController
      */
     public function actionServices()
     {
-        $this->checkAccess('services');
-        
         $settings = [];
         $apiEndpoint = $this->model->ngRestApiEndpoint();
         $userSortSettings = Yii::$app->adminuser->identity->setting->get('ngrestorder.admin/'.$apiEndpoint, false);
@@ -522,7 +520,6 @@ class Api extends RestActiveController
 
     public function actionToggleNotification()
     {
-        $this->checkAccess('toggle-notification');
         $newMuteState = Yii::$app->request->getBodyParam('mute');
 
         $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
@@ -552,8 +549,6 @@ class Api extends RestActiveController
      */
     public function actionSearch($query = null)
     {
-        $this->checkAccess('search');
-        
         if (empty($query)) {
             $query = Yii::$app->request->post('query');
         }
@@ -598,8 +593,6 @@ class Api extends RestActiveController
      */
     public function actionRelationCall($arrayIndex, $id, $modelClass, $query = null)
     {
-        $this->checkAccess('relation-call');
-        
         $modelClass = base64_decode($modelClass);
         $model = $modelClass::findOne((int) $id);
         
@@ -653,8 +646,6 @@ class Api extends RestActiveController
      */
     public function actionFilter($filterName, $query = null)
     {
-        $this->checkAccess('filter');
-        
         $model = $this->model;
 
         $this->handleNotifications($this->modelClass, $this->authId);
@@ -692,8 +683,6 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowCallback()
     {
-        $this->checkAccess('active-window-callback');
-        
         $config = $this->model->getNgRestConfig();
         $render = new RenderActiveWindowCallback();
         $ngrest = new NgRest($config);
@@ -708,8 +697,6 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowRender()
     {
-        $this->checkAccess('active-window-render');
-        
         // generate ngrest active window
         $render = new RenderActiveWindow();
         $render->setItemId(Yii::$app->request->getBodyParam('itemId', false));
@@ -735,8 +722,6 @@ class Api extends RestActiveController
      */
     public function actionExport()
     {
-        $this->checkAccess('export');
-        
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
@@ -796,7 +781,6 @@ class Api extends RestActiveController
      */
     public function actionActiveButton($hash, $id)
     {
-        $this->checkAccess('active-button');
         $model = $this->findModel($id);
 
         return $model->handleNgRestActiveButton($hash);

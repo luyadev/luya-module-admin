@@ -26,9 +26,11 @@ class DeleteAction extends \yii\rest\DeleteAction
     {
         $model = $this->findModel($id);
 
+        /*
         if ($this->checkAccess) {
             call_user_func($this->checkAccess, $this->id, $model);
         }
+        */
 
         if ($model->delete() === false) {
             
