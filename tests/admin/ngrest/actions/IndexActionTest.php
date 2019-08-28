@@ -38,6 +38,7 @@ class IndexActionTest extends AdminTestCase
         ]);
 
         $ctrl = new TestApi('test-api', $this->app);
+        $ctrl->authOptional = ['index'];
         Yii::$app->controller = $ctrl;
         $ctrl->detachBehavior('authenticator');
         $r = $ctrl->runAction('index');
