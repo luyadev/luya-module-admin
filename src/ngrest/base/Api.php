@@ -15,6 +15,7 @@ use luya\helpers\Url;
 use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
+use luya\admin\components\Auth;
 use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
@@ -95,6 +96,22 @@ class Api extends RestActiveController
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
         }
+
+        $this->addActionPermission(Auth::CAN_VIEW, [
+            'index', 'view', 'services', 'search', 'relation-call', 'filter', 'export', 'list', 'toggle-notification',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_CREATE, [
+            'create',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_UPDATE, [
+            'active-window-render', 'active-window-callback', 'active-button', 'update',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_DELETE, [
+            'delete',
+        ]);
     }
     
     /**

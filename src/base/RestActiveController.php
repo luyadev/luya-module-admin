@@ -23,49 +23,72 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 class RestActiveController extends ActiveController implements UserBehaviorInterface
 {
     use AdminRestBehaviorTrait;
-
-    /**
-     * @inheritdoc
-     */
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        switch ($action) {
-            case 'index':
-            case 'view':
-            case 'services':
-            case 'search':
-            case 'relation-call':
-            case 'filter':
-            case 'export':
-            case 'list':
-            case 'toggle-notification':
-                $type = Auth::CAN_VIEW;
-                break;
-            case 'create':
-                $type = Auth::CAN_CREATE;
-                break;
-            case 'active-window-render':
-            case 'active-window-callback':
-            case 'active-button':
-            case 'update':
-                $type = Auth::CAN_UPDATE;
-                break;
-            case 'delete':
-                $type = Auth::CAN_DELETE;
-                break;
-            default:
-                throw new ForbiddenHttpException("Invalid REST API call for action '{$action}'.");
-                break;
-        }
-        
-        return $this->can($type);
-    }
-
+    
     /**
      * @var integer Contains the id of the current running auth id
      * @since 2.0.0
      */
     protected $authId;
+
+    /**
+     * Provide a list of actions with the given permission
+     *
+     * ```php
+     * return [
+     *     'my-action' => Auth::CAN_UPDATE,
+     * ];
+     * ```
+     * 
+     * the action `actionMyAction()` would now require at least CAN UPDATE permission on this API to work.
+     * 
+     * @return array An array where key is the action id and value the Auth type
+     */
+    public function actionPermissions()
+    {
+        return [];
+    }
+
+    private $_actionPermissions = [];
+
+    /**
+     * Add a permission with a function.
+     * 
+     * This allows you to inject permission on init() which won't allow them to override.
+     * 
+     * ```php
+     * public function init()
+     * {
+     *     parent::init();
+     * 
+     *     $this->addActionPermission(Auth::CAN_UPDATE, [
+     *         'my-action', 'another-action',
+     *     ]); 
+     * }
+     * ```
+     *
+     * @param integer $type The type of permission
+     * @param string $actions The name of the action
+     */
+    protected function addActionPermission($type, $actions)
+    {
+        foreach ((array) $actions as $actionName) {
+            $this->_actionPermissions[$actionName] = $type;
+        }
+    }
+
+    /**
+     * Get all actions as array from {{actionPermissions()}} method and those wo where inject by {{åddActionPermission}}.
+     * 
+     * @return array
+     */
+    protected function getActionPermissions()
+    {
+        foreach ($this->actionPermissions() as $type => $actionName) {
+            $this->addActionPermission($type, $actionName);
+        }
+
+        return $this->_actionPermissions;
+    }
 
     /**
      * Check if the current user have given permissions type.
@@ -80,20 +103,34 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * @return boolean Returns true otherwise throws an exception
      * @throws ForbiddenHttpException
      * @since 2.0.0
+     * @deprected can is deprecated and replaced with isActionAllowed
      */
     public function can($type)
     {
-        if (!in_array($type, [Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW])) {
-            throw new InvalidConfigException("Invalid type of permission call.");
+        trigger_error("can is deprecated, us isActionAllowed instead", E_USER_DEPRECATED);
+    }
+
+    public function isActionAllowed($action)
+    {
+        // a permission action exists, ensure if user has permission for this action or not:
+        if (array_key_exists($action, $this->getActionPermissions())) {
+            $type = $this->getActionPermissions()[$action];
+
+            if (!in_array($type, [false, Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW])) {
+                throw new InvalidConfigException("Invalid type \"$type\" of action permission.");
+            }
+            
+            $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, $type);
+            
+            if (!$this->authId) {
+                throw new ForbiddenHttpException("User is unable to access the API \"{$this->id}\" due to insufficient permissions.");
+            }
+
+            return true;
         }
 
-        $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, $type);
-
-        if (!$this->authId) {
-            throw new ForbiddenHttpException("User is unable to access the API due to insufficient permissions.");
-        }
-
-        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
+        // there is no permission for the given api and action id, ensure api user access.
+        $this->canApiUserAccess();
 
         return true;
     }
@@ -108,33 +145,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            // check whether for the current route exists a permission entry
-            // if the permission entry exists, a checkRouteAccess() must be done.
-            // otherwise just check whether api user can access the api without permission entry.
-            if (Yii::$app->auth->isInApiEndpointPermissionTable($this->id)) {
-                $this->checkAccess($action->id);
-            } else {
-                $this->canApiUserAccess();
-            }
-
-            return true;
+            return $this->isActionAllowed($action->id§);
         }
 
         return false;
-    }
-
-    /**
-     * Checks if the current api endpoint exists in the list of accessables APIs.
-     *
-     * @throws ForbiddenHttpException
-     * @since 1.1.0
-     */
-    public function checkEndpointAccess()
-    {
-        if (!Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, false)) {
-            throw new ForbiddenHttpException('Unable to access this action due to insufficient permissions.');
-        }
-
-        UserOnline::refreshUser($this->userAuthClass()->identity, $this->id);
     }
 }
