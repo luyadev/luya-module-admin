@@ -43,16 +43,6 @@ class StorageController extends RestController
      */
     const PERMISSION_ROUTE = 'admin/storage/index';
     
-    /**
-     * Flush the storage caching data.
-     */
-    protected function flushApiCache($folderId = 0, $page = 0)
-    {
-        Yii::$app->storage->flushArrays();
-        $this->deleteHasCache('storageApiDataFolders');
-        $this->deleteHasCache(['storageApiDataFiles', (int) $folderId, (int) $page]);
-    }
-    
     // DATA READERS
 
     /**
@@ -62,6 +52,8 @@ class StorageController extends RestController
      */
     public function actionDataFolders()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         return $this->getOrSetHasCache('storageApiDataFolders', function () {
             $folders = [];
             foreach (Yii::$app->storage->findFolders() as $key => $folder) {
@@ -80,6 +72,8 @@ class StorageController extends RestController
      */
     public function actionDataFiles($folderId = 0, $search = null)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $query = StorageFile::find()
             ->select(['id', 'name_original', 'extension', 'upload_timestamp', 'file_size', 'mime_type'])
             ->where(['is_hidden' => false, 'is_deleted' => false])
@@ -100,8 +94,6 @@ class StorageController extends RestController
         ]);
     }
     
-    // ACTIONS
-    
     /**
      * Toggle Tags for a given file.
      *
@@ -112,6 +104,8 @@ class StorageController extends RestController
      */
     public function actionToggleFileTag()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $tagId = Yii::$app->request->getBodyParam('tagId');
         $fileId = Yii::$app->request->getBodyParam('fileId');
 
@@ -148,6 +142,8 @@ class StorageController extends RestController
      */
     public function actionFileInfo($id)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images', 'tags'])->one();
         
         if (!$model) {
@@ -168,6 +164,8 @@ class StorageController extends RestController
      */
     public function actionFile($id)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $model = StorageFile::find()->where(['id' => $id])->one();
 
         if (!$model) {
@@ -188,6 +186,8 @@ class StorageController extends RestController
      */
     public function actionImage($id)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $model = StorageImage::find()->where(['id' => $id])->with(['file'])->one();
 
         if (!$model) {
@@ -206,6 +206,8 @@ class StorageController extends RestController
      */
     public function actionImageInfo($id)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         
         if (!$model) {
@@ -231,6 +233,8 @@ class StorageController extends RestController
      */
     public function actionImagesInfo()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $ids = Yii::$app->request->getBodyParam('ids', []);
         $ids = array_unique($ids);
         return new ActiveDataProvider([
@@ -248,6 +252,8 @@ class StorageController extends RestController
      */
     public function actionFileUpdate($id, $pageId = 0)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
         
         if (!$model) {
@@ -329,6 +335,8 @@ class StorageController extends RestController
      */
     public function actionDataFilters()
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         return Yii::$app->storage->filtersArray;
     }
     
@@ -509,6 +517,8 @@ class StorageController extends RestController
      */
     public function actionIsFolderEmpty($folderId)
     {
+        $this->checkRouteAccess(self::PERMISSION_ROUTE);
+
         $count = StorageFile::find()->where(['folder_id' => $folderId, 'is_deleted' => false])->count();
         
         return [
@@ -592,5 +602,15 @@ class StorageController extends RestController
         $this->flushApiCache();
         
         return $response;
+    }
+    
+    /**
+     * Flush the storage caching data.
+     */
+    protected function flushApiCache($folderId = 0, $page = 0)
+    {
+        Yii::$app->storage->flushArrays();
+        $this->deleteHasCache('storageApiDataFolders');
+        $this->deleteHasCache(['storageApiDataFiles', (int) $folderId, (int) $page]);
     }
 }
