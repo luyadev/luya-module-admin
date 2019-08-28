@@ -112,6 +112,10 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
     public function isActionAllowed($action)
     {
+        if ($this->isActionAuthOptional($action)) {
+            return true;
+        }
+
         // a permission action exists, ensure if user has permission for this action or not:
         if (array_key_exists($action, $this->getActionPermissions())) {
             $type = $this->getActionPermissions()[$action];
@@ -131,6 +135,8 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
         // there is no permission for the given api and action id, ensure api user access.
         $this->canApiUserAccess();
+
+        UserOnline::refreshUser($this->userAuthClass()->identity, $action);
 
         return true;
     }

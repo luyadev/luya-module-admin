@@ -79,6 +79,11 @@ trait AdminRestBehaviorTrait
         return Yii::$app->adminuser;
     }
 
+    public function isActionAuthOptional($actionId)
+    {
+        return in_array($actionId, $this->authOptional);
+    }
+    
     /**
      * If the current user is an API user this action might be not permitted. As Api Users
      * also acts as proxy for JWT authenticated users sensitive informations could be exposed.

@@ -120,6 +120,10 @@ class RestController extends Controller implements UserBehaviorInterface
     {
         if (parent::beforeAction($action)) {
             $route = $this->permissionRoute($action);
+
+            if ($this->isActionAuthOptional($action->id)) {
+                return true;
+            }
             // check whether for the current route exists a permission entry
             // if the permission entry exists, a checkRouteAccess() must be done.
             // otherwise just check whether api user can access the api without permission entry.
