@@ -118,19 +118,18 @@ class RestController extends Controller implements UserBehaviorInterface
      */
     public function beforeAction($action)
     {
-        $action = parent::beforeAction($action);
-
-        $route = $this->permissionRoute($action);
-
-        // check whether for the current route exists a permission entry
-        // if the permission entry exists, a checkRouteAccess() must be done.
-        // otherwise just check whether api user can access the api without permission entry.
-        if (Yii::$app->auth->isInRoutePermissionTable($route)) {
-            $this->checkRouteAccess($route);
-        } else {
-            $this->canApiUserAccess();
+        if (parent::beforeAction($action)) {
+            $route = $this->permissionRoute($action);
+            // check whether for the current route exists a permission entry
+            // if the permission entry exists, a checkRouteAccess() must be done.
+            // otherwise just check whether api user can access the api without permission entry.
+            if (Yii::$app->auth->isInRoutePermissionTable($route)) {
+                $this->checkRouteAccess($route);
+            } else {
+                $this->canApiUserAccess();
+            }
         }
 
-        return $action;
+        return false;
     }
 }
