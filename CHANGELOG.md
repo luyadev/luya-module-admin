@@ -7,7 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Changed
 
-+ [#358](https://github.com/luyadev/luya-module-admin/pull/358) Forbid the call of actions without permissions entrys when authorized as Api User.
++ [#358](https://github.com/luyadev/luya-module-admin/pull/358) Forbid the call of actions without permissions entrys when authorized as Api User. Along with this permission improvments both RestActiveController and RestController now perform an `beforeAction()` check against `permissionRoute()` or `actionPermissions()`.
 
 ### Fixed
 
