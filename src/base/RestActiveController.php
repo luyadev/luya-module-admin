@@ -23,7 +23,7 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 class RestActiveController extends ActiveController implements UserBehaviorInterface
 {
     use AdminRestBehaviorTrait;
-    
+
     /**
      * @var integer Contains the id of the current running auth id
      * @since 2.0.0
@@ -145,7 +145,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            return $this->isActionAllowed($action->id§);
+            return $this->isActionAllowed($action->id);
         }
 
         return false;
