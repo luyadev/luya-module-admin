@@ -128,6 +128,8 @@ class RestController extends Controller implements UserBehaviorInterface
             } else {
                 $this->canApiUserAccess();
             }
+
+            return true;
         }
 
         return false;
