@@ -42,6 +42,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * the action `actionMyAction()` would now require at least CAN UPDATE permission on this API to work.
      * 
      * @return array An array where key is the action id and value the Auth type
+     * @since 2.2.0
      */
     public function actionPermissions()
     {
@@ -68,6 +69,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      *
      * @param integer $type The type of permission
      * @param string $actions The name of the action
+     * @since 2.2.0
      */
     protected function addActionPermission($type, $actions)
     {
@@ -80,6 +82,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * Get all actions as array from {{actionPermissions()}} method and those wo where inject by {{åddActionPermission}}.
      * 
      * @return array
+     * @since 2.2.0
      */
     protected function getActionPermissions()
     {
@@ -103,13 +106,20 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * @return boolean Returns true otherwise throws an exception
      * @throws ForbiddenHttpException
      * @since 2.0.0
-     * @deprected can is deprecated and replaced with isActionAllowed
+     * @deprecated Deprecated since 2.2.0 and replaced with isActionAllowed() will be removedd in 3.0
      */
     public function can($type)
     {
         trigger_error("can is deprecated, us isActionAllowed instead", E_USER_DEPRECATED);
     }
 
+    /**
+     * Checks if the given action id is allowed or not
+     *
+     * @param string $action The action id
+     * @return boolean
+     * @since 2.2.0
+     */
     public function isActionAllowed($action)
     {
         if ($this->isActionAuthOptional($action)) {
