@@ -26,10 +26,12 @@ class RestTest extends NgRestTestCase
         $config = parent::getConfigArray();
 
         return ArrayHelper::merge($config, [
-            'modules' => [
-                'admin' => [
-                    'jwtSecret' => 'xyz',
-                    'jwtAuthModel' => [
+            'components' => [
+                'jwt' => [
+                    'class' => 'luya\admin\components\Jwt',
+                    'key' => 'xyz',
+                    'apiUserEmail' => 'foo@bar.com',
+                    'identityClass' => [
                         'class' => 'luya\admin\tests\data\models\JwtModel',
                     ],
                 ]
@@ -41,7 +43,7 @@ class RestTest extends NgRestTestCase
 
     public function testRequestWithJwt()
     {
-        $this->app->getModule('admin')->jwtApiUserEmail = $this->userFixture->getModel('user1')->email;
+        $this->app->jwt->apiUserEmail = $this->userFixture->getModel('user1')->email;
         $this->app->getModule('admin')->registerComponents();
 
         $this->apiCanList(true);
@@ -54,10 +56,10 @@ class RestTest extends NgRestTestCase
         $this->assertTrue(is_array($r));
 
         $token = (new Token(['alg' => 'none'], [], null, [false, false]));
-        $this->assertNull($this->api->authJwtUser($token, 'athMethod'));
+        $this->assertNull($this->app->jwt->authenticateUser($token, 'athMethod'));
         $token = (new Token(['alg' => 'none'], [], null, [true, true]));
 
-        $user = $this->api->authJwtUser($token, 'athMethod');
+        $user = $this->app->jwt->authenticateUser($token, 'athMethod');
         $this->assertSame('John', $user->firstname);
 
         $newUser = new JwtModel();
@@ -67,21 +69,22 @@ class RestTest extends NgRestTestCase
     public function testExceptionModel()
     {
         $token = (new Token(['alg' => 'none'], [], null, [false, false]));
-        $this->app->getModule('admin')->jwtSecret = 'xyz';
-        $this->app->getModule('admin')->jwtApiUserEmail = $this->userFixture->getModel('user1')->email;
-        $this->app->getModule('admin')->jwtAuthModel = 'luya\admin\models\User';
+        $this->app->jwt->key = 'xyz';
+        $this->app->jwt->apiUserEmail = $this->userFixture->getModel('user1')->email;
+        $this->app->jwt->identityClass = 'luya\admin\models\User';
 
         $this->expectException('yii\base\InvalidConfigException');
-        $this->api->authJwtUser($token, 'athMethod');
+        $this->app->jwt->authenticateUser($token, 'athMethod');
     }
 
     public function testMisconfiguredJwtUser()
     {
         $token = (new Token(['alg' => 'none'], [], null, [1, 1]));
-        $this->app->getModule('admin')->jwtSecret = 'xyz';
-        $this->app->getModule('admin')->jwtApiUserEmail = 'notfound@luya.io';
+        
+        $this->app->jwt->key = 'xyz';
+        $this->app->jwt->apiUserEmail = 'notfound@luya.io';
 
         $this->expectException('yii\base\InvalidConfigException');
-        $r = $this->api->authJwtUser($token, 'athMethod');
+        $this->app->jwt->authenticateUser($token, 'athMethod');
     }
 }
