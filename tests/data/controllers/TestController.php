@@ -2,9 +2,9 @@
 
 namespace luya\admin\tests\data\controllers;
 
-use luya\rest\Controller;
+use luya\admin\base\RestController;
 
-class TestController extends Controller
+class TestController extends RestController
 {
     public function actionBarFoo()
     {

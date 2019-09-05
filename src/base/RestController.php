@@ -8,13 +8,17 @@ use luya\rest\Controller;
 use yii\web\ForbiddenHttpException;
 use luya\admin\models\UserOnline;
 use luya\admin\traits\AdminRestBehaviorTrait;
+use yii\base\Action;
 
 /**
  * Base class for RestControllers.
  *
- * Provides the basic functionality to access and serialize this controller via rest
- * api.
- *
+ * > Read more about permissions: [[app-admin-module-permission.md]]
+ * 
+ * Provides the basic functionality to access and serialize this controller via REST Api.
+ * 
+ * An example action in the RestController:
+ * 
  *```php
  * class TestController extends \luya\admin\base\RestController
  * {
@@ -25,7 +29,9 @@ use luya\admin\traits\AdminRestBehaviorTrait;
  * }
  * ```
  * 
- * In order to make permission for a certain action the {{luya\admin\base\Module::extendPermissionRoutes()}} can be configured as followed:
+ * > **An action is by default visible by authenticated users unless an {{luya\admin\base\Module::extendPermissionRoutes()}} is defined**
+ * 
+ * In order to make permission for a certain actions or the whole controller the {{luya\admin\base\Module::extendPermissionRoutes()}} can be configured as followed:
  * 
  * ```php
  * public function extendPermissionRoutes()
@@ -36,19 +42,19 @@ use luya\admin\traits\AdminRestBehaviorTrait;
  * }
  * ```
  * 
- * Now the permission call for this action must be done inside the controller action:
+ * As route `mymodule/test/secure-action` is now registered as permission the users group needs permission to run this route:
  * 
  * ```php
  * class TestController extends \luya\admin\base\RestController
  * {
  *     public function actionSecureAction()
  *     {
- *          $this->checkRouteAccess('secure-action');
- * 
- *          // do stuff as the permission is ensured.
+ *          // do stuff as its protected by extend permission
  *     }
  * }
  * ```
+ * 
+ * If there is **no extend route permission** entry this action endpoint is available to all authenticated users.
  * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -73,7 +79,7 @@ class RestController extends Controller implements UserBehaviorInterface
      * Or to switch routes for given actions use:
      * 
      * ```php
-     * public function permissionRoute($action)
+     * public function permissionRoute(Action $action)
      * {
      *      if ($action->id == 'my-index-action') {
      *           return 'module/index/action';
@@ -89,7 +95,7 @@ class RestController extends Controller implements UserBehaviorInterface
      * @return string
      * @since 2.2.0
      */
-    public function permissionRoute($action)
+    public function permissionRoute(Action $action)
     {
         return implode('/', [$action->controller->module->id, $action->controller->id, $action->id]);
     }
@@ -119,11 +125,13 @@ class RestController extends Controller implements UserBehaviorInterface
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            $route = $this->permissionRoute($action);
-
+            
             if ($this->isActionAuthOptional($action->id)) {
                 return true;
             }
+
+            $route = $this->permissionRoute($action);
+
             // check whether for the current route exists a permission entry
             // if the permission entry exists, a checkRouteAccess() must be done.
             // otherwise just check whether api user can access the api without permission entry.

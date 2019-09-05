@@ -79,6 +79,13 @@ trait AdminRestBehaviorTrait
         return Yii::$app->adminuser;
     }
 
+    /**
+     * Wether the given action id does not required authentication or not.
+     *
+     * @param string $actionId
+     * @return boolean
+     * @since 2.2.0
+     */
     public function isActionAuthOptional($actionId)
     {
         return in_array($actionId, $this->authOptional);

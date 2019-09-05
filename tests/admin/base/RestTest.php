@@ -10,7 +10,8 @@ use luya\admin\models\ApiUser;
 use luya\admin\controllers\ApiUserController;
 use Lcobucci\JWT\Token;
 use luya\admin\components\Auth;
-use luya\admin\tests\data\apis\StubUserApiController;
+use luya\admin\tests\data\apis\StubApiUserApiController;
+use luya\admin\tests\data\controllers\StubApiUserControllerController;
 use luya\admin\tests\data\models\JwtModel;
 use yii\helpers\ArrayHelper;
 
@@ -18,9 +19,9 @@ class RestTest extends NgRestTestCase
 {
     public $modelClass = ApiUser::class;
 
-    public $controllerClass = ApiUserController::class;
+    public $controllerClass = StubApiUserControllerController::class;
 
-    public $apiClass = StubUserApiController::class;
+    public $apiClass = StubApiUserApiController::class;
 
     public function getConfigArray()
     {
@@ -42,6 +43,15 @@ class RestTest extends NgRestTestCase
         return $config;
     }
 
+    public function testControllerCustomActionRoute()
+    {
+        // as the route of the controller is not in permission system, this is visible to not api users:
+        $this->assertSame('adminmodeltest/stubapiuser/foo-bar', $this->runControllerAction($this->controller, 'foo-bar'));
+        
+        $this->controllerCanAccess('foo-bar', false);
+        $this->runControllerAction($this->controller, 'foo-bar');
+    }
+
     public function testGetActionPermissions()
     {
         $r = $this->api->getActionPermissions();
@@ -51,6 +61,12 @@ class RestTest extends NgRestTestCase
         $this->apiCanDelete(true);
 
         $this->assertSame('test!', $this->runControllerAction($this->api, 'foo-bar'));
+    }
+
+    public function testInvalidType()
+    {
+        $this->expectException('yii\base\InvalidConfigException');
+        $this->api->isActionAllowed('invalid');
     }
 
     public function testActionPermissionNoAccess()

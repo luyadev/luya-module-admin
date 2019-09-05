@@ -13,10 +13,9 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 
 /**
  * Base class for Rest Active Controllers.
- *
- * Wrapper for yii2 basic rest controller used with a model class. The wrapper is made to
- * change behaviours and overwrite the indexAction.
- *
+ * 
+ * > Read more about permissions: [[app-admin-module-permission.md]]
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -129,8 +128,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
         // a permission action exists, ensure if user has permission for this action or not:
         if (array_key_exists($action, $this->getActionPermissions())) {
             $type = $this->getActionPermissions()[$action];
-
-            if (!in_array($type, [false, Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW])) {
+            if (!in_array($type, [false, Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW], true)) {
                 throw new InvalidConfigException("Invalid type \"$type\" of action permission.");
             }
             
@@ -139,12 +137,10 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             if (!$this->authId) {
                 throw new ForbiddenHttpException("User is unable to access the API \"{$this->id}\" due to insufficient permissions.");
             }
-
-            return true;
+        } else {
+            // there is no permission for the given api and action id, ensure api user access.
+            $this->canApiUserAccess();
         }
-
-        // there is no permission for the given api and action id, ensure api user access.
-        $this->canApiUserAccess();
 
         UserOnline::refreshUser($this->userAuthClass()->identity, $action);
 
