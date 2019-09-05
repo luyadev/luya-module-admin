@@ -84,10 +84,10 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * @return array
      * @since 2.2.0
      */
-    protected function getActionPermissions()
+    public function getActionPermissions()
     {
         foreach ($this->actionPermissions() as $type => $actionName) {
-            $this->addActionPermission($type, $actionName);
+            $this->addActionPermission($actionName, $type);
         }
 
         return $this->_actionPermissions;

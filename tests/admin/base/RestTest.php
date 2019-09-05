@@ -8,8 +8,9 @@ error_reporting(E_ALL);
 use luya\admin\tests\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\controllers\ApiUserController;
-use luya\admin\apis\ApiUserController as LuyaApiUserController;
 use Lcobucci\JWT\Token;
+use luya\admin\components\Auth;
+use luya\admin\tests\data\apis\StubUserApiController;
 use luya\admin\tests\data\models\JwtModel;
 use yii\helpers\ArrayHelper;
 
@@ -19,7 +20,7 @@ class RestTest extends NgRestTestCase
 
     public $controllerClass = ApiUserController::class;
 
-    public $apiClass = LuyaApiUserController::class;
+    public $apiClass = StubUserApiController::class;
 
     public function getConfigArray()
     {
@@ -39,6 +40,23 @@ class RestTest extends NgRestTestCase
         ]);
 
         return $config;
+    }
+
+    public function testGetActionPermissions()
+    {
+        $r = $this->api->getActionPermissions();
+
+        $this->assertSame($r['foo-bar'], Auth::CAN_DELETE);
+
+        $this->apiCanDelete(true);
+
+        $this->assertSame('test!', $this->runControllerAction($this->api, 'foo-bar'));
+    }
+
+    public function testActionPermissionNoAccess()
+    {
+        $this->expectException('yii\web\ForbiddenHttpException');
+        $this->runControllerAction($this->api, 'foo-bar');
     }
 
     public function testRequestWithJwt()
