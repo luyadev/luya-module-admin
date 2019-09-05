@@ -47,4 +47,11 @@ class RestControllerTest extends NgRestTestCase
         $this->expectException('yii\web\ForbiddenHttpException');
         $this->assertTrue($this->runControllerAction($ctrl, 'bar-foo'));
     }
+
+    public function testOptionalAuthController()
+    {
+        $ctrl = new TestController('controllerid', $this->app);
+
+        $this->assertTrue($this->runControllerAction($ctrl, 'no-auth'), [], false);
+    }
 }
