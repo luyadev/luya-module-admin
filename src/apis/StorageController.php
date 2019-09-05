@@ -23,6 +23,7 @@ use luya\admin\models\TagRelation;
 use luya\admin\traits\TaggableTrait;
 use luya\admin\storage\BaseFileSystemStorage;
 use luya\admin\events\FileEvent;
+use yii\base\Action;
 
 /**
  * Filemanager and Storage API.
@@ -43,7 +44,7 @@ class StorageController extends RestController
      */
     const PERMISSION_ROUTE = 'admin/storage/index';
     
-    public function permissionRoute($action)
+    public function permissionRoute(Action $action)
     {
         return self::PERMISSION_ROUTE;
     }
