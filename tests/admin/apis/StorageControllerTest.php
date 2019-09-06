@@ -4,6 +4,7 @@ namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
 use luya\admin\apis\StorageController;
+use luya\testsuite\scopes\PermissionScope;
 
 class StorageControllerTest extends AdminModelTestCase
 {
@@ -19,15 +20,15 @@ class StorageControllerTest extends AdminModelTestCase
     {
         $ctrl = new StorageController('id', $this->app);
 
-        $this->permissionScope(function($scope) use($ctrl) {
-            $scope->allowRoute('mytestapp/id/replace-file');
-            $response = $scope->runControllerAction($ctrl, 'replace-file');
-            // compare response
+        PermissionScope::run($this->app, function(PermissionScope $scope) use ($ctrl) {
+            $scope->createAndAllowRoute(StorageController::PERMISSION_ROUTE);
+            $this->assertNotEmpty($scope->runControllerAction($ctrl, 'images-upload'));
         });
 
-        $this->permissionScope(function($scope) use ($ctrl) {
-            // forbidden 
-            $response = $scope->runControllerAction($ctrl, 'replace-file');
+        PermissionScope::run($this->app, function(PermissionScope $scope) use ($ctrl) {
+            $scope->createRoute(StorageController::PERMISSION_ROUTE);
+            $this->expectException('yii\web\ForbiddenHttpException');
+            $scope->runControllerAction($ctrl, 'images-upload');
         });
     }
 }

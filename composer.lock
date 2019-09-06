@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f20e365e18f6f327ac975c4889eb6a65",
+    "content-hash": "7405b1fc8d5722eec78b6dc882788748",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1316,16 +1316,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.19",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "a803e3d74b74c8e491c3dcfac457fe12b6d3b5ae"
+                "reference": "595d198b4b4124da7fcde6e2992233c7000ceeb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/a803e3d74b74c8e491c3dcfac457fe12b6d3b5ae",
-                "reference": "a803e3d74b74c8e491c3dcfac457fe12b6d3b5ae",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/595d198b4b4124da7fcde6e2992233c7000ceeb5",
+                "reference": "595d198b4b4124da7fcde6e2992233c7000ceeb5",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-09-04T06:33:09+00:00"
+            "time": "2019-09-06T16:23:29+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2997,7 +2997,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "luyadev/luya-core": 20
+        "luyadev/luya-core": 20,
+        "luyadev/luya-testsuite": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
