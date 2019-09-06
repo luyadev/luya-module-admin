@@ -15,6 +15,7 @@ use luya\admin\traits\AdminRestBehaviorTrait;
  * Base class for Rest Active Controllers.
  * 
  * > Read more about permissions: [[app-admin-module-permission.md]]
+ * > Rest Active Controllers use `api` permissions.
  * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -110,6 +111,16 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     public function can($type)
     {
         trigger_error("can is deprecated, us isActionAllowed instead", E_USER_DEPRECATED);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        // use the check access method to ensure whether a certain item is valid to a certain user or not.
+        // the main purpose of validation whether the action can be access or not is done in {{isActionAllowed()}}
+        // which runs always in {{beforeAction()}}.
     }
 
     /**

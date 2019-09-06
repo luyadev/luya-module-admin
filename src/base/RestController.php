@@ -14,6 +14,7 @@ use yii\base\Action;
  * Base class for RestControllers.
  *
  * > Read more about permissions: [[app-admin-module-permission.md]]
+ * > Rest Controllers use `routes` as permission.
  * 
  * Provides the basic functionality to access and serialize this controller via REST Api.
  * 
