@@ -159,7 +159,7 @@ class Jwt extends BaseJwt
             $user = ApiUser::find()->andWhere(['email' => $this->apiUserEmail, 'is_api_user' => true])->one();
 
             if (!$user) {
-                throw new InvalidConfigException("The jwt api user could not be found. Ensure `apiUserEmail` is configured property.");
+                throw new InvalidConfigException("The jwt api user could not be found. Ensure `apiUserEmail` with value `{$this->apiUserEmail}` is configured property.");
             }
 
             $this->identity = $auth;

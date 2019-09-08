@@ -51,22 +51,6 @@ class UserController extends Api
     }
     
     /**
-     * Ensure whether the current user has an active email verification token or not.
-     *
-     * @param User $user The user object to evaluate.
-     * @return boolean
-     */
-    private function hasOpenEmailValidation(User $user)
-    {
-        $ts = $user->email_verification_token_timestamp;
-        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
      * Action to change the password for the given User.
      *
      * @return \luya\admin\models\UserChangePassword
@@ -168,5 +152,21 @@ class UserController extends Api
         }
         
         return true;
+    }
+
+    /**
+     * Ensure whether the current user has an active email verification token or not.
+     *
+     * @param User $user The user object to evaluate.
+     * @return boolean
+     */
+    private function hasOpenEmailValidation(User $user)
+    {
+        $ts = $user->email_verification_token_timestamp;
+        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
+            return true;
+        }
+        
+        return false;
     }
 }

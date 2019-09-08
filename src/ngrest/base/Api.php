@@ -15,6 +15,7 @@ use luya\helpers\Url;
 use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
+use luya\admin\components\Auth;
 use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
@@ -95,6 +96,22 @@ class Api extends RestActiveController
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
         }
+
+        $this->addActionPermission(Auth::CAN_VIEW, [
+            'index', 'view', 'services', 'search', 'relation-call', 'filter', 'export', 'list', 'toggle-notification',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_CREATE, [
+            'create',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_UPDATE, [
+            'active-window-render', 'active-window-callback', 'active-button', 'update',
+        ]);
+
+        $this->addActionPermission(Auth::CAN_DELETE, [
+            'delete',
+        ]);
     }
     
     /**
@@ -469,8 +486,6 @@ class Api extends RestActiveController
      */
     public function actionServices()
     {
-        $this->checkAccess('services');
-        
         $settings = [];
         $apiEndpoint = $this->model->ngRestApiEndpoint();
         $userSortSettings = Yii::$app->adminuser->identity->setting->get('ngrestorder.admin/'.$apiEndpoint, false);
@@ -522,7 +537,6 @@ class Api extends RestActiveController
 
     public function actionToggleNotification()
     {
-        $this->checkAccess('toggle-notification');
         $newMuteState = Yii::$app->request->getBodyParam('mute');
 
         $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $this->authId])->one();
@@ -552,8 +566,6 @@ class Api extends RestActiveController
      */
     public function actionSearch($query = null)
     {
-        $this->checkAccess('search');
-        
         if (empty($query)) {
             $query = Yii::$app->request->post('query');
         }
@@ -598,9 +610,12 @@ class Api extends RestActiveController
      */
     public function actionRelationCall($arrayIndex, $id, $modelClass, $query = null)
     {
-        $this->checkAccess('relation-call');
-        
         $modelClass = base64_decode($modelClass);
+
+        if (!class_exists($modelClass)) {
+            throw new InvalidCallException("Unable to find the given class \"$modelClass\".");
+        }
+        
         $model = $modelClass::findOne((int) $id);
         
         if (!$model) {
@@ -653,8 +668,6 @@ class Api extends RestActiveController
      */
     public function actionFilter($filterName, $query = null)
     {
-        $this->checkAccess('filter');
-        
         $model = $this->model;
 
         $this->handleNotifications($this->modelClass, $this->authId);
@@ -692,8 +705,6 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowCallback()
     {
-        $this->checkAccess('active-window-callback');
-        
         $config = $this->model->getNgRestConfig();
         $render = new RenderActiveWindowCallback();
         $ngrest = new NgRest($config);
@@ -708,8 +719,6 @@ class Api extends RestActiveController
      */
     public function actionActiveWindowRender()
     {
-        $this->checkAccess('active-window-render');
-        
         // generate ngrest active window
         $render = new RenderActiveWindow();
         $render->setItemId(Yii::$app->request->getBodyParam('itemId', false));
@@ -735,8 +744,6 @@ class Api extends RestActiveController
      */
     public function actionExport()
     {
-        $this->checkAccess('export');
-        
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
@@ -796,7 +803,6 @@ class Api extends RestActiveController
      */
     public function actionActiveButton($hash, $id)
     {
-        $this->checkAccess('active-button');
         $model = $this->findModel($id);
 
         return $model->handleNgRestActiveButton($hash);
