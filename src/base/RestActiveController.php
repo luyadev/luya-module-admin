@@ -110,7 +110,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      */
     public function can($type)
     {
-        trigger_error("can is deprecated, us isActionAllowed instead", E_USER_DEPRECATED);
+        trigger_error("can() is deprecated, use isActionAllowed() instead", E_USER_DEPRECATED);
     }
 
     /**

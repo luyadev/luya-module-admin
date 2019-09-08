@@ -90,4 +90,13 @@ class ApiUserControllerTest extends AdminModelTestCase
         $this->assertTrue($this->invokeMethod($ctrl, 'hasOpenEmailValidation', [$user->getModel('yes')]));
         
     }
+
+
+    public function testDeprectadCanMethod()
+    {
+        $ctrl = new UserController('user', $this->app->getModule('admin'));
+
+        $this->expectException('yii\base\ErrorException');
+        $ctrl->can(1);
+    }
 }
