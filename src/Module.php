@@ -195,7 +195,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $fileDefaultInlineDisposition = false;
 
     /**
-     * @var boolean Defines whether Api Users can access a method which is not protected from the permission system.
+     * @var boolean Defines whether Api Users can access a method which is not protected from the permission system. When working with JWT or SPA
+     * applications this should be disabled.
      * @since 2.2.0
      */
     public $apiUserAllowActionsWithoutPermissions = false;

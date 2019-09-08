@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f20e365e18f6f327ac975c4889eb6a65",
+    "content-hash": "7405b1fc8d5722eec78b6dc882788748",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -467,12 +467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "24fd3e8a7b951ad8b1dc25f96f4c7ef8237f9327"
+                "reference": "784daf3b8e9170d2dd5d9fe542a3922db25441f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/24fd3e8a7b951ad8b1dc25f96f4c7ef8237f9327",
-                "reference": "24fd3e8a7b951ad8b1dc25f96f4c7ef8237f9327",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/784daf3b8e9170d2dd5d9fe542a3922db25441f2",
+                "reference": "784daf3b8e9170d2dd5d9fe542a3922db25441f2",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +516,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-08-28T08:44:55+00:00"
+            "time": "2019-09-08T09:31:42+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1302,16 +1302,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.20",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "ac8ca08105995cab4736314366895292e12a8b50"
+                "reference": "c6f6b9ee7fb046f10a05c2d042a3d58bd124dc5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/ac8ca08105995cab4736314366895292e12a8b50",
-                "reference": "ac8ca08105995cab4736314366895292e12a8b50",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/c6f6b9ee7fb046f10a05c2d042a3d58bd124dc5c",
+                "reference": "c6f6b9ee7fb046f10a05c2d042a3d58bd124dc5c",
                 "shasum": ""
             },
             "require": {
@@ -1351,7 +1351,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-09-08T07:11:24+00:00"
+            "time": "2019-09-08T09:52:42+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2983,7 +2983,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "luyadev/luya-core": 20
+        "luyadev/luya-core": 20,
+        "luyadev/luya-testsuite": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
