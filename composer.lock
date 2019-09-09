@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f20e365e18f6f327ac975c4889eb6a65",
+    "content-hash": "ddbe3d0b601817d7ce9034959441fa2e",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -463,16 +463,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "dev-master",
+            "version": "1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "784daf3b8e9170d2dd5d9fe542a3922db25441f2"
+                "reference": "23d8714ce08deddfb586c4e90ccaf0da2a95b112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/784daf3b8e9170d2dd5d9fe542a3922db25441f2",
-                "reference": "784daf3b8e9170d2dd5d9fe542a3922db25441f2",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/23d8714ce08deddfb586c4e90ccaf0da2a95b112",
+                "reference": "23d8714ce08deddfb586c4e90ccaf0da2a95b112",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +516,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-09-08T09:31:42+00:00"
+            "time": "2019-09-09T12:08:23+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -2982,9 +2982,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "luyadev/luya-core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
