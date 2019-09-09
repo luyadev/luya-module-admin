@@ -13,10 +13,10 @@ use luya\admin\traits\AdminRestBehaviorTrait;
 
 /**
  * Base class for Rest Active Controllers.
- * 
+ *
  * > Read more about permissions: [[app-admin-module-permission.md]]
  * > Rest Active Controllers use `api` permissions.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -38,9 +38,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      *     'my-action' => Auth::CAN_UPDATE,
      * ];
      * ```
-     * 
+     *
      * the action `actionMyAction()` would now require at least CAN UPDATE permission on this API to work.
-     * 
+     *
      * @return array An array where key is the action id and value the Auth type
      * @since 2.2.0
      */
@@ -53,17 +53,17 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
     /**
      * Add a permission with a function.
-     * 
+     *
      * This allows you to inject permission on init() which won't allow them to override.
-     * 
+     *
      * ```php
      * public function init()
      * {
      *     parent::init();
-     * 
+     *
      *     $this->addActionPermission(Auth::CAN_UPDATE, [
      *         'my-action', 'another-action',
-     *     ]); 
+     *     ]);
      * }
      * ```
      *
@@ -80,7 +80,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
 
     /**
      * Get all actions as array from {{actionPermissions()}} method and those wo where inject by {{åddActionPermission}}.
-     * 
+     *
      * @return array
      * @since 2.2.0
      */

@@ -37,14 +37,14 @@ class ProxyMachine extends NgRestModel
     
     /**
      * Generate the identifier and access token.
-     * 
+     *
      * Only when creating a new record.
      */
     public function generateIdentifierAndToken()
     {
         if ($this->isNewRecord) {
             $this->identifier = uniqid('lcp');
-            $this->access_token = str_replace(['-', '_'], rand(1,9), Yii::$app->security->generateRandomString(32));
+            $this->access_token = str_replace(['-', '_'], rand(1, 9), Yii::$app->security->generateRandomString(32));
         }
     }
     

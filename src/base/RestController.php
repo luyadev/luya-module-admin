@@ -15,11 +15,11 @@ use yii\base\Action;
  *
  * > Read more about permissions: [[app-admin-module-permission.md]]
  * > Rest Controllers use `routes` as permission.
- * 
+ *
  * Provides the basic functionality to access and serialize this controller via REST Api.
- * 
+ *
  * An example action in the RestController:
- * 
+ *
  *```php
  * class TestController extends \luya\admin\base\RestController
  * {
@@ -29,11 +29,11 @@ use yii\base\Action;
  *     }
  * }
  * ```
- * 
+ *
  * > **An action is by default visible by authenticated users unless an {{luya\admin\base\Module::extendPermissionRoutes()}} is defined**
- * 
+ *
  * In order to make permission for a certain actions or the whole controller the {{luya\admin\base\Module::extendPermissionRoutes()}} can be configured as followed:
- * 
+ *
  * ```php
  * public function extendPermissionRoutes()
  * {
@@ -42,9 +42,9 @@ use yii\base\Action;
  *      ];
  * }
  * ```
- * 
+ *
  * As route `mymodule/test/secure-action` is now registered as permission the users group needs permission to run this route:
- * 
+ *
  * ```php
  * class TestController extends \luya\admin\base\RestController
  * {
@@ -54,9 +54,9 @@ use yii\base\Action;
  *     }
  * }
  * ```
- * 
+ *
  * If there is **no extend route permission** entry this action endpoint is available to all authenticated users.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -65,33 +65,33 @@ class RestController extends Controller implements UserBehaviorInterface
     use AdminRestBehaviorTrait;
     
     /**
-     * Returns the default permission route to check. By default this will return 
+     * Returns the default permission route to check. By default this will return
      * the current route of the performed action.
      *
      * In order to override permission check use:
-     * 
+     *
      * ```php
      * public function permissionRoute($action)
      * {
      *      return 'my/custom/route';
      * }
      * ```
-     * 
+     *
      * Or to switch routes for given actions use:
-     * 
+     *
      * ```php
      * public function permissionRoute(Action $action)
      * {
      *      if ($action->id == 'my-index-action') {
      *           return 'module/index/action';
      *      }
-     * 
+     *
      *      return 'module/index/another-action';
      * }
      * ```
-     * 
+     *
      * Keep in mind this permission route check is mainly to determine if an action exists
-     * 
+     *
      * @param \yii\base\Action $action
      * @return string
      * @since 2.2.0
@@ -126,7 +126,6 @@ class RestController extends Controller implements UserBehaviorInterface
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            
             if ($this->isActionAuthOptional($action->id)) {
                 return true;
             }

@@ -9,17 +9,17 @@ use yii\web\ForbiddenHttpException;
 
 /**
  * A trait for LUYA admin rest behaviors.
- * 
+ *
  * Implemented by
- * 
+ *
  * + {{luya\admin\base\RestActiveController}}
  * + {{luya\admin\base\RestController}}
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.1.0
  */
 trait AdminRestBehaviorTrait
-{   
+{
     /**
      * @var AdminModule
      */
@@ -94,11 +94,11 @@ trait AdminRestBehaviorTrait
     /**
      * If the current user is an API user this action might be not permitted. As Api Users
      * also acts as proxy for JWT authenticated users sensitive informations could be exposed.
-     * 
+     *
      * For example a JWT authenticated user proxied trough Api User could access `admin/api-admin-user/session`
      * as the {{luya\admin\apis\UserController::actionSession()}} is only secured through authentification and **not**
      * trough a given permission (let's say "view my session data").
-     * 
+     *
      * As Api Users are not allowed to login the don't need access to those *generic admin ui API endpoints*, this method
      * checks if the current user is an api user and therefore restricsts the access to such calls, unless the property
      * {{luya\admin\Module::$apiUserAllowActionsWithoutPermissions}} is enabled.

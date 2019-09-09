@@ -58,11 +58,11 @@ class NgRestActiveQuery extends ActiveQuery
      * ```
      * jsonWhere(['=', 'json_values', 'key', 'value']);
      * ```
-     * 
+     *
      * Assuming you have a json value in the field `json_values` stored as objects, for example `{"key":"value", "key":"value2"}`
-     * 
+     *
      * > Keep in mind this only works with mysql version 5.7 and above.
-     * 
+     *
      * @param string $operator The operator to compare the value
      * @param string $field The field which contains the json data
      * @param string $key The key inside the json object to compare
@@ -77,13 +77,13 @@ class NgRestActiveQuery extends ActiveQuery
 
     /**
      * Where condition for a field inside an array.
-     * 
+     *
      * ```
      * jsonWhere(['json_values', 'key', 'value']);
      * ```
-     * 
+     *
      * Assuming you have a json value in the field `json_values` stored as array with obejcts, for example `[{"key":"value"}, {"key":"value2"}]`.
-     * 
+     *
      * > Keep in mind this only works with mysql version 5.7 and above.
      *
      * @param string $field The field which contains the json data
@@ -121,22 +121,22 @@ class NgRestActiveQuery extends ActiveQuery
 
     /**
      * Add a where condition for the current model primary key.
-     * 
+     *
      * ```php
      * MyModel::ngRestFind()->byPrimaryKey(1);
-     * 
+     *
      * // equals to if primary key field is id
-     * 
+     *
      * MyModel::ngRestFind()->andWhere(['id' => 1]);
      * ```
-     * 
+     *
      * Composite keys
-     * 
+     *
      * ```php
      * MyModel::ngRestFind()->byPrimaryKey("1,14");
      * // or
      * MyModel::ngRerstFind()->byPrimaryKey([1,14]);
-     * 
+     *
      * // equals to if composite primary key would be user_id and group_id
      * MyModel::ngRestFind()->andWhere(['user_id' => 1, 'group_id' => 14]);
      * ```

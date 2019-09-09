@@ -18,7 +18,7 @@ use luya\helpers\Json;
  * @property string $model_class
  * @property int $created_at
  * @property int $updated_at
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */
@@ -69,7 +69,7 @@ class UserAuthNotification extends ActiveRecord
 
     /**
      * Get auth
-     * 
+     *
      * @return Auth
      */
     public function getAuth()
@@ -87,7 +87,7 @@ class UserAuthNotification extends ActiveRecord
 
     /**
      * Get the diff count between primary key in table and current value.
-     * 
+     *
      * @return integer
      */
     public function getDiffCount()
@@ -100,5 +100,4 @@ class UserAuthNotification extends ActiveRecord
 
         return $nowValue - $oldValue;
     }
-        
 }

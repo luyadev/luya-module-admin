@@ -83,7 +83,7 @@ class Auth extends \yii\base\Component
      * Check if a given api endpoint is in the permission (auth) system available.
      *
      * > This does not mean any given user has access to this endpoint.
-     * 
+     *
      * @param string $apiEndpoint The api endpoint to validate.
      * @return boolean
      * @since 2.1.0
@@ -112,7 +112,7 @@ class Auth extends \yii\base\Component
 
     /**
      * Check if a given route exists in permission system.
-     * 
+     *
      * > This does not mean any given user has access to this endpoint.
      *
      * @param string $route

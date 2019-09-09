@@ -115,7 +115,7 @@ class Angular
      */
     public static function optionsFilter(array $array)
     {
-        return array_filter($array, function($value) {
+        return array_filter($array, function ($value) {
             if (is_null($value) || $value === '' || $value === false) {
                 return false;
             }
@@ -148,7 +148,7 @@ class Angular
 
     /**
      * Generate the LUYA admin scheduler tag.
-     * 
+     *
      * ```php
      * Angular::schedule('data.is_online', 'Online Status', 1, [0 => 'No', 1 => 'Yes'], 'path/to/model', 'is_online');
      * ```

@@ -33,7 +33,7 @@ use luya\admin\base\ReloadButton;
  *
  * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
  * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -179,7 +179,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * @var boolean If enabled, the admin bootstrap process will check whether the queue job was runing within the last 30min or not. If you are not setting up any cronjob to run
      * the scheduler and you need to rely on the queue/scheulder system you enable this property which will then do a "dummy frontend user cronjob". So on every request it will
-     * check whether to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue` 
+     * check whether to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue`
      * command using {{luya\admin\commands\QueueController}}.
      * @since 2.0.0
      * @see {{luya\admin\commands\QueueController}}
@@ -370,13 +370,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
 
     /**
      * Set an array of relaod buttons with a callback function to run on click.
-     * 
+     *
      * Every array item needs at least:
-     * 
+     *
      * + label: The label which is displayed in the mnu
      * + icon: A material icon value from https://material.io/tools/icons/
      * + callback: A php callable function which is executed when clicking the button.
-     * 
+     *
      * ```php
      * 'reloadButtons' => [
      *     ['label' => 'Clear Frontpage Cache', 'icon' => 'clear', 'callback' => function($button) {
@@ -384,20 +384,20 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      *     }]
      * ]
      * ```
-     * 
+     *
      * The first paramter of the callback function is the ReloadButton object itself, this allwos you to
      * change the response message.
-     * 
+     *
      * ```php
      * 'callback' => function(\luya\admin\base\ReloadButton $button) {
      *     // do something
      *     // ...
-     * 
+     *
      *     // change response (success) message.
      *     $button->response = 'Running this button was a full success!';
      * }
      * ```
-     * 
+     *
      * @param array $buttons
      * @since 2.0.0
      */

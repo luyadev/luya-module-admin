@@ -79,7 +79,7 @@ class TimestampController extends RestController
 
     /**
      * Returns an array with auth_id as key and value is the diff notification count.
-     * 
+     *
      * @return array An array with key auth_id and value diff count
      * @since 2.0.0
      */

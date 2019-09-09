@@ -12,9 +12,9 @@ use luya\helpers\ObjectHelper;
 
 /**
  * The Jwt component.
- * 
+ *
  * To successfull configure the jwt component {{Jwt::$key}}, {{Jwt::$apiUserEmail}} and {{Jwt::$identityClass}} can not be null.
- * 
+ *
  * ```php
  * 'components' => [
  *     'jwt' => [
@@ -25,14 +25,14 @@ use luya\helpers\ObjectHelper;
  *     ],
  * ],
  * ```
- * 
+ *
  * An example of create a custom endpoint to retrieve the JWT auth user data:
- * 
+ *
  * ```php
  * class MeController extends RestController
  * {
  *     public $authOptional = ['login'];
- * 
+ *
  *     public function actionLogin()
  *     {
  *         $model = new FrontendUser();
@@ -41,13 +41,13 @@ use luya\helpers\ObjectHelper;
  *              $token = Yii::$app->jwt->generateToken($model);
  *              $model->jwt_token = $token;
  *              $model->update();
- * 
+ *
  *              return $this->asJson([
  *                  'token' => $token,
  *              ]);
  *          }
  *     }
- * 
+ *
  *     public function actionData()
  *     {
  *          // the authenticated user identity.
@@ -56,7 +56,7 @@ use luya\helpers\ObjectHelper;
  *      }
  * }
  * ```
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.2
  */
@@ -97,22 +97,22 @@ class Jwt extends BaseJwt
 
     /**
      * Method to generate a token from an user with identity interface.
-     * 
+     *
      * Use this method to return the jwt token by a public accessable end point which validates the user credentials.
-     * 
+     *
      * ```php
      * public function actionUserLogin()
      * {
      *     $model = new UserLogin();
      *     $model->attributes = Yii::$app->request->post();
-     * 
+     *
      *     if ($model->validate()) {
      *         $token = Yii::$app->jwt->generateToken($model);
      *         // depending on whether you like to store the jwt token or use the uid claim to retrieve the user id.
      *         $model->updateAttributes(['jwt_token' => $token]);
      *         return $token;
      *     }
-     * 
+     *
      *     throw new InvalidRequest("Unable to find and validate the givne User.");
      * }
      * ```
@@ -129,7 +129,7 @@ class Jwt extends BaseJwt
             ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
             ->setExpiration(time() + $this->expireTime) // Configures the expiration time of the token (exp claim)
             ->set('uid', $user->getId()) // Configures a new claim, called "uid", this information can be retrieved later to identify the user
-            ->sign(new Sha256(), $this->key ) // creates a signature using [[Jwt::$key]]
+            ->sign(new Sha256(), $this->key) // creates a signature using [[Jwt::$key]]
             ->getToken();
 
         return $token->__toString();

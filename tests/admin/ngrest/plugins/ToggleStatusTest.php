@@ -15,7 +15,7 @@ class ToggleStatusTest extends NgRestTestCase
 {
     public $modelClass = User::class;
     public $apiClass = UserController::class;
-    public $controllerClass = LuyaUserController::class; 
+    public $controllerClass = LuyaUserController::class;
 
     public function testNotAllowed()
     {

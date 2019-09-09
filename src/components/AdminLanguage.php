@@ -48,9 +48,9 @@ class AdminLanguage extends Component
     
     /**
      * Get the array of the current active language (its not an AR object!)
-     * 
+     *
      * Determines active language by:
-     * 
+     *
      * 1. langShortCode of composite component
      * 2. language which has is_default flag enabled.
      *
@@ -92,9 +92,9 @@ class AdminLanguage extends Component
     
     /**
      * Get an array of all languages (its not an AR object!)
-     * 
+     *
      * An Example response.
-     * 
+     *
      * array(
      *    'de' => ['name' => Deutsch', 'short_code' => 'de', 'is_default' => 1],
      *    'en' => ['name' => English', 'short_code' => 'en', 'is_default' => 0],
@@ -105,7 +105,7 @@ class AdminLanguage extends Component
     public function getLanguages()
     {
         if ($this->_languages === null) {
-            $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function() {
+            $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function () {
                 return Lang::getQuery();
             });
         }

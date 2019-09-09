@@ -475,7 +475,7 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * The scheduler tag allows you to change the given field value based on input values for a given field if a model is ailable.
      *
-     * @param string $ngModel The string to 
+     * @param string $ngModel The string to
      * @param array $values An array with values to display
      * @param string $dataRow The data row context (item)
      * @param array $options `only-icon` => 1

@@ -53,7 +53,7 @@ class JwtHttpBearerAuthTest extends AdminTestCase
     {
         $_SERVER['HTTP_Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IjEifQ.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MCIsImF1ZCI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDgwIiwianRpIjoiMSIsImlhdCI6MTU2NjQ4MjAxMSwiZXhwIjoxNTY2NDg1NjExLCJ1aWQiOiIxIn0.587xedNWYrOeZeurcJkkG4_S1YPyczFEOE_zBnIuTMo';
         $filter = new JwtHttpBearerAuth();
-        $filter->auth = function() {
+        $filter->auth = function () {
             return true;
         };
         $this->assertNull($filter->authenticate($this->app->adminuser, $this->app->request, $this->app->response));

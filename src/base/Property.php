@@ -207,14 +207,14 @@ abstract class Property extends Component implements TypesInterface
 
     /**
      * Returns the identifier of the property.
-     * 
-     * This allows a more dynamic approach of embed property by using the class name instead of 
+     *
+     * This allows a more dynamic approach of embed property by using the class name instead of
      * the hardcoded var name.
-     * 
+     *
      * ```php
      * Yii::$app->cms->current->getProperty(YourProperty::identifier())->getValue();
      * ```
-     * 
+     *
      * @return string The {{Property::varName()}} wil be retunred.
      * @since 2.1.0
      */

@@ -79,7 +79,7 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         $query = new NgRestActiveQuery(User::class);
         $this->assertSame(['id' => 1], $query->byPrimaryKey([1])->where);
 
-       new NgRestModelFixture([
+        new NgRestModelFixture([
             'modelClass' => TagRelation::class,
             'primaryKey' => ['tag_id' => 'int(11)', 'table_name' => 'int(11)', 'pk_id' => 'int(11)', 'PRIMARY KEY (tag_id, table_name, pk_id)'],
         ]);
@@ -89,7 +89,6 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         
         $query = new NgRestActiveQuery(TagRelation::class);
         $this->assertSame(['tag_id' => 1, 'table_name' => 'name', 'pk_id' => 3], $query->byPrimaryKey([1,'name',3])->where);
-
     }
 
     public function testFailingFindByPrimaryKey()

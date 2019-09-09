@@ -120,7 +120,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Get an array with the latest primary key value.
-     * 
+     *
      * @return array An array with latest primary key value, for example [10] or if composite keys [10,4]
      * @since 2.0.0
      */
@@ -149,13 +149,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * Returns the value for an i18n field before it was casted to the output for the current active language if empty.
      *
      * The main purpose of this method is to retrieve any value from this attribute event when the current value is empty.
-     * 
+     *
      * The value is determined by:
-     * 
+     *
      * 1. Is the the i18n casted value empty continue or return value.
      * 2. If preffered language is given and a none empty value exists for the preferred language return the value or continue.
      * 3. Foreach the array and return the first value which is not empty.
-     * 
+     *
      * @param string $attributeName The attribute to return the fallback.
      * @param string $preferredLanguage The prefered language short code name which should be checked whether it has a value or not.
      * @return string|null

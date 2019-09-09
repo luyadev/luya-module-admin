@@ -9,7 +9,7 @@ use yii\base\InvalidCallException;
 
 /**
  * The Scheduler Job
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */

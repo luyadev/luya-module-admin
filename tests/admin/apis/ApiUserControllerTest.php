@@ -15,7 +15,7 @@ class ApiUserControllerTest extends AdminModelTestCase
     public function testDeleteNoPermission()
     {
         $api = new StubApiUserApiController('apiuser', $this->app);
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($api) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $this->expectException('yii\web\ForbiddenHttpException');
             $scope->runControllerAction($api, 'delete', ['id' => 1], 'DELETE');
         });
@@ -24,7 +24,7 @@ class ApiUserControllerTest extends AdminModelTestCase
     public function testNoAuth()
     {
         $api = new StubApiUserApiController('apiuser', $this->app);
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($api) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->setQueryAuthToken(false);
             $this->expectException('yii\web\UnauthorizedHttpException');
             $api->runAction('delete');
@@ -34,7 +34,7 @@ class ApiUserControllerTest extends AdminModelTestCase
     public function testAddApiAuthRouteButDoNotGrant()
     {
         $api = new StubApiUserApiController('apiuser', $this->app);
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($api) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->createApi('apiuser');
             $this->expectException('yii\web\ForbiddenHttpException');
             $scope->runControllerAction($api, 'delete', ['id' => 1], 'DELETE');
@@ -44,7 +44,7 @@ class ApiUserControllerTest extends AdminModelTestCase
     public function testAddApiButDoNotAllowDeleteAction()
     {
         $api = new StubApiUserApiController('apiuser', $this->app);
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($api) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->createApi('apiuser');
             $scope->allowApi('apiuser');
 
@@ -88,7 +88,6 @@ class ApiUserControllerTest extends AdminModelTestCase
 
 
         $this->assertTrue($this->invokeMethod($ctrl, 'hasOpenEmailValidation', [$user->getModel('yes')]));
-        
     }
 
 

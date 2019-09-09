@@ -9,6 +9,5 @@ class RestActiveControllerTest extends AdminTestCase
 {
     public function testCheckEndpointAccess()
     {
-        
     }
 }

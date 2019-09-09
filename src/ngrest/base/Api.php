@@ -550,7 +550,6 @@ class Api extends RestActiveController
             $model->auth_id = $this->authId;
             $model->user_id = Yii::$app->adminuser->id;
             $model->model_class = $this->modelClass;
-
         }
 
         return $model;
