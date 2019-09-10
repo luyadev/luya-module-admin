@@ -13,8 +13,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#356](https://github.com/luyadev/luya-module-admin/issues/356) Hide NgRest attribute groups when no fields are contained.
 + [#361](https://github.com/luyadev/luya-module-admin/issues/361) Disabled tag filter bar when any filter is active.
-+ [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL
++ [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL.
 
 ### Added
 
