@@ -5,6 +5,8 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.2.0 (in progress)
 
+> When making Api Requests trough Api Users, turn on `apiUserAllowActionsWithoutPermissions` on order to allow access to actions without permissions entry (behavior of version 2.1 and below). This change was required in order to make Api Users more secure.
+
 ### Changed
 
 + [#358](https://github.com/luyadev/luya-module-admin/pull/358) Forbid the call of actions without permission entries when authorized as Api User. Along with this permission improvement both RestActiveController and RestController now perform an `beforeAction()` check against `actionPermissions()` or `permissionRoute()`.
