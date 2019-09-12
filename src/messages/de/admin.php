@@ -419,8 +419,8 @@ return [
     'crud_notification_enable' => 'Benachrichtigung aktivieren',
     'crud_notification_disable' => 'Benachrichtigung deaktivieren',
     'admin_button_execute' => '"{label}" ausgeführt',
-    'layout_btn_reload_admin' => 'Admin&nbsp;aktualisieren',
-    'layout_btn_reload_cache' => 'Cache&nbsp;Leeren',
+    'layout_btn_reload_admin' => 'Admin&nbsp;neu&nbsp;laden',
+    'layout_btn_reload_cache' => 'Cache&nbsp;leeren',
 
 // 2.0.1
 
