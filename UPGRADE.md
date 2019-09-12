@@ -2,7 +2,7 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
-## from 2.1 to 2.1
+## from 2.1 to 2.2
 
 + The {{luya\admin\Module::$apiUserAllowActionsWithoutPermissions}} disables the access for **none permission protected actions** by default. This means that actions which does not have a permission system entry (like the global search) are disabled unless `$apiUserAllowActionsWithoutPermissions` is enabled. This ensures the Api Users which can be used for SPA applications won't have access to system APIs.
 + As {{luya\admin\base\RestActiveController::can()}} is deprecated you should define those permissions in {{luya\admin\base\RestActiveController::actionPermissions()}} instead. Assuming your code was looking like this:
