@@ -5,6 +5,24 @@ This document will help you upgrading from a LUYA admin module version into anot
 ## from 2.1 to 2.1
 
 + The {{luya\admin\Module::$apiUserAllowActionsWithoutPermissions}} disables the access for **none permission protected actions** by default. This means that actions which does not have a permission system entry (like the global search) are disabled unless `$apiUserAllowActionsWithoutPermissions` is enabled. This ensures the Api Users which can be used for SPA applications won't have access to system APIs.
++ As {{luya\admin\base\RestActiveController::can()}} is deprecated you should define those permissions in {{luya\admin\base\RestActiveController::actionPermissions()}} instead. Assuming your code was looking like this:
+```php
+public function actionLogin()
+{
+    $this->can(Auth::CAN_UPDATE);
+    // ... code of login
+}
+```
+Remove the `can()` part and define in actionPermissions() instead:
+
+```php
+public function actionPermissions()
+{
+    return [
+        'login' => Auth::CAN_UPDATE,
+    ];
+}
+```
 
 ## from 1.2 to 2.0
 
