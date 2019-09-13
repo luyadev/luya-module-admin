@@ -1107,7 +1107,7 @@ zaa.directive("zaaWysiwyg", function () {
             "id": "@fieldid"
         },
         template: function () {
-            return '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig>';
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig></div></div>';
         }
     }
 });
