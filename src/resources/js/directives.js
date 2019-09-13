@@ -1797,12 +1797,10 @@ zaa.directive("zaaDatetime", function () {
                 '</datepicker>' +
                 '<div ng-show="model!=null && date!=null" class="hour-selection">' +
                 '<div class="input-group">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">' +
-                '<i class="material-icons">access_time</i>' +
-                '</div>' +
-                '</div>' +
-                '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
+                    '<div class="input-group-prepend align-items-center">' +
+                        '<i class="material-icons pr-2">access_time</i>' +
+                    '</div>' +
+                    '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend zaa-datetime-time-colon">' +
