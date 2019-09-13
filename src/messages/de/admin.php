@@ -434,8 +434,9 @@ return [
     
 // 2.2.0
     
-    'active_button_togglestatus_label' => 'Toggle status',
-    'active_button_togglestatus_error' => 'Could not activated',
-    'active_button_togglestatus_enabled' => '{modelName} enabled',
-    'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'active_button_togglestatus_label' => 'Status Wechseln',
+    'active_button_togglestatus_error' => 'Konnte nicht aktiviert werden.',
+    'active_button_togglestatus_enabled' => '{modelName} aktiviert',
+    'active_button_togglestatus_disabled' => '{modelName} deaktiviert',
+    'layout_filemanager_detail_details' => 'Datei Informationen',
 ];

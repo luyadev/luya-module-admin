@@ -65,6 +65,26 @@ zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) 
 }]);
 
 /**
+ * Select a given element when clicking on it
+ * 
+ * Usage:
+ * 
+ * ```
+ * <input type="text" class="form-control form-control-sm mt-3" readonly select-on-click ng-model="fileDetailFull.source" />
+ * ```
+ * 
+ * @since 2.1.0
+ */
+zaa.directive('selectOnClick', function () {
+    // Linker function
+    return function (scope, element, attrs) {
+        element.bind('click', function () {
+            this.select();
+        });
+    };
+  });
+
+/**
  * Usage:
  *
  * ```

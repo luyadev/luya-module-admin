@@ -436,4 +436,5 @@ return [
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'layout_filemanager_detail_details' => 'File details',
 ];

@@ -393,18 +393,7 @@ use luya\admin\helpers\Angular;
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
         </div>
 
-        <h5 class="mt-4">
-        </h5>
-        <div class="inline-edit mt-4">
-            <div class="inline-edit-value">
-                <h5 class="inline-edit-label m-0" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</h5>
-                <input class="inline-edit-input" type="text" ng-show="nameEditMode" ng-model="fileDetailFull.name_original" />
-            </div>
-            <div class="inline-edit-button">
-                <button ng-show="!nameEditMode" type="button" class="btn btn-icon btn-edit" ng-click="nameEditMode=1"></button>
-                <button ng-show="nameEditMode" type="button" class="btn btn-icon btn-cancel" ng-click="nameEditMode=0"></button>
-            </div>
-        </div>
+        <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
 
         <div ng-if="fileDetail.isImage" class="mt-3 text-center">
             <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
@@ -414,7 +403,9 @@ use luya\admin\helpers\Angular;
             </modal>
             <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}?{{fileDetailFull.upload_timestamp}}" />
         </div>
-        <table class="table table-striped table-hover table-align-middle mt-3">
+        <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_detail_details'); ?>">
+        <input type="text" class="form-control form-control-sm" readonly select-on-click ng-model="fileDetailFull.source" />
+        <table class="table table-hover table-align-middle mt-3">
             <tbody>
             <tr>
                 <td><small><?= Admin::t('model_pk_id'); ?></small></td>
@@ -450,18 +441,24 @@ use luya\admin\helpers\Angular;
             <tr ng-if="fileDetailFull">
                 <td><small><?= Admin::t('layout_filemanager_col_file_disposition'); ?></small></td>
                 <td>
-                    <select ng-model="fileDetailFull.inline_disposition">
+                    <select class="form-control form-control-sm" ng-model="fileDetailFull.inline_disposition">
                         <option ng-value="0"><?= Admin::t('layout_filemanager_col_file_disposition_download'); ?></option>
                         <option ng-value="1"><?= Admin::t('layout_filemanager_col_file_disposition_browser'); ?></option>
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <input class="form-control form-control-sm" type="text" ng-model="fileDetailFull.name_original" />
+                </td>
+            </tr>
             </tbody>
         </table>
+        
         <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
-
-        <form class="bg-faded mt-4">
-            <h5 class="mb-3"><?= Admin::t('layout_filemanager_file_captions'); ?></h5>
+        </collapse-container>
+        <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_file_captions'); ?>">
+        <form class="bg-faded">
             <div class="form-group" ng-repeat="(key, cap) in fileDetailFull.file.captionArray">
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="fileDetailFull.file.captionArray[key]">
@@ -472,14 +469,15 @@ use luya\admin\helpers\Angular;
             </div>
             <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
         </form>
-
-        <h5 ng-show="tags.length > 0" class="mb-3 mt-4"><?= Admin::t('menu_system_item_tags'); ?></h5>
+        </collapse-container>
+        <collapse-container class="mt-3" ng-show="tags.length > 0" title="<?= Admin::t('menu_system_item_tags'); ?>">
         <span style="font-size:15px;" 
             ng-repeat="tag in tags"
             ng-click="saveTagRelation(tag, fileDetailFull)"
             ng-class="{'badge-primary font-weight-bold text-bold': fileHasTag(tag), 'badge-secondary': !fileHasTag(tag)}"
             class="badge badge-pill mx-1 mb-2"
         >{{tag.name}}</span>
+        </collapse-container>
     </div>
 </script>
 
