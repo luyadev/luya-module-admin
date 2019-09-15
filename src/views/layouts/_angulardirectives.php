@@ -384,7 +384,7 @@ use luya\admin\helpers\Angular;
         <!-- /Files -->
     </div>
 
-    <div class="file-detail-view" ng-class="{'open': fileDetail}">
+    <div class="file-detail-view shadow" ng-class="{'open': fileDetail}">
 
         <div class="file-detail-view-head">
             <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
