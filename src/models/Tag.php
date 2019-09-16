@@ -121,6 +121,7 @@ final class Tag extends NgRestModel
             ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
             ->where(['pk_id' => $pkId, 'table_name' => TaggableTrait::cleanBaseTableName($tableName)])
             ->indexBy('name')
+            ->orderBy(['name' => SORT_ASC])
             ->all();
     }
     
@@ -136,6 +137,7 @@ final class Tag extends NgRestModel
             ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
             ->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])
             ->indexBy('name')
+            ->orderBy(['name' => SORT_ASC])
             ->distinct()
             ->all();
     }
