@@ -2888,7 +2888,7 @@ zaa.directive("storageFileManager", function () {
 
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function (folderId, oldFolderId) {
-                    if (folderId !== undefined && folderId != oldFolderId) {
+                    if (folderId !== undefined) {
                         // generate the current pare info based on folder
                         $scope.generateFolderInheritance(folderId);
                         $scope.getFilesForPageAndFolder(folderId, 1);
@@ -2900,7 +2900,7 @@ zaa.directive("storageFileManager", function () {
                 $scope.generateFolderInheritance = function (folderId) {
                     $scope.folderInheritance = [];
                     $scope.findFolderInheritance(folderId);
-                }
+                };
 
                 $scope.findFolderInheritance = function (folderId) {
                     if ($scope.foldersData && $scope.foldersData.hasOwnProperty(folderId)) {
