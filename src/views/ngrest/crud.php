@@ -137,7 +137,7 @@ $this->beginBody();
                     <?php endif; ?>
                 </div>
                 <div ng-if="config.tagFilter && serviceResponse._tags && config.filter==0" class="mt-3">
-                    <span class="badge"><i class="material-icons" ng-click="searchTags=!searchTags">search</i><input ng-show="searchTags" ng-model="tagSearchQuery" type="text" class="ml-1" /></span>
+                    <span ng-hide="serviceResponse._tags | isArray" class="badge"><i class="material-icons" ng-click="searchTags=!searchTags;tagSearchQuery=''">search</i><input ng-show="searchTags" ng-model="tagSearchQuery" type="text" class="ml-1" /></span>
                     <span class="badge mr-1 badge-pill" ng-class="{'badge-primary': isTagFilterActive(tag.id), 'badge-secondary' : !isTagFilterActive(tag.id)}" ng-click="toggleTagFilter(tag.id)" ng-repeat="tag in serviceResponse._tags | toArray:false | filter:tagSearchQuery">{{ tag.name }}</span>
                 </div>
             </div>
