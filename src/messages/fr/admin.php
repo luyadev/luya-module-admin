@@ -151,7 +151,7 @@ return [
 
     /* Added translations in 1.0.0-beta7 */
     'login_securetoken_mail_subject' => 'Code de sécurité LUYA',
-    'login_securetoken_mail' => '<h1>Code de sécurité LUYA</h1><p>Utiliser le code suivant pour la connexion à votre espace d\'administration sur {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Utiliser le code suivant pour la connexion à votre espace d\'administration:',
     'login_async_token_error' => 'Le code saisi est erroné',
     'login_async_token_globalerror' => 'Une erreur de serveur est survenue, veuillez contacter l\'administrateur du site !',
     'ngrest_crud_csv_export_btn' => 'Générer CSV',
@@ -332,7 +332,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Mauvaise adresse email ou mot de passe. Tentative #{attempt} de {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Heure de verrouillage de la connexion',
     'account_changeemail_subject' => 'Vérifiez la mise à jour de votre adresse e-mail',
-    'account_changeemail_body' => '<h1>Code de vérification</h1><p>Entrez le code de vérification suivant pour modifier votre adresse électronique pour le site Web {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display: inline-block; background-color: #F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Entrez le code de vérification suivant pour modifier votre adresse électronique pour le site:',
     'account_changeemail_tokensenterror' => 'Impossible d\'envoyer le code de vérification à {email}. Assurez-vous que le component mail est configuré correctement.',
     'account_changeemail_wrongtokenorempty' => 'Code de vérification de l\'email vide, invalide ou expiré.',
     'account_changeemail_enterverificationtoken' => 'Veuillez entrer le code de vérification envoyé à <b>{{profile.email}}</b> afin de confirmer la demande de modification <b>{{settings.newUserEmail}}</b>.',

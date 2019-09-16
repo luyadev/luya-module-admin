@@ -109,7 +109,7 @@ trait AdminRestBehaviorTrait
     public function canApiUserAccess()
     {
         if ($this->userAuthClass()->identity->is_api_user && !$this->_module->apiUserAllowActionsWithoutPermissions) {
-            throw new ForbiddenHttpException("This action is forbidden for API users unless apiUserAllowActionsWithoutPermissions is enabled in admin module config.");
+            throw new ForbiddenHttpException("This controller ({$this->id}) action is forbidden for API users unless apiUserAllowActionsWithoutPermissions is enabled in admin module config.");
         }
     }
 }

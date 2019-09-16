@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Sicherheitscode',
-    'login_securetoken_mail' => '<h1>Sicherheitscode</h1><p>Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website:',
     'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch oder abgelaufen.',
     'login_async_token_globalerror' => 'Ein Globaler-Fehler ist aufgetreten. Bitte kontaktiere den Seitenbetreiber.',
     'ngrest_crud_csv_export_btn' => 'CSV generieren',
@@ -333,7 +333,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login Sperrzeit',
     'account_changeemail_subject' => 'Aktualisierung der E-Mail-Adresse bestätigen',
-    'account_changeemail_body' => '<h1>Bestätigungscode</h1><p>Geben Sie den folgenden Bestätigungscode ein, um Ihre E-Mail-Adresse für die Website {url} zu aktualisieren.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Geben Sie den folgenden Bestätigungscode ein, um Ihre E-Mail-Adress zu aktualisieren:',
     'account_changeemail_tokensenterror' => 'Der Bestätigungscode konnte nicht an die E-Mail-Adresse {email} geschickt werden. Stellen Sie sicher, dass die Mail-Komponente korrekt installiert ist.',
     'account_changeemail_wrongtokenorempty' => 'Leerer, ungültiger oder abgelaufener E-Mail-Bestätigungscode.',
     'account_changeemail_enterverificationtoken' => 'Bitte geben Sie den Bestätigungscode ein, der an <b>{{profile.email}}</b> geschickt wurde, um die Änderung Ihrer E-Mail-Adresse zu bestätigen <b>{{settings.newUserEmail}}</b>.',

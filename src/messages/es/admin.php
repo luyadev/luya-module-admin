@@ -142,7 +142,7 @@ return [
     'debug_state_off' => 'Apagado',
 // 1.0.0-beta7
     'login_securetoken_mail_subject' => 'Código de Seguridad LUYA',
-    'login_securetoken_mail' => '<h1>Código de Seguridad LUYA</h1><p>Use el siguiente código de seguridad para acceder a su interfaz de administración de {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Use el siguiente código de seguridad para acceder a su interfaz de administración:',
     'login_async_token_error' => 'Código de seguridad incorrecto.',
     'login_async_token_globalerror' => 'Error del servidor, póngase en contacto con el administrador del Sitio.',
     'ngrest_crud_csv_export_btn' => 'Generar CSV',
@@ -314,7 +314,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Correo o contraseña equivocada. Intento #{attempt} de {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Tiempo de bloqueo de inicio de sesión',
     'account_changeemail_subject' => 'Verifique la actualización de su dirección de correo electrónico',
-    'account_changeemail_body' => '<h1>Código de verificación</h1><p>Ingrese el siguiente código de verificación para cambiar su dirección de correo electrónico para el sitio web {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Ingrese el siguiente código de verificación para cambiar su dirección de correo electrónico para el sitio web:',
     'account_changeemail_tokensenterror' => 'No se pudo enviar el código de verificación a {email}. Asegúrese de que el componente de correo electrónico esté configurado correctamente.',
     'account_changeemail_wrongtokenorempty' => 'Código de verificación de correo electrónico vacío, no válido o caducado.',
     'account_changeemail_enterverificationtoken' => 'Ingrese el código de verificación enviado a <b>{{profile.email}}</b> para confirmar la solicitud de cambio a <b>{{settings.newUserEmail}}</b>',

@@ -15,6 +15,8 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\helpers\Url;
+use WhichBrowser\Parser;
 
 /**
  * User Model represents all Administration Users.
@@ -393,7 +395,25 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return ['groups', 'lastloginTimestamp'];
     }
 
-    // AuthMethods
+    /**
+     * Render user token based email:
+     * 
+     * This is currently used for secure token and email validation tokens.
+     * 
+     * @see https://mjml.io/try-it-live/Hk9rJe68B
+     * @since 2.2.0
+     */
+    public static function generateTokenEmail($token, $title, $text)
+    {
+        $result = new Parser(Yii::$app->request->userAgent);
+        return Yii::$app->view->render('@admin/views/mail/_token.php', [
+            'url' => Url::domain(Url::base(true)),
+            'token' => $token,
+            'browser' => $result->toString(),
+            'title' => $title,
+            'text' => $text,
+        ]);
+    }
 
     /**
      * Finds a current user for a given email.

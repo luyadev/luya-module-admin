@@ -142,7 +142,7 @@ return [
     'debug_state_off' => 'Uit',
     // vertalingen toegevoegd in 1.0.0-beta7
     'login_securetoken_mail_subject' => 'Beveiligingscode',
-    'login_securetoken_mail' => '<h1> Beveiligingscode </h1> <p> Gebruik de volgende beveiligingscode om u aan te melden bij uw administratie op {url}: </p> <span style = "font-size: 22px; letter- spatiëring: 2px; opvulling: 5px 10px; weergave: inline-block; achtergrondkleur: # F0F0F0; "> {token} </span>',
+    'login_securetoken_mail' => 'Gebruik de volgende beveiligingscode om u aan te melden bij uw administratie:',
     'login_async_token_error' => 'De opgegeven beveiligingscode is ongeldig of verlopen.',
     'login_async_token_globalerror' => 'Er is een serverfout opgetreden, neem contact op met uw sitebeheerder.',
     'ngrest_crud_csv_export_btn' => 'CSV genereren',
@@ -306,7 +306,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Verkeerde e-mail of wachtwoord.  Poging # {poging} van {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Vergrendelingstijd voor inloggen',
     'account_changeemail_subject' => 'Controleer update van uw e-mailadres',
-    'account_changeemail_body' => '<h1> Verificatiecode </h1> <p> Voer de volgende verificatiecode in om uw e-mailadres voor de website {url} te wijzigen. </p> <span style = "font-size: 22px; letter-spacing: 2px; opvulling: 5px 10px; weergave: inline-block; achtergrondkleur: # F0F0F0; "> {token} </span>',
+    'account_changeemail_body' => 'Voer de volgende verificatiecode in om uw e-mailadres voor de website te wijzigen:',
     'account_changeemail_tokensenterror' => 'Kon verificatiecode niet verzenden naar {email}.  Controleer of het e-mailonderdeel correct is geconfigureerd.',
     'account_changeemail_wrongtokenorempty' => 'Lege, ongeldige of verlopen e-mailverificatiecode.',
     'account_changeemail_enterverificationtoken' => 'Voer de verificatiecode in die is verzonden naar <b> {{profile.email}} </b> om het wijzigingsverzoek <b> {{settings.newUserEmail}} </b> te bevestigen.',

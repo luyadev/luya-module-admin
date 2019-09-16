@@ -71,7 +71,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
      * @param string $actions The name of the action
      * @since 2.2.0
      */
-    protected function addActionPermission($type, $actions)
+    public function addActionPermission($type, $actions)
     {
         foreach ((array) $actions as $actionName) {
             $this->_actionPermissions[$actionName] = $type;

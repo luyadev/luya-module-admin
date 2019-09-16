@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'LUYA код безпеки',
-    'login_securetoken_mail' => '<h1>LUYA код безпеки</h1><p>Використовуйте наступний код для входу в свій інтерфейс адміністрування на {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Використовуйте наступний код для входу в свій інтерфейс адміністрування на:',
     'login_async_token_error' => 'Наданий код безпеки невірний.',
     'login_async_token_globalerror' =>'Сталася помилка сервера, будь ласка, зверніться до адміністратора сайту.',
     'ngrest_crud_csv_export_btn' => 'Вивантажити до CSV',
@@ -333,7 +333,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
     'account_changeemail_subject' => 'Verify update of your email address',
-    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Enter the following verification code to change your email address for the website:',
     'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
     'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
     'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
