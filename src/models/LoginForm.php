@@ -135,28 +135,9 @@ final class LoginForm extends Model
         $mail = Yii::$app->mail;
         $mail->layout = false; // ensure layout is disabled even when enabled in application config
         return $mail
-            ->compose(Module::t('login_securetoken_mail_subject'), self::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail')))
+            ->compose(Module::t('login_securetoken_mail_subject'), User::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail')))
             ->address($this->user->email)
             ->send();
-    }
-
-    /**
-     * Render user token based email:
-     * 
-     * This is currently used for secure token and email validation tokens.
-     * 
-     * @see https://mjml.io/try-it-live/Hk9rJe68B
-     */
-    public static function generateTokenEmail($token, $title, $text)
-    {
-        $result = new Parser(Yii::$app->request->userAgent);
-        return Yii::$app->view->render('@admin/views/login/_token.php', [
-            'url' => Url::domain(Url::base(true)),
-            'token' => $token,
-            'browser' => $result->toString(),
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 
     /**

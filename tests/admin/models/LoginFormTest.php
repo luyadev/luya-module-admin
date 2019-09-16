@@ -4,6 +4,7 @@ namespace luya\admin\tests\admin\models;
 
 use admintests\AdminModelTestCase;
 use luya\admin\models\LoginForm;
+use luya\admin\models\User;
 use luya\admin\Module;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 
@@ -31,7 +32,7 @@ class LoginFormTest extends AdminModelTestCase
         $this->assertFalse($login->sendSecureLogin());
         
         $token = 'testtoken';
-        $emailBody = LoginForm::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail'));
+        $emailBody = User::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail'));
 
         $this->assertContains($token, $emailBody);
         $this->assertContains(Module::t('login_securetoken_mail_subject'), $emailBody);

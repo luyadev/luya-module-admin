@@ -138,7 +138,7 @@ class UserController extends Api
         // check if email has changed, if yes send secure token and temp store new value in user settings table.
         if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
             $token = $user->getAndStoreEmailVerificationToken();
-            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), LoginForm::generateTokenEmail($token, Module::t('account_changeemail_subject'), Module::t('account_changeemail_body')))
+            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), User::generateTokenEmail($token, Module::t('account_changeemail_subject'), Module::t('account_changeemail_body')))
             ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
             ->send();
             
