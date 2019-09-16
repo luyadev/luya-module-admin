@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Güvenlik Kodu',
-    'login_securetoken_mail' => '<h1>Güvenlik Kodu</h1><p>Yönetim panelinize giriş yapmak için bağlantıdaki güvenlik kodunu kullanın {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Yönetim panelinize giriş yapmak için bağlantıdaki güvenlik kodunu kullanın:',
     'login_async_token_error' => 'Sağlanan güvenlik kodu geçersiz veya süresi dolmuş.',
     'login_async_token_globalerror' => 'Bir Sunucu hatası oluştu, lütfen site yöneticinize başvurun.',
     'ngrest_crud_csv_export_btn' => 'CSV oluştur',
@@ -332,7 +332,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Yanlış eposta veya şifre. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Giriş kilitleme zamanı',
     'account_changeemail_subject' => 'E-posta adresinizin güncellemesini doğrulayın',
-    'account_changeemail_body' => '<h1>Doğrulama kodu</h1><p>Web sitesi için e-posta adresinizi değiştirmek için aşağıdaki doğrulama kodunu girin. {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Web sitesi için e-posta adresinizi değiştirmek için aşağıdaki doğrulama kodunu girin:',
     'account_changeemail_tokensenterror' => 'Doğrulama kodunu {email} adresine gönderilemedi. Posta bileşeninin doğru şekilde yapılandırıldığından emin olun.',
     'account_changeemail_wrongtokenorempty' => 'Boş, geçersiz veya süresi geçmiş e-posta doğrulama kodu.',
     'account_changeemail_enterverificationtoken' => '<b>{{settings.newUserEmail}}</b> değişiklik isteğini onaylamak için lütfen <b>{{profile.email}}</b> adresine gönderilen doğrulama kodunu girin.',

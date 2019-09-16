@@ -2,10 +2,12 @@
 
 namespace luya\admin\apis;
 
+use luya\admin\models\LoginForm;
 use Yii;
 use luya\admin\ngrest\base\Api;
 use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
+use luya\admin\models\UserLogin;
 use luya\validators\StrengthValidator;
 use luya\helpers\Url;
 use luya\admin\Module;
@@ -136,8 +138,7 @@ class UserController extends Api
         // check if email has changed, if yes send secure token and temp store new value in user settings table.
         if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
             $token = $user->getAndStoreEmailVerificationToken();
-            
-            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), Module::t('account_changeemail_body', ['url' => Url::base(true), 'token' => $token]))
+            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), LoginForm::generateTokenEmail($token, Module::t('account_changeemail_subject'), Module::t('account_changeemail_body')))
             ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
             ->send();
             

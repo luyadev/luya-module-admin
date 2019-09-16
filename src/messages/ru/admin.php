@@ -155,7 +155,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Код безопасности LUYA',
-    'login_securetoken_mail' => '<h1>Код безопасности LUYA</h1><p>Используйте следующий код для входа в свою админ-панель на {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Используйте следующий код для входа в свою админ-панель на:',
     'login_async_token_error' => 'Предоставленный код безопасности неверный.',
     'login_async_token_globalerror' => 'Произошла ошибка сервера, пожалуйста, обратитесь к администратору сайта.',
     'ngrest_crud_csv_export_btn' => 'Сгенерировать CSV',
@@ -335,7 +335,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Неправильный e-mail или пароль. Попытка #{attempt} из {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
     'account_changeemail_subject' => 'Подтверждение изменения вашего адреса электронной почты',
-    'account_changeemail_body' => '<h1>Код подтверждения</h1><p>Введите следующий код подтверждения, чтобы изменить адрес электронной почты для сайта {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Введите следующий код подтверждения, чтобы изменить адрес электронной почты для сайта:',
     'account_changeemail_tokensenterror' => 'Не удалось отправить код подтверждения на {email}. Убедитесь, что почтовый компонент настроен правильно.',
     'account_changeemail_wrongtokenorempty' => 'Пустой, неправильный или просроченный код подтверждения адреса электронной почты.',
     'account_changeemail_enterverificationtoken' => 'Пожалуйста, введите код подтверждения, отправленный на <b>{{profile.email}}</b>, чтобы подтвердить изменение адреса почты на <b>{{settings.newUserEmail}}</b>.',

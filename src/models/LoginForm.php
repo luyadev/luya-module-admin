@@ -3,8 +3,9 @@
 namespace luya\admin\models;
 
 use Yii;
-use yii\helpers\Url;
+use luya\helpers\Url;
 use luya\admin\Module;
+use WhichBrowser\Parser;
 use yii\base\Model;
 
 /**
@@ -17,10 +18,14 @@ use yii\base\Model;
  */
 final class LoginForm extends Model
 {
-    private $_user = false;
-
+    /**
+     * @var string the Email property.
+     */
     public $email;
     
+    /**
+     * @var string The passwort property
+     */
     public $password;
 
     public $attempts = 0;
@@ -127,14 +132,31 @@ final class LoginForm extends Model
     public function sendSecureLogin()
     {
         $token = $this->getUser()->getAndStoreToken();
-
-        return Yii::$app->mail
-            ->compose(Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail', [
-                'url' => Url::base(true),
-                'token' => $token,
-            ]))
+        $mail = Yii::$app->mail;
+        $mail->layout = false; // ensure layout is disabled even when enabled in application config
+        return $mail
+            ->compose(Module::t('login_securetoken_mail_subject'), self::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail')))
             ->address($this->user->email)
             ->send();
+    }
+
+    /**
+     * Render user token based email:
+     * 
+     * This is currently used for secure token and email validation tokens.
+     * 
+     * @see https://mjml.io/try-it-live/Hk9rJe68B
+     */
+    public static function generateTokenEmail($token, $title, $text)
+    {
+        $result = new Parser(Yii::$app->request->userAgent);
+        return Yii::$app->view->render('@admin/views/login/_token.php', [
+            'url' => Url::domain(Url::base(true)),
+            'token' => $token,
+            'browser' => $result->toString(),
+            'title' => $title,
+            'text' => $text,
+        ]);
     }
 
     /**
@@ -142,7 +164,7 @@ final class LoginForm extends Model
      *
      * @param string $token
      * @param integer $userId
-     * @return boolean|\luya\admin\models\User
+     * @return boolean|User
      */
     public function validateSecureToken($token, $userId)
     {
@@ -166,7 +188,7 @@ final class LoginForm extends Model
     /**
      * Login the current user if valid.
      *
-     * @return boolean|\luya\admin\models\User|boolean
+     * @return User|boolean
      */
     public function login()
     {
@@ -201,8 +223,11 @@ final class LoginForm extends Model
         return false;
     }
 
+
+    private $_user = false;
+
     /**
-     * @return boolean|\luya\admin\models\User
+     * @return boolean|User
      */
     public function getUser()
     {

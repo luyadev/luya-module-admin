@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Código de segurança LUYA',
-    'login_securetoken_mail' => '<h1>Código de segurança LUYA</h1><p>Use o código de segurança a seguir para efetuar login na interface administrativa em {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Use o código de segurança a seguir para efetuar login na interface administrativa:',
     'login_async_token_error' => 'O código de segurança fornecido está errado.',
     'login_async_token_globalerror' => 'Ocorreu um erro no servidor, por favor, entre em contato com o administrador do site',
     'ngrest_crud_csv_export_btn' => 'Gerar CSV',
@@ -333,7 +333,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'E-mail ou senha errados. Tentativa #{attempt} de {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Tempo de bloqueio de login',
     'account_changeemail_subject' => 'Verificar atualização do seu endereço de e-mail',
-    'account_changeemail_body' => '<h1>Código de verificação</h1><p>Entre o seguinte código de verificação para mudar o seu endereço de e-mail para o site {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Entre o seguinte código de verificação para mudar o seu endereço de e-mail para o site:',
     'account_changeemail_tokensenterror' => 'Não foi possível enviar o código de verificação para {email}. Certifique-se de que o componente de envio de email esteja configurado corretamente.',
     'account_changeemail_wrongtokenorempty' => 'O código de verificação de e-mail está vazio, expirado ou é inválido.',
     'account_changeemail_enterverificationtoken' => 'Por favor, insira o código de verificação enviado para <b>{{profile.email}}</b> para confirmar a <b>{{settings.newUserEmail}}</b> solicitação de alteração.',

@@ -20,7 +20,8 @@
         "yiisoft/yii2-imagine": "~2.1.0",
         "yiisoft/yii2-queue" : "~2.0.0",
         "flowjs/flow-php-server": "^1.0",
-        "sizeg/yii2-jwt": "^1.2"
+        "sizeg/yii2-jwt": "^1.2",
+		"whichbrowser/parser": "^2.0"
 	},
 	"require-dev" : {
         "luyadev/luya-testsuite" : "^1.0",

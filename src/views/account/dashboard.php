@@ -18,6 +18,7 @@ use luya\admin\Module;
                         
                     </form>
                     <div ng-show="activities.open_email_validation" class="mt-3">
+                        <hr />
                         <div class="alert alert-warning">
                             <p class="mb-0"><?= Module::t('account_changeemail_enterverificationtoken')?></p>
                         </div>
