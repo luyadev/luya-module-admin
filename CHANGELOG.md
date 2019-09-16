@@ -13,6 +13,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#363](https://github.com/luyadev/luya-module-admin/issues/363) Fixed bug when display package infos in LUYA Developer mode.
 + [#2](https://github.com/luyadev/luya-module-admin/issues/2) Fixed UX issue with none clickable clock icon.
 + [#356](https://github.com/luyadev/luya-module-admin/issues/356) Hide NgRest attribute groups when no fields are contained.
 + [#361](https://github.com/luyadev/luya-module-admin/issues/361) Disabled tag filter bar when any filter is active.

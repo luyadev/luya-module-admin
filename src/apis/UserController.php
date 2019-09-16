@@ -9,6 +9,7 @@ use luya\admin\models\User;
 use luya\validators\StrengthValidator;
 use luya\helpers\Url;
 use luya\admin\Module;
+use luya\base\PackageInstaller;
 
 /**
  * User API, provides ability to manager and list all administration users.
@@ -24,7 +25,7 @@ class UserController extends Api
     public $modelClass = 'luya\admin\models\User';
     
     /**
-     * Dump the current data from your user session.
+     * Return informations about the current logged in user
      *
      * @return array
      */
@@ -40,14 +41,35 @@ class UserController extends Api
             ], [
                 User::USER_SETTING_UILANGUAGE => $this->module->interfaceLanguage,
             ]),
+            'vendor_install_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
         ];
         
         // if developer option is enabled provide package infos
         if ($session['settings'][User::USER_SETTING_ISDEVELOPER]) {
-            $session['packages'] = Yii::$app->getPackageInstaller()->getConfigs();
+            $session['packages'] = $this->packagesToArray(Yii::$app->getPackageInstaller());
         }
         
         return $session;
+    }
+
+    /**
+     * Generate an array with package infos
+     *
+     * @param PackageInstaller $installer
+     * @return array
+     * @since 2.2.0
+     */
+    private function packagesToArray(PackageInstaller $installer)
+    {
+        $packages = [];
+        foreach ($installer->getConfigs() as $config) {
+            $packages[] = [
+                'package' => $config->package,
+                'bootstrap' => $config->bootstrap,
+                'blocks' => $config->blocks,
+            ];
+        }
+        return $packages;
     }
     
     /**
