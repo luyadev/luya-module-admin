@@ -38,6 +38,14 @@ abstract class CheckboxProperty extends Property
     /**
      * @inheritdoc
      */
+    public function defaultValue()
+    {
+        return 0;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getValue()
     {
         return (bool) parent::getValue();
