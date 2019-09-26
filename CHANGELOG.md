@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.2.1
+
++ [#367](https://github.com/luyadev/luya-module-admin/issues/367) Fixed bug with checkbox properties and default values in admin context.
+
 ## 2.2.0 (17. September 2019)
 
 > When you make Api Requests trough Api Users, turn on `apiUserAllowActionsWithoutPermissions` on order to allow access to actions without permissions entry (behavior of version 2.1 and below) or add permissions, read more in the [Upgrade document](UPGRADE.md). This change was required in order to make Api Users more secure.
