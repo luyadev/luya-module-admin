@@ -422,7 +422,7 @@ return [
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'Le fichier a été remplacé avec succès.',
+    'js_dir_manager_file_replace_ok' => 'Le fichier a été replacé avec succès.',
 
 // 2.0.3
 
