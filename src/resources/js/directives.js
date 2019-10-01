@@ -939,6 +939,56 @@ zaa.directive("zaaSortRelationArray", function () {
 });
 
 /**
+ * Generate an array of tag ids which are selected from the list of tags.
+ * 
+ * An example content of model could be `var model = [1,3,4]` where values are the TAG IDs.
+ * 
+ * @since 2.2.1
+ */
+zaa.directive("zaaTagArray", function() {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid"
+        },
+        controller: ['$scope', '$http', function ($scope, $http) {
+            $scope.tags = [];
+
+            $http.get('admin/api-admin-common/tags').then(function(response) {
+                $scope.tags = response.data;
+            });
+
+            if ($scope.model == undefined) {
+                $scope.model = [];
+            }
+
+            $scope.isInSelection = function(id) {
+                return $scope.model.indexOf(id) !== -1;
+            };
+
+            $scope.toggleSelection = function(id) {
+                var i = $scope.model.indexOf(id);
+                if (i > -1) {
+                    $scope.model.splice(i, 1);
+                } else {
+                    $scope.model.push(id);
+                }
+            };
+        }],
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side">' + 
+                    '<span ng-click="toggleSelection(tag.id)" ng-repeat="tag in tags" ng-class="{\'badge-primary\' : isInSelection(tag.id), \'badge-secondary\' : !isInSelection(tag.id)}" class="badge badge-pill mx-1 mb-2">{{tag.name}}</span>' + 
+                '</div>' + 
+            '</div>';
+        }
+    }
+});
+
+/**
  * <zaa-link model="linkinfo" />
  */
 zaa.directive("zaaLink", ['$filter', function ($filter) {
