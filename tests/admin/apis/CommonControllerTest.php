@@ -22,7 +22,7 @@ class CommonControllerTest extends AdminModelTestCase
     {
         PermissionScope::run($this->app, function(PermissionScope $scope) {
 
-            $this->createAdminLangFixture([]);
+            $lang = $this->createAdminLangFixture([]);
 
             $tag = new NgRestModelFixture([
                 'modelClass' => Tag::class,
@@ -49,6 +49,37 @@ class CommonControllerTest extends AdminModelTestCase
             ]);
 
             $this->assertTrue($response);
+
+            $this->expectException('yii\base\InvalidCallException');
+            $response = $scope->runControllerAction($ctrl, 'tag-relation-toggle', [
+                'tagId' => 100,
+                'pkId' => 2,
+                'tableName' => 'test',
+            ]);
+
+            $tag->cleanup();
+            $rel->cleanup();
+            $lang->cleanup();
+        });
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testActionTags()
+    {
+        PermissionScope::run($this->app, function(PermissionScope $scope) {
+            $this->createAdminLangFixture([]);
+            $scope->createAndAllowRoute('adminmodeltest/id/tags');
+            $ctrl = new CommonController('id', $this->app);
+            $tag = new NgRestModelFixture([
+                'modelClass' => Tag::class,
+                'fixtureData' => [
+                ]
+            ]);
+            $response = $scope->runControllerAction($ctrl, 'tags');
+
+            $this->assertSame([], $response);
         });
     }
 }
