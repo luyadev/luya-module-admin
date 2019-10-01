@@ -412,29 +412,29 @@ return [
     'aw_requestinsight_toggle_error' => 'Erreur durant l\'activation de Request Insight.',
     'aw_requestinsight_cleared' => 'Données effacées.',
     'aw_requestinsight_default_label' => 'Request Insight',
-    'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
-    'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
-    'crud_notification_enable' => 'Enable Notification',
-    'crud_notification_disable' => 'Disable Notification',
-    'admin_button_execute' => '"{label}" executed',
-    'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
-    'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+    'login_noscript_error' => 'Vous devez activer Javascript pour utiliser LUYA.',
+    'login_browsehappy' => 'Vous utilisez une version <strong>obsolète</strong> de votre navigateur. Veuillez <a href="https://browsehappy.com/" target="_blank">mettre à jour votre navigateur</a> pour améliorer votre expérience et votre sécurité.',
+    'crud_notification_enable' => 'Activer les notifications',
+    'crud_notification_disable' => 'Désactiver les notifications',
+    'admin_button_execute' => '"{label}" executé',
+    'layout_btn_reload_admin' => 'Recharger&nbsp;Admin',
+    'layout_btn_reload_cache' => 'Vider&nbsp;Cache',
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
+    'js_dir_manager_file_replace_ok' => 'Le fichier a été replacé avec succès.',
 
 // 2.0.3
 
-    'status_true' => 'Yes',
-    'status_false' => 'No',
-    'js_jsonobject_newkey' => 'New key name',
+    'status_true' => 'Oui',
+    'status_false' => 'Non',
+    'js_jsonobject_newkey' => 'Nouveau mot clé',
     
 // 2.2.0
     
-    'active_button_togglestatus_label' => 'Toggle status',
-    'active_button_togglestatus_error' => 'Could not activated',
-    'active_button_togglestatus_enabled' => '{modelName} enabled',
-    'active_button_togglestatus_disabled' => '{modelName} disabled',
-    'layout_filemanager_detail_details' => 'File details',
+    'active_button_togglestatus_label' => 'Changer de statut',
+    'active_button_togglestatus_error' => 'Impossible d\'activer',
+    'active_button_togglestatus_enabled' => '{modelName} activé',
+    'active_button_togglestatus_disabled' => '{modelName} désactivé',
+    'layout_filemanager_detail_details' => 'Détails du fichier',
 ];
