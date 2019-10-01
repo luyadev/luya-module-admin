@@ -191,7 +191,7 @@ return [
     'ngrest_crud_filter_prompt' => 'Фильтр',
     'ngrest_crud_ajax_search_length' => 'Поисковый запрос должен быть не менее 3 символов.',
     'menu_system_logger' => 'Логирование',
-    'layout_filemanager_detail_replace_file' => 'Заменить файл',
+    'layout_filemanager_detail_replace_file' => 'Заменить',
     'layout_rightbar_languagelabel' => 'Язык интерфейса',
     'layout_rightbar_savebtn' => 'Сохранить',
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
@@ -415,29 +415,29 @@ return [
     'aw_requestinsight_toggle_error' => 'Ошибка при включении Insight запросов.',
     'aw_requestinsight_cleared' => 'Данные очищены.',
     'aw_requestinsight_default_label' => 'Insight запросов',
-    'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
-    'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
+    'login_noscript_error' => 'Необходимо включить Javascript, чтобы работать в LUYA.',
+    'login_browsehappy' => 'Вы используете <strong>устаревший</strong> браузер. Пожалуйста, <a href="https://browsehappy.com/" target="_blank">обновите его</a>, чтобы повысить удобство и обеспечить лучшую защиту от угроз.',
     'crud_notification_enable' => 'Enable Notification',
     'crud_notification_disable' => 'Disable Notification',
     'admin_button_execute' => '"{label}" executed',
-    'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
-    'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+    'layout_btn_reload_admin' => 'Обновить&nbsp;страницу',
+    'layout_btn_reload_cache' => 'Очистить&nbsp;кэш',
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
+    'js_dir_manager_file_replace_ok' => 'Файл успешно заменён.',
 
 // 2.0.3
 
-    'status_true' => 'Yes',
-    'status_false' => 'No',
+    'status_true' => 'Да',
+    'status_false' => 'Нет',
     'js_jsonobject_newkey' => 'New key name',
     
 // 2.2.0
     
-    'active_button_togglestatus_label' => 'Toggle status',
-    'active_button_togglestatus_error' => 'Could not activated',
-    'active_button_togglestatus_enabled' => '{modelName} enabled',
-    'active_button_togglestatus_disabled' => '{modelName} disabled',
-    'layout_filemanager_detail_details' => 'File details',
+    'active_button_togglestatus_label' => 'Изменить статус',
+    'active_button_togglestatus_error' => 'Не удалось изменить статус',
+    'active_button_togglestatus_enabled' => 'Модель {modelName} включена',
+    'active_button_togglestatus_disabled' => 'Модель {modelName} отключена',
+    'layout_filemanager_detail_details' => 'Свойства файла',
 ];
