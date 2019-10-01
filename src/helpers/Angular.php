@@ -193,6 +193,11 @@ class Angular
         return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => static::optionsArrayInput($sourceData)], $options);
     }
         
+    public static function tagArray($ngModel, $label, array $options = [])
+    {
+        return self::injector(TypesInterface::TYPE_TAG_ARRAY, $ngModel, $label, [], $options);
+    }
+
     /**
      * zaaText directive
      *

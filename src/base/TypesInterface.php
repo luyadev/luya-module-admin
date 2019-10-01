@@ -81,6 +81,9 @@ interface TypesInterface
      */
     const TYPE_DATETIME = 'zaa-datetime';
     
+
+    const TYPE_TAG_ARRAY = 'zaa-tag-array';
+
     /**
      * @var integer If value is set (checkbox is checked) `1` will return otherwise `0`.
      */
