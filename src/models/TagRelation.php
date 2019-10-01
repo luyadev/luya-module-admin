@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveRecord;
 
 /**
@@ -46,11 +47,12 @@ final class TagRelation extends ActiveRecord
      *
      * @param string $tableName The table name
      * @param integer $pkId The primary key combination.
+     * @param boolean $asArray Whether active records should be returned or raw arrays.
      * @return array|ActiveRecord[]
      */
-    public static function getDataForRelation($tableName, $pkId)
+    public static function getDataForRelation($tableName, $pkId, $asArray = true)
     {
-        return self::find()->where(['table_name' => $tableName, 'pk_id' => $pkId])->asArray()->all();
+        return self::find()->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName), 'pk_id' => $pkId])->asArray($asArray)->all();
     }
 
     /**
@@ -59,11 +61,12 @@ final class TagRelation extends ActiveRecord
      * This methods i mainly used internal to retrieve data for the Active Window. Use the {{luya\admin\traits\TagsTrait}} in your Model instead.
      *
      * @param string $tableName The table name.
+     * @param boolean $asArray Whether active records should be returned or raw arrays.
      * @return array|ActiveRecord[]
      */
-    public static function getDistinctDataForTable($tableName)
+    public static function getDistinctDataForTable($tableName, $asArray = true)
     {
-        return self::find()->select('tag_id')->where(['table_name' => $tableName])->distinct()->asArray()->all();
+        return self::find()->select('tag_id')->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])->distinct()->asArray($asArray)->all();
     }
     
     /**
