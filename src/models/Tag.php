@@ -160,9 +160,9 @@ final class Tag extends NgRestModel
     public function toggleRelationByModel(ActiveRecordInterface $model)
     {
         $pkId = $model->getPrimaryKey(false);
-        $tableName = TaggableTrait::cleanBaseTableName($model->tableName);
+        $tableName = TaggableTrait::cleanBaseTableName($model->tableName());
         
-        return $this->toggleTag($pkId, $tableName);
+        return $this->toggleRelation($pkId, $tableName);
     }
 
     /**
@@ -177,7 +177,6 @@ final class Tag extends NgRestModel
     {
         $relation = $this->getTagRelations()
             ->andWhere([
-                'and',
                 'table_name' => $tableName,
                 'pk_id' => $pkId,
             ])
