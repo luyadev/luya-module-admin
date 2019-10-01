@@ -15,6 +15,10 @@ use yii\db\ActiveRecord;
  * ```
  *
  * The above example will return all
+ * 
+ * @property string $table_name
+ * @property integer $pk_id
+ * @property integer $tag_id
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -27,6 +31,14 @@ final class TagRelation extends ActiveRecord
     public static function tableName()
     {
         return '{{%admin_tag_relation}}';
+    }
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_VALIDATE, function() {
+            $this->table_name = TaggableTrait::cleanBaseTableName($this->table_name);
+        });
     }
 
     /**
