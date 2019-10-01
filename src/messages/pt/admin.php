@@ -325,9 +325,9 @@ return [
 // 1.1.1
 
     'ngrest_crud_total_count' => '{{data.listArray.length}} de {{totalRows}}',
-    
+
 // 1.2.0
-    
+
     'login_async_submission_limit_reached' => 'O número máximo de submissão foi atingifo, tente novamente em {time}.',
     'model_loginform_max_user_attempts' => 'O número máximo de tentativas de login foi atingido, tente novamente em {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-mail ou senha errados. Tentativa #{attempt} de {allowedAttempts}.',
@@ -343,9 +343,9 @@ return [
     'layout_filemanager_col_file_disposition' => 'Entrega de arquivos',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Mostrar no navegador',
-    
+
 // 1.2.1
-    
+
     'mode_user_personal_info' => 'Informação pessoal',
     'settings_general' => 'Geral',
     'settings_developer_mode' => 'Modo de desenvolvimento',
@@ -353,9 +353,9 @@ return [
     'view_index_redirect_telephone' => 'número de telefone',
     'view_index_redirect_telephone_help' => 'Por favor, entre com um número de telefone válido (para o sinal "+" é obrigatório usar um "\").',
     'missing_file_upload_permission' => 'Permissões insuficientes para enviar arquivos.',
-    
+
 // 1.2.2
-    
+
     'button_no' => 'Não',
     'crud_exportdata_btn' => 'Exportar Dados',
     'crud_exportdata_col_header' => 'Cabeçalho',
@@ -371,9 +371,10 @@ return [
 
 // 1.2.3
 
-    'active_button_duplicate_label' => 'Duplicado',
+
+    'active_button_duplicate_label' => 'Duplicar',
     'active_button_duplicate_success' => 'Uma cópia foi criada.',
-    'active_button_duplicate_error' => 'Erro durante criação a cópia: {message}',
+    'active_button_duplicate_error' => 'Erro ao criar uma cópia: {message}',
 
 // 2.0
 
