@@ -942,6 +942,8 @@ zaa.directive("zaaSortRelationArray", function () {
  * Generate an array of tag ids which are selected from the list of tags.
  * 
  * An example content of model could be `var model = [1,3,4]` where values are the TAG IDs.
+ * 
+ * @since 2.2.1
  */
 zaa.directive("zaaTagArray", function() {
     return {
