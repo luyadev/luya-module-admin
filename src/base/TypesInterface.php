@@ -81,7 +81,10 @@ interface TypesInterface
      */
     const TYPE_DATETIME = 'zaa-datetime';
     
-
+    /**
+     * @var string The directive returns an array of tag ids assigned to the model.
+     * @since 2.2.1
+     */
     const TYPE_TAG_ARRAY = 'zaa-tag-array';
 
     /**
