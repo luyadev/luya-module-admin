@@ -15,6 +15,9 @@ class CommonControllerTest extends AdminModelTestCase
 {
     use AdminDatabaseTableTrait;
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testActionTagRelationToggle()
     {
         PermissionScope::run($this->app, function(PermissionScope $scope) {
