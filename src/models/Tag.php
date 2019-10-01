@@ -5,12 +5,14 @@ namespace luya\admin\models;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
 use luya\admin\traits\TaggableTrait;
+use yii\db\ActiveRecordInterface;
 
 /**
  * This is the model class for table "admin_tag".
  *
  * @property integer $id
  * @property string $name
+ * @property string $translation
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -140,6 +142,57 @@ final class Tag extends NgRestModel
             ->orderBy(['name' => SORT_ASC])
             ->distinct()
             ->all();
+    }
+    
+    /**
+     * Toggle (Enable or Disable) a given tag for a Model.
+     * 
+     * ```php
+     * $tag = Tag::find()->where(['alias' => 'soccer'])->one();
+     * 
+     * $model = MyModel::findOne(1);
+     * $tag->toggleRelationByModel($model);
+     * ```
+     *
+     * @param ActiveRecordInterface $model
+     * @return boolean
+     * @since 2.2.1
+     */
+    public function toggleRelationByModel(ActiveRecordInterface $model)
+    {
+        $pkId = $model->getPrimaryKey(false);
+        $tableName = TaggableTrait::cleanBaseTableName($model->tableName());
+        
+        return $this->toggleRelation($pkId, $tableName);
+    }
+
+    /**
+     * Toggle a tag relation for given pkId and tableName.
+     *
+     * @param integer $pkId
+     * @param string $tableName
+     * @return boolean
+     * @since 2.2.1
+     */
+    public function toggleRelation($pkId, $tableName)
+    {
+        $relation = $this->getTagRelations()
+            ->andWhere([
+                'table_name' => $tableName,
+                'pk_id' => $pkId,
+            ])
+            ->one();
+
+        if ($relation) {
+            return (bool) $relation->delete();
+        }
+
+        $relation = new TagRelation();
+        $relation->tag_id = $this->id;
+        $relation->table_name = $tableName;
+        $relation->pk_id = $pkId;
+
+        return $relation->save();
     }
     
     /**

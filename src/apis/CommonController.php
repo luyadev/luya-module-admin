@@ -14,6 +14,7 @@ use luya\admin\models\Scheduler;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use luya\admin\models\Config;
+use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -131,6 +132,26 @@ class CommonController extends RestController
     public function actionTags()
     {
         return Tag::find()->select(['id', 'name', 'translation'])->orderBy(['name' => SORT_ASC])->all();
+    }
+
+    /**
+     * Toggle the state of a given tag for a certain relation.
+     *
+     * @param integer $tagId
+     * @param integer $pkId
+     * @param string $tableName
+     * @return boolean
+     * @since 2.2.1
+     */
+    public function actionTagRelationToggle($tagId, $pkId, $tableName)
+    {
+        $tag = Tag::findOne($tagId);
+
+        if (!$tag) {
+            throw new InvalidCallException("The given tag id does not exists.");
+        }
+
+        return $tag->toggleRelation($pkId, $tableName);
     }
 
     /**
