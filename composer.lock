@@ -520,16 +520,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.7",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59"
+                "reference": "26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0c41a36d4508d470e376498c1c0c527aa36a2d59",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8",
+                "reference": "26bd96350b0b2fcbf0ef4e6f0f9cf3528302a9d8",
                 "shasum": ""
             },
             "require": {
@@ -562,16 +562,16 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1"
+                "LGPL-2.1-only"
             ],
             "authors": [
                 {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
                     "name": "Marcus Bointon",
                     "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
                 },
                 {
                     "name": "Andy Prevost",
@@ -582,7 +582,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2019-02-01T15:04:28+00:00"
+            "time": "2019-09-27T21:33:43+00:00"
         },
         {
             "name": "psr/cache",
@@ -632,16 +632,16 @@
         },
         {
             "name": "sizeg/yii2-jwt",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sizeg/yii2-jwt.git",
-                "reference": "75d68ae920e5232d7d121305990df6514817808f"
+                "reference": "22100b1313a8ee281525fa63d91d5ef12c06d959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sizeg/yii2-jwt/zipball/75d68ae920e5232d7d121305990df6514817808f",
-                "reference": "75d68ae920e5232d7d121305990df6514817808f",
+                "url": "https://api.github.com/repos/sizeg/yii2-jwt/zipball/22100b1313a8ee281525fa63d91d5ef12c06d959",
+                "reference": "22100b1313a8ee281525fa63d91d5ef12c06d959",
                 "shasum": ""
             },
             "require": {
@@ -672,7 +672,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2018-12-21T02:43:35+00:00"
+            "time": "2019-03-20T06:36:38+00:00"
         },
         {
             "name": "symfony/process",
@@ -784,16 +784,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.26",
+            "version": "2.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "5ca9036dd6eb75354fbd287cc57f79ca861fb7f1"
+                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5ca9036dd6eb75354fbd287cc57f79ca861fb7f1",
-                "reference": "5ca9036dd6eb75354fbd287cc57f79ca861fb7f1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
+                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-09-03T21:38:33+00:00"
+            "time": "2019-09-18T13:04:16+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1343,16 +1343,16 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "4161117f3410342e9cb8fef8dff95e245fac38be"
+                "reference": "b2ed43763d99aba7b1e2314a3d06bfda617c3cf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/4161117f3410342e9cb8fef8dff95e245fac38be",
-                "reference": "4161117f3410342e9cb8fef8dff95e245fac38be",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/b2ed43763d99aba7b1e2314a3d06bfda617c3cf6",
+                "reference": "b2ed43763d99aba7b1e2314a3d06bfda617c3cf6",
                 "shasum": ""
             },
             "require-dev": {
@@ -1403,20 +1403,20 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2019-07-22T12:32:51+00:00"
+            "time": "2019-09-17T17:59:48+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.20.2",
+            "version": "1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "efdcac3b85af2bf055c10041f0860e29a99916fd"
+                "reference": "371d889d0318323aca0f2291d30766dfe24366bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/efdcac3b85af2bf055c10041f0860e29a99916fd",
-                "reference": "efdcac3b85af2bf055c10041f0860e29a99916fd",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/371d889d0318323aca0f2291d30766dfe24366bd",
+                "reference": "371d889d0318323aca0f2291d30766dfe24366bd",
                 "shasum": ""
             },
             "require": {
@@ -1456,7 +1456,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-09-13T14:55:12+00:00"
+            "time": "2019-09-17T15:06:22+00:00"
         },
         {
             "name": "myclabs/deep-copy",

@@ -43,10 +43,14 @@ class TagTest extends AdminModelTestCase
         $this->assertTrue($m->toggleRelationByModel($uoModel));
         
         // get relations
+        $this->assertSame('1', $m->getTagRelations()->count());
 
         // untoggle
+        $this->assertTrue($m->toggleRelationByModel($uoModel));
 
         // get relations
+        // get relations
+        $this->assertSame('0', $m->getTagRelations()->count());
 
     }
 }

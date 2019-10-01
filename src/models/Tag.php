@@ -12,6 +12,7 @@ use yii\db\ActiveRecordInterface;
  *
  * @property integer $id
  * @property string $name
+ * @property string $translation
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -183,7 +184,7 @@ final class Tag extends NgRestModel
             ->one();
 
         if ($relation) {
-            return $relation->delete();
+            return (bool) $relation->delete();
         }
 
         $relation = new TagRelation();
