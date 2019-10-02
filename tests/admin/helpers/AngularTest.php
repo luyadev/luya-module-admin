@@ -41,4 +41,9 @@ class AngularTest extends AdminTestCase
         $this->assertSame('<luya-schedule value="model" title="xyz" model-class="path/to/model" attribute-name="attribute_name" attribute-values=\'[{"label":"Off","value":0},{"label":"On","value":1}]\' primary-key-value="pkvalue"></luya-schedule>', Angular::schedule('model', 'label', 'pkvalue', [0 => 'Off', 1 => 'On'], 'path/to/model', 'attribute_name', ['title' => 'xyz'])->render());
         $this->assertSame('<luya-schedule value="model" title="label" model-class="path/to/model" attribute-name="attribute_name" attribute-values=\'[{"label":"Off","value":0},{"label":"On","value":1}]\' primary-key-value="pkvalue" only-icon="1"></luya-schedule>', Angular::schedule('model', 'label', 'pkvalue', [0 => 'Off', 1 => 'On'], 'path/to/model', 'attribute_name', ['only-icon' => 1])->render());
     }
+
+    public function testTagArray()
+    {
+        $this->assertSame('<zaa-tag-array model="barfoo" label="label" options=\'[]\' fieldid="barfoo-zaa-tag-array" fieldname="barfoo"></zaa-tag-array>', Angular::tagArray('barfoo', 'label')->render());
+    }
 }
