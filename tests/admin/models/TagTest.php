@@ -53,4 +53,39 @@ class TagTest extends AdminModelTestCase
         $this->assertSame('0', $m->getTagRelations()->count());
 
     }
+
+    public function testRelationMethods()
+    {
+        $this->createNgRestLogFixture();
+
+        $tag = new NgRestModelFixture([
+            'modelClass' => Tag::class,
+        ]);
+
+        $rel = new ActiveRecordFixture([
+            'modelClass' => TagRelation::class,
+        ]);
+
+        $this->assertSame(3, TagRelation::batchUpdateRelations([1,2,3], 'foobar', 1));
+
+        // distinct
+
+        $values = TagRelation::getDistinctDataForTable('foobar', true);
+        $this->assertSame(3, count($values));
+
+        $this->assertSame(3, TagRelation::batchUpdateRelations([1,2,3], 'foobar', 1));
+    }
+
+    public function testAfterValidateTableName()
+    {
+        $rel = new ActiveRecordFixture([
+            'modelClass' => TagRelation::class,
+        ]);
+
+        $model = new TagRelation();
+        $model->table_name = '{{%foobar}}';
+
+        $model->validate(['table_name']);
+        $this->assertSame('foobar', $model->table_name);
+    }
 }

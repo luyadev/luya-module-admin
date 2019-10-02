@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.2.1
 
++ [#373](https://github.com/luyadev/luya-module-admin/pull/373) Added new methods to batch insert tag relations, ensure tag relation table does not contain db prefix when saving.
 + [#370](https://github.com/luyadev/luya-module-admin/pull/370) Added new `zaa-tag-array` directive which generates an array of selected tag ids assigned to the model.
 + [#369](https://github.com/luyadev/luya-module-admin/pull/369) Added `toggleRelation` option for Tags model and common api to toggle tags on a certain item.
 + [#367](https://github.com/luyadev/luya-module-admin/issues/367) Fixed bug with checkbox properties and default values in admin context.
