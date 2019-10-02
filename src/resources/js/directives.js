@@ -958,7 +958,10 @@ zaa.directive("zaaTagArray", function() {
             $scope.tags = [];
 
             $http.get('admin/api-admin-common/tags').then(function(response) {
-                $scope.tags = response.data;
+                angular.forEach(response.data, function(value) {
+                    value.id = parseInt(value.id);
+                    $scope.tags.push(value);
+                });
             });
 
             if ($scope.model == undefined) {
@@ -966,7 +969,12 @@ zaa.directive("zaaTagArray", function() {
             }
 
             $scope.isInSelection = function(id) {
-                return $scope.model.indexOf(id) !== -1;
+                id = parseInt(id);
+                if ($scope.model.indexOf(id) == -1) {
+                    return false;
+                }
+
+                return true;
             };
 
             $scope.toggleSelection = function(id) {
