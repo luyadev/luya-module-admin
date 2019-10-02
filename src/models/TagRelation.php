@@ -82,6 +82,51 @@ final class TagRelation extends ActiveRecord
     }
     
     /**
+     * Save multiple tags for a given pk and table name.
+     *
+     * @param array $tagIds
+     * @param integer $tableName
+     * @param integer $pkId
+     * @return integer Returns the number of relations successfull added.
+     * @since 2.2.1
+     */
+    public static function batchInsertRelations(array $tagIds, $tableName, $pkId)
+    {
+        $counter = 0;
+        foreach ($tagIds as $tagId) {
+            $relation = new self();
+            $relation->table_name = $tableName;
+            $relation->tag_id = $tagId;
+            $relation->pk_id = $pkId;
+            if ($relation->save()) {
+                $counter++;
+            }
+        }
+
+        return $counter;
+    }
+
+    /**
+     * Remove all relations of the table and add new relations based on tagIds array and pkId.
+     *
+     * > compared to {{batchInsertRelations}} this will also remove all existing relation entries for this table.
+     * 
+     * @param array $tagIds
+     * @param string $tableName
+     * @param integer $pkId
+     * @return integer Returns the number of relations successfull added.
+     * @since 2.2.1
+     */
+    public static function batchUpdateRelations(array $tagIds, $tableName, $pkId)
+    {
+        foreach (self::getDataForRelation($tableName, $pkId, false) as $relation) {
+            $relation->delete();
+        }
+
+        return self::batchInsertRelations($tagIds, $tableName, $pkId);
+    }
+
+    /**
      * Get tag object relation.
      *
      * @return \luya\admin\models\Tag
