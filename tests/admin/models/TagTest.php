@@ -72,6 +72,8 @@ class TagTest extends AdminModelTestCase
 
         $values = TagRelation::getDistinctDataForTable('foobar', true);
         $this->assertSame(3, count($values));
+
+        $this->assertSame(3, TagRelation::batchUpdateRelations([1,2,3], 'foobar', 1));
     }
 
     public function testAfterValidateTableName()
