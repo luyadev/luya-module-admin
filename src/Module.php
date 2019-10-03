@@ -437,7 +437,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
-                    ->itemApi('menu_system_item_tags', 'admin/tag/index', 'view_list', 'api-admin-tag')
+                    ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
                     ->itemApi('Queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
                 ->group('menu_group_images')
