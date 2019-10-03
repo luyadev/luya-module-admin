@@ -108,7 +108,7 @@ class TaggableActiveWindow extends ActiveWindow
      */
     public function defaultIcon()
     {
-        return 'view_list';
+        return 'tag';
     }
 
     /**
