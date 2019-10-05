@@ -966,6 +966,10 @@ zaa.directive("zaaTagArray", function() {
 
             if ($scope.model == undefined) {
                 $scope.model = [];
+            } else {
+                angular.forEach($scope.model, function(value, key) {
+                    $scope.model[key] = parseInt(value);
+                });
             }
 
             $scope.isInSelection = function(id) {
