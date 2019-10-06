@@ -94,32 +94,6 @@ $this->beginPage()
                             </span>
                         </span>
                     </li>
-                    <li class="mainnav-entry hide-on-mobile">
-                        <span class="mainnav-link">
-                            <div class="mainnav-icon mainnav-icon-user-count">
-                                <span class="mainnav-user-online">{{notify.length}}</span>
-                                <i class="material-icons">panorama_fish_eye</i>
-                            </div>
-                            <span class="mainnav-label">
-                                <?= Admin::t('layout_btn_useronline'); ?>
-                            </span>
-                            <span class="mainnav-tooltip-big-wrapper">
-                                <span class="mainnav-tooltip-big">
-                                    <table>
-                                        <tr ng-repeat="row in notify" ng-class="{ 'mainnav-tooltip-big-green' : row.is_active, 'mainnav-tooltip-big-gray' : !row.is_active }">
-                                            <td>{{row.firstname}} {{row.lastname}}</td>
-                                            <td>{{row.email}}</td>
-                                            <td>
-                                                <div class="tooltip-big-activity" tooltip tooltip-position="right" tooltip-text="<span><b>{{row.inactive_since}}</b>&nbsp;<?= Admin::t('layout_useronline_inactive'); ?></span><br /><small>{{ row.lock_description }}</small>" ng-class="{ 'green' : row.is_active, 'grey' : !row.is_active }">
-                                                    <i class="material-icons">info_outline</i>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </span>
-                            </span>
-                        </span>
-                    </li>
                     <li class="mainnav-entry">
                             <!-- needs to be fixed -->
                             <span class="mainnav-parent" active-class="mainnav-parent-active">
