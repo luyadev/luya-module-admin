@@ -193,7 +193,19 @@ abstract class Plugin extends Component implements TypesInterface
      * ```php
      * 'sortField' => false,
      * ```
-     *
+     * 
+     * In order to enable order by counting of relation tables update the APIs {{luya\admin\ngrest\base\Api::prepareListQuery()}} with the given sub
+     * select condition where the alias name is equal to the field to sort:
+     * 
+     * ```php
+     * public function prepareListQuery()
+     * {
+     *     return parent::prepareListQuery()->select(['*', '(SELECT count(*) FROM admin_tag_relation WHERE tag_id = id) as relationsCount']);
+     * }
+     * ```
+     * 
+     * Where in the above example `relationsCount` would be the sortField name.
+     * 
      * @see https://www.yiiframework.com/doc/api/2.0/yii-data-sort#$attributes-detail
      * @since 2.0.0
      */

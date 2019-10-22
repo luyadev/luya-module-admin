@@ -40,4 +40,12 @@ class TagController extends Api
             'query' => Tag::find()->joinWith(['tagRelations'])->where(['table_name' => $tableName])->distinct(),
         ]);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepareListQuery()
+    {
+        return parent::prepareListQuery()->select(['*', '(select count(*) from admin_tag_relation WHERE tag_id = id) as relationsCount']);
+    }
 }
