@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.2.2
 
-+ [#383](https://github.com/luyadev/luya-module-admin/issues/383) Added `beforeListFind` callable propertie for ngrest plugins.
++ [#383](https://github.com/luyadev/luya-module-admin/issues/383) Added `beforeListFind` callable property for ngrest plugins.
 
 ## 2.2.1 (3. October 2019)
 
