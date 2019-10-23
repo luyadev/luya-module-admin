@@ -99,6 +99,26 @@ abstract class Plugin extends Component implements TypesInterface
      * @since 1.1.1
      */
     public $renderContext;
+
+    /**
+     * @var callable A callable which will return before the ngrest list view for a given attribute.
+     * 
+     * The function annotation contains the value of the attribute and second the model (event sender argument).
+     * 
+     * ```php
+     * 'beforeListFind' => function($value, $model) {
+     *    return I18n::decode($value)['en']; // returns always the english language key value.
+     * }
+     * ```
+     * 
+     * Return return value of the callable function will be set as attribute value to display.
+     * 
+     * > Keep in mind that the return value of the function won't be processed by any further events.
+     * > For example the i18n property might not have any effect anymore even when {{$i18n}} is enabled.
+     * 
+     * @since 2.2.2
+     */
+    public $beforeListFind;
     
     /**
      * Renders the element for the CRUD LIST overview for a specific type.
@@ -607,11 +627,19 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function onBeforeListFind($event)
     {
+        if ($this->beforeListFind) {
+            $this->writeAttribute($event, call_user_func_array($this->beforeListFind, [$this->getAttributeValue($event), $event->sender]));
+            return false;
+        }
+
         return true;
     }
     
     /**
-     * This event is only trigger when returning the ngrest crud list data. If the property of this plugin inside the model, the event will not be triggered.
+     * This event is only trigger when returning the ngrest crud list data. 
+     * 
+     * If the attribute is not inside the model (property not writeable), the event will not be triggered. Ensure its a
+     * public property or contains getter/setter methods.
      *
      * @param \luya\admin\ngrest\base\NgRestModel::EVENT_AFTER_NGREST_FIND $event The NgRestModel after ngrest find event.
      */
