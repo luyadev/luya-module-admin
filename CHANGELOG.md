@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.2.2
+
++ [#388](https://github.com/luyadev/luya-module-admin/pull/388) Fixed bug when using DuplicateActiveButton with properties which resolve an object in the after find event.
+
 ## 2.2.1 (3. October 2019)
 
 + [#373](https://github.com/luyadev/luya-module-admin/pull/373) Added new methods to batch insert tag relations, ensure tag relation table does not contain db prefix when saving.
