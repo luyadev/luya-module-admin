@@ -73,4 +73,23 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
             'events' => [],
         ], $btn->handle($model));
     }
+
+    public function testCopyDuplicateModelErrorNotFound()
+    {
+        $btn = new DuplicateActiveButton();
+    
+        $this->createNgRestLogFixture();
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Tag::class,
+        ]);
+
+        $model = $fixture->newModel;
+
+        // wont work as alias is unique
+        $this->assertSame([
+            'success' => false,
+            'message' => 'active_button_duplicate_error',
+            'events' => [],
+        ], $btn->handle($model));
+    }
 }
