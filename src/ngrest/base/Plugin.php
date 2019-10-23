@@ -116,7 +116,7 @@ abstract class Plugin extends Component implements TypesInterface
      * > Keep in mind that the return value of the function won't be processed by any further events.
      * > For example the i18n property might not have any effect anymore even when {{$i18n}} is enabled.
      * 
-     * @since 2.2.x
+     * @since 2.2.2
      */
     public $beforeListFind;
     
