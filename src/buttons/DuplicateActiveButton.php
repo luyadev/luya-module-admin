@@ -35,12 +35,15 @@ class DuplicateActiveButton extends ActiveButton
      */
     public function handle(NgRestModel $model)
     {
-        $copy = clone $model;
-        $copy->isNewRecord = true;
-        foreach ($model->getPrimaryKey(true) as $field => $value) {
-            unset($copy->{$field});
+        $data = $model::find()->byPrimaryKey($model->getPrimaryKey())->asArray()->one();
+
+        if (!$data) {
+            return $this->sendError(Module::t('active_button_duplicate_error', ['message' => 'Model with id ' . $model->getPrimaryKey() . ' not found.']));
         }
-        
+
+        $copy = new $model;
+        $copy->attributes = $data;
+
         if ($copy->save()) {
             $this->sendReloadEvent();
             return $this->sendSuccess(Module::t('active_button_duplicate_success'));

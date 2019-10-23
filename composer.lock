@@ -463,16 +463,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.21",
+            "version": "1.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "23d8714ce08deddfb586c4e90ccaf0da2a95b112"
+                "reference": "c818377491124ca702b7b8bd93dc65759844a03c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/23d8714ce08deddfb586c4e90ccaf0da2a95b112",
-                "reference": "23d8714ce08deddfb586c4e90ccaf0da2a95b112",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/c818377491124ca702b7b8bd93dc65759844a03c",
+                "reference": "c818377491124ca702b7b8bd93dc65759844a03c",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +516,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-09-09T12:08:23+00:00"
+            "time": "2019-10-22T11:53:22+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -784,16 +784,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.27",
+            "version": "2.0.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85"
+                "reference": "f972275551172a4b2e293979d77aa0c795ae36a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
-                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f972275551172a4b2e293979d77aa0c795ae36a2",
+                "reference": "f972275551172a4b2e293979d77aa0c795ae36a2",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-09-18T13:04:16+00:00"
+            "time": "2019-10-22T13:47:14+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1407,16 +1407,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.21",
+            "version": "1.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "371d889d0318323aca0f2291d30766dfe24366bd"
+                "reference": "9c9823a5b1e1cb71ed379fa865481f58f2e7305f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/371d889d0318323aca0f2291d30766dfe24366bd",
-                "reference": "371d889d0318323aca0f2291d30766dfe24366bd",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/9c9823a5b1e1cb71ed379fa865481f58f2e7305f",
+                "reference": "9c9823a5b1e1cb71ed379fa865481f58f2e7305f",
                 "shasum": ""
             },
             "require": {
@@ -1456,7 +1456,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-09-17T15:06:22+00:00"
+            "time": "2019-10-22T10:13:18+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1757,22 +1757,22 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.8.1",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76"
+                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
-                "reference": "1927e75f4ed19131ec9bcc3b002e07fb1173ee76",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f6811d96d97bdf400077a0cc100ae56aa32b9203",
+                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
                 "sebastian/comparator": "^1.1|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -1816,7 +1816,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-06-13T12:50:23+00:00"
+            "time": "2019-10-03T11:07:50+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
