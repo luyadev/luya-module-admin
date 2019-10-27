@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.3.0
+
++ [#389](https://github.com/luyadev/luya-module-admin/issues/389) Do not throw an exception by default when pool identifier does not exists in the list of pools.
+
 ## 2.2.2 (23. October 2019)
 
 + [#388](https://github.com/luyadev/luya-module-admin/pull/388) Fixed bug when using DuplicateActiveButton with properties which resolve an object in the after find event.
