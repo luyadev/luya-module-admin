@@ -7,6 +7,7 @@ use luya\admin\models\User;
 use luya\admin\models\TagRelation;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use admintests\AdminModelTestCase;
+use admintests\data\models\PoolModel;
 use luya\admin\models\Lang;
 
 class NgRestActiveQueryTest extends AdminModelTestCase
@@ -77,6 +78,18 @@ class NgRestActiveQueryTest extends AdminModelTestCase
 
         $this->expectException("yii\base\InvalidConfigException");
         $query->inPool('notexisting', true);
+    }
+
+    public function testInPoolWhereCondition()
+    {
+        new NgRestModelFixture([
+            'modelClass' => PoolModel::class,
+        ]);
+
+        $query = new NgRestActiveQuery(PoolModel::class);
+
+        $this->assertSame(['field' => 'value'], $query->inPool('pool1')->where);
+
     }
 
     public function testFindByPrimaryKey()
