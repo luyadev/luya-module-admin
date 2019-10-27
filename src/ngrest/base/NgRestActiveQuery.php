@@ -98,13 +98,18 @@ class NgRestActiveQuery extends ActiveQuery
     }
 
     /**
-     * Add the pool where condition if a pool is given.
+     * Generate a pool where condition for a given ngRestPools() defintion.
+     * 
+     * The defined pool must exists in the list of {{luya\admin\ngrest\base\NgRestModel::ngRestPools()}}. If not found
+     * the where condition will not be added. If $exception is enabled an exception will be thrown when the pool identifier
+     * is not found in the list of pools.
      *
-     * @param string $pool
+     * @param string $pool The name of the pool to lookup in the ngRestPools().
+     * @param boolean $exception Whether the method should throw an exception if the pool can not be found in the list of model pools.
      * @return NgRestActiveQuery
      * @since 2.0.0
      */
-    public function inPool($pool = null)
+    public function inPool($pool = null, $exception = false)
     {
         if (empty($pool)) {
             return $this;
@@ -112,11 +117,15 @@ class NgRestActiveQuery extends ActiveQuery
 
         $model = Yii::createObject($this->modelClass);
 
-        if (!array_key_exists($pool, $model->ngRestPools())) {
+        if (array_key_exists($pool, $model->ngRestPools())) {
+            return $this->andWhere($model->ngRestPools()[$pool]);
+        }
+
+        if ($exception) {
             throw new InvalidConfigException("The requested pool identifier '{$pool}' does not exist in the ngRestPools() definition.");
         }
 
-        return $this->andWhere($model->ngRestPools()[$pool]);
+        return $this;
     }
 
     /**
