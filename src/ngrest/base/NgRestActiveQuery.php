@@ -105,7 +105,7 @@ class NgRestActiveQuery extends ActiveQuery
      * is not found in the list of pools.
      *
      * @param string $pool The name of the pool to lookup in the ngRestPools().
-     * @param boolean $exception Whether the method should throw an exception if the pool can not be found in the list of model pools.
+     * @param boolean $exception Whether the method should throw an exception if the pool can not be found in the list of model pools. {@since 2.4.0}
      * @return NgRestActiveQuery
      * @since 2.0.0
      */
