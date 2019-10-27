@@ -591,12 +591,89 @@ class Api extends RestActiveController
     {
         $sortAttributes = [];
         foreach ($config->getPointerPlugins('list') as $plugin) {
-            $sortAttributes = ArrayHelper::merge($plugin->getSortField(), $sortAttributes);
+
+            $sortField = $plugin->getSortField();
+
+            $isI18n = $plugin->i18n;
+            if ($isI18n && is_array($sortField)) {
+                $lang = Yii::$app->composition->langShortCode;
+
+                // An analogue of the function array_key_first (the last one avaiable only for PHP >= 7.3)
+                foreach($sortField as $key => $value) {
+                    break;
+                }
+
+                if ($key === 0){
+                    $sortField = [
+                        $value =>
+                            [
+                                'asc' =>  [$this->addJsonExtractToQuery($value) => SORT_ASC],
+                                'desc' => [$this->addJsonExtractToQuery($value) => SORT_DESC]
+                            ]
+                    ];
+                } else {
+                    $a = [];
+                    foreach ($value as $sortKey => $sortVal) {
+                        switch ($sortKey) {
+                            case 'asc':
+                                $a[$sortKey] = [$this->addJsonExtractToQuery($key) => SORT_ASC];
+                                break;
+                            case 'desc':
+                                $a[$sortKey] = [$this->addJsonExtractToQuery($key) => SORT_DESC];
+                                break;
+                            default:
+                                $a[$sortKey] = $sortVal;
+                                break;
+                        }
+                    }
+                    $sortField = [
+                        $key => $a
+                    ];
+                }
+
+            }
+
+            $sortAttributes = ArrayHelper::merge($sortField, $sortAttributes);
         }
 
         return $sortAttributes;
+    }    
+
+    /**
+     * Adds JSON_EXTRACTS() (or similar) to i18n sort attributes
+     * @param $name
+     * @return string
+     * @throws NotSupportedException
+     * @since 2.2.x
+     */
+
+    protected function addJsonExtractToQuery($name)
+    {
+        if (!$name) return $name;
+        $lang = Yii::$app->composition->langShortCode;
+        $dbDriver = Yii::$app->db->getDriverName();
+        switch ($dbDriver) {
+            case 'pgsql':
+                $q = '(`'.$key.'`->"$.'.$lang.'")';
+                break;
+            case 'cubrid':
+                throw new NotSupportedException($dbDriver . ' does not support json_extract().');
+                break;
+            case 'oracle':
+            case 'mssql':
+                $q = '(JSON_VALUE(`'.$name.'`, "$.'.$lang.'"))';
+                break;
+            default:
+                $q = '(JSON_EXTRACT(`'.$name.'`, "$.'.$lang.'"))';
+                break;
+        }
+
+        return $q;
     }
-    
+
+
+
+
     /**
      * Call the dataProvider for a foreign model.
      *
