@@ -63,8 +63,20 @@ class NgRestActiveQueryTest extends AdminModelTestCase
 
         $this->assertSame(null, $query->inPool()->where);
 
+        $q = $query->inPool('notexisting');
+        $this->assertInstanceOf(NgRestActiveQuery::class, $q);
+    }
+
+    public function testInPoolException()
+    {
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+        ]);
+
+        $query = new NgRestActiveQuery(User::class);
+
         $this->expectException("yii\base\InvalidConfigException");
-        $query->inPool('notexisting');
+        $query->inPool('notexisting', true);
     }
 
     public function testFindByPrimaryKey()
