@@ -196,7 +196,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @param string $attributeName
      * @param mixed $value
      * @return mixed
-     * @since 2.2.x
+     * @since 2.3.0
      */
     protected function runI18nContextOnFindPlugin($attributeName, $value)
     {

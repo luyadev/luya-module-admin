@@ -57,7 +57,7 @@ class NgRestEventBehavior extends Behavior
      * 
      * @param string $attribute
      * @return \luya\admin\ngrest\base\Plugin
-     * @since 2.2.x
+     * @since 2.3.0
      */
     public function getPluginObject($attribute)
     {

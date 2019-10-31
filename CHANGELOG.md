@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. This projec
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
 ## 2.3.0
-
++ [#397](https://github.com/luyadev/luya-module-admin/issues/397) i18nAttributeFallbackValue() require to run the onFind() context of the given attribute plugin in order to ensure plugin specific options like `markdown`. 
 + [#389](https://github.com/luyadev/luya-module-admin/issues/389) Do not throw an exception by default when pool identifier does not exists in the list of pools.
 
 ## 2.2.2 (23. October 2019)
