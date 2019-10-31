@@ -90,6 +90,9 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
         $fixture->cleanup();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
     {
 
