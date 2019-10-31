@@ -45,6 +45,24 @@ class NgRestEventBehavior extends Behavior
             }
         }
     }
+
+    /**
+     * Get the Plugin object based on the Attribute Name.
+     *
+     * As Behaviors works like trait its possible to access the Plugin object from Model scope:
+     * 
+     * ```php
+     * $plugin = $this->getPluginObject('attributeName');
+     * ```
+     * 
+     * @param string $attribute
+     * @return \luya\admin\ngrest\base\Plugin
+     * @since 2.2.x
+     */
+    public function getPluginObject($attribute)
+    {
+        return self::$_pluginInstances[$this->owner->tableName()][$attribute];
+    }
     
     /**
      * Singleton Container for Plugin Objects.
