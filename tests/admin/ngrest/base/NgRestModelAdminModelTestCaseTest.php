@@ -90,9 +90,6 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
         $fixture->cleanup();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
     {
 
@@ -131,6 +128,10 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 
         $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
         $this->assertSameTrimmed('<p>Francais <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'fr')); // <p>Francais <em>foo</em></p>
+        $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
+
+        $fixture->cleanup();
+        $lang->cleanup();
         
     }
 }
@@ -138,6 +139,11 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 class I18nMarkdownTagTest extends User
 {
     public $i18n = ['lastname', 'firstname'];
+
+    public static function tableName()
+    {
+        return 'user_copy';
+    }
 
     public function ngRestAttributeTypes()
     {

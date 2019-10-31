@@ -201,7 +201,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     protected function runI18nContextOnFindPlugin($attributeName, $value)
     {
         // create the plugin without i18n context as the plugin can handle whether its i18n or not
-        $plugin = $this->getPluginObject($attributeName);
+        $plugin = clone $this->getPluginObject($attributeName);
         $plugin->i18n = false;
         // prepare the context for the event with the current model.
         $senderContext = clone $this;
