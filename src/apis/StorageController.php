@@ -43,9 +43,17 @@ class StorageController extends RestController
      * @var string The route which is used in the permission system
      */
     const PERMISSION_ROUTE = 'admin/storage/index';
+
+    private $_actionWhitelist = ['data-folders', 'data-files', 'data-filters'];
     
     public function permissionRoute(Action $action)
     {
+        // whiteliste certain data endpoints from permission system as this would trigger a user logout
+        // if people without file permission visit any NgRest CRUD view.
+        if (in_array($action->id, $this->_actionWhitelist)) {
+            return false;
+        }
+
         return self::PERMISSION_ROUTE;
     }
     

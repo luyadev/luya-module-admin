@@ -90,7 +90,9 @@ class RestController extends Controller implements UserBehaviorInterface
      * }
      * ```
      *
-     * Keep in mind this permission route check is mainly to determine if an action exists
+     * Keep in mind this permission route check is mainly to determine if an action exists.
+     * 
+     * If the permission route returns false, this means the given action does not require a permission.
      *
      * @param \yii\base\Action $action
      * @return string
@@ -135,7 +137,7 @@ class RestController extends Controller implements UserBehaviorInterface
             // check whether for the current route exists a permission entry
             // if the permission entry exists, a checkRouteAccess() must be done.
             // otherwise just check whether api user can access the api without permission entry.
-            if (Yii::$app->auth->isInRoutePermissionTable($route)) {
+            if ($route && Yii::$app->auth->isInRoutePermissionTable($route)) {
                 $this->checkRouteAccess($route);
             } else {
                 $this->canApiUserAccess();
