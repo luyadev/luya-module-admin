@@ -92,7 +92,7 @@ class RestController extends Controller implements UserBehaviorInterface
      *
      * Keep in mind this permission route check is mainly to determine if an action exists.
      * 
-     * If the permission route returns false, this means the given action does not require a permission.
+     * > If the permission route returns false, this means the given action does not require a permission.
      *
      * @param \yii\base\Action $action
      * @return string
