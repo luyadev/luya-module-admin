@@ -19,6 +19,9 @@ class NgRestEventBehavior extends Behavior
 {
     public $plugins = [];
     
+    /**
+     * @var \luya\admin\ngrest\base\Plugin[] An array which holds all the plugin objects which are loaded after the active record has been initiliazed.
+     */
     private static $_pluginInstances = [];
     
     /**
@@ -44,6 +47,24 @@ class NgRestEventBehavior extends Behavior
                 $event->sender->on($on, is_string($handler) ? [$plugin, $handler] : $handler);
             }
         }
+    }
+
+    /**
+     * Get the Plugin object based on the Attribute Name.
+     *
+     * As Behaviors works like trait its possible to access the Plugin object from Model scope:
+     * 
+     * ```php
+     * $plugin = $this->getPluginObject('attributeName');
+     * ```
+     * 
+     * @param string $attribute
+     * @return \luya\admin\ngrest\base\Plugin
+     * @since 2.3.0
+     */
+    public function getPluginObject($attribute)
+    {
+        return self::$_pluginInstances[$this->owner->tableName()][$attribute];
     }
     
     /**
