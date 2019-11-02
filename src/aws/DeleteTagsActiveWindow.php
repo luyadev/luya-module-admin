@@ -34,4 +34,27 @@ class DeleteTagsActiveWindow extends ActiveWindow
             'relations' => $relations,
         ]);
     }
+
+    public function callbackRemove($name)
+    {
+        if (strtolower($name) !== strtolower($this->model->name)) {
+            return $this->sendError("The given input name is wrong.");
+        }
+
+        $transaction = $this->model::getDb()->beginTransaction();
+
+        try {
+            TagRelation::deleteAll(['tag_id' => $this->model->id]);
+            $this->model->delete();
+            $transaction->commit();
+
+            return $this->sendSuccess("Tag and relations has been removed.");
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return $this->sendError($e->getMessage());
+        }
+
+        return $this->sendError("Error while deleting tag and relations.");
+        
+    }
 }

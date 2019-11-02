@@ -13,6 +13,10 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
 {
     use AdminDatabaseTableTrait;
 
+    protected $langFixture;
+    protected $tagRelationFixture;
+    protected $tagFixture;
+
     public function afterSetup()
     {
         parent::afterSetup();
@@ -60,14 +64,19 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $aws->ngRestModelClass = Tag::class;
         $aws->itemId = 1;
 
-        $html = 'ff';
-        $this->assertSame($html, $aws->index());
+        $html = $aws->index();
+        $this->assertContains('test1', $html);
+        $this->assertContains('test2', $html);
     }
 
+    /*
     public function beforeTearDown()
     {
+        parent::beforeTearDown();
+        
         $this->tagFixtures->cleanup();
         $this->tagRelationFixture->cleanup();
         $this->langFixture->cleanup();
     }
+    */
 }
