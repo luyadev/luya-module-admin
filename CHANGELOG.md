@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 2.3.0
 
 + [#395](https://github.com/luyadev/luya-module-admin/issues/395) New Active Window to delete tags.
++ [#401](https://github.com/luyadev/luya-module-admin/issues/401) Fixed logout bug for users without file permission.
 + [#397](https://github.com/luyadev/luya-module-admin/issues/397) i18nAttributeFallbackValue() require to run the onFind() context of the given attribute plugin in order to ensure plugin specific options like `markdown`. 
 + [#389](https://github.com/luyadev/luya-module-admin/issues/389) Do not throw an exception by default when pool identifier does not exists in the list of pools.
 
