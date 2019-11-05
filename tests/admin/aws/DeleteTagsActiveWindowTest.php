@@ -56,6 +56,9 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
     }
 
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRender()
     {
         $tagModel = $this->tagFixture->getData(1);
