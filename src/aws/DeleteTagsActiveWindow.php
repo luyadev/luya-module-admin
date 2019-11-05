@@ -35,6 +35,12 @@ class DeleteTagsActiveWindow extends ActiveWindow
         ]);
     }
 
+    /**
+     * Remove the given tag if the entered tag name is correct.
+     *
+     * @param string $name The current tag alias
+     * @return array
+     */
     public function callbackRemove($name)
     {
         if (strtolower($name) !== strtolower($this->model->name)) {
@@ -53,8 +59,5 @@ class DeleteTagsActiveWindow extends ActiveWindow
             $transaction->rollBack();
             return $this->sendError($e->getMessage());
         }
-
-        return $this->sendError("Error while deleting tag and relations.");
-        
     }
 }
