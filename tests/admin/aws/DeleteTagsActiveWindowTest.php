@@ -73,6 +73,8 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $this->assertContains('test1', $html);
         $this->assertContains('test2', $html);
 
+        $this->assertSame('foobar', $aws->getTitle());
+
         // run remove callback
 
         $response = $aws->callbackRemove('foobar');
@@ -116,22 +118,8 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
      */
     public function testErrorExceptionCallback()
     {
-        $this->makeFixtures();
-        $tagModel = $this->tagFixture->getData(1);
-
         $aws = new DeleteTagsActiveWindow();
-        $aws->ngRestModelClass = Tag::class;
-        $aws->itemId = 'invaliderrorid';
-
-        $response = $aws->callbackRemove('foobar');
-
-        $this->assertSame([
-            'error' => true,
-            'message' => 'The given input name is wrong.',
-            'responseData' => [],
-        ], $response);
-
-        $this->cleanupFixtures();
+        $this->assertSame('delete', $aws->defaultIcon());
     }
 
     public function cleanupFixtures()
