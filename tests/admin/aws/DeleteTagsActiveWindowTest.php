@@ -4,6 +4,7 @@ namespace tests\admin\aws;
 
 use admintests\AdminModelTestCase;
 use luya\admin\aws\DeleteTagsActiveWindow;
+use luya\admin\models\NgrestLog;
 use luya\admin\models\Tag;
 use luya\admin\models\TagRelation;
 use luya\testsuite\fixtures\NgRestModelFixture;
@@ -16,9 +17,11 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
     protected $langFixture;
     protected $tagRelationFixture;
     protected $tagFixture;
+    protected $logFixture;
 
     public function makeFixtures()
     {
+        $this->logFixture = new NgRestModelFixture(['modelClass' => NgrestLog::class]);
         $this->langFixture = $this->createAdminLangFixture([]);
 
         $this->tagFixture = new NgRestModelFixture([
@@ -70,6 +73,16 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $this->assertContains('test1', $html);
         $this->assertContains('test2', $html);
 
+        // run remove callback
+
+        $response = $aws->callbackRemove('foobar');
+
+        $this->assertSame([
+            'error' => false,
+            'message' => 'Tag and relations has been removed.',
+            'responseData' => [],
+        ], $response);
+
         $this->cleanupFixtures();
     }
 
@@ -83,6 +96,10 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         }
         if ($this->langFixture) {
             $this->langFixture->cleanup();
+        }
+
+        if ($this->logFixture) {
+            $this->logFixture->cleanup();
         }
     }
 }
