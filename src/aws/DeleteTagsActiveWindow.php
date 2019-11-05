@@ -21,6 +21,22 @@ class DeleteTagsActiveWindow extends ActiveWindow
 {
     public $module = '@admin';
 
+    /**
+     * @inheritdoc
+     */
+    public function defaultLabel()
+    {
+        return false;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function defaultIcon()
+    {
+        return 'trash';
+    }
+
     public function index()
     {
         $relations = TagRelation::find()
