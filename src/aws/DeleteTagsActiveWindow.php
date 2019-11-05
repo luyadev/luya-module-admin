@@ -20,21 +20,18 @@ use luya\admin\ngrest\base\ActiveWindow;
 class DeleteTagsActiveWindow extends ActiveWindow
 {
     public $module = '@admin';
-
-    /**
-     * @inheritdoc
-     */
-    public function defaultLabel()
-    {
-        return false;
-    }
     
     /**
      * @inheritdoc
      */
     public function defaultIcon()
     {
-        return 'trash';
+        return 'delete';
+    }
+
+    public function getTitle()
+    {
+        return $this->model->name;
     }
 
     public function index()
