@@ -437,4 +437,13 @@ return [
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
     'layout_filemanager_detail_details' => 'File details',
+
+// 2.3.0
+
+    'aws_delete_remove_success' => 'Tag and relations has been removed.',
+    'aws_delete_remove_wrong_name' => 'The given input name is wrong.',
+    'aws_delete_relations_info' => 'The tag has been used %count times. Also relations are made to the following tables:',
+    'aws_delete_relations_table_name' => 'Relation Table Name',
+    'aws_delete_relations_table_count' => 'Number of Entries',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and submit.',
 ];

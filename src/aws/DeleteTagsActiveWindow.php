@@ -4,6 +4,7 @@ namespace luya\admin\aws;
 
 use luya\admin\models\Tag;
 use luya\admin\models\TagRelation;
+use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveWindow;
 
 /**
@@ -57,7 +58,7 @@ class DeleteTagsActiveWindow extends ActiveWindow
     public function callbackRemove($name)
     {
         if (strtolower($name) !== strtolower($this->model->name)) {
-            return $this->sendError("The given input name is wrong.");
+            return $this->sendError(Module::t('aws_delete_remove_wrong_name'));
         }
 
         $transaction = $this->model::getDb()->beginTransaction();
@@ -67,7 +68,7 @@ class DeleteTagsActiveWindow extends ActiveWindow
             $this->model->delete();
             $transaction->commit();
 
-            return $this->sendSuccess("Tag and relations has been removed.");
+            return $this->sendSuccess(Module::t('aws_delete_remove_success'));
         } catch (\Exception $e) {
             $transaction->rollBack();
             return $this->sendError($e->getMessage());

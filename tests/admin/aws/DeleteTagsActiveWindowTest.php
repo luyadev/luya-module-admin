@@ -81,7 +81,7 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
 
         $this->assertSame([
             'error' => false,
-            'message' => 'Tag and relations has been removed.',
+            'message' => 'aws_delete_remove_success',
             'responseData' => [],
         ], $response);
 
@@ -105,7 +105,7 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
 
         $this->assertSame([
             'error' => true,
-            'message' => 'The given input name is wrong.',
+            'message' => 'aws_delete_remove_wrong_name',
             'responseData' => [],
         ], $response);
 
