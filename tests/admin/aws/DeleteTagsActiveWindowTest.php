@@ -86,6 +86,32 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $this->cleanupFixtures();
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testErrorCallback()
+    {
+        $this->makeFixtures();
+        $tagModel = $this->tagFixture->getData(1);
+
+        $aws = new DeleteTagsActiveWindow();
+        $aws->ngRestModelClass = Tag::class;
+        $aws->itemId = 1;
+
+        $response = $aws->callbackRemove('unknown');
+
+        $this->assertSame([
+            'error' => true,
+            'message' => 'The given input name is wrong.',
+            'responseData' => [],
+        ], $response);
+
+        $this->cleanupFixtures();
+    }
+
+
+
     public function cleanupFixtures()
     {
         if ($this->tagFixture) {
