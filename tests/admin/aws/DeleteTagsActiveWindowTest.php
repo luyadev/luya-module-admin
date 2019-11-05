@@ -17,10 +17,8 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
     protected $tagRelationFixture;
     protected $tagFixture;
 
-    public function afterSetup()
+    public function makeFixtures()
     {
-        parent::afterSetup();
-
         $this->langFixture = $this->createAdminLangFixture([]);
 
         $this->tagFixture = new NgRestModelFixture([
@@ -55,12 +53,13 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         ]);
     }
 
-
     /**
      * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testRender()
     {
+        $this->makeFixtures();
         $tagModel = $this->tagFixture->getData(1);
 
         $aws = new DeleteTagsActiveWindow();
@@ -70,16 +69,20 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $html = $aws->index();
         $this->assertContains('test1', $html);
         $this->assertContains('test2', $html);
+
+        $this->cleanupFixtures();
     }
 
-    /*
-    public function beforeTearDown()
+    public function cleanupFixtures()
     {
-        parent::beforeTearDown();
-        
-        $this->tagFixtures->cleanup();
-        $this->tagRelationFixture->cleanup();
-        $this->langFixture->cleanup();
+        if ($this->tagFixture) {
+            $this->tagFixture->cleanup();
+        }
+        if ($this->tagRelationFixture) {
+            $this->tagRelationFixture->cleanup();
+        }
+        if ($this->langFixture) {
+            $this->langFixture->cleanup();
+        }
     }
-    */
 }
