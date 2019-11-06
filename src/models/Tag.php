@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use luya\admin\aws\DeleteTagsActiveWindow;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
 use luya\admin\traits\TaggableTrait;
@@ -97,6 +98,16 @@ final class Tag extends NgRestModel
         return [
             [['list'], ['name', 'relationsCount']],
             [['create', 'update'], ['name', 'translation']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => DeleteTagsActiveWindow::class],
         ];
     }
     
