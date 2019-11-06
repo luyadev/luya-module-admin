@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 use Yii;
+use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
@@ -24,7 +25,11 @@ class DeleteAction extends \yii\rest\DeleteAction
      */
     public function run($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->modelClass::ngRestFind()->byPrimaryKey($id)->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException("Object not found: $id");
+        }
 
         if ($this->checkAccess) {
             call_user_func($this->checkAccess, $this->id, $model);
