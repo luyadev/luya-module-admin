@@ -6,7 +6,7 @@ use luya\admin\ngrest\aw\ActiveWindowFormWidget;
 
 ?>
 <?php if (count($relations) > 0): ?>
-<p class="lead"><?= Module::t('aws_delete_relations_info', ['count' => count($relations)]); ?></p>
+<p class="lead"><?= Module::t('aws_delete_relations_info', ['count' => count($relations), 'name' => $tagName]); ?></p>
 <table class="table table-striped mt-5 mb-5">
 <thead>
     <tr>

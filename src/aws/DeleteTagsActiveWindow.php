@@ -46,6 +46,7 @@ class DeleteTagsActiveWindow extends ActiveWindow
 
         return $this->render('index', [
             'relations' => $relations,
+            'tagName' => $this->model->name,
         ]);
     }
 
