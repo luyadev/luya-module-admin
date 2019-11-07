@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.3.0
 
++ [#394](https://github.com/luyadev/luya-module-admin/issues/394) Do not run fake cronjob for admin queue if it was not enabled by module's config.
 + [#407](https://github.com/luyadev/luya-module-admin/pull/407) Add new ngrest `raw` plugin which won't change input/output.
 + [#404](https://github.com/luyadev/luya-module-admin/issues/404) NgRest API delete action use ngRestFind() instead of find().
 + [#395](https://github.com/luyadev/luya-module-admin/issues/395) New Active Window to delete tags.
