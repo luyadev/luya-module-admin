@@ -6,7 +6,7 @@ use luya\admin\Bootstrap;
 use luya\web\Application;
 use yii\base\Event;
 
-class BootstrapTest extends AdminTestCase
+class BootstrapTest extends AdminModelTestCase
 {
     public function testRunQueueJob()
     {
