@@ -35,7 +35,7 @@ class DuplicateActiveButton extends ActiveButton
      */
     public function handle(NgRestModel $model)
     {
-        $data = $model::find()->byPrimaryKey($model->getPrimaryKey())->asArray()->one();
+        $data = $model::ngRestFind()->byPrimaryKey($model->getPrimaryKey())->asArray()->one();
 
         if (!$data) {
             return $this->sendError(Module::t('active_button_duplicate_error', ['message' => 'Model with id ' . $model->getPrimaryKey() . ' not found.']));

@@ -228,6 +228,10 @@ class CommonController extends RestController
      */
     public function actionCache()
     {
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        }
+
         $this->flushHasCache();
     
         $user = Yii::$app->adminuser->identity;

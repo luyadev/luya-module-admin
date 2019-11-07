@@ -84,6 +84,18 @@ class Jwt extends BaseJwt
     public $expireTime = 3600; // 1 hour
 
     /**
+     * @var string The issuer (iss claim). If not defined the Yii::$app->request->hostInfo will be taken.
+     * @since 2.3.0
+     */
+    public $issuer;
+
+    /**
+     * @var string The audience (aud claim). If not defined the Yii::$app->request->hostInfo will be taken.
+     * @since 2.3.0
+     */
+    public $audience;
+
+    /**
      * {@inheritDoc}
      */
     public function init()
@@ -123,8 +135,8 @@ class Jwt extends BaseJwt
     public function generateToken(JwtIdentityInterface $user)
     {
         $token = $this->getBuilder()
-            ->setIssuer(Yii::$app->request->hostInfo) // Configures the issuer (iss claim)
-            ->setAudience(Yii::$app->request->hostInfo) // Configures the audience (aud claim)
+            ->setIssuer($this->issuer ? $this->issuer : Yii::$app->request->hostInfo) // Configures the issuer (iss claim)
+            ->setAudience($this->audience ? $this->audience : Yii::$app->request->hostInfo) // Configures the audience (aud claim)
             ->setId($user->getId(), true) // Configures the id (jti claim), replicating as a header item
             ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
             ->setExpiration(time() + $this->expireTime) // Configures the expiration time of the token (exp claim)

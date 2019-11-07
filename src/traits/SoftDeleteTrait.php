@@ -73,7 +73,7 @@ trait SoftDeleteTrait
     public static function find()
     {
         $where = static::internalAndWhere();
-        return (empty($where)) ? parent::find() : parent::find()->andWhere($where);
+        return empty($where) ? parent::find() : parent::find()->andWhere($where);
     }
 
     /**
