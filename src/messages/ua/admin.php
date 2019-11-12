@@ -446,5 +446,5 @@ return [
     'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
     'aws_delete_relations_table_name' => 'Relation Table Name',
     'aws_delete_relations_table_count' => 'Number of Entries',
-    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press "Delete".',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];
