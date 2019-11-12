@@ -446,5 +446,5 @@ return [
     'aws_delete_relations_info' => 'Das Tag <b>{name}</b> wird <b>{count}</b> mal verwendet. Es ist Einträgen in folgenden Tabellen zugeordnet:',
     'aws_delete_relations_table_name' => 'Zuordnungs-Tabelle',
     'aws_delete_relations_table_count' => 'Anzahl Zuordnungen',
-    'aws_delete_relations_form_hint' => 'Um das Löschen des Tags zu bestätigen, geben Sie den Tag-Namen ein und klicken Sie auf "Löschen".',
+    'aws_delete_relations_form_hint' => 'Um das Löschen des Tags zu bestätigen, geben Sie den Tag-Namen ein und klicken Sie auf \"Löschen\".',
 ];
