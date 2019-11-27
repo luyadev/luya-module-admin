@@ -35,7 +35,7 @@ final class Bootstrap implements BootstrapInterface
         if ($app instanceof ConsoleApplication) {
             $app->controllerMap['queue'] = [
                 'class' => Command::class,
-                'queue' => $app->queue,
+                'queue' => $app->adminqueue,
             ];
         }
 
