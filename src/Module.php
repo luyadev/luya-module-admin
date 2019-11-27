@@ -15,6 +15,8 @@ use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\filesystem\LocalFileSystem;
 use luya\admin\base\ReloadButton;
+use yii\console\Application;
+use yii\queue\db\Command;
 
 /**
  * Admin Module.
@@ -497,6 +499,17 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             FilterImporter::class,
             PropertyImporter::class,
         ];
+    }
+
+    public function luyaBootstrap(\yii\base\Application $app)
+    {
+        // if console application bootstrap the yii2 queue cli command.
+        if ($app instanceof Application) {
+            $app->controllerMap['queue'] = [
+                'class' => Command::class,
+                'queue' => $app->adminqueue,
+            ];
+        }
     }
     
     /**
