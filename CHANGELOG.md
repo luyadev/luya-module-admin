@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 2.4.0
+
++ [#409](https://github.com/luyadev/luya-module-admin/issues/409) Bootstrap the native Yii Queue console command in order to use run and listen commands.
+
 ## 2.3.0 (12. November 2019)
 
 + [#394](https://github.com/luyadev/luya-module-admin/issues/394) Do not run fake cronjob for admin queue if it was not enabled by module's config.
