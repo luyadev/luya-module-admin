@@ -7,6 +7,8 @@ use yii\base\BootstrapInterface;
 use luya\traits\CacheableTrait;
 use luya\admin\models\Config;
 use yii\base\Application;
+use yii\console\Application as ConsoleApplication;
+use yii\queue\cli\Command;
 
 /**
  * Admin Bootstrap
@@ -28,6 +30,15 @@ final class Bootstrap implements BootstrapInterface
     {
         /** @var \luya\admin\Module $admin */
         $admin = $app->getModule('admin');
+
+        // if console application bootstrap the yii2 queue cli command.
+        if ($app instanceof ConsoleApplication) {
+            $app->controllerMap['queue'] = [
+                'class' => Command::class,
+                'queue' => $app->queue,
+            ];
+        }
+
         // boot the queue job only if enabled and module available.
         if ($admin && $admin->autoBootstrapQueue) {
             $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
