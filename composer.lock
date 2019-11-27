@@ -463,16 +463,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.22",
+            "version": "1.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "c818377491124ca702b7b8bd93dc65759844a03c"
+                "reference": "5f709ac6760ee90deee641f77fe41e27f153f95b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/c818377491124ca702b7b8bd93dc65759844a03c",
-                "reference": "c818377491124ca702b7b8bd93dc65759844a03c",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/5f709ac6760ee90deee641f77fe41e27f153f95b",
+                "reference": "5f709ac6760ee90deee641f77fe41e27f153f95b",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +516,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-10-22T11:53:22+00:00"
+            "time": "2019-11-27T17:10:09+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1086,7 +1086,7 @@
             "version": "v0.5.17",
             "source": {
                 "type": "git",
-                "url": "https://github.com/a8m/angular-filter.git",
+                "url": "git@github.com:a8m/angular-filter.git",
                 "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711"
             },
             "dist": {
@@ -1125,7 +1125,7 @@
             "version": "1.9.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lancedikson/bowser.git",
+                "url": "git@github.com:lancedikson/bowser.git",
                 "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786"
             },
             "dist": {
@@ -1143,12 +1143,12 @@
             "version": "3.8.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/apache/incubator-echarts.git",
+                "url": "git@github.com:ecomfe/echarts.git",
                 "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
                 "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
             },
             "type": "bower-asset"
@@ -1158,7 +1158,7 @@
             "version": "v2.13.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/flowjs/flow.js.git",
+                "url": "git@github.com:flowjs/flow.js.git",
                 "reference": "538524c708153a3cb2358ff57b531a759b5236aa"
             },
             "dist": {
@@ -1249,7 +1249,7 @@
             "version": "0.10.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/philsbury/twigjs-bower.git",
+                "url": "git@github.com:philsbury/twigjs-bower.git",
                 "reference": "425d39571c91121e504dea4984b873306a60361f"
             },
             "dist": {
@@ -1267,7 +1267,7 @@
             "version": "0.4.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular-ui/ui-router.git",
+                "url": "git@github.com:angular-ui/ui-router.git",
                 "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330"
             },
             "dist": {
@@ -2768,16 +2768,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.12.0",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "550ebaac289296ce228a706d0867afc34687e3f4"
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/550ebaac289296ce228a706d0867afc34687e3f4",
-                "reference": "550ebaac289296ce228a706d0867afc34687e3f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
+                "reference": "f8f0b461be3385e56d6de3dbb5a0df24c0c275e3",
                 "shasum": ""
             },
             "require": {
@@ -2789,7 +2789,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -2822,7 +2822,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-08-06T08:03:45+00:00"
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "theseer/tokenizer",
