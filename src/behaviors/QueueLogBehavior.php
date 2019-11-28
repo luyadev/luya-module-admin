@@ -9,7 +9,6 @@ use yii\queue\PushEvent;
 use yii\queue\ExecEvent;
 use yii\queue\JobEvent;
 use luya\admin\models\QueueLog;
-use yii\queue\ErrorEvent;
 use yii\queue\JobInterface;
 
 /**
@@ -76,16 +75,16 @@ class QueueLogBehavior extends Behavior
     }
 
     /**
-     * @param ErrorEvent $event
+     * @param ExecEvent $event
      */
-    public function afterError(ErrorEvent $event)
+    public function afterError(ExecEvent $event)
     {
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
             $title = $this->getExecTitle($event);
             $title.= " | " . $event->error->getMessage();
-            $log->updateAttributes(['end_timestamp' => time(), 'title' => $this->getExecTitle($event), 'is_error' => true]);
+            $log->updateAttributes(['end_timestamp' => time(), 'title' => $title, 'is_error' => true]);
         }
 
         // send error 
@@ -97,7 +96,7 @@ class QueueLogBehavior extends Behavior
      */
     protected function getJobTitle(JobEvent $event)
     {
-        return $event->job instanceof JobInterface ? get_class($event->job) : 'unknown job';
+        return $event->job instanceof JobInterface ? get_class($event->job) : 'Unknown job Title';
     }
 
     /**
