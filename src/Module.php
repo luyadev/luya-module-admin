@@ -481,7 +481,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'mutex' => 'yii\mutex\FileMutex',
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
-                'as log' => 'luya\admin\behaviors\QueueLogBehavior'
+                'as log' => 'luya\admin\behaviors\QueueLogBehavior',
+                'attempts' => 5, // allow to attempt 5 tiems
+                'ttr' => 300, // wait 5 minutes
             ],
         ];
     }
