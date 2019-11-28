@@ -83,7 +83,9 @@ class QueueLogBehavior extends Behavior
 
         if ($log) {
             $title = $this->getExecTitle($event);
-            $title.= " | " . $event->error->getMessage();
+            if ($event->error) {
+                $title.= " | " . $event->error->getMessage();
+            }
             $log->updateAttributes(['end_timestamp' => time(), 'title' => $title, 'is_error' => true]);
         }
 
