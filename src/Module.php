@@ -190,6 +190,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $autoBootstrapQueue = false;
     
     /**
+     * @var boolean Whether the `queue` command should be bootstraped automatically. Defaults to true. If already a queue is configured, this might conflict and override
+     * those settings. Therefore you can disable the bootstrap of `queue` command.
+     * @since 2.0.4
+     */
+    public $bootstrapQueueCli = true;
+    
+    /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
      * when opening the file url, in order to enable inline disposition (will try to display the file in the browser) set true.
      * > This property will only have an effect when uploading new files and won't work for existing uploaded files or a general default behavior.
@@ -506,7 +513,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public function luyaBootstrap(\yii\base\Application $app)
     {
         // if console application bootstrap the yii2 queue cli command.
-        if ($app instanceof Application) {
+        if ($this->bootstrapQueueCli && $app instanceof Application) {
             $app->controllerMap['queue'] = [
                 'class' => Command::class,
                 'queue' => $app->adminqueue,
