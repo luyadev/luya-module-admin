@@ -513,7 +513,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public function luyaBootstrap(\yii\base\Application $app)
     {
         // if console application bootstrap the yii2 queue cli command.
-        if ($this->$bootstrapQueueCli && $app instanceof Application) {
+        if ($this->bootstrapQueueCli && $app instanceof Application) {
             $app->controllerMap['queue'] = [
                 'class' => Command::class,
                 'queue' => $app->adminqueue,
