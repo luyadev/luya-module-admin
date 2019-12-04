@@ -142,7 +142,7 @@ return [
     'debug_state_off' => 'Ανενεργό',
 // added translations in 1.0.0-beta7
     'login_securetoken_mail_subject' => 'Κωδικός (token) Ασφαλείας LUYA',
-    'login_securetoken_mail' => '<h1>Κωδικός Ασφαλέιας LUYA</h1><p>Χρησιμοποιήστε τον ακόλουθο κωδικό ασφαλείας για να εισέλθετε στο interface διαχειρηστή στο {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Χρησιμοποιήστε τον ακόλουθο κωδικό ασφαλείας για να εισέλθετε στο interface διαχειρηστή στο:',
     'login_async_token_error' => 'Ο κωδικός ασφαλέιας που δώθηκε είναι λανθασμένος.',
     'login_async_token_globalerror' => 'Παρουσιάστηκε σφάλμα διακομιστή, παρακαλώ επικοινωνήστε με το διαχειρηστή του ιστότοπου.',
     'ngrest_crud_csv_export_btn' => 'Δημιουργία CSV',
@@ -321,7 +321,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Wrong email or password. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
     'account_changeemail_subject' => 'Verify update of your email address',
-    'account_changeemail_body' => '<h1>Verification code</h1><p>Enter the following verification code to change your email address for the website {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Enter the following verification code to change your email address for the website:',
     'account_changeemail_tokensenterror' => 'Could not send verification code to {email}. Make sure the mail component is configured correctly.',
     'account_changeemail_wrongtokenorempty' => 'Empty, invalid or expired email verification code.',
     'account_changeemail_enterverificationtoken' => 'Please enter the verification code sent to <b>{{profile.email}}</b> in order to confirm the <b>{{settings.newUserEmail}}</b> change request.',
@@ -425,4 +425,14 @@ return [
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'layout_filemanager_detail_details' => 'File details',
+
+// 2.3.0
+
+    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
+    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
+    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
+    'aws_delete_relations_table_name' => 'Relation Table Name',
+    'aws_delete_relations_table_count' => 'Number of Entries',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];

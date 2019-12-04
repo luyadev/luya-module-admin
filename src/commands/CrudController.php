@@ -472,7 +472,7 @@ class CrudController extends BaseCrudController
                 $this->apiEndpoint,
                 $this->getDbTableShema(),
                 $this->enableI18n
-             ),
+            ),
         ];
         
         foreach ($files as $file) {
@@ -529,7 +529,7 @@ class CrudController extends BaseCrudController
                 $apiEndpoint,
                 Yii::$app->db->getTableSchema($object->tableName(), true),
                 $i18n
-             ),
+            ),
         ];
         
         $this->generateFile($data);

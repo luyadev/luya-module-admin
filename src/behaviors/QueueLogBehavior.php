@@ -82,8 +82,15 @@ class QueueLogBehavior extends Behavior
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
-            $log->updateAttributes(['end_timestamp' => time(), 'title' => $this->getExecTitle($event), 'is_error' => true]);
+            $title = $this->getExecTitle($event);
+            if ($event->error) {
+                $title.= " | " . $event->error->getMessage();
+            }
+            $log->updateAttributes(['end_timestamp' => time(), 'title' => $title, 'is_error' => true]);
         }
+
+        // send error 
+        Yii::$app->errorHandler->transferMessage($event->error->getMessage(), $event->error->getFile(), $event->error->getLine());
     }
     /**
      * @param JobEvent $event
@@ -91,7 +98,7 @@ class QueueLogBehavior extends Behavior
      */
     protected function getJobTitle(JobEvent $event)
     {
-        return $event->job instanceof JobInterface ? get_class($event->job) : 'unknown job';
+        return $event->job instanceof JobInterface ? get_class($event->job) : 'Unknown job Title';
     }
 
     /**

@@ -65,6 +65,26 @@ zaa.directive("compileHtml", ['$compile', '$parse', function ($compile, $parse) 
 }]);
 
 /**
+ * Select a given element when clicking on it
+ * 
+ * Usage:
+ * 
+ * ```
+ * <input type="text" class="form-control form-control-sm mt-3" readonly select-on-click ng-model="fileDetailFull.source" />
+ * ```
+ * 
+ * @since 2.1.0
+ */
+zaa.directive('selectOnClick', function () {
+    // Linker function
+    return function (scope, element, attrs) {
+        element.bind('click', function () {
+            this.select();
+        });
+    };
+  });
+
+/**
  * Usage:
  *
  * ```
@@ -919,6 +939,68 @@ zaa.directive("zaaSortRelationArray", function () {
 });
 
 /**
+ * Generate an array of tag ids which are selected from the list of tags.
+ * 
+ * An example content of model could be `var model = [1,3,4]` where values are the TAG IDs.
+ * 
+ * @since 2.2.1
+ */
+zaa.directive("zaaTagArray", function() {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid"
+        },
+        controller: ['$scope', '$http', function ($scope, $http) {
+            $scope.tags = [];
+
+            $http.get('admin/api-admin-common/tags').then(function(response) {
+                angular.forEach(response.data, function(value) {
+                    value.id = parseInt(value.id);
+                    $scope.tags.push(value);
+                });
+            });
+
+            if ($scope.model == undefined) {
+                $scope.model = [];
+            } else {
+                angular.forEach($scope.model, function(value, key) {
+                    $scope.model[key] = parseInt(value);
+                });
+            }
+
+            $scope.isInSelection = function(id) {
+                id = parseInt(id);
+                if ($scope.model.indexOf(id) == -1) {
+                    return false;
+                }
+
+                return true;
+            };
+
+            $scope.toggleSelection = function(id) {
+                var i = $scope.model.indexOf(id);
+                if (i > -1) {
+                    $scope.model.splice(i, 1);
+                } else {
+                    $scope.model.push(id);
+                }
+            };
+        }],
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side">' + 
+                    '<span ng-click="toggleSelection(tag.id)" ng-repeat="tag in tags" ng-class="{\'badge-primary\' : isInSelection(tag.id), \'badge-secondary\' : !isInSelection(tag.id)}" class="badge badge-pill mx-1 mb-2">{{tag.name}}</span>' + 
+                '</div>' + 
+            '</div>';
+        }
+    }
+});
+
+/**
  * <zaa-link model="linkinfo" />
  */
 zaa.directive("zaaLink", ['$filter', function ($filter) {
@@ -1107,7 +1189,7 @@ zaa.directive("zaaWysiwyg", function () {
             "id": "@fieldid"
         },
         template: function () {
-            return '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig>';
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><label for="{{id}}">{{label}}</label></div><div class="form-side"><ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig></div></div>';
         }
     }
 });
@@ -1797,12 +1879,10 @@ zaa.directive("zaaDatetime", function () {
                 '</datepicker>' +
                 '<div ng-show="model!=null && date!=null" class="hour-selection">' +
                 '<div class="input-group">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">' +
-                '<i class="material-icons">access_time</i>' +
-                '</div>' +
-                '</div>' +
-                '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
+                    '<div class="input-group-prepend align-items-center">' +
+                        '<i class="material-icons pr-2">access_time</i>' +
+                    '</div>' +
+                    '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend zaa-datetime-time-colon">' +
@@ -2870,7 +2950,7 @@ zaa.directive("storageFileManager", function () {
 
                 // load files data for a given folder id
                 $scope.$watch('currentFolderId', function (folderId, oldFolderId) {
-                    if (folderId !== undefined && folderId != oldFolderId) {
+                    if (folderId !== undefined) {
                         // generate the current pare info based on folder
                         $scope.generateFolderInheritance(folderId);
                         $scope.getFilesForPageAndFolder(folderId, 1);
@@ -2882,7 +2962,7 @@ zaa.directive("storageFileManager", function () {
                 $scope.generateFolderInheritance = function (folderId) {
                     $scope.folderInheritance = [];
                     $scope.findFolderInheritance(folderId);
-                }
+                };
 
                 $scope.findFolderInheritance = function (folderId) {
                     if ($scope.foldersData && $scope.foldersData.hasOwnProperty(folderId)) {

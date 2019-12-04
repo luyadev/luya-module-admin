@@ -7,8 +7,8 @@ use luya\admin\ngrest\base\Api;
 use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
 use luya\validators\StrengthValidator;
-use luya\helpers\Url;
 use luya\admin\Module;
+use luya\base\PackageInstaller;
 
 /**
  * User API, provides ability to manager and list all administration users.
@@ -24,7 +24,7 @@ class UserController extends Api
     public $modelClass = 'luya\admin\models\User';
     
     /**
-     * Dump the current data from your user session.
+     * Return informations about the current logged in user
      *
      * @return array
      */
@@ -40,30 +40,35 @@ class UserController extends Api
             ], [
                 User::USER_SETTING_UILANGUAGE => $this->module->interfaceLanguage,
             ]),
+            'vendor_install_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
         ];
         
         // if developer option is enabled provide package infos
         if ($session['settings'][User::USER_SETTING_ISDEVELOPER]) {
-            $session['packages'] = Yii::$app->getPackageInstaller()->getConfigs();
+            $session['packages'] = $this->packagesToArray(Yii::$app->getPackageInstaller());
         }
         
         return $session;
     }
-    
+
     /**
-     * Ensure whether the current user has an active email verification token or not.
+     * Generate an array with package infos
      *
-     * @param User $user The user object to evaluate.
-     * @return boolean
+     * @param PackageInstaller $installer
+     * @return array
+     * @since 2.2.0
      */
-    private function hasOpenEmailValidation(User $user)
+    private function packagesToArray(PackageInstaller $installer)
     {
-        $ts = $user->email_verification_token_timestamp;
-        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
-            return true;
+        $packages = [];
+        foreach ($installer->getConfigs() as $config) {
+            $packages[] = [
+                'package' => $config->package,
+                'bootstrap' => $config->bootstrap,
+                'blocks' => $config->blocks,
+            ];
         }
-        
-        return false;
+        return $packages;
     }
     
     /**
@@ -130,10 +135,11 @@ class UserController extends Api
         // check if email has changed, if yes send secure token and temp store new value in user settings table.
         if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
             $token = $user->getAndStoreEmailVerificationToken();
-            
-            $mail = Yii::$app->mail->compose(Module::t('account_changeemail_subject'), Module::t('account_changeemail_body', ['url' => Url::base(true), 'token' => $token]))
-            ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
-            ->send();
+            $mailer = Yii::$app->mail;
+            $mailer->layout = false; // disable layout as mail template contains layout
+            $mail = $mailer->compose(Module::t('account_changeemail_subject'), User::generateTokenEmail($token, Module::t('account_changeemail_subject'), Module::t('account_changeemail_body')))
+                ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
+                ->send();
             
             if ($mail) {
                 $identity->setting->set(User::USER_SETTING_NEWUSEREMAIL, $user->email);
@@ -168,5 +174,21 @@ class UserController extends Api
         }
         
         return true;
+    }
+
+    /**
+     * Ensure whether the current user has an active email verification token or not.
+     *
+     * @param User $user The user object to evaluate.
+     * @return boolean
+     */
+    private function hasOpenEmailValidation(User $user)
+    {
+        $ts = $user->email_verification_token_timestamp;
+        if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
+            return true;
+        }
+        
+        return false;
     }
 }

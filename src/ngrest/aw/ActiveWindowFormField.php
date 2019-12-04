@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\aw;
 
 use luya\admin\helpers\Angular;
+use luya\admin\helpers\AngularObject;
 use yii\base\BaseObject;
 
 /**
@@ -33,9 +34,22 @@ class ActiveWindowFormField extends BaseObject
      */
     public $label = false;
     
+    /**
+     * @var array An array with key and value.
+     */
     protected $parts = [];
     
+    /**
+     * @var AngularObject The angular object element which is taken to generate the input.
+     */
     protected $element;
+
+    public function init()
+    {
+        parent::init();
+        // set text input as default element
+        $this->textInput();
+    }
     
     /**
      * Define a label for this field. If false, no label will be used, if a label is provided from the configration
@@ -270,10 +284,6 @@ class ActiveWindowFormField extends BaseObject
      */
     public function render()
     {
-        if (empty($this->element)) {
-            $this->textInput();
-        }
-        
         if (!isset($this->parts['{label}'])) {
             $this->label($this->label);
         }
@@ -291,6 +301,19 @@ class ActiveWindowFormField extends BaseObject
         ], $this->element) . PHP_EOL;
     }
     
+    /**
+     * The method to set a hint value for the current render AngularObject element.
+     *
+     * @param string $text The hint text to display.
+     * @return ActiveField
+     * @since 2.3.0
+     */
+    public function hint($text)
+    {
+        $this->element->hint($text);
+        return $this;
+    }
+
     /**
      * When the element is directly forced to echo its output this method is called and the template will be
      * render with the `render()` method.

@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'LUYA 安全验证码',
-    'login_securetoken_mail' => '<h1>LUYA 安全验证码</h1><p>使用以下安全验证码登录您的管理后台 {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => '使用以下安全验证码登录您的管理后台:',
     'login_async_token_error' => '安全验证码无效.',
     'login_async_token_globalerror' => '服务器错误，请联系管理员.',
     'ngrest_crud_csv_export_btn' => '生成 CSV',
@@ -332,7 +332,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => '用户名或密码错误. Attempt #{attempt} of {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => '用户登录锁定中',
     'account_changeemail_subject' => '验证更新邮件地址',
-    'account_changeemail_body' => '<h1>验证码</h1><p>输入以下验证码以更改您的电子邮件地址 {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => '输入以下验证码以更改您的电子邮件地址:',
     'account_changeemail_tokensenterror' => '验证码无法发送至 {email}. 请确保邮件模块配置正确.',
     'account_changeemail_wrongtokenorempty' => '空的, 无效的或过期的邮箱验证码.',
     'account_changeemail_enterverificationtoken' => '请输入发送到 <b>{{profile.email}}</b> 的验证码来确认新邮箱 <b>{{settings.newUserEmail}}</b> 的修改请求.',
@@ -436,4 +436,14 @@ return [
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'layout_filemanager_detail_details' => 'File details',
+
+// 2.3.0
+
+'aws_delete_remove_success' => 'The tag and its relations have been removed.',
+'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
+'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
+'aws_delete_relations_table_name' => 'Relation Table Name',
+'aws_delete_relations_table_count' => 'Number of Entries',
+'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];

@@ -155,7 +155,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Код безопасности LUYA',
-    'login_securetoken_mail' => '<h1>Код безопасности LUYA</h1><p>Используйте следующий код для входа в свою админ-панель на {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Используйте следующий код для входа в свою админ-панель на:',
     'login_async_token_error' => 'Предоставленный код безопасности неверный.',
     'login_async_token_globalerror' => 'Произошла ошибка сервера, пожалуйста, обратитесь к администратору сайта.',
     'ngrest_crud_csv_export_btn' => 'Сгенерировать CSV',
@@ -191,7 +191,7 @@ return [
     'ngrest_crud_filter_prompt' => 'Фильтр',
     'ngrest_crud_ajax_search_length' => 'Поисковый запрос должен быть не менее 3 символов.',
     'menu_system_logger' => 'Логирование',
-    'layout_filemanager_detail_replace_file' => 'Заменить файл',
+    'layout_filemanager_detail_replace_file' => 'Заменить',
     'layout_rightbar_languagelabel' => 'Язык интерфейса',
     'layout_rightbar_savebtn' => 'Сохранить',
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
@@ -335,7 +335,7 @@ return [
     'model_loginform_wrong_user_or_password_attempts' => 'Неправильный e-mail или пароль. Попытка #{attempt} из {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
     'account_changeemail_subject' => 'Подтверждение изменения вашего адреса электронной почты',
-    'account_changeemail_body' => '<h1>Код подтверждения</h1><p>Введите следующий код подтверждения, чтобы изменить адрес электронной почты для сайта {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Введите следующий код подтверждения, чтобы изменить адрес электронной почты для сайта:',
     'account_changeemail_tokensenterror' => 'Не удалось отправить код подтверждения на {email}. Убедитесь, что почтовый компонент настроен правильно.',
     'account_changeemail_wrongtokenorempty' => 'Пустой, неправильный или просроченный код подтверждения адреса электронной почты.',
     'account_changeemail_enterverificationtoken' => 'Пожалуйста, введите код подтверждения, отправленный на <b>{{profile.email}}</b>, чтобы подтвердить изменение адреса почты на <b>{{settings.newUserEmail}}</b>.',
@@ -415,28 +415,38 @@ return [
     'aw_requestinsight_toggle_error' => 'Ошибка при включении Insight запросов.',
     'aw_requestinsight_cleared' => 'Данные очищены.',
     'aw_requestinsight_default_label' => 'Insight запросов',
-    'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
-    'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
+    'login_noscript_error' => 'Необходимо включить Javascript, чтобы работать в LUYA.',
+    'login_browsehappy' => 'Вы используете <strong>устаревший</strong> браузер. Пожалуйста, <a href="https://browsehappy.com/" target="_blank">обновите его</a>, чтобы повысить удобство и обеспечить лучшую защиту от угроз.',
     'crud_notification_enable' => 'Enable Notification',
     'crud_notification_disable' => 'Disable Notification',
     'admin_button_execute' => '"{label}" executed',
-    'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
-    'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+    'layout_btn_reload_admin' => 'Обновить&nbsp;страницу',
+    'layout_btn_reload_cache' => 'Очистить&nbsp;кэш',
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
+    'js_dir_manager_file_replace_ok' => 'Файл успешно заменён.',
 
 // 2.0.3
 
-    'status_true' => 'Yes',
-    'status_false' => 'No',
+    'status_true' => 'Да',
+    'status_false' => 'Нет',
     'js_jsonobject_newkey' => 'New key name',
     
 // 2.2.0
     
-    'active_button_togglestatus_label' => 'Toggle status',
-    'active_button_togglestatus_error' => 'Could not activated',
-    'active_button_togglestatus_enabled' => '{modelName} enabled',
-    'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'active_button_togglestatus_label' => 'Изменить статус',
+    'active_button_togglestatus_error' => 'Не удалось изменить статус',
+    'active_button_togglestatus_enabled' => 'Модель {modelName} включена',
+    'active_button_togglestatus_disabled' => 'Модель {modelName} отключена',
+    'layout_filemanager_detail_details' => 'Свойства файла',
+
+// 2.3.0
+
+    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
+    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
+    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
+    'aws_delete_relations_table_name' => 'Relation Table Name',
+    'aws_delete_relations_table_count' => 'Number of Entries',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];

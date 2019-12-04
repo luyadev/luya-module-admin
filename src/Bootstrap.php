@@ -28,6 +28,7 @@ final class Bootstrap implements BootstrapInterface
     {
         /** @var \luya\admin\Module $admin */
         $admin = $app->getModule('admin');
+
         // boot the queue job only if enabled and module available.
         if ($admin && $admin->autoBootstrapQueue) {
             $app->on(Application::EVENT_BEFORE_REQUEST, [$this, 'runQueueJob']);
@@ -41,7 +42,7 @@ final class Bootstrap implements BootstrapInterface
      */
     public function runQueueJob($event)
     {
-        if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {
+        if (!$event->sender->request->isConsoleRequest) {
             // use cache to ensure this will run only every 30min
             $this->getOrSetHasCache(['admin', 'bootstrap', 'queue'], function () {
                 $timestamp = Config::get(Config::CONFIG_QUEUE_TIMESTAMP);

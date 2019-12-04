@@ -3,14 +3,54 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 2.2.0 (in progress)
+## 2.4.0
+
++ [#413](https://github.com/luyadev/luya-module-admin/pull/413) Option to disable the auto bootstrap of the queue command in conflict siutations.
++ [#409](https://github.com/luyadev/luya-module-admin/issues/409) Bootstrap the native Yii Queue console command in order to use run and listen commands.
+
+## 2.3.0 (12. November 2019)
+
++ [#394](https://github.com/luyadev/luya-module-admin/issues/394) Do not run fake cronjob for admin queue if it was not enabled by module's config.
++ [#407](https://github.com/luyadev/luya-module-admin/pull/407) Add new ngrest `raw` plugin which won't change input/output.
++ [#404](https://github.com/luyadev/luya-module-admin/issues/404) NgRest API delete action use ngRestFind() instead of find().
++ [#395](https://github.com/luyadev/luya-module-admin/issues/395) New Active Window to delete tags.
++ [#401](https://github.com/luyadev/luya-module-admin/issues/401) Fixed logout bug for users without file permission.
++ [#397](https://github.com/luyadev/luya-module-admin/issues/397) i18nAttributeFallbackValue() require to run the onFind() context of the given attribute plugin in order to ensure plugin specific options like `markdown`. 
++ [#389](https://github.com/luyadev/luya-module-admin/issues/389) Do not throw an exception by default when pool identifier does not exists in the list of pools.
++ [#403](https://github.com/luyadev/luya-module-admin/pull/403) Use ngRestFind() method for duplicate button instead of find().
+
+## 2.2.2 (23. October 2019)
+
++ [#388](https://github.com/luyadev/luya-module-admin/pull/388) Fixed bug when using DuplicateActiveButton with properties which resolve an object in the after find event.
++ [#383](https://github.com/luyadev/luya-module-admin/issues/383) Added `beforeListFind` callable property for ngrest plugins.
+
+## 2.2.1 (3. October 2019)
+
++ [#373](https://github.com/luyadev/luya-module-admin/pull/373) Added new methods to batch insert tag relations, ensure tag relation table does not contain db prefix when saving.
++ [#370](https://github.com/luyadev/luya-module-admin/pull/370) Added new `zaa-tag-array` directive which generates an array of selected tag ids assigned to the model.
++ [#369](https://github.com/luyadev/luya-module-admin/pull/369) Added `toggleRelation` option for Tags model and common api to toggle tags on a certain item.
++ [#367](https://github.com/luyadev/luya-module-admin/issues/367) Fixed bug with checkbox properties and default values in admin context.
+
+## 2.2.0 (17. September 2019)
+
+> When you make Api Requests trough Api Users, turn on `apiUserAllowActionsWithoutPermissions` on order to allow access to actions without permissions entry (behavior of version 2.1 and below) or add permissions, read more in the [Upgrade document](UPGRADE.md). This change was required in order to make Api Users more secure.
+
+### Changed
+
++ [#358](https://github.com/luyadev/luya-module-admin/pull/358) Forbid the call of actions without permission entries when authorized as Api User. Along with this permission improvement both RestActiveController and RestController now perform an `beforeAction()` check against `actionPermissions()` or `permissionRoute()`.
 
 ### Fixed
 
-+ [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL
++ [#363](https://github.com/luyadev/luya-module-admin/issues/363) Fixed bug when display package infos in LUYA Developer mode.
++ [#2](https://github.com/luyadev/luya-module-admin/issues/2) Fixed UX issue with none clickable clock icon.
++ [#356](https://github.com/luyadev/luya-module-admin/issues/356) Hide NgRest attribute groups when no fields are contained.
++ [#361](https://github.com/luyadev/luya-module-admin/issues/361) Disabled tag filter bar when any filter is active.
++ [#343](https://github.com/luyadev/luya-module-admin/pull/343) Fixed bug with migrations when using PostgreSQL.
 
 ### Added
 
++ [#339](https://github.com/luyadev/luya-module-admin/issues/339) Show public download link to file in file manager detail view.
++ [#340](https://github.com/luyadev/luya-module-admin/issues/340) Added new authentification system for JWT based on ApiUser. 
 + [#338](https://github.com/luyadev/luya-module-admin/pull/338) Toggle button for ngRestModel to switch between enable and disable status.
 
 ## 2.1.0 (22. July 2019)

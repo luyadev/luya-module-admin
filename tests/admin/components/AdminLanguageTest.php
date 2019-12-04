@@ -32,7 +32,7 @@ class AdminLanguageTest extends AdminModelTestCase
                     'is_deleted' => 0,
                 ]
             ]
-        ]); 
+        ]);
     }
 
     public function testGetLanguages()

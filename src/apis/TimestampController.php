@@ -37,12 +37,6 @@ class TimestampController extends RestController
             return Yii::$app->response->send();
         }
 
-        // run internal worker
-        $this->getOrSetHasCache(['timestamp', 'queue', 'run'], function () {
-            Yii::$app->adminqueue->run(false);
-            Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
-        }, 60*5);
-        
         // update keystrokes
         $lastKeyStroke = Yii::$app->request->getBodyParam('lastKeyStroke');
         if (Yii::$app->session->get('__lastKeyStroke') != $lastKeyStroke) {
@@ -79,7 +73,7 @@ class TimestampController extends RestController
 
     /**
      * Returns an array with auth_id as key and value is the diff notification count.
-     * 
+     *
      * @return array An array with key auth_id and value diff count
      * @since 2.0.0
      */

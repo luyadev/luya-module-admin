@@ -15,6 +15,8 @@ use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\filesystem\LocalFileSystem;
 use luya\admin\base\ReloadButton;
+use yii\console\Application;
+use yii\queue\db\Command;
 
 /**
  * Admin Module.
@@ -33,7 +35,7 @@ use luya\admin\base\ReloadButton;
  *
  * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
  * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -54,7 +56,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
-     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl
+     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl, th
      */
     public $interfaceLanguage = 'en';
     
@@ -77,6 +79,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'fa' => 'فارسی',
         'cn' => '中文简体',
         'nl' => 'Dutch',
+        'th' => 'ภาษาไทย',
     ];
     
     /**
@@ -179,12 +182,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * @var boolean If enabled, the admin bootstrap process will check whether the queue job was runing within the last 30min or not. If you are not setting up any cronjob to run
      * the scheduler and you need to rely on the queue/scheulder system you enable this property which will then do a "dummy frontend user cronjob". So on every request it will
-     * check whether to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue` 
+     * check whether to run queue or not. By default this is disabled in order to prevent to have more memory and database usage. If disable setup a cronjob with `admin/queue`
      * command using {{luya\admin\commands\QueueController}}.
      * @since 2.0.0
      * @see {{luya\admin\commands\QueueController}}
      */
     public $autoBootstrapQueue = false;
+    
+    /**
+     * @var boolean Whether the `queue` command should be bootstraped automatically. Defaults to true. If already a queue is configured, this might conflict and override
+     * those settings. Therefore you can disable the bootstrap of `queue` command.
+     * @since 2.0.4
+     */
+    public $bootstrapQueueCli = true;
     
     /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
@@ -193,6 +203,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 2.0.0
      */
     public $fileDefaultInlineDisposition = false;
+
+    /**
+     * @var boolean Defines whether Api Users can access a method which is not protected from the permission system. When working with JWT or SPA
+     * applications this should be disabled.
+     * @since 2.2.0
+     */
+    public $apiUserAllowActionsWithoutPermissions = false;
 
     /**
      * @var array A configuration array with all tags shipped by default with the admin module.
@@ -224,7 +241,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
         'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
-        'api-admin-userrequest' => 'luya\admin\apis\UserRequestController',
     ];
 
     /**
@@ -243,6 +259,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      */
     public $moduleMenus = [];
     
+    /**
+     * @inheritDoc
+     */
     public static function onLoad()
     {
         self::registerTranslation('admin*', '@admin/messages', [
@@ -361,13 +380,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
 
     /**
      * Set an array of relaod buttons with a callback function to run on click.
-     * 
+     *
      * Every array item needs at least:
-     * 
+     *
      * + label: The label which is displayed in the mnu
      * + icon: A material icon value from https://material.io/tools/icons/
      * + callback: A php callable function which is executed when clicking the button.
-     * 
+     *
      * ```php
      * 'reloadButtons' => [
      *     ['label' => 'Clear Frontpage Cache', 'icon' => 'clear', 'callback' => function($button) {
@@ -375,20 +394,20 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      *     }]
      * ]
      * ```
-     * 
+     *
      * The first paramter of the callback function is the ReloadButton object itself, this allwos you to
      * change the response message.
-     * 
+     *
      * ```php
      * 'callback' => function(\luya\admin\base\ReloadButton $button) {
      *     // do something
      *     // ...
-     * 
+     *
      *     // change response (success) message.
      *     $button->response = 'Running this button was a full success!';
      * }
      * ```
-     * 
+     *
      * @param array $buttons
      * @since 2.0.0
      */
@@ -428,7 +447,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
-                    ->itemApi('menu_system_item_tags', 'admin/tag/index', 'view_list', 'api-admin-tag')
+                    ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
                     ->itemApi('Queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
                 ->group('menu_group_images')
@@ -469,8 +488,10 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'mutex' => 'yii\mutex\FileMutex',
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
-                'as log' => 'luya\admin\behaviors\QueueLogBehavior'
-            ]
+                'as log' => 'luya\admin\behaviors\QueueLogBehavior',
+                'attempts' => 5, // allow to attempt 5 tiems
+                'ttr' => 300, // wait 5 minutes
+            ],
         ];
     }
 
@@ -487,6 +508,17 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             FilterImporter::class,
             PropertyImporter::class,
         ];
+    }
+
+    public function luyaBootstrap(\yii\base\Application $app)
+    {
+        // if console application bootstrap the yii2 queue cli command.
+        if ($this->bootstrapQueueCli && $app instanceof Application) {
+            $app->controllerMap['queue'] = [
+                'class' => Command::class,
+                'queue' => $app->adminqueue,
+            ];
+        }
     }
     
     /**

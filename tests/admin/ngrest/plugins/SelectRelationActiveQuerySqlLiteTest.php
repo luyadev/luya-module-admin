@@ -60,8 +60,8 @@ class SelectRelationActiveQueryTestSqlLite extends AdminModelTestCase
     }
 }
 
-class TestModel extends NgRestModel {
-
+class TestModel extends NgRestModel
+{
     public static function ngRestApiEndpoint()
     {
         return 'api-end-point';
@@ -83,5 +83,4 @@ class TestModel extends NgRestModel {
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
 };

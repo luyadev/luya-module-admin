@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveRecord;
 
 /**
@@ -14,6 +15,10 @@ use yii\db\ActiveRecord;
  * ```
  *
  * The above example will return all
+ * 
+ * @property string $table_name
+ * @property integer $pk_id
+ * @property integer $tag_id
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -26,6 +31,14 @@ final class TagRelation extends ActiveRecord
     public static function tableName()
     {
         return '{{%admin_tag_relation}}';
+    }
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_VALIDATE, function() {
+            $this->table_name = TaggableTrait::cleanBaseTableName($this->table_name);
+        });
     }
 
     /**
@@ -46,11 +59,12 @@ final class TagRelation extends ActiveRecord
      *
      * @param string $tableName The table name
      * @param integer $pkId The primary key combination.
+     * @param boolean $asArray Whether active records should be returned or raw arrays.
      * @return array|ActiveRecord[]
      */
-    public static function getDataForRelation($tableName, $pkId)
+    public static function getDataForRelation($tableName, $pkId, $asArray = true)
     {
-        return self::find()->where(['table_name' => $tableName, 'pk_id' => $pkId])->asArray()->all();
+        return self::find()->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName), 'pk_id' => $pkId])->asArray($asArray)->all();
     }
 
     /**
@@ -59,13 +73,59 @@ final class TagRelation extends ActiveRecord
      * This methods i mainly used internal to retrieve data for the Active Window. Use the {{luya\admin\traits\TagsTrait}} in your Model instead.
      *
      * @param string $tableName The table name.
+     * @param boolean $asArray Whether active records should be returned or raw arrays.
      * @return array|ActiveRecord[]
      */
-    public static function getDistinctDataForTable($tableName)
+    public static function getDistinctDataForTable($tableName, $asArray = true)
     {
-        return self::find()->select('tag_id')->where(['table_name' => $tableName])->distinct()->asArray()->all();
+        return self::find()->select('tag_id')->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])->distinct()->asArray($asArray)->all();
     }
     
+    /**
+     * Save multiple tags for a given pk and table name.
+     *
+     * @param array $tagIds
+     * @param integer $tableName
+     * @param integer $pkId
+     * @return integer Returns the number of relations successfull added.
+     * @since 2.2.1
+     */
+    public static function batchInsertRelations(array $tagIds, $tableName, $pkId)
+    {
+        $counter = 0;
+        foreach ($tagIds as $tagId) {
+            $relation = new self();
+            $relation->table_name = $tableName;
+            $relation->tag_id = $tagId;
+            $relation->pk_id = $pkId;
+            if ($relation->save()) {
+                $counter++;
+            }
+        }
+
+        return $counter;
+    }
+
+    /**
+     * Remove all relations of the table and add new relations based on tagIds array and pkId.
+     *
+     * > compared to {{batchInsertRelations}} this will also remove all existing relation entries for this table.
+     * 
+     * @param array $tagIds
+     * @param string $tableName
+     * @param integer $pkId
+     * @return integer Returns the number of relations successfull added.
+     * @since 2.2.1
+     */
+    public static function batchUpdateRelations(array $tagIds, $tableName, $pkId)
+    {
+        foreach (self::getDataForRelation($tableName, $pkId, false) as $relation) {
+            $relation->delete();
+        }
+
+        return self::batchInsertRelations($tagIds, $tableName, $pkId);
+    }
+
     /**
      * Get tag object relation.
      *

@@ -153,7 +153,7 @@ return [
 // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Código de segurança LUYA',
-    'login_securetoken_mail' => '<h1>Código de segurança LUYA</h1><p>Use o código de segurança a seguir para efetuar login na interface administrativa em {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'login_securetoken_mail' => 'Use o código de segurança a seguir para efetuar login na interface administrativa:',
     'login_async_token_error' => 'O código de segurança fornecido está errado.',
     'login_async_token_globalerror' => 'Ocorreu um erro no servidor, por favor, entre em contato com o administrador do site',
     'ngrest_crud_csv_export_btn' => 'Gerar CSV',
@@ -325,15 +325,15 @@ return [
 // 1.1.1
 
     'ngrest_crud_total_count' => '{{data.listArray.length}} de {{totalRows}}',
-    
+
 // 1.2.0
-    
+
     'login_async_submission_limit_reached' => 'O número máximo de submissão foi atingifo, tente novamente em {time}.',
     'model_loginform_max_user_attempts' => 'O número máximo de tentativas de login foi atingido, tente novamente em {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-mail ou senha errados. Tentativa #{attempt} de {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Tempo de bloqueio de login',
     'account_changeemail_subject' => 'Verificar atualização do seu endereço de e-mail',
-    'account_changeemail_body' => '<h1>Código de verificação</h1><p>Entre o seguinte código de verificação para mudar o seu endereço de e-mail para o site {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+    'account_changeemail_body' => 'Entre o seguinte código de verificação para mudar o seu endereço de e-mail para o site:',
     'account_changeemail_tokensenterror' => 'Não foi possível enviar o código de verificação para {email}. Certifique-se de que o componente de envio de email esteja configurado corretamente.',
     'account_changeemail_wrongtokenorempty' => 'O código de verificação de e-mail está vazio, expirado ou é inválido.',
     'account_changeemail_enterverificationtoken' => 'Por favor, insira o código de verificação enviado para <b>{{profile.email}}</b> para confirmar a <b>{{settings.newUserEmail}}</b> solicitação de alteração.',
@@ -343,9 +343,9 @@ return [
     'layout_filemanager_col_file_disposition' => 'Entrega de arquivos',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Mostrar no navegador',
-    
+
 // 1.2.1
-    
+
     'mode_user_personal_info' => 'Informação pessoal',
     'settings_general' => 'Geral',
     'settings_developer_mode' => 'Modo de desenvolvimento',
@@ -353,9 +353,9 @@ return [
     'view_index_redirect_telephone' => 'número de telefone',
     'view_index_redirect_telephone_help' => 'Por favor, entre com um número de telefone válido (para o sinal "+" é obrigatório usar um "\").',
     'missing_file_upload_permission' => 'Permissões insuficientes para enviar arquivos.',
-    
+
 // 1.2.2
-    
+
     'button_no' => 'Não',
     'crud_exportdata_btn' => 'Exportar Dados',
     'crud_exportdata_col_header' => 'Cabeçalho',
@@ -371,70 +371,81 @@ return [
 
 // 1.2.3
 
-    'active_button_duplicate_label' => 'Duplicate',
-    'active_button_duplicate_success' => 'A copy has been created.',
-    'active_button_duplicate_error' => 'Error while creating the copy: {message}',
+
+    'active_button_duplicate_label' => 'Duplicar',
+    'active_button_duplicate_success' => 'Uma cópia foi criada.',
+    'active_button_duplicate_error' => 'Erro ao criar uma cópia: {message}',
 
 // 2.0
 
-    'model_tag_translation' => 'Translation',
-    'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
+    'model_tag_translation' => 'Tradução',
+    'model_tag_translation_hint' => 'Uma tradução opcional para a tag da linguagem escolhida. Isso permite associar e publicar a mesma tag em websites com várias linguagens.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
-    'active_button_timestamp_error' => 'Error while storing timestamp.',
-    'js_scheduler_show_datepicker' => 'Schedule',
-    'js_scheduler_new_value' => 'New value',
-    'js_scheduler_time' => 'Execution Time',
-    'js_scheduler_save' => 'Add',
-    'js_scheduler_title_upcoming' => 'Upcoming',
-    'js_scheduler_title_completed' => 'Completed',
-    'js_scheduler_table_newvalue' => 'New value',
-    'js_scheduler_table_timestamp' => 'Execution Time',
-    'js_dir_manager_rename_success' => 'The folder has been renamed successfully.',
-    'layout_filemanager_search_no_results' => 'No files were found for <strong>{{searchQuery}}</strong>.',
-    'layout_filemanager_empty_folder' => 'This directory contains no files.',
-    'aw_requestinsight_warning' => 'This feature is mainly used to get insights into a given API. It\'s not recommended to enable it over a long period of time as it can collect lots of data and slow down your application.',
-    'aw_requestinsight_logger_active' => 'The Request Insight is currently active!',
+    'active_button_timestamp_success' => 'Timestamp foi definido com sucesso.',
+    'active_button_timestamp_error' => 'Erro enquanto armazenar timestamp.',
+    'js_scheduler_show_datepicker' => 'Cronograma',
+    'js_scheduler_new_value' => 'Novo valor',
+    'js_scheduler_time' => 'Tempo de Execução',
+    'js_scheduler_save' => 'Adicionar',
+    'js_scheduler_title_upcoming' => 'Próximo',
+    'js_scheduler_title_completed' => 'Concluído',
+    'js_scheduler_table_newvalue' => 'Novo valor',
+    'js_scheduler_table_timestamp' => 'Tempo de Execução',
+    'js_dir_manager_rename_success' => 'A pasta foi renomeada com sucesso.',
+    'layout_filemanager_search_no_results' => 'Nenhum arquivo foi encontrado em <strong>{{searchQuery}}</strong>.',
+    'layout_filemanager_empty_folder' => 'O diretório não contém arquivos.',
+    'aw_requestinsight_warning' => 'Essa feature é usada principalmente para obter insights em uma determinada API. Não é recomendado habilitá-la por um longo período de tempo pois pode coletar um grande volume de dados e afetar a performance de sua aplicação.',
+    'aw_requestinsight_logger_active' => 'O Request Insight está ativo!',
     'aw_requestinsight_btn_disable' => 'Disable Insight',
     'aw_requestinsight_btn_enable' => 'Enable Insight',
-    'aw_requestinsight_btn_clear' => 'Clear Data',
-    'aw_requestinsight_btn_fetch' => 'Fetch Data',
-    'aw_requestinsight_request_label' => 'Requests',
-    'aw_requestinsight_col_date' => 'Date',
-    'aw_requestinsight_col_type' => 'Type',
+    'aw_requestinsight_btn_clear' => 'Limpar Dados',
+    'aw_requestinsight_btn_fetch' => 'Buscar Dados',
+    'aw_requestinsight_request_label' => 'Requisições',
+    'aw_requestinsight_col_date' => 'Data',
+    'aw_requestinsight_col_type' => 'Tipo',
     'aw_requestinsight_col_url' => 'URL',
-    'aw_requestinsight_col_time' => 'Time',
-    'aw_requestinsight_col_count' => 'Count',
-    'aw_requestinsight_top_request_label' => 'Top Requested URLs',
-    'aw_requestinsight_longest_response_label' => 'URLs with Longest Response Time',
-    'aw_requestinsight_data_pagination' => '{{data.length}} of {{dataCount}} requests',
-    'aw_requestinsight_toggle_logger_enabled' => 'Insight is enabled.',
-    'aw_requestinsight_toggle_logger_disabled' => 'Insight is disabled.',
-    'aw_requestinsight_toggle_error' => 'Error while enabling Request Insight.',
-    'aw_requestinsight_cleared' => 'Data has been cleared.',
+    'aw_requestinsight_col_time' => 'Tempo',
+    'aw_requestinsight_col_count' => 'Contagem',
+    'aw_requestinsight_top_request_label' => 'Top URLs de Requisições',
+    'aw_requestinsight_longest_response_label' => 'URLs com Maior Tempo de Resposta',
+    'aw_requestinsight_data_pagination' => '{{data.length}} de {{dataCount}} requisições',
+    'aw_requestinsight_toggle_logger_enabled' => 'Insight está habilitado.',
+    'aw_requestinsight_toggle_logger_disabled' => 'Insight está desabilitado.',
+    'aw_requestinsight_toggle_error' => 'Erro ao habilitar Request Insight.',
+    'aw_requestinsight_cleared' => 'Dados foram apagados.',
     'aw_requestinsight_default_label' => 'Request Insight',
-    'login_noscript_error' => 'You have to activate Javascript to use LUYA.',
-    'login_browsehappy' => 'You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/" target="_blank">upgrade your browser</a> to improve your experience and security.',
-    'crud_notification_enable' => 'Enable Notification',
-    'crud_notification_disable' => 'Disable Notification',
-    'admin_button_execute' => '"{label}" executed',
-    'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
-    'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
+    'login_noscript_error' => 'É necessário habilitar o JavaScript para utilizar LUYA.',
+    'login_browsehappy' => 'Você está utilizando um browser <strong>desatualizado</strong>. Por favor, <a href="https://browsehappy.com/" target="_blank">atualize seu browser</a> para melhorar a sua experiência e segurança.',
+    'crud_notification_enable' => 'Habilitar Notificação',
+    'crud_notification_disable' => 'Desabilitar Notificação',
+    'admin_button_execute' => '"{label}" executado',
+    'layout_btn_reload_admin' => 'Recarregar&nbsp;Admin',
+    'layout_btn_reload_cache' => 'Limpar&nbsp;Cache',
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
+    'js_dir_manager_file_replace_ok' => 'O arquivo foi substituído com sucesso.',
 
 // 2.0.3
 
-    'status_true' => 'Yes',
-    'status_false' => 'No',
-    'js_jsonobject_newkey' => 'New key name',
+    'status_true' => 'Sim',
+    'status_false' => 'Não',
+    'js_jsonobject_newkey' => 'Novo nome da chave',
     
 // 2.2.0
     
     'active_button_togglestatus_label' => 'Toggle status',
-    'active_button_togglestatus_error' => 'Could not activated',
-    'active_button_togglestatus_enabled' => '{modelName} enabled',
-    'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'active_button_togglestatus_error' => 'Não foi possível ativar',
+    'active_button_togglestatus_enabled' => '{modelName} habilitado',
+    'active_button_togglestatus_disabled' => '{modelName} desabilitado',
+    'layout_filemanager_detail_details' => 'Detalhes do arquivo',
+
+// 2.3.0
+
+    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
+    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
+    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
+    'aws_delete_relations_table_name' => 'Relation Table Name',
+    'aws_delete_relations_table_count' => 'Number of Entries',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];

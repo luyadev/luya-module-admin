@@ -41,7 +41,8 @@ abstract class Property extends Component implements TypesInterface
     public $i18n = false;
     
     /**
-     * @var boolean Whether a json object value should be auto decoded when retrieving data via getValue() and getAdminValue(). This is used when storing json data like link type.
+     * @var boolean Whether a json object value should be auto decoded when retrieving data via {{Property::getValue()}} and
+     * {{Property::getAdminValue()}}. This is used when storing json data like link type.
      * @since 1.0.3
      */
     public $autoDecodeJson = true;
@@ -141,7 +142,7 @@ abstract class Property extends Component implements TypesInterface
 
     /**
      * If the property is requested in admin context and there is no value
-     * the `default()` value response will be used.
+     * the `defaultValue()` value response will be used.
      *
      * For example a preselecting item from a list select dropdown:
      *
@@ -160,7 +161,8 @@ abstract class Property extends Component implements TypesInterface
     }
     
     /**
-     * The value is passed from the administration area side to the angular view.
+     * This value is used to determine the administration interface value to render the
+     * angular directive "model" values.
      *
      * @return mixed
      */
@@ -207,14 +209,14 @@ abstract class Property extends Component implements TypesInterface
 
     /**
      * Returns the identifier of the property.
-     * 
-     * This allows a more dynamic approach of embed property by using the class name instead of 
+     *
+     * This allows a more dynamic approach of embed property by using the class name instead of
      * the hardcoded var name.
-     * 
+     *
      * ```php
      * Yii::$app->cms->current->getProperty(YourProperty::identifier())->getValue();
      * ```
-     * 
+     *
      * @return string The {{Property::varName()}} wil be retunred.
      * @since 2.1.0
      */

@@ -341,6 +341,7 @@ $this->beginPage()
                     </tr>
                     </thead>
                     <tr><td><?= Admin::t('layout_debug_luya_version'); ?>:</td><td><?= \luya\Boot::VERSION; ?></td></tr>
+                    <tr><td>Vendor:</td><td><?= strftime("%c", Yii::$app->getPackageInstaller()->getTimestamp()); ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_id'); ?>:</td><td><?= Yii::$app->id ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_sitetitle'); ?>:</td><td><?= Yii::$app->siteTitle ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_remotetoken'); ?>:</td><td><?= $this->context->colorizeValue(Yii::$app->remoteToken, true); ?></td></tr>
@@ -359,27 +360,22 @@ $this->beginPage()
             </div>
         </div>
         <div class="debug-panel" ng-if="debugTab==3">
-            <div class="table-responsive">
-                <div ng-repeat="(packageName, package) in packages" class="mb-3">
-                    <p class="lead">{{ packageName }}</p>
-                    <table class="table table-striped table-sm table-bordered">
-                        <tr>
-                            <td class="w-25">Name</td>
-                            <td class="w-75">{{ package.package.prettyName}}</td>
-                        </tr>
-                        <tr>
-                            <td>Installed version</td>
-                            <td>{{ package.package.version}}</td>
-                        </tr>
-                        <tr>
-                            <td>Bootstraping files</td>
-                            <td><small>{{ package.bootstrap | json }}</small></td>
-                        </tr>
-                        <tr>
-                            <td>Blocks resources</td>
-                            <td><small>{{ package.blocks | json }}</small></td>
-                        </tr>
-                    </table>
+            <div class="row">
+                <div class="col-md-4 mb-3" ng-repeat="(packageName, package) in packages">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            {{ package.package.prettyName }}
+                            <a target="_blank" ng-href="{{package.package.sourceUrl}}" class="float-right"><i class="material-icons">link</i></a>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-0">Version:</p>
+                            <p class="card-text">{{ package.package.version}}</p>
+                            <p class="text-muted mb-0">Bootstraping files:</p>
+                            <p class="card-text">{{ package.bootstrap | json }}</p>
+                            <p class="text-muted mb-0">Blocks resources:</p>
+                            <p class="card-text">{{ package.blocks | json }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

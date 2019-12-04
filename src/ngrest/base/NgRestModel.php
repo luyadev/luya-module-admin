@@ -13,6 +13,7 @@ use luya\admin\base\GenericSearchInterface;
 use luya\admin\ngrest\Config;
 use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\base\RestActiveController;
+use yii\base\Event;
 
 /**
  * NgRest Model.
@@ -120,7 +121,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Get an array with the latest primary key value.
-     * 
+     *
      * @return array An array with latest primary key value, for example [10] or if composite keys [10,4]
      * @since 2.0.0
      */
@@ -149,13 +150,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * Returns the value for an i18n field before it was casted to the output for the current active language if empty.
      *
      * The main purpose of this method is to retrieve any value from this attribute event when the current value is empty.
-     * 
+     *
      * The value is determined by:
-     * 
+     *
      * 1. Is the the i18n casted value empty continue or return value.
      * 2. If preffered language is given and a none empty value exists for the preferred language return the value or continue.
      * 3. Foreach the array and return the first value which is not empty.
-     * 
+     *
      * @param string $attributeName The attribute to return the fallback.
      * @param string $preferredLanguage The prefered language short code name which should be checked whether it has a value or not.
      * @return string|null
@@ -170,17 +171,48 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $array = I18n::decode($this->getOldAttribute($attributeName));
 
             if ($preferredLanguage && isset($array[$preferredLanguage]) && !empty($array[$preferredLanguage])) {
-                return $array[$preferredLanguage];
+                return $this->runI18nContextOnFindPlugin($attributeName, $array[$preferredLanguage]);
             }
 
             foreach ($array as $value) {
                 if (!empty($value)) {
-                    return $value;
+                    return $this->runI18nContextOnFindPlugin($attributeName, $value);
                 }
             }
         }
 
         return $value;
+    }
+
+    /**
+     * Run an attribute plugin in i18n context in order to ensure plugin functions.
+     * 
+     * This method will return the plugin of the given attribute with the context of the
+     * new value. This allows you to re-run plugin options like `markdown` on a given attribute.
+     * 
+     * This is mainly used when the {{i18nAttributeFallbackValue()}} method finds an i18n value
+     * and needs to re-run the configured plugin options like nl2br, markdown, conver to link object.
+     *
+     * @param string $attributeName
+     * @param mixed $value
+     * @return mixed
+     * @since 2.3.0
+     */
+    protected function runI18nContextOnFindPlugin($attributeName, $value)
+    {
+        // create the plugin without i18n context as the plugin can handle whether its i18n or not
+        $plugin = clone $this->getPluginObject($attributeName);
+        $plugin->i18n = false;
+        // prepare the context for the event with the current model.
+        $senderContext = clone $this;
+        $senderContext->{$attributeName} = $value;
+        $plugin->onFind(new Event(['sender' => $senderContext]));
+        // as the plugin as run the onFind event the sender context will have the new value
+        $convertedValue = $senderContext->{$attributeName};
+        // clear variables to help with memory issues
+        unset($plugin, $senderContext);
+
+        return $convertedValue;
     }
 
     /**

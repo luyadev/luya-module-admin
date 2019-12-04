@@ -99,6 +99,26 @@ abstract class Plugin extends Component implements TypesInterface
      * @since 1.1.1
      */
     public $renderContext;
+
+    /**
+     * @var callable A callable which will return before the ngrest list view for a given attribute.
+     * 
+     * The function annotation contains the value of the attribute and second the model (event sender argument).
+     * 
+     * ```php
+     * 'beforeListFind' => function($value, $model) {
+     *    return I18n::decode($value)['en']; // returns always the english language key value.
+     * }
+     * ```
+     * 
+     * Return return value of the callable function will be set as attribute value to display.
+     * 
+     * > Keep in mind that the return value of the function won't be processed by any further events.
+     * > For example the i18n property might not have any effect anymore even when {{$i18n}} is enabled.
+     * 
+     * @since 2.2.2
+     */
+    public $beforeListFind;
     
     /**
      * Renders the element for the CRUD LIST overview for a specific type.
@@ -193,7 +213,19 @@ abstract class Plugin extends Component implements TypesInterface
      * ```php
      * 'sortField' => false,
      * ```
-     *
+     * 
+     * In order to enable order by counting of relation tables update the APIs {{luya\admin\ngrest\base\Api::prepareListQuery()}} with the given sub
+     * select condition where the alias name is equal to the field to sort:
+     * 
+     * ```php
+     * public function prepareListQuery()
+     * {
+     *     return parent::prepareListQuery()->select(['*', '(SELECT count(*) FROM admin_tag_relation WHERE tag_id = id) as relationsCount']);
+     * }
+     * ```
+     * 
+     * Where in the above example `relationsCount` would be the sortField name.
+     * 
      * @see https://www.yiiframework.com/doc/api/2.0/yii-data-sort#$attributes-detail
      * @since 2.0.0
      */
@@ -475,7 +507,7 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * The scheduler tag allows you to change the given field value based on input values for a given field if a model is ailable.
      *
-     * @param string $ngModel The string to 
+     * @param string $ngModel The string to
      * @param array $values An array with values to display
      * @param string $dataRow The data row context (item)
      * @param array $options `only-icon` => 1
@@ -595,11 +627,19 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function onBeforeListFind($event)
     {
+        if ($this->beforeListFind) {
+            $this->writeAttribute($event, call_user_func_array($this->beforeListFind, [$this->getAttributeValue($event), $event->sender]));
+            return false;
+        }
+
         return true;
     }
     
     /**
-     * This event is only trigger when returning the ngrest crud list data. If the property of this plugin inside the model, the event will not be triggered.
+     * This event is only trigger when returning the ngrest crud list data. 
+     * 
+     * If the attribute is not inside the model (property not writeable), the event will not be triggered. Ensure its a
+     * public property or contains getter/setter methods.
      *
      * @param \luya\admin\ngrest\base\NgRestModel::EVENT_AFTER_NGREST_FIND $event The NgRestModel after ngrest find event.
      */

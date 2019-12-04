@@ -6,6 +6,7 @@ use Yii;
 use luya\admin\models\Auth as AuthModel;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
+use yii\web\IdentityInterface;
 
 /**
  * Auth components gives informations about permissions, who can do what.
@@ -81,6 +82,8 @@ class Auth extends \yii\base\Component
     /**
      * Check if a given api endpoint is in the permission (auth) system available.
      *
+     * > This does not mean any given user has access to this endpoint.
+     *
      * @param string $apiEndpoint The api endpoint to validate.
      * @return boolean
      * @since 2.1.0
@@ -89,7 +92,38 @@ class Auth extends \yii\base\Component
     {
         return array_key_exists($apiEndpoint, $this->getPermissionApiEndpointsTable());
     }
-    
+
+    private $_routes;
+
+    /**
+     * Get all api endpoints as array with index by api endpoitn name
+     *
+     * @return array An array with all api endpoints from the permission system indexed by the api name.
+     * @since 2.2.0
+     */
+    public function getPermissionRoutesTable()
+    {
+        if (!$this->_routes) {
+            $this->_routes = AuthModel::find()->andWhere(['not', ['route' => null]])->indexBy('route')->asArray()->all();
+        }
+
+        return $this->_routes;
+    }
+
+    /**
+     * Check if a given route exists in permission system.
+     *
+     * > This does not mean any given user has access to this endpoint.
+     *
+     * @param string $route
+     * @return boolean
+     * @since 2.2.0
+     */
+    public function isInRoutePermissionTable($route)
+    {
+        return array_key_exists($route, $this->getPermissionRoutesTable());
+    }
+
     /**
      * Get the permission table for a user without doublicated entries.
      *
@@ -159,7 +193,7 @@ class Auth extends \yii\base\Component
     /**
      * Verify a permission type against its calculated `weight`.
      *
-     * In order to calculate the permissions weight see {{\luya\admin\components\Auth::permissionWeight}}.
+     * In order to calculate the permissions weight see {{\luya\admin\components\Auth::permissionWeight()}}.
      *
      * @param string $type The type of permission (1,2,3 see constants)
      * @param integer $permissionWeight A weight of the permssions which is value between 1 - 9, see [[app-admin-module-permission.md]].
@@ -185,19 +219,39 @@ class Auth extends \yii\base\Component
     }
 
     /**
+     * Normalize the given input user id or identity interface to an id.
+     *
+     * @param integer|string|IdentityInterface $user
+     * @return integer The user id as int value
+     * @since 2.2.0
+     */
+    protected function normalizeIdentityOrId($user)
+    {
+        if ($user instanceof IdentityInterface) {
+            return $user->getId();
+        }
+
+        if (is_scalar($user)) {
+            return $user;
+        }
+
+        return 0;
+    }
+
+    /**
      * See if a User have rights to access this api.
      *
-     * @param integer $userId
+     * @param integer|IdentityInterface $userId
      * @param string $apiEndpoint As defined in the Module.php like (api-admin-user) which is a unique identifiere
-     * @param integer|string $typeVerification The CONST number provided from CAN_*
+     * @param integer|string $typeVerification The CONST number provided from CAN_* or false if none (which is equals: VIEW)
      * @return boolean|integer return false or the auth id, if this a can view request also bool is returned
      */
     public function matchApi($userId, $apiEndpoint, $typeVerification = false)
     {
-        $groups = $this->getApiTable($userId, $apiEndpoint);
+        $groups = $this->getApiTable($this->normalizeIdentityOrId($userId), $apiEndpoint);
 
         if ($typeVerification === false || $typeVerification === self::CAN_VIEW) {
-            return (count($groups) > 0) ? current($groups)['id'] : false;
+            return count($groups) > 0 ? current($groups)['id'] : false;
         }
 
         foreach ($groups as $row) {
@@ -212,13 +266,13 @@ class Auth extends \yii\base\Component
     /**
      * See if the user has permitted the provided route.
      *
-     * @param integer $userId The user id from admin users
+     * @param integer|IdentityInterface $userId The user id from admin users
      * @param string $route The route to test.
      * @return boolean|integer returns false or the id of the auth
      */
     public function matchRoute($userId, $route)
     {
-        $groups = $this->getRouteTable($userId, $route);
+        $groups = $this->getRouteTable($this->normalizeIdentityOrId($userId), $route);
         
         if (is_array($groups) && count($groups) > 0) {
             return current($groups)['id'];

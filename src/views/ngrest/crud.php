@@ -136,9 +136,12 @@ $this->beginBody();
                     </div>
                     <?php endif; ?>
                 </div>
-                <div ng-if="config.tagFilter && serviceResponse._tags" class="mt-3">
-                    <span class="badge mr-1 badge-pill" ng-class="{'badge-primary': isTagFilterActive(tag.id), 'badge-secondary' : !isTagFilterActive(tag.id)}" ng-click="toggleTagFilter(tag.id)" ng-repeat="tag in serviceResponse._tags">{{ tag.name }}</span>
-                </div>
+                <?php if (!$relationCall): ?>
+                    <div ng-if="config.tagFilter && serviceResponse._tags && config.filter==0" class="mt-3">
+                        <span ng-hide="serviceResponse._tags | isArray" class="badge"><i class="material-icons" ng-click="searchTags=!searchTags;tagSearchQuery=''">search</i><input ng-show="searchTags" ng-model="tagSearchQuery" type="text" class="ml-1" /></span>
+                        <span class="badge mr-1 badge-pill" ng-class="{'badge-primary': isTagFilterActive(tag.id), 'badge-secondary' : !isTagFilterActive(tag.id)}" ng-click="toggleTagFilter(tag.id)" ng-repeat="tag in serviceResponse._tags | toArray:false | filter:tagSearchQuery">{{ tag.name }}</span>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php if ($relationCall && $canCreate && $config->getPointer('create')): ?>
             <button type="button" class="btn btn-add ml-3 mt-3" ng-click="switchTo(1)">

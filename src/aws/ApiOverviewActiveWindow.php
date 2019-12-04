@@ -59,7 +59,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
 
     /**
      * Returns an array with available endpoints and the corresponding actions.
-     * 
+     *
      * @return array An array with the api or controller as key.
      */
     protected function getAvailableApiEndpoints()

@@ -152,7 +152,7 @@ return [
 // added translations in 1.0.0-beta7
 
 'login_securetoken_mail_subject' => 'Kod zabezpieczający',
-'login_securetoken_mail' => '<h1>Kod bezpieczeństwa</h1><p>Użyj poniższego kodu bezpieczeństwa, aby zalogować się do administracji pod adresem {url}:</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+'login_securetoken_mail' => 'Użyj poniższego kodu bezpieczeństwa, aby zalogować się do administracji pod adresem:',
 'login_async_token_error' => 'Podany kod bezpieczeństwa jest nieważny lub wygasł.',
 'login_async_token_globalerror' => 'Wystąpił błąd serwera, skontaktuj się z administratorem witryny.',
 'ngrest_crud_csv_export_btn' => 'Wygeneruj CSV',
@@ -324,7 +324,7 @@ return [
 'ngrest_crud_total_count' => '{{data.listArray.length}} z {{totalRows}}',
 // 1.2.0
     
-'account_changeemail_body' => '<h1>Kod weryfikacyjny</h1><p>Wpisz następujący kod weryfikacyjny, aby zmienić adres e-mail dla witryny {url}.</p><span style="font-size:22px; letter-spacing:2px; padding:5px 10px; display:inline-block; background-color:#F0F0F0;">{token}</span>',
+'account_changeemail_body' => 'Wpisz następujący kod weryfikacyjny, aby zmienić adres e-mail dla witryny:',
 'account_changeemail_enterverificationtoken' => 'Wprowadź kod weryfikacyjny wysłany do <b>{{profile.email}}</b> aby potwierdzić żądanie zmiany <b>{{settings.newUserEmail}}</b> change request.',
 'login_async_submission_limit_reached' => 'Osiągnięto maksymalną liczbę zgłoszeń, spróbuj ponownie {czas}.',
 'model_loginform_max_user_attempts' => 'Osiągnięto maksymalną liczbę prób logowania, spróbuj ponownie {czas}.',
@@ -433,4 +433,14 @@ return [
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
+    'layout_filemanager_detail_details' => 'File details',
+
+// 2.3.0
+
+    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
+    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
+    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
+    'aws_delete_relations_table_name' => 'Relation Table Name',
+    'aws_delete_relations_table_count' => 'Number of Entries',
+    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 ];

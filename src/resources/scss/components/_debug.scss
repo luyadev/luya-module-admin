@@ -20,6 +20,7 @@ $tabs-height: 0;
     .row,
     div[class*="col"] {
         height: 100%;
+        width: 100%;
     }
 
     &-toggled {
@@ -103,8 +104,4 @@ $tabs-height: 0;
         padding-left: 25px;
         width: 60%;
     }
-}
-
-.debug-panel-network-open {
-
 }

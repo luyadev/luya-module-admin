@@ -14,6 +14,7 @@ use luya\admin\models\Scheduler;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 use luya\admin\models\Config;
+use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -134,6 +135,26 @@ class CommonController extends RestController
     }
 
     /**
+     * Toggle the state of a given tag for a certain relation.
+     *
+     * @param integer $tagId
+     * @param integer $pkId
+     * @param string $tableName
+     * @return boolean
+     * @since 2.2.1
+     */
+    public function actionTagRelationToggle($tagId, $pkId, $tableName)
+    {
+        $tag = Tag::findOne($tagId);
+
+        if (!$tag) {
+            throw new InvalidCallException("The given tag id does not exists.");
+        }
+
+        return $tag->toggleRelation($pkId, $tableName);
+    }
+
+    /**
      * Set the lastest ngrest filter selection in the User Settings.
      *
      * @return boolean
@@ -207,6 +228,10 @@ class CommonController extends RestController
      */
     public function actionCache()
     {
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        }
+
         $this->flushHasCache();
     
         $user = Yii::$app->adminuser->identity;

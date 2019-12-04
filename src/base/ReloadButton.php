@@ -8,10 +8,10 @@ use yii\base\InvalidConfigException;
 
 /**
  * Reload Button Object.
- * 
+ *
  * @property string $label
  * @property callable $callback
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.0
  */
@@ -88,5 +88,5 @@ class ReloadButton extends BaseObject
     public function getCallback()
     {
         return $this->_callback;
-    }    
+    }
 }

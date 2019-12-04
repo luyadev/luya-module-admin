@@ -115,7 +115,7 @@ class Angular
      */
     public static function optionsFilter(array $array)
     {
-        return array_filter($array, function($value) {
+        return array_filter($array, function ($value) {
             if (is_null($value) || $value === '' || $value === false) {
                 return false;
             }
@@ -148,7 +148,7 @@ class Angular
 
     /**
      * Generate the LUYA admin scheduler tag.
-     * 
+     *
      * ```php
      * Angular::schedule('data.is_online', 'Online Status', 1, [0 => 'No', 1 => 'Yes'], 'path/to/model', 'is_online');
      * ```
@@ -193,6 +193,20 @@ class Angular
         return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => static::optionsArrayInput($sourceData)], $options);
     }
         
+    /**
+     * Generate a directive which assignes an array of selected tag ids to the model.
+     *
+     * @param string $ngModel The name of the ng model which should be used for data binding.
+     * @param string $label The label to display for the form input.
+     * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
+     * @return AngularObject
+     * @since 2.2.1
+     */
+    public static function tagArray($ngModel, $label, array $options = [])
+    {
+        return self::injector(TypesInterface::TYPE_TAG_ARRAY, $ngModel, $label, [], $options);
+    }
+
     /**
      * zaaText directive
      *

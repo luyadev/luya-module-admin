@@ -52,7 +52,7 @@ interface NgRestModelInterface extends ActiveRecordInterface
      *
      * > This method will taken for all internal *NOT API USER* related calls. So assuming an API user makes request to the APi
      * > it will use find() instead of ngRestFind(). If a logged in user will make a request to an API it will take ngRestFind().
-     * 
+     *
      * > Also this methid is used for the admin scheduler, see {{luya\admin\models\Scheduler::triggerJob()}}.
      *
      * @see {{yii\db\ActiveRecord::find()}}

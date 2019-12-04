@@ -58,7 +58,7 @@ class SelectRelationActiveQuery extends Plugin
     /**
      * @var string The name of the relation which should be used to load the data. For example if you have `getPerson()` the relation name would be `person`.
      * In order to reduce sql queries you can eager load the given relation in {{luya\admin\ngrest\base\Api::prepareListQuery()}}:
-     * 
+     *
      * ```php
      * public function prepareListQuery()
      * {

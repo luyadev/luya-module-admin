@@ -7,6 +7,7 @@ use admintests\AdminModelTestCase;
 use luya\admin\models\Tag;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\Lang;
+use luya\admin\models\User;
 use luya\web\Composition;
 
 class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
@@ -84,5 +85,73 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
         $this->assertEmpty($model->translation);
         $this->assertSame('Deutsch', $model->i18nAttributeFallbackValue('translation'));
         $this->assertSame('Francais', $model->i18nAttributeFallbackValue('translation', 'fr'));
+
+        $lang->cleanup();
+        $fixture->cleanup();
+    }
+
+    public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
+    {
+
+        $lang = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'English',
+                    'short_code' => 'en',
+                    'is_default' => 0,
+                    'is_deleted' => 0,
+                ],
+                'id2' => [
+                    'id' => 2,
+                    'name' => 'French',
+                    'short_code' => 'fr',
+                    'is_default' => 1,
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+
+        $fixture = new NgRestModelFixture([
+            'modelClass' => I18nMarkdownTagTest::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'email' => 'foobar@test.com',
+                    'firstname' => 'name',
+                    'lastname' => '{"de":"Deutsch *foo*", "en": "", "fr": "Francais *foo*"}',
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+
+        $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
+        $this->assertSameTrimmed('<p>Francais <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'fr')); // <p>Francais <em>foo</em></p>
+        $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
+
+        $fixture->cleanup();
+        $lang->cleanup();
+        
+    }
+}
+
+class I18nMarkdownTagTest extends User
+{
+    public $i18n = ['lastname', 'firstname'];
+
+    public static function tableName()
+    {
+        return 'user_copy';
+    }
+
+    public function ngRestAttributeTypes()
+    {
+
+        $at = parent::ngRestAttributeTypes();
+        $at['firstname'] = ['textarea', 'markdown' => true];
+        $at['lastname'] = ['textarea', 'markdown' => true];
+
+        return $at;
     }
 }
