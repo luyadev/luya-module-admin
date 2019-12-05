@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest\render;
 
+use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveWindow;
 use Yii;
 use yii\helpers\Inflector;
@@ -39,7 +40,7 @@ class RenderActiveWindowCallback extends Render
         try {
             return ObjectHelper::callMethodSanitizeArguments($obj, $function, Yii::$app->request->post());
         } catch (Exception $error) {
-            return $obj->sendError("One or more fields are empty but are requred.", [
+            return $obj->sendError(Module::t('aws_missing_callback_param_generic_errror'), [
                 'message' => $error->getMessage(),
             ]);
         }
