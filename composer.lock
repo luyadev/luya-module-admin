@@ -11,7 +11,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -400,8 +400,8 @@
             "authors": [
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
-                    "role": "Developer",
-                    "email": "lcobucci@gmail.com"
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -1410,16 +1410,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.23",
+            "version": "1.0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "9c9823a5b1e1cb71ed379fa865481f58f2e7305f"
+                "reference": "ddf0dea82a6f624e119804500d5027826d71b8d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/9c9823a5b1e1cb71ed379fa865481f58f2e7305f",
-                "reference": "9c9823a5b1e1cb71ed379fa865481f58f2e7305f",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/ddf0dea82a6f624e119804500d5027826d71b8d9",
+                "reference": "ddf0dea82a6f624e119804500d5027826d71b8d9",
                 "shasum": ""
             },
             "require": {
@@ -1459,7 +1459,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-10-22T10:13:18+00:00"
+            "time": "2019-12-05T13:40:23+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2775,7 +2775,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.13.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -2990,23 +2990,24 @@
         },
         {
             "name": "unglue/client",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unglue-workflow/client.git",
-                "reference": "95a7ff7d810374b84adab100b15fe5868a48382a"
+                "reference": "733ae73160fc5d5a1fae7f47047fcf3a56fadc8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unglue-workflow/client/zipball/95a7ff7d810374b84adab100b15fe5868a48382a",
-                "reference": "95a7ff7d810374b84adab100b15fe5868a48382a",
+                "url": "https://api.github.com/repos/unglue-workflow/client/zipball/733ae73160fc5d5a1fae7f47047fcf3a56fadc8c",
+                "reference": "733ae73160fc5d5a1fae7f47047fcf3a56fadc8c",
                 "shasum": ""
             },
             "require": {
-                "luyadev/luya-core": "~1.0.0"
+                "luyadev/luya-core": "^1.0"
             },
             "require-dev": {
-                "luyadev/luya-testsuite": "~1.0"
+                "luyadev/luya-testsuite": "^1.0",
+                "macfja/phar-builder": "^0.2.8"
             },
             "bin": [
                 "src/bin/unglue"
@@ -3015,6 +3016,18 @@
             "extra": {
                 "luya": {
                     "symlink": false
+                },
+                "phar-builder": {
+                    "compression": "none",
+                    "name": "unglue.phar",
+                    "output-dir": "./",
+                    "entry-point": "./src/index.php",
+                    "include": [
+                        "src"
+                    ],
+                    "include-dev": false,
+                    "shebang": true,
+                    "skip-shebang": true
                 }
             },
             "autoload": {
@@ -3033,7 +3046,7 @@
                 }
             ],
             "description": "The client binary which sends the data to the server and creates the output from the API response.",
-            "time": "2019-03-20T12:06:30+00:00"
+            "time": "2019-12-04T13:15:04+00:00"
         },
         {
             "name": "webmozart/assert",
