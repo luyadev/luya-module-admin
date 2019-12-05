@@ -73,6 +73,6 @@ class AdminLanguageTest extends AdminModelTestCase
             'is_default' => "1",
             'is_deleted' => "0",
         ], $component->getLanguageByShortCode('de'));
-        $this->assertFalse($component->clearCache()); // cache not defined... delete will faile
+        $this->assertTrue($component->clearCache()); // cache not defined... delete will faile
     }
 }

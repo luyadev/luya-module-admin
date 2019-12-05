@@ -441,10 +441,15 @@ return [
     'layout_filemanager_detail_details' => 'Datei Informationen',
     
 // 2.3.0
+
     'aws_delete_remove_success' => 'Das Tag und seine Zuordnungen wurden entfernt.',
     'aws_delete_remove_wrong_name' => 'Der Tag-Name ist falsch.',
     'aws_delete_relations_info' => 'Das Tag <b>{name}</b> wird <b>{count}</b> mal verwendet. Es ist Einträgen in folgenden Tabellen zugeordnet:',
     'aws_delete_relations_table_name' => 'Zuordnungs-Tabelle',
     'aws_delete_relations_table_count' => 'Anzahl Zuordnungen',
     'aws_delete_relations_form_hint' => 'Um das Löschen des Tags zu bestätigen, geben Sie den Tag-Namen ein und klicken Sie auf \"Löschen\".',
+
+// 2.4.0
+
+    'aws_missing_callback_param_generic_errror' => 'Erforderliche Angaben fehlen.',
 ];
