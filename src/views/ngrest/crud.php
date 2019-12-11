@@ -2,6 +2,8 @@
 use luya\admin\ngrest\render\RenderCrud;
 use luya\admin\Module;
 use luya\admin\helpers\Angular;
+use luya\helpers\ArrayHelper;
+use luya\helpers\Json;
 
 /** @var $config \luya\admin\ngrest\ConfigInterface */
 /** @var $this \luya\admin\ngrest\render\RenderCrudView */
@@ -10,6 +12,9 @@ use luya\admin\helpers\Angular;
 /** @var $modelSelection string|boolean Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
 $this->beginPage();
 $this->beginBody();
+
+$filters = ArrayHelper::combine(array_keys($config->getFilters()));
+$filters = Angular::optionsArrayInput($filters);
 ?>
 <?php $this->registerAngularControllerScript(); ?>
 <div ng-controller="<?= $config->hash; ?>" class="crud">
@@ -127,12 +132,7 @@ $this->beginBody();
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <select class="form-control" ng-model="config.filter" ng-change="changeNgRestFilter()">
-                            <option value="0"><?= Module::t('ngrest_crud_filter_prompt'); ?></option>
-                            <?php foreach (array_keys($config->getFilters()) as $name): ?>
-                                <option value="<?= $name; ?>"><?= $name; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <luya-select ng-model="config.filter" initvalue="0" ng-change="changeNgRestFilter()" options='<?= Json::htmlEncode($filters); ?>' />
                     </div>
                     <?php endif; ?>
                 </div>
