@@ -177,11 +177,13 @@ $filters = Angular::optionsArrayInput($filters);
                     </thead>
                     <tbody ng-repeat="(key, items) in data.listArray | groupBy: config.groupByField" ng-init="viewToggler[key]=config.groupByExpanded">
                         <tr ng-if="config.groupBy" class="table-group" ng-click="viewToggler[key]=!viewToggler[key]">
-                            <td colspan="<?= count($config->getPointer('list')) + 1 ?>">
-                                <strong>{{key}}</strong>
-                                <i class="material-icons right" ng-show="!viewToggler[key]">keyboard_arrow_right</i>
-                                <i class="material-icons right" ng-show="viewToggler[key]">keyboard_arrow_down</i>
+                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
+                            <td ng-init="item=items[0]" ng-if="config.groupByField=='<?= $item['name']; ?>'" colspan="<?= count($config->getPointer('list')) + 1 ?>">
+                                <strong><?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?></strong>
+                                <i class="material-icons float-right pt-1" ng-show="!viewToggler[key]">keyboard_arrow_right</i>
+                                <i class="material-icons float-right pt-1" ng-show="viewToggler[key]">keyboard_arrow_down</i>
                             </td>
+                            <?php endforeach; ?>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
