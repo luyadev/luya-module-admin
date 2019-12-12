@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.4.0
 
-+ [#419]https://github.com/luyadev/luya-module-admin/pull/419) NgRest Filters are rendered by LUYA admin select dropdown instead of browser dropdown, this allows to search in the list.
++ [#419](https://github.com/luyadev/luya-module-admin/pull/419) NgRest Filters are rendered by LUYA admin select dropdown instead of browser dropdown, this allows to search in the list.
 + [#233](https://github.com/luyadev/luya-module-admin/issues/233) Improve error message for empty active window callback parameters.
 + [#413](https://github.com/luyadev/luya-module-admin/pull/413) Option to disable the auto bootstrap of the queue command in conflict siutations.
 + [#409](https://github.com/luyadev/luya-module-admin/issues/409) Bootstrap the native Yii Queue console command in order to use run and listen commands.
