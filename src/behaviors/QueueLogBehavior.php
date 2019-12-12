@@ -86,7 +86,12 @@ class QueueLogBehavior extends Behavior
             if ($event->error) {
                 $title.= " | " . $event->error->getMessage();
             }
-            $log->updateAttributes(['end_timestamp' => time(), 'title' => $title, 'is_error' => true]);
+            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => true]);
+
+            // ensure title length validation.
+            // admin 3.0 is required to add new log message table with text instead of string.
+            $log->title = $title;
+            $log->save();
         }
 
         // send error 
