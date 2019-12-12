@@ -1,7 +1,7 @@
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*
- AngularJS v1.7.8
+ AngularJS v1.7.9
  (c) 2010-2018 Google, Inc. http://angularjs.org
  License: MIT
 */
@@ -21,7 +21,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     return function () {
       var d = arguments[0],
           c;
-      c = "[" + (a ? a + ":" : "") + d + "] http://errors.angularjs.org/1.7.8/" + (a ? a + "/" : "") + d;
+      c = "[" + (a ? a + ":" : "") + d + "] http://errors.angularjs.org/1.7.9/" + (a ? a + "/" : "") + d;
 
       for (d = 1; d < arguments.length; d++) {
         c = c + (1 == d ? "?" : "&") + "p" + (d - 1) + "=";
@@ -89,7 +89,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       if (D(g) || B(g)) for (var k = Object.keys(g), h = 0, l = k.length; h < l; h++) {
         var m = k[h],
             p = g[m];
-        d && D(p) ? ha(p) ? a[m] = new Date(p.valueOf()) : ab(p) ? a[m] = new RegExp(p) : p.nodeName ? a[m] = p.cloneNode(!0) : $b(p) ? a[m] = p.clone() : (D(a[m]) || (a[m] = H(p) ? [] : {}), Zb(a[m], [p], !0)) : a[m] = p;
+        d && D(p) ? ha(p) ? a[m] = new Date(p.valueOf()) : ab(p) ? a[m] = new RegExp(p) : p.nodeName ? a[m] = p.cloneNode(!0) : $b(p) ? a[m] = p.clone() : "__proto__" !== m && (D(a[m]) || (a[m] = H(p) ? [] : {}), Zb(a[m], [p], !0)) : a[m] = p;
       }
     }
 
@@ -881,7 +881,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         $$cookieReader: kg
       });
     }]).info({
-      angularVersion: "1.7.8"
+      angularVersion: "1.7.9"
     });
   }
 
@@ -6464,11 +6464,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       Wc = !1,
       Pa = 3,
       Ke = {
-    full: "1.7.8",
+    full: "1.7.9",
     major: 1,
     minor: 7,
-    dot: 8,
-    codeName: "enthusiastic-oblation"
+    dot: 9,
+    codeName: "pollution-eradication"
   };
 
   Y.expando = "ng339";
@@ -10049,9 +10049,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   }],
       jf = Ra(function (a, b, d) {
     a.$watchCollection(d.ngStyle, function (a, d) {
-      d && a !== d && (a || (a = {}), r(d, function (b, d) {
-        null == a[d] && (a[d] = "");
-      }));
+      d && a !== d && r(d, function (a, c) {
+        b.css(c, "");
+      });
       a && b.css(a);
     });
   }),
