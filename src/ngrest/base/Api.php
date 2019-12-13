@@ -673,11 +673,13 @@ class Api extends RestActiveController
         
         $filterName = Html::encode($filterName);
         
-        if (!array_key_exists($filterName, $model->ngRestFilters())) {
+        $filtersList = $model->ngRestFilters();
+
+        if (!array_key_exists($filterName, $filtersList)) {
             throw new InvalidCallException("The requested filter '$filterName' does not exists in the filter list.");
         }
 
-        $find = $model->ngRestFilters()[$filterName];
+        $find = $filtersList[$filterName];
 
         if ($query) {
             foreach ($model->getNgRestPrimaryKey() as $pkName) {
