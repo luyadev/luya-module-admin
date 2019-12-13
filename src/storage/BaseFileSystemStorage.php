@@ -681,7 +681,8 @@ abstract class BaseFileSystemStorage extends Component
 
         $file = StorageFile::findOne($fileId);
 
-        if (!$file) {
+        // https://github.com/luyadev/luya-module-admin/issues/415
+        if (!$file && !$file->isImage) {
             return false;
         }
         // create the new image name
