@@ -615,7 +615,7 @@ class Api extends RestActiveController
             throw new InvalidCallException("Unable to find the given class \"$modelClass\".");
         }
 
-        // `findOne((int) $id)`: (int) $id is not required as the value is cased by action param
+        // `findOne((int) $id)`: (int) $id is not required as the value is safed by action param $id
         $model = $modelClass::findOne($id);
         
         if (!$model) {
