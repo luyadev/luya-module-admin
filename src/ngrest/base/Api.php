@@ -614,8 +614,9 @@ class Api extends RestActiveController
         if (!class_exists($modelClass)) {
             throw new InvalidCallException("Unable to find the given class \"$modelClass\".");
         }
-        
-        $model = $modelClass::findOne((int) $id);
+
+        // `findOne((int) $id)`: (int) $id is not required as the value is safed by action param $id
+        $model = $modelClass::findOne($id);
         
         if (!$model) {
             throw new InvalidCallException("Unable to resolve relation call model.");

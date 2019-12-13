@@ -3,6 +3,7 @@
 namespace admintests\admin\ngrest;
 
 use admintests\AdminModelTestCase;
+use luya\admin\apis\UserController;
 use luya\admin\buttons\TimestampActiveButton;
 use luya\admin\models\Group;
 use luya\admin\models\NgrestLog;
@@ -10,9 +11,12 @@ use luya\admin\models\User;
 use luya\admin\models\UserLogin;
 use luya\admin\ngrest\Config;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use luya\testsuite\traits\DatabaseTableTrait;
 
 class ConfigTest extends AdminModelTestCase
 {
+    use DatabaseTableTrait;
+
     /**
      * @expectedException yii\base\InvalidConfigException
      */
@@ -74,6 +78,35 @@ class ConfigTest extends AdminModelTestCase
         $cfg->setPrimaryKey(['key1', 'key2']);
         $this->expectException('yii\base\InvalidConfigException');
         $cfg->getRelations();
+    }
+
+    public function testRelationCallOnApiWithConfig()
+    {
+        new NgRestModelFixture([
+            'modelClass' => StubUserModel::class,
+        ]);
+        new NgRestModelFixture([
+            'modelClass' => Group::class,
+            'fixtureData' => [
+                1 => [
+                    'id' => 1,
+                    'name' => 'name',
+                    'text' => 'text',
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+        $this->createTableIfNotExists('admin_user_group', [
+            'user_id' => 'int',
+            'group_id' => 'int',
+        ]);
+        $api = new UserController('user', $this->app);
+        $api->modelClass = StubUserModel::class;
+
+        $this->expectException('yii\base\InvalidCallException');
+        $api->actionRelationCall(0, 1, base64_encode(Group::class));
+        $api->actionRelationCall(0, 2, base64_encode(Group::class));
+        $api->actionRelationCall(0, 2, 'unknownclass');
     }
 }
 

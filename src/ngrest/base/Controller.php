@@ -170,7 +170,7 @@ class Controller extends \luya\admin\base\Controller
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);
         $crud->setModelSelection($modelSelection);
-        if ($relation && is_numeric($relation) && $arrayIndex !== false && $modelClass !== false) {
+        if ($relation && is_scalar($relation) && $arrayIndex !== false && $modelClass !== false) {
             $crud->setRelationCall(['id' => $relation, 'arrayIndex' => $arrayIndex, 'modelClass' => $modelClass]);
         }
         
