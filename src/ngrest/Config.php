@@ -99,8 +99,8 @@ class Config extends BaseObject implements ConfigInterface
     {
         if ($this->_relations === null) {
             // ensure relations are made not on composite table.
-            if ($this->model->ngRestRelations() && count($this->model->getNgRestPrimaryKey()) > 1) {
-                throw new InvalidConfigException("You can not use the ngRestRelations() on composite key model.");
+            if ($this->model->ngRestRelations() && count($this->getPrimaryKey()) > 1) {
+                throw new InvalidConfigException("Its not allowed to have ngRestRealtions() on models with composite primary keys.");
             }
 
             // generate relations
