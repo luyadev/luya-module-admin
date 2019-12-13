@@ -919,39 +919,21 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 $config->appendFieldOption($fieldName, 'i18n', true);
             }
 
-            // set model as context in order to lazy load data like:
+            // set model as context in order to lazy load data like (https://github.com/luyadev/luya-module-admin/pull/422)
             // - ngRestFilters
             // - getNgRestPrimaryKey
             // - ngRestActiveButtons
             // - ngRestRelations (trough: generateNgRestRelations())
             $config->setModel($this);
-
+            
             // copy model data into config
             $config->setApiEndpoint(static::ngRestApiEndpoint());
-            //$config->setPrimaryKey($this->getNgRestPrimaryKey());
-            //$config->setFilters($this->ngRestFilters());
-            //$config->setActiveButtons($this->ngRestActiveButtons());
             $config->setDefaultOrder($this->ngRestListOrder());
             $config->setAttributeGroups($this->ngRestAttributeGroups());
             $config->setGroupByField($this->ngRestGroupByField());
             $config->setGroupByExpanded($this->ngRestGroupByExpanded());
             $config->setTableName($this->tableName());
             $config->setAttributeLabels($this->attributeLabels());
-
-            
-            // ensure relations are made not on composite table.
-            /*
-            if ($this->ngRestRelations() && count($this->getNgRestPrimaryKey()) > 1) {
-                throw new InvalidConfigException("You can not use the ngRestRelations() on composite key model.");
-            }
-            */
-            
-            // generate relations
-            /*
-            foreach ($this->generateNgRestRelations() as $relation) {
-                $config->setRelation($relation);
-            }
-            */
 
             $config->onFinish();
             $this->_config = $config;
