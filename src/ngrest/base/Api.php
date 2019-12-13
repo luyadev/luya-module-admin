@@ -668,16 +668,16 @@ class Api extends RestActiveController
     public function actionFilter($filterName, $query = null)
     {
         $model = $this->model;
-
-        $this->handleNotifications($this->modelClass, $this->authId);
-        
         $filterName = Html::encode($filterName);
-        
-        if (!array_key_exists($filterName, $model->ngRestFilters())) {
+        $filtersList = $model->ngRestFilters();
+
+        if (!array_key_exists($filterName, $filtersList)) {
             throw new InvalidCallException("The requested filter '$filterName' does not exists in the filter list.");
         }
 
-        $find = $model->ngRestFilters()[$filterName];
+        $this->handleNotifications($this->modelClass, $this->authId);
+
+        $find = $filtersList[$filterName];
 
         if ($query) {
             foreach ($model->getNgRestPrimaryKey() as $pkName) {

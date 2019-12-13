@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 2.4.0
 
++ [#421](https://github.com/luyadev/luya-module-admin/issues/421) Lazyload ngrest config informations to reduce memory usage and sql requests.
 + [#420](https://github.com/luyadev/luya-module-admin/pull/420) Fix a bug when using group by option in crud and values where not rendered trough ngrest plugins mechanism. 
 + [#419](https://github.com/luyadev/luya-module-admin/pull/419) NgRest Filters are rendered by LUYA admin select dropdown instead of browser dropdown, this allows to search in the list.
 + [#233](https://github.com/luyadev/luya-module-admin/issues/233) Improve error message for empty active window callback parameters.
