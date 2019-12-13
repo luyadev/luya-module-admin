@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 2.4.0
+## 2.4.0 (13. December 2019)
 
 + [#415](https://github.com/luyadev/luya-module-admin/issues/415) Storage createImage works only when image mimetype is provided.
 + [#385](https://github.com/luyadev/luya-module-admin/issues/385) Fixed issue with varchar primary keys when working with relations.
