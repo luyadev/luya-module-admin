@@ -35,7 +35,7 @@ use luya\helpers\Json;
  * @property integer $passthrough_file_stats
  * @property string $caption
  * @property string $inline_disposition
- *
+ * @property boolean $isImage
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
