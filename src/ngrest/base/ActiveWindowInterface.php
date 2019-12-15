@@ -39,7 +39,7 @@ interface ActiveWindowInterface
     /**
      * Set the current configratuion hash name to the ActiveWindow.
      *
-     * Setting the the hash happens in the {{luya\admin\ngrest\render\RenderActiveWindow::render}} method.
+     * Setting the hash happens in the {{luya\admin\ngrest\render\RenderActiveWindow::render}} method.
      *
      * @param string $hash The hash name of the current active config.
      */
@@ -48,7 +48,7 @@ interface ActiveWindowInterface
     /**
      * Set the hash of the current active window which is calculated by the ActiveWindow.
      *
-     * Setting the the hash happens in the {{luya\admin\ngrest\render\RenderActiveWindow::render}} method.
+     * Setting the hash happens in the {{luya\admin\ngrest\render\RenderActiveWindow::render}} method.
      * @param string $hash
      */
     public function setActiveWindowHash($hash);

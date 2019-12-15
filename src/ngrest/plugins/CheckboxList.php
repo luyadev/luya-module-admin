@@ -79,7 +79,7 @@ class CheckboxList extends Plugin
      */
     public function onBeforeSave($event)
     {
-        // if its not i18n casted field we have to serialize the the file array as json and abort further event excution.
+        // if its not i18n casted field we have to serialize the file array as json and abort further event excution.
         if (!$this->i18n) {
             // as it could be an assigned array from the frontend model assigne via a form, we verify if the array contains a value key.
             $value = $event->sender->getAttribute($this->name);

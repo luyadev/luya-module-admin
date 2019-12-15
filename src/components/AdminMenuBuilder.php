@@ -114,7 +114,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     }
     
     /**
-     * A node which is a custom route to open, nodes are the the top menu of the luya administration interfaces.
+     * A node which is a custom route to open, nodes are the top menu of the luya administration interfaces.
      *
      * @param string $name The name of the node, all names will process trough the `Yii::t` function with its module name as prefix.
      * @param string $icon The icon name based on the google icons font see https://design.google.com/icons/.

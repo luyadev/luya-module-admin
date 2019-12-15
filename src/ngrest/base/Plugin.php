@@ -759,7 +759,7 @@ abstract class Plugin extends Component implements TypesInterface
     /**
      * The ngrest services collector.
      *
-     * > The service event is async to the other events, which means the service event collects data before the the other events are called.
+     * > The service event is async to the other events, which means the service event collects data before the other events are called.
      *
      * @param \luya\admin\ngrest\base\NgRestModel::EVENT_SERVICE_NGREST $event NgRestModel event EVENT_SERVICE_NGREST.
      */

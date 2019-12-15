@@ -136,7 +136,7 @@ final class StorageImage extends ActiveRecord
     }
 
     /**
-     * The the relation for an storage image with the given filter identifier
+     * the relation for an storage image with the given filter identifier
      *
      * @param string $identifier The identifier of the filter to use.
      * @return self

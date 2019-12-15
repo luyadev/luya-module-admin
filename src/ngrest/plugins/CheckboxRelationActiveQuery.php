@@ -9,7 +9,7 @@ use yii\base\InvalidConfigException;
 /**
  * Checkbox relation based on an Active Query.
  *
- * This plugin uses the the active linking abilities of the yii relation defintions (hasMany, viaTable, hasOne).
+ * This plugin uses the active linking abilities of the yii relation defintions (hasMany, viaTable, hasOne).
  *
  * Example implementation:
  *

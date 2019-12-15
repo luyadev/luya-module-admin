@@ -66,7 +66,7 @@ class CallbackButtonFileDownloadWidget extends CallbackButtonWidget
      * Generates and returns the content output.
      *
      * @param \luya\admin\ngrest\base\ActiveWindow $context The ActiveWindow context where the method is called in order to act as the callback could.
-     * @param string $fileName The filename which the the user would download. Make sure to use the correct extension as the mime type is read from the extension name.
+     * @param string $fileName The filename which the user would download. Make sure to use the correct extension as the mime type is read from the extension name.
      * @param string $content The output content which will be written to a temporary file and the return to the user by your filename.
      * @return array
      */
