@@ -11,7 +11,7 @@ use yii\base\InvalidConfigException;
 /**
  * Performance optimised select relation plugin.
  *
- * This plugin is for CRUD tables with large amount of tables, there for you can not access the the ActiveRecord object.
+ * This plugin is for CRUD tables with large amount of tables, there for you can not access the ActiveRecord object.
  *
  * ```php
  * 'client_id' => [

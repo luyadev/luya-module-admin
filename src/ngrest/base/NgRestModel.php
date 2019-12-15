@@ -153,7 +153,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * The value is determined by:
      *
-     * 1. Is the the i18n casted value empty continue or return value.
+     * 1. Is the i18n casted value empty continue or return value.
      * 2. If preffered language is given and a none empty value exists for the preferred language return the value or continue.
      * 3. Foreach the array and return the first value which is not empty.
      *

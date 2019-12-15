@@ -133,7 +133,7 @@ abstract class Filter extends BaseObject implements FilterInterface
     public function getEffectParamsList($effectParams)
     {
         if ($this->_effectParamsList === null) {
-            // see if the the effect defintion contains a vars key
+            // see if the effect defintion contains a vars key
             if (!array_key_exists('vars', $effectParams)) {
                 throw new Exception("Required 'vars' key not found in effect definition array.");
             }

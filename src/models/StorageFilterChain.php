@@ -77,7 +77,7 @@ final class StorageFilterChain extends ActiveRecord
     }
 
     /**
-     * Encode the the effect_json_values array to a json structure.
+     * Encode the effect_json_values array to a json structure.
      */
     public function eventBeforeValidate()
     {

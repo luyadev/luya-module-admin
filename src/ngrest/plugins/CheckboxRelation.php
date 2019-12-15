@@ -69,7 +69,7 @@ use luya\admin\helpers\I18n;
  * }
  * ```
  *
- * As now the there is a relation for `groups` this relation query will be used in order to return the data.
+ * As now there is a relation for `groups` this relation query will be used in order to return the data.
  *
  * @property \luya\admin\ngrest\base\NgRestModel $model The model object
  * @property string $modelPrimaryKey The primary key string.
