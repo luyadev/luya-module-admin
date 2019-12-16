@@ -58,9 +58,9 @@ class ConfigTest extends AdminModelTestCase
         ], $cfg->getRelations());
         $this->assertSame([
             [
-                'hash' => '0b825e122b29fedf9d68ed51404e408968ede7f5'
-                'label' => 'active_button_timestamp_label'
-                'icon' => 'update'
+                'hash' => '0b825e122b29fedf9d68ed51404e408968ede7f5',
+                'label' => 'active_button_timestamp_label',
+                'icon' => 'update',
             ]
         ], $cfg->getActiveButtons());
 
