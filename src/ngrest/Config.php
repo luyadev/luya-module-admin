@@ -164,7 +164,7 @@ class Config extends BaseObject implements ConfigInterface
                 ];
             }
 
-            $this->_activeButtons = $buttons;
+            $this->_activeButtons = $btns;
         }
 
         return $this->_activeButtons;
