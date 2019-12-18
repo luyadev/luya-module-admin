@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98ad1bfe5d84d407c92602152ee98478",
+    "content-hash": "2955e0c079fd3e32c7e06481145a2df8",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -780,16 +780,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.30",
+            "version": "2.0.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "dfeeaf4dbdd23c9cd29b9246921e8a9ca2dbabe4"
+                "reference": "b9fa3d184b41fb847aa7ae8b447d59b243c72d45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/dfeeaf4dbdd23c9cd29b9246921e8a9ca2dbabe4",
-                "reference": "dfeeaf4dbdd23c9cd29b9246921e8a9ca2dbabe4",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b9fa3d184b41fb847aa7ae8b447d59b243c72d45",
+                "reference": "b9fa3d184b41fb847aa7ae8b447d59b243c72d45",
                 "shasum": ""
             },
             "require": {
@@ -876,7 +876,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-11-19T21:22:20+00:00"
+            "time": "2019-12-18T12:52:24+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1075,7 +1075,7 @@
             "version": "v1.7.9",
             "source": {
                 "type": "git",
-                "url": "git@github.com:angular/bower-angular.git",
+                "url": "https://github.com/angular/bower-angular.git",
                 "reference": "84a5b810f33f82a552cee361268b77181691ce65"
             },
             "dist": {
@@ -1147,16 +1147,16 @@
         },
         {
             "name": "bower-asset/echarts",
-            "version": "3.8.5",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:ecomfe/echarts.git",
-                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
+                "url": "https://github.com/apache/incubator-echarts.git",
+                "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
-                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
+                "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
+                "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "type": "bower-asset"
         },
@@ -1346,16 +1346,16 @@
         },
         {
             "name": "luyadev/luya-module-cms",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "6a3cc4cef5b02477a1c46f8eac0e1d08d34095e9"
+                "reference": "d792102ad3d5b61981b0ed930a7444c520166b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/6a3cc4cef5b02477a1c46f8eac0e1d08d34095e9",
-                "reference": "6a3cc4cef5b02477a1c46f8eac0e1d08d34095e9",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/d792102ad3d5b61981b0ed930a7444c520166b6e",
+                "reference": "d792102ad3d5b61981b0ed930a7444c520166b6e",
                 "shasum": ""
             },
             "require-dev": {
@@ -1406,7 +1406,7 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2019-11-12T16:39:13+00:00"
+            "time": "2019-12-13T11:13:53+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
@@ -1760,33 +1760,33 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203"
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f6811d96d97bdf400077a0cc100ae56aa32b9203",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
-                "sebastian/comparator": "^1.1|^2.0|^3.0",
+                "sebastian/comparator": "^1.2.3|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.5|^3.2",
+                "phpspec/phpspec": "^2.5 || ^3.2",
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -1819,7 +1819,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-10-03T11:07:50+00:00"
+            "time": "2019-12-17T16:54:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
