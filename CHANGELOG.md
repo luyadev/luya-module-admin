@@ -5,7 +5,13 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.0
 
+### Changed
+
 + [#428](https://github.com/luyadev/luya-module-admin/issues/428) Update to latest echarts version (from 3.5 to 4.5) for backwards compatbility problems take a look at https://www.echartsjs.com/en/changelog.html#v4-0-0.
+
+### Fixed
+
++ [#426](https://github.com/luyadev/luya-module-admin/issues/426) Fixed a bug where color plugin does not work when model is empty.
 
 ## 2.4.1 (16. December 2019)
 

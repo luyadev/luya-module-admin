@@ -18,7 +18,7 @@ class Color extends Plugin
     public function renderList($id, $ngModel)
     {
         return [
-            $this->createTag('span', null, ['style' => 'background-color: {{' . $ngModel .' }}; margin-right:5px; border-radius: 60%; padding:0px 8px;']),
+            $this->createTag('span', null, ['style' => 'background-color: {{' . $ngModel .' }}; width:12px; height:12px; border-radius:50%; display:inline-block', 'ng-if' => $ngModel]),
             $this->createListTag($ngModel),
         ];
     }
