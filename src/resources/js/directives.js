@@ -1126,7 +1126,7 @@ zaa.directive("zaaColor", function () {
         },
         controller: ['$scope', function ($scope) {
             function getTextColor() {
-                if (typeof $scope.model === 'undefined') {
+                if (typeof $scope.model === 'undefined' || !$scope.model) {
                     return '#000';
                 }
 
