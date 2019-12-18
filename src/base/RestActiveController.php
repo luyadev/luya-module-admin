@@ -94,32 +94,6 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
     }
 
     /**
-     * Check if the current user have given permissions type.
-     *
-     * ```php
-     * $this->can(Auth::CAN_UPDATE);
-     * ```
-     *
-     * If the user has no permission to update a forbidden http exception is thrown.
-     *
-     * @param integer $type
-     * @return boolean Returns true otherwise throws an exception
-     * @throws ForbiddenHttpException
-     * @since 2.0.0
-     * @deprecated Deprecated since 2.2.0 and replaced with isActionAllowed() will be removedd in 3.0. In order to define and check action permission use actionPermissions() instead.
-     */
-    public function can($type)
-    {
-        trigger_error("can() is deprecated, use define action permissions in actionPermissions() instead!", E_USER_DEPRECATED);
-
-        $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, $type);
-            
-        if (!$this->authId) {
-            throw new ForbiddenHttpException("User is unable to access the API \"{$this->id}\" due to insufficient permissions.");
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function checkAccess($action, $model = null, $params = [])
