@@ -404,7 +404,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getPointer($pointer, $defaultValue = false)
     {
-        return ($this->hasPointer($pointer)) ? $this->_config[$pointer] : $defaultValue;
+        return $this->hasPointer($pointer) ? $this->_config[$pointer] : $defaultValue;
     }
 
     /**
@@ -415,7 +415,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function hasField($pointer, $field)
     {
-        return ($this->getPointer($pointer)) ? array_key_exists($field, $this->_config[$pointer]) : false;
+        return $this->getPointer($pointer) ? array_key_exists($field, $this->_config[$pointer]) : false;
     }
 
     /**
@@ -426,7 +426,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getField($pointer, $field)
     {
-        return ($this->hasField($pointer, $field)) ? $this->_config[$pointer][$field] : false;
+        return $this->hasField($pointer, $field) ? $this->_config[$pointer][$field] : false;
     }
 
     /**
@@ -555,7 +555,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function isDeletable()
     {
-        return ($this->getPointer('delete') === true) ? true : false;
+        return $this->getPointer('delete') === true ? true : false;
     }
 
     private $_plugins;
