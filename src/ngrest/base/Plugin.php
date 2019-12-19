@@ -60,6 +60,14 @@ abstract class Plugin extends Component implements TypesInterface
     public $i18n = false;
 
     /**
+     * @var boolean Whether the the value is only readable in EDIT scope or not. If enabled the data is displayed in the edit form as value instead
+     * of the edit form. This has no effect to the create scope ony to the edit scope. Internally when enabled, the plugin will use {{renderList()}} in 
+     * update context instead of {{renderUpdate()}}.
+     * @since 3.0.0
+     */
+    public $readonly = false;
+
+    /**
      * @var boolean Whether this column should be hidden in the list. If the column is hidden in the list the data will be loaded from the api and can
      * be used by other fields, but its not visible in list view.
      * @since 2.0.0

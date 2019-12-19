@@ -587,8 +587,13 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         $args = $typeConfig['args'];
         $args['renderContext'] = $this;
         $obj = NgRest::createPluginObject($typeConfig['class'], $attribute, $label, $elmni18n, $args);
-        $method = 'render'.ucfirst($configContext);
-        $html = $obj->$method($uniqueId, $ngRestModel);
+
+        if ($obj->readonly && $configContext == self::TYPE_UPDATE) {
+            $html = $obj->renderList($uniqueId, $ngRestModel);
+        } else {
+            $method = 'render'.ucfirst($configContext);
+            $html = $obj->$method($uniqueId, $ngRestModel);
+        }
 
         // parsed the element output content to a string
         $content = is_array($html) ? implode(" ", $html) : $html;
@@ -599,6 +604,14 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             if ($isRequired) {
                 $content = '<span class="bold-form-label">'.$content.'</span>';
             }
+        }
+
+        // if read only, wrap from group around read only value:
+        if ($obj->readonly && $configContext == self::TYPE_UPDATE) {
+            $content = '<div class="form-group form-side-by-side">
+                <div class="form-side form-side-label">'.$label.'</div>
+                <div class="form-side">'.$content.'</div>
+            </div>';
         }
 
         return $content;
