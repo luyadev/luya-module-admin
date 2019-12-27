@@ -23,6 +23,8 @@ namespace luya\admin\ngrest\plugins;
  * [['list'], ['id.index']],
  * ```
  * 
+ * > In order to hide the primary key column take a look at [[ngrest-model.md]] hidenInList
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 3.0.0
  */
