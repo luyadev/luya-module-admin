@@ -1656,9 +1656,7 @@ zaa.directive("zaaCheckbox", function () {
 
             $scope.init = function () {
                 if ($scope.model == undefined && $scope.model == null) {
-                    
                     $scope.model = typeCastValue($scope.initvalue);
-                    console.log($scope.model);
                 }
             };
             $timeout(function () {
