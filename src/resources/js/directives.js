@@ -1656,25 +1656,35 @@ zaa.directive("zaaCheckbox", function () {
 
             $scope.init = function () {
                 if ($scope.model == undefined && $scope.model == null) {
+                    
                     $scope.model = typeCastValue($scope.initvalue);
+                    console.log($scope.model);
                 }
             };
             $timeout(function () {
                 $scope.init();
-            })
+            });
+
+            $scope.clicker = function() {
+                if ($scope.model == $scope.valueTrue) {
+                    $scope.model = $scope.valueFalse;
+                } else {
+                    $scope.model = $scope.valueTrue;
+                }
+            };
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                 '<div class="form-side form-side-label">' +
-                '<label for="{{id}}">{{label}}</label>' +
+                    '<label for="{{id}}">{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side">' +
-                '<div class="form-check">' +
-                '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
-                '<label for="{{id}}"></label>' +
+                    '<div class="form-check">' +
+                        '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-change="change()" ng-click="clicker()" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
+                        '<label for="{{id}}"></label>' +
+                    '</div>' +
                 '</div>' +
-                '</div>' +
-                '</div>';
+            '</div>';
         }
     }
 });
