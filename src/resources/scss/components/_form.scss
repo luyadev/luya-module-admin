@@ -120,7 +120,9 @@ input[type="radio"] {
 }
 
 input[type="radio"] {
-    display: none;
+    position: fixed;
+    left: -1000000px;
+    visibility: hidden;
 
     & + label {
         display: block;
@@ -171,7 +173,9 @@ input[type="radio"] {
 }
 
 input[type="checkbox"] {
-    display: none;
+    position: fixed;
+    left: -1000000px;
+    visibility: hidden;
 
     & + label {
         display: block;
