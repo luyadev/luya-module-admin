@@ -13,14 +13,23 @@ use luya\admin\ngrest\base\Plugin;
 class Color extends Plugin
 {
     /**
+     * @var boolean Whether the color value should be hidden in the list view or not. The value is the hex format of the color select.
+     * @since 3.0.0
+     */
+    public $valueInList = true;
+
+    /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
-        return [
-            $this->createTag('span', null, ['style' => 'background-color: {{' . $ngModel .' }}; width:12px; height:12px; border-radius:50%; display:inline-block', 'ng-if' => $ngModel]),
-            $this->createListTag($ngModel),
-        ];
+        $html = [$this->createTag('span', null, ['style' => 'background-color: {{' . $ngModel .' }}; width:12px; height:12px; border-radius:50%; display:inline-block', 'ng-if' => $ngModel])];
+
+        if ($this->valueInList) {
+            $html[] = $this->createListTag($ngModel);
+        }
+        
+        return $html;
     }
 
     /**
