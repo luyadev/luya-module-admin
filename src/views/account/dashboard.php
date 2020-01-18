@@ -35,9 +35,9 @@ use luya\admin\Module;
             <div class="card">
                 <div class="card-body">
                     <form ng-submit="changePassword()">
+                        <zaa-password autocomplete="current-password" fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
                         <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
                         <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
-                        <zaa-password autocomplete="current-password" fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
                         <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
                     </form>
                 </div>
