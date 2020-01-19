@@ -5,6 +5,7 @@ namespace luya\admin\ngrest;
 use Yii;
 use luya\helpers\ArrayHelper;
 use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
 use yii\base\InvalidConfigException;
 use yii\base\BaseObject;
 use luya\admin\ngrest\base\NgRestRelation;
@@ -34,11 +35,39 @@ use luya\admin\ngrest\base\NgRestRelation;
  * ];
  * ```
  *
+ * @property NgRestModel $model
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
 class Config extends BaseObject implements ConfigInterface
 {
+    private $_model;
+
+    /**
+     * Setter methdo for ngrest model context.
+     * 
+     * The model that can be lazy loaded on request instead of preloading from model.
+     *
+     * @param NgRestModel $model
+     * @since 2.4.0
+     */
+    public function setModel(NgRestModel $model)
+    {
+        $this->_model = $model;
+    }
+
+    /**
+     * Getter method for the model
+     * 
+     * @return NgRestModel
+     * @since 2.4.0
+     */
+    public function getModel()
+    {
+        return $this->_model;
+    }
+
     private $_config = [];
     
     /**
@@ -61,28 +90,37 @@ class Config extends BaseObject implements ConfigInterface
         return $this->_config;
     }
     
-    private $_relations = [];
+    private $_relations = null;
     
     /**
      * @inheritdoc
      */
     public function getRelations()
     {
-        $array = [];
-        
-        foreach ($this->_relations as $relation) {
-            /** @var $relation \luya\admin\ngrest\base\NgRestRelationInterface */
-            $array[] = [
-                'label' => $relation->getLabel(),
-                'apiEndpoint' => $relation->getApiEndpoint(),
-                'arrayIndex' => $relation->getArrayIndex(),
-                'modelClass' => $relation->getModelClass(),
-                'tabLabelAttribute' => $relation->getTabLabelAttribute(),
-                'relationLink' => $relation->getRelationLink(),
-            ];
+        if ($this->_relations === null) {
+            // ensure relations are made not on composite table.
+            if ($this->model->ngRestRelations() && count($this->getPrimaryKey()) > 1) {
+                throw new InvalidConfigException("Its not allowed to have ngRestRealtions() on models with composite primary keys.");
+            }
+
+            // generate relations
+            $relations = [];
+            foreach ($this->model->generateNgRestRelations() as $relation) {
+                /** @var $relation \luya\admin\ngrest\base\NgRestRelationInterface */
+                $relations[] = [
+                    'label' => $relation->getLabel(),
+                    'apiEndpoint' => $relation->getApiEndpoint(),
+                    'arrayIndex' => $relation->getArrayIndex(),
+                    'modelClass' => $relation->getModelClass(),
+                    'tabLabelAttribute' => $relation->getTabLabelAttribute(),
+                    'relationLink' => $relation->getRelationLink(),
+                ];
+            }
+
+            $this->_relations = $relations;
         }
-        
-        return $array;
+
+        return $this->_relations;
     }
 
     /**
@@ -94,7 +132,7 @@ class Config extends BaseObject implements ConfigInterface
         $this->_relations[] = $relation;
     }
     
-    private $_activeButtons = [];
+    private $_activeButtons;
 
     /**
      * Setter method for the active button array from the model
@@ -112,18 +150,24 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getActiveButtons()
     {
-        $btns = [];
-        foreach ($this->_activeButtons as $button) {
-            $hash = sha1($button['class']);
-            $object = Yii::createObject($button);
-            $btns[] = [
-                'hash' => $hash,
-                'label' => $object->getLabel(),
-                'icon' => $object->getIcon(),
-            ];
+        if ($this->_activeButtons === null) {
+            $buttons = $this->model->ngRestActiveButtons();
+
+            $btns = [];
+            foreach ($buttons as $button) {
+                $hash = sha1($button['class']);
+                $object = Yii::createObject($button);
+                $btns[] = [
+                    'hash' => $hash,
+                    'label' => $object->getLabel(),
+                    'icon' => $object->getIcon(),
+                ];
+            }
+
+            $this->_activeButtons = $btns;
         }
 
-        return $btns;
+        return $this->_activeButtons;
     }
     
 
@@ -175,18 +219,23 @@ class Config extends BaseObject implements ConfigInterface
         $this->_attributeLabels = $labels;
     }
     
-    private $_filters = false;
+    private $_filters;
     
     /**
      * @inheritdoc
      */
     public function getFilters()
     {
+        if ($this->_filters === null) {
+            $this->_filters = $this->model->ngRestFilters();
+        }
+
         return $this->_filters;
     }
     
     /**
-     *
+     * Setter method for filters.
+     * 
      * @param array $filters
      */
     public function setFilters(array $filters)
@@ -273,6 +322,10 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getPrimaryKey()
     {
+        if ($this->_primaryKey === null) {
+            $this->_primaryKey = $this->model->getNgRestPrimaryKey();
+        }
+        
         return $this->_primaryKey;
     }
     
@@ -351,7 +404,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getPointer($pointer, $defaultValue = false)
     {
-        return ($this->hasPointer($pointer)) ? $this->_config[$pointer] : $defaultValue;
+        return $this->hasPointer($pointer) ? $this->_config[$pointer] : $defaultValue;
     }
 
     /**
@@ -362,7 +415,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function hasField($pointer, $field)
     {
-        return ($this->getPointer($pointer)) ? array_key_exists($field, $this->_config[$pointer]) : false;
+        return $this->getPointer($pointer) ? array_key_exists($field, $this->_config[$pointer]) : false;
     }
 
     /**
@@ -373,7 +426,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function getField($pointer, $field)
     {
-        return ($this->hasField($pointer, $field)) ? $this->_config[$pointer][$field] : false;
+        return $this->hasField($pointer, $field) ? $this->_config[$pointer][$field] : false;
     }
 
     /**
@@ -502,7 +555,7 @@ class Config extends BaseObject implements ConfigInterface
      */
     public function isDeletable()
     {
-        return ($this->getPointer('delete') === true) ? true : false;
+        return $this->getPointer('delete') === true ? true : false;
     }
 
     private $_plugins;

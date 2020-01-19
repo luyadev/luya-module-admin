@@ -43,6 +43,15 @@ class RemoteController extends Controller
         
         UserOnline::clearList($this->module->userIdleTimeout);
 
+        $packages = [];
+
+        foreach (Yii::$app->getPackageInstaller()->getConfigs() as $name => $config) {
+            $packages[$name] = [
+                'package' => $config->package,
+                'time' => Yii::$app->getPackageInstaller()->timestamp,
+            ];
+        }
+
         return [
             'yii_version' => Yii::getVersion(),
             'luya_version' => Boot::VERSION,
@@ -52,7 +61,7 @@ class RemoteController extends Controller
             'app_transfer_exceptions' => (int) Yii::$app->errorHandler->transferException,
             'admin_online_count' => UserOnline::find()->count(),
             'app_elapsed_time' => Yii::getLogger()->getElapsedTime(),
-            'packages' => Yii::$app->getPackageInstaller()->getConfigs(),
+            'packages' => $packages,
             'packages_update_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
         ];
     }

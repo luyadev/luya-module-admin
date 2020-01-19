@@ -20,6 +20,8 @@ return [
         ]
     ],
     'components' => [
+        'session' => ['class' => 'yii\web\CacheSession'],
+        'cache' => ['class' => 'yii\caching\DummyCache'],
         'request' => [
             'forceWebRequest' => true,
             'isAdmin' => true,

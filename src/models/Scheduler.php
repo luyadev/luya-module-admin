@@ -84,7 +84,7 @@ class Scheduler extends \yii\db\ActiveRecord
             throw new Exception("The scheduler could not save the new value for model '{$this->model_class}' with primary key '{$this->primary_key}'.");
         }
 
-        throw new Exception("The Scheduler could not find the the model with primary key '{$this->primary_key}' for model '{$this->model_class}'.");
+        throw new Exception("The scheduler could not find model '{$this->model_class}' with primary key '{$this->primary_key}'.");
     }
 
     /**

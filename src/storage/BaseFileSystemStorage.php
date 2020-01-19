@@ -405,7 +405,7 @@ abstract class BaseFileSystemStorage extends Component
     }
 
     /**
-     * Get a single file based on the the ID.
+     * Get a single file based on the ID.
      *
      * If not found false is returned.
      *
@@ -584,7 +584,7 @@ abstract class BaseFileSystemStorage extends Component
     }
 
     /**
-     * Get a single image based on the the ID.
+     * Get a single image based on the ID.
      *
      * If not found false is returned.
      *
@@ -681,7 +681,8 @@ abstract class BaseFileSystemStorage extends Component
 
         $file = StorageFile::findOne($fileId);
 
-        if (!$file) {
+        // https://github.com/luyadev/luya-module-admin/issues/415
+        if (!$file && !$file->isImage) {
             return false;
         }
         // create the new image name
@@ -816,7 +817,7 @@ abstract class BaseFileSystemStorage extends Component
     }
 
     /**
-     * Get a single folder based on the the ID.
+     * Get a single folder based on the ID.
      *
      * If not found false is returned.
      *

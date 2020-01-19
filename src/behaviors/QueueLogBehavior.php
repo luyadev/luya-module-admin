@@ -82,8 +82,20 @@ class QueueLogBehavior extends Behavior
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
         if ($log) {
-            $log->updateAttributes(['end_timestamp' => time(), 'title' => $this->getExecTitle($event), 'is_error' => true]);
+            $title = $this->getExecTitle($event);
+            if ($event->error) {
+                $title.= " | " . $event->error->getMessage();
+            }
+            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => true]);
+
+            // ensure title length validation.
+            // admin 3.0 is required to add new log message table with text instead of string.
+            $log->title = $title;
+            $log->save();
         }
+
+        // send error 
+        Yii::$app->errorHandler->transferMessage($event->error->getMessage(), $event->error->getFile(), $event->error->getLine());
     }
     /**
      * @param JobEvent $event
@@ -91,7 +103,7 @@ class QueueLogBehavior extends Behavior
      */
     protected function getJobTitle(JobEvent $event)
     {
-        return $event->job instanceof JobInterface ? get_class($event->job) : 'unknown job';
+        return $event->job instanceof JobInterface ? get_class($event->job) : 'Unknown job Title';
     }
 
     /**

@@ -20,7 +20,7 @@ use yii\base\InvalidConfigException;
  * }
  * ```
  *
- * The above example shows how the the first attribute contains the value of the directive inside the $type attribute, the second
+ * The above example shows how the first attribute contains the value of the directive inside the $type attribute, the second
  * attribute $value uses the injector plugin in order to rendern this given type interactively in the form. This allows you to
  * change the input type dynamically while typing.
  *

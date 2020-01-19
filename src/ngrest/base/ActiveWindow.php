@@ -323,7 +323,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     }
 
     /**
-     * Render a template with its name and params based on the the view folder path.
+     * Render a template with its name and params based on the view folder path.
      *
      * @param string $name The view file to render
      * @param array $params Optional params to assign into the view

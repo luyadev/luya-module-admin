@@ -2,6 +2,8 @@
 use luya\admin\ngrest\render\RenderCrud;
 use luya\admin\Module;
 use luya\admin\helpers\Angular;
+use luya\helpers\ArrayHelper;
+use luya\helpers\Json;
 
 /** @var $config \luya\admin\ngrest\ConfigInterface */
 /** @var $this \luya\admin\ngrest\render\RenderCrudView */
@@ -10,6 +12,9 @@ use luya\admin\helpers\Angular;
 /** @var $modelSelection string|boolean Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
 $this->beginPage();
 $this->beginBody();
+
+$filters = ArrayHelper::combine(array_keys($config->getFilters()));
+$filters = Angular::optionsArrayInput($filters);
 ?>
 <?php $this->registerAngularControllerScript(); ?>
 <div ng-controller="<?= $config->hash; ?>" class="crud">
@@ -127,12 +132,7 @@ $this->beginBody();
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <select class="form-control" ng-model="config.filter" ng-change="changeNgRestFilter()">
-                            <option value="0"><?= Module::t('ngrest_crud_filter_prompt'); ?></option>
-                            <?php foreach (array_keys($config->getFilters()) as $name): ?>
-                                <option value="<?= $name; ?>"><?= $name; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <luya-select ng-model="config.filter" initvalue="0" ng-change="changeNgRestFilter()" options='<?= Json::htmlEncode($filters); ?>' />
                     </div>
                     <?php endif; ?>
                 </div>
@@ -177,11 +177,13 @@ $this->beginBody();
                     </thead>
                     <tbody ng-repeat="(key, items) in data.listArray | groupBy: config.groupByField" ng-init="viewToggler[key]=config.groupByExpanded">
                         <tr ng-if="config.groupBy" class="table-group" ng-click="viewToggler[key]=!viewToggler[key]">
-                            <td colspan="<?= count($config->getPointer('list')) + 1 ?>">
-                                <strong>{{key}}</strong>
-                                <i class="material-icons right" ng-show="!viewToggler[key]">keyboard_arrow_right</i>
-                                <i class="material-icons right" ng-show="viewToggler[key]">keyboard_arrow_down</i>
+                            <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
+                            <td ng-init="item=items[0]" ng-if="config.groupByField=='<?= $item['name']; ?>'" colspan="<?= count($config->getPointer('list')) + 1 ?>">
+                                <strong><?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?></strong>
+                                <i class="material-icons float-right pt-1" ng-show="!viewToggler[key]">keyboard_arrow_right</i>
+                                <i class="material-icons float-right pt-1" ng-show="viewToggler[key]">keyboard_arrow_down</i>
                             </td>
+                            <?php endforeach; ?>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>

@@ -15,6 +15,8 @@ use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\filesystem\LocalFileSystem;
 use luya\admin\base\ReloadButton;
+use yii\console\Application;
+use yii\queue\db\Command;
 
 /**
  * Admin Module.
@@ -186,6 +188,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @see {{luya\admin\commands\QueueController}}
      */
     public $autoBootstrapQueue = false;
+    
+    /**
+     * @var boolean Whether the `queue` command should be bootstraped automatically. Defaults to true. If already a queue is configured, this might conflict and override
+     * those settings. Therefore you can disable the bootstrap of `queue` command.
+     * @since 2.0.4
+     */
+    public $bootstrapQueueCli = true;
     
     /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
@@ -479,7 +488,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'mutex' => 'yii\mutex\FileMutex',
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
-                'as log' => 'luya\admin\behaviors\QueueLogBehavior'
+                'as log' => 'luya\admin\behaviors\QueueLogBehavior',
+                'attempts' => 5, // allow to attempt 5 times
+                'ttr' => 300, // wait 5 minutes, also its the max amount a job can take: The ttr (Time to reserve, TTR) option defines the number of seconds during which a job must be successfully completed.
             ],
         ];
     }
@@ -497,6 +508,17 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             FilterImporter::class,
             PropertyImporter::class,
         ];
+    }
+
+    public function luyaBootstrap(\yii\base\Application $app)
+    {
+        // if console application bootstrap the yii2 queue cli command.
+        if ($this->bootstrapQueueCli && $app instanceof Application) {
+            $app->controllerMap['queue'] = [
+                'class' => Command::class,
+                'queue' => $app->adminqueue,
+            ];
+        }
     }
     
     /**

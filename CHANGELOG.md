@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.0
+
+### Changed
+
++ [#428](https://github.com/luyadev/luya-module-admin/issues/428) Update to latest echarts version (from 3.5 to 4.5) for backwards compatbility problems take a look at https://www.echartsjs.com/en/changelog.html#v4-0-0.
+
+### Added
+
++ [#437](https://github.com/luyadev/luya-module-admin/pull/437) Option to display only the color dot in the Color plugin not the the selected color value.
++ [#434](https://github.com/luyadev/luya-module-admin/pull/434) New Badge plugin to generate badge views in list overview.
++ [#380](https://github.com/luyadev/luya-module-admin/issues/380) New `index` ngrest plugins in order to generate a sequential row numbering in list views.
++ [#264](https://github.com/luyadev/luya-module-admin/issues/264) Added new `readonly` option to NgRest Plugins which will render the list value in update scope.
+
+### Fixed
+
+± [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
++ [#426](https://github.com/luyadev/luya-module-admin/issues/426) Fixed a bug where color plugin does not work when model is empty.
+
+## 2.4.1 (16. December 2019)
+
++ [#424](https://github.com/luyadev/luya-module-admin/pull/424) Fixed bug of wrong variable in active buttons.
+
+## 2.4.0 (13. December 2019)
+
++ [#415](https://github.com/luyadev/luya-module-admin/issues/415) Storage createImage works only when image mimetype is provided.
++ [#385](https://github.com/luyadev/luya-module-admin/issues/385) Fixed issue with varchar primary keys when working with relations.
++ [#421](https://github.com/luyadev/luya-module-admin/issues/421) Lazyload ngrest config informations to reduce memory usage and sql requests.
++ [#420](https://github.com/luyadev/luya-module-admin/pull/420) Fix a bug when using group by option in crud and values where not rendered trough ngrest plugins mechanism. 
++ [#419](https://github.com/luyadev/luya-module-admin/pull/419) NgRest Filters are rendered by LUYA admin select dropdown instead of browser dropdown, this allows to search in the list.
++ [#233](https://github.com/luyadev/luya-module-admin/issues/233) Improve error message for empty active window callback parameters.
++ [#413](https://github.com/luyadev/luya-module-admin/pull/413) Option to disable the auto bootstrap of the queue command in conflict siutations.
++ [#409](https://github.com/luyadev/luya-module-admin/issues/409) Bootstrap the native Yii Queue console command in order to use run and listen commands.
+
+## 2.3.0 (12. November 2019)
+
++ [#394](https://github.com/luyadev/luya-module-admin/issues/394) Do not run fake cronjob for admin queue if it was not enabled by module's config.
++ [#407](https://github.com/luyadev/luya-module-admin/pull/407) Add new ngrest `raw` plugin which won't change input/output.
++ [#404](https://github.com/luyadev/luya-module-admin/issues/404) NgRest API delete action use ngRestFind() instead of find().
++ [#395](https://github.com/luyadev/luya-module-admin/issues/395) New Active Window to delete tags.
++ [#401](https://github.com/luyadev/luya-module-admin/issues/401) Fixed logout bug for users without file permission.
++ [#397](https://github.com/luyadev/luya-module-admin/issues/397) i18nAttributeFallbackValue() require to run the onFind() context of the given attribute plugin in order to ensure plugin specific options like `markdown`. 
++ [#389](https://github.com/luyadev/luya-module-admin/issues/389) Do not throw an exception by default when pool identifier does not exists in the list of pools.
++ [#403](https://github.com/luyadev/luya-module-admin/pull/403) Use ngRestFind() method for duplicate button instead of find().
+
 ## 2.2.2 (23. October 2019)
 
 + [#388](https://github.com/luyadev/luya-module-admin/pull/388) Fixed bug when using DuplicateActiveButton with properties which resolve an object in the after find event.
