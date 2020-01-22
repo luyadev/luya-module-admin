@@ -67,7 +67,7 @@ body {
         </div>
     </form>
     <!-- end of secure login form -->
-    <div class="login-success hidden" id="success">
+    <div class="login-success" style="visibility: hidden;" id="success">
         <i class="material-icons login-success-icon">check_circle</i>
     </div>
 </div>
