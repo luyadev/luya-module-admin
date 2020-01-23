@@ -18,8 +18,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 + [#441](https://github.com/luyadev/luya-module-admin/issues/441) Fixed switching of the "check_circle" text to the real icon after successful authentication
-
-± [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
++ [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
 + [#426](https://github.com/luyadev/luya-module-admin/issues/426) Fixed a bug where color plugin does not work when model is empty.
 
 ## 2.4.1 (16. December 2019)
