@@ -35,6 +35,14 @@ abstract class Select extends Plugin
     public $emptyListValue = "-";
 
     /**
+     * @var boolean If enabeld, which is default, the selected value will be automaticcaly assigned with the model attribute and override its default
+     * value from the database. This might be a problem when working with relations.
+     * @see https://github.com/luyadev/luya-module-admin/issues/439
+     * @since 3.0.0 
+     */
+    public $assignAfterFind = true;
+
+    /**
      * Getter method for data array.
      *
      * @return array
@@ -92,6 +100,10 @@ abstract class Select extends Plugin
      */
     public function onAfterListFind($event)
     {
+        if (!$this->assignAfterFind) {
+            return parent::onAfterListFind($event);
+        }
+
         $value = StringHelper::typeCast($event->sender->getAttribute($this->name));
         
         if ($this->scheduling) {
