@@ -72,7 +72,7 @@ class ImageArray extends Plugin
      */
     public function onBeforeSave($event)
     {
-        // if its not i18n casted field we have to serialize the the image array as json and abort further event excution.
+        // if its not i18n casted field we have to serialize the image array as json and abort further event excution.
         if (!$this->i18n) {
             $this->writeAttribute($event, Json::encode($event->sender->getAttribute($this->name)));
             return false;

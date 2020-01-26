@@ -36,7 +36,7 @@ var observeLogin = function (form, url, secureUrl) {
                 }
 
                 if (refresh) {
-                    $('#success').show();
+                    $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
                     $('#loginForm').hide();
                     $('.login-logo').hide();
@@ -69,7 +69,7 @@ var observeLogin = function (form, url, secureUrl) {
                 }
 
                 if (refresh) {
-                    $('#success').show();
+                    $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
                     $('#loginForm').hide();
                     $('.login-logo').hide();
@@ -86,7 +86,7 @@ var observeLogin = function (form, url, secureUrl) {
         $('#errorsContainer').hide();
         $('#secureForm').hide();
         $('#loginForm').show();
-        $('#success').hide();
+        $('#success').css('visibility', 'hidden');
     });
 };
 

@@ -1126,7 +1126,7 @@ zaa.directive("zaaColor", function () {
         },
         controller: ['$scope', function ($scope) {
             function getTextColor() {
-                if (typeof $scope.model === 'undefined') {
+                if (typeof $scope.model === 'undefined' || !$scope.model) {
                     return '#000';
                 }
 
@@ -1483,16 +1483,47 @@ zaa.directive("zaaSelect", function () {
             "initvalue": "@initvalue"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
-
-            /* default scope values */
-
-            $scope.isOpen = 0;
-
             if ($scope.optionsvalue == undefined) {
                 $scope.optionsvalue = 'value';
             }
-
             if ($scope.optionslabel == undefined) {
+                $scope.optionslabel = 'label';
+            }
+        }],
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                    '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">'+
+                    '<luya-select ng-model="model" options="options" id="{{id}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}" />' +
+                '</div>' +
+            '</div>';
+        }
+    }
+});
+
+zaa.directive("luyaSelect", function() {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "options": "=",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
+            "id": "@fieldid",
+            "initvalue": "@initvalue",
+            ngChange : "&"
+        },
+        controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
+
+            $scope.isOpen = 0;
+
+            if ($scope.optionsvalue == undefined || $scope.optionsvalue == "") {
+                $scope.optionsvalue = 'value';
+            }
+
+            if ($scope.optionslabel == undefined || $scope.optionslabel == "") {
                 $scope.optionslabel = 'label';
             }
 
@@ -1520,6 +1551,8 @@ zaa.directive("zaaSelect", function () {
                             $scope.model = $scope.initvalue;
                         }
                     }
+
+                    
                 });
             });
 
@@ -1547,7 +1580,8 @@ zaa.directive("zaaSelect", function () {
             };
 
             $scope.setModelValue = function (option) {
-                $scope.model = option[$scope.optionsvalue];
+                $scope.model = angular.isObject(option) ? option[$scope.optionsvalue] : option;
+                $timeout($scope.ngChange, 0);
                 $scope.closeSelect();
             };
 
@@ -1573,33 +1607,26 @@ zaa.directive("zaaSelect", function () {
             };
         }],
         template: function () {
-            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                '<div class="form-side form-side-label">' +
-                '<label for="{{id}}">{{label}}</label>' +
-                '</div>' +
-                '<div class="form-side">' +
-                '<div class="zaaselect" ng-class="{\'open\':isOpen, \'selected\':hasSelectedValue()}">' +
-                '<select class="zaaselect-select" ng-model="model">' +
-                '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
-                '</select>' +
-                '<div class="zaaselect-selected">' +
-                '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
-                '<i class="material-icons zaaselect-clear-icon" ng-click="model=initvalue">clear</i>' +
-                '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
-                '</div>' +
-                '<div class="zaaselect-dropdown">' +
-                '<div class="zaaselect-search">' +
-                '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
-                '</div>' +
-                '<div class="zaaselect-overflow">' +
-                '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
-                '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+            return  '<div class="zaaselect" ng-class="{\'open\':isOpen, \'selected\':hasSelectedValue()}">' +
+                        '<select class="zaaselect-select" ng-model="model">' +
+                            '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
+                        '</select>' +
+                        '<div class="zaaselect-selected">' +
+                            '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
+                            '<i class="material-icons zaaselect-clear-icon" ng-click="setModelValue(initvalue)">clear</i>' +
+                            '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
+                        '</div>' +
+                        '<div class="zaaselect-dropdown">' +
+                            '<div class="zaaselect-search">' +
+                                '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
+                            '</div>' +
+                            '<div class="zaaselect-overflow">' +
+                                '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
+                                    '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
         }
     }
 });
@@ -1634,20 +1661,28 @@ zaa.directive("zaaCheckbox", function () {
             };
             $timeout(function () {
                 $scope.init();
-            })
+            });
+
+            $scope.clicker = function() {
+                if ($scope.model == $scope.valueTrue) {
+                    $scope.model = $scope.valueFalse;
+                } else {
+                    $scope.model = $scope.valueTrue;
+                }
+            };
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                 '<div class="form-side form-side-label">' +
-                '<label for="{{id}}">{{label}}</label>' +
+                    '<label for="{{id}}">{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side">' +
-                '<div class="form-check">' +
-                '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
-                '<label for="{{id}}"></label>' +
+                    '<div class="form-check">' +
+                        '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-change="change()" ng-click="clicker()" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
+                        '<label for="{{id}}"></label>' +
+                    '</div>' +
                 '</div>' +
-                '</div>' +
-                '</div>';
+            '</div>';
         }
     }
 });

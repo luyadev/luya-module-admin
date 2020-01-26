@@ -18,7 +18,9 @@ class AdminModelTestCase extends WebApplicationTestCase
                 ],
                 'storage' => [
                     'class' => 'luya\admin\filesystem\DummyFileSystem'
-                ]
+                ],
+                'session' => ['class' => 'luya\testsuite\components\DummySession'],
+                'cache' => ['class' => 'yii\caching\DummyCache'],
             ],
             'modules' => [
                 'admin' => [

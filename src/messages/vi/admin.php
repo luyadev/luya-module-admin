@@ -446,4 +446,8 @@ return [
     'aws_delete_relations_table_name' => 'Relation Table Name',
     'aws_delete_relations_table_count' => 'Number of Entries',
     'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
+
+// 2.4.0
+
+    'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
 ];

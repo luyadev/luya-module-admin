@@ -42,6 +42,11 @@ zaa.directive("luyaSchedule", function() {
 
             // toggle window
 
+            $scope.getFirstAttributeKeyAsDefaultValue = function() {
+                return $scope.attributeValues[0]['value'];
+            };
+
+            $scope.newvalue = $scope.getFirstAttributeKeyAsDefaultValue();
             $scope.isVisible = false;
             $scope.upcomingAccordionOpen = true;
             $scope.archiveAccordionOpen = false;

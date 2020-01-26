@@ -489,8 +489,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior',
-                'attempts' => 5, // allow to attempt 5 tiems
-                'ttr' => 300, // wait 5 minutes
+                'attempts' => 5, // allow to attempt 5 times
+                'ttr' => 300, // wait 5 minutes, also its the max amount a job can take: The ttr (Time to reserve, TTR) option defines the number of seconds during which a job must be successfully completed.
             ],
         ];
     }

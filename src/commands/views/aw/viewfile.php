@@ -10,8 +10,8 @@ echo "<?php\n";
 /**
  * <?= $className; ?> Index View.
  *
- * @var $this \luya\admin\ngrest\base\ActiveWindowView
- * @var $model \luya\admin\ngrest\base\NgRestModel
+ * @var \luya\admin\ngrest\base\ActiveWindowView $this
+ * @var \luya\admin\ngrest\base\NgRestModel $model
  */
 ?>
 <h1>Active Window</h1>

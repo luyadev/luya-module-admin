@@ -25,7 +25,7 @@ interface JwtIdentityInterface extends Configurable
      *     // get the user id
      *     $userId = $token->getClaim('uid');
      *
-     *     return User::findOne($userId);
+     *     return User::find()->where(['id' => $userId, 'is_active' => true]);
      * }
      * ```
      *

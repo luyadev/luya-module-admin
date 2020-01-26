@@ -2,6 +2,8 @@
 
 namespace luya\admin\ngrest\render;
 
+use luya\admin\Module;
+use luya\admin\ngrest\base\ActiveWindow;
 use Yii;
 use yii\helpers\Inflector;
 use luya\Exception;
@@ -27,6 +29,7 @@ class RenderActiveWindowCallback extends Render
             throw new Exception("Unable to find ActiveWindow " . $activeWindowHash);
         }
         
+        /** @var ActiveWindow $obj */
         $obj = Yii::createObject($activeWindows[$activeWindowHash]['objectConfig']);
         $obj->setItemId(Yii::$app->session->get($activeWindowHash));
         $obj->setConfigHash($this->config->getHash());
@@ -34,6 +37,12 @@ class RenderActiveWindowCallback extends Render
 
         $function = 'callback'.Inflector::id2camel($activeWindowCallback);
 
-        return ObjectHelper::callMethodSanitizeArguments($obj, $function, Yii::$app->request->post());
+        try {
+            return ObjectHelper::callMethodSanitizeArguments($obj, $function, Yii::$app->request->post());
+        } catch (Exception $error) {
+            return $obj->sendError(Module::t('aws_missing_callback_param_generic_errror'), [
+                'message' => $error->getMessage(),
+            ]);
+        }
     }
 }

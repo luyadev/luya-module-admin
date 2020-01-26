@@ -153,7 +153,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * The value is determined by:
      *
-     * 1. Is the the i18n casted value empty continue or return value.
+     * 1. Is the i18n casted value empty continue or return value.
      * 2. If preffered language is given and a none empty value exists for the preferred language return the value or continue.
      * 3. Foreach the array and return the first value which is not empty.
      *
@@ -381,8 +381,11 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
-     * When is enabled grouping, you can set if will be grouped items showed expanded*
-     * @return bool true cause the grouped items will be expaded on page load (default)
+     * When enabled, the field groups in the form are by default expanded (open) or not (closed).
+     * 
+     * This has no effect unless {{luya\admin\ngrest\base\NgRestModel::ngRestGroupByField()}} is configured.
+     * 
+     * @return bool Whether the group field should be expanded or not (default is true).
      * @since 1.2.2.1
      */
     public function ngRestGroupByExpanded()
@@ -916,27 +919,21 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 $config->appendFieldOption($fieldName, 'i18n', true);
             }
 
+            // set model as context in order to lazy load data like (https://github.com/luyadev/luya-module-admin/pull/422)
+            // - ngRestFilters
+            // - getNgRestPrimaryKey
+            // - ngRestActiveButtons
+            // - ngRestRelations (trough: generateNgRestRelations())
+            $config->setModel($this);
+            
             // copy model data into config
             $config->setApiEndpoint(static::ngRestApiEndpoint());
-            $config->setPrimaryKey($this->getNgRestPrimaryKey());
-            $config->setFilters($this->ngRestFilters());
             $config->setDefaultOrder($this->ngRestListOrder());
             $config->setAttributeGroups($this->ngRestAttributeGroups());
             $config->setGroupByField($this->ngRestGroupByField());
             $config->setGroupByExpanded($this->ngRestGroupByExpanded());
             $config->setTableName($this->tableName());
             $config->setAttributeLabels($this->attributeLabels());
-            $config->setActiveButtons($this->ngRestActiveButtons());
-            
-            // ensure relations are made not on composite table.
-            if ($this->ngRestRelations() && count($this->getNgRestPrimaryKey()) > 1) {
-                throw new InvalidConfigException("You can not use the ngRestRelations() on composite key model.");
-            }
-            
-            // generate relations
-            foreach ($this->generateNgRestRelations() as $relation) {
-                $config->setRelation($relation);
-            }
 
             $config->onFinish();
             $this->_config = $config;
@@ -951,7 +948,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @return array
      * @since 2.0.0
      */
-    protected function generateNgRestRelations()
+    public function generateNgRestRelations()
     {
         $relations = [];
         // generate relations
