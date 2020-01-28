@@ -524,6 +524,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             $user->updateAttributes(['api_last_activity' => time()]);
         }
         
+        // this ensures the user cookie won't be destroyed.
+        Yii::$app->adminuser->enableAutoLogin = false;
         return $user;
     }
 
@@ -538,16 +540,46 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * @inheritdoc
      */
+    /*
     public function getAuthToken()
     {
         return $this->auth_token;
     }
+    */
 
     /**
      * @inheritdoc
      */
     public function getAuthKey()
     {
+        $userAgent = Yii::$app->request->userAgent;
+
+        // no user agent, dissable auto login
+        if (empty($userAgent)) {
+            return false;
+        }
+
+        $device = new UserDevice();
+        $checksum = $device->generateUserAgentChecksum($userAgent);
+
+        $model = UserDevice::find()->where(['user_id' => $this->id, 'user_agent_checksum' => $checksum])->one();
+
+        if ($model) {
+            // update last update timestamp and return existing auth key
+            $model->touch('updated_at');
+            return $model->auth_key;
+        }
+
+        $model = new UserDevice();
+        $model->user_id = $this->id;
+        $model->user_agent = $userAgent;
+        $model->user_agent_checksum = $checksum;
+        $model->auth_key = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomKey() . $checksum);
+
+        if ($model->save()) {
+            return $model->auth_key;
+        }
+
         return false;
     }
 
@@ -556,6 +588,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function validateAuthKey($authKey)
     {
-        return false;
+        return UserDevice::find()->where(['auth_key' => $authKey, 'user_id' => $this->id])->exists();
     }
 }

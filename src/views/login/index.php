@@ -38,6 +38,10 @@ body {
                 <input class="login-input" id="password" name="login[password]" type="password" autocomplete="current-password" tabindex="2" required />
                 <label for="password" class="login-input-label"><?= Module::t('login_password'); ?></label>
             </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="login[autologin]" id="autologin">
+                <label class="form-check-label" for="autologin">Remember me</label>
+            </div>
             <div class="login-status alert alert-danger" id="errorsContainer" style="display: none"></div>
             <div class="login-buttons login-buttons-right">
                 <button class="btn btn-primary login-btn" type="submit"  tabindex="3">

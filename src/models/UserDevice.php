@@ -3,6 +3,7 @@
 namespace luya\admin\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%admin_user_device}}".
@@ -15,7 +16,7 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $updated_at
  */
-class AdminUserDevice extends \yii\db\ActiveRecord
+class UserDevice extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -23,6 +24,21 @@ class AdminUserDevice extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%admin_user_device}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::class],
+        ];
+    }
+
+    public function generateUserAgentChecksum($userAgent)
+    {
+        return empty($userAgent) ? false : sha1($userAgent);
     }
 
     /**

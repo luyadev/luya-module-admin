@@ -130,13 +130,18 @@ class LoginController extends Controller
                     // try to send the secure token to the given user email store the token in the session.
                     if ($model->sendSecureLogin()) {
                         Yii::$app->session->set('secureId', $model->getUser()->id);
+                        Yii::$app->session->set('autologin', $model->autologin);
                         return $this->sendArray(false, [], true);
                     }
                     
                     return $this->sendArray(false, ['Unable to send and store secure token.']);
                 }
                 
-                if (Yii::$app->adminuser->login($userObject)) {
+                if (!$model->autologin) {
+                    // auto login is disabled, disable the function
+                    Yii::$app->adminuser->enableAutoLogin = false;
+                }
+                if (Yii::$app->adminuser->login($userObject, Yii::$app->adminuser->cookieLoginDuration)) {
                     return $this->sendArray(true);
                 }
             }
@@ -164,7 +169,14 @@ class LoginController extends Controller
         if ($secureToken) {
             $user = $model->validateSecureToken($secureToken, Yii::$app->session->get('secureId'));
 
-            if ($user && Yii::$app->adminuser->login($user)) {
+            $autologin = Yii::$app->session->get('autologin', false);
+
+            if (!$autologin) {
+                // auto login is disabled, disable the function
+                Yii::$app->adminuser->enableAutoLogin = false;
+            }
+
+            if ($user && Yii::$app->adminuser->login($user, Yii::$app->adminuser->cookieLoginDuration)) {
                 Yii::$app->session->remove('secureId');
                 return $this->sendArray(true);
             }
