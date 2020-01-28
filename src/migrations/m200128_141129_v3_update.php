@@ -27,8 +27,6 @@ class m200128_141129_v3_update extends Migration
         ]);
 
         $this->createIndex('user_id', '{{%admin_user_device}}', ['user_id']);
-        $this->createIndex('auth_key', '{{%admin_user_device}}', ['auth_key']);
-
         // user 2fa
         $this->addColumn('{{%admin_user}}', 'login_2fa_enabled', $this->boolean()->defaultValue(false));
         $this->addColumn('{{%admin_user}}', 'login_2fa_secret', $this->string());

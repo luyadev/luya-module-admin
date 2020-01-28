@@ -44,6 +44,11 @@ use WhichBrowser\Parser;
  * @property integer $login_attempt
  * @property integer $login_attempt_lock_expiration
  * @property boolean $is_request_logger_enabled
+ * @property int|null $login_2fa_enabled {@since 3.0.0}
+ * @property string|null $login_2fa_secret {@since 3.0.0}
+ * @property string|null $login_2fa_backup_key {@since 3.0.0}
+ * @property string|null $password_verification_token {@since 3.0.0}
+ * @property int|null $password_verification_token_timestamp {@since 3.0.0}
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -225,15 +230,17 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email', 'password'], 'required', 'on' => 'login'],
             [['secure_token'], 'required', 'on' => 'securelayer'],
             [['title', 'firstname', 'lastname', 'email', 'password'], 'required', 'on' => 'default'],
+            [['firstname', 'lastname', 'password', 'password_salt', 'cookie_token', 'api_allowed_ips', 'login_2fa_secret', 'login_2fa_backup_key'], 'string', 'max' => 255],
             [['email'], 'email'],
             [['email'], 'unique', 'except' => ['login']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
-            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled'], 'integer'],
-            [['email_verification_token'], 'string', 'length' => 40],
+            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled', 'password_verification_token', 'password_verification_token_timestamp'], 'integer'],
+            [['email_verification_token', 'secure_token', 'password_verification_token'], 'string', 'length' => 40],
             [['password'], StrengthValidator::class, 'when' => function () {
                 return Module::getInstance()->strongPasswordPolicy;
             }, 'on' => ['restcreate', 'restupdate', 'default']],
+            [['login_2fa_enabled'], 'integer'],
         ];
     }
 
