@@ -351,7 +351,7 @@ zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminD
         responseError: function (data) {
             if (data.status == 401 || data.status == 403 || data.status == 405) {
             	if (!data.config.hasOwnProperty('authToken')) {
-            		window.location = "admin/default/logout";
+            		window.location = "admin/default/logout?autologout=1";
             	}
             } else if (data.status != 422) {
             	var message = data.data.hasOwnProperty('message');

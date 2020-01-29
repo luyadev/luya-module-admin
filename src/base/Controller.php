@@ -103,7 +103,7 @@ class Controller extends \luya\web\Controller
     {
         $behaviors = [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'user' => Yii::$app->adminuser,
                 'rules' => $this->getRules(),
             ],
@@ -111,7 +111,7 @@ class Controller extends \luya\web\Controller
         
         if (!empty($this->apiResponseActions)) {
             $behaviors['negotiator'] = [
-                'class' => ContentNegotiator::className(),
+                'class' => ContentNegotiator::class,
                 'only' => $this->apiResponseActions,
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,

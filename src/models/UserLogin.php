@@ -8,12 +8,13 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "admin_user_login".
  *
- * @property integer $id
- * @property integer $user_id
- * @property integer $timestamp_create
+ * @property int $id
+ * @property int $user_id
+ * @property int $timestamp_create
  * @property string $auth_token
  * @property string $ip
- * @property integer $is_destroyed
+ * @property int|null $is_destroyed
+ * @property string|null $user_agent {@since 3.0.0}
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -72,6 +73,7 @@ final class UserLogin extends ActiveRecord
             [['is_destroyed'], 'boolean'],
             [['auth_token'], 'string', 'max' => 120],
             [['ip'], 'string', 'max' => 45],
+            [['user_agent'], 'string', 'max' => 255],
         ];
     }
 
@@ -87,6 +89,7 @@ final class UserLogin extends ActiveRecord
             'auth_token' => 'Auth Token',
             'ip' => 'Ip',
             'is_destroyed' => 'Is Destroyed',
+            'user_agen' => 'User Agent',
         ];
     }
 }

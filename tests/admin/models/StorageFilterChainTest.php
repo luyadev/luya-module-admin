@@ -73,7 +73,7 @@ class StorageFilterChainTest extends AdminModelTestCase
         $this->assertSame(800, $model1->effectChainValue('thumbnail', 'width'));
         $this->assertSame(700, $model1->effectChainValue('thumbnail', 'height'));
         $this->assertSame(false, $model1->effectChainValue('thumbnail', 'doesnotexists'));
-        $this->assertSame('outbound', $model1->effectChainValue('thumbnail', 'mode')); // call mode option not provided by the effect_json_values
+        $this->assertSame(2, $model1->effectChainValue('thumbnail', 'mode')); // call mode option not provided by the effect_json_values
         
         
         // auto encode

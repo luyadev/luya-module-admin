@@ -38,7 +38,13 @@ class AdminUser extends User
     /**
      * @inheritdoc
      */
-    public $enableAutoLogin = false;
+    public $enableAutoLogin = true;
+
+    /**
+     * @var integer The number of seconds the web cookie with auto login should be active
+     * @since 3.0.0
+     */
+    public $cookieLoginDuration = 2592000; // 30 days (60 * 60 * 24 * 30)
     
     /**
      * @var string Variable to assign the default language from the admin module in order to set default language if not set.

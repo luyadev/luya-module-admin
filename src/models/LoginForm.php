@@ -3,9 +3,7 @@
 namespace luya\admin\models;
 
 use Yii;
-use luya\helpers\Url;
 use luya\admin\Module;
-use WhichBrowser\Parser;
 use yii\base\Model;
 
 /**
@@ -28,6 +26,8 @@ final class LoginForm extends Model
      */
     public $password;
 
+    public $autologin = false;
+
     public $attempts = 0;
     
     public $allowedAttempts = 10;
@@ -44,6 +44,7 @@ final class LoginForm extends Model
         return [
             [['email', 'password'], 'required'],
             [['email'], 'email'],
+            [['autologin'], 'safe'],
             ['password', 'validatePassword'],
         ];
     }
@@ -193,6 +194,7 @@ final class LoginForm extends Model
                 'auth_token' => $user->auth_token,
                 'user_id' => $user->id,
                 'is_destroyed' => false,
+                'user_agent' => Yii::$app->request->userAgent,
             ]);
             $login->save();
             

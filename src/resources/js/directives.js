@@ -638,7 +638,8 @@ zaa.directive("collapseContainer", [function() {
     return {
         restrict: "E",
         scope: {
-            "title" : "@"
+            "title" : "@",
+            "icon" : "@"
         },
         replace: true,
         transclude: true,
@@ -652,6 +653,7 @@ zaa.directive("collapseContainer", [function() {
             return '<div class="card" ng-class="{\'card-closed\': !visible}">'+
                 '<div class="card-header" ng-click="toggleVisibility()">'+
                     '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>'+
+                    '<i class="material-icons" ng-show="icon">{{icon}}</i>'+
                     '<span>{{title}}</span>'+
                 '</div>'+
                 '<div class="card-body" ng-transclude></div>'+
