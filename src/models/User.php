@@ -402,6 +402,11 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return ['groups', 'lastloginTimestamp'];
     }
 
+    public function getDevices()
+    {
+        return $this->hasMany(UserDevice::class, ['user_id' => 'id']);
+    }
+
     /**
      * Render user token based email:
      * 
@@ -559,8 +564,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             return false;
         }
 
-        $device = new UserDevice();
-        $checksum = $device->generateUserAgentChecksum($userAgent);
+        $checksum = UserDevice::generateUserAgentChecksum($userAgent);
 
         $model = UserDevice::find()->where(['user_id' => $this->id, 'user_agent_checksum' => $checksum])->one();
 

@@ -1290,17 +1290,24 @@
 			});
 		};
 
+		$scope.removeDevice = function(device) {
+			$http.post('admin/api-admin-user/remove-device', {'deviceId':device.id}).then(function(response) {
+				$scope.getProfile();
+			});
+		};
+
 		$scope.profile = {};
 		$scope.settings = {};
 		$scope.activities = {};
-
 		$scope.email = {};
+		$scope.devices = [];
 
 		$scope.getProfile = function() {
 			$http.get('admin/api-admin-user/session').then(function(success) {
 				$scope.profile = success.data.user;
 				$scope.settings = success.data.settings;
 				$scope.activities = success.data.activities;
+				$scope.devices = success.data.devices;
 			});
 		};
 

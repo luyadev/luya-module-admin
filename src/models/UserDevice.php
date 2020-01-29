@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use WhichBrowser\Parser;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -36,9 +37,26 @@ class UserDevice extends \yii\db\ActiveRecord
         ];
     }
 
-    public function generateUserAgentChecksum($userAgent)
+    public static function generateUserAgentChecksum($userAgent)
     {
         return empty($userAgent) ? false : sha1($userAgent);
+    }
+
+    public function getUserAgentName()
+    {
+        return (new Parser($this->user_agent))->toString();
+    }
+
+    public function getIsCurrentDevice()
+    {
+        return Yii::$app->request->userAgent == $this->user_agent;
+    }
+
+    public function fields()
+    {
+        return [
+            'id', 'created_at', 'updated_at', 'user_agent', 'userAgentName', 'isCurrentDevice',
+        ];
     }
 
     /**

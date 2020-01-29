@@ -40,7 +40,7 @@ body {
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" name="login[autologin]" id="autologin">
-                <label class="form-check-label" for="autologin">Remember me</label>
+                <label class="form-check-label" for="autologin">Remember this device</label>
             </div>
             <div class="login-status alert alert-danger" id="errorsContainer" style="display: none"></div>
             <div class="login-buttons login-buttons-right">

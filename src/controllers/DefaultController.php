@@ -7,6 +7,7 @@ use luya\admin\Module;
 use luya\helpers\Url;
 use yii\helpers\Json;
 use luya\admin\base\Controller;
+use luya\admin\models\UserDevice;
 use luya\TagParser;
 use luya\web\View;
 use yii\helpers\Markdown;
@@ -101,6 +102,10 @@ class DefaultController extends Controller
      */
     public function actionLogout()
     {
+        $checksum = UserDevice::generateUserAgentChecksum(Yii::$app->request->userAgent);
+        // remove device with the same checksum for this user.
+        UserDevice::deleteAll(['user_id' => Yii::$app->adminuser->id, 'user_agent_checksum' => $checksum]);
+
         if (!Yii::$app->adminuser->logout(false)) {
             Yii::$app->session->destroy();
         }

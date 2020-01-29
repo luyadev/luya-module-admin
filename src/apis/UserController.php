@@ -6,9 +6,11 @@ use Yii;
 use luya\admin\ngrest\base\Api;
 use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
+use luya\admin\models\UserDevice;
 use luya\validators\StrengthValidator;
 use luya\admin\Module;
 use luya\base\PackageInstaller;
+use yii\web\NotFoundHttpException;
 
 /**
  * User API, provides ability to manager and list all administration users.
@@ -41,6 +43,7 @@ class UserController extends Api
                 User::USER_SETTING_UILANGUAGE => $this->module->interfaceLanguage,
             ]),
             'vendor_install_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
+            'devices' => $user->devices,
         ];
         
         // if developer option is enabled provide package infos
@@ -71,6 +74,19 @@ class UserController extends Api
         return $packages;
     }
     
+    public function actionRemoveDevice()
+    {
+        $deviceId = Yii::$app->request->getBodyParam('deviceId');
+
+        $device = UserDevice::find()->where(['id' => $deviceId, 'user_id' => Yii::$app->adminuser->id])->one();
+
+        if ($device) {
+            return $device->delete();
+        }
+
+        throw new NotFoundHttpException();
+    }
+
     /**
      * Action to change the password for the given User.
      *

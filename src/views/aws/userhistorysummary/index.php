@@ -4,6 +4,7 @@ use luya\helpers\Html;
 use yii\helpers\VarDumper;
 use luya\admin\Module;
 use luya\admin\traits\TaggableTrait;
+use WhichBrowser\Parser;
 
 /**
  * UserHistorySummaryActiveWindow Index View.
@@ -101,7 +102,12 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 						<?php endif; ?>
 						</td>
 			   	 	<td><?= Yii::$app->formatter->asRelativeTime($login->timestamp_create); ?></td>
-			    	<td class="text-right"><?= $login->ip; ?></td>
+					<td class="text-right">
+						<?= $login->ip; ?>
+						<?php if (!empty($login->user_agent)): ?>
+							<span class="badge badge-secondary"><?= (new Parser($login->user_agent))->toString(); ?></span>
+						<?php endif; ?>
+					</td>
 			    <?php ?>
 					</tr>
 		    <?php endforeach; ?>
