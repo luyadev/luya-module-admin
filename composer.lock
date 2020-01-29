@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31664fbfa89641cf4af80794cbcfc248",
+    "content-hash": "25600a9de8c91d93a30cb233013ae4c6",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -296,25 +296,142 @@
             "time": "2017-04-22T08:41:31+00:00"
         },
         {
-            "name": "imagine/imagine",
-            "version": "v0.7.1",
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "8.11.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa"
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "0329cf6a6ede750a78e7165b61fcc83cd72e9768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/a9a702a946073cbca166718f1b02a1e72d742daa",
-                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/0329cf6a6ede750a78e7165b61fcc83cd72e9768",
+                "reference": "0329cf6a6ede750a78e7165b61fcc83cd72e9768",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "giggsey/locale": "^1.7",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "^1.0",
+                "pear/versioncontrol_git": "^0.5",
+                "phing/phing": "^2.7",
+                "php-coveralls/php-coveralls": "^1.0|^2.0",
+                "phpunit/phpunit": "^4.8.36|^5.0",
+                "symfony/console": "^2.8|^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "libphonenumber\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/src/data/",
+                    "/src/carrier/data/",
+                    "/src/geocoding/data/",
+                    "/src/timezone/data/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "https://giggsey.com/"
+                }
+            ],
+            "description": "PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2020-01-28T11:48:03+00:00"
+        },
+        {
+            "name": "giggsey/locale",
+            "version": "1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/Locale.git",
+                "reference": "85a1b251bad11c986fec2a051b10d4b80a5caa1b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/Locale/zipball/85a1b251bad11c986fec2a051b10d4b80a5caa1b",
+                "reference": "85a1b251bad11c986fec2a051b10d4b80a5caa1b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "sami/sami": "^3.3",
-                "symfony/phpunit-bridge": "^3.2"
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "^1.0",
+                "pear/versioncontrol_git": "^0.5",
+                "phing/phing": "~2.7",
+                "php-coveralls/php-coveralls": "^1.0|^2.0",
+                "phpunit/phpunit": "^4.8|^5.0",
+                "symfony/console": "^2.8|^3.0|^4.0",
+                "symfony/filesystem": "^2.8|^3.0|^4.0",
+                "symfony/finder": "^2.8|^3.0|^4.0",
+                "symfony/process": "^2.8|^3.0|^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Giggsey\\Locale\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "Locale functions required by libphonenumber-for-php",
+            "time": "2019-10-09T18:53:14+00:00"
+        },
+        {
+            "name": "imagine/imagine",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "cb2361e5bb4410b681462d8e4f912bc5dabf84ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/cb2361e5bb4410b681462d8e4f912bc5dabf84ab",
+                "reference": "cb2361e5bb4410b681462d8e4f912bc5dabf84ab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.2.*",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.4"
             },
             "suggest": {
                 "ext-gd": "to use the GD implementation",
@@ -328,8 +445,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Imagine": "lib/"
+                "psr-4": {
+                    "Imagine\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -351,7 +468,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2017-05-16T10:31:22+00:00"
+            "time": "2019-12-04T09:55:33+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -463,20 +580,21 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.24",
+            "version": "1.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "656be457ffc80e0691eaaaeccbd5442deadbe0a5"
+                "reference": "a0974a2f86f897652e60f48f5056b3d4467d93e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/656be457ffc80e0691eaaaeccbd5442deadbe0a5",
-                "reference": "656be457ffc80e0691eaaaeccbd5442deadbe0a5",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/a0974a2f86f897652e60f48f5056b3d4467d93e7",
+                "reference": "a0974a2f86f897652e60f48f5056b3d4467d93e7",
                 "shasum": ""
             },
             "require": {
                 "curl/curl": "^2.0 || ^1.0",
+                "giggsey/libphonenumber-for-php": "^8.11",
                 "luyadev/luya-composer": "^1.0",
                 "phpmailer/phpmailer": "^6.0",
                 "yiisoft/yii2": "~2.0.15"
@@ -516,7 +634,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-12-09T19:41:48+00:00"
+            "time": "2020-01-07T15:33:57+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -772,16 +890,16 @@
         },
         {
             "name": "whichbrowser/parser",
-            "version": "v2.0.40",
+            "version": "v2.0.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WhichBrowser/Parser-PHP.git",
-                "reference": "eebd583e67ef3633a6fc607f877daadf4579dfe6"
+                "reference": "c7b71a46f5f51b5b7284ed36a5b16c62b6f9dc8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WhichBrowser/Parser-PHP/zipball/eebd583e67ef3633a6fc607f877daadf4579dfe6",
-                "reference": "eebd583e67ef3633a6fc607f877daadf4579dfe6",
+                "url": "https://api.github.com/repos/WhichBrowser/Parser-PHP/zipball/c7b71a46f5f51b5b7284ed36a5b16c62b6f9dc8c",
+                "reference": "c7b71a46f5f51b5b7284ed36a5b16c62b6f9dc8c",
                 "shasum": ""
             },
             "require": {
@@ -827,20 +945,20 @@
                 "ua",
                 "useragent"
             ],
-            "time": "2019-12-09T11:34:11+00:00"
+            "time": "2020-01-02T14:36:46+00:00"
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.31",
+            "version": "2.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "b9fa3d184b41fb847aa7ae8b447d59b243c72d45"
+                "reference": "a4aca1a2154098844a039d21112cafd31d70b8fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b9fa3d184b41fb847aa7ae8b447d59b243c72d45",
-                "reference": "b9fa3d184b41fb847aa7ae8b447d59b243c72d45",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/a4aca1a2154098844a039d21112cafd31d70b8fd",
+                "reference": "a4aca1a2154098844a039d21112cafd31d70b8fd",
                 "shasum": ""
             },
             "require": {
@@ -927,7 +1045,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-12-18T12:52:24+00:00"
+            "time": "2020-01-21T22:29:38+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -986,21 +1104,24 @@
         },
         {
             "name": "yiisoft/yii2-imagine",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-imagine.git",
-                "reference": "a8a1a068862a86e3395e665bc86e63d5c9b60841"
+                "reference": "8637f63ee2eb81b7fe1f4c0e16cc8cc474a68bae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-imagine/zipball/a8a1a068862a86e3395e665bc86e63d5c9b60841",
-                "reference": "a8a1a068862a86e3395e665bc86e63d5c9b60841",
+                "url": "https://api.github.com/repos/yiisoft/yii2-imagine/zipball/8637f63ee2eb81b7fe1f4c0e16cc8cc474a68bae",
+                "reference": "8637f63ee2eb81b7fe1f4c0e16cc8cc474a68bae",
                 "shasum": ""
             },
             "require": {
-                "imagine/imagine": "~0.6.0 | ~0.7.1",
+                "imagine/imagine": "^0.6 | ^0.7 | ^1.0",
                 "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "<7"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1030,7 +1151,7 @@
                 "imagine",
                 "yii2"
             ],
-            "time": "2018-02-22T11:57:06+00:00"
+            "time": "2019-06-04T12:38:50+00:00"
         },
         {
             "name": "yiisoft/yii2-queue",
@@ -1126,7 +1247,7 @@
             "version": "v1.7.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular/bower-angular.git",
+                "url": "git@github.com:angular/bower-angular.git",
                 "reference": "84a5b810f33f82a552cee361268b77181691ce65"
             },
             "dist": {
@@ -1213,16 +1334,16 @@
         },
         {
             "name": "bower-asset/flow.js",
-            "version": "v2.13.2",
+            "version": "v2.14.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flowjs/flow.js.git",
-                "reference": "538524c708153a3cb2358ff57b531a759b5236aa"
+                "reference": "45dcba147211d5bf296ae7e1f496b4dd1a48b198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flowjs/flow.js/zipball/538524c708153a3cb2358ff57b531a759b5236aa",
-                "reference": "538524c708153a3cb2358ff57b531a759b5236aa"
+                "url": "https://api.github.com/repos/flowjs/flow.js/zipball/45dcba147211d5bf296ae7e1f496b4dd1a48b198",
+                "reference": "45dcba147211d5bf296ae7e1f496b4dd1a48b198"
             },
             "type": "bower-asset"
         },
@@ -1461,16 +1582,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.24",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "ddf0dea82a6f624e119804500d5027826d71b8d9"
+                "reference": "444505f18e61412845befc715e073968c28ec228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/ddf0dea82a6f624e119804500d5027826d71b8d9",
-                "reference": "ddf0dea82a6f624e119804500d5027826d71b8d9",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/444505f18e61412845befc715e073968c28ec228",
+                "reference": "444505f18e61412845befc715e073968c28ec228",
                 "shasum": ""
             },
             "require": {
@@ -1485,6 +1606,11 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0.x-dev"
+                },
+                "luya": {
+                    "bootstrap": [
+                        "luya\\testsuite\\Bootstrap"
+                    ]
                 }
             },
             "autoload": {
@@ -1510,7 +1636,7 @@
                 "module",
                 "php"
             ],
-            "time": "2019-12-05T13:40:23+00:00"
+            "time": "2020-01-29T17:05:45+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1715,16 +1841,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.2",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e"
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
-                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/da3fd972d6bafd628114f7e7e036f45944b62e9c",
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c",
                 "shasum": ""
             },
             "require": {
@@ -1736,6 +1862,7 @@
             "require-dev": {
                 "doctrine/instantiator": "^1.0.5",
                 "mockery/mockery": "^1.0",
+                "phpdocumentor/type-resolver": "0.4.*",
                 "phpunit/phpunit": "^6.4"
             },
             "type": "library",
@@ -1762,7 +1889,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2019-09-12T14:27:41+00:00"
+            "time": "2019-12-28T18:55:12+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1811,24 +1938,24 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.10.0",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
+                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
+                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
-                "sebastian/comparator": "^1.2.3|^2.0|^3.0",
-                "sebastian/recursion-context": "^1.0|^2.0|^3.0"
+                "sebastian/comparator": "^1.2.3|^2.0|^3.0|^4.0",
+                "sebastian/recursion-context": "^1.0|^2.0|^3.0|^4.0"
             },
             "require-dev": {
                 "phpspec/phpspec": "^2.5 || ^3.2",
@@ -1870,7 +1997,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-12-17T16:54:23+00:00"
+            "time": "2020-01-20T15:57:02+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3150,7 +3277,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "luyadev/luya-testsuite": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
