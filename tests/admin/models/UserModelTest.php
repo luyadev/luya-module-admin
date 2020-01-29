@@ -7,7 +7,7 @@ use luya\admin\models\UserDevice;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 
-class UserTest extends AdminModelTestCase
+class UserModelTest extends AdminModelTestCase
 {
     use AdminDatabaseTableTrait;
 
