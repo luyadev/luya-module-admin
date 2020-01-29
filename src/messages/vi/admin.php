@@ -450,4 +450,34 @@ return [
 // 2.4.0
 
     'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
+
+// 3.0.0
+
+    'device' => 'Device',
+    'last_login' => 'Last login',
+    'first_login' => 'First login',
+    'login_async_twofa_verify_error' => 'The one time secure code is invalid. Please use the latest code from your app and try again',
+    'login_async_twofa_wrong_backup_code' => 'The provided backup code is invalid.',
+    'login_autologin_label' => 'Remember this device',
+    'login_otp_label' => 'Enter the one time secure code from your 2FA application:',
+    'login_otp_placeholder' => 'One Time Code', // OTP, keep original name makes sense
+    'login_otp_backup' => 'Backup Code',
+    'login_otp_help' => 'Unable to access the App?',
+    'login_otp_help_toggler' => 'Enter the backup code',
+    'user_register_2fa_verification_error' => 'Invalid verification code, please enter the new code from the 2fa app.',
+    'settings_devices' => 'Devices',
+    'settings_devices_info' => 'A list of devices you will be automatically logged in without being prompted for a password.',
+    'settings_devices_empty' => 'There are no devices yet for your account.',
+    'settings_devices_this' => 'This device',
+    'settings_2fa' => 'Two-factor authentication (2FA)',
+    'settings_2fa_intro' => 'Two-factor authentication ensures that only people with the password and access to the second factor device can log in. Each time you log in, you will be prompted to enter the two-factor code.',
+    'settings_2fa_backup_code_hint' => 'Store the backup code {{twoFaBackupCode}} in a safe place, it won\'t be displayed again.',
+    'settings_2fa_success' => 'two-factor authentication was set up successfully.',
+    'settings_2fa_step1' => 'Scan the QR code',
+    'settings_2fa_step2' => 'Enter the code from the app',
+    'settings_2fa_modal_pretext' => 'The following backup code can be used in case you have no access to the authenticator app:',
+    'settings_2fa_modal_after' => 'This code will only be displayed once and can\'t be retrieved later. Please write it down and store it in a safe place.',
+    'settings_2fa_verify_code_label' => 'Verification Code',
+    'settings_2fa_verify_code_hint' => 'Enter the code from your device, do note it changes every few seconds.',
+    'login_async_secure_token_error' => 'Unable to send and store secure token.',
 ];
