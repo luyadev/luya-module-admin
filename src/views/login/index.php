@@ -79,6 +79,13 @@ body {
                 <label class="input-label login-secure-token-label" for="verfiy_code"><?= Module::t('login_otp_label'); ?></label>
                 <input class="login-input" id="verfiy_code" name="verfiy_code" autocomplete="one-time-code" type="text" tabindex="1" placeholder="<?= Module::t('login_otp_placeholder'); ?>" />
             </div>
+            <div>
+                <p class="text-muted"><small><?= Module::t('login_otp_help'); ?> <a href="javascript:$('#backupcode').toggleClass('hidden')"><?= Module::t('login_otp_help_toggler'); ?></a>.</small></p>
+            </div>
+            <div class="login-form-field hidden" id="backupcode">
+                <label class="input-label login-secure-backup-label" for="backup_code"><?= Module::t('login_otp_backup'); ?></label>
+                <input class="login-input" id="backup_code" name="backup_code" type="text" tabindex="1" placeholder="" />
+            </div>
             <div class="login-buttons">
                 <button class="btn btn-secondary login-btn login-btn-50" id="abortTwoFa" type="button" tabindex="3">
                     <?= Module::t('button_abort'); ?>

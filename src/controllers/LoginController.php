@@ -204,6 +204,26 @@ class LoginController extends Controller
         $user = User::findOne(Yii::$app->session->get('secureId'));
         $verify = Yii::$app->request->post('verfiy_code', false);
 
+        $backupCode = Yii::$app->request->post('backup_code', false);
+
+        if ($backupCode && $user) {
+            if (Yii::$app->security->validatePassword($backupCode, $user->login_2fa_backup_key)) {
+                $autologin = Yii::$app->session->get('autologin', false);
+
+                if (!$autologin) {
+                    // auto login is disabled, disable the function
+                    Yii::$app->adminuser->enableAutoLogin = false;
+                }
+
+                if ($user && Yii::$app->adminuser->login($user, Yii::$app->adminuser->cookieLoginDuration)) {
+                    Yii::$app->session->remove('secureId');
+                    return $this->sendArray(true);
+                }
+            } else {
+                return $this->sendArray(false, [Module::t('login_async_twofa_wrong_backup_code')]);
+            }
+        }
+
         if ($verify && $user) {
             $twoFa = new TwoFactorAuth();
             if ($twoFa->verifyCode($user->login_2fa_secret, $verify)) {
