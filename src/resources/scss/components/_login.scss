@@ -46,6 +46,12 @@
         }
     }
 
+    @media screen and (min-height: 800px) {
+        &-loaded {
+            top: -150px;
+        }
+    }
+
     @media screen and (max-height: 400px) {
         opacity: 0;
     }

@@ -19,6 +19,7 @@ body {
 </style>
 <?php endif; ?>
 <div class="login-frame">
+    <?php if (!$backgroundImage): ?>
     <div class="login-logo">
         <?= Svg::widget([
             'folder' => "@admin/resources/svg",
@@ -26,8 +27,9 @@ body {
             'file' => 'logo/luya_logo.svg'
         ]) ?>
     </div>
+    <?php endif; ?>
     <!-- E-Mail & Password Form -->
-    <form class="login-form" method="post" id="loginForm">
+    <form class="login-form shadow-lg rounded" method="post" id="loginForm">
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field form-group">
@@ -51,7 +53,7 @@ body {
     </form>
 
     <!-- Admin Secure Token -->
-    <form class="login-form hidden" method="post" id="secureForm">
+    <form class="login-form hidden shadow-lg rounded" method="post" id="secureForm">
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field">
@@ -70,7 +72,7 @@ body {
     </form>
 
     <!-- User 2FA -->
-    <form class="login-form hidden" method="post" id="twofaForm">
+    <form class="login-form hidden shadow-lg rounded" method="post" id="twofaForm">
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field">
@@ -88,7 +90,7 @@ body {
         </div>
     </form>
 
-    <div class="login-status alert alert-danger" id="errorsContainer" style="display: none"></div>
+    <div class="login-status mt-3 alert alert-danger" id="errorsContainer" style="display: none"></div>
 
     <div class="login-success" style="visibility: hidden;" id="success">
         <i class="material-icons login-success-icon">check_circle</i>

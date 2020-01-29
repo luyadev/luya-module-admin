@@ -93,11 +93,9 @@ use luya\admin\Module;
          <div ng-if="twoFaBackupCode" class="alert alert-warning">
             <?= Module::t('settings_2fa_backup_code_hint'); ?>
             <modal is-modal-hidden="false" modal-title="Backup Code">
-                <div class="alert alert-warning">
-                    <p><?= Module::t('settings_2fa_modal_pretext'); ?></p>
-                    <h1 class="mb-0">{{twoFaBackupCode}}</h1>
-                    <p class="mb-0"><?= Module::t('settings_2fa_modal_after'); ?></p>
-                </div>
+                <p><?= Module::t('settings_2fa_modal_pretext'); ?></p>
+                <h1 class="alert alert-warning mb-3">{{twoFaBackupCode}}</h1>
+                <p class="mb-0"><?= Module::t('settings_2fa_modal_after'); ?></p>
             </modal>
          </div>
          <div ng-show="twoFa.enabled" class="alert alert-success">
