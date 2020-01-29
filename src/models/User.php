@@ -402,6 +402,12 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return ['groups', 'lastloginTimestamp'];
     }
 
+    /**
+     * Devices Active Query
+     *
+     * @return UserDevice[]
+     * @since 3.0.0
+     */
     public function getDevices()
     {
         return $this->hasMany(UserDevice::class, ['user_id' => 'id']);

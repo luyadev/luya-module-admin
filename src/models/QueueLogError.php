@@ -3,6 +3,7 @@
 namespace luya\admin\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%admin_queue_log_error}}".
@@ -28,6 +29,13 @@ class QueueLogError extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%admin_queue_log_error}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::class],
+        ];
     }
 
     /**
