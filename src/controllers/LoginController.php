@@ -314,11 +314,14 @@ class LoginController extends Controller
         }
 
         $model->updateCounters(['attempt_count' => 1]);
-        $model->touch('updated_at');
+
 
         if ($model->attempt_count >= $this->module->loginSessionAttemptCount) {
-            return time() + $this->module->loginSessionAttemptLockoutTime;
+            return $model->updated_at + $this->module->loginSessionAttemptLockoutTime;
         }
+        
+        $model->touch('updated_at');
+
         
         return false;
     }
