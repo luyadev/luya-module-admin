@@ -76,10 +76,10 @@ use luya\admin\Module;
                     <span class="badge badge-success" ng-show="device.isCurrentDevice"><?= Module::t('settings_devices_this'); ?></span>
                 </td>
                 <td>
-                    {{ device.updated_at | date:'short' }}
+                    {{ device.updated_at * 1000 | date:'short' }}
                 </td>
                 <td>
-                    {{ device.created_at | date:'short' }}
+                    {{ device.created_at * 1000 | date:'short' }}
                 </td>
                 <td class="text-center">
                     <button type="button" ng-click="removeDevice(device)" class="btn btn-icon btn-delete"></button>

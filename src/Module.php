@@ -161,7 +161,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var integer The number of seconds inactivity until the user is logged out.
      * @since 1.2.0
      */
-    public $userIdleTimeout = 60;
+    public $userIdleTimeout = 1800;
 
     /**
      * @var string The component/connection name from application.
