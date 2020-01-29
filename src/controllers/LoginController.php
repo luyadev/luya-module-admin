@@ -142,7 +142,7 @@ class LoginController extends Controller
                         return $this->sendArray(false, [], true);
                     }
                     
-                    return $this->sendArray(false, ['Unable to send and store secure token.']);
+                    return $this->sendArray(false, [Module::t('login_async_secure_token_error')]);
                 }
                 
                 if (!$model->autologin) {
