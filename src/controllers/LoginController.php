@@ -12,7 +12,9 @@ use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
 use luya\admin\models\User;
+use luya\admin\models\UserLoginLockout;
 use RobThree\Auth\TwoFactorAuth;
+use yii\base\InvalidConfigException;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
@@ -111,11 +113,10 @@ class LoginController extends Controller
      */
     public function actionAsync()
     {
-        if (($lockout = $this->sessionBruteForceLock())) {
+        if (($lockout = $this->sessionBruteForceLock(0))) {
             return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
-        
-        // get the login form model
+
         $model = new LoginForm();
         $model->allowedAttempts = $this->module->loginUserAttemptCount;
         $model->lockoutTime = $this->module->loginUserAttemptLockoutTime;
@@ -165,10 +166,9 @@ class LoginController extends Controller
      */
     public function actionAsyncToken()
     {
-        if (($lockout = $this->sessionBruteForceLock())) {
+        if (($lockout = $this->sessionBruteForceLock(Yii::$app->session->get('secureId')))) {
             return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
-        
         $secureToken = Yii::$app->request->post('secure_token', false);
         
         $model = new LoginForm();
@@ -197,7 +197,7 @@ class LoginController extends Controller
     
     public function actionTwofaToken()
     {
-        if (($lockout = $this->sessionBruteForceLock())) {
+        if (($lockout = $this->sessionBruteForceLock(Yii::$app->session->get('secureId')))) {
             return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
         
@@ -283,26 +283,41 @@ class LoginController extends Controller
     /**
      * Ensure current brute force attempt based on session.
      *
+     * @param $userId an user id or empty blocks the whole ip
      * @return boolean|integer
      * @since 1.2.0
      */
-    private function sessionBruteForceLock()
+    private function sessionBruteForceLock($userId)
     {
-        $attempt = Yii::$app->session->get('__attempt_count', 0);
-        
-        $counter = $attempt + 1;
-        
-        Yii::$app->session->set('__attempt_count', $counter);
-        
-        $lockout = Yii::$app->session->get('__attempt_lockout');
-        
-        if ($lockout && $lockout > time()) {
-            Yii::$app->session->set('__attempt_count', 0);
-            return $lockout;
+        if (empty($userId)) {
+            // block all request from this IP
+            $userId = 0;
         }
-        
-        if ($counter >= $this->module->loginSessionAttemptCount) {
-            Yii::$app->session->set('__attempt_lockout', time() + $this->module->loginSessionAttemptLockoutTime);
+        $userIP = Yii::$app->request->userIP;
+
+        $model = UserLoginLockout::find()->where(['ip' => $userIP, 'user_id' => $userId])->one();
+
+        if (!$model) {
+            $model = new UserLoginLockout();
+            $model->user_id = $userId;
+            $model->ip = $userIP;
+            $model->attempt_count = 0;
+
+            if (!$model->save()) {
+                throw new InvalidConfigException("error while storing the model.");
+            }
+        } else {
+            // reset the attempt count if lockout time has been passed
+            if ((time() - $model->updated_at) > $this->module->loginSessionAttemptLockoutTime) {
+                $model->updateAttributes(['attempt_count' => 0]);
+            }
+        }
+
+        $model->updateCounters(['attempt_count' => 1]);
+        $model->touch('updated_at');
+
+        if ($model->attempt_count >= $this->module->loginSessionAttemptCount) {
+            return time() + $this->module->loginSessionAttemptLockoutTime;
         }
         
         return false;

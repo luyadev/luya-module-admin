@@ -3,6 +3,7 @@
 namespace luya\admin\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%admin_user_login_lockout}}".
@@ -22,6 +23,16 @@ class UserLoginLockout extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%admin_user_login_lockout}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::class],
+        ];
     }
 
     /**

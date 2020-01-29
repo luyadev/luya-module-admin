@@ -97,7 +97,7 @@ body {
         </div>
     </form>
 
-    <div class="login-status mt-3 alert alert-danger" id="errorsContainer" style="display: none"></div>
+    <div class="login-status mt-3 alert alert-danger shadow" id="errorsContainer" style="display: none"></div>
 
     <div class="login-success" style="visibility: hidden;" id="success">
         <i class="material-icons login-success-icon">check_circle</i>
