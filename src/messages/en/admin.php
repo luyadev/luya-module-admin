@@ -460,7 +460,7 @@ return [
     'login_async_twofa_wrong_backup_code' => 'The provided backup code is invalid.',
     'login_autologin_label' => 'Remember this device',
     'login_otp_label' => 'Enter the one time secure code from your 2FA application:',
-    'login_otp_placeholder' => 'One Time Code',
+    'login_otp_placeholder' => 'One Time Code', // OTP, keep original name makes sense
     'login_otp_backup' => 'Backup Code',
     'login_otp_help' => 'Unable to access the App?',
     'login_otp_help_toggler' => 'Enter the backup code',
@@ -479,5 +479,5 @@ return [
     'settings_2fa_modal_after' => 'This code will only be displayed once and can\'t be retrieved later. Please write it down and store it in a safe place.',
     'settings_2fa_verify_code_label' => 'Verification Code',
     'settings_2fa_verify_code_hint' => 'Enter the code from your device, do note it changes every few seconds.',
-    'login_async_secure_token_error' => 'Unable to send and store secure token.'
+    'login_async_secure_token_error' => 'Unable to send and store secure token.',
 ];
