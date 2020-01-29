@@ -4,9 +4,12 @@ namespace luya\admin\tests\admin\controllers;
 
 use admintests\AdminModelTestCase;
 use luya\admin\controllers\LoginController;
+use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class LoginControllerTest extends AdminModelTestCase
 {
+    use AdminDatabaseTableTrait;
+
     public function testSendArray()
     {
         $login = new LoginController('login', $this->app->getModule('admin'));
@@ -31,11 +34,11 @@ class LoginControllerTest extends AdminModelTestCase
         ], $reponse);
     }
 
-    /*
     public function testLogin()
     {
+        $this->createUserOnlineFixture();
         $login = new LoginController('login', $this->app->getModule('admin'));
         $r = $login->actionIndex();
+        $this->assertNotNull($r);
     }
-    */
 }
