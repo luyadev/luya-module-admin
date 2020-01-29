@@ -105,10 +105,12 @@ body {
 
 </div>
 
+<?php if (!$backgroundImage): ?>
 <div class="login-info">
     <h1 class="login-title"><span class="on-white"><?= Yii::$app->siteTitle; ?></span></h1>
     <span class="login-info-text on-white"><?php if (Yii::$app->request->isSecureConnection): ?><i alt="<?= Module::t('login_ssl_info');?>" title="<?= Module::t('login_ssl_info');?>" class="material-icons">verified_user</i><?php endif; ?><?= Url::domain(Yii::$app->request->hostInfo); ?></span>
 </div>
+<?php endif; ?>
 
 <div class="login-links">
     <ul>
