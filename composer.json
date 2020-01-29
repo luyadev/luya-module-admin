@@ -22,7 +22,7 @@
         "flowjs/flow-php-server": "^1.0",
         "sizeg/yii2-jwt": "^1.2",
         "whichbrowser/parser": "^2.0",
-		"robthree/twofactorauth": "^1.7"
+        "robthree/twofactorauth": "^1.7"
 	},
 	"require-dev" : {
         "luyadev/luya-testsuite" : "dev-master",

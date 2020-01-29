@@ -37,8 +37,15 @@ class LoginControllerTest extends AdminModelTestCase
     public function testLogin()
     {
         $this->createUserOnlineFixture();
+        $this->createUserFixture();
         $login = new LoginController('login', $this->app->getModule('admin'));
         $r = $login->actionIndex();
+        $this->assertNotNull($r);
+        $r = $login->actionAsync();
+        $this->assertNotNull($r);
+        $r = $login->actionAsyncToken();
+        $this->assertNotNull($r);
+        $r = $login->actionTwofaToken();
         $this->assertNotNull($r);
     }
 }
