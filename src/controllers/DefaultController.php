@@ -100,7 +100,7 @@ class DefaultController extends Controller
      *
      * @return \yii\web\Response
      */
-    public function actionLogout()
+    public function actionLogout($autologout = false)
     {
         $checksum = UserDevice::generateUserAgentChecksum(Yii::$app->request->userAgent);
         // remove device with the same checksum for this user.
@@ -110,7 +110,7 @@ class DefaultController extends Controller
             Yii::$app->session->destroy();
         }
         
-        return $this->redirect(['/admin/login/index', 'logout' => true]);
+        return $this->redirect(['/admin/login/index', 'autologout' => $autologout]);
     }
     
     /**
@@ -129,6 +129,11 @@ class DefaultController extends Controller
         return '<span style="color:red;">'.Module::t('debug_state_off').'</span>';
     }
 
+    /**
+     * Reload buttons from admin module config.
+     * 
+     * @return array An array with all reload buttons.
+     */
     public function reloadButtonArray()
     {
         return $this->module->reloadButtons;

@@ -10,6 +10,7 @@ use luya\admin\models\UserDevice;
 use luya\validators\StrengthValidator;
 use luya\admin\Module;
 use luya\base\PackageInstaller;
+use RobThree\Auth\TwoFactorAuth;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -33,6 +34,15 @@ class UserController extends Api
     public function actionSession()
     {
         $user = Yii::$app->adminuser->identity;
+
+        $qrcode = null;
+        $secret = null;
+        if (!$user->login_2fa_enabled) {
+            $tfa = new TwoFactorAuth(Yii::$app->siteTitle);
+            $secret = $tfa->createSecret();
+            $qrcode = $tfa->getQRCodeImageAsDataUri(Yii::$app->siteTitle, $secret);
+        }
+
         $session = [
             'packages' => [],
             'user' => $user->toArray(['title', 'firstname', 'lastname', 'email', 'id', 'email_verification_token_timestamp']),
@@ -44,6 +54,11 @@ class UserController extends Api
             ]),
             'vendor_install_timestamp' => Yii::$app->getPackageInstaller()->getTimestamp(),
             'devices' => $user->devices,
+            'twoFa' => [
+                'enabled' => $user->login_2fa_enabled,
+                'qrcode' => $qrcode,
+                'secret' => $secret,
+            ],
         ];
         
         // if developer option is enabled provide package infos
@@ -74,6 +89,67 @@ class UserController extends Api
         return $packages;
     }
     
+    /**
+     * Action to disable the two fa auth for this user.
+     *
+     * @return array
+     * @since 3.0.0
+     */
+    public function actionDisableTwofa()
+    {
+        $user = Yii::$app->adminuser->identity;
+        $user->login_2fa_enabled = 0;
+        $user->login_2fa_secret = '';
+        $user->login_2fa_backup_key = '';
+
+        if ($user->update(true, ['login_2fa_enabled', 'login_2fa_secret', 'login_2fa_backup_key'])) {
+            return [];
+        }
+
+        return $this->sendModelError($user);
+    }
+
+    /**
+     * Action to register new OTP device
+     *
+     * @return array
+     * @since 3.0.0
+     */
+    public function actionRegisterTwofa()
+    {
+        $user = Yii::$app->adminuser->identity;
+
+        $verification = Yii::$app->request->getBodyParam('verification');
+        $secret = Yii::$app->request->getBodyParam('secret');
+
+        $tfa = new TwoFactorAuth(Yii::$app->siteTitle);
+
+        if (!$tfa->verifyCode($secret, $verification)) {
+            return $this->sendArrayError(['verificaton' => Module::t('user_register_2fa_verification_error')]);
+        }
+
+        $code = rand(1000000,9999999);
+        $backupKey = Yii::$app->security->generatePasswordHash($code);
+
+        $user->login_2fa_enabled = 1;
+        $user->login_2fa_secret = $secret;
+        $user->login_2fa_backup_key = $backupKey;
+
+        if ($user->update(true, ['login_2fa_enabled', 'login_2fa_secret', 'login_2fa_backup_key'])) {
+            return [
+                'backupCode' => $code,
+            ];
+        }
+
+        return $this->sendModelError($user);
+    }
+
+    /**
+     * Remove a device from the list
+     *
+     * @return array
+     * @since 3.0.0
+     */
     public function actionRemoveDevice()
     {
         $deviceId = Yii::$app->request->getBodyParam('deviceId');

@@ -5,14 +5,14 @@ namespace luya\admin\controllers;
 use Yii;
 use yii\web\Response;
 use yii\filters\HttpCache;
-
-;
 use luya\helpers\Url;
 use luya\admin\models\LoginForm;
 use luya\admin\Module;
 use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
+use luya\admin\models\User;
+use RobThree\Auth\TwoFactorAuth;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
@@ -45,7 +45,7 @@ class LoginController extends Controller
         return [
             [
                 'allow' => true,
-                'actions' => ['index', 'async', 'async-token'],
+                'actions' => ['index', 'async', 'async-token', 'twofa-token'],
                 'roles' => ['?', '@'],
             ],
         ];
@@ -79,7 +79,7 @@ class LoginController extends Controller
      *
      * @return \yii\web\Response|string
      */
-    public function actionIndex()
+    public function actionIndex($autologout = null)
     {
         // redirect logged in users
         if (!Yii::$app->adminuser->isGuest) {
@@ -89,13 +89,14 @@ class LoginController extends Controller
         $this->registerAsset(Login::class);
         
         $this->view->registerJs("$('#email').focus(); checkInputLabels();
-        	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."');
+        	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');
         ");
     
         UserOnline::clearList($this->module->userIdleTimeout);
         
         return $this->render('index', [
             'backgroundImage' => $this->backgroundImage,
+            'autologout' => $autologout,
         ]);
     }
     
@@ -125,12 +126,19 @@ class LoginController extends Controller
         if ($loginData) {
             $model->attributes = $loginData;
             if (($userObject = $model->login()) !== false) {
+
+                Yii::$app->session->set('autologin', $model->autologin);
+                // if the user has enabled the 2fa verification
+                if ($userObject->login_2fa_enabled) {
+                    Yii::$app->session->set('secureId', $model->getUser()->id);
+                    return $this->sendArray(false, [], false, null, true);
+                }
+
                 // see if secure login is enabled or not
                 if ($this->module->secureLogin) {
                     // try to send the secure token to the given user email store the token in the session.
                     if ($model->sendSecureLogin()) {
                         Yii::$app->session->set('secureId', $model->getUser()->id);
-                        Yii::$app->session->set('autologin', $model->autologin);
                         return $this->sendArray(false, [], true);
                     }
                     
@@ -187,6 +195,38 @@ class LoginController extends Controller
         return $this->sendArray(false, [Module::t('login_async_token_globalerror')]);
     }
     
+    public function actionTwofaToken()
+    {
+        if (($lockout = $this->sessionBruteForceLock())) {
+            return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
+        }
+        
+        $user = User::findOne(Yii::$app->session->get('secureId'));
+        $verify = Yii::$app->request->post('verfiy_code', false);
+
+        if ($verify && $user) {
+            $twoFa = new TwoFactorAuth();
+            if ($twoFa->verifyCode($user->login_2fa_secret, $verify)) {
+
+                $autologin = Yii::$app->session->get('autologin', false);
+
+                if (!$autologin) {
+                    // auto login is disabled, disable the function
+                    Yii::$app->adminuser->enableAutoLogin = false;
+                }
+
+                if ($user && Yii::$app->adminuser->login($user, Yii::$app->adminuser->cookieLoginDuration)) {
+                    Yii::$app->session->remove('secureId');
+                    return $this->sendArray(true);
+                }
+            } else {
+                return $this->sendArray(false, [Module::t('login_async_twofa_verify_error')]);
+            }
+        }
+
+        return $this->sendArray(false, [Module::t('login_async_token_globalerror')]);
+    }
+
     /**
      * Change the response format to json and return the array.
      *
@@ -196,17 +236,28 @@ class LoginController extends Controller
      * @param string $message
      * @return array
      */
-    private function sendArray($refresh, array $errors = [], $enterSecureToken = false, $message = null)
+    private function sendArray($refresh, array $errors = [], $enterSecureToken = false, $message = null, $enterTwoFaToken = false)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         
         return [
             'refresh' => $refresh,
             'message' => $message,
-            'errors' => $errors,
+            'errors' => $this->toErrorArray($errors),
             'enterSecureToken' => $enterSecureToken,
+            'enterTwoFaToken' => $enterTwoFaToken,
             'time' => time(),
         ];
+    }
+
+    private function toErrorArray(array $errors) 
+    {
+        $array = [];
+        foreach ($errors as $field => $message) {
+            $array[] = ['field' => $field, 'message' => $message];
+        }
+
+        return $array;
     }
 
     /**

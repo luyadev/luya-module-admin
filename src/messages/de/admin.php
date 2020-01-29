@@ -452,4 +452,29 @@ return [
 // 2.4.0
 
     'aws_missing_callback_param_generic_errror' => 'Erforderliche Angaben fehlen.',
+
+// 3.0.0
+
+    'device' => 'Gerät',
+    'last_login' => 'Neustes login',
+    'first_login' => 'Erstes login',
+    'login_async_twofa_verify_error' => 'Der eingegebn Code ist nicht oder nicht mehr gültigt. Geben Sie den neusten Code aus der App ein.',
+    'login_autologin_label' => 'Auf diesem Gerät nicht mehr fragen',
+    'login_otp_label' => 'Geben Sie den Code aus der Zwei-Faktor Applikation ein:',
+    'login_otp_placeholder' => 'One Time Code',
+    'user_register_2fa_verification_error' => 'Der eingegeben Code ist nicht korrekt, stellen Sie sicher das sie den neusten Code aus der Applikation eingegeben haben.',
+    'settings_devices' => 'Geräte',
+    'settings_devices_info' => 'Liste der Geräte, auf denen Sie ohne Passwortabfrage automatisch eingeloggt werden.',
+    'settings_devices_empty' => 'Ihrem Konto wurden noch keine Geräte zugewiesen.',
+    'settings_devices_this' => 'Dieses Gerät',
+    'settings_2fa' => 'Zwei-Faktor-Authentifizierung (2FA)',
+    'settings_2fa_intro' => 'Zwei-Faktor-Authentifizierung stellt sicher, dass sich nur Personen mit Passwort und Zugriff auf das Zwei-Faktor-Gerät einloggen können. Bei jedem Login werden Sie nach dem Zwei-Faktor-Code gefragt.',
+    'settings_2fa_backup_code_hint' => 'Speichern Sie den Backup-Code {{twoFaBackupCode}} an einem sicheren Ort, er wird nicht mehr angezeigt werden.',
+    'settings_2fa_success' => 'Die Zwei-Faktor-Authentifizierung wurde erfolgreich eingerichtet.',
+    'settings_2fa_step1' => 'Scannen Sie den QR-Code',
+    'settings_2fa_step2' => 'Geben Sie den Code ein, der in der App angezeigt wird',
+    'settings_2fa_modal_pretext' => 'Den folgenden Backup-Code können Sie verwenden, wenn Sie keinen Zugriff mehr haben auf die Authentifizierungs-App:',
+    'settings_2fa_modal_after' => 'Der Code wird nur einmal angezeigt und kann später nicht mehr abgerufen werden. Bitte notieren und speichern Sie ihn an einem sicheren Ort.',
+    'settings_2fa_verify_code_label' => 'Bestätigungs Code',
+    'settings_2fa_verify_code_hint' => 'Geben Sie den Code von der App ein. Achtung der Code ändert sich alle paar Sekunden.',
 ];
