@@ -38,8 +38,8 @@ class LoginControllerTest extends AdminModelTestCase
 
     public function testLogin()
     {
-        $this->createUserOnlineFixture();
-        $this->createUserFixture();
+        $this->createAdminUserOnlineFixture();
+        $this->createAdminUserFixture();
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         new NgRestModelFixture(['modelClass' => UserLoginLockout::class]);
         

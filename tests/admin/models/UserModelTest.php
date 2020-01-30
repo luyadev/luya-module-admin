@@ -13,7 +13,7 @@ class UserModelTest extends AdminModelTestCase
 
     public function testUser()
     {
-        $user = $this->createUserFixture();
+        $user = $this->createAdminUserFixture();
         
         $this->assertSame(false, $user->newModel->getAuthKey());
 
