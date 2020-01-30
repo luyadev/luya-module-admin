@@ -304,7 +304,7 @@ class LoginController extends Controller
             $model->attempt_count = 0;
 
             if (!$model->save()) {
-                throw new InvalidConfigException("error while storing the model.");
+                throw new InvalidConfigException("error while storing the model." . var_export($model->getErrors(), true));
             }
         } else {
             // reset the attempt count if lockout time has been passed

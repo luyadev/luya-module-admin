@@ -4,6 +4,8 @@ namespace luya\admin\tests\admin\controllers;
 
 use admintests\AdminModelTestCase;
 use luya\admin\controllers\LoginController;
+use luya\admin\models\UserLoginLockout;
+use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class LoginControllerTest extends AdminModelTestCase
@@ -38,6 +40,9 @@ class LoginControllerTest extends AdminModelTestCase
     {
         $this->createUserOnlineFixture();
         $this->createUserFixture();
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        new NgRestModelFixture(['modelClass' => UserLoginLockout::class]);
+        
         $login = new LoginController('login', $this->app->getModule('admin'));
         $r = $login->actionIndex();
         $this->assertNotNull($r);
