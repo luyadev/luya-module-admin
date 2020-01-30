@@ -7,6 +7,7 @@ use yii\web\User;
 use yii\web\UserEvent;
 use luya\admin\models\UserOnline;
 use luya\admin\models\UserLogin;
+use luya\admin\models\UserLoginLockout;
 
 /**
  * AdminUser Component.
@@ -79,6 +80,9 @@ class AdminUser extends User
         if (!$this->identity->is_api_user) {
             Yii::$app->language = $this->getInterfaceLanguage();
         }
+
+        // remove all lockout entrys for the given ip
+        UserLoginLockout::deleteAll(['ip' => Yii::$app->request->userIP]);
     }
 
     /**
