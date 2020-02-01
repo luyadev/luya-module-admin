@@ -17,7 +17,7 @@ use luya\admin\ngrest\aw\ActiveWindowFormWidget;
             'clearOnError' => true,
         ],
     ]); ?>
-    <?= $form->field('newpass', Module::t('aws_changepassword_new_pass'))->passwordInput(); ?>
-    <?= $form->field('newpasswd', Module::t('aws_changepassword_new_pass_retry'))->passwordInput(); ?>
+    <?= $form->field('newpass', Module::t('aws_changepassword_new_pass'))->passwordInput(['autocomplete' => 'password-password']); ?>
+    <?= $form->field('newpasswd', Module::t('aws_changepassword_new_pass_retry'))->passwordInput(['autocomplete' => 'password-password']); ?>
     <?php $form::end(); ?>
 </div>
