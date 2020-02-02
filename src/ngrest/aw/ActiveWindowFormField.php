@@ -104,10 +104,10 @@ class ActiveWindowFormField extends BaseObject
      */
     public function textInput(array $options = [])
     {
-        $this->element = Angular::text('{model}', '{label}', [
+        $this->element = Angular::text('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
         
         return $this;
     }
@@ -120,10 +120,10 @@ class ActiveWindowFormField extends BaseObject
      */
     public function passwordInput(array $options = [])
     {
-        $this->element = Angular::password('{model}', '{label}', [
+        $this->element = Angular::password('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
         
         return $this;
     }
@@ -136,10 +136,10 @@ class ActiveWindowFormField extends BaseObject
      */
     public function textarea(array $options = [])
     {
-        $this->element = Angular::textarea('{model}', '{label}', [
+        $this->element = Angular::textarea('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
         
         return $this;
     }
@@ -154,10 +154,10 @@ class ActiveWindowFormField extends BaseObject
      */
     public function dropDownList(array $data, array $options = [])
     {
-        $this->element = Angular::select('{model}', '{label}', $data, [
+        $this->element = Angular::select('{model}', '{label}', $data, array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
         
         return $this;
     }
@@ -168,12 +168,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function checkbox()
+    public function checkbox(array $options = [])
     {
-        $this->element = Angular::checkbox('{model}', '{label}', [
+        $this->element = Angular::checkbox('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -185,12 +185,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function checkboxList(array $data)
+    public function checkboxList(array $data, array $options = [])
     {
-        $this->element = Angular::checkboxArray('{model}', '{label}', $data, [
+        $this->element = Angular::checkboxArray('{model}', '{label}', $data, array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -202,12 +202,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function radioList(array $data)
+    public function radioList(array $data, array $options = [])
     {
-        $this->element = Angular::radio('{model}', '{label}', $data, [
+        $this->element = Angular::radio('{model}', '{label}', $data, array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -218,12 +218,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function imageUpload()
+    public function imageUpload(array $options = [])
     {
-        $this->element = Angular::imageUpload('{model}', '{label}', [
+        $this->element = Angular::imageUpload('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -234,12 +234,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function fileUpload()
+    public function fileUpload(array $options = [])
     {
-        $this->element = Angular::fileUpload('{model}', '{label}', [
+        $this->element = Angular::fileUpload('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -250,12 +250,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function datePicker()
+    public function datePicker(array $options = [])
     {
-        $this->element = Angular::date('{model}', '{label}', [
+        $this->element = Angular::date('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }
@@ -266,12 +266,12 @@ class ActiveWindowFormField extends BaseObject
      * @return ActiveField
      * @since 2.0.0
      */
-    public function datetimePicker()
+    public function datetimePicker(array $options = [])
     {
-        $this->element = Angular::datetime('{model}', '{label}', [
+        $this->element = Angular::datetime('{model}', '{label}', array_merge($options, [
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
-        ]);
+        ]));
 
         return $this;
     }

@@ -61,7 +61,7 @@ class ApiUserControllerTest extends AdminModelTestCase
     {
         $ctrl = new UserController('user', $this->app->getModule('admin'));
 
-        $user = $this->createUserFixture([
+        $user = $this->createAdminUserFixture([
             'no' => [
                 'id' => 1,
                 'firstname' => 'john',

@@ -9,6 +9,7 @@ use yii\queue\PushEvent;
 use yii\queue\ExecEvent;
 use yii\queue\JobEvent;
 use luya\admin\models\QueueLog;
+use luya\admin\models\QueueLogError;
 use yii\queue\JobInterface;
 
 /**
@@ -81,17 +82,19 @@ class QueueLogBehavior extends Behavior
     {
         $log = QueueLog::findOne(['queue_id' => $event->id]);
 
+        /** @var \Exception $err */
+        $err = $event->error;
         if ($log) {
-            $title = $this->getExecTitle($event);
-            if ($event->error) {
-                $title.= " | " . $event->error->getMessage();
-            }
-            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => true]);
+            $log->updateAttributes(['end_timestamp' => time(), 'is_error' => true, 'title' => $this->getExecTitle($event)]);
 
-            // ensure title length validation.
-            // admin 3.0 is required to add new log message table with text instead of string.
-            $log->title = $title;
-            $log->save();
+            $errorLog = new QueueLogError();
+            $errorLog->queue_log_id = $log->id;
+            $errorLog->message = $err->getMessage();
+            $errorLog->code = $err->getCode();
+            $errorLog->trace = $err->getTraceAsString();
+            $errorLog->file = $err->getFile();
+            $errorLog->line = $err->getLine();
+            $errorLog->save();
         }
 
         // send error 

@@ -126,7 +126,6 @@ input[type="radio"] {
         display: block;
         padding-left: 25px;
         position: relative;
-        transform: translateZ(0);
         width: 100%;
 
         &:before {
@@ -177,7 +176,6 @@ input[type="checkbox"] {
         display: block;
         padding-left: 25px;
         position: relative;
-        transform: translateZ(0);
         width: 100%;
 
         &:before {
