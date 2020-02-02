@@ -20,6 +20,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#434](https://github.com/luyadev/luya-module-admin/pull/434) New Badge plugin to generate badge views in list overview.
 + [#380](https://github.com/luyadev/luya-module-admin/issues/380) New `index` ngrest plugins in order to generate a sequential row numbering in list views.
 + [#264](https://github.com/luyadev/luya-module-admin/issues/264) Added new `readonly` option to NgRest Plugins which will render the list value in update scope.
++ [#443](https://github.com/luyadev/luya-module-admin/issues/443) Added option to disable model validation when using duplicate button.
 + [#364](https://github.com/luyadev/luya-module-admin/issues/364) Added the user agent to the user login table to display more detailed informations.
 
 ### Fixed
