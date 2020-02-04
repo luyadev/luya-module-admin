@@ -12,6 +12,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
             type: "POST",
             url: url,
             data: $(this).serialize(),
+            error: asyncError,
             success: function (response) {
                 $('.login-btn[type="submit"]').attr('disabled', false);
                 $('.login-spinner').hide();
@@ -61,6 +62,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
             type: "POST",
             url: secureUrl,
             data: $(this).serialize(),
+            error: asyncError,
             success: function (response) {
                 $('.login-spinner').hide();
                 $('.login-btn-label').show();
@@ -96,6 +98,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
             type: "POST",
             url: twoFaUrl,
             data: $(this).serialize(),
+            error: asyncError,
             success: function (response) {
                 $('.login-spinner').hide();
                 $('.login-btn-label').show();
@@ -146,6 +149,14 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
         $('.login-btn-label').show();
         $('.login-btn[type="submit"]').attr('disabled', false);
     });
+};
+
+var asyncError = function(request) {
+    $('#errorsContainer').html(request.statusText);
+    $('#errorsContainer').show();
+    $('.login-spinner').hide();
+    $('.login-btn-label').show();
+    $('.login-btn[type="submit"]').attr('disabled', false);
 };
 
 var errorsToList = function(errors) {
