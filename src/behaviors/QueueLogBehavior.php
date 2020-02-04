@@ -90,10 +90,10 @@ class QueueLogBehavior extends Behavior
             $errorLog = new QueueLogError();
             $errorLog->queue_log_id = $log->id;
             $errorLog->message = $err->getMessage();
-            $errorLog->code = $err->getCode();
+            $errorLog->code = (string) $err->getCode();
             $errorLog->trace = $err->getTraceAsString();
             $errorLog->file = $err->getFile();
-            $errorLog->line = $err->getLine();
+            $errorLog->line = (string) $err->getLine();
             $errorLog->save();
         }
 
