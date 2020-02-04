@@ -482,4 +482,6 @@ return [
     'settings_2fa_verify_code_label' => 'Bestätigungs Code',
     'settings_2fa_verify_code_hint' => 'Geben Sie den Code von der App ein. Achtung der Code ändert sich alle paar Sekunden.',
     'login_async_secure_token_error' => 'Fehler beim versenden oder abgleichen des Sicherheits Codes.',
+    'menu_system_queue' => 'Warteschlange',
+    'menu_system_queue_errors' => 'Warteschlange Fehler',
 ];

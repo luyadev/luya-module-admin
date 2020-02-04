@@ -480,4 +480,6 @@ return [
     'settings_2fa_verify_code_label' => 'Verification Code',
     'settings_2fa_verify_code_hint' => 'Enter the code from your device, do note it changes every few seconds.',
     'login_async_secure_token_error' => 'Unable to send and store secure token.',
+    'menu_system_queue' => 'Queue',
+    'menu_system_queue_errors' => 'Queue Errors',
 ];
