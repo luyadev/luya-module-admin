@@ -14,7 +14,7 @@ class LoginFormTest extends AdminModelTestCase
 
     public function testSendSecureToken()
     {
-        $user = $this->createUserFixture([
+        $user = $this->createAdminUserFixture([
             'user' => [
                 'id' => 1,
                 'firstname' => 'John',
@@ -25,7 +25,7 @@ class LoginFormTest extends AdminModelTestCase
             ]
         ]);
 
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
 
         $login = new LoginForm();
         $login->email = 'test@luya.io';

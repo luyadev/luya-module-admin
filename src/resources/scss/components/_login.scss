@@ -46,6 +46,12 @@
         }
     }
 
+    @media screen and (min-height: 800px) {
+        &-loaded {
+            top: -150px;
+        }
+    }
+
     @media screen and (max-height: 400px) {
         opacity: 0;
     }
@@ -74,6 +80,11 @@
 }
 
 .login-form {
+
+    a {
+        text-decoration: underline;
+        color:$gray-800;
+    }
     opacity: 0;
     transition: .25s opacity ease-in-out;
     &-loaded {

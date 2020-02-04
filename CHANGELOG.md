@@ -5,16 +5,23 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.0
 
+> This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
 ### Changed
 
 + [#428](https://github.com/luyadev/luya-module-admin/issues/428) Update to latest echarts version (from 3.5 to 4.5) for backwards compatbility problems take a look at https://www.echartsjs.com/en/changelog.html#v4-0-0.
 
 ### Added
 
++ [#446](https://github.com/luyadev/luya-module-admin/issues/446) Added option to remember a device which will then auto login the user (unless logout is clicked, or an auto logout happens due to inactivity).
++ [#287](https://github.com/luyadev/luya-module-admin/issues/287) Added 2FA trough OTP for users accounts, if enabled the secure token will not be sent.
++ [#411](https://github.com/luyadev/luya-module-admin/issues/411) Queue log errors are now tracked in a seperate table (queue log error).
 + [#437](https://github.com/luyadev/luya-module-admin/pull/437) Option to display only the color dot in the Color plugin not the the selected color value.
 + [#434](https://github.com/luyadev/luya-module-admin/pull/434) New Badge plugin to generate badge views in list overview.
 + [#380](https://github.com/luyadev/luya-module-admin/issues/380) New `index` ngrest plugins in order to generate a sequential row numbering in list views.
 + [#264](https://github.com/luyadev/luya-module-admin/issues/264) Added new `readonly` option to NgRest Plugins which will render the list value in update scope.
++ [#443](https://github.com/luyadev/luya-module-admin/issues/443) Added option to disable model validation when using duplicate button.
++ [#364](https://github.com/luyadev/luya-module-admin/issues/364) Added the user agent to the user login table to display more detailed informations.
 
 ### Fixed
 

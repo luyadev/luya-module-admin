@@ -17,7 +17,7 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
     {
         $btn = new DuplicateActiveButton();
     
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
         $fixtureGroup = new NgRestModelFixture([
             'schema' => [
                 'id' => 'pk',
@@ -54,7 +54,7 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
     {
         $btn = new DuplicateActiveButton();
     
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,
         ]);
@@ -78,7 +78,7 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
     {
         $btn = new DuplicateActiveButton();
     
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,
         ]);
