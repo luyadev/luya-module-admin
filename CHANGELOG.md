@@ -23,6 +23,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#264](https://github.com/luyadev/luya-module-admin/issues/264) Added new `readonly` option to NgRest Plugins which will render the list value in update scope.
 + [#443](https://github.com/luyadev/luya-module-admin/issues/443) Added option to disable model validation when using duplicate button.
 + [#364](https://github.com/luyadev/luya-module-admin/issues/364) Added the user agent to the user login table to display more detailed informations.
++ [#448](https://github.com/luyadev/luya-module-admin/issues/448) Added checking if the user is not a guest, for the 'view' action to work in $authOptional on Api Controllers
 
 ### Fixed
 
