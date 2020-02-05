@@ -761,6 +761,11 @@ class Api extends RestActiveController
         }
         
         $query = $this->prepareListQuery()->select($fields);
+
+        if (!in_array($type, ['xlsx', 'csv'])) {
+            throw new InvalidConfigException("Invalid export type");
+        }
+
         $tempData = ExportHelper::$type($query, $fields, (bool) $header);
         
         $key = uniqid('ngrestexport', true);
