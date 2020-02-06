@@ -124,7 +124,18 @@ class LoginController extends Controller
         $model = new ResetPasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            echo "NICE";
+            $user = User::findByEmail($model->email);
+            if ($user) {
+                $user->password_verification_token = Yii::$app->security->generateRandomString();
+                $user->password_verification_token_timestamp = time();
+                if ($user->update(true, ['password_verification_token_timestamp' , 'password_verification_token'])) {
+                    // token and timestamp has been stored. send mail.
+
+                }
+            }
+
+            Yii::$app->session->setFlash('reset_password_success');
+            return $this->refresh();
         }
 
         return $this->render('reset', [

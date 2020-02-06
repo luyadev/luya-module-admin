@@ -13,16 +13,11 @@ class ResetPasswordForm extends Model
         return [
             [['email'], 'email'],
             [['email'], 'required'],
-            [['email'], 'validateEmail']
         ];
     }
 
     public function formName()
     {
         return 'reset';
-    }
-
-    public function validateEmail($attribute, $params, $validator) {
-        $this->addError($attribute, 'asdfsdf');
     }
 }
