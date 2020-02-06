@@ -14,6 +14,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Added
 
++ [#265](https://github.com/luyadev/luya-module-admin/issues/265) Session based lockout has been replaced for ip based lockout.
 + [#446](https://github.com/luyadev/luya-module-admin/issues/446) Added option to remember a device which will then auto login the user (unless logout is clicked, or an auto logout happens due to inactivity).
 + [#287](https://github.com/luyadev/luya-module-admin/issues/287) Added 2FA trough OTP for users accounts, if enabled the secure token will not be sent.
 + [#411](https://github.com/luyadev/luya-module-admin/issues/411) Queue log errors are now tracked in a seperate table (queue log error).
