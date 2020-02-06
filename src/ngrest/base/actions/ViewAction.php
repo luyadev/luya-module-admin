@@ -63,7 +63,7 @@ class ViewAction extends \yii\rest\ViewAction
             call_user_func($this->checkAccess, $this->id, $model);
         }
 
-        if (!Yii::$app->adminuser->identity->is_api_user) {
+        if (!Yii::$app->adminuser->isGuest && !Yii::$app->adminuser->identity->is_api_user) {
             $modelClass = $this->modelClass;
             $table = $modelClass::tableName();
             $alias = Yii::$app->adminmenu->getApiDetail($modelClass::ngRestApiEndpoint());
