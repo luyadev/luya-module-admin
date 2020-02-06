@@ -191,9 +191,3 @@ var checkInputLabels = function () {
         check($(this));
     });
 };
-
-$(window).on('load', function () {
-    $('.login-logo').addClass('login-logo-loaded');
-    $('.login-form').addClass('login-form-loaded');
-    checkInputLabels();
-});

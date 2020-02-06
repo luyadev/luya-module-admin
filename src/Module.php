@@ -100,6 +100,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * connection you can use `./vendor/bin/luya health/mailer` command.
      */
     public $secureLogin = false;
+
+    /**
+     * @var boolean If enabled, the login screen contains a "lost password" form, where the user can enter his email adresse and recieves
+     * an email with a link where the user can enter a new password.
+     * @since 3.0.0
+     */
+    public $resetPassword = true; // todo musst be false
     
     /**
      * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.

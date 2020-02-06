@@ -11,6 +11,7 @@ use luya\admin\Module;
 use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
+use luya\admin\models\ResetPasswordForm;
 use luya\admin\models\User;
 use luya\admin\models\UserLoginLockout;
 use RobThree\Auth\TwoFactorAuth;
@@ -47,7 +48,7 @@ class LoginController extends Controller
         return [
             [
                 'allow' => true,
-                'actions' => ['index', 'async', 'async-token', 'twofa-token'],
+                'actions' => ['index', 'async', 'async-token', 'twofa-token', 'reset'],
                 'roles' => ['?', '@'],
             ],
         ];
@@ -90,15 +91,44 @@ class LoginController extends Controller
        
         $this->registerAsset(Login::class);
         
-        $this->view->registerJs("$('#email').focus(); checkInputLabels();
-        	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');
-        ");
+        $this->view->registerJs("
+            $('#email').focus();
+            checkInputLabels();
+            $(window).on('load', function () {
+                $('.login-logo').addClass('login-logo-loaded');
+                $('.login-form').addClass('login-form-loaded');
+            });
+        	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');");
     
         UserOnline::clearList($this->module->userIdleTimeout);
         
         return $this->render('index', [
             'backgroundImage' => $this->backgroundImage,
             'autologout' => $autologout,
+            'resetPassword' => $this->module->resetPassword,
+        ]);
+    }
+
+    public function actionReset()
+    {
+        $this->registerAsset(Login::class);
+        
+        $this->view->registerJs("
+        $('#email').focus();
+        checkInputLabels();
+        $(window).on('load', function () {
+            $('.login-logo').addClass('login-logo-loaded');
+            $('.login-form').addClass('login-form-loaded');
+        });");
+
+        $model = new ResetPasswordForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            echo "NICE";
+        }
+
+        return $this->render('reset', [
+            'model' => $model,
         ]);
     }
     

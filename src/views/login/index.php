@@ -1,6 +1,7 @@
 <?php
 use luya\web\Svg;
 use luya\admin\Module;
+use luya\helpers\Html;
 use luya\helpers\Url;
 
 $spinner = Svg::widget([
@@ -97,11 +98,15 @@ body {
         </div>
     </form>
 
-    <div class="login-status mt-3 alert alert-danger shadow" id="errorsContainer" style="display: none"></div>
+    <div class="login-status mt-3 mb-0 alert alert-danger shadow" id="errorsContainer" style="display: none"></div>
 
     <div class="login-success" style="visibility: hidden;" id="success">
         <i class="material-icons login-success-icon">check_circle</i>
     </div>
+
+    <?php if ($resetPassword): ?>
+        <p class="text-muted mt-2 text-center"><small><?= Html::a('Forgot your Password?', ['reset']); ?></small></p>
+    <?php endif; ?>
 
 </div>
 
