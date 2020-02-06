@@ -90,8 +90,6 @@ zaa.directive('selectOnClick', function () {
  * ```
  * <div zaa-esc="methodClosesThisDiv()" />
  * ```
- *
- * @todo Rename this directive, as it should be prefixed with zaa.
  */
 zaa.directive("zaaEsc", ['$document', function ($document) {
     return function (scope, element, attrs) {

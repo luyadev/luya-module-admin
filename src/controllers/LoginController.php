@@ -127,7 +127,6 @@ class LoginController extends Controller
         if ($loginData) {
             $model->attributes = $loginData;
             if (($userObject = $model->login()) !== false) {
-
                 Yii::$app->session->set('autologin', $model->autologin);
                 // if the user has enabled the 2fa verification
                 if ($userObject->login_2fa_enabled) {
@@ -227,7 +226,6 @@ class LoginController extends Controller
         if ($verify && $user) {
             $twoFa = new TwoFactorAuth();
             if ($twoFa->verifyCode($user->login_2fa_secret, $verify)) {
-
                 $autologin = Yii::$app->session->get('autologin', false);
 
                 if (!$autologin) {
@@ -270,7 +268,7 @@ class LoginController extends Controller
         ];
     }
 
-    private function toErrorArray(array $errors) 
+    private function toErrorArray(array $errors)
     {
         $array = [];
         foreach ($errors as $field => $message) {

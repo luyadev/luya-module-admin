@@ -19,7 +19,7 @@ class ControllerTest extends AdminModelTestCase
             'modelClass' => User::class,
         ]);
 
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             $scope->loginUser();
 
             $stub = new StubController('id', $this->app);
@@ -27,7 +27,6 @@ class ControllerTest extends AdminModelTestCase
 
             $this->assertNotEmpty($html);
         });
-
     }
 }
 

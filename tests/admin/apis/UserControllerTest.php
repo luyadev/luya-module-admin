@@ -16,9 +16,8 @@ class UserControllerTest extends AdminModelTestCase
 {
     public function testActionSessionUpdate()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-            
-            $scope->createAndAllowApi('user');            
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('user');
 
             $module = new Module('admin', $this->app, [
                 'emailVerification' => 1,
@@ -39,7 +38,7 @@ class UserControllerTest extends AdminModelTestCase
                     'message' => 'account_changeemail_tokensenterror',
                 ]
             ], $update);
-        }, function(PermissionScope $config) {
+        }, function (PermissionScope $config) {
             $config->userFixtureData = [
                 'title' => 1,
                 'email' => 'before@test.com',
@@ -49,10 +48,9 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testSessionData()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-            
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture(['modelClass' => UserDevice::class]);
-            $scope->createAndAllowApi('user');     
+            $scope->createAndAllowApi('user');
             $user = new UserController('user', $this->app->getModule('admin'));
             $user->addActionPermission(Auth::CAN_VIEW, 'session');
             $data = $scope->runControllerAction($user, 'session');
@@ -69,9 +67,9 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testDeviceManager()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture(['modelClass' => UserDevice::class]);
-            $scope->createAndAllowApi('user');     
+            $scope->createAndAllowApi('user');
             $user = new UserController('user', $this->app->getModule('admin'));
             $user->addActionPermission(Auth::CAN_VIEW, 'remove-device');
             $this->expectException(NotFoundHttpException::class);
@@ -81,19 +79,18 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testTwoFa()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture(['modelClass' => UserDevice::class]);
-            $scope->createAndAllowApi('user');     
+            $scope->createAndAllowApi('user');
             $user = new UserController('user', $this->app->getModule('admin'));
             $user->addActionPermission(Auth::CAN_VIEW, 'disable-twofa');
             $data = $scope->runControllerAction($user, 'disable-twofa');
             $this->assertsame([], $data);
         });
 
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-            
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture(['modelClass' => UserDevice::class]);
-            $scope->createAndAllowApi('user');     
+            $scope->createAndAllowApi('user');
             $user = new UserController('user', $this->app->getModule('admin'));
             $user->addActionPermission(Auth::CAN_VIEW, 'register-twofa');
             $this->app->request->setBodyParams(['verification' => '123123', 'secret' => '27UZSNVXEA5W7FQC']);

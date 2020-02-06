@@ -97,7 +97,7 @@ class QueueLogBehavior extends Behavior
             $errorLog->save();
         }
 
-        // send error 
+        // send error
         Yii::$app->errorHandler->transferMessage($event->error->getMessage(), $event->error->getFile(), $event->error->getLine());
     }
     /**

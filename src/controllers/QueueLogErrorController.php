@@ -4,8 +4,8 @@ namespace luya\admin\controllers;
 
 /**
  * Queue Log Error Controller.
- * 
- * File has been created with `crud/create` command. 
+ *
+ * File has been created with `crud/create` command.
  */
 class QueueLogErrorController extends \luya\admin\ngrest\base\Controller
 {

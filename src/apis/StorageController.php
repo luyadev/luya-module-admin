@@ -484,7 +484,6 @@ class StorageController extends RestController
     /**
      * Remove files from the storage component.
      *
-     * @todo make permission check.
      * @return boolean
      */
     public function actionFilemanagerRemoveFiles()
@@ -524,7 +523,6 @@ class StorageController extends RestController
      * 3. delete folder
      *
      * @param integer $folderId The folder to delete.
-     * @todo move to storage helpers?
      * @return boolean
      */
     public function actionFolderDelete($folderId)

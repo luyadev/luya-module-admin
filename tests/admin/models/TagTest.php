@@ -51,7 +51,6 @@ class TagTest extends AdminModelTestCase
         // get relations
         // get relations
         $this->assertSame('0', $m->getTagRelations()->count());
-
     }
 
     public function testRelationMethods()

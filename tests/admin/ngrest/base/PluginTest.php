@@ -53,7 +53,7 @@ class PluginTest extends AdminTestCase
     public function testBeforeListFindProperty()
     {
         $plugin = $this->plugin;
-        $plugin->beforeListFind = function($value, $model) {
+        $plugin->beforeListFind = function ($value, $model) {
             return strtoupper($value);
         };
 

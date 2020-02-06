@@ -9,8 +9,8 @@ use yii\behaviors\TimestampBehavior;
 
 /**
  * Queue Log Error.
- * 
- * File has been created with `crud/create` command. 
+ *
+ * File has been created with `crud/create` command.
  *
  * @property integer $id
  * @property integer $queue_log_id
@@ -21,7 +21,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $line
  * @property integer $created_at
  * @property integer $updated_at
- * 
+ *
  * @since 3.0.0
  * @author Basil Suter <git@nadar.io>s
  */

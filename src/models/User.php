@@ -415,9 +415,9 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
     /**
      * Render user token based email:
-     * 
+     *
      * This is currently used for secure token and email validation tokens.
-     * 
+     *
      * @see https://mjml.io/try-it-live/Hk9rJe68B
      * @since 2.2.0
      */

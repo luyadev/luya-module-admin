@@ -35,18 +35,16 @@ class StorageControllerTest extends AdminModelTestCase
 
     public function testPermissionLessDataAction()
     {
-        
-
         $ctrl = new StorageController('id', $this->app);
 
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($ctrl) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($ctrl) {
             $fixture = new NgRestModelFixture([
                 'modelClass' => StorageFile::class,
             ]);
             $data = $scope->runControllerAction($ctrl, 'data-files');
             $this->assertSame([], $data);
             $fixture->cleanup();
-        }, function(PermissionScope $config) {
+        }, function (PermissionScope $config) {
             $config->userFixtureData = [
                 'is_api_user' => 0,
             ];

@@ -89,7 +89,6 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         $query = new NgRestActiveQuery(PoolModel::class);
 
         $this->assertSame(['field' => 'value'], $query->inPool('pool1')->where);
-
     }
 
     public function testFindByPrimaryKey()

@@ -32,7 +32,7 @@ class m200128_141129_v3_update extends Migration
         $this->addColumn('{{%admin_user}}', 'login_2fa_secret', $this->string());
         $this->addColumn('{{%admin_user}}', 'login_2fa_backup_key', $this->string());
 
-        // queue 
+        // queue
         $this->createTable('{{%admin_queue_log_error}}', [
             'id' => $this->primaryKey(),
             'queue_log_id' => $this->integer()->notNull(),

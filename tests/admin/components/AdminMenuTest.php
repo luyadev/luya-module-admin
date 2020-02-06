@@ -56,9 +56,6 @@ class AdminMenuTest extends AdminTestCase
         
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertSame([], $m->getModules());
-        
-        // add tests for logged in users with permissions
-        // todo
     }
     
     public function testGetModuleItems()
@@ -68,9 +65,6 @@ class AdminMenuTest extends AdminTestCase
             $items = $m->getModuleItems($node['id']);
             // As currently there is no user logged in an empty array will be returned. Means no permissions
             $this->assertSame([], $items);
-            
-            // add tests for logged in users with permissions
-            // todo
         }
     }
     
@@ -80,9 +74,6 @@ class AdminMenuTest extends AdminTestCase
 
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertSame([], $m->getItems());
-        
-        // add tests for logged in users with permissions
-        // todo
     }
     
     public function testApiDetail()
@@ -91,8 +82,5 @@ class AdminMenuTest extends AdminTestCase
         
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertFalse($m->getApiDetail('api-admin-user'));
-        
-        // add tests for logged in users with permissions
-        // todo
     }
 }

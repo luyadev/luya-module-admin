@@ -7,9 +7,9 @@ use yii\behaviors\BlameableBehavior as BehaviorsBlameableBehavior;
 
 /**
  * Admin User Component Blameable Behavior.
- * 
+ *
  * Uses the LUYA admin user (adminuser) component id if available.
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 3.0.0
  */

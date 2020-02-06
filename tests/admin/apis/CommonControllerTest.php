@@ -20,8 +20,7 @@ class CommonControllerTest extends AdminModelTestCase
      */
     public function testActionTagRelationToggle()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             $lang = $this->createAdminLangFixture([]);
 
             $tag = new NgRestModelFixture([
@@ -68,7 +67,7 @@ class CommonControllerTest extends AdminModelTestCase
      */
     public function testActionTags()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             $this->createAdminLangFixture([]);
             $scope->createAndAllowRoute('adminmodeltest/id/tags');
             $ctrl = new CommonController('id', $this->app);

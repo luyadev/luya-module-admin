@@ -157,10 +157,10 @@ final class Tag extends NgRestModel
     
     /**
      * Toggle (Enable or Disable) a given tag for a Model.
-     * 
+     *
      * ```php
      * $tag = Tag::find()->where(['alias' => 'soccer'])->one();
-     * 
+     *
      * $model = MyModel::findOne(1);
      * $tag->toggleRelationByModel($model);
      * ```

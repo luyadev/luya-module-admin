@@ -7,7 +7,7 @@ use luya\Exception;
 
 /**
  * Badge with colors for certain values.
- * 
+ *
  * ```php
  * public function getLabel()
  * {
@@ -21,7 +21,7 @@ use luya\Exception;
  *     ];
  * }
  * ```
- * 
+ *
  * @see Available badges https://getbootstrap.com/docs/4.4/components/badge/
  * @author Basil Suter <basil@nadar.io>
  * @since 3.0.0
@@ -38,9 +38,9 @@ class Badge extends Plugin
      * - info
      * - light
      * - dark
-     * 
+     *
      * Example integration:
-     * 
+     *
      * ```php
      * 'variations' => [
      *     'Pending' => 'warning',
@@ -69,7 +69,7 @@ class Badge extends Plugin
     
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws Exception
      */
     public function renderUpdate($id, $ngModel)
@@ -79,7 +79,7 @@ class Badge extends Plugin
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws Exception
      */
     public function renderCreate($id, $ngModel)

@@ -131,7 +131,7 @@ class DefaultController extends Controller
 
     /**
      * Reload buttons from admin module config.
-     * 
+     *
      * @return array An array with all reload buttons.
      */
     public function reloadButtonArray()

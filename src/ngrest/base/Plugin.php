@@ -61,7 +61,7 @@ abstract class Plugin extends Component implements TypesInterface
 
     /**
      * @var boolean Whether the the value is only readable in EDIT scope or not. If enabled the data is displayed in the edit form as value instead
-     * of the edit form. This has no effect to the create scope ony to the edit scope. Internally when enabled, the plugin will use {{renderList()}} in 
+     * of the edit form. This has no effect to the create scope ony to the edit scope. Internally when enabled, the plugin will use {{renderList()}} in
      * update context instead of {{renderUpdate()}}.
      * @since 3.0.0
      */
@@ -110,20 +110,20 @@ abstract class Plugin extends Component implements TypesInterface
 
     /**
      * @var callable A callable which will return before the ngrest list view for a given attribute.
-     * 
+     *
      * The function annotation contains the value of the attribute and second the model (event sender argument).
-     * 
+     *
      * ```php
      * 'beforeListFind' => function($value, $model) {
      *    return I18n::decode($value)['en']; // returns always the english language key value.
      * }
      * ```
-     * 
+     *
      * Return return value of the callable function will be set as attribute value to display.
-     * 
+     *
      * > Keep in mind that the return value of the function won't be processed by any further events.
      * > For example the i18n property might not have any effect anymore even when {{$i18n}} is enabled.
-     * 
+     *
      * @since 2.2.2
      */
     public $beforeListFind;
@@ -221,19 +221,19 @@ abstract class Plugin extends Component implements TypesInterface
      * ```php
      * 'sortField' => false,
      * ```
-     * 
+     *
      * In order to enable order by counting of relation tables update the APIs {{luya\admin\ngrest\base\Api::prepareListQuery()}} with the given sub
      * select condition where the alias name is equal to the field to sort:
-     * 
+     *
      * ```php
      * public function prepareListQuery()
      * {
      *     return parent::prepareListQuery()->select(['*', '(SELECT count(*) FROM admin_tag_relation WHERE tag_id = id) as relationsCount']);
      * }
      * ```
-     * 
+     *
      * Where in the above example `relationsCount` would be the sortField name.
-     * 
+     *
      * @see https://www.yiiframework.com/doc/api/2.0/yii-data-sort#$attributes-detail
      * @since 2.0.0
      */
@@ -644,8 +644,8 @@ abstract class Plugin extends Component implements TypesInterface
     }
     
     /**
-     * This event is only trigger when returning the ngrest crud list data. 
-     * 
+     * This event is only trigger when returning the ngrest crud list data.
+     *
      * If the attribute is not inside the model (property not writeable), the event will not be triggered. Ensure its a
      * public property or contains getter/setter methods.
      *
