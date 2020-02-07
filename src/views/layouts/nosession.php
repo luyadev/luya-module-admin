@@ -1,3 +1,12 @@
+<?php
+$this->registerJs("
+$('#email').focus();
+checkInputLabels();
+$(window).on('load', function () {
+    $('.login-logo').addClass('login-logo-loaded');
+    $('.login-form').addClass('login-form-loaded');
+});");
+?>
 <?php $this->beginPage(); ?>
     <!DOCTYPE html>
     <html>

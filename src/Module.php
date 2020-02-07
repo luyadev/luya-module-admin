@@ -107,6 +107,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 3.0.0
      */
     public $resetPassword = true; // todo musst be false
+
+    public $resetPasswordExpirationTime = 900; // 15min
     
     /**
      * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.

@@ -31,6 +31,11 @@ body {
     <?php endif; ?>
     <!-- E-Mail & Password Form -->
     <form class="login-form shadow-lg rounded" method="post" id="loginForm">
+
+        <?php if (Yii::$app->session->getFlash('invalid_reset_token')): ?>
+            <p class="alert alert-warning mb-5">The reset token link is not valid or expired.</p>
+        <?php endif; ?>
+
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
         <div class="login-inputs">
             <div class="login-form-field form-group">
