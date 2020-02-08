@@ -44,6 +44,8 @@ class LoginControllerTest extends AdminModelTestCase
         new NgRestModelFixture(['modelClass' => UserLoginLockout::class]);
         
         $login = new LoginController('login', $this->app->getModule('admin'));
+        $this->app->controller = $login;
+
         $r = $login->actionIndex();
         $this->assertNotNull($r);
         $r = $login->actionAsync();
@@ -51,6 +53,12 @@ class LoginControllerTest extends AdminModelTestCase
         $r = $login->actionAsyncToken();
         $this->assertNotNull($r);
         $r = $login->actionTwofaToken();
+        $this->assertNotNull($r);
+
+        $r = $login->actionReset();
+        $this->assertNotNull($r);
+
+        $r = $login->actionPasswordReset('token', 1);
         $this->assertNotNull($r);
     }
 }
