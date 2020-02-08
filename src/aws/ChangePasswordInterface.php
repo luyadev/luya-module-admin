@@ -30,6 +30,7 @@ interface ChangePasswordInterface
      * The implementation of this must make sure if the $newPassword and $newPasswordRepetition are equals!
      *
      * @param string $newPassword The new password (as plain input) which must be encoded an set.
+     * @return boolean Whether password change was successfull or not.
      */
     public function changePassword($newPassword);
 }

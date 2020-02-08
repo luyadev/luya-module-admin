@@ -98,7 +98,6 @@ class LoginController extends Controller
         UserOnline::clearList($this->module->userIdleTimeout);
         
         return $this->render('index', [
-            'backgroundImage' => $this->backgroundImage,
             'autologout' => $autologout,
             'resetPassword' => $this->module->resetPassword,
         ]);
@@ -169,6 +168,17 @@ class LoginController extends Controller
         $this->registerAsset(Login::class);
 
         $model = new ResetPasswordChangeForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($user->changePassword($model->password)) {
+                Yii::$app->session->setFlash('reset_password_success');
+                $user->password_verification_token_timestamp = time();
+                $user->password_verification_token = Yii::$app->security->generateRandomString();
+                $user->save(true, ['password_verification_token_timestamp', 'password_verification_token']);
+                return $this->redirect('index');
+            } else {
+                $model->addErrors($user->getErrors());
+            }
+        }
 
         return $this->render('password-reset', [
             'model' => $model,

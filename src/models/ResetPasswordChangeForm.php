@@ -15,4 +15,9 @@ class ResetPasswordChangeForm extends Model
             [['password'], 'string', 'min' => '8'],
         ];
     }
+
+    public function formName()
+    {
+        return 'change';
+    }
 }

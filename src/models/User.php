@@ -324,12 +324,13 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $this->password = $newpass;
 
         if ($this->encodePassword()) {
-            if ($this->save()) {
+            if ($this->save(true, ['password', 'password_salt'])) {
                 return true;
             }
         }
 
-        return $this->addError('newpass', 'Error while saving new password.');
+        $this->addError('newpass', 'Error while saving new password.');
+        return false;
     }
     
     /**

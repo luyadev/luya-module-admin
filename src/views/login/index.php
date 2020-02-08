@@ -2,7 +2,6 @@
 use luya\web\Svg;
 use luya\admin\Module;
 use luya\helpers\Html;
-use luya\helpers\Url;
 
 $spinner = Svg::widget([
     'folder' => "@admin/resources/svg",
@@ -10,30 +9,17 @@ $spinner = Svg::widget([
     'file' => 'login/spinner.svg'
 ]);
 ?>
-<?php if ($backgroundImage): ?>
-<style type="text/css">
-body {
-    background-image: url('<?= $backgroundImage; ?>');
-    background-size: cover;
-    background-position: 50% 50%;
-}
-</style>
-<?php endif; ?>
-<div class="login-frame">
-    <?php if (!$backgroundImage): ?>
-    <div class="login-logo">
-        <?= Svg::widget([
-            'folder' => "@admin/resources/svg",
-            'cssClass' => 'login-logo-svg',
-            'file' => 'logo/luya_logo.svg'
-        ]) ?>
-    </div>
-    <?php endif; ?>
+
+
     <!-- E-Mail & Password Form -->
     <form class="login-form shadow-lg rounded" method="post" id="loginForm">
 
         <?php if (Yii::$app->session->getFlash('invalid_reset_token')): ?>
             <p class="alert alert-warning mb-5">The reset token link is not valid or expired.</p>
+        <?php endif; ?>
+
+        <?php if (Yii::$app->session->getFlash('reset_password_success')): ?>
+            <p class="alert alert-success mb-5">The password has been changed for your account.</p>
         <?php endif; ?>
 
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
@@ -112,30 +98,3 @@ body {
     <?php if ($resetPassword): ?>
         <p class="text-muted mt-2 text-center"><small><?= Html::a('Forgot your Password?', ['reset']); ?></small></p>
     <?php endif; ?>
-
-</div>
-
-<?php if (!$backgroundImage): ?>
-<div class="login-info">
-    <h1 class="login-title"><span class="on-white"><?= Yii::$app->siteTitle; ?></span></h1>
-    <span class="login-info-text on-white"><?php if (Yii::$app->request->isSecureConnection): ?><i alt="<?= Module::t('login_ssl_info');?>" title="<?= Module::t('login_ssl_info');?>" class="material-icons">verified_user</i><?php endif; ?><?= Url::domain(Yii::$app->request->hostInfo); ?></span>
-</div>
-<?php endif; ?>
-
-<div class="login-links">
-    <ul>
-        <li>
-            <a href="https://luya.io" target="_blank" class="login-link on-white">luya.io</a>
-        </li>
-    </ul>
-</div>
-
-<noscript>
-    <div class="login-noscript">
-        <p><?= Module::t('login_noscript_error');?></p>
-    </div>
-</noscript>
-
-<!--[if IE]>
-    <div class="login-browsehappy"><p><?= Module::t('login_browsehappy');?></p></div>
-<![endif]-->
