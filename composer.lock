@@ -17,8 +17,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "shasum": null
+                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -39,8 +38,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
-                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
-                "shasum": null
+                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "type": "bower-asset",
             "license": [
@@ -58,8 +56,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "shasum": null
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "type": "bower-asset"
         },
@@ -74,8 +71,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
-                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
-                "shasum": null
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "require": {
                 "bower-asset/jquery": ">=1.8"
@@ -1251,14 +1247,13 @@
             "version": "v1.7.9",
             "source": {
                 "type": "git",
-                "url": "git@github.com:angular/bower-angular.git",
+                "url": "https://github.com/angular/bower-angular.git",
                 "reference": "84a5b810f33f82a552cee361268b77181691ce65"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular/bower-angular/zipball/84a5b810f33f82a552cee361268b77181691ce65",
-                "reference": "84a5b810f33f82a552cee361268b77181691ce65",
-                "shasum": null
+                "reference": "84a5b810f33f82a552cee361268b77181691ce65"
             },
             "type": "bower-asset",
             "license": [
@@ -1276,8 +1271,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/a8m/angular-filter/zipball/8285ffda674181667ef1ddc32b92b7d6bd6c3711",
-                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711",
-                "shasum": null
+                "reference": "8285ffda674181667ef1ddc32b92b7d6bd6c3711"
             },
             "require": {
                 "bower-asset/angular": ">=1.4.3"
@@ -1298,8 +1292,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/chieffancypants/angular-loading-bar/zipball/d734873e52ded18fa27d67f52272ae43267dfd63",
-                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63",
-                "shasum": null
+                "reference": "d734873e52ded18fa27d67f52272ae43267dfd63"
             },
             "require": {
                 "bower-asset/angular": ">=1.2.9,<2.0.0"
@@ -1317,8 +1310,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/lancedikson/bowser/zipball/1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
-                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786",
-                "shasum": null
+                "reference": "1fb99ced0e8834fd9662604bad7e0f0c3eba2786"
             },
             "type": "bower-asset",
             "license": [
@@ -1330,14 +1322,13 @@
             "version": "4.5.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:ecomfe/echarts.git",
+                "url": "https://github.com/apache/incubator-echarts.git",
                 "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
-                "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
-                "shasum": null
+                "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
+                "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "type": "bower-asset"
         },
@@ -1352,8 +1343,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/flow.js/zipball/45dcba147211d5bf296ae7e1f496b4dd1a48b198",
-                "reference": "45dcba147211d5bf296ae7e1f496b4dd1a48b198",
-                "shasum": null
+                "reference": "45dcba147211d5bf296ae7e1f496b4dd1a48b198"
             },
             "type": "bower-asset"
         },
@@ -1368,8 +1358,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/danialfarid/angular-file-upload-bower/zipball/4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
-                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5",
-                "shasum": null
+                "reference": "4ba3e7eb34c3ced628699e3e20bfca32ea5be1f5"
             },
             "require": {
                 "bower-asset/angular": ">1.2.0"
@@ -1390,8 +1379,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/flowjs/ng-flow/zipball/fbf246e1839ee2c4586a82e9132651c498946ed2",
-                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2",
-                "shasum": null
+                "reference": "fbf246e1839ee2c4586a82e9132651c498946ed2"
             },
             "require": {
                 "bower-asset/angular": "~1",
@@ -1446,8 +1434,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/philsbury/twigjs-bower/zipball/425d39571c91121e504dea4984b873306a60361f",
-                "reference": "425d39571c91121e504dea4984b873306a60361f",
-                "shasum": null
+                "reference": "425d39571c91121e504dea4984b873306a60361f"
             },
             "type": "bower-asset",
             "license": [
@@ -1465,8 +1452,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/angular-ui/ui-router/zipball/ef38bc78495ec7719dcd6876886cf5a27420f330",
-                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330",
-                "shasum": null
+                "reference": "ef38bc78495ec7719dcd6876886cf5a27420f330"
             },
             "require": {
                 "bower-asset/angular": ">=1.0.8,<2.0.0"
@@ -1782,18 +1768,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -2063,8 +2049,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -2111,8 +2097,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -2153,8 +2139,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Simple template engine.",
@@ -2202,8 +2188,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sb@sebastian-bergmann.de"
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
             "description": "Utility class for timing",
@@ -2333,8 +2319,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -2957,8 +2943,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
