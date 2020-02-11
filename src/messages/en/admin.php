@@ -482,7 +482,6 @@ return [
     'login_async_secure_token_error' => 'Unable to send and store secure token.',
     'menu_system_queue' => 'Queue',
     'menu_system_queue_errors' => 'Queue Errors',
-    // REESET
     'login_forgot_password' => 'Forgot your Password?',
     'login_invalid_reset_token' => 'The reset token link is not valid or expired.',
     'login_reset_password_success' => 'The password has been changed for your account.',
@@ -494,7 +493,6 @@ return [
     'reset_email_subject' => 'Reset Password',
     'reset_email_text' => 'Click the link below to set a new password for your user account.',
     'reset_email_btn_label' => 'Reset your Password',
-
     'reset_form_title' => 'Set new Password',
     'reset_form_text' => 'Enter a new password for your account.',
     'reset_form_submit_btn' => 'Save new password',
