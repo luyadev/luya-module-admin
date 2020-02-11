@@ -12,12 +12,11 @@ $spinner = Svg::widget([
 ?>
 <p class="lead text-center"><?= Module::t('reset_title'); ?></p>
 <form class="login-form shadow-lg rounded" method="post">
+    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
     <p class="text-muted mb-5 mt-0 pt-0"><?= Module::t('reset_text'); ?></p>
-
     <?php if (Yii::$app->session->getFlash('reset_password_success')): ?>
         <p class="alert alert-success"><?= Module::t('reset_success'); ?></p>
     <?php else: ?>
-    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
     <div class="login-form-field form-group">
         <input class="login-input" id="email" name="reset[email]" type="email" autocomplete="email" tabindex="1" required />
         <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>

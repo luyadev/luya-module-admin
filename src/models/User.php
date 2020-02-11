@@ -440,7 +440,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $result = new Parser(Yii::$app->request->userAgent);
         return Yii::$app->view->render('@admin/views/mail/_reset.php', [
             'url' => Url::domain(Url::base(true)),
-            'token' => Html::a('Reset', $url),
+            'token' => Html::a(Module::t('reset_email_btn_label'), $url),
             'browser' => $result->toString(),
             'title' => $title,
             'text' => $text,

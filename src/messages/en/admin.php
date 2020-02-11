@@ -490,6 +490,10 @@ return [
     'reset_text' => 'In order to reset your Password enter your E-Mail-Adresse and an email with a reset link will be sent to your inbox.',
     'reset_success' => 'Password reset link has been sent. <b>Check your mailbox</b> and click the link.',
     'reset_submit_btn' => 'Send reset Link',
+    'reset_mail_error' => 'Unable to send E-Mail, problem with mail configuration. Please contact your admin.',
+    'reset_email_subject' => 'Reset Password',
+    'reset_email_text' => 'Click the link below to set a new password for your user account.',
+    'reset_email_btn_label' => 'Reset your Password',
 
     'reset_form_title' => 'Set new Password',
     'reset_form_text' => 'Enter a new password for your account.',

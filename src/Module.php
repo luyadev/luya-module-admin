@@ -106,8 +106,12 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * an email with a link where the user can enter a new password.
      * @since 3.0.0
      */
-    public $resetPassword = true; // todo musst be false
+    public $resetPassword = false;
 
+    /**
+     * @var integer The number of seconds the reset token link is valid.
+     * @since 3.0.0
+     */
     public $resetPasswordExpirationTime = 900; // 15min
     
     /**

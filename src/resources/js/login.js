@@ -40,6 +40,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
@@ -76,6 +77,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
@@ -111,6 +113,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#twofaForm').hide();

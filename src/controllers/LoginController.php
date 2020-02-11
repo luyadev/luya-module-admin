@@ -103,6 +103,12 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * Provides a form to enter an email which will then send a reset link. 
+     *
+     * @return string
+     * @since 3.0.0
+     */
     public function actionReset()
     {
         if (!$this->module->resetPassword) {
@@ -123,14 +129,16 @@ class LoginController extends Controller
                     $mail = Yii::$app->mail;
                     $mail->layout = false; // ensure layout is disabled even when enabled in application config
                     $send = $mail
-                        ->compose('Reset Password', User::generateResetEmail(
-                            Url::toRoute(['/admin/login/password-reset', 'token' => $user->password_verification_token, 'id' => $user->id], true), 'Reset Password', 'Click the below link to reset your password.'))
+                        ->compose(Module::t('reset_email_subject'), User::generateResetEmail(
+                            Url::toRoute(['/admin/login/password-reset', 'token' => $user->password_verification_token, 'id' => $user->id], true), 
+                            Module::t('reset_email_subject'), 
+                            Module::t('reset_email_text')))
                         ->address($user->email)
                         ->send();
 
                     if (!$send) {
                         $error = true;
-                        $model->addError('email', 'Unable to send E-Mail, problem with mail component.');
+                        $model->addError('email', Module::t('reset_mail_error'));
                     }
                 }
             }
@@ -146,6 +154,14 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * The reset action which allows to store a new password for a valid token and id. 
+     *
+     * @param string $token
+     * @param integer $id
+     * @return string
+     * @since 3.0.0
+     */
     public function actionPasswordReset($token, $id)
     {
         if (!$this->module->resetPassword) {
@@ -168,6 +184,7 @@ class LoginController extends Controller
         $this->registerAsset(Login::class);
 
         $model = new ResetPasswordChangeForm();
+        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($user->changePassword($model->password)) {
                 Yii::$app->session->setFlash('reset_password_success');
