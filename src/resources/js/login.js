@@ -129,6 +129,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
         $('#errorsContainer').hide();
         $('#secureForm').hide();
         $('#loginForm').show();
+        $('#forgot').show();
         $('#success').css('visibility', 'hidden');
 
         $('.login-spinner').hide();
@@ -143,6 +144,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
         $('#errorsContainer').hide();
         $('#twofaForm').hide();
         $('#loginForm').show();
+        $('#forgot').show();
         $('#success').css('visibility', 'hidden');
 
         $('.login-spinner').hide();

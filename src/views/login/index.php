@@ -3,23 +3,23 @@ use luya\web\Svg;
 use luya\admin\Module;
 use luya\helpers\Html;
 
+$this->title = Yii::$app->siteTitle . " &rsaquo; " . Module::t('login_btn_login'); 
+
 $spinner = Svg::widget([
     'folder' => "@admin/resources/svg",
     'cssClass' => 'svg-spinner',
     'file' => 'login/spinner.svg'
 ]);
 ?>
-
-
     <!-- E-Mail & Password Form -->
     <form class="login-form shadow-lg rounded" method="post" id="loginForm">
 
         <?php if (Yii::$app->session->getFlash('invalid_reset_token')): ?>
-            <p class="alert alert-warning mb-5">The reset token link is not valid or expired.</p>
+            <p class="alert alert-warning mb-5"><?= Module::t('login_invalid_reset_token'); ?></p>
         <?php endif; ?>
 
         <?php if (Yii::$app->session->getFlash('reset_password_success')): ?>
-            <p class="alert alert-success mb-5">The password has been changed for your account.</p>
+            <p class="alert alert-success mb-5"><?= Module::t('login_reset_password_success'); ?></p>
         <?php endif; ?>
 
         <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
@@ -96,5 +96,5 @@ $spinner = Svg::widget([
     </div>
 
     <?php if ($resetPassword): ?>
-        <p class="text-muted mt-2 text-center"><small><?= Html::a('Forgot your Password?', ['reset']); ?></small></p>
+        <p id="forgot" class="text-muted mt-2 text-center"><small><?= Html::a(Module::t('login_forgot_password'), ['reset']); ?></small></p>
     <?php endif; ?>
