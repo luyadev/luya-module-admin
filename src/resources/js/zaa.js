@@ -93,7 +93,10 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
             })
             .state("home", {
                 url: "",
-                templateUrl: "admin/default/dashboard"
+                templateUrl: "admin/default/dashboard",
+                controller: ['$scope', function($scope) {
+                    $scope.$parent.currentItem = {'icon':'home', 'alias': i18n['menu_dashboard']};
+                }]
             })
             // ngrest crud detail view
             .state("default.route.detail", {

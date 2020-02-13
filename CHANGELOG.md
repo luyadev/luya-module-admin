@@ -28,6 +28,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#453](https://github.com/luyadev/luya-module-admin/issues/453) When visiting dashboard in mobile view, the title was not set correctly.
 + [#439](https://github.com/luyadev/luya-module-admin/issues/439) Add option to dissabled auto assign of select data after find.
 + [#441](https://github.com/luyadev/luya-module-admin/issues/441) Fixed switching of the "check_circle" text to the real icon after successful authentication
 + [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
