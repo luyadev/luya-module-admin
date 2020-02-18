@@ -43,7 +43,9 @@ class LoginControllerTest extends AdminModelTestCase
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         new NgRestModelFixture(['modelClass' => UserLoginLockout::class]);
         
-        $login = new LoginController('login', $this->app->getModule('admin'));
+        $module = $this->app->getModule('admin');
+        $module->resetPassword = true;
+        $login = new LoginController('login', $module);
         $this->app->controller = $login;
 
         $r = $login->actionIndex();
@@ -54,6 +56,7 @@ class LoginControllerTest extends AdminModelTestCase
         $this->assertNotNull($r);
         $r = $login->actionTwofaToken();
         $this->assertNotNull($r);
+
 
         $r = $login->actionReset();
         $this->assertNotNull($r);
