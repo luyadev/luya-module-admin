@@ -79,6 +79,13 @@ class Controller extends \luya\admin\base\Controller
     public $globalButtons = [];
 
     /**
+     * @var boolean Whether the CRUD dropdown shows a button with "Clear Data" which will then truncate the whole table content. Usefull for tables
+     * which contain only temporary informations like logs and errors.
+     * @since 3.0.0
+     */
+    public $clearButton = false;
+
+    /**
      * @var string|array|\luya\admin\ngrest\render\RenderCrudInterface
      *
      * You can customize crud rendering using this property. To do so you may use standard `\luya\admin\ngrest\render\RenderCrud`, but customize
@@ -162,6 +169,14 @@ class Controller extends \luya\admin\base\Controller
         
         if ($userSortSettings && is_array($userSortSettings) && $config->getDefaultOrder() !== false) {
             $config->defaultOrder = [$userSortSettings['field'] => $userSortSettings['sort']];
+        }
+
+        if ($this->clearButton) {
+            $this->globalButtons = array_merge($this->globalButtons, [
+                'icon' => 'trash',
+                'label' => 'Clear Data',
+                'ng-click' => "clearData()"
+            ]);
         }
         
         // generate crud renderer
