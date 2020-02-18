@@ -35,6 +35,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
 + [#426](https://github.com/luyadev/luya-module-admin/issues/426) Fixed a bug where color plugin does not work when model is empty.
 + [#448](https://github.com/luyadev/luya-module-admin/issues/448) Added checking if the user is not a guest, for the 'view' action to work in $authOptional on Api Controllers
++ [#330](https://github.com/luyadev/luya-module-admin/issues/330) Mark required i18n fields with bold label, like none i18n fields.
 
 ## 2.4.1 (16. December 2019)
 

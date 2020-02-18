@@ -561,6 +561,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                 'configContext' => $configContext,
                 'languages' => Lang::getQuery(),
                 'helpButtonHtml' => $this->createFieldHelpButton($element, $configContext),
+                'isRequired' => $this->getModel()->isAttributeRequired($element['name']),
             ]);
         }
 
