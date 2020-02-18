@@ -496,4 +496,5 @@ return [
     'reset_form_title' => 'Reset your Password',
     'reset_form_text' => 'Enter a new password for your account.',
     'reset_form_submit_btn' => 'Update password',
+    'user_change_password_error' =>  'Error while saving new password.',
 ];
