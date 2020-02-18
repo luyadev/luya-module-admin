@@ -11,10 +11,13 @@ use luya\admin\Module;
 use luya\admin\base\Controller;
 use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
+use luya\admin\models\ResetPasswordChangeForm;
+use luya\admin\models\ResetPasswordForm;
 use luya\admin\models\User;
 use luya\admin\models\UserLoginLockout;
 use RobThree\Auth\TwoFactorAuth;
 use yii\base\InvalidConfigException;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
@@ -47,7 +50,7 @@ class LoginController extends Controller
         return [
             [
                 'allow' => true,
-                'actions' => ['index', 'async', 'async-token', 'twofa-token'],
+                'actions' => ['index', 'async', 'async-token', 'twofa-token', 'reset', 'password-reset'],
                 'roles' => ['?', '@'],
             ],
         ];
@@ -90,15 +93,112 @@ class LoginController extends Controller
        
         $this->registerAsset(Login::class);
         
-        $this->view->registerJs("$('#email').focus(); checkInputLabels();
-        	observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');
-        ");
+        $this->view->registerJs("observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');");
     
         UserOnline::clearList($this->module->userIdleTimeout);
         
         return $this->render('index', [
-            'backgroundImage' => $this->backgroundImage,
             'autologout' => $autologout,
+            'resetPassword' => $this->module->resetPassword,
+        ]);
+    }
+
+    /**
+     * Provides a form to enter an email which will then send a reset link. 
+     *
+     * @return string
+     * @since 3.0.0
+     */
+    public function actionReset()
+    {
+        if (!$this->module->resetPassword) {
+            throw new ForbiddenHttpException();
+        }
+
+        $this->registerAsset(Login::class);
+
+        $model = new ResetPasswordForm();
+        $error = false;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = User::findByEmail($model->email);
+            if ($user) {
+                $user->password_verification_token = Yii::$app->security->generateRandomString();
+                $user->password_verification_token_timestamp = time() + $this->module->resetPasswordExpirationTime;
+                if ($user->update(true, ['password_verification_token_timestamp' , 'password_verification_token'])) {
+                    // token and timestamp has been stored. send mail.
+                    $mail = Yii::$app->mail;
+                    $mail->layout = false; // ensure layout is disabled even when enabled in application config
+                    $send = $mail
+                        ->compose(Module::t('reset_email_subject'), User::generateResetEmail(
+                            Url::toRoute(['/admin/login/password-reset', 'token' => $user->password_verification_token, 'id' => $user->id], true), 
+                            Module::t('reset_email_subject'), 
+                            Module::t('reset_email_text')))
+                        ->address($user->email)
+                        ->send();
+
+                    if (!$send) {
+                        $error = true;
+                        $model->addError('email', Module::t('reset_mail_error'));
+                    }
+                }
+            }
+
+            if (!$error) {
+                Yii::$app->session->setFlash('reset_password_success');
+                return $this->refresh();
+            }
+        }
+
+        return $this->render('reset', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * The reset action which allows to store a new password for a valid token and id. 
+     *
+     * @param string $token
+     * @param integer $id
+     * @return string
+     * @since 3.0.0
+     */
+    public function actionPasswordReset($token, $id)
+    {
+        if (!$this->module->resetPassword) {
+            throw new ForbiddenHttpException();
+        }
+
+        $user = User::find()->where([
+            'and',
+            ['=', 'is_deleted', false],
+            ['=', 'id', $id],
+            ['=', 'password_verification_token', $token],
+            ['>=', 'password_verification_token_timestamp', time()]
+        ])->one();
+
+        if (!$user) {
+            Yii::$app->session->setFlash('invalid_reset_token');
+            return $this->redirect('index');
+        }
+
+        $this->registerAsset(Login::class);
+
+        $model = new ResetPasswordChangeForm();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($user->changePassword($model->password)) {
+                Yii::$app->session->setFlash('reset_password_success');
+                $user->password_verification_token_timestamp = time();
+                $user->password_verification_token = Yii::$app->security->generateRandomString();
+                $user->save(true, ['password_verification_token_timestamp', 'password_verification_token']);
+                return $this->redirect('index');
+            } else {
+                $model->addErrors($user->getErrors());
+            }
+        }
+
+        return $this->render('password-reset', [
+            'model' => $model,
         ]);
     }
     

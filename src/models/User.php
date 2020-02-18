@@ -15,6 +15,7 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\helpers\Html;
 use luya\helpers\Url;
 use WhichBrowser\Parser;
 
@@ -323,12 +324,13 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $this->password = $newpass;
 
         if ($this->encodePassword()) {
-            if ($this->save()) {
+            if ($this->save(true, ['password', 'password_salt'])) {
                 return true;
             }
         }
 
-        return $this->addError('newpass', 'Error while saving new password.');
+        $this->addError('newpass', Module::t('user_change_password_error'));
+        return false;
     }
     
     /**
@@ -427,6 +429,18 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return Yii::$app->view->render('@admin/views/mail/_token.php', [
             'url' => Url::domain(Url::base(true)),
             'token' => $token,
+            'browser' => $result->toString(),
+            'title' => $title,
+            'text' => $text,
+        ]);
+    }
+
+    public static function generateResetEmail($url, $title, $text)
+    {
+        $result = new Parser(Yii::$app->request->userAgent);
+        return Yii::$app->view->render('@admin/views/mail/_reset.php', [
+            'url' => Url::domain(Url::base(true)),
+            'token' => Html::a(Module::t('reset_email_btn_label'), $url),
             'browser' => $result->toString(),
             'title' => $title,
             'text' => $text,

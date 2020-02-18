@@ -40,6 +40,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
@@ -76,6 +77,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#secureForm').hide();
@@ -111,6 +113,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
                 }
 
                 if (refresh) {
+                    $('#forgot').hide();
                     $('#errorsContainer').hide();
                     $('#success').css('visibility', 'visible');
                     $('#twofaForm').hide();
@@ -129,6 +132,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
         $('#errorsContainer').hide();
         $('#secureForm').hide();
         $('#loginForm').show();
+        $('#forgot').show();
         $('#success').css('visibility', 'hidden');
 
         $('.login-spinner').hide();
@@ -143,6 +147,7 @@ var observeLogin = function (form, url, secureUrl, twoFaUrl) {
         $('#errorsContainer').hide();
         $('#twofaForm').hide();
         $('#loginForm').show();
+        $('#forgot').show();
         $('#success').css('visibility', 'hidden');
 
         $('.login-spinner').hide();
@@ -191,9 +196,3 @@ var checkInputLabels = function () {
         check($(this));
     });
 };
-
-$(window).on('load', function () {
-    $('.login-logo').addClass('login-logo-loaded');
-    $('.login-form').addClass('login-form-loaded');
-    checkInputLabels();
-});
