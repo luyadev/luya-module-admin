@@ -113,6 +113,8 @@ final class StorageFilterChain extends ActiveRecord
      */
     public function applyFilter($loadFromPath, $imageSavePath)
     {
+        gc_collect_cycles();
+        
         $imagineEffectName = $this->effect->getImagineEffectName();
         
         if (!$this->effectDefinition($imagineEffectName)) {

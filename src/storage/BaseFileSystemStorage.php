@@ -672,6 +672,8 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function createImage($fileId, $filterId)
     {
+        gc_collect_cycles();
+        
         $image = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();
 
         // the image exists already in the database and the file system
