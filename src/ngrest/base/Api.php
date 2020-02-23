@@ -630,7 +630,6 @@ class Api extends RestActiveController
         }
 
         $find = $relation->getDataProvider();
-     
         
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
