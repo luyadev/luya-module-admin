@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.0.1
+
++ [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
+
 ## 3.0 (20. February 2020)
 
 > This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
@@ -29,7 +33,6 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
-+ [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
 + [#453](https://github.com/luyadev/luya-module-admin/issues/453) When visiting dashboard in mobile view, the title was not set correctly.
 + [#439](https://github.com/luyadev/luya-module-admin/issues/439) Add option to dissabled auto assign of select data after find.
 + [#441](https://github.com/luyadev/luya-module-admin/issues/441) Fixed switching of the "check_circle" text to the real icon after successful authentication
