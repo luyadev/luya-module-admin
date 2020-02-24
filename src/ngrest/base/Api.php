@@ -631,10 +631,6 @@ class Api extends RestActiveController
 
         $find = $relation->getDataProvider();
         
-        if ($find instanceof ActiveQueryInterface && !$find->multiple) {
-            throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
-        }
-        
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
             $this->appendPoolWhereCondition($find);
