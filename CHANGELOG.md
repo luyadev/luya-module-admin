@@ -29,6 +29,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ### Fixed
 
++ [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
 + [#453](https://github.com/luyadev/luya-module-admin/issues/453) When visiting dashboard in mobile view, the title was not set correctly.
 + [#439](https://github.com/luyadev/luya-module-admin/issues/439) Add option to dissabled auto assign of select data after find.
 + [#441](https://github.com/luyadev/luya-module-admin/issues/441) Fixed switching of the "check_circle" text to the real icon after successful authentication
