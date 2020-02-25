@@ -3,14 +3,9 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.0.1
-
-### Changed
+## 3.0.1 (25. February 2020)
 
 + [#462](https://github.com/luyadev/luya-module-admin/pull/462) Deleted exception on hasOne() relation in ngrest/base/Api for working ngRestRelations with hasOne relation
-
-### Fixed
-
 + [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
 
 ## 3.0 (20. February 2020)
