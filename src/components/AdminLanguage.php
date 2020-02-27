@@ -18,6 +18,8 @@ use luya\helpers\ArrayHelper;
  * @property integer $activeId Get the current active language ID.
  * @property string $activeShortCode Get the current active langauge Short-Code.
  * @property array $activeLanguage Get the array of the current active language (its not an AR object!).
+ * @property array $defaultLanguage The admin_lang is_default=1 table entry.
+ * @property string $defaultLanguageShortCode The short code from the admin_lang is_default=1 item.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -91,6 +93,30 @@ class AdminLanguage extends Component
         }
         
         return $this->_activeLanguage;
+    }
+
+    /**
+     * Returns the admin default language.
+     * 
+     * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
+     *
+     * @return array
+     * @since 3.1
+     */
+    public function getDefaultLanguage()
+    {
+        return ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
+    }
+
+    /**
+     * Returns the default short code from the admin active language table.
+     *
+     * @return string
+     * @since 3.1
+     */
+    public function getDefaultLanguageShortCode()
+    {
+        return $this->getDefaultLanguage()['short_code'];
     }
     
     /**

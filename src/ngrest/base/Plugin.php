@@ -324,6 +324,7 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * @param string|array $value
      * @return string Returns a string
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public function i18nFieldEncode($value)
     {
@@ -338,6 +339,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @param string|array $value The value to decode (or if alreay is an array already)
      * @param string $onEmptyValue Defines the value if the language could not be found and a value will be returns, this value will be used.
      * @return array returns an array with decoded field value
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public function i18nFieldDecode($value, $onEmptyValue = '')
     {
@@ -351,6 +353,7 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * @param array $fieldValues
      * @return string
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public function i18nDecodedGetActive(array $fieldValues)
     {
@@ -600,7 +603,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         if ($this->isAttributeWriteable($event) && $this->onBeforeSave($event)) {
             if ($this->i18n) {
-                $event->sender->setAttribute($this->name, $this->i18nFieldEncode($event->sender->getAttribute($this->name)));
+                $event->sender->setAttribute($this->name, I18n::encode($event->sender->getAttribute($this->name)));
             }
         }
     }
@@ -655,7 +658,10 @@ abstract class Plugin extends Component implements TypesInterface
     {
         if ($this->isAttributeWriteable($event) && $this->onBeforeListFind($event)) {
             if ($this->i18n) {
-                $event->sender->setAttribute($this->name, $this->i18nDecodedGetActive($this->i18nFieldDecode($event->sender->getAttribute($this->name), $this->i18nEmptyValue)));
+                $event->sender->setAttribute(
+                        $this->name, 
+                        I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue, Yii::$app->adminLanguage->defaultLanguageShortCode)
+                );
             }
             $this->onAfterListFind($event);
         }
@@ -694,7 +700,10 @@ abstract class Plugin extends Component implements TypesInterface
     {
         if ($this->isAttributeWriteable($event) && $this->onBeforeFind($event)) {
             if ($this->i18n) {
-                $event->sender->setAttribute($this->name, $this->i18nDecodedGetActive($this->i18nFieldDecode($event->sender->getAttribute($this->name), $this->i18nEmptyValue)));
+                $event->sender->setAttribute(
+                    $this->name, 
+                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
+                );
             }
             
             $this->onAfterFind($event);
@@ -733,7 +742,10 @@ abstract class Plugin extends Component implements TypesInterface
     {
         if ($this->isAttributeWriteable($event) && $this->onBeforeExpandFind($event)) {
             if ($this->i18n) {
-                $event->sender->setAttribute($this->name, $this->i18nFieldDecode($event->sender->getAttribute($this->name), $this->i18nEmptyValue));
+                $event->sender->setAttribute(
+                    $this->name, 
+                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
+                );
             }
             
             $this->onAfterExpandFind($event);

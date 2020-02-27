@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest\plugins;
 
+use luya\admin\helpers\I18n;
 use luya\admin\ngrest\base\Plugin;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
@@ -97,7 +98,7 @@ class CheckboxList extends Plugin
                 $data = $value;
             }
             
-            $this->writeAttribute($event, $this->i18nFieldEncode($data));
+            $this->writeAttribute($event, I18n::encode($data));
             return false;
         }
     
