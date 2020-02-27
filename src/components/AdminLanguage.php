@@ -27,6 +27,20 @@ class AdminLanguage extends Component
     use CacheableTrait;
 
     /**
+     * @var callable A callable which can be configured in order to define where to take the default language short code from
+     * as this has changed from version 3.0.x to 3.1. The active language is recieved trough Yii::$app->language since
+     * version 3.1. In order to restore the old behavior use:
+     * 
+     * ```php
+     * 'activeShortCodeCallable' => function($adminLanguageObject) {
+     *     return Yii::$app->composition->langShortCode;
+     * }
+     * ```
+     * @since 3.1.0
+     */
+    public $activeShortCodeCallable;
+
+    /**
      * @var string The cache key name
      * @since 2.1.0
      */
@@ -59,10 +73,19 @@ class AdminLanguage extends Component
     public function getActiveLanguage()
     {
         if ($this->_activeLanguage === null) {
-            $langShortCode = Yii::$app->composition->langShortCode;
+            if ($this->activeShortCodeCallable && is_callable($this->activeShortCodeCallable)) {
+                $langShortCode = call_user_func($this->activeShortCodeCallable, $this);
+            } else {
+                $langShortCode = Yii::$app->language;
+            }
+            
+            // find the current language for the composition lang short code
             if ($langShortCode) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'short_code', $langShortCode);
-            } else {
+            }
+
+            // if $langShortCode is empty (_activeLanguage is still null) or searchColumn returns false, the default language will be taken.
+            if (empty($this->_activeLanguage)) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
             }
         }

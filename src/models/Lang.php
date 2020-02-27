@@ -144,7 +144,7 @@ final class Lang extends NgRestModel
     public static function getQuery()
     {
         if (self::$_langInstanceQuery === null) {
-            self::$_langInstanceQuery = self::find()->asArray()->indexBy('short_code')->all();
+            self::$_langInstanceQuery = self::find()->asArray()->orderBy(['is_default' => SORT_DESC])->indexBy('short_code')->all();
         }
 
         return self::$_langInstanceQuery;
