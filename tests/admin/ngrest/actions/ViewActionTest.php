@@ -12,6 +12,8 @@ class ViewActionTest extends AdminModelTestCase
 
     public function testViewOptional()
     {
+        $this->createAdminLangFixture();
+        
         $userFixture = $this->createAdminUserFixture([
             '1' => [
                 'id' => 1,
