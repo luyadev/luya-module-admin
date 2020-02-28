@@ -743,8 +743,8 @@ abstract class Plugin extends Component implements TypesInterface
         if ($this->isAttributeWriteable($event) && $this->onBeforeExpandFind($event)) {
             if ($this->i18n) {
                 $event->sender->setAttribute(
-                    $this->name, 
-                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
+                    $this->name,
+                    I18n::decode($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
                 );
             }
             
