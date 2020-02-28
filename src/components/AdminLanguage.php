@@ -48,19 +48,7 @@ class AdminLanguage extends Component
      */
     const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
 
-    /**
-     * Containg the default language assoc array.
-     *
-     * @var array
-     */
     private $_activeLanguage;
-    
-    /**
-     * Containg all availabe languages from Lang Model.
-     *
-     * @var array
-     */
-    private $_languages;
     
     /**
      * Get the array of the current active language (its not an AR object!)
@@ -138,6 +126,8 @@ class AdminLanguage extends Component
     {
         return (int) $this->getActiveLanguage()['id'];
     }
+
+    private $_languages;
     
     /**
      * Get an array of all languages (its not an AR object!)
@@ -155,7 +145,12 @@ class AdminLanguage extends Component
     {
         if ($this->_languages === null) {
             $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function () {
-                return Lang::getQuery();
+                return Lang::find()
+                    ->where(['is_deleted' => false])
+                    ->indexBy('short_code')
+                    ->orderBy(['is_default' => SORT_DESC])
+                    ->asArray()
+                    ->all();
             });
         }
     
@@ -181,6 +176,8 @@ class AdminLanguage extends Component
      */
     public function clearCache()
     {
+        $this->_languages = null;
+        $this->_activeLanguage = null;
         return $this->deleteHasCache(self::CACHE_KEY_QUERY_ALL);
     }
 }

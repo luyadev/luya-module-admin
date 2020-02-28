@@ -7,11 +7,15 @@ use luya\admin\apis\StorageController;
 use luya\admin\models\StorageFile;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
+use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class StorageControllerTest extends AdminModelTestCase
 {
+    use AdminDatabaseTableTrait;
+
     public function testFlushApiCache()
     {
+        $this->createAdminLangFixture();
         $ctrl = new StorageController('id', $this->app);
 
         $this->assertEmpty($this->invokeMethod($ctrl, 'flushApiCache'));
@@ -19,6 +23,7 @@ class StorageControllerTest extends AdminModelTestCase
 
     public function testPermissionBasedAction()
     {
+        $this->createAdminLangFixture();
         $ctrl = new StorageController('id', $this->app);
 
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($ctrl) {
@@ -35,6 +40,7 @@ class StorageControllerTest extends AdminModelTestCase
 
     public function testPermissionLessDataAction()
     {
+        $this->createAdminLangFixture();
         $ctrl = new StorageController('id', $this->app);
 
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($ctrl) {

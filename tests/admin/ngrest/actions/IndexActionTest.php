@@ -8,9 +8,12 @@ use luya\admin\ngrest\base\Api;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\User;
+use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class IndexActionTest extends AdminTestCase
 {
+    use AdminDatabaseTableTrait;
+
     public function getConfigArray()
     {
         $array = parent::getConfigArray();
@@ -27,6 +30,7 @@ class IndexActionTest extends AdminTestCase
 
     public function testCacheDepencie()
     {
+        $this->createAdminLangFixture();
         $model = new NgRestModelFixture([
             'modelClass' => TestModel::class,
             'fixtureData' => [

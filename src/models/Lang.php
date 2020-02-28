@@ -135,26 +135,21 @@ final class Lang extends NgRestModel
             'saveCallback' => '[\'ServiceLanguagesData\', function(ServiceLanguagesData) { ServiceLanguagesData.load(true).then(function() { $scope.AdminLangService.load(); }); }]',
         ];
     }
-    
-    private static $_langInstanceQuery;
 
     /**
      * @return array
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public static function getQuery()
     {
-        if (self::$_langInstanceQuery === null) {
-            self::$_langInstanceQuery = self::find()->asArray()->orderBy(['is_default' => SORT_DESC])->indexBy('short_code')->all();
-        }
-
-        return self::$_langInstanceQuery;
+        return self::find()->asArray()->orderBy(['is_default' => SORT_DESC])->where(['is_deleted' => false])->indexBy('short_code')->all();
     }
 
     private static $_langInstance;
     
     /**
-     *
      * @return array
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public static function getDefault()
     {

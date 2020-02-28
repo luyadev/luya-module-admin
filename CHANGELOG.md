@@ -5,7 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.1.0
 
-+ [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table
+> This release requires LUYA Core version 1.1 to work.
+
++ [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
 
 ## 3.0.2 (28. Feburary 2020)
 

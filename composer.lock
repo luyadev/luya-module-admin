@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ad44668fbc523a0293afe6e1295dd60",
+    "content-hash": "ca5f3ff261bf7dfc25c1c83946c6d276",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -580,16 +580,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.0.26",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "a0c258d49c8cd5483bc365d827bfd7084d4adb1c"
+                "reference": "8ce533f9630a28291e31777cff442b3c47d2ab40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/a0c258d49c8cd5483bc365d827bfd7084d4adb1c",
-                "reference": "a0c258d49c8cd5483bc365d827bfd7084d4adb1c",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8ce533f9630a28291e31777cff442b3c47d2ab40",
+                "reference": "8ce533f9630a28291e31777cff442b3c47d2ab40",
                 "shasum": ""
             },
             "require": {
@@ -634,7 +634,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2020-02-20T19:42:19+00:00"
+            "time": "2020-02-28T10:14:35+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1322,12 +1322,12 @@
             "version": "4.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/apache/incubator-echarts.git",
+                "url": "git@github.com:ecomfe/echarts.git",
                 "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apache/incubator-echarts/zipball/3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
+                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/3185bb1e43564ba3c96f1e1341e3e0630c47fe82",
                 "reference": "3185bb1e43564ba3c96f1e1341e3e0630c47fe82"
             },
             "type": "bower-asset"
@@ -1582,16 +1582,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.27",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "5b2310328d1e85275c1cf252299109ae02e7ca21"
+                "reference": "b991fe3ac747f6b2b95affdc3c4b5a5c2e2eb251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/5b2310328d1e85275c1cf252299109ae02e7ca21",
-                "reference": "5b2310328d1e85275c1cf252299109ae02e7ca21",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/b991fe3ac747f6b2b95affdc3c4b5a5c2e2eb251",
+                "reference": "b991fe3ac747f6b2b95affdc3c4b5a5c2e2eb251",
                 "shasum": ""
             },
             "require": {
@@ -1636,7 +1636,7 @@
                 "module",
                 "php"
             ],
-            "time": "2020-02-21T06:53:58+00:00"
+            "time": "2020-02-28T11:01:22+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3275,7 +3275,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "luyadev/luya-core": 20,
+        "luyadev/luya-testsuite": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
