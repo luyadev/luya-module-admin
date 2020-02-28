@@ -171,6 +171,7 @@ final class Lang extends NgRestModel
      * Get the active langauge array
      *
      * @return array
+     * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
      */
     public static function findActive()
     {

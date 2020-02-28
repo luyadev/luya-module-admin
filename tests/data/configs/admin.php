@@ -6,6 +6,7 @@ return [
     'remoteToken' => 'testtoken',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'admin',
+    'language' => 'anunknownlanguage',
     'aliases' => [
         '@runtime' => dirname(__DIR__) . '/runtime',
         '@data' => dirname(__DIR__),

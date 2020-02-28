@@ -11,6 +11,7 @@ class AdminModelTestCase extends WebApplicationTestCase
         return [
             'id' => 'adminmodeltest',
             'basePath' => dirname(__DIR__),
+            'language' => 'anunknownlanguage',
             'aliases' => [
                 '@bower' => '@vendor/bower-asset',
                 '@npm'   => '@vendor/npm-asset',
