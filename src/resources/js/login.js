@@ -1,6 +1,5 @@
 var observeLogin = function (form, url, secureUrl, twoFaUrl) {
 
-    
     $(form).submit(function (e) {
         $('#errorsContainer').hide();
         $('.login-btn[type="submit"]').attr('disabled', true);
