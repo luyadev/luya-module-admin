@@ -80,4 +80,18 @@ class AdminLanguageTest extends AdminModelTestCase
         ], $component->getLanguageByShortCode('de'));
         $this->assertTrue($component->clearCache()); // cache not defined... delete will faile
     }
+
+    public function testActiveShortCodeCallable()
+    {
+        $component = new AdminLanguage();
+        $lang = $component->getActiveLanguage();
+        $this->assertSame(1, $component->getActiveId());
+
+        $component = new AdminLanguage();
+        $component->activeShortCodeCallable = function() {
+            return 'en';
+        };
+        $lang = $component->getActiveLanguage();
+        $this->assertSame(2, $component->getActiveId());
+    }
 }
