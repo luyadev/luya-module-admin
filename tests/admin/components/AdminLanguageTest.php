@@ -85,13 +85,13 @@ class AdminLanguageTest extends AdminModelTestCase
     {
         $component = new AdminLanguage();
         $lang = $component->getActiveLanguage();
-        $this->assertSame(1, $component->getActiveId());
+        $this->assertSame(2, $component->getActiveId());
 
         $component = new AdminLanguage();
         $component->activeShortCodeCallable = function() {
-            return 'en';
+            return 'de';
         };
         $lang = $component->getActiveLanguage();
-        $this->assertSame(2, $component->getActiveId());
+        $this->assertSame(1, $component->getActiveId());
     }
 }
