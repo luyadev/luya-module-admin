@@ -9,6 +9,11 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
 
+## 3.0.3 (5. March 2020)
+
++ [#468](https://github.com/luyadev/luya-module-admin/issues/468) Removed window on load from login (was not needed) in order to fix a bug where Safari does not render the login form.
+
+
 ## 3.0.2 (28. Feburary 2020)
 
 + [#463](https://github.com/luyadev/luya-module-admin/issues/463) Fixed an issue with luya-content container height.
