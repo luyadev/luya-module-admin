@@ -36,7 +36,7 @@ class RenderActiveWindowCallbackTest extends AdminModelTestCase
 
         $this->assertSame([
             'error' => true,
-            'message' => 'aws_missing_callback_param_generic_errror',
+            'message' => 'Some required data is missing.',
             'responseData' => [
                 'message' => "The argument 'newpass' is required for method 'callbackSave' in class 'luya\admin\aws\ChangePasswordActiveWindow'.",
             ]

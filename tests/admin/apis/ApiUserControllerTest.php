@@ -14,6 +14,7 @@ class ApiUserControllerTest extends AdminModelTestCase
 
     public function testDeleteNoPermission()
     {
+        $this->createAdminLangFixture();
         $api = new StubApiUserApiController('apiuser', $this->app);
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $this->expectException('yii\web\ForbiddenHttpException');
@@ -23,6 +24,7 @@ class ApiUserControllerTest extends AdminModelTestCase
 
     public function testNoAuth()
     {
+        $this->createAdminLangFixture();
         $api = new StubApiUserApiController('apiuser', $this->app);
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->setQueryAuthToken(false);
@@ -33,6 +35,7 @@ class ApiUserControllerTest extends AdminModelTestCase
 
     public function testAddApiAuthRouteButDoNotGrant()
     {
+        $this->createAdminLangFixture();
         $api = new StubApiUserApiController('apiuser', $this->app);
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->createApi('apiuser');
@@ -43,6 +46,7 @@ class ApiUserControllerTest extends AdminModelTestCase
 
     public function testAddApiButDoNotAllowDeleteAction()
     {
+        $this->createAdminLangFixture();
         $api = new StubApiUserApiController('apiuser', $this->app);
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
             $scope->createApi('apiuser');
@@ -59,6 +63,7 @@ class ApiUserControllerTest extends AdminModelTestCase
 
     public function testHasOpenEmailValidation()
     {
+        $this->createAdminLangFixture();
         $ctrl = new UserController('user', $this->app->getModule('admin'));
 
         $user = $this->createAdminUserFixture([

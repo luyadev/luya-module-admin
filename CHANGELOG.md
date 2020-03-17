@@ -3,9 +3,16 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.1.0
+
+> This release requires LUYA Core version 1.1 to work.
+
++ [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
+
 ## 3.0.3 (5. March 2020)
 
 + [#468](https://github.com/luyadev/luya-module-admin/issues/468) Removed window on load from login (was not needed) in order to fix a bug where Safari does not render the login form.
+
 
 ## 3.0.2 (28. Feburary 2020)
 

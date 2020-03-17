@@ -15,6 +15,7 @@ use luya\admin\models\UserLoginLockout;
  * The administration user Identity extends from {{yii\web\User}} in order to configure customized behaviors.
  *
  * @property \luya\admin\models\User $identity The user identitity object.
+ * @property string $interfaceLanguage
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

@@ -38,6 +38,7 @@ class AdminLanguageTest extends AdminModelTestCase
     public function testGetLanguages()
     {
         $component = new AdminLanguage();
+        $component->clearCache();
         $data = $component->getLanguages();
         $this->assertSame(2, count($data));
 
@@ -48,12 +49,16 @@ class AdminLanguageTest extends AdminModelTestCase
 
     public function testEmptyCompositionLangShortCode()
     {
+        // since version 3.1.0 this won't have any effect as the language is handeld trought Yii::$app->language
         $this->app->composition->setKey(Composition::VAR_LANG_SHORT_CODE, null);
+
         $component = new AdminLanguage();
         $data = $component->getLanguages();
         // This will resolve is_default = 1 because lang short code is null.
-        $this->assertSame(1, $component->getActiveId());
-        $this->assertSame('de', $component->getActiveShortCode());
+        $this->assertSame(2, $component->getActiveId());
+        $this->assertSame('en', $component->getActiveShortCode());
+
+        $this->assertSame('de', $component->getDefaultLanguageShortCode());
     }
 
     public function testGetbyShortCode()
@@ -74,5 +79,19 @@ class AdminLanguageTest extends AdminModelTestCase
             'is_deleted' => "0",
         ], $component->getLanguageByShortCode('de'));
         $this->assertTrue($component->clearCache()); // cache not defined... delete will faile
+    }
+
+    public function testActiveShortCodeCallable()
+    {
+        $component = new AdminLanguage();
+        $lang = $component->getActiveLanguage();
+        $this->assertSame(2, $component->getActiveId());
+
+        $component = new AdminLanguage();
+        $component->activeShortCodeCallable = function() {
+            return 'de';
+        };
+        $lang = $component->getActiveLanguage();
+        $this->assertSame(1, $component->getActiveId());
     }
 }

@@ -36,6 +36,13 @@ trait AdminRestBehaviorTrait
 
         $this->enableCors = $this->_module->cors;
         $this->jsonCruft = $this->_module->jsonCruft;
+
+        // pass all the luya admin languages to the content negoiator, the default language must be the first 
+        // element in the array.
+        $this->languages = [Yii::$app->composition->langShortCode];
+        foreach (Yii::$app->adminLanguage->languages as $lang) {
+            array_push($this->languages, $lang['short_code']);
+        }
     }
     
     /**
