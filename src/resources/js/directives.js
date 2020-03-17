@@ -3346,6 +3346,10 @@ zaa.directive("storageFileManager", function () {
                     });
                 };
 
+                $scope.getFolderData = function(parentFolderId) {
+                    return $filter('filemanagerdirsfilter')($scope.foldersData, parentFolderId);
+                };
+
                 $scope.getFilesForCurrentPage();
 
                 /* file detail related stuff */

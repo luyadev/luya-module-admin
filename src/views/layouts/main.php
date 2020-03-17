@@ -207,7 +207,7 @@ $this->beginPage()
     <div class="luyasearch" ng-class="{'luyasearch-open' : searchInputOpen, 'luyasearch-closed': !searchInputOpen, 'luyasearch-toggled': isHover}" zaa-esc="escapeSearchInput()">
         <div class="luyasearch-inner">
             <div class="luyasearch-form form-group">
-                <input id="global-search-input" focus-me="searchInputOpen" ng-model="searchQuery" type="search" class="luyasearch-input form-control" placeholder="<?= Admin::t('layout_filemanager_search_text'); ?>"/>
+                <input id="global-search-input" focus-me="searchInputOpen" ng-model-options="{ debounce: 1000 }" ng-model="searchQuery" type="search" class="luyasearch-input form-control" placeholder="<?= Admin::t('layout_filemanager_search_text'); ?>"/>
                 <div class="luyasearch-close" ng-click="closeSearchInput()">
                     <i class="material-icons luyasearch-close-icon">close</i>
                 </div>
