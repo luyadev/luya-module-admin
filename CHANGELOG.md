@@ -8,6 +8,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 > This release requires LUYA Core version 1.1 to work.
 
 + [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
++ [#470](https://github.com/luyadev/luya-module-admin/issues/470) Improved the performance of the file manager folder tree, when a lot of data is available.
 
 ## 3.0.3 (5. March 2020)
 
