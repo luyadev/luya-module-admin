@@ -212,7 +212,7 @@ use luya\admin\helpers\Angular;
             <button class="folder-button folder-button--move-to" ng-click="moveFilesTo(folder.id)"><i class="material-icons">subdirectory_arrow_left</i></button>
         </div>
     </div>
-    <ul class="folders" ng-show="folder.subfolder === true && folder.toggle_open==1">
+    <ul class="folders" ng-if="folder.subfolder === true && folder.toggle_open==1">
         <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:folder.id" ng-include="'reverseFolders'"></li>
     </ul>
 </script>
