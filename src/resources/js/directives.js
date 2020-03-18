@@ -1069,13 +1069,41 @@ zaa.directive("zaaLink", ['$filter', function ($filter) {
                 '</div>' +
                 '</div>' +
                 '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">' +
-                '<update-form-redirect data="data.model"></update-form-redirect>' +
+                '<zaa-link-options data="data.model"></zaa-link-options>' +
                 '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">' + i18n['js_link_set_value'] + '</button></form>' +
                 '</modal>' +
                 '</div></div>';
         }
     }
 }]);
+
+
+
+/**
+ * Provides all linkable object options.
+ * 
+ * + internal redirect
+ * + external redirect
+ * + to file
+ * + to email
+ * + to telephone
+ */
+zaa.directive("zaaLinkOptions", function() {
+    return {
+        restrict : 'EA',
+        scope : {
+            data : '='
+        },
+        templateUrl : 'linkoptions.html',
+        controller : ['$scope', function($scope) {
+            $scope.$watch(function() { return $scope.data }, function(n, o) {
+                if (angular.isArray(n)) {
+                    $scope.data = {};
+                }
+            });
+        }]
+    }
+});
 
 /**
  * Generates slug from a given model input.

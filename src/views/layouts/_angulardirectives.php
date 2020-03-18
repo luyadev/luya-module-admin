@@ -36,8 +36,8 @@ use luya\admin\helpers\Angular;
     </div>
 </div>
 </script>
-<!-- UPDATE REDIRECT FORM -->
-<script type="text/ng-template" id="updateformredirect.html">
+<!-- Sub template of zaa-link -->
+<script type="text/ng-template" id="linkoptions.html">
 <div>
 	<div class="form-group form-side-by-side">
 		<div class="form-side form-side-label">
