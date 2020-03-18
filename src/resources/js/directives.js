@@ -3448,6 +3448,12 @@ zaa.directive("storageFileManager", function () {
                     $scope.removeFiles();
                 };
 
+                $scope.isFileEditHidden = true;
+
+                $scope.editFile = function(file) {
+                    $scope.isFileEditHidden = !$scope.isFileEditHidden;
+                };
+
                 $scope.storeFileCaption = function (fileDetail) {
                     $http.post('admin/api-admin-storage/filemanager-update-caption', { 'id': fileDetail.id, 'captionsText': fileDetail.captionArray, 'pageId': $scope.currentPageId }).then(function (transport) {
                         // @TODO i18n
@@ -3556,6 +3562,58 @@ zaa.directive('activeClass', function () {
             });
         }
     };
+});
+
+/**
+ * Image edit div: https://github.com/CrackerakiUA/ui-cropper/wiki/Options
+ */
+zaa.directive('imageEdit', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            fileId:'='
+        },
+        controller: ['$scope', '$http', function($scope, $http) {
+            
+            $scope.file;
+
+            $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
+                $scope.file = response.data;
+            });
+
+            $scope.distUrl = '';
+            $scope.blogResult = {};
+            $scope.areaType = 'rectangle';
+
+            $scope.$watch('distUrl', function(n) {
+                $http.post('/admin/api-admin-storage/file-crop', {distImage: n});
+            })
+        }],
+        template : `
+    <div class="row">
+        <div class="col" ng-show="file.source">
+            <ui-cropper 
+                style="width:100% height:100%"
+                image="file.source" 
+                result-image="distUrl"
+                url-blob="blogResult"
+                area-type="{{areaType}}" 
+                chargement="'Loading'"
+                canvas-scalemode="full-width"
+            ></ui-cropper>
+            <hr />
+            <select ng-model="areaType">
+                <option value="rectangle">rectangle</option>
+                <option value="circle">circle</option>
+                <option value="square">square</option>
+            </select>
+        </div>
+        <div class="col">
+            <img ng-src="{{distUrl}}" ng-show="distUrl" class="img-fluid" />
+        </div>
+    </div>
+        `
+    }
 });
 
 /**

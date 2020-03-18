@@ -166,6 +166,22 @@ class StorageController extends RestController
         return $model->toArray([], ['user', 'file', 'images', 'source', 'tags']);
     }
 
+    public function actionFileCrop()
+    {
+        $data = Yii::$app->request->getBodyParam('distImage');
+
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+        $data = base64_decode($data);
+
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'fromFile');
+        FileHelper::writeFile($fromTempFile, $data);
+
+        $file = Yii::$app->storage->addFile($fromTempFile, 'test.png');
+
+        return $file;
+    }
+
     /**
      * Get file model.
      *

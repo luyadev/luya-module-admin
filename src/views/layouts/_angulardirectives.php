@@ -390,10 +390,16 @@ use luya\admin\helpers\Angular;
             <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
             <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
+            <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)">Edit</button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
         </div>
 
         <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
+
+
+        <modal is-modal-hidden="isFileEditHidden" modal-title="{{ fileDetailFull.file.name }}">
+            <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id"></image-edit>
+        </modal>
 
         <div ng-if="fileDetail.isImage" class="mt-3 text-center">
             <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">

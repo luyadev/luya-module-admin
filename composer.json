@@ -37,6 +37,7 @@
         "bower-asset/angular-filter" : "~0.5.15",
         "bower-asset/bowser": "^1.9",
         "bower-asset/echarts": "4.5.0",
+        "bower-asset/ui-cropper" : "^1.0",
 		"unglue/client": "^1.4.1"
 	},
 	"autoload" : {

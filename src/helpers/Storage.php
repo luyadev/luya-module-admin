@@ -7,6 +7,7 @@ use Yii;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageImage;
 use luya\admin\Module;
+use luya\helpers\FileHelper;
 use yii\helpers\VarDumper;
 
 /**
@@ -219,6 +220,14 @@ class Storage
         }
         
         return self::verifyAndSaveFile($files[0], $toFolder, $isHidden);
+    }
+
+    public static function uploadFromContent($content, $fileName)
+    {
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+        FileHelper::writeFile($fromTempFile, $content);
+
+        return Yii::$app->storage->addFile($fromTempFile, $fileName);
     }
     
     /**
