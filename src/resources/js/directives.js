@@ -3457,6 +3457,7 @@ zaa.directive("storageFileManager", function () {
                 $scope.cropSuccess = function() {
                     $scope.isFileEditHidden = true;
                     $scope.getFilesForCurrentPage().then(function () {
+                        // @TODO i18n
                         AdminToastService.success('File has been cropped an stored.');
                     });
                     $scope.openFileDetail($scope.fileDetail, true);
