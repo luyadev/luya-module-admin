@@ -3,6 +3,8 @@
 namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
+use ErrorException;
+use InvalidArgumentException;
 use luya\admin\apis\StorageController;
 use luya\admin\models\StorageFile;
 use luya\testsuite\fixtures\NgRestModelFixture;
@@ -54,6 +56,44 @@ class StorageControllerTest extends AdminModelTestCase
             $config->userFixtureData = [
                 'is_api_user' => 0,
             ];
+        });
+    }
+
+    public function testFileCrop()
+    {
+        
+
+        PermissionScope::run($this->app, function(PermissionScope $scope) {
+
+            new NgRestModelFixture([
+                'modelClass' => StorageFile::class,
+            ]);
+
+            $scope->createAndAllowRoute(StorageController::PERMISSION_ROUTE);
+
+            $ctrl = new StorageController('id', $this->app);
+            
+            $this->expectException(InvalidArgumentException::class);
+            $data = $scope->runControllerAction($ctrl, 'file-crop');
+
+        });
+    }
+
+    public function testFileReplace()
+    {
+        PermissionScope::run($this->app, function(PermissionScope $scope) {
+
+            new NgRestModelFixture([
+                'modelClass' => StorageFile::class,
+            ]);
+
+            $scope->createAndAllowRoute(StorageController::PERMISSION_ROUTE);
+
+            $ctrl = new StorageController('id', $this->app);
+            
+            $this->expectException(ErrorException::class);
+            $data = $scope->runControllerAction($ctrl, 'file-replace');
+
         });
     }
 }

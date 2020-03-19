@@ -3630,14 +3630,10 @@ zaa.directive('imageEdit', function() {
             };
         }],
         template : `
-    <div class="row">
-        <div class="col-md-8" ng-show="cropperImage">
-            <ul class="list-group list-group-horizontal mb-3">
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>Frei</small></li>
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>1:1</small></li>
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>16:9</small></li>
-            </ul>
-
+    <div class="row" ng-show="cropperImage">
+        <div class="col-md-8">
+            <p class="lead">Source Image</p>
+            <div class="bg-light rounded pt-3 pl-3 pr-3 pb-2">
             <ui-cropper 
                 image="cropperImage" 
                 result-image="distUrl"
@@ -3649,18 +3645,26 @@ zaa.directive('imageEdit', function() {
                 aspect-ratio="ratio"
                 result-image-size="resultImageSize"
             ></ui-cropper>
+            </div>
+            <ul class="list-group list-group-horizontal justify-content-center mt-3">
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>Free</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>1:1</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>Desktop</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('0.5')}" ng-click="changeRatio('0.5')"><i class="material-icons">crop_portrait</i><br /><small>Mobile</small></li>
+                </ul>
         </div>
         <div class="col-md-4">
             <p class="lead">Preview</p>
             <img ng-src="{{distUrl}}" ng-show="distUrl" class="img-fluid border" />
 
-            <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" ng-model="saveAsCopy" id="saveAsCopy">
-                <label class="form-check-label" for="saveAsCopy">
+            <div class="form-check mt-3 rounded border p-2" ng-click="saveAsCopy=!saveAsCopy" ng-class="{'bg-light':saveAsCopy}">
+                <input class="form-check-input" type="checkbox" ng-model="saveAsCopy">
+                <label class="form-check-label">
                     Save image as copy
                 </label>
+                <small class="text-muted">When enabled, the file will be stored as a <strong>new image</strong> instead of overriding the existing image.</small>
             </div>
-            <button type="button" class="mt-3 btn btn-primary" ng-click="save()">Speichern</button>
+            <button type="button" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Save cropped Image</button>
         </div>
     </div>
         `

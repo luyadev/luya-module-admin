@@ -2,6 +2,7 @@
 
 namespace luya\admin\helpers;
 
+use InvalidArgumentException;
 use Yii;
 use luya\admin\file\Item;
 use luya\Exception;
@@ -208,6 +209,10 @@ class Storage
         }
         
         $file = StorageFile::findOne($fileId);
+
+        if (!$file) {
+            throw new InvalidArgumentException("Unable to find the given file.");
+        }
 
         $fileHash = FileHelper::md5sum($filePath);
         $fileSize = @filesize($filePath);

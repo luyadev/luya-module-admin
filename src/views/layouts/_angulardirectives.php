@@ -388,7 +388,7 @@ use luya\admin\helpers\Angular;
 
         <div class="file-detail-view-head">
             <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
-            <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)"><i class="material-icons">crop</i></button>
+            <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)" ng-show="fileDetail.isImage"><i class="material-icons">crop</i></button>
             <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
@@ -397,8 +397,7 @@ use luya\admin\helpers\Angular;
         <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
 
 
-        <modal is-modal-hidden="isFileEditHidden" modal-title="Cropping">
-            <div class="text-muted mb-3"><span class="badge badge-secondary">beta</span> Crop the existing image or save as a new image.</div>
+        <modal is-modal-hidden="isFileEditHidden" modal-title="Image Cropping">
             <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id" on-success="cropSuccess()"></image-edit>
         </modal>
 
