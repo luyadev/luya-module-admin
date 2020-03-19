@@ -3454,6 +3454,14 @@ zaa.directive("storageFileManager", function () {
                     $scope.isFileEditHidden = !$scope.isFileEditHidden;
                 };
 
+                $scope.cropSuccess = function() {
+                    $scope.isFileEditHidden = true;
+                    $scope.getFilesForCurrentPage().then(function () {
+                        AdminToastService.success('File has been cropped an stored.');
+                    });
+                    $scope.openFileDetail($scope.fileDetail, true);
+                }
+
                 $scope.storeFileCaption = function (fileDetail) {
                     $http.post('admin/api-admin-storage/filemanager-update-caption', { 'id': fileDetail.id, 'captionsText': fileDetail.captionArray, 'pageId': $scope.currentPageId }).then(function (transport) {
                         // @TODO i18n
@@ -3566,50 +3574,92 @@ zaa.directive('activeClass', function () {
 
 /**
  * Image edit div: https://github.com/CrackerakiUA/ui-cropper/wiki/Options
+ * 
+ * bind config: https://github.com/CrackerakiUA/ui-cropper/blob/master/source/js/ui-cropper.js#L6-L53
+ * 
+ * @see bug with reset aspect ratio: https://github.com/CrackerakiUA/ui-cropper/issues/41
  */
 zaa.directive('imageEdit', function() {
     return {
         restrict: 'E',
         scope: {
-            fileId:'='
+            fileId:'=',
+            onSuccess: '&',
         },
-        controller: ['$scope', '$http', function($scope, $http) {
+        controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
             
             $scope.file;
 
             $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
                 $scope.file = response.data;
+                $scope.cropperImage = $scope.file.source;
             });
 
+            // cropper settings
+            $scope.cropperImage;
             $scope.distUrl = '';
             $scope.blogResult = {};
             $scope.areaType = 'rectangle';
+            $scope.ratio = null;
+            $scope.resultImageSize = 'max';
+            $scope.areaInitSize = 200;
+            $scope.areaMinSize = 10;
+            $scope.canvasScalemode = 'full-width';
 
-            $scope.$watch('distUrl', function(n) {
-                $http.post('/admin/api-admin-storage/file-crop', {distImage: n});
-            })
+            $scope.saveAsCopy = true;
+
+            $scope.isCurrentRatio = function(value) {
+                return $scope.ratio == value;
+            };
+
+            $scope.changeRatio = function(value) {
+                $scope.ratio = value;
+            };
+
+            $scope.save = function() {
+                $http.post('/admin/api-admin-storage/file-crop', {
+                    distImage: $scope.distUrl,
+                    fileName: $scope.file.name_new_compound,
+                    extension: 'png',
+                    saveAsCopy: $scope.saveAsCopy,
+                    fileId: $scope.file.id
+                }).then(function(response) {
+                    $scope.onSuccess();
+                });
+            };
         }],
         template : `
     <div class="row">
-        <div class="col" ng-show="file.source">
+        <div class="col-md-8" ng-show="cropperImage">
+            <ul class="list-group list-group-horizontal mb-3">
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>Frei</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>1:1</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>16:9</small></li>
+            </ul>
+
             <ui-cropper 
-                style="width:100% height:100%"
-                image="file.source" 
+                image="cropperImage" 
                 result-image="distUrl"
                 url-blob="blogResult"
                 area-type="{{areaType}}" 
+                area-init-size="areaInitSize"
                 chargement="'Loading'"
-                canvas-scalemode="full-width"
+                canvas-scalemode="{{canvasScalemode}}"
+                aspect-ratio="ratio"
+                result-image-size="resultImageSize"
             ></ui-cropper>
-            <hr />
-            <select ng-model="areaType">
-                <option value="rectangle">rectangle</option>
-                <option value="circle">circle</option>
-                <option value="square">square</option>
-            </select>
         </div>
-        <div class="col">
-            <img ng-src="{{distUrl}}" ng-show="distUrl" class="img-fluid" />
+        <div class="col-md-4">
+            <p class="lead">Preview</p>
+            <img ng-src="{{distUrl}}" ng-show="distUrl" class="img-fluid border" />
+
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" ng-model="saveAsCopy" id="saveAsCopy">
+                <label class="form-check-label" for="saveAsCopy">
+                    Save image as copy
+                </label>
+            </div>
+            <button type="button" class="mt-3 btn btn-primary" ng-click="save()">Speichern</button>
         </div>
     </div>
         `

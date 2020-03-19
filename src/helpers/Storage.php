@@ -2,13 +2,13 @@
 
 namespace luya\admin\helpers;
 
-use luya\Exception;
 use Yii;
+use luya\admin\file\Item;
+use luya\Exception;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageImage;
 use luya\admin\Module;
 use luya\helpers\FileHelper;
-use yii\helpers\VarDumper;
 
 /**
  * Helper class to handle remove, upload and moving of storage files.
@@ -189,6 +189,73 @@ class Storage
 
         return Yii::$app->storage->fileSystemReplaceFile($fileName, $newFileSource);
     }
+
+    /**
+     * Update the hash file sum, file size and remove image filter version from this file.
+     *
+     * @param integer $fileId
+     * @param string $fileContent
+     * @return boolean
+     */
+    public static function refreshFile($fileId, $filePath)
+    {
+        foreach (StorageImage::find()->where(['file_id' => $fileId])->all() as $img) {
+            // remove the source
+            if ($img->deleteSource()) {
+                // recreate image filters
+                $img->imageFilter($img->filter_id, false);
+            }
+        }
+        
+        $file = StorageFile::findOne($fileId);
+
+        $fileHash = FileHelper::md5sum($filePath);
+        $fileSize = @filesize($filePath);
+        $file->updateAttributes([
+            'hash_file' => $fileHash,
+            'file_size' => $fileSize,
+            'upload_timestamp' => time(),
+        ]);
+        return true;
+    }
+
+    /**
+     * Replace the current file based on image data
+     *
+     * @param string $fileName
+     * @param string $newFileContent
+     * @return boolean
+     * @since 3.1.0
+     */
+    public static function replaceFileFromContent($fileName, $newFileContent)
+    {
+        $newFileSource = @tempnam(sys_get_temp_dir(), 'replaceFromFromContent');
+        FileHelper::writeFile($newFileSource, $newFileContent);
+        
+        try {
+            Yii::$app->storage->ensureFileUpload($newFileSource, $fileName);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return Yii::$app->storage->fileSystemReplaceFile($fileName, $newFileSource);
+    }
+
+    /**
+     * Upload a file with content
+     *
+     * @param string $content
+     * @param string $fileName
+     * @return Item
+     * @since 3.1.0
+     */
+    public static function uploadFromContent($content, $fileName, $folderId = 0, $isHidden = false)
+    {
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+        FileHelper::writeFile($fromTempFile, $content);
+
+        return Yii::$app->storage->addFile($fromTempFile, $fileName, $folderId, $isHidden);
+    }
     
     /**
      * Add File to the storage container by providing the $_FILES array name.
@@ -220,14 +287,6 @@ class Storage
         }
         
         return self::verifyAndSaveFile($files[0], $toFolder, $isHidden);
-    }
-
-    public static function uploadFromContent($content, $fileName)
-    {
-        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
-        FileHelper::writeFile($fromTempFile, $content);
-
-        return Yii::$app->storage->addFile($fromTempFile, $fileName);
     }
     
     /**
