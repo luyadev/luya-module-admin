@@ -3664,7 +3664,9 @@ zaa.directive('imageEdit', function() {
                 </label>
                 <small class="text-muted">When enabled, the file will be stored as a <strong>new image</strong> instead of overriding the existing image.</small>
             </div>
-            <button type="button" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Save cropped Image</button>
+
+            <button type="button" ng-show="saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Save as Copy</button>
+            <button type="button" ng-show="!saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Override source Image</button>
         </div>
     </div>
         `
