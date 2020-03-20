@@ -10,6 +10,7 @@
     ],
     "css" : [
         "../vendorlibs/angularjs-datepicker/angular-datepicker.min.css",
+        "../../../vendor/bower-asset/ui-cropper/compile/minified/ui-cropper.css",
         "../scss/admin.scss"
     ]
 }

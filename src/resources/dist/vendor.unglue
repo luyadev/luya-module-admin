@@ -14,7 +14,8 @@
         "../../../vendor/bower-asset/bowser/src/useragent.js",
         "../../../vendor/bower-asset/bowser/src/bowser.js",
         "../../../vendor/bower-asset/echarts/dist/echarts.min.js",
-        "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.js"
+        "../../../vendor/bower-asset/angularjs-slider/dist/rzslider.js",
+        "../../../vendor/bower-asset/ui-cropper/compile/minified/ui-cropper.js"
     ],
     "options": {
         "babel": false,

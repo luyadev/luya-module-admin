@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccac999bf9b56533eee1b2fb23907b8c",
+    "content-hash": "0c08e39a16c36f2e74e97456dcaad42a",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1452,6 +1452,28 @@
             "type": "bower-asset",
             "license": [
                 "BSD-2-Clause"
+            ]
+        },
+        {
+            "name": "bower-asset/ui-cropper",
+            "version": "1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CrackerakiUA/ui-cropper.git",
+                "reference": "78a6c264f67d6df74a657fb1a61a6c8fe7e037e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CrackerakiUA/ui-cropper/zipball/78a6c264f67d6df74a657fb1a61a6c8fe7e037e5",
+                "reference": "78a6c264f67d6df74a657fb1a61a6c8fe7e037e5",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/angular": ">=1.4.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
             ]
         },
         {

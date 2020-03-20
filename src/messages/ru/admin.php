@@ -500,4 +500,20 @@ return [
     'reset_form_text' => 'Enter a new password for your account.',
     'reset_form_submit_btn' => 'Update password',
     'user_change_password_error' =>  'Error while saving new password.',
+
+// 3.1.0
+
+    'crop_source_image' => 'Source Image',
+    'crop_preview' => 'Preview',
+    'crop_btn_as_copy' => 'Save image as a copy',
+    'crop_btn_as_copy_hint' => 'When enabled, the image will be stored as <b>a new file</b>, otherwise the existing file will be replaced.',
+    'crop_btn_save_copy' => 'Save as a copy',
+    'crop_btn_save_replace' => 'Replace existing file',
+    'crop_size_free' => 'Free',
+    'crop_size_1to1' => '1:1',
+    'crop_size_desktop' => 'Desktop',
+    'crop_size_mobile' => 'Mobile',
+    'crop_modal_title' => 'Image Cropping',
+    'crop_success' => 'File has been cropped an saved.',
+    'file_caption_success' => 'Captions has been updated.',
 ];
