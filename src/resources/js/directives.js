@@ -3457,16 +3457,14 @@ zaa.directive("storageFileManager", function () {
                 $scope.cropSuccess = function() {
                     $scope.isFileEditHidden = true;
                     $scope.getFilesForCurrentPage().then(function () {
-                        // @TODO i18n
-                        AdminToastService.success('File has been cropped an stored.');
+                        AdminToastService.success(i18n['crop_success']);
                     });
                     $scope.openFileDetail($scope.fileDetail, true);
                 }
 
                 $scope.storeFileCaption = function (fileDetail) {
                     $http.post('admin/api-admin-storage/filemanager-update-caption', { 'id': fileDetail.id, 'captionsText': fileDetail.captionArray, 'pageId': $scope.currentPageId }).then(function (transport) {
-                        // @TODO i18n
-                        AdminToastService.success('Captions has been updated');
+                        AdminToastService.success(i18n['file_caption_success']);
                     });
                 }
 
@@ -3574,11 +3572,9 @@ zaa.directive('activeClass', function () {
 });
 
 /**
- * Image edit div: https://github.com/CrackerakiUA/ui-cropper/wiki/Options
+ * Image edit div.
  * 
- * bind config: https://github.com/CrackerakiUA/ui-cropper/blob/master/source/js/ui-cropper.js#L6-L53
- * 
- * @see bug with reset aspect ratio: https://github.com/CrackerakiUA/ui-cropper/issues/41
+ * @see https://github.com/CrackerakiUA/ui-cropper/wiki/Options
  */
 zaa.directive('imageEdit', function() {
     return {
@@ -3596,30 +3592,36 @@ zaa.directive('imageEdit', function() {
                 $scope.cropperImage = $scope.file.source;
             });
 
-            // cropper settings
+            // cropper image
             $scope.cropperImage;
-            $scope.distUrl = '';
-            $scope.blogResult = {};
-            $scope.areaType = 'rectangle';
-            $scope.ratio = null;
-            $scope.resultImageSize = 'max';
-            $scope.areaInitSize = 200;
-            $scope.areaMinSize = 10;
-            $scope.canvasScalemode = 'full-width';
+            
+            // cropper config
+            $scope.cropperConfig = {
+                distUrl:'',
+                areaType : 'rectangle',
+                ratio : null,
+                resultImageSize : 'max',
+                areaInitSize : 200,
+                canvasScalemode : 'full-width'
+            };
 
             $scope.saveAsCopy = true;
 
             $scope.isCurrentRatio = function(value) {
-                return $scope.ratio == value;
+                return $scope.cropperConfig.ratio == value;
             };
 
             $scope.changeRatio = function(value) {
-                $scope.ratio = value;
+                $scope.cropperImage = false;
+                $scope.cropperConfig.ratio = value;
+                $timeout(function() {
+                    $scope.cropperImage = $scope.file.source;
+                });
             };
 
             $scope.save = function() {
                 $http.post('/admin/api-admin-storage/file-crop', {
-                    distImage: $scope.distUrl,
+                    distImage: $scope.cropperConfig.distUrl,
                     fileName: $scope.file.name_new_compound,
                     extension: 'png',
                     saveAsCopy: $scope.saveAsCopy,
@@ -3630,43 +3632,43 @@ zaa.directive('imageEdit', function() {
             };
         }],
         template : `
-    <div class="row" ng-show="cropperImage">
+    <div class="row">
         <div class="col-md-8">
-            <p class="lead">Source Image</p>
+            <p class="lead">` + i18n['crop_source_image'] + `</p>
             <div class="bg-light rounded pt-3 pl-3 pr-3 pb-2">
-            <ui-cropper 
+            <ui-cropper
+                ng-if="cropperImage" 
                 image="cropperImage" 
-                result-image="distUrl"
-                url-blob="blogResult"
-                area-type="{{areaType}}" 
-                area-init-size="areaInitSize"
+                result-image="cropperConfig.distUrl"
+                area-type="{{cropperConfig.areaType}}" 
+                area-init-size="cropperConfig.areaInitSize"
                 chargement="'Loading'"
-                canvas-scalemode="{{canvasScalemode}}"
-                aspect-ratio="ratio"
-                result-image-size="resultImageSize"
+                canvas-scalemode="{{cropperConfig.canvasScalemode}}"
+                aspect-ratio="cropperConfig.ratio"
+                result-image-size="cropperConfig.resultImageSize"
             ></ui-cropper>
             </div>
             <ul class="list-group list-group-horizontal justify-content-center mt-3">
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>Free</small></li>
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>1:1</small></li>
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>Desktop</small></li>
-                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('0.5')}" ng-click="changeRatio('0.5')"><i class="material-icons">crop_portrait</i><br /><small>Mobile</small></li>
-                </ul>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>` + i18n['crop_size_free'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>` + i18n['crop_size_1to1'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>` + i18n['crop_size_desktop'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('0.5')}" ng-click="changeRatio('0.5')"><i class="material-icons">crop_portrait</i><br /><small>` + i18n['crop_size_mobile'] + `</small></li>
+            </ul>
         </div>
-        <div class="col-md-4">
-            <p class="lead">Preview</p>
-            <img ng-src="{{distUrl}}" ng-show="distUrl" class="img-fluid border" />
+        <div class="col-md-4" ng-show="cropperImage">
+            <p class="lead">` + i18n['crop_preview'] + `</p>
+            <img ng-src="{{cropperConfig.distUrl}}" ng-show="cropperConfig.distUrl" class="img-fluid border" />
 
             <div class="form-check mt-3 rounded border p-2" ng-click="saveAsCopy=!saveAsCopy" ng-class="{'bg-light':saveAsCopy}">
                 <input class="form-check-input" type="checkbox" ng-model="saveAsCopy">
                 <label class="form-check-label">
-                    Save image as copy
+                ` + i18n['crop_btn_as_copy'] + `
                 </label>
-                <small class="text-muted">When enabled, the file will be stored as a <strong>new image</strong> instead of overriding the existing image.</small>
+                <small class="text-muted">` + i18n['crop_btn_as_copy_hint'] + `</small>
             </div>
 
-            <button type="button" ng-show="saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Save as Copy</button>
-            <button type="button" ng-show="!saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">Override source Image</button>
+            <button type="button" ng-show="saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">`+ i18n['crop_btn_save_copy'] + `</button>
+            <button type="button" ng-show="!saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">`+ i18n['crop_btn_save_replace'] + `</button>
         </div>
     </div>
         `

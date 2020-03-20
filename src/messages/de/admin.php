@@ -499,4 +499,20 @@ return [
     'reset_form_text' => 'Geben Sie ein neues Passwort für Ihr Konto ein.',
     'reset_form_submit_btn' => 'Passwort aktualisieren',
     'user_change_password_error' =>  'Während dem Speichern des Passworts trat ein Fehler auf.',
+
+// 3.1.0
+
+    'crop_source_image' => 'Quellen Datei',
+    'crop_preview' => 'Vorschau',
+    'crop_btn_as_copy' => 'Bild als Kopie speichern',
+    'crop_btn_as_copy_hint' => 'Wenn ausgewählt, wird das Bild als neue Datei gespeichert, ansonsten wird die bestehende Datei ersetzt.',
+    'crop_btn_save_copy' => 'Kopie speichern',
+    'crop_btn_save_replace' => 'Datei ersetzen',
+    'crop_size_free' => 'Frei',
+    'crop_size_1to1' => '1:1',
+    'crop_size_desktop' => 'Desktop',
+    'crop_size_mobile' => 'Mobile',
+    'crop_modal_title' => 'Bild Zuschneiden',
+    'crop_success' => 'Datei wurde zugeschnitten und gespeichert.',
+    'file_caption_success' => 'Datei Beschreibung wurde gespeichert.',
 ];

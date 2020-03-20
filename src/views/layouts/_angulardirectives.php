@@ -397,7 +397,7 @@ use luya\admin\helpers\Angular;
         <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
 
 
-        <modal is-modal-hidden="isFileEditHidden" modal-title="Image Cropping">
+        <modal is-modal-hidden="isFileEditHidden" modal-title="<?= Admin::t('crop_modal_title'); ?>">
             <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id" on-success="cropSuccess()"></image-edit>
         </modal>
 
