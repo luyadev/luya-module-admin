@@ -516,4 +516,7 @@ return [
     'crop_modal_title' => 'Image Cropping',
     'crop_success' => 'File has been cropped an saved.',
     'file_caption_success' => 'Captions has been updated.',
+    'crop_quality_high' => 'High',
+    'crop_quality_medium' => 'Medium', 
+    'crop_quality_low' => 'Low',
 ];

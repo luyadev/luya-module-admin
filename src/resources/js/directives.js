@@ -3595,9 +3595,17 @@ zaa.directive('imageEdit', function() {
                 ratio : null,
                 resultImageSize : 'max',
                 resultImageFormat: 'image/jpeg',
-                resultImageQuality: '1.0',
+                resultImageQuality: 1.0,
                 areaInitSize : 200,
                 canvasScalemode : 'full-width',
+            };
+
+            $scope.changeQuality = function(value) {
+                $scope.cropperConfig.resultImageQuality = value;
+            };
+
+            $scope.isCurrentQuality = function(value) {
+                return $scope.cropperConfig.resultImageQuality == value;
             };
 
             $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
@@ -3661,6 +3669,12 @@ zaa.directive('imageEdit', function() {
         <div class="col-md-4" ng-show="cropperImage">
             <p class="lead">` + i18n['crop_preview'] + `</p>
             <img ng-src="{{cropperConfig.distUrl}}" ng-show="cropperConfig.distUrl" class="img-fluid border" />
+
+            <ul class="list-group list-group-horizontal justify-content-center mt-3">
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(1.0)}" ng-click="changeQuality(1.0)"><i class="material-icons">looks_one</i><br /><small>` + i18n['crop_quality_high'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(0.8)}" ng-click="changeQuality(0.8)"><i class="material-icons">looks_two</i><br /><small>` + i18n['crop_quality_medium'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(0.5)}" ng-click="changeQuality(0.5)"><i class="material-icons">looks_3</i><br /><small>` + i18n['crop_quality_low'] + `</small></li>
+            </ul>
 
             <div class="form-check mt-3 rounded border p-2" ng-click="saveAsCopy=!saveAsCopy" ng-class="{'bg-light':saveAsCopy}">
                 <input class="form-check-input" type="checkbox" ng-model="saveAsCopy">

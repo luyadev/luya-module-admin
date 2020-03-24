@@ -515,4 +515,7 @@ return [
     'crop_modal_title' => 'Bild Zuschneiden',
     'crop_success' => 'Datei wurde zugeschnitten und gespeichert.',
     'file_caption_success' => 'Datei Beschreibung wurde gespeichert.',
+    'crop_quality_high' => 'Hoch',
+    'crop_quality_medium' => 'Mittel', 
+    'crop_quality_low' => 'Niedrig',
 ];
