@@ -199,7 +199,7 @@ class StorageController extends RestController
             return Storage::refreshFile($fileId, $file->getServerSource());
         }
 
-        return Storage::uploadFromContent($data, $file->name_new .'_crop.'.$ext, $file->folder_id);
+        return Storage::uploadFromContent($data, $file->name_new .'_copy.'.$ext, $file->folder_id);
     }
 
     /**

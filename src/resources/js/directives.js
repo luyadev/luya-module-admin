@@ -3601,8 +3601,10 @@ zaa.directive('imageEdit', function() {
                 areaType : 'rectangle',
                 ratio : null,
                 resultImageSize : 'max',
+                resultImageFormat: 'image/jpeg',
+                resultImageQuality: '1.0',
                 areaInitSize : 200,
-                canvasScalemode : 'full-width'
+                canvasScalemode : 'full-width',
             };
 
             $scope.saveAsCopy = true;
@@ -3623,7 +3625,7 @@ zaa.directive('imageEdit', function() {
                 $http.post('/admin/api-admin-storage/file-crop', {
                     distImage: $scope.cropperConfig.distUrl,
                     fileName: $scope.file.name_new_compound,
-                    extension: 'png',
+                    extension: 'jpg',
                     saveAsCopy: $scope.saveAsCopy,
                     fileId: $scope.file.id
                 }).then(function(response) {
@@ -3640,12 +3642,14 @@ zaa.directive('imageEdit', function() {
                 ng-if="cropperImage" 
                 image="cropperImage" 
                 result-image="cropperConfig.distUrl"
+                result-image-format="{{cropperConfig.resultImageFormat}}"
+                result-image-quality="{{cropperConfig.resultImageQuality}}"
+                result-image-size="cropperConfig.resultImageSize"
                 area-type="{{cropperConfig.areaType}}" 
                 area-init-size="cropperConfig.areaInitSize"
                 chargement="'Loading'"
                 canvas-scalemode="{{cropperConfig.canvasScalemode}}"
                 aspect-ratio="cropperConfig.ratio"
-                result-image-size="cropperConfig.resultImageSize"
             ></ui-cropper>
             </div>
             <ul class="list-group list-group-horizontal justify-content-center mt-3">
