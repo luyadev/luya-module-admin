@@ -357,7 +357,7 @@ use luya\admin\helpers\Angular;
                                     <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                                 </td>
                                 <td ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-text="{{file.id}}">{{file.name_original | truncateMiddle: 50}}</td>
-                                <td ng-click="toggleSelection(file)">{{file.extension}}</td>
+                                <td ng-click="openFileDetail(file)">{{file.extension}}</td>
                                 <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
                                 <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
                                 <td class="text-right">
@@ -394,7 +394,7 @@ use luya\admin\helpers\Angular;
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
         </div>
 
-        <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
+        <p class="mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
 
 
         <modal is-modal-hidden="isFileEditHidden" modal-title="<?= Admin::t('crop_modal_title'); ?>">
