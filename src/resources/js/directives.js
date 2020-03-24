@@ -3584,17 +3584,10 @@ zaa.directive('imageEdit', function() {
             onSuccess: '&',
         },
         controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
-            
+            // the loaded file to crop
             $scope.file;
-
-            $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
-                $scope.file = response.data;
-                $scope.cropperImage = $scope.file.source;
-            });
-
             // cropper image
             $scope.cropperImage;
-            
             // cropper config
             $scope.cropperConfig = {
                 distUrl:'',
@@ -3606,6 +3599,12 @@ zaa.directive('imageEdit', function() {
                 areaInitSize : 200,
                 canvasScalemode : 'full-width',
             };
+
+            $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
+                $scope.file = response.data;
+                $scope.cropperConfig.resultImageFormat = $scope.file.mime_type;
+                $scope.cropperImage = $scope.file.source;
+            });
 
             $scope.saveAsCopy = true;
 
@@ -3625,7 +3624,7 @@ zaa.directive('imageEdit', function() {
                 $http.post('/admin/api-admin-storage/file-crop', {
                     distImage: $scope.cropperConfig.distUrl,
                     fileName: $scope.file.name_new_compound,
-                    extension: 'jpg',
+                    extension: $scope.file.extension,
                     saveAsCopy: $scope.saveAsCopy,
                     fileId: $scope.file.id
                 }).then(function(response) {
@@ -3643,7 +3642,7 @@ zaa.directive('imageEdit', function() {
                 image="cropperImage" 
                 result-image="cropperConfig.distUrl"
                 result-image-format="{{cropperConfig.resultImageFormat}}"
-                result-image-quality="{{cropperConfig.resultImageQuality}}"
+                result-image-quality="cropperConfig.resultImageQuality"
                 result-image-size="cropperConfig.resultImageSize"
                 area-type="{{cropperConfig.areaType}}" 
                 area-init-size="cropperConfig.areaInitSize"
