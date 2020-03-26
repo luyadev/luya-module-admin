@@ -5,6 +5,8 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.2.0
 
++ [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
+
 ## 3.1.0 (24. March 2020)
 
 > This release requires LUYA Core version 1.1 to work.
