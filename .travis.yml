@@ -24,6 +24,7 @@ services:
 
 install:
   - travis_retry composer self-update && composer --version
+  - composer config -g github-oauth.github.com "$TOKEN"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
 
