@@ -30,6 +30,8 @@ class TagTest extends AdminModelTestCase
         $m->name = 'foo';
         $this->assertSame(true, $m->save());
 
+        $this->assertSame('goo', $m->getTranslationName());
+
         $uo = new NgRestModelFixture([
             'modelClass' => UserOnline::class,
         ]);
