@@ -2,11 +2,19 @@
 
 namespace luya\admin\apis;
 
+use cebe\openapi\spec\Info;
+use cebe\openapi\spec\OpenApi;
+use luya\admin\components\UrlRule;
 use Yii;
 use luya\Boot;
 use luya\Exception;
 use luya\admin\models\UserOnline;
+use luya\admin\openapi\ControllerParser;
+use luya\admin\openapi\RouteParser;
+use luya\helpers\ArrayHelper;
 use luya\rest\Controller;
+use ReflectionClass;
+use yii\web\Response;
 
 /**
  * Remove API, allows to collect system data with a valid $token.
@@ -26,6 +34,56 @@ class RemoteController extends Controller
     public function userAuthClass()
     {
         return false;
+    }
+
+    /**
+     * https://www.php.net/manual/en/reflectionclass.getdoccomment.php
+     * https://github.com/phpDocumentor/ReflectionDocBlock
+     * https://github.com/PHP-DI/PhpDocReader
+     *
+     * @return void
+     */
+    public function actionOpenapi()
+    {
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        $paths = [];
+
+        $rules = [];
+
+        foreach (Yii::$app->urlManager->rules as $rule) {
+            if ($rule instanceof UrlRule) {
+                    $reflection = new ReflectionClass($rule);
+                    $property = $reflection->getProperty('rules');
+                    $property->setAccessible(true);
+                    $array = $property->getValue($rule);
+                    foreach ($array as $rule => $config) {
+                        $rules[$rule] = ArrayHelper::index($config, null, 'name');
+                    }
+                    
+            }
+        }
+
+        foreach ($rules as $route => $items) {
+
+            foreach ($items as $rulePattern => $ruleConfig) {
+
+                $parser = new RouteParser($rulePattern, $route, $ruleConfig, $this->module->controllerMap);
+                $paths[$parser->getPath()] = $parser->getPathItem();
+                unset($parser);
+            }
+        }
+
+        $definition = [
+            'openapi' => '3.0.2',
+            'info' => new Info([
+                'title' => Yii::$app->siteTitle,
+                'version' => '1.0.0',
+            ]),
+            'paths' => $paths,
+        ];
+
+        $openapi = new OpenApi($definition);
+        return \cebe\openapi\Writer::writeToJson($openapi);
     }
 
     /**
