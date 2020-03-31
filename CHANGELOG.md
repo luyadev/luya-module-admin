@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 3.2.0
 
 + [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
++ [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers are of the requred type otherwise skip this class.
 
 ## 3.1.0 (24. March 2020)
 
