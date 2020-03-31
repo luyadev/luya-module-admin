@@ -2,6 +2,7 @@
 
 namespace luya\admin\importers;
 
+use luya\admin\base\Filter;
 use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFilter;
 use luya\console\Importer;
@@ -58,11 +59,14 @@ class FilterImporter extends Importer
             $filterClassName = $file['ns'];
             if (class_exists($filterClassName)) {
                 $object = new $filterClassName();
-                $object->save();
-                $list[] = $object->identifier();
-                $log = $object->getLog();
-                if (count($log) > 0) {
-                    $this->addLog([$object->identifier() => $log]);
+                // process only if object is instance of filter
+                if ($object instanceof Filter) {
+                    $object->save();
+                    $list[] = $object->identifier();
+                    $log = $object->getLog();
+                    if (count($log) > 0) {
+                        $this->addLog([$object->identifier() => $log]);
+                    }
                 }
             }
         }

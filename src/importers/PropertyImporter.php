@@ -3,6 +3,7 @@
 namespace luya\admin\importers;
 
 use Yii;
+use luya\admin\base\Property as BaseProperty;
 use luya\admin\models\Property;
 use luya\console\Importer;
 
@@ -25,7 +26,8 @@ class PropertyImporter extends Importer
 
             if (class_exists($className)) {
                 $object = Yii::createObject(['class' => $className, 'moduleName' => $file['module']]);
-                if ($object) {
+                // if object exists and instance of BaseProperty
+                if ($object && $object instanceof BaseProperty) {
                     $ids[] = $this->install($object);
                     //$ids[] = $object->install();
                     $this->addLog('Property '.$object->varName().' is installed and up to date.');
