@@ -5,10 +5,8 @@ namespace admintests\admin\importers;
 use admintests\AdminConsoleSqLiteTestCase;
 use luya\admin\importers\PropertyImporter;
 use luya\admin\models\Property;
-use luya\admin\models\StorageEffect;
 use luya\console\commands\ImportController;
 use luya\testsuite\fixtures\NgRestModelFixture;
-use Yii;
 
 class PropertyImporterTest extends AdminConsoleSqLiteTestCase
 {

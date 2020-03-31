@@ -2,6 +2,7 @@
 
 namespace luya\admin\importers;
 
+use Yii;
 use luya\admin\base\Filter;
 use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFilter;
@@ -58,7 +59,7 @@ class FilterImporter extends Importer
         foreach ($this->getImporter()->getDirectoryFiles('filters') as $file) {
             $filterClassName = $file['ns'];
             if (class_exists($filterClassName)) {
-                $object = new $filterClassName();
+                $object = Yii::createObject(['class' => $filterClassName]);
                 // process only if object is instance of filter
                 if ($object instanceof Filter) {
                     $object->save();
