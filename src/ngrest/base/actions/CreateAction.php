@@ -3,7 +3,9 @@
 namespace luya\admin\ngrest\base\actions;
 
 /**
- * CreateAction for REST implementation.
+ * Create new item
+ * 
+ * Create a new entrie using POST.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

@@ -2,19 +2,21 @@
 
 namespace luya\admin\apis;
 
-use cebe\openapi\spec\Info;
-use cebe\openapi\spec\OpenApi;
-use luya\admin\components\UrlRule;
+use ReflectionClass;
 use Yii;
 use luya\Boot;
 use luya\Exception;
 use luya\admin\models\UserOnline;
-use luya\admin\openapi\ControllerParser;
-use luya\admin\openapi\RouteParser;
+use luya\admin\openapi\ActionRouteParser;
+use luya\admin\openapi\UrlRuleRouteParser;
+use luya\admin\components\UrlRule;
 use luya\helpers\ArrayHelper;
+use luya\helpers\ObjectHelper;
 use luya\rest\Controller;
-use ReflectionClass;
 use yii\web\Response;
+use cebe\openapi\spec\Info;
+use cebe\openapi\spec\OpenApi;
+use cebe\openapi\Writer;
 
 /**
  * Remove API, allows to collect system data with a valid $token.
@@ -41,38 +43,53 @@ class RemoteController extends Controller
      * https://github.com/phpDocumentor/ReflectionDocBlock
      * https://github.com/PHP-DI/PhpDocReader
      *
-     * @return void
+     * @return string Openapi as json
+     * @since 3.2.0
      */
     public function actionOpenapi()
     {
-        Yii::$app->response->format = Response::FORMAT_RAW;
-        $paths = [];
-
         $rules = [];
-
+        // get all rules from the urlManager
         foreach (Yii::$app->urlManager->rules as $rule) {
             if ($rule instanceof UrlRule) {
-                    $reflection = new ReflectionClass($rule);
-                    $property = $reflection->getProperty('rules');
-                    $property->setAccessible(true);
-                    $array = $property->getValue($rule);
-                    foreach ($array as $rule => $config) {
-                        $rules[$rule] = ArrayHelper::index($config, null, 'name');
-                    }
-                    
+                $reflection = new ReflectionClass($rule);
+                $property = $reflection->getProperty('rules');
+                $property->setAccessible(true);
+                $array = $property->getValue($rule);
+                foreach ($array as $rule => $config) {
+                    $rules[$rule] = ArrayHelper::index($config, null, 'name');
+                }
             }
         }
 
+        $paths = [];
+        $routesProcessed = [];
+        // generate all paths from the urlManager rules
         foreach ($rules as $route => $items) {
-
             foreach ($items as $rulePattern => $ruleConfig) {
-
-                $parser = new RouteParser($rulePattern, $route, $ruleConfig, $this->module->controllerMap);
-                $paths[$parser->getPath()] = $parser->getPathItem();
+                $parser = new UrlRuleRouteParser($rulePattern, $route, $ruleConfig);
+                if ($parser->getIsValid()) {
+                    $paths[$parser->getPath()] = $parser->getPathItem();
+                    $routesProcessed = array_merge($routesProcessed, $parser->getAllIncludedRoutes());
+                }
                 unset($parser);
             }
         }
 
+        // add actions (routes) from controller map which are not covered by an urlRule from above
+        foreach ($this->module->controllerMap as $key => $map) {
+            $controller = Yii::createObject($map['class'], [$key, $map['module']]);
+            $route = 'admin/'.$key;
+            foreach (ObjectHelper::getActions($controller) as $actionName) {
+                $absoluteRoute = $route.'/'.$actionName;
+                if (!in_array($absoluteRoute, $routesProcessed)) {
+                    $parser = new ActionRouteParser($controller, $actionName, $absoluteRoute, $route);
+                    $paths[$parser->getPath()] = $parser->getPathItem();
+                }
+            }
+        }
+
+        // generate the openapi file
         $definition = [
             'openapi' => '3.0.2',
             'info' => new Info([
@@ -82,8 +99,11 @@ class RemoteController extends Controller
             'paths' => $paths,
         ];
 
+        Yii::$app->response->format = Response::FORMAT_RAW;
+
+        // write the json file
         $openapi = new OpenApi($definition);
-        return \cebe\openapi\Writer::writeToJson($openapi);
+        return Writer::writeToJson($openapi);
     }
 
     /**
