@@ -5,9 +5,14 @@ namespace luya\admin\openapi\phpdoc;
 use cebe\openapi\spec\MediaType;
 use cebe\openapi\spec\Response;
 use cebe\openapi\spec\Schema;
+use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
+use luya\helpers\ObjectHelper;
 use ReflectionClass;
 use ReflectionMethod;
+use Yii;
+use yii\rest\Action;
+use yii\rest\IndexAction;
 
 /**
  * Read PHP docs and interprets those.
@@ -21,6 +26,10 @@ abstract class BaseDocReader
      * @return ReflectionClass|ReflectionMethod
      */
     abstract public function getReflection();
+
+    abstract public function getActionObject();
+
+    abstract public function getControllerObject();
 
     public function getRows($reflection)
     {
@@ -46,11 +55,10 @@ abstract class BaseDocReader
 
         return $rows;
     }
-
     public function getResponses()
     {
         $response200 = new Response([]);
-        $response200->description = 'OK';
+        $response200->description = $this->getPhpDocReturnDescription();
 
         if ($this->getResponseContent()) {
             $response200->content = $this->getResponseContent();
@@ -61,24 +69,44 @@ abstract class BaseDocReader
         ];
     }
 
-    public function getResponseContent()
+    public function getPhpDocReturn()
     {
         $params = $this->getRows($this->getReflection())['params'];
 
-        $return = ArrayHelper::searchColumn($params, 0, '@return');
+        return ArrayHelper::searchColumn($params, 0, '@return');
+    }
 
-        if (!$return) {
-            return [];
-        }
+    public function getPhpDocReturnDescription()
+    {
+        $return = $this->getPhpDocReturn();
+
+        return isset($return[2]) ? $return[2] : '';
+    }
+
+    public function getPhpDocReturnType()
+    {
+        $return = $this->getPhpDocReturn();
 
         $type = isset($return[1]) ? $return[1] : null;
-        $description = isset($return[2]) ? $return[2] : '';
 
-        if (empty($type)) {
-            return [];
+        // fix not supported short form types
+        if ($type == 'bool') {
+            $type = 'boolean';
+        }
+        if ($type == 'int') {
+            $type = 'integer';
         }
 
-        if (in_array($type, [
+        return $type;
+    }
+
+    public function getIsPhpDocReturnObject($type)
+    {
+        if (empty($type) || $type === false) {
+            return false;
+        }
+
+        return !in_array($type, [
             'bool',
             'boolean',
             'string',
@@ -92,62 +120,98 @@ abstract class BaseDocReader
             'resource',
             'mixed',
             'iterable',
-        ])) {
-            if ($type == 'bool') {
-                $type = 'boolean';
-            }
-            if ($type == 'int') {
-                $type = 'integer';
-            }
-            if ($type == 'array') {
-                return [
-                    'application/json' => new MediaType([
-                        'schema' => [
-                            'type' => $type,
-                            'items' => [],
-                            'description' => $description,
-                        ],
-                    ])
-                ];
-                
-            } else {
-                return [
-                    'application/json' => new MediaType([
-                        'schema' => [
-                            'type' => $type,
-                            'description' => $description,
-                        ],
-                    ])
-                ];
-            }
-            
+            'void',
+        ]);
+    }
+
+    public function modelContextToResponse($contextModel)
+    {
+        $schema = new ActiveRecordToSchema(Yii::createObject($contextModel));
+
+        if ($this->getActionObject() instanceof IndexAction) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => $schema->getProperties()
+                        ]
+                    ],
+                ])
+            ];
         }
 
-        // if type object including []
-        /*
-        schema:
-                type: array
-                items:
-        */
-
-        // return the object
-        /*
-        schema:
-            properties
-                id
-                  - type
-                    string
-        */
         return [
             'application/json' => new MediaType([
                 'schema' => [
                     'type' => 'object',
-                    'properties' => [
-                        'id' => new Schema([
-                            'type' => 'string',
-                            'description' => 'Das ist der Primary KEY?',
-                        ])
-                    ]
+                    'properties' => $schema->getProperties(),
+                ],
+            ])
+        ];
+    }
+
+    public function getNgRestApiModelClass()
+    {
+        if (ObjectHelper::isInstanceOf($this->getActionObject(), [Api::class, Action::class], false)) {
+            return $this->getActionObject()->modelClass;
+        }
+
+        return false;
+    }
+
+
+    public function getResponseContent()
+    {
+        $type = $this->getPhpDocReturnType();
+
+        // if void is requested it will be returned.
+        if ($type == 'void') {
+            return [];
+        }
+
+        // handle php object type
+        if ($this->getIsPhpDocReturnObject($type)) {
+            // if $type is a class which exists, use this instead.
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'id' => new Schema([
+                                'type' => $type,
+                                'description' => 'Php doc return type ' . $type,
+                            ])
+                        ]
+                    ],
+                ])
+            ];
+        } 
+
+        // handle type array
+        if ($type == 'array') {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => $type,
+                        'items' => [],
+                    ],
+                ])
+            ];
+        }
+
+        $modelClass = $this->getNgRestApiModelClass();
+
+        if ($modelClass) {
+            return $this->modelContextToResponse($modelClass);
+        }
+
+        // handle scalar return types
+        return [
+            'application/json' => new MediaType([
+                'schema' => [
+                    'type' => $type,
                 ],
             ])
         ];

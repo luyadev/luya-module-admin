@@ -9,12 +9,15 @@ use yii\base\InlineAction;
 
 class DocReaderAction extends BaseDocReader
 {
+    protected $controller;
+
     protected $reflection;
  
     protected $actionObject;
 
     public function __construct(Controller $controller, $actionName)
     {
+        $this->controller = $controller;
         $this->actionObject = $controller->createAction($actionName);
         if ($this->actionObject instanceof InlineAction) {
             // read data from: actionMethodName()
@@ -23,6 +26,11 @@ class DocReaderAction extends BaseDocReader
         } elseif ($this->actionObject) {
             $this->reflection = new ReflectionClass(get_class($this->actionObject));
         }
+    }
+
+    public function getControllerObject()
+    {
+        return $this->controller;
     }
 
     public function getActionObject()

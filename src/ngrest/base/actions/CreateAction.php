@@ -3,7 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 /**
- * Create new item
+ * Create Item
  * 
  * Create a new entrie using POST.
  *

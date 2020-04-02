@@ -7,7 +7,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * Delete item
+ * Delete Item
  *
  * In order to report errors when deleting problems appear the delete action
  * has been modified in order to return model getErrors() instead of an unknown

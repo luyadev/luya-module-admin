@@ -13,7 +13,7 @@ use luya\helpers\Inflector;
 use Yii;
 use yii\web\UrlRule;
 
-class UrlRuleRouteParser implements RouteParserInterface
+class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
 {
     protected $rulePattern;
     protected $route;
@@ -107,7 +107,7 @@ class UrlRuleRouteParser implements RouteParserInterface
             $this->_coveredRoutes[] = $urlRule->route;
 
             $operations[$verbName] = new Operation([
-                'tags' => [$this->route],
+                'tags' => [$this->routeToTag($this->route)],
                 'summary' => $actionDoc->getSummary(),
                 'description' => $actionDoc->getDescription(),
                 'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
@@ -120,12 +120,6 @@ class UrlRuleRouteParser implements RouteParserInterface
 
         $this->_operations = $operations;
         return $operations;
-        /*return new Operation([
-            'tags' => ['foo', 'bar'],
-            'summary' => $verbName . ' Summary Operation',
-            'description' => $verbName . ' Summary Description',
-            'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
-        ]);*/
     }
 
     public function getAllIncludedRoutes()

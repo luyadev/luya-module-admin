@@ -89,6 +89,8 @@ class RemoteController extends Controller
             }
         }
 
+        ksort($paths);
+
         // generate the openapi file
         $definition = [
             'openapi' => '3.0.2',

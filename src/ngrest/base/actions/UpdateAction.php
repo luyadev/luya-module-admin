@@ -8,7 +8,7 @@ use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * Updatem item.
+ * Updatem Item
  * 
  * Updates the given item when sending a PUT request.
  *

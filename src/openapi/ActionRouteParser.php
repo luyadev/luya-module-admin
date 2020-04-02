@@ -12,7 +12,7 @@ use ReflectionClass;
 use yii\base\Controller;
 use yii\base\InlineAction;
 
-class ActionRouteParser implements RouteParserInterface
+class ActionRouteParser extends BaseParser implements RouteParserInterface
 {
     protected $controllerDoc;
     protected $absoluteRoute;
@@ -48,7 +48,7 @@ class ActionRouteParser implements RouteParserInterface
             'summary' => $this->controllerDoc->getSummary(),
             'description' => $this->controllerDoc->getDescription(),
             'get' => new Operation([
-                'tags' => [$this->route],
+                'tags' => [$this->routeToTag($this->route)],
                 'summary' => $actionDoc->getSummary(),
                 'description' => $actionDoc->getDescription(),
                 'operationId' => Inflector::slug('get' . '-' . $this->getPath()),
