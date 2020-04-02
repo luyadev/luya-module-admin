@@ -104,6 +104,8 @@ class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
                 continue;
             }
 
+            $params = array_merge($params, $actionDoc->getParameters());
+
             $this->_coveredRoutes[] = $urlRule->route;
 
             $operations[$verbName] = new Operation([

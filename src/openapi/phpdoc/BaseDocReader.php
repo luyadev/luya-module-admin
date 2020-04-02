@@ -3,14 +3,18 @@
 namespace luya\admin\openapi\phpdoc;
 
 use cebe\openapi\spec\MediaType;
+use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\Response;
 use cebe\openapi\spec\Schema;
 use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
+use luya\helpers\StringHelper;
 use ReflectionClass;
 use ReflectionMethod;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\rest\Action;
 use yii\rest\IndexAction;
 
@@ -31,11 +35,19 @@ abstract class BaseDocReader
 
     abstract public function getControllerObject();
 
-    public function getRows($reflection)
+    public function getRows()
     {
+        $reflection = $this->getReflection();
         $rows = [
             'texts' => [],
-            'params' => [],
+            'return' => [],
+            'author' => [],
+            'param' => [],
+            'deprecated' => [],
+            'see' => [],
+            'link' => [],
+            'since' => [],
+            'var' => [],
         ];
         foreach(explode(PHP_EOL, $reflection->getDocComment()) as $row) {
             $row = ltrim($row);
@@ -45,35 +57,119 @@ abstract class BaseDocReader
             $row = ltrim($row, "* ");
 
             if (substr($row, 0, 1) == '@') {
-                preg_match("/^(@[a-z]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
-                unset($matches[0]);
-                $rows['params'][] = array_values($matches);
+
+                if (StringHelper::startsWith($row, '@param')) {
+                    preg_match("/^(@[a-z]+)\s+([^\s]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
+                    unset($matches[0]);
+                } else {
+                    preg_match("/^(@[a-z]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
+                    unset($matches[0]);
+                }
+
+                
+                if (isset($matches[1])) {
+                    $rows[substr($matches[1], 1)][] = array_values($matches);
+                }
             } else {
                 $rows['texts'][] = $row;
             }
         }
 
+
         return $rows;
     }
+
+    public function getPhpDocParam($paramName)
+    {
+        $params = $this->getRows()['param'];
+
+        foreach ($params as $p) {
+            if (isset($p[2]) && ltrim(strtolower($p[2]), '$') == strtolower($paramName)) {
+                return $p;
+            }
+        }
+
+        return false;
+    }
+
+    public function getFirstSchemaType($schema)
+    {
+        $values = explode("|", $schema);
+
+        return current($values);
+    }
+
+    public function getParameters()
+    {
+        $params = [];
+        if ($this->getReflection() instanceof ReflectionMethod) {
+            foreach ($this->getReflection()->getParameters() AS $arg) {
+
+                $paramDoc = $this->getPhpDocParam($arg->getName());
+
+                $params[] = new Parameter([
+                    'name' => $arg->getName(),
+                    'in' => 'query',
+                    'required' => !$arg->isOptional(),
+                    'description' => isset($paramDoc[3]) ? $paramDoc[3] : '',
+                    'schema' => new Schema([
+                        'type' => $this->getFirstSchemaType($paramDoc[1]),
+                    ])
+                ]);
+            }
+        }
+
+        return $params;
+        /*
+        - in: query
+        name: offset
+        schema:
+          type: integer
+        description: The number of items to skip before starting to collect the result set
+        */
+    }
+
     public function getResponses()
     {
-        $response200 = new Response([]);
-        $response200->description = $this->getPhpDocReturnDescription();
+        $response = new Response([]);
+        $response->description = $this->getPhpDocReturnDescription();
 
+        
         if ($this->getResponseContent()) {
-            $response200->content = $this->getResponseContent();
+            $response->content = $this->getResponseContent();
+            $statusCode = 200;
+        } else {
+            $statusCode = 204;
         }
 
         return [
-            200 => $response200,
+            $statusCode => $response,
+            500 => new Response([
+                'description' => 'Unexpected error',
+                'content' => [
+                    'application/json' => new MediaType([
+                        'schema' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'message' => [
+                                    'type' => 'string',
+                                    'title' => 'Message',
+                                    'description' => 'Message of the exception',
+                                ]
+                            ],
+                        ],
+                    ])
+                ]
+            ])
         ];
     }
 
     public function getPhpDocReturn()
     {
-        $params = $this->getRows($this->getReflection())['params'];
+        $params = $this->getRows()['return'];
 
-        return ArrayHelper::searchColumn($params, 0, '@return');
+        // as it should have only 1 return!
+        return current($params);
     }
 
     public function getPhpDocReturnDescription()
@@ -124,11 +220,33 @@ abstract class BaseDocReader
         ]);
     }
 
-    public function modelContextToResponse($contextModel)
+    public function modelContextToResponse($contextModel, $isArray = false)
     {
-        $schema = new ActiveRecordToSchema(Yii::createObject($contextModel));
+        $object = Yii::createObject($contextModel);
+
+        $schema = false;
+
+        if ($object instanceof ActiveRecord) {
+            $schema = new ActiveRecordToSchema($object);
+        } elseif ($object instanceof ActiveDataProvider) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'array',
+                    ],
+                ])
+            ];
+        }
+        
+        if (!$schema) {
+            return [];
+        }
 
         if ($this->getActionObject() instanceof IndexAction) {
+            $isArray = true;
+        }
+
+        if ($isArray) {
             return [
                 'application/json' => new MediaType([
                     'schema' => [
@@ -141,7 +259,7 @@ abstract class BaseDocReader
                 ])
             ];
         }
-
+        
         return [
             'application/json' => new MediaType([
                 'schema' => [
@@ -161,6 +279,18 @@ abstract class BaseDocReader
         return false;
     }
 
+    public function typeToObjectAnnotation($type)
+    {
+        $arrayResponse = false;
+        if (StringHelper::endsWith($type, '[]')) {
+            $arrayResponse = true;
+        }
+
+        return [
+            'arrayResponse' => $arrayResponse,
+            'object' => str_replace('[]', '', $type),
+        ];
+    }
 
     public function getResponseContent()
     {
@@ -173,17 +303,16 @@ abstract class BaseDocReader
 
         // handle php object type
         if ($this->getIsPhpDocReturnObject($type)) {
+
+            $format = $this->typeToObjectAnnotation($type);
+            if (class_exists($format['object'])) {
+                return $this->modelContextToResponse($format['object'], $format['arrayResponse']);
+            }
             // if $type is a class which exists, use this instead.
             return [
                 'application/json' => new MediaType([
                     'schema' => [
-                        'type' => 'object',
-                        'properties' => [
-                            'id' => new Schema([
-                                'type' => $type,
-                                'description' => 'Php doc return type ' . $type,
-                            ])
-                        ]
+                        'type' => $this->getFirstSchemaType($type),
                     ],
                 ])
             ];
@@ -194,8 +323,9 @@ abstract class BaseDocReader
             return [
                 'application/json' => new MediaType([
                     'schema' => [
-                        'type' => $type,
+                        'type' => 'array',
                         'items' => [],
+                        // @todo option for force empty array?
                     ],
                 ])
             ];
@@ -207,11 +337,15 @@ abstract class BaseDocReader
             return $this->modelContextToResponse($modelClass);
         }
 
+        if (empty($type)) {
+            return [];
+        }
+
         // handle scalar return types
         return [
             'application/json' => new MediaType([
                 'schema' => [
-                    'type' => $type,
+                    'type' => $this->getFirstSchemaType($type),
                 ],
             ])
         ];
@@ -219,13 +353,13 @@ abstract class BaseDocReader
 
     public function generateShortSummary($reflection)
     {
-        return current($this->getRows($reflection)['texts']);
+        return current($this->getRows()['texts']);
     }
 
     public function generateLongDescription($reflection)
     {
         $content = [];
-        foreach ($this->getRows($reflection)['texts'] as $key => $row) {
+        foreach ($this->getRows()['texts'] as $key => $row) {
             if ($key == 0) {
                 continue;
             }

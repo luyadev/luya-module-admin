@@ -44,6 +44,8 @@ class ActionRouteParser extends BaseParser implements RouteParserInterface
     {
         $actionDoc = new DocReaderAction($this->controller, $this->actionName);
 
+        $params = $actionDoc->getParameters();
+
         $config = [
             'summary' => $this->controllerDoc->getSummary(),
             'description' => $this->controllerDoc->getDescription(),
@@ -52,6 +54,7 @@ class ActionRouteParser extends BaseParser implements RouteParserInterface
                 'summary' => $actionDoc->getSummary(),
                 'description' => $actionDoc->getDescription(),
                 'operationId' => Inflector::slug('get' . '-' . $this->getPath()),
+                'parameters' => $params,
                 'responses' => new Responses($actionDoc->getResponses())
             ])
         ];
