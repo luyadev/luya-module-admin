@@ -16,7 +16,7 @@ class TagTest extends AdminModelTestCase
 
     public function testToggleModel()
     {
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
 
         $tag = new NgRestModelFixture([
             'modelClass' => Tag::class,
@@ -29,6 +29,11 @@ class TagTest extends AdminModelTestCase
         $m = $tag->newModel;
         $m->name = 'foo';
         $this->assertSame(true, $m->save());
+
+        $this->assertSame('foo', $m->getTranslationName());
+
+        $m->translation = 'en';
+        $this->assertSame('en', $m->getTranslationName());
 
         $uo = new NgRestModelFixture([
             'modelClass' => UserOnline::class,
@@ -51,12 +56,11 @@ class TagTest extends AdminModelTestCase
         // get relations
         // get relations
         $this->assertSame('0', $m->getTagRelations()->count());
-
     }
 
     public function testRelationMethods()
     {
-        $this->createNgRestLogFixture();
+        $this->createAdminNgRestLogFixture();
 
         $tag = new NgRestModelFixture([
             'modelClass' => Tag::class,

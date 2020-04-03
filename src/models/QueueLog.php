@@ -88,4 +88,28 @@ class QueueLog extends NgRestModel
             ['list', ['title', 'push_timestamp', 'run_timestamp', 'end_timestamp', 'is_error']],
         ];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestRelations()
+    {
+        return [
+            [
+                'label' => 'Errors',
+                'targetModel' => QueueLogError::class,
+                'dataProvider' => $this->getLogErrors(),
+            ],
+        ];
+    }
+    
+    /**
+     * Get Queue Log Errors
+     *
+     * @return QueueLogError[]
+     */
+    public function getLogErrors()
+    {
+        return $this->hasMany(QueueLogError::class, ['queue_log_id' => 'id']);
+    }
 }

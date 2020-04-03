@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest\plugins;
 
+use luya\admin\helpers\I18n;
 use Yii;
 use luya\admin\ngrest\base\Plugin;
 use yii\db\ActiveQuery;
@@ -228,7 +229,7 @@ class SelectRelationActiveQuery extends Plugin
         
         $row = array_map(function ($fieldValue, $fieldName) use ($model) {
             if ((new $model)->isI18n($fieldName)) {
-                return $this->i18nDecodedGetActive($this->i18nFieldDecode($fieldValue));
+                return I18n::decodeFindActive($fieldValue);
             }
             return $fieldValue;
         }, $row, array_keys($row));

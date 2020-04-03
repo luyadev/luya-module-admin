@@ -4,7 +4,7 @@ namespace luya\admin\helpers;
 
 use Yii;
 use yii\helpers\Json;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 
 /**
  * I18n Encode/Decode helper method
@@ -46,7 +46,7 @@ class I18n
         if (!is_array($value) && !empty($value)) {
             try {
                 $value = Json::decode($value);
-            } catch (InvalidParamException $e) {
+            } catch (InvalidArgumentException $e) {
                 $value = [];
             }
         }

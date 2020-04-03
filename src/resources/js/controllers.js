@@ -1202,8 +1202,6 @@
 
 		$scope.searchResponse = null;
 
-		$scope.searchPromise = null;
-
 		$scope.hasUnreadNotificaton = function(item) {
 			var authIds = item.authIds;
 			var count = 0;
@@ -1219,12 +1217,9 @@
 		$scope.$watch(function() { return $scope.searchQuery}, function(n, o) {
 			if (n !== o) {
 				if (n.length > 2) {
-					$timeout.cancel($scope.searchPromise);
-					$scope.searchPromise = $timeout(function() {
-						$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
-							$scope.searchResponse = response.data;
-						});
-					}, 1000)
+					$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
+						$scope.searchResponse = response.data;
+					});
 				} else {
 	                $scope.searchResponse = null;
 				}
@@ -1290,17 +1285,29 @@
 			});
 		};
 
+		$scope.removeDevice = function(device) {
+			$http.post('admin/api-admin-user/remove-device', {'deviceId':device.id}).then(function() {
+				AdminToastService.success(i18n['js_account_update_profile_success']);
+				$scope.getProfile();
+			});
+		};
+
 		$scope.profile = {};
 		$scope.settings = {};
 		$scope.activities = {};
-
 		$scope.email = {};
+		$scope.devices = [];
+		$scope.twoFa = {};
+
+		$scope.twoFaBackupCode = false;
 
 		$scope.getProfile = function() {
 			$http.get('admin/api-admin-user/session').then(function(success) {
 				$scope.profile = success.data.user;
 				$scope.settings = success.data.settings;
 				$scope.activities = success.data.activities;
+				$scope.devices = success.data.devices;
+				$scope.twoFa = success.data.twoFa;
 			});
 		};
 
@@ -1319,6 +1326,23 @@
 				$scope.getProfile();
 			}, function(error) {
 				AdminToastService.errorArray(error.data);
+			});
+		};
+
+		$scope.registerTwoFa = function() {
+			$http.post('admin/api-admin-user/register-twofa', {secret:$scope.twoFa.secret, verification:$scope.twoFa.verification}).then(function(response) {
+				$scope.twoFaBackupCode = response.data.backupCode;
+				AdminToastService.success(i18n['js_account_update_profile_success']);
+				$scope.getProfile();
+			}, function(error) {
+				AdminToastService.errorArray(error.data);
+			});
+		};
+
+		$scope.disableTwoFa = function() {
+			$http.post('admin/api-admin-user/disable-twofa').then(function() {
+				AdminToastService.success(i18n['js_account_update_profile_success']);
+				$scope.getProfile();
 			});
 		};
 

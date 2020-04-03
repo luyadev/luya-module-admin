@@ -186,10 +186,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Run an attribute plugin in i18n context in order to ensure plugin functions.
-     * 
+     *
      * This method will return the plugin of the given attribute with the context of the
      * new value. This allows you to re-run plugin options like `markdown` on a given attribute.
-     * 
+     *
      * This is mainly used when the {{i18nAttributeFallbackValue()}} method finds an i18n value
      * and needs to re-run the configured plugin options like nl2br, markdown, conver to link object.
      *
@@ -382,9 +382,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * When enabled, the field groups in the form are by default expanded (open) or not (closed).
-     * 
+     *
      * This has no effect unless {{luya\admin\ngrest\base\NgRestModel::ngRestGroupByField()}} is configured.
-     * 
+     *
      * @return bool Whether the group field should be expanded or not (default is true).
      * @since 1.2.2.1
      */

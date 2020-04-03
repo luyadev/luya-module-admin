@@ -6,11 +6,11 @@ return [
     'remoteToken' => 'testtoken',
     'basePath' => dirname(__DIR__),
     'defaultRoute' => 'admin',
+    'language' => 'en',
     'aliases' => [
         '@runtime' => dirname(__DIR__) . '/runtime',
         '@data' => dirname(__DIR__),
     ],
-    'language' => 'en',
     'modules' => [
         'admin' => [
             'class' => 'luya\admin\Module',

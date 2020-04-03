@@ -36,8 +36,8 @@ use luya\admin\helpers\Angular;
     </div>
 </div>
 </script>
-<!-- UPDATE REDIRECT FORM -->
-<script type="text/ng-template" id="updateformredirect.html">
+<!-- Sub template of zaa-link -->
+<script type="text/ng-template" id="linkoptions.html">
 <div>
 	<div class="form-group form-side-by-side">
 		<div class="form-side form-side-label">
@@ -212,8 +212,8 @@ use luya\admin\helpers\Angular;
             <button class="folder-button folder-button--move-to" ng-click="moveFilesTo(folder.id)"><i class="material-icons">subdirectory_arrow_left</i></button>
         </div>
     </div>
-    <ul class="folders" ng-show="folder.subfolder === true && folder.toggle_open==1">
-        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:folder.id" ng-include="'reverseFolders'"></li>
+    <ul class="folders" ng-if="folder.subfolder === true && folder.toggle_open==1">
+        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in getFolderData(folder.id) track by folder.id" ng-include="'reverseFolders'"></li>
     </ul>
 </script>
 
@@ -247,7 +247,7 @@ use luya\admin\helpers\Angular;
                         </span>
                     </div>
                     <ul class="folders">
-                        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in foldersData | toArray:false | orderBy:'name' | filemanagerdirsfilter:0" ng-include="'reverseFolders'"></li>
+                        <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in getFolderData(0) track by folder.id" ng-include="'reverseFolders'"></li>
                     </ul>
                 </li>
             </ul>
@@ -357,7 +357,7 @@ use luya\admin\helpers\Angular;
                                     <span ng-if="!file.isImage"><i class="material-icons custom-color-icon">attach_file</i></span>
                                 </td>
                                 <td ng-click="toggleSelection(file)" tooltip tooltip-position="left" tooltip-text="{{file.id}}">{{file.name_original | truncateMiddle: 50}}</td>
-                                <td ng-click="toggleSelection(file)">{{file.extension}}</td>
+                                <td ng-click="openFileDetail(file)">{{file.extension}}</td>
                                 <td ng-click="openFileDetail(file)">{{file.upload_timestamp * 1000 | date:"short"}}</td>
                                 <td ng-click="openFileDetail(file)">{{file.sizeReadable}}</td>
                                 <td class="text-right">
@@ -389,11 +389,17 @@ use luya\admin\helpers\Angular;
         <div class="file-detail-view-head">
             <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
             <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
+            <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)" ng-show="fileDetail.isImage"><i class="material-icons">crop</i></button>
             <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
             <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
         </div>
 
-        <p class="lead mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
+        <p class="mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
+
+
+        <modal is-modal-hidden="isFileEditHidden" modal-title="<?= Admin::t('crop_modal_title'); ?>">
+            <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id" on-success="cropSuccess()"></image-edit>
+        </modal>
 
         <div ng-if="fileDetail.isImage" class="mt-3 text-center">
             <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">

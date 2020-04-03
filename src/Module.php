@@ -100,6 +100,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * connection you can use `./vendor/bin/luya health/mailer` command.
      */
     public $secureLogin = false;
+
+    /**
+     * @var boolean If enabled, the login screen contains a "lost password" form, where the user can enter his email adresse and recieves
+     * an email with a link where the user can enter a new password.
+     * @since 3.0.0
+     */
+    public $resetPassword = false;
+
+    /**
+     * @var integer The number of seconds the reset token link is valid.
+     * @since 3.0.0
+     */
+    public $resetPasswordExpirationTime = 900; // 15min
     
     /**
      * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
@@ -241,6 +254,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-proxy' => 'luya\admin\apis\ProxyController',
         'api-admin-config' => 'luya\admin\apis\ConfigController',
         'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
+        'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
     ];
 
     /**
@@ -342,7 +356,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'ngrest_select_no_selection', 'js_ngrest_toggler_success', 'js_filemanager_count_files_overlay', 'js_link_set_value', 'js_link_not_set', 'js_link_change_value', 'aws_changepassword_succes', 'js_account_update_profile_success', 'layout_filemanager_remove_dir_not_empty',
             'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title', 'ngrest_crud_search_text', 'js_dir_manager_rm_folder_confirm_title', 'js_pagination_page', 'js_dir_manager_rename_success',
             'js_scheduler_show_datepicker', 'js_scheduler_new_value', 'js_scheduler_time', 'js_scheduler_save', 'js_scheduler_title_upcoming', 'js_scheduler_title_completed', 'js_scheduler_table_newvalue', 'js_scheduler_table_timestamp', 'js_dir_manager_file_replace_ok',
-            'js_jsonobject_newkey',
+            'js_jsonobject_newkey', 'menu_dashboard', 'file_caption_success',
+            // cropping
+            'crop_source_image', 'crop_preview', 'crop_btn_as_copy', 'crop_btn_as_copy_hint', 'crop_btn_save_copy', 'crop_btn_save_replace','crop_size_free','crop_size_1to1','crop_size_desktop','crop_size_mobile', 'crop_success', 'crop_quality_high', 'crop_quality_medium', 'crop_quality_low'
         ];
     }
     
@@ -439,7 +455,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     {
         return (new AdminMenuBuilder($this))
             ->nodeRoute('menu_node_filemanager', 'cloud_upload', 'admin/storage/index')
-            ->node('menu_node_system', 'settings_applications')
+            ->node('menu_node_system', 'settings_system_daydream')
                 ->group('menu_group_access')
                     ->itemApi('menu_access_item_user', 'admin/user/index', 'person', 'api-admin-user')
                     ->itemApi('menu_access_item_apiuser', 'admin/api-user/index', 'device_hub', 'api-admin-apiuser')
@@ -449,7 +465,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
-                    ->itemApi('Queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
+                    ->itemApi('menu_system_queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
+                    ->itemApi('menu_system_queue_errors', 'admin/queue-log-error/index', 'bug_report', 'api-admin-queuelogerror')
                 ->group('menu_group_images')
                     ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
                     ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')

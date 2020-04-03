@@ -36,7 +36,7 @@ use luya\admin\ngrest\base\NgRestRelation;
  * ```
  *
  * @property NgRestModel $model
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -46,7 +46,7 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      * Setter methdo for ngrest model context.
-     * 
+     *
      * The model that can be lazy loaded on request instead of preloading from model.
      *
      * @param NgRestModel $model
@@ -59,7 +59,7 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      * Getter method for the model
-     * 
+     *
      * @return NgRestModel
      * @since 2.4.0
      */
@@ -235,7 +235,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      * Setter method for filters.
-     * 
+     *
      * @param array $filters
      */
     public function setFilters(array $filters)

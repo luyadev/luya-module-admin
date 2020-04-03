@@ -16,12 +16,13 @@
 		"issues" : "https://github.com/luyadev/luya-module-admin/issues"
 	},
 	"require" : {
-        "luyadev/luya-core" : "^1.0",
-        "yiisoft/yii2-imagine": "~2.1.0",
+        "luyadev/luya-core" : "^1.1",
+        "yiisoft/yii2-imagine": "^2.1",
         "yiisoft/yii2-queue" : "^2.0",
         "flowjs/flow-php-server": "^1.0",
         "sizeg/yii2-jwt": "^1.2",
-        "whichbrowser/parser": "^2.0"
+        "whichbrowser/parser": "^2.0",
+        "robthree/twofactorauth": "^1.7"
 	},
 	"require-dev" : {
         "luyadev/luya-testsuite" : "^1.0",
@@ -36,6 +37,7 @@
         "bower-asset/angular-filter" : "~0.5.15",
         "bower-asset/bowser": "^1.9",
         "bower-asset/echarts": "4.5.0",
+        "bower-asset/ui-cropper" : "^1.0",
 		"unglue/client": "^1.4.1"
 	},
 	"autoload" : {

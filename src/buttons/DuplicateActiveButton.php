@@ -15,6 +15,12 @@ use luya\admin\Module;
 class DuplicateActiveButton extends ActiveButton
 {
     /**
+     * @var boolean Whether the model should be validate while saving or not.
+     * @since 3.0.0
+     */
+    public $modelValidation = true;
+
+    /**
      * {@inheritDoc}
      */
     public function getDefaultIcon()
@@ -44,7 +50,7 @@ class DuplicateActiveButton extends ActiveButton
         $copy = new $model;
         $copy->attributes = $data;
 
-        if ($copy->save()) {
+        if ($copy->save($this->modelValidation)) {
             $this->sendReloadEvent();
             return $this->sendSuccess(Module::t('active_button_duplicate_success'));
         }

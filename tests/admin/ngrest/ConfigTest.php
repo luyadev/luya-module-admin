@@ -59,7 +59,7 @@ class ConfigTest extends AdminModelTestCase
         $this->assertSame([
             [
                 'hash' => '0b825e122b29fedf9d68ed51404e408968ede7f5',
-                'label' => 'active_button_timestamp_label',
+                'label' => 'Timestamp',
                 'icon' => 'update',
             ]
         ], $cfg->getActiveButtons());
@@ -83,6 +83,7 @@ class ConfigTest extends AdminModelTestCase
 
     public function testRelationCallOnApiWithConfig()
     {
+        $this->createAdminLangFixture();
         new NgRestModelFixture([
             'modelClass' => StubUserModel::class,
         ]);

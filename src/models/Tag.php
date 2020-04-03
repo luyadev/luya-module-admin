@@ -14,6 +14,7 @@ use yii\db\ActiveRecordInterface;
  * @property integer $id
  * @property string $name
  * @property string $translation
+ * @property string $translationName
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -110,6 +111,19 @@ final class Tag extends NgRestModel
             ['class' => DeleteTagsActiveWindow::class],
         ];
     }
+
+    /**
+     * Returns the translation, but if empty returns the name.
+     *
+     * This ensures no empty translation value is returned.
+     * 
+     * @return string
+     * @since 3.2.0
+     */
+    public function getTranslationName()
+    {
+        return empty($this->translation) ? $this->name : $this->translation;
+    }
     
     /**
      * Returns the amount of rows for the curren tag.
@@ -157,10 +171,10 @@ final class Tag extends NgRestModel
     
     /**
      * Toggle (Enable or Disable) a given tag for a Model.
-     * 
+     *
      * ```php
      * $tag = Tag::find()->where(['alias' => 'soccer'])->one();
-     * 
+     *
      * $model = MyModel::findOne(1);
      * $tag->toggleRelationByModel($model);
      * ```

@@ -78,10 +78,10 @@ class ToggleStatusTest extends NgRestTestCase
             'scheduling' => true,
         ]);
 
-        $this->assertSame('<luya-schedule value="model" title="test" model-class="luya\admin\models\User" attribute-name="test" attribute-values=\'[{"label":"status_false","value":0},{"label":"status_true","value":1}]\' primary-key-value="getRowPrimaryValue(item)"></luya-schedule>', $plugin->renderList(1, 'model'));
+        $this->assertSame('<luya-schedule value="model" title="test" model-class="luya\admin\models\User" attribute-name="test" attribute-values=\'[{"label":"No","value":0},{"label":"Yes","value":1}]\' primary-key-value="getRowPrimaryValue(item)"></luya-schedule>', $plugin->renderList(1, 'model'));
     
         $this->assertSame([
-            0 => '<div class="crud-loader-tag crud-loader-tag-for-checkbox"><luya-schedule value="model" title="test" model-class="luya\admin\models\User" attribute-name="test" attribute-values=\'[{"label":"status_false","value":0},{"label":"status_true","value":1}]\' primary-key-value="getRowPrimaryValue(data.update)" only-icon="1"></luya-schedule></div>',
+            0 => '<div class="crud-loader-tag crud-loader-tag-for-checkbox"><luya-schedule value="model" title="test" model-class="luya\admin\models\User" attribute-name="test" attribute-values=\'[{"label":"No","value":0},{"label":"Yes","value":1}]\' primary-key-value="getRowPrimaryValue(data.update)" only-icon="1"></luya-schedule></div>',
             1 => '<zaa-checkbox options="{&quot;true-value&quot;:1,&quot;false-value&quot;:0}" initvalue="0" fieldid="id" model="model" label="test" fieldname="test" i18n=""></zaa-checkbox>'
         ], $plugin->renderUpdate('id', 'model'));
     }

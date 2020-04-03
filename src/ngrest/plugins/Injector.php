@@ -3,8 +3,6 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
-use luya\helpers\Html as HtmlHelper;
-use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 
 /**
@@ -42,7 +40,6 @@ class Injector extends Plugin
     public function init()
     {
         /**
-         * @todo $this->renderContext->getModel() should return BaseObject
          * @see BaseObject::canGetProperty
          */
         if ($this->renderContext && !$this->renderContext->getModel()->hasAttribute($this->attribute)) {

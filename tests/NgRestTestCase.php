@@ -11,6 +11,7 @@ class NgRestTestCase extends BaseNgRestTestCase
         return [
             'id' => 'adminmodeltest',
             'basePath' => dirname(__DIR__),
+            'language' => 'en',
             'components' => [
                 'db' => [
                     'class' => 'yii\db\Connection',

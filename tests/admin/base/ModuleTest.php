@@ -46,7 +46,7 @@ class ModuleTest extends AdminModelTestCase
 
         // import auths
 
-        PermissionScope::run($this->app, function(PermissionScope $scope) use ($module) {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($module) {
 
             /*
             $console = new Application($this->getConfigArray());

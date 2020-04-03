@@ -4,7 +4,7 @@ use luya\helpers\Inflector;
 ?>
 <div class="form-i18n" ng-class="{'has-field-help': getFieldHelp('<?= $element['name']; ?>')}">
     <?= $helpButtonHtml; ?>
-    <label class="form-i18n-label">
+        <label class="form-i18n-label <?php if ($isRequired): ?>font-weight-bold<?php endif; ?>">
         <?= $element['alias']; ?>
     </label>
     <div class="row">

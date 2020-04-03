@@ -56,7 +56,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         $result = $button->handle($modelFr);
     
         $this->assertTrue($result['success']);
-        $this->assertEquals('active_button_togglestatus_enabled', $result['message']);
+        $this->assertEquals('3 enabled', $result['message']);
     
         $modelFr->refresh();
         $this->assertTrue($modelFr->is_default, "Francais must be default after toggle too.");
@@ -100,7 +100,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         $result = $button->handle($modelFr);
 
         $this->assertTrue($result['success']);
-        $this->assertEquals('active_button_togglestatus_enabled', $result['message']);
+        $this->assertEquals('3 enabled', $result['message']);
     
         $modelFr->refresh();
         $this->assertTrue($modelFr->is_default, "Francais must be default after toggle.");
@@ -129,13 +129,13 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
         // toggle on
         $result = $button->handle($model);
         $this->assertTrue($result['success']);
-        $this->assertEquals('active_button_togglestatus_enabled', $result['message']);
+        $this->assertEquals(' enabled', $result['message']);
         $this->assertEquals('on', $model->is_default, "Default value must be on");
     
         // toggle off
         $result = $button->handle($model);
         $this->assertTrue($result['success']);
-        $this->assertEquals('active_button_togglestatus_disabled', $result['message']);
+        $this->assertEquals(' disabled', $result['message']);
         $this->assertEquals('off', $model->is_default, "Default value must be off");
     }
     
@@ -187,7 +187,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
             'attribute' => 'foo',
         ]);
         
-        $this->assertEquals("active_button_togglestatus_label", $button->getDefaultLabel());
+        $this->assertEquals("Toggle status", $button->getDefaultLabel());
         $this->assertEquals("toggle_on", $button->getDefaultIcon());
     }
 }

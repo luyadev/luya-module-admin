@@ -46,7 +46,7 @@ function typeCastValue(value) {
 
 /* DEFINE LUYA ADMIN ANGULAR VAR */
 
-var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel"]);
+var zaa = angular.module("zaa", ["ui.router", "dnd", "angular-loading-bar", "ngFileUpload", "ngWig", "flow", "angular.filter", "720kb.datepicker", "directive.ngColorwheel", "uiCropper"]);
     
 /* CONFIG */
 
@@ -93,7 +93,10 @@ zaa.config(['$httpProvider', '$stateProvider', '$controllerProvider', '$urlMatch
             })
             .state("home", {
                 url: "",
-                templateUrl: "admin/default/dashboard"
+                templateUrl: "admin/default/dashboard",
+                controller: ['$scope', function($scope) {
+                    $scope.$parent.currentItem = {'icon':'home', 'alias': i18n['menu_dashboard']};
+                }]
             })
             // ngrest crud detail view
             .state("default.route.detail", {
@@ -351,7 +354,7 @@ zaa.factory("authInterceptor", ['$rootScope', '$q', 'AdminToastService', 'AdminD
         responseError: function (data) {
             if (data.status == 401 || data.status == 403 || data.status == 405) {
             	if (!data.config.hasOwnProperty('authToken')) {
-            		window.location = "admin/default/logout";
+            		window.location = "admin/default/logout?autologout=1";
             	}
             } else if (data.status != 422) {
             	var message = data.data.hasOwnProperty('message');

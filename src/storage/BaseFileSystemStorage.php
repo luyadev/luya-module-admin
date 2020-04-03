@@ -672,6 +672,8 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function createImage($fileId, $filterId)
     {
+        gc_collect_cycles();
+        
         $image = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();
 
         // the image exists already in the database and the file system
@@ -764,11 +766,10 @@ abstract class BaseFileSystemStorage extends Component
                 ->from('{{%admin_storage_folder}} as folder')
                 ->select(['folder.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(file.id) filesCount'])
                 ->where(['folder.is_deleted' => false])
-                ->orderBy(['name' => 'ASC'])
+                ->orderBy(['name' => SORT_ASC, 'parent_id' => SORT_ASC])
                 ->leftJoin('{{%admin_storage_file}} as file', 'folder.id=file.folder_id AND file.is_deleted = 0')
                 ->groupBy(['folder.id'])
                 ->indexBy(['id']);
-
             $this->_foldersArray = $this->getQueryCacheHelper($query, self::CACHE_KEY_FOLDER);
         }
 

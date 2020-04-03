@@ -3,23 +3,67 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.0
+## 3.2.0
+
++ [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
++ [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.
+
+## 3.1.0 (24. March 2020)
+
+> This release requires LUYA Core version 1.1 to work.
+
++ [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
++ [#470](https://github.com/luyadev/luya-module-admin/issues/470) Improved the performance of the file manager folder tree, when a lot of data is available.
++ [#472](https://github.com/luyadev/luya-module-admin/issues/472) Added new controller for website uptime tests (Route: `admin/uptime`) 
++ [#196](https://github.com/luyadev/luya-module-admin/issues/196) Enable croping for images.
+
+## 3.0.3 (5. March 2020)
+
++ [#468](https://github.com/luyadev/luya-module-admin/issues/468) Removed window on load from login (was not needed) in order to fix a bug where Safari does not render the login form.
+
+
+## 3.0.2 (28. Feburary 2020)
+
++ [#463](https://github.com/luyadev/luya-module-admin/issues/463) Fixed an issue with luya-content container height.
+
+## 3.0.1 (25. February 2020)
+
++ [#462](https://github.com/luyadev/luya-module-admin/pull/462) Deleted exception on hasOne() relation in ngrest/base/Api for working ngRestRelations with hasOne relation
++ [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
+
+## 3.0 (20. February 2020)
+
+> This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 
 ### Changed
 
++ [#429](https://github.com/luyadev/luya-module-admin/issues/429) Removed deprecated methods.
++ [#440](https://github.com/luyadev/luya-module-admin/issues/440) Show vertical scrollbars.
 + [#428](https://github.com/luyadev/luya-module-admin/issues/428) Update to latest echarts version (from 3.5 to 4.5) for backwards compatbility problems take a look at https://www.echartsjs.com/en/changelog.html#v4-0-0.
 
 ### Added
 
++ [#320](https://github.com/luyadev/luya-module-admin/issues/320) If `$resetPassword` is enabled and `mail` component is configured properly, the user can enter the email address to reset his password.
++ [#265](https://github.com/luyadev/luya-module-admin/issues/265) Session based lockout has been replaced for ip based lockout.
++ [#446](https://github.com/luyadev/luya-module-admin/issues/446) Added option to remember a device which will then auto login the user (unless logout is clicked, or an auto logout happens due to inactivity).
++ [#287](https://github.com/luyadev/luya-module-admin/issues/287) Added 2FA trough OTP for users accounts, if enabled the secure token will not be sent.
++ [#411](https://github.com/luyadev/luya-module-admin/issues/411) Queue log errors are now tracked in a seperate table (queue log error).
 + [#437](https://github.com/luyadev/luya-module-admin/pull/437) Option to display only the color dot in the Color plugin not the the selected color value.
 + [#434](https://github.com/luyadev/luya-module-admin/pull/434) New Badge plugin to generate badge views in list overview.
 + [#380](https://github.com/luyadev/luya-module-admin/issues/380) New `index` ngrest plugins in order to generate a sequential row numbering in list views.
 + [#264](https://github.com/luyadev/luya-module-admin/issues/264) Added new `readonly` option to NgRest Plugins which will render the list value in update scope.
++ [#443](https://github.com/luyadev/luya-module-admin/issues/443) Added option to disable model validation when using duplicate button.
++ [#364](https://github.com/luyadev/luya-module-admin/issues/364) Added the user agent to the user login table to display more detailed informations.
 
 ### Fixed
+
++ [#453](https://github.com/luyadev/luya-module-admin/issues/453) When visiting dashboard in mobile view, the title was not set correctly.
++ [#439](https://github.com/luyadev/luya-module-admin/issues/439) Add option to dissabled auto assign of select data after find.
 + [#441](https://github.com/luyadev/luya-module-admin/issues/441) Fixed switching of the "check_circle" text to the real icon after successful authentication
 + [#435](https://github.com/luyadev/luya-module-admin/issues/435) Problem when clicking on checkboxes when initvalue is true (active) state.
 + [#426](https://github.com/luyadev/luya-module-admin/issues/426) Fixed a bug where color plugin does not work when model is empty.
++ [#448](https://github.com/luyadev/luya-module-admin/issues/448) Added checking if the user is not a guest, for the 'view' action to work in $authOptional on Api Controllers
++ [#330](https://github.com/luyadev/luya-module-admin/issues/330) Mark required i18n fields with bold label, like none i18n fields.
 
 ## 2.4.1 (16. December 2019)
 

@@ -9,12 +9,12 @@ use luya\admin\ngrest\base\ActiveWindow;
 
 /**
  * Delete Tags Active Window.
- * 
+ *
  * An active Window which is only allowed in Tag context in order to delete a given
  * tag. It displays all the relation which will be deleted as well.
  *
  * @property Tag $model The model tag context.
- *  
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 2.3.0
  */

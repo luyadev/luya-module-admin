@@ -90,8 +90,6 @@ zaa.directive('selectOnClick', function () {
  * ```
  * <div zaa-esc="methodClosesThisDiv()" />
  * ```
- *
- * @todo Rename this directive, as it should be prefixed with zaa.
  */
 zaa.directive("zaaEsc", ['$document', function ($document) {
     return function (scope, element, attrs) {
@@ -638,7 +636,8 @@ zaa.directive("collapseContainer", [function() {
     return {
         restrict: "E",
         scope: {
-            "title" : "@"
+            "title" : "@",
+            "icon" : "@"
         },
         replace: true,
         transclude: true,
@@ -652,6 +651,7 @@ zaa.directive("collapseContainer", [function() {
             return '<div class="card" ng-class="{\'card-closed\': !visible}">'+
                 '<div class="card-header" ng-click="toggleVisibility()">'+
                     '<span class="material-icons card-toggle-indicator">keyboard_arrow_down</span>'+
+                    '<i class="material-icons" ng-show="icon">{{icon}}</i>'+
                     '<span>{{title}}</span>'+
                 '</div>'+
                 '<div class="card-body" ng-transclude></div>'+
@@ -1069,13 +1069,41 @@ zaa.directive("zaaLink", ['$filter', function ($filter) {
                 '</div>' +
                 '</div>' +
                 '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">' +
-                '<update-form-redirect data="data.model"></update-form-redirect>' +
+                '<zaa-link-options data="data.model"></zaa-link-options>' +
                 '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">' + i18n['js_link_set_value'] + '</button></form>' +
                 '</modal>' +
                 '</div></div>';
         }
     }
 }]);
+
+
+
+/**
+ * Provides all linkable object options.
+ * 
+ * + internal redirect
+ * + external redirect
+ * + to file
+ * + to email
+ * + to telephone
+ */
+zaa.directive("zaaLinkOptions", function() {
+    return {
+        restrict : 'EA',
+        scope : {
+            data : '='
+        },
+        templateUrl : 'linkoptions.html',
+        controller : ['$scope', function($scope) {
+            $scope.$watch(function() { return $scope.data }, function(n, o) {
+                if (angular.isArray(n)) {
+                    $scope.data = {};
+                }
+            });
+        }]
+    }
+});
 
 /**
  * Generates slug from a given model input.
@@ -3346,6 +3374,10 @@ zaa.directive("storageFileManager", function () {
                     });
                 };
 
+                $scope.getFolderData = function(parentFolderId) {
+                    return $filter('filemanagerdirsfilter')($scope.foldersData, parentFolderId);
+                };
+
                 $scope.getFilesForCurrentPage();
 
                 /* file detail related stuff */
@@ -3416,10 +3448,23 @@ zaa.directive("storageFileManager", function () {
                     $scope.removeFiles();
                 };
 
+                $scope.isFileEditHidden = true;
+
+                $scope.editFile = function(file) {
+                    $scope.isFileEditHidden = !$scope.isFileEditHidden;
+                };
+
+                $scope.cropSuccess = function() {
+                    $scope.isFileEditHidden = true;
+                    $scope.getFilesForCurrentPage().then(function () {
+                        AdminToastService.success(i18n['crop_success']);
+                    });
+                    $scope.openFileDetail($scope.fileDetail, true);
+                }
+
                 $scope.storeFileCaption = function (fileDetail) {
                     $http.post('admin/api-admin-storage/filemanager-update-caption', { 'id': fileDetail.id, 'captionsText': fileDetail.captionArray, 'pageId': $scope.currentPageId }).then(function (transport) {
-                        // @TODO i18n
-                        AdminToastService.success('Captions has been updated');
+                        AdminToastService.success(i18n['file_caption_success']);
                     });
                 }
 
@@ -3524,6 +3569,127 @@ zaa.directive('activeClass', function () {
             });
         }
     };
+});
+
+/**
+ * Image edit div.
+ * 
+ * @see https://github.com/CrackerakiUA/ui-cropper/wiki/Options
+ */
+zaa.directive('imageEdit', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            fileId:'=',
+            onSuccess: '&',
+        },
+        controller: ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+            // the loaded file to crop
+            $scope.file;
+            // cropper image
+            $scope.cropperImage;
+            // cropper config
+            $scope.cropperConfig = {
+                distUrl:'',
+                areaType : 'rectangle',
+                ratio : null,
+                resultImageSize : 'max',
+                resultImageFormat: 'image/jpeg',
+                resultImageQuality: 1.0,
+                areaInitSize : 200,
+                canvasScalemode : 'full-width',
+            };
+
+            $scope.changeQuality = function(value) {
+                $scope.cropperConfig.resultImageQuality = value;
+            };
+
+            $scope.isCurrentQuality = function(value) {
+                return $scope.cropperConfig.resultImageQuality == value;
+            };
+
+            $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
+                $scope.file = response.data;
+                $scope.cropperConfig.resultImageFormat = $scope.file.mime_type;
+                $scope.cropperImage = $scope.file.source;
+            });
+
+            $scope.saveAsCopy = true;
+
+            $scope.isCurrentRatio = function(value) {
+                return $scope.cropperConfig.ratio == value;
+            };
+
+            $scope.changeRatio = function(value) {
+                $scope.cropperImage = false;
+                $scope.cropperConfig.ratio = value;
+                $timeout(function() {
+                    $scope.cropperImage = $scope.file.source;
+                });
+            };
+
+            $scope.save = function() {
+                $http.post('/admin/api-admin-storage/file-crop', {
+                    distImage: $scope.cropperConfig.distUrl,
+                    fileName: $scope.file.name_new_compound,
+                    extension: $scope.file.extension,
+                    saveAsCopy: $scope.saveAsCopy,
+                    fileId: $scope.file.id
+                }).then(function(response) {
+                    $scope.onSuccess();
+                });
+            };
+        }],
+        template : `
+    <div class="row">
+        <div class="col-md-8">
+            <p class="lead">` + i18n['crop_source_image'] + `</p>
+            <div class="bg-light rounded pt-3 pl-3 pr-3 pb-2">
+            <ui-cropper
+                ng-if="cropperImage" 
+                image="cropperImage" 
+                result-image="cropperConfig.distUrl"
+                result-image-format="{{cropperConfig.resultImageFormat}}"
+                result-image-quality="cropperConfig.resultImageQuality"
+                result-image-size="cropperConfig.resultImageSize"
+                area-type="{{cropperConfig.areaType}}" 
+                area-init-size="cropperConfig.areaInitSize"
+                chargement="'Loading'"
+                canvas-scalemode="{{cropperConfig.canvasScalemode}}"
+                aspect-ratio="cropperConfig.ratio"
+            ></ui-cropper>
+            </div>
+            <ul class="list-group list-group-horizontal justify-content-center mt-3">
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio(null)}" ng-click="changeRatio(null)"><i class="material-icons">crop_free</i><br /><small>` + i18n['crop_size_free'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1')}" ng-click="changeRatio('1')"><i class="material-icons">crop_square</i><br /><small>` + i18n['crop_size_1to1'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('1.7')}" ng-click="changeRatio('1.7')"><i class="material-icons">crop_16_9</i><br /><small>` + i18n['crop_size_desktop'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentRatio('0.5')}" ng-click="changeRatio('0.5')"><i class="material-icons">crop_portrait</i><br /><small>` + i18n['crop_size_mobile'] + `</small></li>
+            </ul>
+        </div>
+        <div class="col-md-4" ng-show="cropperImage">
+            <p class="lead">` + i18n['crop_preview'] + `</p>
+            <img ng-src="{{cropperConfig.distUrl}}" ng-show="cropperConfig.distUrl" class="img-fluid border" />
+
+            <ul class="list-group list-group-horizontal justify-content-center mt-3">
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(1.0)}" ng-click="changeQuality(1.0)"><i class="material-icons">looks_one</i><br /><small>` + i18n['crop_quality_high'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(0.8)}" ng-click="changeQuality(0.8)"><i class="material-icons">looks_two</i><br /><small>` + i18n['crop_quality_medium'] + `</small></li>
+                <li class="list-group-item text-center" ng-class="{'active':isCurrentQuality(0.5)}" ng-click="changeQuality(0.5)"><i class="material-icons">looks_3</i><br /><small>` + i18n['crop_quality_low'] + `</small></li>
+            </ul>
+
+            <div class="form-check mt-3 rounded border p-2" ng-click="saveAsCopy=!saveAsCopy" ng-class="{'bg-light':saveAsCopy}">
+                <input class="form-check-input" type="checkbox" ng-model="saveAsCopy">
+                <label class="form-check-label">
+                ` + i18n['crop_btn_as_copy'] + `
+                </label>
+                <small class="text-muted">` + i18n['crop_btn_as_copy_hint'] + `</small>
+            </div>
+
+            <button type="button" ng-show="saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">`+ i18n['crop_btn_save_copy'] + `</button>
+            <button type="button" ng-show="!saveAsCopy" class="mt-3 btn btn-lg btn-icon btn-save" ng-click="save()">`+ i18n['crop_btn_save_replace'] + `</button>
+        </div>
+    </div>
+        `
+    }
 });
 
 /**

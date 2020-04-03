@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * ```
  *
  * The above example will return all
- * 
+ *
  * @property string $table_name
  * @property integer $pk_id
  * @property integer $tag_id
@@ -36,7 +36,7 @@ final class TagRelation extends ActiveRecord
     public function init()
     {
         parent::init();
-        $this->on(self::EVENT_AFTER_VALIDATE, function() {
+        $this->on(self::EVENT_AFTER_VALIDATE, function () {
             $this->table_name = TaggableTrait::cleanBaseTableName($this->table_name);
         });
     }
@@ -110,7 +110,7 @@ final class TagRelation extends ActiveRecord
      * Remove all relations of the table and add new relations based on tagIds array and pkId.
      *
      * > compared to {{batchInsertRelations}} this will also remove all existing relation entries for this table.
-     * 
+     *
      * @param array $tagIds
      * @param string $tableName
      * @param integer $pkId

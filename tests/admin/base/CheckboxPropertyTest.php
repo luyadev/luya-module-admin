@@ -13,7 +13,7 @@ class CheckboxPropertyTest extends AdminTestCase
             'value' => 1,
         ]);
 
-	$this->assertSame(0, $prop->defaultValue());
+        $this->assertSame(0, $prop->defaultValue());
 
         $this->assertSame(1, $prop->getAdminValue());
         $this->assertTrue($prop->getValue());

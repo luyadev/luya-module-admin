@@ -2,10 +2,15 @@
 
 namespace admintests\admin\helpers;
 
+use admintests\AdminModelTestCase;
 use admintests\AdminTestCase;
+use InvalidArgumentException;
 use luya\admin\helpers\Storage;
+use luya\admin\models\StorageFile;
+use luya\admin\models\StorageImage;
+use luya\testsuite\fixtures\NgRestModelFixture;
 
-class StorageTest extends AdminTestCase
+class StorageTest extends AdminModelTestCase
 {
     /*
     public function testSuccessUploadFromFiles()
@@ -37,5 +42,28 @@ class StorageTest extends AdminTestCase
     public function testUploadErrorMessages()
     {
         $this->assertSame('The uploaded file exceeds the upload_max_filesize directive in php.ini.', Storage::getUploadErrorMessage(UPLOAD_ERR_INI_SIZE));
+    }
+
+    public function testRefreshFile()
+    {
+        new NgRestModelFixture([
+            'modelClass' => StorageImage::class,
+        ]);
+        new NgRestModelFixture([
+            'modelClass' => StorageFile::class,
+        ]);
+        $this->expectException(InvalidArgumentException::class);
+        Storage::refreshFile(1, 'path/to/file.png');
+    }
+
+    public function testReplaceFileFromContent()
+    {
+        $this->assertFalse(Storage::replaceFileFromContent('invalid', 'invalid.png'));
+    }
+
+    public function testUploadFromContent()
+    {
+        $this->expectException('luya\Exception');
+        Storage::uploadFromContent('invalid', 'invalid.png');
     }
 }

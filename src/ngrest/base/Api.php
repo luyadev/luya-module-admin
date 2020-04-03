@@ -460,7 +460,7 @@ class Api extends RestActiveController
     {
         $condition = array_combine($keys, $values);
         // If an api user the internal find methods are used to find items.
-        if (Yii::$app->adminuser->identity->is_api_user) {
+        if (!Yii::$app->adminuser->isGuest && Yii::$app->adminuser->identity->is_api_user) {
             // api calls will always use the "original" find method which is based on yii2 guide the best approach to hide given data by default.
             $findModelInstance = $modelClass::find();
         } else {
@@ -631,10 +631,6 @@ class Api extends RestActiveController
 
         $find = $relation->getDataProvider();
         
-        if ($find instanceof ActiveQueryInterface && !$find->multiple) {
-            throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
-        }
-        
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
             $this->appendPoolWhereCondition($find);
@@ -761,6 +757,11 @@ class Api extends RestActiveController
         }
         
         $query = $this->prepareListQuery()->select($fields);
+
+        if (!in_array($type, ['xlsx', 'csv'])) {
+            throw new InvalidConfigException("Invalid export type");
+        }
+
         $tempData = ExportHelper::$type($query, $fields, (bool) $header);
         
         $key = uniqid('ngrestexport', true);

@@ -92,7 +92,6 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 
     public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
     {
-
         $lang = new NgRestModelFixture([
             'modelClass' => Lang::class,
             'fixtureData' => [
@@ -132,7 +131,6 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 
         $fixture->cleanup();
         $lang->cleanup();
-        
     }
 }
 
@@ -147,7 +145,6 @@ class I18nMarkdownTagTest extends User
 
     public function ngRestAttributeTypes()
     {
-
         $at = parent::ngRestAttributeTypes();
         $at['firstname'] = ['textarea', 'markdown' => true];
         $at['lastname'] = ['textarea', 'markdown' => true];

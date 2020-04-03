@@ -15,6 +15,7 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\helpers\Html;
 use luya\helpers\Url;
 use WhichBrowser\Parser;
 
@@ -44,6 +45,11 @@ use WhichBrowser\Parser;
  * @property integer $login_attempt
  * @property integer $login_attempt_lock_expiration
  * @property boolean $is_request_logger_enabled
+ * @property int|null $login_2fa_enabled {@since 3.0.0}
+ * @property string|null $login_2fa_secret {@since 3.0.0}
+ * @property string|null $login_2fa_backup_key {@since 3.0.0}
+ * @property string|null $password_verification_token {@since 3.0.0}
+ * @property int|null $password_verification_token_timestamp {@since 3.0.0}
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -225,15 +231,17 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email', 'password'], 'required', 'on' => 'login'],
             [['secure_token'], 'required', 'on' => 'securelayer'],
             [['title', 'firstname', 'lastname', 'email', 'password'], 'required', 'on' => 'default'],
+            [['firstname', 'lastname', 'password', 'password_salt', 'cookie_token', 'api_allowed_ips', 'login_2fa_secret', 'login_2fa_backup_key'], 'string', 'max' => 255],
             [['email'], 'email'],
             [['email'], 'unique', 'except' => ['login']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
-            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled'], 'integer'],
-            [['email_verification_token'], 'string', 'length' => 40],
+            [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled', 'password_verification_token', 'password_verification_token_timestamp'], 'integer'],
+            [['email_verification_token', 'secure_token', 'password_verification_token'], 'string', 'length' => 40],
             [['password'], StrengthValidator::class, 'when' => function () {
                 return Module::getInstance()->strongPasswordPolicy;
             }, 'on' => ['restcreate', 'restupdate', 'default']],
+            [['login_2fa_enabled'], 'integer'],
         ];
     }
 
@@ -316,12 +324,13 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $this->password = $newpass;
 
         if ($this->encodePassword()) {
-            if ($this->save()) {
+            if ($this->save(true, ['password', 'password_salt'])) {
                 return true;
             }
         }
 
-        return $this->addError('newpass', 'Error while saving new password.');
+        $this->addError('newpass', Module::t('user_change_password_error'));
+        return false;
     }
     
     /**
@@ -396,10 +405,21 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     }
 
     /**
+     * Devices Active Query
+     *
+     * @return UserDevice[]
+     * @since 3.0.0
+     */
+    public function getDevices()
+    {
+        return $this->hasMany(UserDevice::class, ['user_id' => 'id']);
+    }
+
+    /**
      * Render user token based email:
-     * 
+     *
      * This is currently used for secure token and email validation tokens.
-     * 
+     *
      * @see https://mjml.io/try-it-live/Hk9rJe68B
      * @since 2.2.0
      */
@@ -409,6 +429,18 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         return Yii::$app->view->render('@admin/views/mail/_token.php', [
             'url' => Url::domain(Url::base(true)),
             'token' => $token,
+            'browser' => $result->toString(),
+            'title' => $title,
+            'text' => $text,
+        ]);
+    }
+
+    public static function generateResetEmail($url, $title, $text)
+    {
+        $result = new Parser(Yii::$app->request->userAgent);
+        return Yii::$app->view->render('@admin/views/mail/_reset.php', [
+            'url' => Url::domain(Url::base(true)),
+            'token' => Html::a(Module::t('reset_email_btn_label'), $url),
             'browser' => $result->toString(),
             'title' => $title,
             'text' => $text,
@@ -517,6 +549,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             $user->updateAttributes(['api_last_activity' => time()]);
         }
         
+        // this ensures the user cookie won't be destroyed.
+        Yii::$app->adminuser->enableAutoLogin = false;
         return $user;
     }
 
@@ -531,16 +565,45 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * @inheritdoc
      */
+    /*
     public function getAuthToken()
     {
         return $this->auth_token;
     }
+    */
 
     /**
      * @inheritdoc
      */
     public function getAuthKey()
     {
+        $userAgent = Yii::$app->request->userAgent;
+
+        // no user agent, dissable auto login
+        if (empty($userAgent)) {
+            return false;
+        }
+
+        $checksum = UserDevice::generateUserAgentChecksum($userAgent);
+
+        $model = UserDevice::find()->where(['user_id' => $this->id, 'user_agent_checksum' => $checksum])->one();
+
+        if ($model) {
+            // update last update timestamp and return existing auth key
+            $model->touch('updated_at');
+            return $model->auth_key;
+        }
+
+        $model = new UserDevice();
+        $model->user_id = $this->id;
+        $model->user_agent = $userAgent;
+        $model->user_agent_checksum = $checksum;
+        $model->auth_key = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomKey() . $checksum);
+
+        if ($model->save()) {
+            return $model->auth_key;
+        }
+
         return false;
     }
 
@@ -549,6 +612,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function validateAuthKey($authKey)
     {
-        return false;
+        return UserDevice::find()->where(['auth_key' => $authKey, 'user_id' => $this->id])->exists();
     }
 }

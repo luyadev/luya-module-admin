@@ -66,12 +66,7 @@
 
 .mainnav-modules {
     flex: 1 0;
-    -ms-overflow-style: none; // IE 10+
     overflow-y: auto;
-    //overflow: -moz-scrollbars-none; // Firefox
-    &::-webkit-scrollbar {
-        display: none; // Safari and Chrome
-    }
 }
 
 .mainnav-static {

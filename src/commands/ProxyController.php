@@ -60,6 +60,14 @@ use luya\console\Command;
  *
  * would only sync tables which starts with `app_*` like `app_news`, `app_articles`.
  *
+ * In order to ignore certain tables its possible to negate input values with `!`:
+ *
+ * ```sh
+ * ./vendor/bin/luya admin/proxy -t='!crawler*'
+ * ```
+ *
+ * The above exmaple would exclude all tables starting *crawler*.
+ *
  * In order to clear the proxy config run:
  *
  * ```sh

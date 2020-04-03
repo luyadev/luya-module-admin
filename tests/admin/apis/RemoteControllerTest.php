@@ -19,7 +19,7 @@ class RemoteControllerTest extends AdminModelTestCase
 
     public function testIndexContent()
     {
-        $this->createUserOnlineFixture();
+        $this->createAdminUserOnlineFixture();
         $this->app->remoteToken = 'foobar';
         $ctrl = new RemoteController('ctrl', $this->app->getModule('admin'));
         $r = $ctrl->actionIndex(sha1('foobar'));
