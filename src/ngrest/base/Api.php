@@ -610,7 +610,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Run Relation Call
+     * Get Relation Data
      *
      * @param mixed $arrayIndex
      * @param mixed $id
@@ -807,7 +807,7 @@ class Api extends RestActiveController
     }
 
     /**
-     * Trigger Active Button
+     * Active Button
      *
      * @param string $hash The hash from the class name.
      * @param string|integer $id

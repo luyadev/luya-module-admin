@@ -17,6 +17,7 @@ use yii\web\Response;
 use cebe\openapi\spec\Info;
 use cebe\openapi\spec\OpenApi;
 use cebe\openapi\Writer;
+use luya\admin\ngrest\base\Api;
 
 /**
  * Remove API, allows to collect system data with a valid $token.
@@ -77,10 +78,24 @@ class RemoteController extends Controller
         }
 
         // add actions (routes) from controller map which are not covered by an urlRule from above
+         // ignore those ngrest api actions as they are not used in api context and only available for admin
+        $ignoreActions = [
+            'active-window-callback',
+            'active-window-render',
+            'unlock',
+            'toggle-notification',
+            'export',
+            'permissions',
+            'services',
+            'options',
+        ];
         foreach ($this->module->controllerMap as $key => $map) {
             $controller = Yii::createObject($map['class'], [$key, $map['module']]);
             $route = 'admin/'.$key;
             foreach (ObjectHelper::getActions($controller) as $actionName) {
+                if ($controller instanceof Api && in_array($actionName, $ignoreActions)) {
+                    continue;
+                }
                 $absoluteRoute = $route.'/'.$actionName;
                 if (!in_array($absoluteRoute, $routesProcessed)) {
                     $parser = new ActionRouteParser($controller, $actionName, $absoluteRoute, $route);

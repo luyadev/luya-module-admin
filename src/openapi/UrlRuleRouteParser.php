@@ -79,11 +79,13 @@ class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
         foreach ($this->rules as $urlRule) {
             $verbName = current($urlRule->verb);
             $params = [];
+            $registeredParams = [];
             preg_match_all('/{+(.*?)}/', $this->getPath(), $matches);
 
 
             if (isset($matches[1])) {
                 foreach ($matches[1] as $param) {
+                    $registeredParams[] = $param;
                     $params[] = new Parameter([
                         'name' => $param,
                         'in' => 'path',
@@ -99,12 +101,17 @@ class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
 
             $actionDoc = new DocReaderAction($this->getController(), $this->getActionNameFromRoute($urlRule->route));
 
+
             if (!$actionDoc->getActionObject()) {
                 // this action does not exists
                 continue;
             }
 
-            $params = array_merge($params, $actionDoc->getParameters());
+            foreach ($actionDoc->getParameters() as $param) {
+                if (!in_array($param->name, $registeredParams)) {
+                    $params[] = $param;
+                }
+            }
 
             $this->_coveredRoutes[] = $urlRule->route;
 
