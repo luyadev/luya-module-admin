@@ -18,6 +18,7 @@ use cebe\openapi\spec\Info;
 use cebe\openapi\spec\OpenApi;
 use cebe\openapi\Writer;
 use luya\admin\ngrest\base\Api;
+use luya\admin\openapi\Generator;
 
 /**
  * Remove API, allows to collect system data with a valid $token.
@@ -49,62 +50,8 @@ class RemoteController extends Controller
      */
     public function actionOpenapi()
     {
-        $rules = [];
-        // get all rules from the urlManager
-        foreach (Yii::$app->urlManager->rules as $rule) {
-            if ($rule instanceof UrlRule) {
-                $reflection = new ReflectionClass($rule);
-                $property = $reflection->getProperty('rules');
-                $property->setAccessible(true);
-                $array = $property->getValue($rule);
-                foreach ($array as $rule => $config) {
-                    $rules[$rule] = ArrayHelper::index($config, null, 'name');
-                }
-            }
-        }
+        $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);
 
-        $paths = [];
-        $routesProcessed = [];
-        // generate all paths from the urlManager rules
-        foreach ($rules as $route => $items) {
-            foreach ($items as $rulePattern => $ruleConfig) {
-                $parser = new UrlRuleRouteParser($rulePattern, $route, $ruleConfig);
-                if ($parser->getIsValid()) {
-                    $paths[$parser->getPath()] = $parser->getPathItem();
-                    $routesProcessed = array_merge($routesProcessed, $parser->getAllIncludedRoutes());
-                }
-                unset($parser);
-            }
-        }
-
-        // add actions (routes) from controller map which are not covered by an urlRule from above
-         // ignore those ngrest api actions as they are not used in api context and only available for admin
-        $ignoreActions = [
-            'active-window-callback',
-            'active-window-render',
-            'unlock',
-            'toggle-notification',
-            'export',
-            'permissions',
-            'services',
-            'options',
-        ];
-        foreach ($this->module->controllerMap as $key => $map) {
-            $controller = Yii::createObject($map['class'], [$key, $map['module']]);
-            $route = 'admin/'.$key;
-            foreach (ObjectHelper::getActions($controller) as $actionName) {
-                if ($controller instanceof Api && in_array($actionName, $ignoreActions)) {
-                    continue;
-                }
-                $absoluteRoute = $route.'/'.$actionName;
-                if (!in_array($absoluteRoute, $routesProcessed)) {
-                    $parser = new ActionRouteParser($controller, $actionName, $absoluteRoute, $route);
-                    $paths[$parser->getPath()] = $parser->getPathItem();
-                }
-            }
-        }
-
-        ksort($paths);
 
         // generate the openapi file
         $definition = [
@@ -113,14 +60,14 @@ class RemoteController extends Controller
                 'title' => Yii::$app->siteTitle,
                 'version' => '1.0.0',
             ]),
-            'paths' => $paths,
+            'paths' => $generator->getPaths(),
         ];
-
-        Yii::$app->response->format = Response::FORMAT_RAW;
 
         // write the json file
         $openapi = new OpenApi($definition);
-        return Writer::writeToJson($openapi);
+
+        // returns an array with the openapi specs
+        return $openapi->getSerializableData();
     }
 
     /**

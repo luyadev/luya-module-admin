@@ -9,4 +9,8 @@ interface RouteParserInterface
     public function getPathItem(): PathItem;
 
     public function getPath(): string;
+
+    public function isValid(): bool;
+
+    public function routes(): array;
 }

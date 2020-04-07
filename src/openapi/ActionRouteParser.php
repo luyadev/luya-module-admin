@@ -8,62 +8,51 @@ use cebe\openapi\spec\Responses;
 use luya\admin\openapi\phpdoc\DocReaderAction;
 use luya\admin\openapi\phpdoc\DocReaderController;
 use luya\helpers\Inflector;
-use ReflectionClass;
 use yii\base\Controller;
-use yii\base\InlineAction;
 
-class ActionRouteParser extends BaseParser implements RouteParserInterface
+class ActionRouteParser extends BasePathParser
 {
+    protected $actionDoc;
     protected $controllerDoc;
     protected $absoluteRoute;
-    protected $route;
-    protected $actionObject;
-    protected $controller;
-    protected $actionName;
+    protected $controllerMapRoute;
 
-    public function __construct(Controller $controller, $actionName, $absoluteRoute, $route)
+    public function __construct(Controller $controller, $actionName, $absoluteRoute, $controllerMapRoute)
     {
-        $this->controller = $controller;
         $this->controllerDoc = new DocReaderController($controller);
+        $this->actionDoc = new DocReaderAction($controller, $actionName);
         $this->absoluteRoute = $absoluteRoute;
-        $this->route = $route;
-        $this->actionName = $actionName;
-
-        $this->actionObject = $controller->createAction($actionName);
-
-        if ($this->actionObject instanceof InlineAction) {
-            // read data from: actionMethodName()
-            $reflector = new ReflectionClass(get_class($controller));
-            $this->reflection = $reflector->getMethod('action'.Inflector::id2camel($actionName));
-        } elseif ($this->actionObject) {
-            $this->reflection = new ReflectionClass(get_class($this->actionObject));
-        }
+        $this->controllerMapRoute = $controllerMapRoute;
     }
 
     public function getPathItem(): PathItem
     {
-        $actionDoc = new DocReaderAction($this->controller, $this->actionName);
-
-        $params = $actionDoc->getParameters();
-
-        $config = [
+        return new PathItem([
             'summary' => $this->controllerDoc->getSummary(),
             'description' => $this->controllerDoc->getDescription(),
             'get' => new Operation([
-                'tags' => [$this->routeToTag($this->route)],
-                'summary' => $actionDoc->getSummary(),
-                'description' => $actionDoc->getDescription(),
+                'tags' => [$this->routeToTag($this->controllerMapRoute)],
+                'summary' => $this->actionDoc->getSummary(),
+                'description' => $this->actionDoc->getDescription(),
                 'operationId' => Inflector::slug('get' . '-' . $this->getPath()),
-                'parameters' => $params,
-                'responses' => new Responses($actionDoc->getResponses())
+                'parameters' => $this->actionDoc->getParameters(),
+                'responses' => new Responses($this->actionDoc->getResponses())
             ])
-        ];
-
-        return new PathItem($config);
+        ]);
     }
 
     public function getPath(): string
     {
         return '/'.$this->absoluteRoute;
+    }
+
+    public function routes(): array
+    {
+        return [$this->controllerMapRoute];
+    }
+
+    public function isValid(): bool
+    {
+        return true;
     }
 }

@@ -4,7 +4,11 @@ namespace luya\admin\openapi;
 
 use luya\helpers\Inflector;
 
-abstract class BaseParser
+/**
+ * AbsoluteRoute: admin/user/index or admin/api-cms-admin/create
+ * controllerMapRoute: admin/api-cms-admin or admin/api-cms-nav
+ */
+abstract class BasePathParser implements RouteParserInterface
 {
     public function routeToTag($route)
     {

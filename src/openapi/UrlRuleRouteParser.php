@@ -13,31 +13,26 @@ use luya\helpers\Inflector;
 use Yii;
 use yii\web\UrlRule;
 
-class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
+class UrlRuleRouteParser extends BasePathParser
 {
-    protected $rulePattern;
-    protected $route;
+    protected $patternRoute;
+    protected $controllerMapRoute;
     protected $rules;
-
+    protected $controller;
     protected $controllerDoc;
 
-    public function __construct($rulePattern, $route, array $rules)
+    public function __construct($patternRoute, $controllerMapRoute, array $rules)
     {
-        $this->rulePattern = $rulePattern;
-        $this->route = $route;
+        $this->patternRoute = $patternRoute;
+        $this->controllerMapRoute = $controllerMapRoute;
         $this->rules = $rules;
-        $this->controllerDoc = new DocReaderController($this->getController());
+        $this->controller = Yii::$app->createController($controllerMapRoute)[0];
+        $this->controllerDoc = new DocReaderController($this->controller);
     }
 
     public function getPath() : string
     {
-        // <id:\d[\d,]*>
-        return '/'.str_replace(['<', ':\d[\d,]*>'], ['{', '}'], $this->rulePattern);
-    }
-
-    public function getController()
-    {
-        return Yii::$app->createController($this->route)[0];
+        return '/'.str_replace(['<', ':\d[\d,]*>'], ['{', '}'], $this->patternRoute);
     }
 
     public function getPathItem(): PathItem
@@ -54,7 +49,7 @@ class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
         return new PathItem($config);
     }
 
-    public function getIsValid()
+    public function isValid(): bool
     {
         return !empty($this->getOperations());
     }
@@ -74,65 +69,71 @@ class UrlRuleRouteParser extends BaseParser implements RouteParserInterface
         if ($this->_operations !== null) {
             return $this->_operations;
         }
+        
         $operations = [];
+
         /** @var UrlRule $urlRule */
         foreach ($this->rules as $urlRule) {
             $verbName = current($urlRule->verb);
-            $params = [];
-            $registeredParams = [];
-            preg_match_all('/{+(.*?)}/', $this->getPath(), $matches);
+            $operation = $this->getOperation($urlRule, $verbName);
 
-
-            if (isset($matches[1])) {
-                foreach ($matches[1] as $param) {
-                    $registeredParams[] = $param;
-                    $params[] = new Parameter([
-                        'name' => $param,
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => new Schema(['type' => 'string'])
-                    ]);
-                }
+            if ($operation) {
+                $operations[$verbName] = $operation;
+                $this->_coveredRoutes[] = $urlRule->route;
             }
-
-            if (empty($urlRule->verb)) {
-                continue;
-            }
-
-            $actionDoc = new DocReaderAction($this->getController(), $this->getActionNameFromRoute($urlRule->route));
-
-
-            if (!$actionDoc->getActionObject()) {
-                // this action does not exists
-                continue;
-            }
-
-            foreach ($actionDoc->getParameters() as $param) {
-                if (!in_array($param->name, $registeredParams)) {
-                    $params[] = $param;
-                }
-            }
-
-            $this->_coveredRoutes[] = $urlRule->route;
-
-            $operations[$verbName] = new Operation([
-                'tags' => [$this->routeToTag($this->route)],
-                'summary' => $actionDoc->getSummary(),
-                'description' => $actionDoc->getDescription(),
-                'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
-                'parameters' => $params,
-                'responses' => new Responses($actionDoc->getResponses())
-            ]);
-
-            unset($actionDoc);
         }
 
         $this->_operations = $operations;
+
         return $operations;
     }
 
-    public function getAllIncludedRoutes()
+    public function routes(): array
     {
         return $this->_coveredRoutes;
+    }
+
+    protected function getOperation(UrlRule $urlRule, $verbName)
+    {
+        if (empty($urlRule->verb)) {
+            return false;
+        }
+
+        $actionDoc = new DocReaderAction($this->controller, $this->getActionNameFromRoute($urlRule->route));
+
+        if (!$actionDoc->getActionObject()) {
+            return false;
+        }
+
+        $params = [];
+        $registeredParams = [];
+        preg_match_all('/{+(.*?)}/', $this->getPath(), $matches);
+
+        if (isset($matches[1])) {
+            foreach ($matches[1] as $param) {
+                $registeredParams[] = $param;
+                $params[] = new Parameter([
+                    'name' => $param,
+                    'in' => 'path',
+                    'required' => true,
+                    'schema' => new Schema(['type' => 'string'])
+                ]);
+            }
+        }
+
+        foreach ($actionDoc->getParameters() as $param) {
+            if (!in_array($param->name, $registeredParams)) {
+                $params[] = $param;
+            }
+        }
+
+        return new Operation([
+            'tags' => [$this->routeToTag($this->controllerMapRoute)],
+            'summary' => $actionDoc->getSummary(),
+            'description' => $actionDoc->getDescription(),
+            'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
+            'parameters' => $params,
+            'responses' => new Responses($actionDoc->getResponses())
+        ]);
     }
 }

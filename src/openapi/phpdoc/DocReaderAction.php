@@ -10,36 +10,48 @@ use yii\base\InlineAction;
 class DocReaderAction extends BaseDocReader
 {
     protected $controller;
-
-    protected $reflection;
  
-    protected $actionObject;
+    protected $actioName;
 
     public function __construct(Controller $controller, $actionName)
     {
         $this->controller = $controller;
-        $this->actionObject = $controller->createAction($actionName);
-        if ($this->actionObject instanceof InlineAction) {
-            // read data from: actionMethodName()
-            $reflector = new ReflectionClass(get_class($controller));
-            $this->reflection = $reflector->getMethod('action'.Inflector::id2camel($actionName));
-        } elseif ($this->actionObject) {
-            $this->reflection = new ReflectionClass(get_class($this->actionObject));
-        }
+        $this->actioName = $actionName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getControllerObject()
     {
         return $this->controller;
     }
 
+    private $_actionObject;
+    /**
+     * {@inheritDoc}
+     */
     public function getActionObject()
     {
-        return $this->actionObject;
+        if ($this->_actionObject === null) {
+            $this->_actionObject = $this->getControllerObject()->createAction($this->actioName);
+        }
+
+        return $this->_actionObject;
     }
 
+    private $_reflection;
+    /**
+     * {@inheritDoc}
+     */
     public function getReflection()
     {
-        return $this->reflection;
+        if ($this->getActionObject() instanceof InlineAction) {
+            // read data from: actionMethodName()
+            $reflector = new ReflectionClass(get_class($this->getControllerObject()));
+            return $reflector->getMethod('action'.Inflector::id2camel($this->actioName));
+        }
+
+        return new ReflectionClass(get_class($this->getActionObject()));
     }
 }

@@ -17,16 +17,25 @@ class DocReaderController extends BaseDocReader
         $this->reflection = new ReflectionClass(get_class($controller));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getControllerObject()
     {
         return $this->controller;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getActionObject()
     {
         return $this->controller;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getReflection()
     {
         return $this->reflection;
