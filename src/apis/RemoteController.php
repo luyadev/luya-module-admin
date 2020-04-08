@@ -19,6 +19,7 @@ use cebe\openapi\spec\OpenApi;
 use cebe\openapi\Writer;
 use luya\admin\ngrest\base\Api;
 use luya\admin\openapi\Generator;
+use luya\base\DynamicModel as Holz;
 
 /**
  * Remove API, allows to collect system data with a valid $token.

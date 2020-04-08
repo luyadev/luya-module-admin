@@ -29,4 +29,9 @@ class PhpDocReflection
     {
         return $this->reflection->getDocComment();
     }
+
+    public function getFileName()
+    {
+        return $this->reflection->getFileName();
+    }
 }

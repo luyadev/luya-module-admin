@@ -35,12 +35,7 @@ class PhpDocType
             'integer',
             'float',
             'double',
-            'array',
-            'object',
-            'callable',
-            'resource',
             'mixed',
-            'iterable',
         ]);
     }
 
@@ -70,10 +65,22 @@ class PhpDocType
         ]);
     }
 
-    public function getIsClass()
+    public function getClassName()
     {
+        if ($this->getIsScalar() || $this->getIsEmpty()) {
+            return false;
+        }
+
         if (class_exists($this->name)) {
-            return true;
+            return $this->name;
+        }
+
+        // get the 
+
+        $ensureClassName = $this->phpDocParser->ensureClassName($this->name);
+
+        if ($ensureClassName && class_exists($ensureClassName)) {
+            return $ensureClassName;
         }
 
         return false;

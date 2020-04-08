@@ -134,6 +134,7 @@ abstract class BaseSpecs implements SpecInterface
 
     protected function modelContextToResponse($contextModel, $isArray = false)
     {
+
         $object = Yii::createObject($contextModel);
 
         $schema = false;
@@ -206,9 +207,10 @@ abstract class BaseSpecs implements SpecInterface
             return [];
         }
 
+        $className = $type->getClassName();
         // handle php object type
-        if ($type->getIsClass()) {
-            return $this->modelContextToResponse($type->getNoramlizeName(), $type->getIsArray());
+        if ($className) {
+            return $this->modelContextToResponse($className, $type->getIsArray());
         } 
 
         // handle type array

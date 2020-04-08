@@ -3,6 +3,7 @@
 namespace luya\admin\openapi\phpdoc;
 
 use luya\helpers\StringHelper;
+use PHP_Token_USE;
 use Reflector;
 
 /**
@@ -157,5 +158,70 @@ class PhpDocParser
         }
 
         return implode(PHP_EOL, $content);
+    }
+
+    /**
+     * 
+     * 
+     * + luya\cms\models\NavContainer
+     * + luya\cms\models\NavItemModule
+     * + luya\base\DynamicModel as FooBar
+     * 
+     * @return array
+     */
+    public function getUseClasses()
+    {
+        $file = $this->reflection->getFileName();
+        $tokens = token_get_all(file_get_contents($file));
+
+        $parts = [];
+        $startCapture = 0;
+        foreach ($tokens as $token) {
+            if (is_array($token)) {
+
+                if ($token[0] == T_DOC_COMMENT) {
+                    break;
+                }
+                
+                if ($token[0] == T_USE) {
+                    // use starts
+                    $startCapture = $startCapture + 1;
+                }
+
+                if ($startCapture > 0) {
+                    $parts[$startCapture][] = $token[1];
+                }
+            }
+        }
+
+        foreach ($parts as $k => $part) {
+            $parts[$k] = str_replace("use ", "", trim(implode("", $part)));
+        }
+
+        return $parts;
+    }
+
+    public function ensureClassName($className)
+    {
+        $className = strtolower($className);
+        foreach ($this->getUseClasses() as $name) {
+            if (StringHelper::contains(' as ', strtolower($name))) {
+                $items = explode(" as ", $name);
+                $aliasName = end($items);
+                if (trim($aliasName) == $className) {
+                    return $name;
+                }
+            } else {
+                $items = explode("\\", strtolower($name));
+
+                $lastItem = end($items);
+
+                if (trim($lastItem) == $className) {
+                    return $name;
+                }
+            }
+        }
+
+        return false;
     }
 }
