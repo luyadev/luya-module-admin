@@ -1,11 +1,11 @@
 <?php
 
-namespace luya\admin\openapi\phpdoc;
+namespace luya\admin\openapi\specs;
 
 use ReflectionClass;
 use yii\base\Controller;
 
-class DocReaderController extends BaseDocReader
+class ControllerSpecs extends BaseSpecs
 {
     protected $reflection;
 

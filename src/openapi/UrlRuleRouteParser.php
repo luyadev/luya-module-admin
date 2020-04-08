@@ -7,19 +7,29 @@ use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
-use luya\admin\openapi\phpdoc\DocReaderAction;
-use luya\admin\openapi\phpdoc\DocReaderController;
+use luya\admin\openapi\specs\ControllerActionSpecs;
+use luya\admin\openapi\specs\ControllerSpecs;
 use luya\helpers\Inflector;
 use Yii;
 use yii\web\UrlRule;
 
+/**
+ * Generate a Path for a $rules array containg UrlRule objects.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class UrlRuleRouteParser extends BasePathParser
 {
     protected $patternRoute;
     protected $controllerMapRoute;
     protected $rules;
     protected $controller;
-    protected $controllerDoc;
+
+    /**
+     * @var ControllerSpecs
+     */
+    protected $controllerSpecs;
 
     public function __construct($patternRoute, $controllerMapRoute, array $rules)
     {
@@ -27,19 +37,25 @@ class UrlRuleRouteParser extends BasePathParser
         $this->controllerMapRoute = $controllerMapRoute;
         $this->rules = $rules;
         $this->controller = Yii::$app->createController($controllerMapRoute)[0];
-        $this->controllerDoc = new DocReaderController($this->controller);
+        $this->controllerSpecs = new ControllerSpecs($this->controller);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getPath() : string
     {
         return '/'.str_replace(['<', ':\d[\d,]*>'], ['{', '}'], $this->patternRoute);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getPathItem(): PathItem
     {
         $config = [
-            'summary' => $this->controllerDoc->getSummary(),
-            'description' => $this->controllerDoc->getDescription(),
+            'summary' => $this->controllerSpecs->getSummary(),
+            'description' => $this->controllerSpecs->getDescription(),
         ];
 
         foreach ($this->getOperations() as $verb => $operation) {
@@ -49,9 +65,20 @@ class UrlRuleRouteParser extends BasePathParser
         return new PathItem($config);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isValid(): bool
     {
         return !empty($this->getOperations());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function routes(): array
+    {
+        return $this->_coveredRoutes;
     }
 
     public function getActionNameFromRoute($route)
@@ -88,20 +115,15 @@ class UrlRuleRouteParser extends BasePathParser
         return $operations;
     }
 
-    public function routes(): array
-    {
-        return $this->_coveredRoutes;
-    }
-
     protected function getOperation(UrlRule $urlRule, $verbName)
     {
         if (empty($urlRule->verb)) {
             return false;
         }
 
-        $actionDoc = new DocReaderAction($this->controller, $this->getActionNameFromRoute($urlRule->route));
+        $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route));
 
-        if (!$actionDoc->getActionObject()) {
+        if (!$actionSpecs->getActionObject()) {
             return false;
         }
 
@@ -121,19 +143,19 @@ class UrlRuleRouteParser extends BasePathParser
             }
         }
 
-        foreach ($actionDoc->getParameters() as $param) {
+        foreach ($actionSpecs->getParameters() as $param) {
             if (!in_array($param->name, $registeredParams)) {
                 $params[] = $param;
             }
         }
 
         return new Operation([
-            'tags' => [$this->routeToTag($this->controllerMapRoute)],
-            'summary' => $actionDoc->getSummary(),
-            'description' => $actionDoc->getDescription(),
+            'tags' => [$this->normalizeTag($this->controllerMapRoute)],
+            'summary' => $actionSpecs->getSummary(),
+            'description' => $actionSpecs->getDescription(),
             'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
             'parameters' => $params,
-            'responses' => new Responses($actionDoc->getResponses())
+            'responses' => new Responses($actionSpecs->getResponses())
         ]);
     }
 }

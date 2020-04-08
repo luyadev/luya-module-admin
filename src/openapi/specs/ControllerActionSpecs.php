@@ -1,13 +1,13 @@
 <?php
 
-namespace luya\admin\openapi\phpdoc;
+namespace luya\admin\openapi\specs;
 
 use luya\helpers\Inflector;
 use ReflectionClass;
 use yii\base\Controller;
 use yii\base\InlineAction;
 
-class DocReaderAction extends BaseDocReader
+class ControllerActionSpecs extends BaseSpecs
 {
     protected $controller;
  

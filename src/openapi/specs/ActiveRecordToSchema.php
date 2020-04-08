@@ -1,6 +1,6 @@
 <?php
 
-namespace luya\admin\openapi\phpdoc;
+namespace luya\admin\openapi\specs;
 
 use cebe\openapi\spec\Schema;
 use yii\db\BaseActiveRecord;

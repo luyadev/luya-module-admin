@@ -11,6 +11,12 @@ use yii\base\BaseObject;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
 
+/**
+ * Generate Path Objects from UrlManager and ControllerMap.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class Generator extends BaseObject
 {
     protected $urlManager;
@@ -106,6 +112,7 @@ class Generator extends BaseObject
         $this->getPathsFromControllerMap();
 
         $paths = $this->_paths;
+        
         ksort($paths);
 
         return $paths;

@@ -5,52 +5,76 @@ namespace luya\admin\openapi;
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\Responses;
-use luya\admin\openapi\phpdoc\DocReaderAction;
-use luya\admin\openapi\phpdoc\DocReaderController;
+use luya\admin\openapi\specs\ControllerActionSpecs;
+use luya\admin\openapi\specs\ControllerSpecs;
 use luya\helpers\Inflector;
 use yii\base\Controller;
 
+/**
+ * Generate a path for a absolute route to an action.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class ActionRouteParser extends BasePathParser
 {
-    protected $actionDoc;
-    protected $controllerDoc;
+    /**
+     * @var ControllerActionSpecs
+     */
+    protected $actionSpecs;
+    /**
+     * @var ControllerSpecs
+     */
+    protected $controllerSpecs;
     protected $absoluteRoute;
     protected $controllerMapRoute;
 
     public function __construct(Controller $controller, $actionName, $absoluteRoute, $controllerMapRoute)
     {
-        $this->controllerDoc = new DocReaderController($controller);
-        $this->actionDoc = new DocReaderAction($controller, $actionName);
+        $this->controllerSpecs = new ControllerSpecs($controller);
+        $this->actionSpecs = new ControllerActionSpecs($controller, $actionName);
         $this->absoluteRoute = $absoluteRoute;
         $this->controllerMapRoute = $controllerMapRoute;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getPathItem(): PathItem
     {
         return new PathItem([
-            'summary' => $this->controllerDoc->getSummary(),
-            'description' => $this->controllerDoc->getDescription(),
+            'summary' => $this->controllerSpecs->getSummary(),
+            'description' => $this->controllerSpecs->getDescription(),
             'get' => new Operation([
-                'tags' => [$this->routeToTag($this->controllerMapRoute)],
-                'summary' => $this->actionDoc->getSummary(),
-                'description' => $this->actionDoc->getDescription(),
+                'tags' => [$this->normalizeTag($this->controllerMapRoute)],
+                'summary' => $this->actionSpecs->getSummary(),
+                'description' => $this->actionSpecs->getDescription(),
                 'operationId' => Inflector::slug('get' . '-' . $this->getPath()),
-                'parameters' => $this->actionDoc->getParameters(),
-                'responses' => new Responses($this->actionDoc->getResponses())
+                'parameters' => $this->actionSpecs->getParameters(),
+                'responses' => new Responses($this->actionSpecs->getResponses())
             ])
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getPath(): string
     {
         return '/'.$this->absoluteRoute;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function routes(): array
     {
         return [$this->controllerMapRoute];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isValid(): bool
     {
         return true;
