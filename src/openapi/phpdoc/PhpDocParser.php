@@ -5,6 +5,12 @@ namespace luya\admin\openapi\phpdoc;
 use luya\helpers\StringHelper;
 use Reflector;
 
+/**
+ * Create Parser Object from reflection class to read PhpDocs.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class PhpDocParser
 {
     /**

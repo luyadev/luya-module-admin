@@ -7,6 +7,12 @@ use ReflectionClass;
 use yii\base\Controller;
 use yii\base\InlineAction;
 
+/**
+ * Specs from an Action.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class ControllerActionSpecs extends BaseSpecs
 {
     protected $controller;

@@ -5,6 +5,12 @@ namespace luya\admin\openapi\specs;
 use cebe\openapi\spec\Schema;
 use yii\db\BaseActiveRecord;
 
+/**
+ * Generate Schema Specs from Active Record.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class ActiveRecordToSchema
 {
     protected $activeRecord;

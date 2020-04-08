@@ -2,6 +2,12 @@
 
 namespace luya\admin\openapi\phpdoc;
 
+/**
+ * Return Object from PhpDoc.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class PhpDocReturn
 {
     protected $phpDocParser;

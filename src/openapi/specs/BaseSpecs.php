@@ -21,10 +21,13 @@ use yii\rest\Action;
 use yii\rest\IndexAction;
 
 /**
- * Read PHP docs and interprets those.
+ * Generate Specs Details.
  * 
  * + works with the class php doc block
  * + works with the method php doc block
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
  */
 abstract class BaseSpecs implements SpecInterface
 {

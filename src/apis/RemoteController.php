@@ -41,11 +41,13 @@ class RemoteController extends Controller
     }
 
     /**
+     * Generate OpenApi Json File.
+     * 
      * https://www.php.net/manual/en/reflectionclass.getdoccomment.php
      * https://github.com/phpDocumentor/ReflectionDocBlock
      * https://github.com/PHP-DI/PhpDocReader
      *
-     * @return string Openapi as json
+     * @return array The OpenApi Json Data.
      * @since 3.2.0
      */
     public function actionOpenapi()

@@ -2,6 +2,12 @@
 
 namespace luya\admin\openapi\phpdoc;
 
+/**
+ * Php Doc Param Object.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class PhpDocParam
 {
     protected $phpDocParser;

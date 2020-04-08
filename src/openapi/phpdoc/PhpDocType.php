@@ -4,6 +4,12 @@ namespace luya\admin\openapi\phpdoc;
 
 use luya\helpers\StringHelper;
 
+/**
+ * A Type Object whether for Return or Param.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class PhpDocType
 {
     /**

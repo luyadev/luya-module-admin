@@ -5,6 +5,12 @@ namespace luya\admin\openapi\specs;
 use ReflectionClass;
 use yii\base\Controller;
 
+/**
+ * Specs of a Controller.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
+ */
 class ControllerSpecs extends BaseSpecs
 {
     protected $reflection;
