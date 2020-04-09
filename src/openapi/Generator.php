@@ -39,12 +39,23 @@ class Generator extends BaseObject
         'options',
     ];
 
+    /**
+     * Constructor.
+     *
+     * @param UrlManager $urlManager
+     * @param array $controllerMap
+     */
     public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
         $this->urlManager = $urlManager;   
         $this->controllerMap = $controllerMap;
     }
 
+    /**
+     * Get all Url Rules.
+     *
+     * @return array
+     */
     public function getUrlRules()
     {
         $rules = [];
@@ -66,6 +77,9 @@ class Generator extends BaseObject
         return $rules;
     }
 
+    /**
+     * Generate paths from url rules.
+     */
     protected function getPathsFromUrlRules()
     {
         foreach ($this->getUrlRules() as $controllerMapRoute => $items) {
@@ -75,6 +89,9 @@ class Generator extends BaseObject
         }
     }
 
+    /**
+     * Generate paths from controller map.
+     */
     protected function getPathsFromControllerMap()
     {
         foreach ($this->controllerMap as $key => $map) {
@@ -96,6 +113,11 @@ class Generator extends BaseObject
 
     private $_routes = [];
 
+    /**
+     * Add a path to the paths array
+     *
+     * @param BasePathParser $pathParser
+     */
     private function addPath(BasePathParser $pathParser)
     {
         if ($pathParser->isValid()) {
@@ -106,6 +128,11 @@ class Generator extends BaseObject
         }
     } 
 
+    /**
+     * Get paths for given config.
+     *
+     * @return array
+     */
     public function getPaths()
     {
         $this->getPathsFromUrlRules();

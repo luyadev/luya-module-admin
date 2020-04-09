@@ -1,9 +1,7 @@
 <?php
 
 namespace luya\admin\openapi\phpdoc;
-
 use luya\helpers\StringHelper;
-use PHP_Token_USE;
 use Reflector;
 
 /**

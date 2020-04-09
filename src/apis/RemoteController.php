@@ -2,24 +2,17 @@
 
 namespace luya\admin\apis;
 
-use ReflectionClass;
+use cebe\openapi\spec\Components;
 use Yii;
 use luya\Boot;
 use luya\Exception;
 use luya\admin\models\UserOnline;
-use luya\admin\openapi\ActionRouteParser;
-use luya\admin\openapi\UrlRuleRouteParser;
-use luya\admin\components\UrlRule;
-use luya\helpers\ArrayHelper;
-use luya\helpers\ObjectHelper;
 use luya\rest\Controller;
-use yii\web\Response;
 use cebe\openapi\spec\Info;
 use cebe\openapi\spec\OpenApi;
-use cebe\openapi\Writer;
-use luya\admin\ngrest\base\Api;
+use cebe\openapi\spec\SecurityScheme;
 use luya\admin\openapi\Generator;
-use luya\base\DynamicModel as Holz;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Remove API, allows to collect system data with a valid $token.
@@ -42,19 +35,36 @@ class RemoteController extends Controller
     }
 
     /**
+     * Verify the remote token, if enabled.
+     *
+     * @param string $token
+     * @throws ForbiddenHttpException
+     */
+    protected function verifyToken($token)
+    {
+        if (empty(Yii::$app->remoteToken) || sha1(Yii::$app->remoteToken) !== $token) {
+            throw new ForbiddenHttpException('The provided remote token is wrong.');
+        }
+    }
+
+    /**
      * Generate OpenApi Json File.
      * 
-     * https://www.php.net/manual/en/reflectionclass.getdoccomment.php
-     * https://github.com/phpDocumentor/ReflectionDocBlock
-     * https://github.com/PHP-DI/PhpDocReader
+     * You can either enable {{luya\module\Admin::$openApiFile}} or provider the {{luya\web\Application::$remoteToken}} to get
+     * an on-the-fly generated Json formated Open Api file.
      *
+     * @param string $token The remote token to view the api.
      * @return array The OpenApi Json Data.
      * @since 3.2.0
      */
-    public function actionOpenapi()
+    public function actionOpenapi($token = null)
     {
+        if ($token) {
+            $this->verifyToken($token);
+        } elseif (!$this->module->openApiFile) {
+            throw new ForbiddenHttpException("Rendering openApi is disabled by the module.");
+        }
         $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);
-
 
         // generate the openapi file
         $definition = [
@@ -64,6 +74,18 @@ class RemoteController extends Controller
                 'version' => '1.0.0',
             ]),
             'paths' => $generator->getPaths(),
+            'components' => new Components([
+                'securitySchemes' => [
+                    'BearerAuth' => new SecurityScheme([
+                        'type' => 'http',
+                        'scheme' => 'bearer',
+                        'bearerFormat' => 'JWT'    # optional, arbitrary value for documentation purposes
+                    ])
+                ],
+            ]),
+            'security' => [
+                'BearerAuth' => [],
+            ]
         ];
 
         // write the json file
@@ -82,9 +104,7 @@ class RemoteController extends Controller
      */
     public function actionIndex($token)
     {
-        if (empty(Yii::$app->remoteToken) || sha1(Yii::$app->remoteToken) !== $token) {
-            throw new Exception('The provided remote token is wrong.');
-        }
+        $this->verifyToken($token);
         
         UserOnline::clearList($this->module->userIdleTimeout);
 

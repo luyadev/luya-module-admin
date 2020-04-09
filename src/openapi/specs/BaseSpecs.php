@@ -9,9 +9,7 @@ use cebe\openapi\spec\Schema;
 use luya\admin\ngrest\base\Api;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use luya\admin\openapi\phpdoc\PhpDocType;
-use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
-use luya\helpers\StringHelper;
 use ReflectionClass;
 use ReflectionMethod;
 use Yii;
@@ -87,7 +85,7 @@ abstract class BaseSpecs implements SpecInterface
             }
         }
 
-        // add query params:
+        // @TODO add query params:
         // fields=
         // expand=
         // page=
@@ -120,6 +118,7 @@ abstract class BaseSpecs implements SpecInterface
             500 => new Response([
                 'description' => 'Unexpected error',
                 /*
+                
                 'content' => [
                     'application/json' => new MediaType([
                         'schema' => [

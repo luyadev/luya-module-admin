@@ -22,6 +22,7 @@ class ActionRouteParser extends BasePathParser
      * @var ControllerActionSpecs
      */
     protected $actionSpecs;
+    
     /**
      * @var ControllerSpecs
      */

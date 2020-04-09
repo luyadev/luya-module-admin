@@ -14,10 +14,13 @@ use ReflectionClass;
 class PhpDocType
 {
     /**
-     * @var string Contains the type like `integer`, `string`
+     * @var string Contains the type like `integer`, `string`, noramlized as lowercase value.
      */
     public $name;
 
+    /**
+     * @var string Contains the original raw name.
+     */
     public $rawName;
 
     /**
@@ -116,7 +119,7 @@ class PhpDocType
     }
 
     /**
-     * Undocumented function
+     * Get PhpDocParser from className definition.
      *
      * @return PhpDocParser
      */

@@ -22,6 +22,11 @@ class PhpDocParam
         $this->definition = $definition;
     }
 
+    /**
+     * Description.
+     *
+     * @return string
+     */
     public function getDescription()
     {
         return isset($this->definition[3]) ? $this->definition[3] : '';
