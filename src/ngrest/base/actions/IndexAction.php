@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use luya\traits\CacheableTrait;
 
 /**
- * IndexAction for REST implementation.
+ * List Items
  *
  * In order to enable or disable the pagination for index actions regulatet by the ActiveController
  * the main yii\rest\IndexAction is overriten by adding the pagination propertie to the action

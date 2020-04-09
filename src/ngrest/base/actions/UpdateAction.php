@@ -8,7 +8,9 @@ use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * UpdateAction for REST implementation.
+ * Updatem Item
+ * 
+ * Updates the given item when sending a PUT request.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

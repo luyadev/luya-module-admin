@@ -46,6 +46,17 @@ class DefaultController extends Controller
     }
 
     /**
+     * Renders the Open API latest file with redoc inline
+     *
+     * @return string
+     * @since 3.2.0
+     */
+    public function actionApiDoc()
+    {
+        return $this->renderPartial('apidoc');
+    }
+
+    /**
      * Render the admin index page.
      *
      * @return string

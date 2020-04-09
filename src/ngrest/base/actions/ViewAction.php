@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\db\ActiveRecordInterface;
 
 /**
- * IndexAction for REST implementation.
+ * View Item
  *
  * In order to enable or disable the pagination for index actions regulatet by the ActiveController
  * the main yii\rest\IndexAction is overriten by adding the pagination propertie to the action

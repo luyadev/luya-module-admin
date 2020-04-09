@@ -161,7 +161,7 @@ class ProxyController extends Controller
      * @param string $buildToken
      * @param string $table
      * @param integer $offset
-     * @return array
+     * @return array An array with all data for the given $table
      */
     public function actionDataProvider($machine, $buildToken, $table, $offset)
     {
