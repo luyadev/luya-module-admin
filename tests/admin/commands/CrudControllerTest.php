@@ -232,6 +232,7 @@ class TestModel extends NgRestModel
         ];
     }
 }
+
 EOT;
         $c = $ctrl->generateModelContent(
             'file\\namespace',
@@ -368,6 +369,7 @@ class TestModel extends NgRestModel
         ];
     }
 }
+
 EOT;
         $this->assertSame($model, $c);
     }
