@@ -13,6 +13,7 @@ php:
   
 matrix:
     allow_failures:
+        - php: 7.0
         - php: 5.6
         - php: 7.4
         - php: nightly
@@ -26,7 +27,7 @@ install:
   - travis_retry composer self-update && composer --version
   - composer config -g github-oauth.github.com "$TOKEN"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - travis_retry composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction --ignore-platform-reqs
+  - travis_retry composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
 
 before_script:
   - mysql -e 'create database myapp_test;'  
