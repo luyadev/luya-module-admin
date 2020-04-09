@@ -79,8 +79,8 @@ class <?= $className; ?> extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['<?= implode($fields, "', '"); ?>']],
-            [['create', 'update'], ['<?= implode($fields, "', '"); ?>']],
+            ['list', ['<?= implode("', '", $fields); ?>']],
+            [['create', 'update'], ['<?= implode("', '", $fields); ?>']],
             ['delete', false],
         ];
     }
