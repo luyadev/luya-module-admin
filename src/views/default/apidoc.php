@@ -26,9 +26,28 @@ $this->beginPage()
   </head>
   <body>
   <?php $this->beginBody(); ?>
-  <div style="padding:10px; background-color:#F0F0F0">
-      <a href="<?= Url::toRoute(['/admin/default/index']); ?>" class="btn btn-primary"><span class="material-icons">keyboard_backspace</span> Back to Admin</a>
-  </div>
+      <div class="mainnav mainnav--horizontal">
+          <div class="mainnav-static">
+              <ul class="mainnav-list">
+                  <li class="mainnav-entry">
+                      <a class="mainnav-link" href="<?= Url::toRoute(['/admin/default/index']); ?>">
+                          <i class="mainnav-icon material-icons">keyboard_backspace</i>
+                          <span class="mainnav-label">Back to Admin</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+          <?php /* Example for right aligned button(s): <div class="mainnav-static mainnav-static--bottom">
+              <ul class="mainnav-list">
+                  <li class="mainnav-entry">
+                      <a class="mainnav-link" href="#">
+                          <i class="mainnav-icon material-icons">flare</i>
+                          <span class="mainnav-label">Example</span>
+                      </a>
+                  </li>
+              </ul>
+          </div> */ ?>
+      </div>
     <redoc spec-url='/admin/api-admin-remote/openapi<?php if (Yii::$app->remoteToken): ?>?token=<?= sha1(Yii::$app->remoteToken); endif; ?>'></redoc>
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
     <?php $this->endBody() ?>
