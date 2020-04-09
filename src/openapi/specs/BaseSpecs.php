@@ -81,12 +81,19 @@ abstract class BaseSpecs implements SpecInterface
                     'required' => !$arg->isOptional(),
                     'description' => $paramDoc->getDescription(),
                     'schema' => new Schema([
-                        'type' => $paramDoc->getType(),
+                        'type' => $paramDoc->getType()->getNoramlizeName(),
                     ])
                 ]);
             }
         }
 
+        // add query params:
+        // fields=
+        // expand=
+        // page=
+        // per-page
+        // _language
+        // _format
         return $params;
     }
 
@@ -140,7 +147,7 @@ abstract class BaseSpecs implements SpecInterface
         $schema = false;
 
         if ($object instanceof ActiveRecord) {
-            $schema = new ActiveRecordToSchema($object);
+            $schema = new ActiveRecordToSchema($this, $object);
         } elseif ($object instanceof ActiveDataProvider) {
             return [
                 'application/json' => new MediaType([
@@ -159,27 +166,38 @@ abstract class BaseSpecs implements SpecInterface
             $isArray = true;
         }
 
-        if ($isArray) {
-            return [
-                'application/json' => new MediaType([
-                    'schema' => [
-                        'type' => 'array',
-                        'items' => [
-                            'type' => 'object',
-                            'properties' => $schema->getProperties()
-                        ]
-                    ],
-                ])
-            ];
-        }
-        
         return [
             'application/json' => new MediaType([
-                'schema' => [
-                    'type' => 'object',
-                    'properties' => $schema->getProperties(),
-                ],
+                'schema' => $this->classNameToSchema($schema, $isArray),
             ])
+        ];
+    }
+
+    public function createActiveRecordSchema($activeRecordClassName)
+    {
+        $object = Yii::createObject($activeRecordClassName);
+
+        if ($object instanceof ActiveRecord) {
+            return new ActiveRecordToSchema($this, $object);
+        }
+
+        return false;
+    }
+    
+    public function classNameToSchema(ActiveRecordToSchema $activeRecord, $isArray = false)
+    {
+        if ($isArray) {
+            return [
+                'type' => 'array',
+                'items' => [
+                    'type' => 'object',
+                    'properties' => $activeRecord->getProperties()
+                ]
+            ];
+        }
+        return [
+            'type' => 'object',
+            'properties' => $activeRecord->getProperties()
         ];
     }
 
@@ -207,10 +225,9 @@ abstract class BaseSpecs implements SpecInterface
             return [];
         }
 
-        $className = $type->getClassName();
         // handle php object type
-        if ($className) {
-            return $this->modelContextToResponse($className, $type->getIsArray());
+        if ($type->getIsClass()) {
+            return $this->modelContextToResponse($type->getClassName(), $type->getIsArray());
         } 
 
         // handle type array

@@ -5,6 +5,8 @@ namespace luya\admin\openapi\phpdoc;
 /**
  * Php Doc Param Object.
  * 
+ * The param notation is the same as for the @property annotation therfore PhpDocParm serves both param and property.
+ * 
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -17,6 +19,7 @@ class PhpDocParam
     public function __construct(PhpDocParser $phpDocParser, array $definition)
     {
         $this->phpDocParser = $phpDocParser;
+        $this->definition = $definition;
     }
 
     public function getDescription()
@@ -31,6 +34,6 @@ class PhpDocParam
      */
     public function getType()
     {
-        return isset($this->definition[1]) ? new PhpDocType($this->phpDocParser, $this->definition[1]) : null;
+        return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
     }
 }

@@ -14,6 +14,9 @@ use Reflector;
  */
 class PhpDocReflection
 {
+    /**
+     * @var ReflectionMethod|ReflectionClass
+     */
     protected $reflection;
 
     /**
@@ -33,5 +36,10 @@ class PhpDocReflection
     public function getFileName()
     {
         return $this->reflection->getFileName();
+    }
+
+    public function getNamespaceName()
+    {
+        return $this->reflection->getNamespaceName();
     }
 }

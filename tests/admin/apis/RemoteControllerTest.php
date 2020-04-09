@@ -27,4 +27,10 @@ class RemoteControllerTest extends AdminModelTestCase
         $this->assertArrayHasKey('yii_version', $r);
         $this->assertArrayHasKey('packages', $r);
     }
+    
+    public function testGenerateOpenApi()
+    {
+        $ctrl = new RemoteController('ctrl', $this->app->getModule('admin'));
+        $this->assertNotEmpty($ctrl->actionOpenapi());
+    }
 }

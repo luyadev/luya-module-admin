@@ -17,7 +17,7 @@ class PhpDocParser
     /**
      * @var PhpDocReflection
      */
-    protected $reflection;
+    public $reflection;
 
     public $rows = [];
 
@@ -31,14 +31,15 @@ class PhpDocParser
     {
         $rows = [
             'texts' => [],
-            'return' => [],
+            'return' => [], // @return <type> <description>
             'author' => [],
-            'param' => [],
+            'param' => [], // @param <type> $firstname <description>
             'deprecated' => [],
             'see' => [],
             'link' => [],
             'since' => [],
             'var' => [],
+            'property' => [], // @property <type> $firstname <description>
         ];
 
         foreach(explode(PHP_EOL, $reflection->getDocComment()) as $row) {
@@ -50,7 +51,7 @@ class PhpDocParser
 
             if (substr($row, 0, 1) == '@') {
 
-                if (StringHelper::startsWith($row, '@param')) {
+                if (StringHelper::startsWith($row, '@param') || StringHelper::startsWith($row, '@property')) {
                     preg_match("/^(@[a-z]+)\s+([^\s]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
                     unset($matches[0]);
                 } else {
@@ -68,6 +69,55 @@ class PhpDocParser
         }
 
         return $rows;
+    }
+
+    /**
+     * Get all @property
+     *
+     * @return PhpDocParam[]
+     */
+    public function getProperties()
+    {
+        $properties = [];
+        foreach ($this->rows['property'] as $param) {
+            $properties[] = new PhpDocParam($this, $param);
+        }
+
+        return $properties;
+    }
+
+    /**
+     * 
+     *
+     * @param string $paramName
+     * @return PhpDocParam 
+     */
+    public function getProperty($propertyName)
+    {
+        $properties = $this->rows['property'];
+
+        foreach ($properties as $p) {
+            if (isset($p[2]) && ltrim(strtolower($p[2]), '$') == strtolower($propertyName)) {
+                return new PhpDocParam($this, $p);
+            }
+        }
+
+        return new PhpDocParam($this, []);
+    }
+
+    /**
+     * Get all @param
+     *
+     * @return PhpDocParam[]
+     */
+    public function getParams()
+    {
+        $params = [];
+        foreach ($this->rows['param'] as $param) {
+            $params[] = new PhpDocParam($this, $param);
+        }
+
+        return $params;
     }
 
     /**
@@ -161,7 +211,7 @@ class PhpDocParser
     }
 
     /**
-     * 
+     * Returns all use statements from a class file.
      * 
      * + luya\cms\models\NavContainer
      * + luya\cms\models\NavItemModule
@@ -201,6 +251,12 @@ class PhpDocParser
         return $parts;
     }
 
+    /**
+     * Search for a given class inside the use statement and return the fully qualified path.
+     *
+     * @param string $className Search for `User` should return `app\models\User`
+     * @return string
+     */
     public function ensureClassName($className)
     {
         $className = strtolower($className);
