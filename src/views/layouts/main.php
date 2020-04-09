@@ -393,7 +393,7 @@ $this->beginPage()
             <?php if ($this->context->module->publicOpenApi || Yii::$app->remoteToken): ?>
                 <div class="m-3 shadow-lg rounded p-3 mt-3">
                     <p>
-                        <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" class="btn">Open API Documentation</a> (Authentication is required to view the explorer)
+                        <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" class="btn">Open Documentation Explorer</a> (Authentication is required)
                     </p>
                     <p>OpenAPI URL: <kbd><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></kbd></p>
                 </div>
