@@ -50,7 +50,7 @@ class RemoteController extends Controller
     /**
      * Generate OpenApi Json File.
      * 
-     * You can either enable {{luya\module\Admin::$openApiFile}} or provider the {{luya\web\Application::$remoteToken}} to get
+     * You can either enable {{luya\module\Admin::$publicOpenApi}} or provider the {{luya\web\Application::$remoteToken}} to get
      * an on-the-fly generated Json formated Open Api file.
      *
      * @param string $token The remote token to view the api.
@@ -61,7 +61,7 @@ class RemoteController extends Controller
     {
         if ($token) {
             $this->verifyToken($token);
-        } elseif (!$this->module->openApiFile) {
+        } elseif (!$this->module->publicOpenApi) {
             throw new ForbiddenHttpException("Rendering openApi is disabled by the module.");
         }
         $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);

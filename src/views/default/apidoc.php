@@ -27,9 +27,9 @@ $this->beginPage()
   <body>
   <?php $this->beginBody(); ?>
   <div style="padding:10px; background-color:#F0F0F0">
-      <a href="<?= Url::toRoute(['/admin/default/index']); ?>">&laquo; Back to Admin</a>
+      <a href="<?= Url::toRoute(['/admin/default/index']); ?>" class="btn btn-primary"><span class="material-icons">keyboard_backspace</span> Back to Admin</a>
   </div>
-    <redoc spec-url='/admin/api-admin-remote/openapi'></redoc>
+    <redoc spec-url='/admin/api-admin-remote/openapi<?php if (Yii::$app->remoteToken): ?>?token=<?= sha1(Yii::$app->remoteToken); endif; ?>'></redoc>
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
     <?php $this->endBody() ?>
   </body>

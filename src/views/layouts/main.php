@@ -272,6 +272,9 @@ $this->beginPage()
             <li class="nav-item" ng-click="debugTab=3">
                 <span class="nav-link" ng-class="{'active': debugTab==3}">Packages</span>
             </li>
+            <li class="nav-item" ng-click="debugTab=4">
+                <span class="nav-link" ng-class="{'active': debugTab==4}">OpenAPI</span>
+            </li>
         </ul>
         <div class="debug-panel debug-panel-network" ng-class="{'debug-panel-network-open': debugDetail}" ng-if="debugTab==1">
             <div class="debug-network-items pr-3">
@@ -378,6 +381,23 @@ $this->beginPage()
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="debug-panel" ng-if="debugTab==4">
+            <div class="alert alert-info">
+                In order to fetch the latest OpenAPI file either set endpoint to public with <code>publicOpenApi</code> or define and use <code>remoteToken</code>
+                <span class="badge badge-secondary float-right">BETA</span> 
+            </div>
+            <p>Public OpenAPI File: <b><?= Yii::$app->formatter->asBoolean($this->context->module->publicOpenApi); ?></b></p>
+            <p>OpenAPI available with Remote Token: <b><?= Yii::$app->formatter->asBoolean(!empty(Yii::$app->remoteToken)); ?></b> <?php if (!empty(Yii::$app->remoteToken)): ?><kbd><?= sha1(Yii::$app->remoteToken); ?></kbd><?php endif; ?></p>
+            
+            <?php if ($this->context->module->publicOpenApi || Yii::$app->remoteToken): ?>
+                <div class="m-3 shadow-lg rounded p-3 mt-3">
+                    <p>
+                        <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" class="btn">Open API Documentation</a> (Authentication is required to view the explorer)
+                    </p>
+                    <p>OpenAPI URL: <kbd><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></kbd></p>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

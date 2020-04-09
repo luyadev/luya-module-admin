@@ -277,7 +277,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI defintion for current LUYA System (including all registered modules) or not.
      * @since 3.2.0
      */
-    public $openApiFile = false;
+    public $publicOpenApi = false;
 
     /**
      * @inheritDoc
