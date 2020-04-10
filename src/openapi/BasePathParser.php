@@ -69,4 +69,19 @@ abstract class BasePathParser
         return Inflector::camel2words(Inflector::id2camel($route));
     }
 
+    /**
+     * Generate a readable operation id for current route and verb.
+     *
+     * @param string $verb
+     * @return string
+     */
+    public function generateOperationId($verb)
+    {
+        $path = ltrim(str_replace(["admin/api-", "admin/api", "admin/"], '', $this->getPath()), '/');
+        
+        $operation = $verb . '-'. str_replace("/", " ", $path); // replace slashes with newlines
+        $camelCase = Inflector::slug($operation, '-', true, false);
+        return Inflector::id2camel($camelCase);
+    }
+
 }

@@ -153,7 +153,7 @@ class UrlRuleRouteParser extends BasePathParser
             'tags' => [$this->normalizeTag($this->controllerMapRoute)],
             'summary' => $actionSpecs->getSummary(),
             'description' => $actionSpecs->getDescription(),
-            'operationId' => Inflector::slug($verbName . '-' . $this->getPath()),
+            'operationId' => $this->generateOperationId($verbName),
             'parameters' => $params,
             'responses' => new Responses($actionSpecs->getResponses())
         ]);

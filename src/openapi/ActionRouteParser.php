@@ -50,7 +50,7 @@ class ActionRouteParser extends BasePathParser
                 'tags' => [$this->normalizeTag($this->controllerMapRoute)],
                 'summary' => $this->actionSpecs->getSummary(),
                 'description' => $this->actionSpecs->getDescription(),
-                'operationId' => Inflector::slug('get' . '-' . $this->getPath()),
+                'operationId' => $this->generateOperationId('get'),
                 'parameters' => $this->actionSpecs->getParameters(),
                 'responses' => new Responses($this->actionSpecs->getResponses())
             ])
