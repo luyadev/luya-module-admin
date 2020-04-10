@@ -11,7 +11,9 @@ use luya\rest\Controller;
 use cebe\openapi\spec\Info;
 use cebe\openapi\spec\OpenApi;
 use cebe\openapi\spec\SecurityScheme;
+use cebe\openapi\spec\Server;
 use luya\admin\openapi\Generator;
+use luya\helpers\Url;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -85,6 +87,12 @@ class RemoteController extends Controller
             ]),
             'security' => [
                 'BearerAuth' => [],
+            ],
+            'servers' => [
+                new Server([
+                    'url' => Url::base(true),
+                    'description' => Yii::$app->siteTitle . ' Server',
+                ])
             ]
         ];
 
