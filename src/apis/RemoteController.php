@@ -91,8 +91,8 @@ class RemoteController extends Controller
         // write the json file
         $openapi = new OpenApi($definition);
 
-        // returns an array with the openapi specs
-        return $openapi->getSerializableData();
+        // always return as json
+        return $this->asJson($openapi->getSerializableData());
     }
 
     /**

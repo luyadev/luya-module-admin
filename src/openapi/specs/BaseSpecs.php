@@ -73,13 +73,14 @@ abstract class BaseSpecs implements SpecInterface
 
                 $paramDoc = $this->getPhpDocParser()->getParam($arg->getName());
 
+                $paramType = $paramDoc->getType()->getNoramlizeName();
                 $params[] = new Parameter([
                     'name' => $arg->getName(),
                     'in' => 'query',
                     'required' => !$arg->isOptional(),
                     'description' => $paramDoc->getDescription(),
                     'schema' => new Schema([
-                        'type' => $paramDoc->getType()->getNoramlizeName(),
+                        'type' => in_array($paramType, ['integer', 'string']) ? $paramType : 'string', // only integer and string allowed
                     ])
                 ]);
             }
