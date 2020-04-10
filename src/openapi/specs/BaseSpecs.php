@@ -13,6 +13,7 @@ use luya\helpers\ObjectHelper;
 use ReflectionClass;
 use ReflectionMethod;
 use Yii;
+use yii\base\Action as BaseAction;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\rest\Action;
@@ -34,6 +35,9 @@ abstract class BaseSpecs implements SpecInterface
      */
     abstract public function getReflection();
 
+    /**
+     * @return BaseAction
+     */
     abstract public function getActionObject();
 
     abstract public function getControllerObject();
@@ -168,11 +172,17 @@ abstract class BaseSpecs implements SpecInterface
 
         return [
             'application/json' => new MediaType([
-                'schema' => $this->classNameToSchema($schema, $isArray),
+                'schema' => $this->activeRecordToSchema($schema, $isArray),
             ])
         ];
     }
 
+    /**
+     * create an ActiveRecordSchema from a className
+     *
+     * @param string|array $activeRecordClassName
+     * @return ActiveRecordToSchema
+     */
     public function createActiveRecordSchema($activeRecordClassName)
     {
         $object = Yii::createObject($activeRecordClassName);
@@ -184,7 +194,14 @@ abstract class BaseSpecs implements SpecInterface
         return false;
     }
     
-    public function classNameToSchema(ActiveRecordToSchema $activeRecord, $isArray = false)
+    /**
+     * Generate OpenAPI schema structure from ActiveRecordToSchema Object
+     *
+     * @param ActiveRecordToSchema $activeRecord
+     * @param boolean $isArray
+     * @return array
+     */
+    public function activeRecordToSchema(ActiveRecordToSchema $activeRecord, $isArray = false)
     {
         if ($isArray) {
             return [
@@ -201,10 +218,25 @@ abstract class BaseSpecs implements SpecInterface
         ];
     }
 
-    protected function getNgRestApiModelClass()
+    protected function getNgRestApiModelClass($actionObject)
     {
-        if (ObjectHelper::isInstanceOf($this->getActionObject(), [Api::class, Action::class], false)) {
+        if (ObjectHelper::isInstanceOf($actionObject, [Api::class, Action::class], false)) {
             return $this->getActionObject()->modelClass;
+        }
+
+        return false;
+    }
+
+    public function createSchemaFromClass($actionObject, $asArray = false)
+    {
+        $class = $this->getNgRestApiModelClass($actionObject);
+
+        if ($class) {
+            $object = $this->createActiveRecordSchema($class);
+
+            if ($object) {
+                return $this->activeRecordToSchema($object, $asArray);
+            }
         }
 
         return false;
@@ -212,7 +244,7 @@ abstract class BaseSpecs implements SpecInterface
 
     protected function getResponseContent()
     {
-        $modelClass = $this->getNgRestApiModelClass();
+        $modelClass = $this->getNgRestApiModelClass($this->getActionObject());
 
         if ($modelClass) {
             return $this->modelContextToResponse($modelClass);
@@ -237,7 +269,6 @@ abstract class BaseSpecs implements SpecInterface
                     'schema' => [
                         'type' => 'array',
                         'items' => [],
-                        // @todo option for force empty array?
                     ],
                 ])
             ];

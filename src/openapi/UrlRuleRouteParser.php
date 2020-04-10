@@ -2,15 +2,19 @@
 
 namespace luya\admin\openapi;
 
+use cebe\openapi\spec\MediaType;
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\PathItem;
+use cebe\openapi\spec\RequestBody;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
 use luya\helpers\Inflector;
 use Yii;
+use yii\rest\CreateAction;
+use yii\rest\UpdateAction;
 use yii\web\UrlRule;
 
 /**
@@ -123,7 +127,8 @@ class UrlRuleRouteParser extends BasePathParser
 
         $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route));
 
-        if (!$actionSpecs->getActionObject()) {
+        $actionObject = $actionSpecs->getActionObject();
+        if (!$actionObject) {
             return false;
         }
 
@@ -149,13 +154,26 @@ class UrlRuleRouteParser extends BasePathParser
             }
         }
 
-        return new Operation([
+        $requestBody = false;
+        if ($actionObject instanceof UpdateAction || $actionObject instanceof CreateAction) {
+            $requestBody = new RequestBody([
+                'required' => true,
+                'content' => [
+                    'application/json' => new MediaType([
+                        'schema' => $actionSpecs->createSchemaFromClass($actionObject, false),
+                    ])
+                ]
+            ]);
+        }
+
+        return new Operation(array_filter([
             'tags' => [$this->normalizeTag($this->controllerMapRoute)],
             'summary' => $actionSpecs->getSummary(),
             'description' => $actionSpecs->getDescription(),
             'operationId' => $this->generateOperationId($verbName),
             'parameters' => $params,
-            'responses' => new Responses($actionSpecs->getResponses())
-        ]);
+            'responses' => new Responses($actionSpecs->getResponses()),
+            'requestBody' => $requestBody,
+        ]));
     }
 }
