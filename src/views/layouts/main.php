@@ -258,7 +258,7 @@ $this->beginPage()
         </div>
     </div>
 
-    <div class="debug" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
+    <div class="debug shadow" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
         <ul class="nav nav-tabs debug-tabs">
             <li class="nav-item" ng-click="debugTab=1">
                 <span class="nav-link" ng-class="{'active': debugTab==1}">Network</span>
