@@ -42,7 +42,7 @@ $this->beginPage()
     </div>
 </div>
 <div class="luya">
-    <div class="luya-mainnav" ng-class="{'luya-mainnav-small' : !isHover}">
+    <div class="luya-mainnav" ng-class="{'luya-mainnav-small' : !isHover, 'shadow-lg': showDebugBar}">
         <div class="mainnav" ng-class="{'mainnav-small' : !isHover}">
             <div class="mainnav-toggler-mobile">
                 <div class="mainnav-toggler-mobile-icon" ng-click="isOpen = !isOpen">
@@ -260,11 +260,6 @@ $this->beginPage()
 
     <div class="debug" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
         <ul class="nav nav-tabs debug-tabs">
-            <li class="nav-item" ng-click="showDebugBar=0">
-                <span class="nav-link">
-                    <i class="material-icons">close</i>
-                </span>
-            </li>
             <li class="nav-item" ng-click="debugTab=1">
                 <span class="nav-link" ng-class="{'active': debugTab==1}">Network</span>
             </li>
@@ -276,6 +271,11 @@ $this->beginPage()
             </li>
             <li class="nav-item" ng-click="debugTab=4">
                 <span class="nav-link" ng-class="{'active': debugTab==4}">OpenAPI</span>
+            </li>
+            <li class="nav-item" ng-click="showDebugBar=0">
+                <span class="nav-link">
+                    <i class="material-icons">close</i>
+                </span>
             </li>
         </ul>
         <div class="debug-panel debug-panel-network" ng-class="{'debug-panel-network-open': debugDetail}" ng-if="debugTab==1">
