@@ -261,7 +261,9 @@ $this->beginPage()
     <div class="debug" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
         <ul class="nav nav-tabs debug-tabs">
             <li class="nav-item" ng-click="showDebugBar=0">
-                <span class="nav-link">x</span>
+                <span class="nav-link">
+                    <i class="material-icons">close</i>
+                </span>
             </li>
             <li class="nav-item" ng-click="debugTab=1">
                 <span class="nav-link" ng-class="{'active': debugTab==1}">Network</span>
@@ -385,17 +387,30 @@ $this->beginPage()
         <div class="debug-panel" ng-if="debugTab==4">
             <div class="alert alert-info">
                 In order to fetch the latest OpenAPI file either set endpoint to public with <code>publicOpenApi</code> or define and use <code>remoteToken</code>
-                <span class="badge badge-secondary float-right">BETA</span> 
+                <span class="badge badge-secondary badge--inherit-font-size float-right">BETA</span>
             </div>
-            <p>Public OpenAPI File: <b><?= Yii::$app->formatter->asBoolean($this->context->module->publicOpenApi); ?></b></p>
-            <p>OpenAPI available with Remote Token: <b><?= Yii::$app->formatter->asBoolean(!empty(Yii::$app->remoteToken)); ?></b> <?php if (!empty(Yii::$app->remoteToken)): ?><kbd><?= sha1(Yii::$app->remoteToken); ?></kbd><?php endif; ?></p>
+            <p>
+                Public OpenAPI File:
+                <span class="badge badge--inherit-font-size badge-<?= $this->context->module->publicOpenApi ? 'success' : 'danger' ?>"><?= Yii::$app->formatter->asBoolean($this->context->module->publicOpenApi); ?></span>
+            </p>
+            <p>
+                OpenAPI available with Remote Token:
+                <span class="badge badge--inherit-font-size badge-<?= !empty(Yii::$app->remoteToken) ? 'success' : 'danger' ?>"><?= Yii::$app->formatter->asBoolean(Yii::$app->remoteToken); ?></span>
+                <?php if (!empty(Yii::$app->remoteToken)): ?><span class="badge badge--inherit-font-size badge-info"><?= sha1(Yii::$app->remoteToken); ?></span><?php endif; ?>
+            </p>
             
             <?php if ($this->context->module->publicOpenApi || Yii::$app->remoteToken): ?>
-                <div class="m-3 shadow-lg rounded p-3 mt-3">
-                    <p>
-                        <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" class="btn">Open Documentation Explorer</a> (Authentication is required)
-                    </p>
-                    <p>OpenAPI URL: <kbd><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></kbd></p>
+                <div class="card">
+                    <div class="card-header">Access</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            URL: <span class="badge badge--inherit-font-size badge-info"><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></span>
+                        </p>
+                        <p class="card-text">
+                            <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" target="_blank" class="btn btn-primary">Open Documentation</a>
+                            <span class="badge badge--inherit-font-size badge-secondary">Authentication is required</span>
+                        </p>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>
