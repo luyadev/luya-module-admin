@@ -2,12 +2,14 @@
 
 namespace luya\admin\openapi;
 
+use cebe\openapi\spec\OpenApi;
 use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
 use ReflectionClass;
 use Yii;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
 
@@ -47,6 +49,10 @@ class Generator extends BaseObject
      */
     public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
+        if (!class_exists(OpenApi::class)) {
+            throw new InvalidConfigException("The composer package cebe/php-openapi must be installed to generate the OpenAPI file.");
+        }
+        
         $this->urlManager = $urlManager;   
         $this->controllerMap = $controllerMap;
     }
