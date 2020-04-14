@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "910150687cf38aab26a314a31138b57e",
+    "content-hash": "f61fe81e3057698a6a35b5063cd02cf3",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -144,69 +144,6 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
-        },
-        {
-            "name": "cebe/php-openapi",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cebe/php-openapi.git",
-                "reference": "a27ffc4d8edc40bb5d8b127b7ec7016f437b8801"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cebe/php-openapi/zipball/a27ffc4d8edc40bb5d8b127b7ec7016f437b8801",
-                "reference": "a27ffc4d8edc40bb5d8b127b7ec7016f437b8801",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "justinrainbow/json-schema": "^5.0",
-                "php": ">=7.1.0",
-                "symfony/yaml": "^3.0 | ~4.0.0 | ~4.1.0 | ~4.2.0 | ~4.3.0 | ^5.0"
-            },
-            "require-dev": {
-                "apis-guru/openapi-directory": "1.0.0",
-                "cebe/indent": "*",
-                "friendsofphp/php-cs-fixer": "~2.16.1",
-                "mermade/openapi3-examples": "1.0.0",
-                "nexmo/api-specification": "1.0.0",
-                "oai/openapi-specification": "3.0.2",
-                "phpstan/phpstan": "^0.12.0",
-                "phpunit/phpunit": "^6.5"
-            },
-            "bin": [
-                "bin/php-openapi"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "cebe\\openapi\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Carsten Brandt",
-                    "email": "mail@cebe.cc",
-                    "homepage": "https://cebe.cc/",
-                    "role": "Creator"
-                }
-            ],
-            "description": "READ OpenAPI yaml files and make the content accessable in PHP objects.",
-            "homepage": "https://github.com/cebe/php-openapi#readme",
-            "keywords": [
-                "openapi"
-            ],
-            "time": "2020-03-06T18:56:46+00:00"
         },
         {
             "name": "curl/curl",
@@ -538,72 +475,6 @@
             "time": "2019-12-04T09:55:33+00:00"
         },
         {
-            "name": "justinrainbow/json-schema",
-            "version": "5.2.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "44c6787311242a979fa15c704327c20e7221a0e4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/44c6787311242a979fa15c704327c20e7221a0e4",
-                "reference": "44c6787311242a979fa15c704327c20e7221a0e4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
-                "json-schema/json-schema-test-suite": "1.2.0",
-                "phpunit/phpunit": "^4.8.35"
-            },
-            "bin": [
-                "bin/validate-json"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "JsonSchema\\": "src/JsonSchema/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bruno Prieto Reis",
-                    "email": "bruno.p.reis@gmail.com"
-                },
-                {
-                    "name": "Justin Rainbow",
-                    "email": "justin.rainbow@gmail.com"
-                },
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                },
-                {
-                    "name": "Robert Schönthal",
-                    "email": "seroscho@googlemail.com"
-                }
-            ],
-            "description": "A library to validate a json schema.",
-            "homepage": "https://github.com/justinrainbow/json-schema",
-            "keywords": [
-                "json",
-                "schema"
-            ],
-            "time": "2019-09-25T14:49:45+00:00"
-        },
-        {
             "name": "lcobucci/jwt",
             "version": "3.2.5",
             "source": {
@@ -713,16 +584,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.1.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "8fe0130838801410d0c7fc8d2f80a290ade0f936"
+                "reference": "68fcaf0e19a7750be7be1f216ef5dc87cbcebf7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/8fe0130838801410d0c7fc8d2f80a290ade0f936",
-                "reference": "8fe0130838801410d0c7fc8d2f80a290ade0f936",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/68fcaf0e19a7750be7be1f216ef5dc87cbcebf7b",
+                "reference": "68fcaf0e19a7750be7be1f216ef5dc87cbcebf7b",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +638,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2020-03-12T14:58:42+00:00"
+            "time": "2020-04-07T07:01:56+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -973,64 +844,6 @@
             "time": "2019-03-20T06:36:38+00:00"
         },
         {
-            "name": "symfony/polyfill-ctype",
-            "version": "v1.15.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
-                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-ctype": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.15-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for ctype functions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "ctype",
-                "polyfill",
-                "portable"
-            ],
-            "time": "2020-02-27T09:26:54+00:00"
-        },
-        {
             "name": "symfony/process",
             "version": "v3.4.39",
             "source": {
@@ -1078,65 +891,6 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2020-03-20T06:07:50+00:00"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v3.4.39",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e701b47e11749970f63803879c4febb520f07b6c",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "conflict": {
-                "symfony/console": "<3.4"
-            },
-            "require-dev": {
-                "symfony/console": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "https://symfony.com",
-            "time": "2020-03-25T12:02:26+00:00"
         },
         {
             "name": "whichbrowser/parser",
@@ -1497,7 +1251,7 @@
             "version": "v1.7.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular/bower-angular.git",
+                "url": "git@github.com:angular/bower-angular.git",
                 "reference": "84a5b810f33f82a552cee361268b77181691ce65"
             },
             "dist": {
@@ -1745,6 +1499,69 @@
             ]
         },
         {
+            "name": "cebe/php-openapi",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cebe/php-openapi.git",
+                "reference": "ff90fcaa81f9305767ba64bab5175af652302edc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cebe/php-openapi/zipball/ff90fcaa81f9305767ba64bab5175af652302edc",
+                "reference": "ff90fcaa81f9305767ba64bab5175af652302edc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "justinrainbow/json-schema": "^5.0",
+                "php": ">=7.1.0",
+                "symfony/yaml": "^3.0 | ~4.0.0 | ~4.1.0 | ~4.2.0 | ~4.3.0 | ^5.0"
+            },
+            "require-dev": {
+                "apis-guru/openapi-directory": "1.0.0",
+                "cebe/indent": "*",
+                "friendsofphp/php-cs-fixer": "~2.16.1",
+                "mermade/openapi3-examples": "1.0.0",
+                "nexmo/api-specification": "1.0.0",
+                "oai/openapi-specification": "3.0.2",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^6.5"
+            },
+            "bin": [
+                "bin/php-openapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "cebe\\openapi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "https://cebe.cc/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "READ OpenAPI yaml files and make the content accessable in PHP objects.",
+            "homepage": "https://github.com/cebe/php-openapi#readme",
+            "keywords": [
+                "openapi"
+            ],
+            "time": "2020-04-07T15:56:45+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.3.0",
             "source": {
@@ -1801,17 +1618,83 @@
             "time": "2019-10-21T16:45:58+00:00"
         },
         {
-            "name": "luyadev/luya-module-cms",
-            "version": "3.0.3",
+            "name": "justinrainbow/json-schema",
+            "version": "5.2.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/luyadev/luya-module-cms.git",
-                "reference": "29d05465d687976110f6f9086792522eea470bb1"
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "44c6787311242a979fa15c704327c20e7221a0e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/29d05465d687976110f6f9086792522eea470bb1",
-                "reference": "29d05465d687976110f6f9086792522eea470bb1",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/44c6787311242a979fa15c704327c20e7221a0e4",
+                "reference": "44c6787311242a979fa15c704327c20e7221a0e4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
+                "json-schema/json-schema-test-suite": "1.2.0",
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JsonSchema\\": "src/JsonSchema/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ],
+            "time": "2019-09-25T14:49:45+00:00"
+        },
+        {
+            "name": "luyadev/luya-module-cms",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/luyadev/luya-module-cms.git",
+                "reference": "06df2b3690590dbc56f58781ef25b992dba2255a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/luyadev/luya-module-cms/zipball/06df2b3690590dbc56f58781ef25b992dba2255a",
+                "reference": "06df2b3690590dbc56f58781ef25b992dba2255a",
                 "shasum": ""
             },
             "require-dev": {
@@ -1862,24 +1745,24 @@
                 "yii2",
                 "yii2-cms"
             ],
-            "time": "2020-03-24T16:28:50+00:00"
+            "time": "2020-04-14T09:09:35+00:00"
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "1.0.28",
+            "version": "1.0.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "3aee7c2f83994b4c78967645cbb3f0108bc7f745"
+                "reference": "94055b5ec1f4bc0903240a6ad85aa8a78350c5c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/3aee7c2f83994b4c78967645cbb3f0108bc7f745",
-                "reference": "3aee7c2f83994b4c78967645cbb3f0108bc7f745",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/94055b5ec1f4bc0903240a6ad85aa8a78350c5c1",
+                "reference": "94055b5ec1f4bc0903240a6ad85aa8a78350c5c1",
                 "shasum": ""
             },
             "require": {
-                "curl/curl": "^2.0 || ^1.0",
+                "curl/curl": "*",
                 "luyadev/luya-core": "*",
                 "luyadev/luya-module-admin": "*",
                 "luyadev/luya-module-cms": "*",
@@ -1920,7 +1803,7 @@
                 "module",
                 "php"
             ],
-            "time": "2020-03-17T15:29:11+00:00"
+            "time": "2020-04-13T15:50:39+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2055,18 +1938,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -2336,8 +2219,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -2384,8 +2267,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -2426,8 +2309,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -2475,8 +2358,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -2606,8 +2489,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -3230,13 +3113,130 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.15-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "time": "2020-02-27T09:26:54+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.4.39",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "e701b47e11749970f63803879c4febb520f07b6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e701b47e11749970f63803879c4febb520f07b6c",
+                "reference": "e701b47e11749970f63803879c4febb520f07b6c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "conflict": {
+                "symfony/console": "<3.4"
+            },
+            "require-dev": {
+                "symfony/console": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2020-03-25T12:02:26+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -3395,16 +3395,16 @@
         },
         {
             "name": "unglue/client",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unglue-workflow/client.git",
-                "reference": "733ae73160fc5d5a1fae7f47047fcf3a56fadc8c"
+                "reference": "95bed0f8e07ef3d9141eea11cace01769f569242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unglue-workflow/client/zipball/733ae73160fc5d5a1fae7f47047fcf3a56fadc8c",
-                "reference": "733ae73160fc5d5a1fae7f47047fcf3a56fadc8c",
+                "url": "https://api.github.com/repos/unglue-workflow/client/zipball/95bed0f8e07ef3d9141eea11cace01769f569242",
+                "reference": "95bed0f8e07ef3d9141eea11cace01769f569242",
                 "shasum": ""
             },
             "require": {
@@ -3451,7 +3451,7 @@
                 }
             ],
             "description": "The client binary which sends the data to the server and creates the output from the API response.",
-            "time": "2019-12-04T13:15:04+00:00"
+            "time": "2020-04-05T08:02:10+00:00"
         },
         {
             "name": "webmozart/assert",

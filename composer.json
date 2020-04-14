@@ -34,8 +34,7 @@
       "flowjs/flow-php-server":"^1.0",
       "sizeg/yii2-jwt":"^1.2",
       "whichbrowser/parser":"^2.0",
-      "robthree/twofactorauth":"^1.7",
-      "cebe/php-openapi":"^1.4"
+      "robthree/twofactorauth":"^1.7"
    },
    "require-dev":{
       "luyadev/luya-testsuite":"^1.0",
@@ -51,7 +50,11 @@
       "bower-asset/bowser":"^1.9",
       "bower-asset/echarts":"4.5.0",
       "bower-asset/ui-cropper":"^1.0",
-      "unglue/client":"^1.4.1"
+      "unglue/client":"^1.4.1",
+      "cebe/php-openapi":"^1.4"
+   },
+   "suggest": {
+       "cebe/php-openapi":"Is required in order to generate the OpenAPI File."
    },
    "autoload":{
       "psr-4":{
