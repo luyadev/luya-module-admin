@@ -2,22 +2,17 @@
 
 namespace luya\admin\apis;
 
-use cebe\openapi\spec\Components;
 use Yii;
 use luya\Boot;
 use luya\Exception;
 use luya\admin\models\UserOnline;
 use luya\rest\Controller;
-use cebe\openapi\spec\Info;
-use cebe\openapi\spec\OpenApi;
-use cebe\openapi\spec\SecurityScheme;
-use cebe\openapi\spec\Server;
 use luya\admin\openapi\Generator;
-use luya\helpers\Url;
+use luya\admin\openapi\OpenApiGenerator;
 use yii\web\ForbiddenHttpException;
 
 /**
- * Remove API, allows to collect system data with a valid $token.
+ * Remote API, allows to collect system data with a valid $token.
  *
  * The remote api can only access with the oken but is not secured by a loggged in user.
  *
@@ -67,40 +62,12 @@ class RemoteController extends Controller
             throw new ForbiddenHttpException("Rendering openApi is disabled by the module.");
         }
         $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);
+        $generator->controllerMapEndpointPrefix = 'admin/';
 
-        // generate the openapi file
-        $definition = [
-            'openapi' => '3.0.2',
-            'info' => new Info([
-                'title' => Yii::$app->siteTitle,
-                'version' => '1.0.0',
-            ]),
-            'paths' => $generator->getPaths(),
-            'components' => new Components([
-                'securitySchemes' => [
-                    'BearerAuth' => new SecurityScheme([
-                        'type' => 'http',
-                        'scheme' => 'bearer',
-                        'bearerFormat' => 'JWT'    # optional, arbitrary value for documentation purposes
-                    ])
-                ],
-            ]),
-            'security' => [
-                'BearerAuth' => [],
-            ],
-            'servers' => [
-                new Server([
-                    'url' => Url::base(true),
-                    'description' => Yii::$app->siteTitle . ' Server',
-                ])
-            ]
-        ];
-
-        // write the json file
-        $openapi = new OpenApi($definition);
+        $openapi = new OpenApiGenerator($generator);
 
         // always return as json
-        return $this->asJson($openapi->getSerializableData());
+        return $this->asJson($openapi->create()->getSerializableData());
     }
 
     /**

@@ -14,9 +14,11 @@ use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageImage;
 use luya\admin\openapi\Generator;
+use luya\admin\openapi\OpenApiGenerator;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\Bootstrap;
+use luya\web\UrlManager;
 
 class GeneratorTest extends AdminModelTestCase
 {
@@ -84,5 +86,23 @@ class GeneratorTest extends AdminModelTestCase
         $paths = $generator->getPaths();
 
         $this->assertTrue(count($paths) > 0);
+    }
+
+    public function testOpenApiGenerator()
+    {
+        $this->createAdminLangFixture();
+        $urlManager = new UrlManager([
+            'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/does-not-exsts', 'admin/api-admin-remote'],
+                ]
+            ]
+        
+        ]);
+
+        $generator = new Generator($urlManager, []);
+
+        $this->assertSame(['/admin/api-admin-remotes'], array_keys($generator->getPaths()));
     }
 }

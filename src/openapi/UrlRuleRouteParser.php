@@ -11,7 +11,6 @@ use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
-use luya\helpers\Inflector;
 use Yii;
 use yii\rest\CreateAction;
 use yii\rest\UpdateAction;
@@ -29,19 +28,24 @@ class UrlRuleRouteParser extends BasePathParser
     protected $controllerMapRoute;
     protected $rules;
     protected $controller;
+    protected $endpointName;
 
     /**
      * @var ControllerSpecs
      */
     protected $controllerSpecs;
 
-    public function __construct($patternRoute, $controllerMapRoute, array $rules)
+    public function __construct($patternRoute, $controllerMapRoute, array $rules, $endpointName)
     {
         $this->patternRoute = $patternRoute;
         $this->controllerMapRoute = $controllerMapRoute;
         $this->rules = $rules;
         $this->controller = Yii::$app->createController($controllerMapRoute)[0];
-        $this->controllerSpecs = new ControllerSpecs($this->controller);
+
+        if ($this->controller) {
+            $this->controllerSpecs = new ControllerSpecs($this->controller);
+        }
+        $this->endpointName = $endpointName;
     }
 
     /**
@@ -74,7 +78,7 @@ class UrlRuleRouteParser extends BasePathParser
      */
     public function isValid(): bool
     {
-        return !empty($this->getOperations());
+        return $this->controller && !empty($this->getOperations()) ? true : false;
     }
 
     /**

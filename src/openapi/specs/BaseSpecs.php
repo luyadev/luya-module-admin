@@ -120,26 +120,40 @@ abstract class BaseSpecs implements SpecInterface
 
         return [
             $statusCode => $response,
-            500 => new Response([
-                'description' => 'Unexpected error',
-                /*
-                
+            201 => new Response(['description' => 'A resource was successfully created in response to a POST request. The Location header contains the URL pointing to the newly created resource.']),
+            204 => new Response(['description' => 'The request was handled successfully and the response contains no body content (like a DELETE request).']),
+            304 => new Response(['description' => 'The resource was not modified. You can use the cached version.']),
+            400 => new Response(['description' => 'Bad request. This could be caused by various actions by the user, such as providing invalid JSON data in the request body, providing invalid action parameters, etc.']),
+            401 => new Response(['description' => 'Authentication failed.']),
+            403 => new Response(['description' => 'The authenticated user is not allowed to access the specified API endpoint.']),
+            404 => new Response(['description' => 'The requested resource does not exist.']),
+            405 => new Response(['description' => 'Method not allowed. Please check the Allow header for the allowed HTTP methods.']),
+            422 => new Response([
+                'description' => 'Data validation failed (in response to a POST request, for example). Please check the response body for detailed error messages.',
                 'content' => [
                     'application/json' => new MediaType([
                         'schema' => [
-                            'type' => 'object',
-                            'properties' => [
-                                'message' => [
-                                    'type' => 'string',
-                                    'title' => 'Message',
-                                    'description' => 'Message of the exception',
+                            'type' => 'array',  
+                            'items' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'field' => [
+                                        'type' => 'string',
+                                        'example' => 'email',
+                                    ],
+                                    'message' => [
+                                        'type' => 'string',
+                                        'example' => 'Unable to find the given email or password is wrong.'
+                                    ]
                                 ]
-                            ],
+                            ]
+                            
                         ],
                     ])
                 ]
-                */
-            ])
+            ]),
+            429 => new Response(['description' => 'Too many requests. The request was rejected due to rate limiting.']),
+            500 => new Response(['description' => 'Internal server error. This could be caused by internal program errors.'])
         ];
     }
 
@@ -151,7 +165,10 @@ abstract class BaseSpecs implements SpecInterface
         $schema = false;
 
         if ($object instanceof ActiveRecord) {
-            $schema = new ActiveRecordToSchema($this, $object);
+            // ensure the active record table exists
+            if (Yii::$app->db->getTableSchema($object::tableName(), true)) {
+                $schema = new ActiveRecordToSchema($this, $object);
+            }
         } elseif ($object instanceof ActiveDataProvider) {
             return [
                 'application/json' => new MediaType([

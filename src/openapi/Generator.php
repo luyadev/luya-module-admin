@@ -2,14 +2,12 @@
 
 namespace luya\admin\openapi;
 
-use cebe\openapi\spec\OpenApi;
+use Yii;
+use ReflectionClass;
 use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
-use ReflectionClass;
-use Yii;
 use yii\base\BaseObject;
-use yii\base\InvalidConfigException;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
 
@@ -22,7 +20,10 @@ use yii\web\UrlManager;
 class Generator extends BaseObject
 {
     protected $urlManager;
+
     protected $controllerMap;
+
+    public $controllerMapEndpointPrefix;
 
     /**
      * Add actions (routes) from controller map which are not covered by an urlRule from above
@@ -45,14 +46,20 @@ class Generator extends BaseObject
      * Constructor.
      *
      * @param UrlManager $urlManager
-     * @param array $controllerMap
+     * @param array $controllerMap The controllerMap is an array including the resolve path and object conifugration for the rest controller:
+     * ```php
+     * $controllerMap = [
+     *   'the-endpoint-resolve-name' => [
+     *       'class' => 'the\path\to\the\Rest\Controller', // should be an instance of yii\rest\Controller
+     *       'module' => Yii::$app->getModule('foobar'), // 'the module which should be invoken for the controller',
+     *   ]
+     * ]
+     * ```
+     * + The key is the endpointName to resolve, lets say the url.
+     * + Value is an array containing `class` and `module`
      */
     public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
-        if (!class_exists(OpenApi::class)) {
-            throw new InvalidConfigException("The composer package cebe/php-openapi must be installed to generate the OpenAPI file.");
-        }
-        
         $this->urlManager = $urlManager;   
         $this->controllerMap = $controllerMap;
     }
@@ -68,12 +75,20 @@ class Generator extends BaseObject
         // get all rules from the urlManager
         foreach ($this->urlManager->rules as $rule) {
             if ($rule instanceof UrlRule) {
+                $controllerMap = $rule->controller;
                 $reflection = new ReflectionClass($rule);
                 $property = $reflection->getProperty('rules');
                 $property->setAccessible(true);
                 $array = $property->getValue($rule);
-                foreach ($array as $rule => $config) {
-                    $rules[$rule] = ArrayHelper::index($config, null, 'name');
+
+                // as rules can have multiple controllers defined
+                // we have to find the absolute endpointName in the map
+                // and associated the route with the controller name
+                foreach ($controllerMap as $endpointName => $controller) {
+                    // get the rule for the corresponing endpointName
+                    if (isset($array[$endpointName])) {
+                        $rules[$controller][] = ['rules' => ArrayHelper::index($array[$endpointName], null, 'name'), 'endpointName' => $endpointName];
+                    }
                 }
 
                 unset($array, $reflection, $property);
@@ -88,9 +103,11 @@ class Generator extends BaseObject
      */
     protected function getPathsFromUrlRules()
     {
-        foreach ($this->getUrlRules() as $controllerMapRoute => $items) {
-            foreach ($items as $patternRoute => $ruleConfig) {
-                $this->addPath(new UrlRuleRouteParser($patternRoute, $controllerMapRoute, $ruleConfig));
+        foreach ($this->getUrlRules() as $controllerName => $config) {
+            foreach ($config as $item) {
+                foreach ($item['rules'] as $patternRoute => $ruleConfig) {
+                    $this->addPath(new UrlRuleRouteParser($patternRoute, $controllerName, $ruleConfig, $item['endpointName']));
+                }
             }
         }
     }
@@ -102,7 +119,7 @@ class Generator extends BaseObject
     {
         foreach ($this->controllerMap as $key => $map) {
             $controller = Yii::createObject($map['class'], [$key, $map['module']]);
-            $controllerMapRoute = 'admin/'.$key;
+            $controllerMapRoute = $this->controllerMapEndpointPrefix.$key;
             foreach (ObjectHelper::getActions($controller) as $actionName) {
                 if ($controller instanceof Api && in_array($actionName, $this->ignoredApiActions)) {
                     continue;
