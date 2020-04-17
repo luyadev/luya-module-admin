@@ -26,6 +26,14 @@ class ControllerSpecs extends BaseSpecs
     /**
      * {@inheritDoc}
      */
+    public function getVerbName()
+    {
+        return 'get';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getControllerObject()
     {
         return $this->controller;

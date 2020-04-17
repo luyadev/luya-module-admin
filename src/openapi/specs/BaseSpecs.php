@@ -36,6 +36,19 @@ abstract class BaseSpecs implements SpecInterface
     abstract public function getReflection();
 
     /**
+     * Get the context verbname:
+     * 
+     * + get
+     * + post
+     * + delete
+     * + put
+     * + option
+     *
+     * @return string
+     */
+    abstract public function getVerbName();
+
+    /**
      * @return BaseAction
      */
     abstract public function getActionObject();
@@ -154,6 +167,8 @@ abstract class BaseSpecs implements SpecInterface
             429 => new Response(['description' => 'Too many requests. The request was rejected due to rate limiting.']),
             500 => new Response(['description' => 'Internal server error. This could be caused by internal program errors.'])
         ];
+
+        // @TODO: determine status codes based on $this->getVerbName();
     }
 
     protected function modelContextToResponse($contextModel, $isArray = false)

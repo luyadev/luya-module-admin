@@ -129,7 +129,7 @@ class UrlRuleRouteParser extends BasePathParser
             return false;
         }
 
-        $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route));
+        $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route), $verbName);
 
         $actionObject = $actionSpecs->getActionObject();
         if (!$actionObject) {

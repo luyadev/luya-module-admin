@@ -19,10 +19,21 @@ class ControllerActionSpecs extends BaseSpecs
  
     protected $actioName;
 
-    public function __construct(Controller $controller, $actionName)
+    protected $verbName;
+
+    public function __construct(Controller $controller, $actionName, $verbName)
     {
         $this->controller = $controller;
         $this->actioName = $actionName;
+        $this->verbName = $verbName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getVerbName()
+    {
+        return strtolower($this->verbName);
     }
 
     /**
