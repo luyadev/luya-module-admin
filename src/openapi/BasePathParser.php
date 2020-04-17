@@ -66,7 +66,8 @@ abstract class BasePathParser
     {
         $route = str_replace(["admin/api", "admin/"], '', $route);
 
-        return Inflector::camel2words(Inflector::id2camel($route));
+        return ltrim(trim($route, '/'));
+        //return Inflector::camel2words(Inflector::id2camel($route));
     }
 
     /**

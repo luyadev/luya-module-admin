@@ -171,7 +171,7 @@ class UrlRuleRouteParser extends BasePathParser
         }
 
         return new Operation(array_filter([
-            'tags' => [$this->normalizeTag($this->controllerMapRoute)],
+            'tags' => [$this->normalizeTag($this->endpointName)],
             'summary' => $actionSpecs->getSummary(),
             'description' => $actionSpecs->getDescription(),
             'operationId' => $this->generateOperationId($verbName),
