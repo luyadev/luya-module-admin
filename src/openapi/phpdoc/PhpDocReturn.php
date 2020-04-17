@@ -4,7 +4,7 @@ namespace luya\admin\openapi\phpdoc;
 
 /**
  * Return Object from PhpDoc.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -16,7 +16,7 @@ class PhpDocReturn
     public function __construct(PhpDocParser $phpDocParser, array $definition)
     {
         $this->phpDocParser = $phpDocParser;
-        $this->definition = $definition;    
+        $this->definition = $definition;
     }
 
     public function getDescription()

@@ -7,7 +7,7 @@ use ReflectionClass;
 
 /**
  * A Type Object whether for Return or Param.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -31,7 +31,7 @@ class PhpDocType
     public function __construct(PhpDocParser $phpDocParser, $type)
     {
         $this->rawName = $type;
-        $this->name = $phpDocParser->normalizeTypes($type);   
+        $this->name = $phpDocParser->normalizeTypes($type);
         $this->phpDocParser = $phpDocParser;
     }
 
@@ -85,7 +85,7 @@ class PhpDocType
     public function getClassName()
     {
         if ($this->_className !== null) {
-            return $this->_className;    
+            return $this->_className;
         }
 
         if ($this->getIsScalar() || $this->getIsEmpty()) {
@@ -105,7 +105,7 @@ class PhpDocType
             return $this->name;
         }
 
-        // get the 
+        // get the
 
         $ensureClassName = $this->phpDocParser->ensureClassName($this->name);
 

@@ -9,7 +9,7 @@ use yii\db\BaseActiveRecord;
 
 /**
  * Generate Schema Specs from Active Record.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

@@ -1,12 +1,13 @@
 <?php
 
 namespace luya\admin\openapi\phpdoc;
+
 use luya\helpers\StringHelper;
 use Reflector;
 
 /**
  * Create Parser Object from reflection class to read PhpDocs.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -40,7 +41,7 @@ class PhpDocParser
             'property' => [], // @property <type> $firstname <description>
         ];
 
-        foreach(explode(PHP_EOL, $reflection->getDocComment()) as $row) {
+        foreach (explode(PHP_EOL, $reflection->getDocComment()) as $row) {
             $row = ltrim($row);
             if (in_array($row, ["/**", "/*", "*/"])) {
                 continue;
@@ -48,7 +49,6 @@ class PhpDocParser
             $row = ltrim($row, "* ");
 
             if (substr($row, 0, 1) == '@') {
-
                 if (StringHelper::startsWith($row, '@param') || StringHelper::startsWith($row, '@property')) {
                     preg_match("/^(@[a-z]+)\s+([^\s]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
                     unset($matches[0]);
@@ -85,10 +85,10 @@ class PhpDocParser
     }
 
     /**
-     * 
+     *
      *
      * @param string $paramName
-     * @return PhpDocParam 
+     * @return PhpDocParam
      */
     public function getProperty($propertyName)
     {
@@ -119,10 +119,10 @@ class PhpDocParser
     }
 
     /**
-     * 
+     *
      *
      * @param string $paramName
-     * @return PhpDocParam 
+     * @return PhpDocParam
      */
     public function getParam($paramName)
     {
@@ -139,7 +139,7 @@ class PhpDocParser
 
     /**
      * Return types to a single type.
-     * 
+     *
      * Assuming `boolean|string|array` it will return the `boolean` unless $preferred is configured.
      *
      * @param string $schema
@@ -210,11 +210,11 @@ class PhpDocParser
 
     /**
      * Returns all use statements from a class file.
-     * 
+     *
      * + luya\cms\models\NavContainer
      * + luya\cms\models\NavItemModule
      * + luya\base\DynamicModel as FooBar
-     * 
+     *
      * @return array
      */
     public function getUseClasses()
@@ -226,7 +226,6 @@ class PhpDocParser
         $startCapture = 0;
         foreach ($tokens as $token) {
             if (is_array($token)) {
-
                 if ($token[0] == T_DOC_COMMENT) {
                     break;
                 }

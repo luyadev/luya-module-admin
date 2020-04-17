@@ -659,8 +659,8 @@ abstract class Plugin extends Component implements TypesInterface
         if ($this->isAttributeWriteable($event) && $this->onBeforeListFind($event)) {
             if ($this->i18n) {
                 $event->sender->setAttribute(
-                        $this->name, 
-                        I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue, Yii::$app->adminLanguage->defaultLanguageShortCode)
+                    $this->name,
+                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue, Yii::$app->adminLanguage->defaultLanguageShortCode)
                 );
             }
             $this->onAfterListFind($event);
@@ -701,7 +701,7 @@ abstract class Plugin extends Component implements TypesInterface
         if ($this->isAttributeWriteable($event) && $this->onBeforeFind($event)) {
             if ($this->i18n) {
                 $event->sender->setAttribute(
-                    $this->name, 
+                    $this->name,
                     I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
                 );
             }

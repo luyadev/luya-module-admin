@@ -473,9 +473,9 @@ class Api extends RestActiveController
     
     /**
      * User Unlock
-     * 
+     *
      * Unlock this API for the current logged in user.
-     * 
+     *
      * @return void
      */
     public function actionUnlock()
@@ -592,7 +592,7 @@ class Api extends RestActiveController
 
     /**
      * Generate Sort attributes
-     * 
+     *
      * Generate an array of sortable attribute defintions from a ngrest config object.
      *
      * @param Config $config The Ngrest Config object

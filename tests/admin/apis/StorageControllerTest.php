@@ -61,10 +61,7 @@ class StorageControllerTest extends AdminModelTestCase
 
     public function testFileCrop()
     {
-        
-
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture([
                 'modelClass' => StorageFile::class,
             ]);
@@ -75,14 +72,12 @@ class StorageControllerTest extends AdminModelTestCase
             
             $this->expectException(InvalidArgumentException::class);
             $data = $scope->runControllerAction($ctrl, 'file-crop');
-
         });
     }
 
     public function testFileReplace()
     {
-        PermissionScope::run($this->app, function(PermissionScope $scope) {
-
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
             new NgRestModelFixture([
                 'modelClass' => StorageFile::class,
             ]);
@@ -93,7 +88,6 @@ class StorageControllerTest extends AdminModelTestCase
             
             $this->expectException(ErrorException::class);
             $data = $scope->runControllerAction($ctrl, 'file-replace');
-
         });
     }
 }

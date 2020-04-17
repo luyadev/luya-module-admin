@@ -12,7 +12,7 @@ use yii\base\Controller;
 
 /**
  * Generate a path for a absolute route to an action.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

@@ -13,9 +13,9 @@ use luya\helpers\Url;
 
 /**
  * Generate the OpenApi Instance.
- * 
+ *
  * Usage example of how to create a custom OpenApi file generator.
- * 
+ *
  * ```php
  * $generator = new Generator(Yii::$app->urlManager, [
  *     // additional not yii\web\RestRule Endpoints
@@ -50,7 +50,7 @@ class OpenApiGenerator
             throw new InvalidConfigException("The composer package cebe/php-openapi must be installed to generate the OpenAPI file.");
         }
         
-        $this->generator = $generator;    
+        $this->generator = $generator;
     }
 
     /**
@@ -130,7 +130,7 @@ class OpenApiGenerator
 
     /**
      * Create the OpenApi Instance.
-     * 
+     *
      * @return OpenApi
      */
     public function create()

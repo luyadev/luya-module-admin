@@ -38,7 +38,7 @@ class CommonController extends RestController
 
     /**
      * Call Reload Button
-     * 
+     *
      * Run the callback function of a reload button configure in {{luya\admin\Module::$reloadButtons}}
      *
      * @param integer|string $key The array key from reload buttons array

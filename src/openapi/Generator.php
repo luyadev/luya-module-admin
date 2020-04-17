@@ -13,7 +13,7 @@ use yii\web\UrlManager;
 
 /**
  * Generate Path Objects from UrlManager and ControllerMap.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -51,7 +51,7 @@ class Generator extends BaseObject
      * $controllerMap = [
      *   // string annotation
      *   'my-api-endpoint' => MyTestRestController::class,
-     * 
+     *
      *   // with optional module declaration
      *   'the-endpoint-resolve-name' => [
      *       'class' => TheEndpointController::class, // should be an instance of yii\rest\Controller
@@ -64,7 +64,7 @@ class Generator extends BaseObject
      */
     public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
-        $this->urlManager = $urlManager;   
+        $this->urlManager = $urlManager;
         $this->controllerMap = $controllerMap;
     }
 
@@ -122,7 +122,6 @@ class Generator extends BaseObject
     protected function getPathsFromControllerMap()
     {
         foreach ($this->controllerMap as $key => $map) {
-
             if (is_array($map)) {
                 $controller = Yii::createObject($map['class'], [$key, $map['module']]);
             } else {
@@ -159,7 +158,7 @@ class Generator extends BaseObject
                 $this->_routes[] = $route;
             }
         }
-    } 
+    }
 
     /**
      * Get paths for given config.

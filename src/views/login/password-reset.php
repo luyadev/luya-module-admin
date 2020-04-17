@@ -27,7 +27,7 @@ $spinner = Svg::widget([
 
 <?php if (!empty($model->getErrors())): ?>
 <div class="login-status mt-3 mb-0 alert alert-danger shadow">
-    <?php foreach($model->getErrorSummary(true) as $error): ?>
+    <?php foreach ($model->getErrorSummary(true) as $error): ?>
         <p class="my-1"><?= $error; ?></p>
     <?php endforeach; ?>
 </div>

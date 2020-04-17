@@ -2,6 +2,7 @@
 
 use luya\admin\assets\Main;
 use luya\helpers\Url;
+
 Main::register($this);
 $this->beginPage()
 ?>

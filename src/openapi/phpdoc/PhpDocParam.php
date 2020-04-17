@@ -4,9 +4,9 @@ namespace luya\admin\openapi\phpdoc;
 
 /**
  * Php Doc Param Object.
- * 
+ *
  * The param notation is the same as for the @property annotation therfore PhpDocParm serves both param and property.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

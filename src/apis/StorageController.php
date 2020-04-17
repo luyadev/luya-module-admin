@@ -194,7 +194,6 @@ class StorageController extends RestController
         $data = base64_decode($data);
 
         if (!$saveAsCopy && $fileId) {
-            
             Storage::replaceFileFromContent($file->name_new_compound, $data);
             return Storage::refreshFile($fileId, $file->getServerSource());
         }
@@ -398,7 +397,6 @@ class StorageController extends RestController
                 }
                 
                 if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
-
                     return Storage::refreshFile($file->id, $newFileSource);
                 }
             }

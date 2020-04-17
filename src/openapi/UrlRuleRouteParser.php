@@ -18,7 +18,7 @@ use yii\web\UrlRule;
 
 /**
  * Generate a Path for a $rules array containg UrlRule objects.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

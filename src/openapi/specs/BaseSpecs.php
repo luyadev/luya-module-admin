@@ -21,10 +21,10 @@ use yii\rest\IndexAction;
 
 /**
  * Generate Specs Details.
- * 
+ *
  * + works with the class php doc block
  * + works with the method php doc block
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -73,8 +73,7 @@ abstract class BaseSpecs implements SpecInterface
     {
         $params = [];
         if ($this->getReflection() instanceof ReflectionMethod) {
-            foreach ($this->getReflection()->getParameters() AS $arg) {
-
+            foreach ($this->getReflection()->getParameters() as $arg) {
                 $paramDoc = $this->getPhpDocParser()->getParam($arg->getName());
 
                 $paramType = $paramDoc->getType()->getNoramlizeName();
@@ -133,7 +132,7 @@ abstract class BaseSpecs implements SpecInterface
                 'content' => [
                     'application/json' => new MediaType([
                         'schema' => [
-                            'type' => 'array',  
+                            'type' => 'array',
                             'items' => [
                                 'type' => 'object',
                                 'properties' => [
@@ -159,7 +158,6 @@ abstract class BaseSpecs implements SpecInterface
 
     protected function modelContextToResponse($contextModel, $isArray = false)
     {
-
         $object = Yii::createObject($contextModel);
 
         $schema = false;
@@ -277,7 +275,7 @@ abstract class BaseSpecs implements SpecInterface
         // handle php object type
         if ($type->getIsClass()) {
             return $this->modelContextToResponse($type->getClassName(), $type->getIsArray());
-        } 
+        }
 
         // handle type array
         if ($type->getIsArray()) {
