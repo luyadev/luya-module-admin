@@ -12,15 +12,38 @@ use cebe\openapi\spec\Components;
 use luya\helpers\Url;
 
 /**
- * Generate the OpenApi Instance
+ * Generate the OpenApi Instance.
  * 
+ * Usage example of how to create a custom OpenApi file generator.
+ * 
+ * ```php
+ * $generator = new Generator(Yii::$app->urlManager, [
+ *     // additional not yii\web\RestRule Endpoints
+ *     'user' => UserRestController::class,
+ *     'groups' => GroupRestController::class,
+ * ]);
+ *
+ * $openapi = new OpenApiGenerator($generator);
+ *
+ * // always return as json
+ * return $this->asJson($openapi->create()->getSerializableData());
+ * ```
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
 class OpenApiGenerator
 {
+    /**
+     * @var Generator
+     */
     public $generator;
 
+    /**
+     * Constructor with Generator Object
+     *
+     * @param Generator $generator
+     */
     public function __construct(Generator $generator)
     {
         if (!class_exists(OpenApi::class)) {
@@ -30,6 +53,11 @@ class OpenApiGenerator
         $this->generator = $generator;    
     }
 
+    /**
+     * Get Info Object
+     *
+     * @return Info
+     */
     public function getInfo()
     {
         return new Info([
@@ -38,6 +66,11 @@ class OpenApiGenerator
         ]);
     }
 
+    /**
+     * Get Components Object array
+     *
+     * @return Components
+     */
     public function getComponents()
     {
         return new Components([
@@ -51,6 +84,11 @@ class OpenApiGenerator
         ]);
     }
 
+    /**
+     * Get Security Array
+     *
+     * @return array
+     */
     public function getSecurity()
     {
         return [
@@ -58,6 +96,11 @@ class OpenApiGenerator
         ];
     }
 
+    /**
+     * Get Servers
+     *
+     * @return array An array with Server objects
+     */
     public function getServers()
     {
         return [
@@ -68,6 +111,11 @@ class OpenApiGenerator
         ];
     }
 
+    /**
+     * Get base definition.
+     *
+     * @return array
+     */
     public function getDefinition()
     {
         return [
@@ -81,12 +129,12 @@ class OpenApiGenerator
     }
 
     /**
-     * Create the OpenApi Instance
+     * Create the OpenApi Instance.
+     * 
      * @return OpenApi
      */
     public function create()
     {
         return new OpenApi($this->getDefinition());
     }
-
 }

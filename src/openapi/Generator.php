@@ -49,9 +49,13 @@ class Generator extends BaseObject
      * @param array $controllerMap The controllerMap is an array including the resolve path and object conifugration for the rest controller:
      * ```php
      * $controllerMap = [
+     *   // string annotation
+     *   'my-api-endpoint' => MyTestRestController::class,
+     * 
+     *   // with optional module declaration
      *   'the-endpoint-resolve-name' => [
-     *       'class' => 'the\path\to\the\Rest\Controller', // should be an instance of yii\rest\Controller
-     *       'module' => Yii::$app->getModule('foobar'), // 'the module which should be invoken for the controller',
+     *       'class' => TheEndpointController::class, // should be an instance of yii\rest\Controller
+     *       'module' => Yii::$app->getModule('foobar'), // the module which should be invoken for the controller',
      *   ]
      * ]
      * ```
@@ -118,7 +122,13 @@ class Generator extends BaseObject
     protected function getPathsFromControllerMap()
     {
         foreach ($this->controllerMap as $key => $map) {
-            $controller = Yii::createObject($map['class'], [$key, $map['module']]);
+
+            if (is_array($map)) {
+                $controller = Yii::createObject($map['class'], [$key, $map['module']]);
+            } else {
+                $controller = Yii::createObject($map, [$key, Yii::$app]);
+            }
+            
             $controllerMapRoute = $this->controllerMapEndpointPrefix.$key;
             foreach (ObjectHelper::getActions($controller) as $actionName) {
                 if ($controller instanceof Api && in_array($actionName, $this->ignoredApiActions)) {
