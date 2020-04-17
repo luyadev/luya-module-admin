@@ -161,6 +161,8 @@ class PhpDocParser
      */
     public function normalizeTypes($type)
     {
+        $type = strtolower($type);
+
         // fix not supported short form types
         if ($type == 'bool') {
             $type = 'boolean';
@@ -169,7 +171,7 @@ class PhpDocParser
             $type = 'integer';
         }
 
-        return strtolower($type);
+        return $type;
     }
 
     /**
