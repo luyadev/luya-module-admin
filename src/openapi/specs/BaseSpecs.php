@@ -130,45 +130,48 @@ abstract class BaseSpecs implements SpecInterface
             $statusCode = 204;
         }
 
-        return [
+        $responseCodes = [
             $statusCode => $response,
-            201 => new Response(['description' => 'A resource was successfully created in response to a POST request. The Location header contains the URL pointing to the newly created resource.']),
-            204 => new Response(['description' => 'The request was handled successfully and the response contains no body content (like a DELETE request).']),
-            304 => new Response(['description' => 'The resource was not modified. You can use the cached version.']),
-            400 => new Response(['description' => 'Bad request. This could be caused by various actions by the user, such as providing invalid JSON data in the request body, providing invalid action parameters, etc.']),
+            400 => new Response(['description' => 'Bad request.']),
             401 => new Response(['description' => 'Authentication failed.']),
-            403 => new Response(['description' => 'The authenticated user is not allowed to access the specified API endpoint.']),
             404 => new Response(['description' => 'The requested resource does not exist.']),
-            405 => new Response(['description' => 'Method not allowed. Please check the Allow header for the allowed HTTP methods.']),
-            422 => new Response([
-                'description' => 'Data validation failed (in response to a POST request, for example). Please check the response body for detailed error messages.',
-                'content' => [
-                    'application/json' => new MediaType([
-                        'schema' => [
-                            'type' => 'array',
-                            'items' => [
-                                'type' => 'object',
-                                'properties' => [
-                                    'field' => [
-                                        'type' => 'string',
-                                        'example' => 'email',
-                                    ],
-                                    'message' => [
-                                        'type' => 'string',
-                                        'example' => 'Unable to find the given email or password is wrong.'
-                                    ]
-                                ]
-                            ]
-                            
-                        ],
-                    ])
-                ]
-            ]),
-            429 => new Response(['description' => 'Too many requests. The request was rejected due to rate limiting.']),
-            500 => new Response(['description' => 'Internal server error. This could be caused by internal program errors.'])
+            405 => new Response(['description' => 'Method not allowed.']),
+            500 => new Response(['description' => 'Internal server error.']),
         ];
 
-        // @TODO: determine status codes based on $this->getVerbName();
+        if ($this->getVerbName() == 'post' || $this->getVerbName() == 'put') {
+            $responseCodes[422] = $this->getValidationStatusCode();
+        }
+
+        return $responseCodes;
+    }
+
+    protected function getValidationStatusCode()
+    {
+        return new Response([
+            'description' => 'Data validation failed. Check the response body for detailed error messages.',
+            'content' => [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'field' => [
+                                    'type' => 'string',
+                                    'example' => 'email',
+                                ],
+                                'message' => [
+                                    'type' => 'string',
+                                    'example' => 'Unable to find the given user, email or password is wrong.'
+                                ]
+                            ]
+                        ]
+                        
+                    ],
+                ])
+            ]
+        ]);
     }
 
     protected function modelContextToResponse($contextModel, $isArray = false)
