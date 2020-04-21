@@ -280,6 +280,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $publicOpenApi = false;
 
     /**
+     * @var array An array with filter conditions, see {{luya\admin\openapi\Generator::$filterPaths}} for more detailes
+     * @since 3.2.0
+     * @see {{luya\admin\openapi\Generator::$filterPaths}}
+     */
+    public $filterOpenApiPaths = [];
+
+    /**
      * @inheritDoc
      */
     public static function onLoad()

@@ -7,6 +7,7 @@ use ReflectionClass;
 use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
+use luya\helpers\StringHelper;
 use yii\base\BaseObject;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
@@ -23,7 +24,17 @@ class Generator extends BaseObject
 
     protected $controllerMap;
 
+    /**
+     * @var string Prefix all controllers with this key `admin/` or `v1/`.
+     */
     public $controllerMapEndpointPrefix;
+
+    /**
+     * @var array A list of of paths which should be filtered out. See {luya\helpers\StringHelper::filterMatch()}} for more condition syntax docs. Assuming to have
+     * a path `/admin/api-admin-user` a filter path to filter out all apis with `api-admin` would be `'filterPaths' => ['/admin/api-admin*']`.
+     * @see {{luya\helpers\StringHelper::filterMatch()}} for function details.
+     */
+    public $filterPaths = [];
 
     /**
      * Add actions (routes) from controller map which are not covered by an urlRule from above
@@ -153,6 +164,12 @@ class Generator extends BaseObject
     private function addPath(BasePathParser $pathParser)
     {
         if ($pathParser->isValid()) {
+
+            if (!empty($this->filterPaths)) {
+                if (StringHelper::filterMatch($pathParser->getPath(), $this->filterPaths)) {
+                    return;
+                }
+            }
             $this->_paths[$pathParser->getPath()] = $pathParser->getPathItem();
             foreach ($pathParser->routes() as $route) {
                 $this->_routes[] = $route;

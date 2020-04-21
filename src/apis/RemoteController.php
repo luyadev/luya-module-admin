@@ -62,6 +62,7 @@ class RemoteController extends Controller
             throw new ForbiddenHttpException("Rendering openApi is disabled by the module.");
         }
         $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);
+        $generator->filterPaths = $this->module->filterOpenApiPaths;
         $generator->controllerMapEndpointPrefix = 'admin/';
 
         $openapi = new OpenApiGenerator($generator);

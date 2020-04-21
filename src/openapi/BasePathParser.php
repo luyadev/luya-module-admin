@@ -64,10 +64,9 @@ abstract class BasePathParser
      */
     public function normalizeTag($route)
     {
-        $route = str_replace(["admin/api", "admin/"], '', $route);
+        $route = str_replace(["admin/"], '', $route);
 
         return ltrim(trim($route, '/'));
-        //return Inflector::camel2words(Inflector::id2camel($route));
     }
 
     /**
