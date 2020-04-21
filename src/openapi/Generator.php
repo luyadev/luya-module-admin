@@ -20,8 +20,14 @@ use yii\web\UrlManager;
  */
 class Generator extends BaseObject
 {
+    /**
+     * @var UrlManager
+     */
     protected $urlManager;
 
+    /**
+     * @var array
+     */
     protected $controllerMap;
 
     /**
