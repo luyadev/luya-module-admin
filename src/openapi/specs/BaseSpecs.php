@@ -102,13 +102,55 @@ abstract class BaseSpecs implements SpecInterface
             }
         }
 
-        // @TODO add query params:
-        // fields=
-        // expand=
-        // page=
-        // per-page
+        if (ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false)) {
+            // fields
+            $params[] = new Parameter([
+                'name' => 'fields',
+                'in' => 'query',
+                'required' => false,
+                'description' => 'Provide a comma seperated list of fields which should be returned.',
+                'example' => 'id,email,firstname,lastname',
+                'schema' => new Schema(['type' => 'string']),
+            ]);
+            // expand
+            $params[] = new Parameter([
+                'name' => 'expand',
+                'in' => 'query',
+                'required' => false,
+                'description' => 'Provide a comma seperated list of extra attributes (for example relations) which should be expand.',
+                'example' => 'user,groups',
+                'schema' => new Schema(['type' => 'string']),
+            ]);
+            // page
+            $params[] = new Parameter([
+                'name' => 'page',
+                'in' => 'query',
+                'required' => false,
+                'description' => 'The page which should be resolved, page always starts as 1.',
+                'example' => '1',
+                'schema' => new Schema(['type' => 'integer']),
+            ]);
+            // per-page
+            $params[] = new Parameter([
+                'name' => 'per-page',
+                'in' => 'query',
+                'required' => false,
+                'description' => 'The amount of rows to return by a page. By default its 25 rows an usually can not exceed 100 rows.',
+                'example' => '100',
+                'schema' => new Schema(['type' => 'integer']),
+            ]);
+        }
+
+
         // _language
-        // _format
+        $params[] = new Parameter([
+            'name' => '_language',
+            'in' => 'query',
+            'required' => false,
+            'description' => 'Defines the application language to format locale specific content. The given language must be supported by the application.',
+            'example' => 'en',
+            'schema' => new Schema(['type' => 'string']),
+        ]);
         return $params;
     }
 
