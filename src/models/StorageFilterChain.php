@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use Imagine\Image\ImageInterface;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
 use yii\imagine\Image;
@@ -111,7 +112,7 @@ final class StorageFilterChain extends ActiveRecord
      * @param string $imageSavePath The absolute path to the new location where the file should be stroed.
      * @throws InvalidConfigException
      */
-    public function applyFilter($loadFromPath, $imageSavePath)
+    public function applyFilter(ImageInterface $image, array $saveOptions)
     {
         gc_collect_cycles();
         
@@ -129,27 +130,28 @@ final class StorageFilterChain extends ActiveRecord
             // apply crop
             case FilterInterface::EFFECT_CROP:
                 // run imagine crop method
-                $image = Image::crop($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
-                // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
+                $image = Image::crop($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
+
+                return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
                 break;
-                
             // apply thumbnail
             case FilterInterface::EFFECT_THUMBNAIL:
                 // run imagine thumbnail method
-                $image = Image::thumbnail($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
-                // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
+                $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
+                
+                return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
                 break;
 
             // apply watermark
             case FilterInterface::EFFECT_WATERMARK:
-                $image = Image::watermark($loadFromPath, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
+                $image = Image::watermark($image, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
+                return [$image, $saveOptions];
                 break;
 
             // apply text
             case FilterInterface::EFFECT_TEXT:
-                $image = Image::text($loadFromPath, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
+                $image = Image::text($image, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
+                return [$image, $saveOptions];
                 break;
         }
     }
