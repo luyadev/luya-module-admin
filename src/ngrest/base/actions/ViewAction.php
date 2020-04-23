@@ -10,10 +10,6 @@ use yii\db\ActiveRecordInterface;
 /**
  * View Item
  *
- * In order to enable or disable the pagination for index actions regulatet by the ActiveController
- * the main yii\rest\IndexAction is overriten by adding the pagination propertie to the action
- * provided from the luya\rest\ActiveController.
- *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */

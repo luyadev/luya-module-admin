@@ -302,7 +302,7 @@ class CheckboxRelation extends Plugin
      * @param string $viaTableName Example viaTable name: news_article_tag
      * @param string $localTableId The name of the field inside the viaTable which represents the match against the local table, example: article_id
      * @param string $foreignTableId The name of the field inside the viaTable which represents the match against the foreign table, example: tag_id
-     * @return boolean Whether updating the database was successfull or not.
+     * @return boolean Whether updating the database was successful or not.
      */
     protected function setRelation(array $value, $viaTableName, $localTableId, $foreignTableId, $activeRecordId)
     {

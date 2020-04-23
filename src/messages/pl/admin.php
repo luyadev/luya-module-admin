@@ -376,7 +376,7 @@ return [
     'model_tag_translation' => 'Tłumaczenie',
     'model_tag_translation_hint' => 'Opcjonalne tłumaczenie dla tagu w danym języku. Pozwala to przypisać i wypisać ten sam znacznik na stronach wielojęzycznych.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Schedule',
     'js_scheduler_new_value' => 'New value',

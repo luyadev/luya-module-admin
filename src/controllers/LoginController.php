@@ -208,7 +208,7 @@ class LoginController extends Controller
      *
      * This action is triggered by the async request from the login form.
      *
-     * If successfull and 2FA is enabled, a token will be stored and sent to the user's email.
+     * If successful and 2FA is enabled, a token will be stored and sent to the user's email.
      *
      * @return array
      */

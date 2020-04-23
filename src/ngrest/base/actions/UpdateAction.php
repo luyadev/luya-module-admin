@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Updatem Item
  *
- * Updates the given item when sending a PUT request.
+ * Updates the given model values. If saving was successful the new model with its new values will be returned.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

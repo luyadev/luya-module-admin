@@ -240,7 +240,7 @@ return [
 
     'api_storage_file_upload_folder_error' => 'Error while saving the file in the storage folder. A permission error could cause this problem. Make sure the storage folder is writable.',
     'model_user_oldpassword' => 'Previous (old) Password',
-    'js_account_update_profile_success' => 'The profile data has been successfull updated.',
+    'js_account_update_profile_success' => 'The profile data has been successful updated.',
     'dashboard_lastlogin_title' => 'Last User Logins',
     'layout_useronline_activity' => 'Activity',
     'layout_useronline_inactive' => 'inactive',
@@ -379,7 +379,7 @@ return [
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Schedule',
     'js_scheduler_new_value' => 'New value',

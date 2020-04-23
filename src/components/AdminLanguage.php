@@ -171,7 +171,7 @@ class AdminLanguage extends Component
     /**
      * Clear the cache data for admin language
      *
-     * @return boolean whether clearing was successfull or not.
+     * @return boolean whether clearing was successful or not.
      * @since 2.1.0
      */
     public function clearCache()

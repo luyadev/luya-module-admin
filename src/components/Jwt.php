@@ -13,7 +13,7 @@ use luya\helpers\ObjectHelper;
 /**
  * The Jwt component.
  *
- * To successfull configure the jwt component {{Jwt::$key}}, {{Jwt::$apiUserEmail}} and {{Jwt::$identityClass}} can not be null.
+ * To successful configure the jwt component {{Jwt::$key}}, {{Jwt::$apiUserEmail}} and {{Jwt::$identityClass}} can not be null.
  *
  * ```php
  * 'components' => [
