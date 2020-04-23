@@ -95,10 +95,8 @@ final class StorageFilter extends NgRestModel
      */
     public function applyFilterChain($source, $fileSavePath)
     {
-        $loadFrom = $source;
-
         // load resource object before processing chain
-        $image = Image::getImagine()->open($loadFrom);
+        $image = Image::getImagine()->open($source);
         $saveOptions = [];
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
@@ -132,16 +130,21 @@ final class StorageFilter extends NgRestModel
             'identifier' => 'text',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function ngRestConfig($config)
+    public function ngRestScopes()
     {
-        $config->aw->load(StorageFilterImagesActiveWindow::class);
-        
-        $this->ngRestConfigDefine($config, 'list', ['name', 'identifier']);
-        
-        return $config;
+        return [
+            [['list'], ['name', 'identifier']],
+        ];
+    }
+
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => StorageFilterImagesActiveWindow::class],
+        ];
     }
 }

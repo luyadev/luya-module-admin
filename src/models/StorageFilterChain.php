@@ -17,7 +17,7 @@ use Imagine\Image\ManipulatorInterface;
  * @property int $sort_index
  * @property int $filter_id
  * @property int $effect_id
- * @property string $effect_json_values
+ * @property array $effect_json_values
  * @property StorageEffect $effect
  *
  * @author Basil Suter <basil@nadar.io>
