@@ -2,6 +2,10 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 3.1 to 3.2
+
++ [#484](https://github.com/luyadev/luya-module-admin/pull/484) Chained internal methods signature of class `luya\admin\modles\StorageFilterChain` method from `applyFilter($loadFromPath, $imageSavePath)` to `applyFilter(ImageInterface $image, array $saveOptions)`. Since version 3.2 the applyFilter requires an instance of `Imagine\Image\ImageInterface` and returns an array containing two elements, the image object and the saving options.
+
 ## from 2.x to 3.0
 
 + Run the migrate command, as new migrations are available.

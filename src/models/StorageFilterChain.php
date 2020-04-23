@@ -106,10 +106,12 @@ final class StorageFilterChain extends ActiveRecord
     }
     
     /**
-     * Load an image from a given path, apply all effects (filters) from effect_json_values and save the file.
+     * Apply the current filter chain to the given Image Instance.
      *
-     * @param string $loadFromPath The absolute path to the existing file.
-     * @param string $imageSavePath The absolute path to the new location where the file should be stroed.
+     * @param ImageInterface $image The image instance to apply the filter.
+     * @param array $saveOptions The saving options passed from previous steps.
+     * @return array An array with two elements, the first returns the manipulated image object, the second the new or existing $savingOptions.
+     * @since 3.2.0 The method signature has changed see UPGRADE.md
      * @throws InvalidConfigException
      */
     public function applyFilter(ImageInterface $image, array $saveOptions)
