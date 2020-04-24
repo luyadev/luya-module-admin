@@ -253,7 +253,7 @@ class StorageFilterTest extends AdminModelTestCase
 
         /// APPLY THE CHAIN!
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\Exception::class);
         $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
 
     }
