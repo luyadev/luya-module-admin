@@ -3,12 +3,14 @@
 namespace admintests\models;
 
 use admintests\AdminModelTestCase;
+use Imagine\Image\ImageInterface;
 use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageFilterChain;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 use Yii;
+use yii\base\InvalidConfigException;
 
 class StorageFilterTest extends AdminModelTestCase
 {
@@ -134,5 +136,69 @@ class StorageFilterTest extends AdminModelTestCase
 
         $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
 
+    }
+
+    public function testUnknownEffectName()
+    {
+        new NgRestModelFixture([
+            'modelClass' => StorageEffect::class,
+            'fixtureData' => [
+                1 => [
+                    'id' => 1,
+                    'name' => 'effect2',
+                    'identifier' => 'effect2',
+                    'imagine_name' => 'foooo',
+                ],
+            ],
+        ]);
+        // add chains
+        $chain = new NgRestModelFixture([
+            'modelClass' => StorageFilterChain::class,
+        ]);
+        
+        $chainModel = $chain->newModel;
+        $chainModel->setAttributes([
+            'name' => 'Thumbnail',
+            'effect_id' => 1,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['width' => 100, 'height' => 100],
+        ]);
+        $this->assertTrue($chainModel->save());
+        $chainModel->eventAfterFind();
+        $this->expectException(InvalidConfigException::class);
+        $chainModel->applyFilter($this->getMockBuilder(ImageInterface::class)->getMock(), []);
+    }
+
+    public function testInvalidParamConfig()
+    {
+        new NgRestModelFixture([
+            'modelClass' => StorageEffect::class,
+            'fixtureData' => [
+                1 => [
+                    'id' => 1,
+                    'name' => 'effect2',
+                    'identifier' => 'effect2',
+                    'imagine_name' => 'thumbnail',
+                ],
+            ],
+        ]);
+        // add chains
+        $chain = new NgRestModelFixture([
+            'modelClass' => StorageFilterChain::class,
+        ]);
+        
+        $chainModel = $chain->newModel;
+        $chainModel->setAttributes([
+            'name' => 'Thumbnail',
+            'effect_id' => 1,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['x' => 100, 'y' => 100],
+        ]);
+        $this->assertTrue($chainModel->save());
+        $chainModel->eventAfterFind();
+        $this->expectException(InvalidConfigException::class);
+        $chainModel->applyFilter($this->getMockBuilder(ImageInterface::class)->getMock(), []);
     }
 }

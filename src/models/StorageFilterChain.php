@@ -214,7 +214,7 @@ final class StorageFilterChain extends ActiveRecord
      * Get the value for a effect json key.
      *
      * @param string $key
-     * @return boolean
+     * @return boolean|mixed If existing the value is returned 
      */
     protected function getJsonValue($key)
     {
