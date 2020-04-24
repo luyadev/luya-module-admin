@@ -85,6 +85,8 @@ class Api extends RestActiveController
      * @since 1.2.3
      */
     public $cacheDependency;
+
+    public $enableTruncate = false;
     
     /**
      * @inheritdoc
@@ -110,7 +112,7 @@ class Api extends RestActiveController
         ]);
 
         $this->addActionPermission(Auth::CAN_DELETE, [
-            'delete',
+            'delete', 'truncate',
         ]);
     }
     
@@ -372,6 +374,14 @@ class Api extends RestActiveController
                 'class' => 'yii\rest\OptionsAction',
             ],
         ];
+
+        if ($this->enableTruncate) {
+            $actions['truncate'] = [
+                'class' => 'luya\admin\ngrest\base\actions\TruncateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ];
+        }
         
         if ($this->enableCors) {
             $actions['options']['class'] = 'luya\admin\ngrest\base\actions\OptionsAction';

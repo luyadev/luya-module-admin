@@ -7,6 +7,7 @@ use Exception;
 use yii\base\InvalidConfigException;
 use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderCrud;
+use luya\helpers\ArrayHelper;
 use luya\helpers\FileHelper;
 use yii\web\ForbiddenHttpException;
 
@@ -172,8 +173,8 @@ class Controller extends \luya\admin\base\Controller
         }
 
         if ($this->clearButton) {
-            $this->globalButtons = array_merge($this->globalButtons, [
-                'icon' => 'trash',
+            array_push($this->globalButtons, [
+                'icon' => 'delete',
                 'label' => 'Clear Data',
                 'ng-click' => "clearData()"
             ]);

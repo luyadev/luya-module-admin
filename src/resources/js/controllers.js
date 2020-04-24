@@ -27,6 +27,16 @@
 
 		$scope.tabService = CrudTabService;
 
+
+		$scope.clearData = function() {
+			AdminToastService.confirm('Are you sure all data should be removed? This can not be undone', 'Remove all Data', function() {
+				var toast = this;
+				$http.get($scope.config.apiEndpoint + '/truncate').then(function() {
+					toast.close();
+					$scope.loadList();
+				});
+			});
+		};
 		/***** TABS AND SWITCHES *****/
 
 		/**

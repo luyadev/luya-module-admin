@@ -13,4 +13,6 @@ use luya\admin\ngrest\base\Controller;
 class TagController extends Controller
 {
     public $modelClass = '\luya\admin\models\Tag';
+
+    public $clearButton = true;
 }
