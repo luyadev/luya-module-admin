@@ -127,34 +127,24 @@ final class StorageFilterChain extends ActiveRecord
         if ($this->hasMissingRequiredEffectDefinition($imagineEffectName)) {
             throw new InvalidConfigException("The requested effect \"$imagineEffectName\" require some parameters which are not provided.");
         }
-        
-        switch ($imagineEffectName) {
-            // apply crop
-            case FilterInterface::EFFECT_CROP:
-                // run imagine crop method
-                $image = Image::crop($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
 
-                return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
-                break;
-            // apply thumbnail
-            case FilterInterface::EFFECT_THUMBNAIL:
-                // run imagine thumbnail method
-                $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
-                
-                return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
-                break;
+        if ($imagineEffectName == FilterInterface::EFFECT_CROP) {
+            // crop
+            $image = Image::crop($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
+            return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
 
-            // apply watermark
-            case FilterInterface::EFFECT_WATERMARK:
-                $image = Image::watermark($image, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
-                return [$image, $saveOptions];
-                break;
-
-            // apply text
-            case FilterInterface::EFFECT_TEXT:
-                $image = Image::text($image, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
-                return [$image, $saveOptions];
-                break;
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_THUMBNAIL) {
+            // thumbnail
+            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
+            return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_WATERMARK) {
+            // watermark
+            $image = Image::watermark($image, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
+            return [$image, $saveOptions];
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_TEXT) {
+            // text
+            $image = Image::text($image, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
+            return [$image, $saveOptions];
         }
     }
 
