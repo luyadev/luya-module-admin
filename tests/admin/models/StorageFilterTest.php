@@ -59,6 +59,7 @@ class StorageFilterTest extends AdminModelTestCase
         $this->assertNotNull($model->ngRestActiveWindows());
         $this->assertNotNull($model->ngRestScopes());
 
+        $effectModel->id = 1;
         $effectModel->identifier = 'foobar';
         $effectModel->name = 'foobar';
         $effectModel->imagine_name = 'thumbnail';
@@ -79,39 +80,40 @@ class StorageFilterTest extends AdminModelTestCase
         ]);
         
         $chainModel = $chain->newModel;
-
         $chainModel->setAttributes([
-            '$name' => 'Thumbnail',
+            'name' => 'Thumbnail',
             'imagine_name' => 'thumbnail',
             'effect_id' => 1,
             'filter_id' => 1,
             'sort_index' => 1,
             'effect_json_values' => ['width' => 100, 'height' => 100],
         ]);
-
         $this->assertTrue($chainModel->save());
+        $this->assertNotNull($chainModel->effect);
 
+        $chainModel = $chain->newModel;
         $chainModel->setAttributes([
-            '$name' => 'Crop',
+            'name' => 'Crop',
             'imagine_name' => 'crop',
             'effect_id' => 2,
             'filter_id' => 1,
             'sort_index' => 1,
             'effect_json_values' => ['width' => 100, 'height' => 100],
         ]);
-
         $this->assertTrue($chainModel->save());
+        $this->assertNotNull($chainModel->effect);
 
+        $chainModel = $chain->newModel;
         $chainModel->setAttributes([
-            '$name' => 'Watermark',
+            'name' => 'Watermark',
             'imagine_name' => 'watermark',
             'effect_id' => 3,
             'filter_id' => 1,
             'sort_index' => 1,
             'effect_json_values' => ['image' => Yii::getAlias('@app/tests/data/image.jpg')],
         ]);
-
         $this->assertTrue($chainModel->save());
+        $this->assertNotNull($chainModel->effect);
 
         /*
         $chainModel->setAttributes([
@@ -126,7 +128,7 @@ class StorageFilterTest extends AdminModelTestCase
         $this->assertTrue($chainModel->save());
         */
 
-        $this->assertNotNull($chainModel->effect);
+        
 
         /// APPLY THE CHAIN!
 
