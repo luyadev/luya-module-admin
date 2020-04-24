@@ -3,6 +3,7 @@
 namespace admintests\models;
 
 use admintests\AdminModelTestCase;
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\ImageInterface;
 use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFilter;
@@ -200,5 +201,60 @@ class StorageFilterTest extends AdminModelTestCase
         $chainModel->eventAfterFind();
         $this->expectException(InvalidConfigException::class);
         $chainModel->applyFilter($this->getMockBuilder(ImageInterface::class)->getMock(), []);
+    }
+
+    public function testTextEffectWhichFaileDueToMissingExtensions()
+    {
+        $this->createAdminNgRestLogFixture();
+
+        // storage filter
+        $storage = new NgRestModelFixture([
+            'modelClass' => StorageFilter::class,
+        ]);
+
+        $model = new $storage->newModel;
+        $this->assertNotNull($model->ngRestActiveWindows());
+        $this->assertNotNull($model->ngRestScopes());
+
+        $model->identifier = 'foo';
+        $model->name = 'Foo';
+        $this->assertTrue($model->save());
+
+        // effect 
+        new NgRestModelFixture([
+            'modelClass' => StorageEffect::class,
+            'fixtureData' => [
+                1 => [
+                    'id' => 1,
+                    'name' => 'effect4',
+                    'identifier' => 'effect4',
+                    'imagine_name' => 'text',
+                ]
+            ]
+        ]);
+
+        // add chains
+        $chain = new NgRestModelFixture([
+            'modelClass' => StorageFilterChain::class,
+        ]);
+        $chainModel = $chain->newModel;
+        $chainModel->setAttributes([
+            '$name' => 'text',
+            'imagine_name' => 'text',
+            'effect_id' => 1,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['text' => 'text', 'fontFile' => 'fontfile.ttf'],
+        ]);
+
+        $this->assertTrue($chainModel->save());
+
+        
+
+        /// APPLY THE CHAIN!
+
+        $this->expectException(RuntimeException::class);
+        $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
+
     }
 }
