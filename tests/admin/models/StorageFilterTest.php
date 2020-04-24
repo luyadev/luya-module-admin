@@ -34,6 +34,14 @@ class StorageFilterTest extends AdminModelTestCase
         // effect 
         $effect = new NgRestModelFixture([
             'modelClass' => StorageEffect::class,
+            'fixtureData' => [
+                2 => [
+                    'id' => 2,
+                    'name' => 'effect2',
+                    'identifier' => 'effect2',
+                    'imagine_name' => 'crop',
+                ]
+            ]
         ]);
         $effectModel = $effect->newModel;
         $this->assertNotNull($model->ngRestActiveWindows());
@@ -70,6 +78,18 @@ class StorageFilterTest extends AdminModelTestCase
         ]);
 
         $this->assertTrue($chainModel->save());
+
+        $chainModel->setAttributes([
+            '$name' => 'Crop',
+            'imagine_name' => 'crop',
+            'effect_id' => 2,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['width' => 100, 'height' => 100],
+        ]);
+
+        $this->assertTrue($chainModel->save());
+
         $this->assertNotNull($chainModel->effect);
 
         /// APPLY THE CHAIN!
