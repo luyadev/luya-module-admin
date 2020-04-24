@@ -40,6 +40,18 @@ class StorageFilterTest extends AdminModelTestCase
                     'name' => 'effect2',
                     'identifier' => 'effect2',
                     'imagine_name' => 'crop',
+                ],
+                3 => [
+                    'id' => 3,
+                    'name' => 'effect3',
+                    'identifier' => 'effect3',
+                    'imagine_name' => 'watermark',
+                ],
+                4 => [
+                    'id' => 4,
+                    'name' => 'effect4',
+                    'identifier' => 'effect4',
+                    'imagine_name' => 'text',
                 ]
             ]
         ]);
@@ -89,6 +101,30 @@ class StorageFilterTest extends AdminModelTestCase
         ]);
 
         $this->assertTrue($chainModel->save());
+
+        $chainModel->setAttributes([
+            '$name' => 'Watermark',
+            'imagine_name' => 'watermark',
+            'effect_id' => 3,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['image' => Yii::getAlias('@app/tests/data/image.jpg')],
+        ]);
+
+        $this->assertTrue($chainModel->save());
+
+        /*
+        $chainModel->setAttributes([
+            '$name' => 'text',
+            'imagine_name' => 'text',
+            'effect_id' => 4,
+            'filter_id' => 1,
+            'sort_index' => 1,
+            'effect_json_values' => ['text' => 'text', 'fontFile' => 'fontfile.ttf'],
+        ]);
+
+        $this->assertTrue($chainModel->save());
+        */
 
         $this->assertNotNull($chainModel->effect);
 

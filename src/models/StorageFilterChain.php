@@ -125,7 +125,7 @@ final class StorageFilterChain extends ActiveRecord
         }
         
         if ($this->hasMissingRequiredEffectDefinition($imagineEffectName)) {
-            throw new InvalidConfigException("The requested effect mode does require some parameters which are not provided.");
+            throw new InvalidConfigException("The requested effect \"$imagineEffectName\" require some parameters which are not provided.");
         }
         
         switch ($imagineEffectName) {
