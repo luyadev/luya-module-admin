@@ -3,28 +3,27 @@
 namespace luya\admin\models;
 
 use Yii;
-use luya\helpers\Json;
+use luya\admin\ngrest\base\NgRestModel;
 
 /**
- * This is the model class for table "admin_ngrest_log".
+ * Ngrest Log.
+ * 
+ * File has been created with `crud/create` command. 
  *
- * @property int $id
- * @property int $user_id
- * @property int $timestamp_create
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $timestamp_create
  * @property string $route
  * @property string $api
- * @property int $is_update
- * @property int $is_insert
- * @property int $is_delete
- * @property string $attributes_json
- * @property string $attributes_diff_json
+ * @property tinyint $is_update
+ * @property tinyint $is_insert
+ * @property text $attributes_json
+ * @property text $attributes_diff_json
  * @property string $pk_value
  * @property string $table_name
- *
- * @author Basil Suter <basil@nadar.io>
- * @since 1.1.0
+ * @property tinyint $is_delete
  */
-class NgrestLog extends \yii\db\ActiveRecord
+class NgrestLog extends NgRestModel
 {
     /**
      * @inheritdoc
@@ -33,13 +32,34 @@ class NgrestLog extends \yii\db\ActiveRecord
     {
         return '{{%admin_ngrest_log}}';
     }
-    
+
     /**
      * @inheritdoc
      */
-    public static function find()
+    public static function ngRestApiEndpoint()
     {
-        return parent::find()->orderBy(['timestamp_create' => SORT_DESC]);
+        return 'api-admin-ngrestlog';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'timestamp_create' => Yii::t('app', 'Timestamp Create'),
+            'route' => Yii::t('app', 'Route'),
+            'api' => Yii::t('app', 'Api'),
+            'is_update' => Yii::t('app', 'Is Update'),
+            'is_insert' => Yii::t('app', 'Is Insert'),
+            'attributes_json' => Yii::t('app', 'Attributes Json'),
+            'attributes_diff_json' => Yii::t('app', 'Attributes Diff Json'),
+            'pk_value' => Yii::t('app', 'Pk Value'),
+            'table_name' => Yii::t('app', 'Table Name'),
+            'is_delete' => Yii::t('app', 'Is Delete'),
+        ];
     }
 
     /**
@@ -55,71 +75,36 @@ class NgrestLog extends \yii\db\ActiveRecord
             [['pk_value', 'table_name'], 'string', 'max' => 255],
         ];
     }
-    
+
     /**
-     * Get attributes json as array.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getAttributesJsonArray()
+    public function ngRestAttributeTypes()
     {
-        return $this->convertValueToJson($this->attributes_json);
-    }
-    
-    /**
-     * Get attributes json diff as array.
-     *
-     * @return array
-     */
-    public function getAttributesJsonDiffArray()
-    {
-        return $this->convertValueToJson($this->attributes_diff_json);
-    }
-    
-    /**
-     * Get a given attribute by its name from the attributes json diff array.
-     *
-     * @param string $attribute The attribute to check inside the array.
-     * @return mixed
-     */
-    public function getAttributeFromJsonDiffArray($attribute)
-    {
-        return isset($this->getAttributesJsonDiffArray()[$attribute]) ? $this->getAttributesJsonDiffArray()[$attribute] : '';
-    }
-    
-    /**
-     * Convert a given value into an array.
-     *
-     * @param string $value
-     * @return array
-     */
-    protected function convertValueToJson($value)
-    {
-        if (Json::isJson($value)) {
-            return Json::decode($value);
-        }
-        
-        return [];
+        return [
+            'user_id' => 'number',
+            'timestamp_create' => 'number',
+            'route' => 'text',
+            'api' => 'text',
+            'is_update' => 'number',
+            'is_insert' => 'number',
+            'attributes_json' => 'textarea',
+            'attributes_diff_json' => 'textarea',
+            'pk_value' => 'text',
+            'table_name' => 'text',
+            'is_delete' => 'number',
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public function ngRestScopes()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'timestamp_create' => 'Timestamp Create',
-            'route' => 'Route',
-            'api' => 'Api',
-            'is_update' => 'Is Update',
-            'is_insert' => 'Is Insert',
-            'is_delete' => 'Is Delete',
-            'attributes_json' => 'Attributes Json',
-            'attributes_diff_json' => 'Attributes Diff Json',
-            'pk_value' => 'Pk Value',
-            'table_name' => 'Table Name',
+            ['list', ['user_id', 'timestamp_create', 'route', 'api', 'is_update', 'is_insert', 'attributes_json', 'attributes_diff_json', 'pk_value', 'table_name', 'is_delete']],
+            [['create', 'update'], ['user_id', 'timestamp_create', 'route', 'api', 'is_update', 'is_insert', 'attributes_json', 'attributes_diff_json', 'pk_value', 'table_name', 'is_delete']],
+            ['delete', false],
         ];
     }
 }
