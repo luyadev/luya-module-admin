@@ -51,6 +51,11 @@ class GenericApiControllerTest extends AdminModelTestCase
             ]);
 
             $this->assertInstanceOf(ActiveQuery::class, $ctrl->prepareListQuery());
+            $this->assertInstanceOf(ActiveQuery::class, $ctrl->prepareIndexQuery());
+            $this->assertTrue(is_array($ctrl->getWithRelation('index')));
+            $this->assertTrue(is_array($ctrl->actions()));
+            $this->assertNull($ctrl->getDataFilter());
+            $this->assertNotNull($ctrl->getModel());
         }
     }
 }
