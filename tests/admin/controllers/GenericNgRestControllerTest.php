@@ -3,6 +3,8 @@
 namespace admintests\admin\controllers;
 
 use admintests\AdminModelTestCase;
+use luya\admin\components\AdminMenu;
+use luya\admin\components\Auth;
 use luya\admin\controllers\ApiUserController;
 use luya\admin\controllers\ConfigController;
 use luya\admin\controllers\EffectController;
@@ -17,6 +19,10 @@ use luya\admin\controllers\QueueLogController;
 use luya\admin\controllers\QueueLogErrorController;
 use luya\admin\controllers\TagController;
 use luya\admin\controllers\UserController;
+use luya\admin\models\QueueLog;
+use luya\admin\models\QueueLogError;
+use luya\testsuite\fixtures\NgRestModelFixture;
+use luya\testsuite\scopes\PermissionScope;
 use Yii;
 
 class GenericNgRestControllerTest extends AdminModelTestCase
@@ -40,14 +46,40 @@ class GenericNgRestControllerTest extends AdminModelTestCase
 
     public function testControllerGenericMethodsForCoverage()
     {
-        $this->createAdminLangFixture();
+        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
 
         foreach ($this->controllers as $ctrl) {
 
-            $ctrl = Yii::createObject(['class' => $ctrl], ['id', $this->app]);
+            $ctrlObject = Yii::createObject(['class' => $ctrl], ['foo', $this->app]);
+            $this->app->clear('adminmenu');
+            $this->app->clear('auth');
 
-            $ctrl->setDescription('foo');
-            $this->assertNotNull($ctrl->getDescription()); 
+            
+
+            PermissionScope::run($this->app, function(PermissionScope $scope) use ($ctrl, $ctrlObject) {
+
+                
+                $class = $ctrlObject->modelClass;
+                $ctrl = Yii::createObject(['class' => $ctrl], [$class::ngRestApiEndpoint(), $this->app]);
+                $this->app->setComponents(['adminmenu' => ['class' => AdminMenu::class]]);
+                $this->app->setComponents(['auth' => ['class' => Auth::class]]);
+
+                if ($ctrl->modelClass == QueueLog::class) {
+                    $scope->createAndAllowApi(QueueLogError::ngRestApiEndpoint());
+                }
+                $scope->createAndAllowApi($class::ngRestApiEndpoint());
+
+                new NgRestModelFixture([
+                    'modelClass' => $ctrl->modelClass,
+                ]);
+    
+                $ctrl->setDescription('foo');
+                $this->assertNotNull($ctrl->getDescription()); 
+                
+                $scope->runControllerAction($ctrl, 'index');
+            });
+
+            
         }
     }
 }
