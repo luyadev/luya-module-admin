@@ -13,7 +13,7 @@ use luya\admin\Module;
 class NgrestLogController extends \luya\admin\ngrest\base\Controller
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\NgrestLog';
 

@@ -12,10 +12,13 @@ use luya\admin\Module;
 class QueueLogController extends \luya\admin\ngrest\base\Controller
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\QueueLog';
 
+    /**
+     * {@inheritDoc}
+     */
     public function getDescription()
     {
         return Module::t('queuelog_controller_description');

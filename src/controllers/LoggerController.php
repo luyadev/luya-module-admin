@@ -13,6 +13,9 @@ use luya\admin\ngrest\base\Controller;
  */
 class LoggerController extends Controller
 {
+    /**
+     * {@inheritDoc}
+     */
     public $modelClass = 'luya\admin\models\Logger';
 
     /**
@@ -20,6 +23,9 @@ class LoggerController extends Controller
      */
     public $clearButton = true;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getDescription()
     {
         return Module::t('logger_controller_description');
