@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
 use luya\admin\base\TypesInterface;
+use luya\admin\helpers\I18n;
 
 /**
  * Sort Relation Plugin.
@@ -68,7 +69,7 @@ abstract class SortRelation extends Plugin
     public function onBeforeSave($event)
     {
         if (!$this->i18n) {
-            $this->writeAttribute($event, $this->i18nFieldEncode($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, I18n::encode($event->sender->getAttribute($this->name)));
             return false;
         }
     

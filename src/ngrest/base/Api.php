@@ -375,7 +375,7 @@ class Api extends RestActiveController
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'options' => [
-                'class' => 'yii\rest\OptionsAction',
+                'class' => 'luya\admin\ngrest\base\actions\OptionsAction',
             ],
         ];
 
@@ -486,7 +486,11 @@ class Api extends RestActiveController
     }
     
     /**
+     * User Unlock
+     *
      * Unlock this API for the current logged in user.
+     *
+     * @return void
      */
     public function actionUnlock()
     {
@@ -494,9 +498,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Service Action provides mutliple CRUD informations.
+     * Service Data
      *
-     * @return array
+     * @return array An array with all services information for the given ngrest model.
      */
     public function actionServices()
     {
@@ -549,6 +553,12 @@ class Api extends RestActiveController
         ];
     }
 
+    /**
+     * Toggle Notifications
+     *
+     * @return UserAuthNotification The user auth notification model. If model does not exists a new model will be created.
+     * @since 2.0.0
+     */
     public function actionToggleNotification()
     {
         $newMuteState = Yii::$app->request->getBodyParam('mute');
@@ -570,7 +580,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Generate a response with pagination disabled.
+     * Search by Query
      *
      * Search querys with Pagination will be handled by this action.
      *
@@ -595,10 +605,12 @@ class Api extends RestActiveController
     }
 
     /**
+     * Generate Sort attributes
+     *
      * Generate an array of sortable attribute defintions from a ngrest config object.
      *
      * @param Config $config The Ngrest Config object
-     * @return array
+     * @return array Returns an array with sortable attributes.
      * @since 2.0.0
      */
     public function generateSortAttributes(Config $config)
@@ -612,7 +624,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Call the dataProvider for a foreign model.
+     * Get Relation Data
      *
      * @param mixed $arrayIndex
      * @param mixed $id
@@ -645,10 +657,6 @@ class Api extends RestActiveController
 
         $find = $relation->getDataProvider();
         
-        if ($find instanceof ActiveQueryInterface && !$find->multiple) {
-            throw new InvalidConfigException("The relation definition must be a hasMany() relation.");
-        }
-        
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
             $this->appendPoolWhereCondition($find);
@@ -673,7 +681,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Filter the Api response by a defined Filtername.
+     * Filter data by Filter-Name
      *
      * @param string $filterName
      * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
@@ -713,9 +721,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Renders the Callback for an ActiveWindow.
+     * Renders ActiveWindow Callback
      *
-     * @return string
+     * @return string Returns the rendered string from the callback.
      */
     public function actionActiveWindowCallback()
     {
@@ -727,9 +735,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Renders the index page of an ActiveWindow.
+     * Render ActiveWindow
      *
-     * @return array
+     * @return array An array with content, icon, label, title and requestDate
      */
     public function actionActiveWindowRender()
     {
@@ -751,9 +759,9 @@ class Api extends RestActiveController
     }
 
     /**
-     * Export the Data into a temp CSV.
+     * Export Data
      *
-     * @return array
+     * @return array An array with the key `url` which contains the download path to the file
      * @throws ErrorException
      */
     public function actionExport()
@@ -813,11 +821,11 @@ class Api extends RestActiveController
     }
 
     /**
-     * Trigger an Active Button handler.
+     * Active Button
      *
      * @param string $hash The hash from the class name.
      * @param string|integer $id
-     * @return void
+     * @return array|boolean
      * @since 1.2.3
      */
     public function actionActiveButton($hash, $id)

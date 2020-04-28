@@ -2,12 +2,14 @@
 
 namespace luya\admin\helpers;
 
-use luya\Exception;
+use InvalidArgumentException;
 use Yii;
+use luya\admin\file\Item;
+use luya\Exception;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageImage;
 use luya\admin\Module;
-use yii\helpers\VarDumper;
+use luya\helpers\FileHelper;
 
 /**
  * Helper class to handle remove, upload and moving of storage files.
@@ -176,7 +178,7 @@ class Storage
      * @param string $fileName The filename identifier key in order to find the file based on the locale files system.
      * @param string $newFileSource The path to the new file which is going to have the same name as the old file e.g. `path/of/new.jpg`.  $_FILES['tmp_name']
      * @param string $newFileName The new name of the file which is uploaded, mostly given from $_FILES['name']
-     * @return boolean Whether moving was successfull or not.
+     * @return boolean Whether moving was successful or not.
      */
     public static function replaceFile($fileName, $newFileSource, $newFileName)
     {
@@ -187,6 +189,77 @@ class Storage
         }
 
         return Yii::$app->storage->fileSystemReplaceFile($fileName, $newFileSource);
+    }
+
+    /**
+     * Update the hash file sum, file size and remove image filter version from this file.
+     *
+     * @param integer $fileId
+     * @param string $fileContent
+     * @return boolean
+     */
+    public static function refreshFile($fileId, $filePath)
+    {
+        foreach (StorageImage::find()->where(['file_id' => $fileId])->all() as $img) {
+            // remove the source
+            if ($img->deleteSource()) {
+                // recreate image filters
+                $img->imageFilter($img->filter_id, false);
+            }
+        }
+        
+        $file = StorageFile::findOne($fileId);
+
+        if (!$file) {
+            throw new InvalidArgumentException("Unable to find the given file.");
+        }
+
+        $fileHash = FileHelper::md5sum($filePath);
+        $fileSize = @filesize($filePath);
+        $file->updateAttributes([
+            'hash_file' => $fileHash,
+            'file_size' => $fileSize,
+            'upload_timestamp' => time(),
+        ]);
+        return true;
+    }
+
+    /**
+     * Replace the current file based on image data
+     *
+     * @param string $fileName
+     * @param string $newFileContent
+     * @return boolean
+     * @since 3.1.0
+     */
+    public static function replaceFileFromContent($fileName, $newFileContent)
+    {
+        $newFileSource = @tempnam(sys_get_temp_dir(), 'replaceFromFromContent');
+        FileHelper::writeFile($newFileSource, $newFileContent);
+        
+        try {
+            Yii::$app->storage->ensureFileUpload($newFileSource, $fileName);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return Yii::$app->storage->fileSystemReplaceFile($fileName, $newFileSource);
+    }
+
+    /**
+     * Upload a file with content
+     *
+     * @param string $content
+     * @param string $fileName
+     * @return Item
+     * @since 3.1.0
+     */
+    public static function uploadFromContent($content, $fileName, $folderId = 0, $isHidden = false)
+    {
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+        FileHelper::writeFile($fromTempFile, $content);
+
+        return Yii::$app->storage->addFile($fromTempFile, $fileName, $folderId, $isHidden);
     }
     
     /**

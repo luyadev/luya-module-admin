@@ -3,14 +3,24 @@
 namespace admintests\admin\ngrest\base;
 
 use admintests\AdminTestCase;
+use admintests\data\models\I18nUser;
 use admintests\data\stubs\StubPlugin;
+use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\Text;
 use luya\base\DynamicModel;
+use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\Event;
+use yii\db\ActiveRecord;
 
 class PluginTest extends AdminTestCase
 {
+    /**
+     * @var StubPlugin
+     */
     public $plugin;
+    /**
+     * @var StubPlugin
+     */
     public $plugini18n;
     
     public function setUp()
@@ -69,5 +79,46 @@ class PluginTest extends AdminTestCase
 
         $this->assertSame('bar', $event->sender->foo);
         $this->assertSame('BARFOO', $event->sender->myField);
+    }
+
+    public function testOnListFindi18n()
+    {
+        new NgRestModelFixture([
+            'modelClass' => I18nUser::class,
+        ]);
+        $model = new I18nUser();
+        $model->firstname = '{"de":"Deutsch","en":"English"}';
+        $this->assertSame('{"de":"Deutsch","en":"English"}', $model->firstname);
+
+        $event = new Event();
+        $event->sender = $model;
+
+        $plugin = $this->plugini18n;
+        $plugin->name = 'firstname';
+        $plugin->onListFind($event);
+
+        $this->assertSame('English', $model->firstname);
+    }
+
+    public function testOnExpandFindI18n()
+    {
+        new NgRestModelFixture([
+            'modelClass' => I18nUser::class,
+        ]);
+        $model = new I18nUser();
+        $model->firstname = '{"de":"Deutsch","en":"English"}';
+        $this->assertSame('{"de":"Deutsch","en":"English"}', $model->firstname);
+        
+        $event = new Event();
+        $event->sender = $model;
+
+        $plugin = $this->plugini18n;
+        $plugin->name = 'firstname';
+        $plugin->onExpandFind($event);
+
+        $this->assertSame([
+            'de' => 'Deutsch',
+            'en' => 'English',
+        ], $model->firstname);
     }
 }

@@ -104,7 +104,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Provides a form to enter an email which will then send a reset link. 
+     * Provides a form to enter an email which will then send a reset link.
      *
      * @return string
      * @since 3.0.0
@@ -130,9 +130,10 @@ class LoginController extends Controller
                     $mail->layout = false; // ensure layout is disabled even when enabled in application config
                     $send = $mail
                         ->compose(Module::t('reset_email_subject'), User::generateResetEmail(
-                            Url::toRoute(['/admin/login/password-reset', 'token' => $user->password_verification_token, 'id' => $user->id], true), 
-                            Module::t('reset_email_subject'), 
-                            Module::t('reset_email_text')))
+                            Url::toRoute(['/admin/login/password-reset', 'token' => $user->password_verification_token, 'id' => $user->id], true),
+                            Module::t('reset_email_subject'),
+                            Module::t('reset_email_text')
+                        ))
                         ->address($user->email)
                         ->send();
 
@@ -155,7 +156,7 @@ class LoginController extends Controller
     }
 
     /**
-     * The reset action which allows to store a new password for a valid token and id. 
+     * The reset action which allows to store a new password for a valid token and id.
      *
      * @param string $token
      * @param integer $id
@@ -207,7 +208,7 @@ class LoginController extends Controller
      *
      * This action is triggered by the async request from the login form.
      *
-     * If successfull and 2FA is enabled, a token will be stored and sent to the user's email.
+     * If successful and 2FA is enabled, a token will be stored and sent to the user's email.
      *
      * @return array
      */

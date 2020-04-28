@@ -102,10 +102,11 @@
 .luya-content {
     background-color: map-get($grays, 100);
     padding: $content-padding-y $content-padding-x;
-    /*padding-top: 0;*/
     
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 1 1;
+        overflow-y: auto;
+        overflow-x: hidden;
         height: 100%;
 
         .luya-subnav.overlaying + & {

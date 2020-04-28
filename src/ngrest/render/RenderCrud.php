@@ -565,7 +565,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             return $this->view->render('_crudform_i18n_pluginhtml', [
                 'element' => $element,
                 'configContext' => $configContext,
-                'languages' => Lang::getQuery(),
+                'languages' => Yii::$app->adminLanguage->languages,
                 'helpButtonHtml' => $this->createFieldHelpButton($element, $configContext),
                 'isRequired' => $this->getModel()->isAttributeRequired($element['name']),
             ]);

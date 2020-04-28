@@ -10,7 +10,7 @@ use luya\admin\aws\ApiRequestInsightActiveWindow;
 /**
  * User Model represents all Administration Users.
  *
- * @property integer $id
+ * @property integer $id User Primary Key
  * @property string $firstname
  * @property string $lastname
  * @property integer $title
@@ -134,5 +134,10 @@ final class ApiUser extends User
             ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
             ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
+    }
+    
+    public function attributeHints()
+    {
+        return ['id' => 'hinitnitnnt'];
     }
 }

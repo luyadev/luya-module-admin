@@ -3,7 +3,7 @@ use luya\web\Svg;
 use luya\admin\Module;
 use luya\helpers\Html;
 
-$this->title = Yii::$app->siteTitle . " &rsaquo; " . Module::t('login_btn_login'); 
+$this->title = Yii::$app->siteTitle . " &rsaquo; " . Module::t('login_btn_login');
 
 $spinner = Svg::widget([
     'folder' => "@admin/resources/svg",

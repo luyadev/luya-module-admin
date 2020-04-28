@@ -87,7 +87,7 @@ final class TagRelation extends ActiveRecord
      * @param array $tagIds
      * @param integer $tableName
      * @param integer $pkId
-     * @return integer Returns the number of relations successfull added.
+     * @return integer Returns the number of relations successful added.
      * @since 2.2.1
      */
     public static function batchInsertRelations(array $tagIds, $tableName, $pkId)
@@ -114,7 +114,7 @@ final class TagRelation extends ActiveRecord
      * @param array $tagIds
      * @param string $tableName
      * @param integer $pkId
-     * @return integer Returns the number of relations successfull added.
+     * @return integer Returns the number of relations successful added.
      * @since 2.2.1
      */
     public static function batchUpdateRelations(array $tagIds, $tableName, $pkId)

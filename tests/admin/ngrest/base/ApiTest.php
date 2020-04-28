@@ -8,11 +8,15 @@ use luya\admin\models\User;
 use luya\admin\models\UserAuthNotification;
 use luya\admin\ngrest\base\Api;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class ApiTest extends AdminModelTestCase
 {
+    use AdminDatabaseTableTrait;
+
     public function testWithRelations()
     {
+        $this->createAdminLangFixture();
         $rel = new TestApi('test-api', $this->app);
         $this->app->request->setQueryParams(['expand' => 'bar,foo,news']);
         $f = $rel->getWithRelation('index');
@@ -22,6 +26,7 @@ class ApiTest extends AdminModelTestCase
 
     public function testWithRelationsActions()
     {
+        $this->createAdminLangFixture();
         $rel = new TestActionApi('test-api', $this->app);
         $this->app->request->setQueryParams(['expand' => 'image,news']);
         $f = $rel->getWithRelation('index');
@@ -31,6 +36,7 @@ class ApiTest extends AdminModelTestCase
 
     public function testFilterAction()
     {
+        $this->createAdminLangFixture();
         $fixture = new NgRestModelFixture([
             'modelClass' => User::class,
         ]);

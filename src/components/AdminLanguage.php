@@ -18,6 +18,8 @@ use luya\helpers\ArrayHelper;
  * @property integer $activeId Get the current active language ID.
  * @property string $activeShortCode Get the current active langauge Short-Code.
  * @property array $activeLanguage Get the array of the current active language (its not an AR object!).
+ * @property array $defaultLanguage The admin_lang is_default=1 table entry.
+ * @property string $defaultLanguageShortCode The short code from the admin_lang is_default=1 item.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -27,24 +29,26 @@ class AdminLanguage extends Component
     use CacheableTrait;
 
     /**
+     * @var callable A callable which can be configured in order to define where to take the default language short code from
+     * as this has changed from version 3.0.x to 3.1. The active language is recieved trough Yii::$app->language since
+     * version 3.1. In order to restore the old behavior use:
+     *
+     * ```php
+     * 'activeShortCodeCallable' => function($adminLanguageObject) {
+     *     return Yii::$app->composition->langShortCode;
+     * }
+     * ```
+     * @since 3.1.0
+     */
+    public $activeShortCodeCallable;
+
+    /**
      * @var string The cache key name
      * @since 2.1.0
      */
     const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
 
-    /**
-     * Containg the default language assoc array.
-     *
-     * @var array
-     */
     private $_activeLanguage;
-    
-    /**
-     * Containg all availabe languages from Lang Model.
-     *
-     * @var array
-     */
-    private $_languages;
     
     /**
      * Get the array of the current active language (its not an AR object!)
@@ -59,15 +63,48 @@ class AdminLanguage extends Component
     public function getActiveLanguage()
     {
         if ($this->_activeLanguage === null) {
-            $langShortCode = Yii::$app->composition->langShortCode;
+            if ($this->activeShortCodeCallable && is_callable($this->activeShortCodeCallable)) {
+                $langShortCode = call_user_func($this->activeShortCodeCallable, $this);
+            } else {
+                $langShortCode = Yii::$app->language;
+            }
+            
+            // find the current language for the composition lang short code
             if ($langShortCode) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'short_code', $langShortCode);
-            } else {
+            }
+
+            // if $langShortCode is empty (_activeLanguage is still null) or searchColumn returns false, the default language will be taken.
+            if (empty($this->_activeLanguage)) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
             }
         }
         
         return $this->_activeLanguage;
+    }
+
+    /**
+     * Returns the admin default language.
+     *
+     * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
+     *
+     * @return array
+     * @since 3.1
+     */
+    public function getDefaultLanguage()
+    {
+        return ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
+    }
+
+    /**
+     * Returns the default short code from the admin active language table.
+     *
+     * @return string
+     * @since 3.1
+     */
+    public function getDefaultLanguageShortCode()
+    {
+        return $this->getDefaultLanguage()['short_code'];
     }
     
     /**
@@ -89,6 +126,8 @@ class AdminLanguage extends Component
     {
         return (int) $this->getActiveLanguage()['id'];
     }
+
+    private $_languages;
     
     /**
      * Get an array of all languages (its not an AR object!)
@@ -106,7 +145,12 @@ class AdminLanguage extends Component
     {
         if ($this->_languages === null) {
             $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function () {
-                return Lang::getQuery();
+                return Lang::find()
+                    ->where(['is_deleted' => false])
+                    ->indexBy('short_code')
+                    ->orderBy(['is_default' => SORT_DESC])
+                    ->asArray()
+                    ->all();
             });
         }
     
@@ -127,11 +171,13 @@ class AdminLanguage extends Component
     /**
      * Clear the cache data for admin language
      *
-     * @return boolean whether clearing was successfull or not.
+     * @return boolean whether clearing was successful or not.
      * @since 2.1.0
      */
     public function clearCache()
     {
+        $this->_languages = null;
+        $this->_activeLanguage = null;
         return $this->deleteHasCache(self::CACHE_KEY_QUERY_ALL);
     }
 }

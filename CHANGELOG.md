@@ -3,7 +3,39 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.0
+## 3.2.0
+
+> This release contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#467](https://github.com/luyadev/luya-module-admin/issues/467) Improve performance of applying multiple filters on an image.
++ [#478](https://github.com/luyadev/luya-module-admin/pull/478) Corrected `implode()` in `ngRestScopes()` in create model command template.
++ [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
++ [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.
+
+## 3.1.0 (24. March 2020)
+
+> This release requires LUYA Core version 1.1 to work.
+
++ [#464](https://github.com/luyadev/luya-module-admin/issues/464) Change behavior of how i18n values are encoded, by using $app->language instead of $composition->langShortCode. Automatically provided ContentNegotation $languages from LUYA admin language table (requires luya core version 1.1)
++ [#470](https://github.com/luyadev/luya-module-admin/issues/470) Improved the performance of the file manager folder tree, when a lot of data is available.
++ [#472](https://github.com/luyadev/luya-module-admin/issues/472) Added new controller for website uptime tests (Route: `admin/uptime`) 
++ [#196](https://github.com/luyadev/luya-module-admin/issues/196) Enable croping for images.
+
+## 3.0.3 (5. March 2020)
+
++ [#468](https://github.com/luyadev/luya-module-admin/issues/468) Removed window on load from login (was not needed) in order to fix a bug where Safari does not render the login form.
+
+
+## 3.0.2 (28. Feburary 2020)
+
++ [#463](https://github.com/luyadev/luya-module-admin/issues/463) Fixed an issue with luya-content container height.
+
+## 3.0.1 (25. February 2020)
+
++ [#462](https://github.com/luyadev/luya-module-admin/pull/462) Deleted exception on hasOne() relation in ngrest/base/Api for working ngRestRelations with hasOne relation
++ [#461](https://github.com/luyadev/luya-module-admin/issues/461) Fixed an overflow issue on admin pages.
+
+## 3.0 (20. February 2020)
 
 > This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 

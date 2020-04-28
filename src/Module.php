@@ -275,6 +275,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $moduleMenus = [];
     
     /**
+     * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI defintion for current LUYA System (including all registered modules) or not.
+     * @since 3.2.0
+     */
+    public $publicOpenApi = false;
+
+    /**
+     * @var array An array with filter conditions, see {{luya\admin\openapi\Generator::$filterPaths}} for more detailes
+     * @since 3.2.0
+     * @see {{luya\admin\openapi\Generator::$filterPaths}}
+     */
+    public $filterOpenApiPaths = [];
+
+    /**
      * @inheritDoc
      */
     public static function onLoad()
@@ -357,7 +370,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'ngrest_select_no_selection', 'js_ngrest_toggler_success', 'js_filemanager_count_files_overlay', 'js_link_set_value', 'js_link_not_set', 'js_link_change_value', 'aws_changepassword_succes', 'js_account_update_profile_success', 'layout_filemanager_remove_dir_not_empty',
             'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title', 'ngrest_crud_search_text', 'js_dir_manager_rm_folder_confirm_title', 'js_pagination_page', 'js_dir_manager_rename_success',
             'js_scheduler_show_datepicker', 'js_scheduler_new_value', 'js_scheduler_time', 'js_scheduler_save', 'js_scheduler_title_upcoming', 'js_scheduler_title_completed', 'js_scheduler_table_newvalue', 'js_scheduler_table_timestamp', 'js_dir_manager_file_replace_ok',
-            'js_jsonobject_newkey', 'menu_dashboard', 'ngrest_delete_all_button_confirm_message', 'ngrest_delete_all_button_label',
+            'js_jsonobject_newkey', 'menu_dashboard', 'file_caption_success', 'ngrest_delete_all_button_confirm_message', 'ngrest_delete_all_button_label',
+            // cropping
+            'crop_source_image', 'crop_preview', 'crop_btn_as_copy', 'crop_btn_as_copy_hint', 'crop_btn_save_copy', 'crop_btn_save_replace','crop_size_free','crop_size_1to1','crop_size_desktop','crop_size_mobile', 'crop_success', 'crop_quality_high', 'crop_quality_medium', 'crop_quality_low'
         ];
     }
     

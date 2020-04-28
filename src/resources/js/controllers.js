@@ -1212,8 +1212,6 @@
 
 		$scope.searchResponse = null;
 
-		$scope.searchPromise = null;
-
 		$scope.hasUnreadNotificaton = function(item) {
 			var authIds = item.authIds;
 			var count = 0;
@@ -1229,12 +1227,9 @@
 		$scope.$watch(function() { return $scope.searchQuery}, function(n, o) {
 			if (n !== o) {
 				if (n.length > 2) {
-					$timeout.cancel($scope.searchPromise);
-					$scope.searchPromise = $timeout(function() {
-						$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
-							$scope.searchResponse = response.data;
-						});
-					}, 1000)
+					$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
+						$scope.searchResponse = response.data;
+					});
 				} else {
 	                $scope.searchResponse = null;
 				}

@@ -3,7 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 /**
- * OptionAction for CORS auth.
+ * Options CORS
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

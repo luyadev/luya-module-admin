@@ -1,0 +1,16 @@
+.apidoc-menu {
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: color(gray);
+}
+
+.apidoc-menu__column {
+    display: flex;
+    margin: -10px 0 0 -10px;
+
+    > div {
+        padding: 10px 0 0 10px;
+    }
+}

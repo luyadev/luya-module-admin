@@ -381,7 +381,7 @@ return [
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Terminieren',
     'js_scheduler_new_value' => 'Neuer Wert',
@@ -499,4 +499,23 @@ return [
     'reset_form_text' => 'Geben Sie ein neues Passwort für Ihr Konto ein.',
     'reset_form_submit_btn' => 'Passwort aktualisieren',
     'user_change_password_error' =>  'Während dem Speichern des Passworts trat ein Fehler auf.',
+
+// 3.1.0
+
+    'crop_source_image' => 'Quellen Datei',
+    'crop_preview' => 'Vorschau',
+    'crop_btn_as_copy' => 'Bild als Kopie speichern',
+    'crop_btn_as_copy_hint' => 'Wenn ausgewählt, wird das Bild als neue Datei gespeichert, ansonsten wird die bestehende Datei ersetzt.',
+    'crop_btn_save_copy' => 'Kopie speichern',
+    'crop_btn_save_replace' => 'Datei ersetzen',
+    'crop_size_free' => 'Frei',
+    'crop_size_1to1' => '1:1',
+    'crop_size_desktop' => 'Desktop',
+    'crop_size_mobile' => 'Mobile',
+    'crop_modal_title' => 'Bild Zuschneiden',
+    'crop_success' => 'Datei wurde zugeschnitten und gespeichert.',
+    'file_caption_success' => 'Datei Beschreibung wurde gespeichert.',
+    'crop_quality_high' => 'Hoch',
+    'crop_quality_medium' => 'Mittel',
+    'crop_quality_low' => 'Niedrig',
 ];

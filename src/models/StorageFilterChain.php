@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use Imagine\Image\ImageInterface;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
 use yii\imagine\Image;
@@ -16,7 +17,7 @@ use Imagine\Image\ManipulatorInterface;
  * @property int $sort_index
  * @property int $filter_id
  * @property int $effect_id
- * @property string $effect_json_values
+ * @property array $effect_json_values
  * @property StorageEffect $effect
  *
  * @author Basil Suter <basil@nadar.io>
@@ -105,14 +106,18 @@ final class StorageFilterChain extends ActiveRecord
     }
     
     /**
-     * Load an image from a given path, apply all effects (filters) from effect_json_values and save the file.
+     * Apply the current filter chain to the given Image Instance.
      *
-     * @param string $loadFromPath The absolute path to the existing file.
-     * @param string $imageSavePath The absolute path to the new location where the file should be stroed.
+     * @param ImageInterface $image The image instance to apply the filter.
+     * @param array $saveOptions The saving options passed from previous steps.
+     * @return array An array with two elements, the first returns the manipulated image object, the second the new or existing $savingOptions.
+     * @since 3.2.0 The method signature has changed see UPGRADE.md
      * @throws InvalidConfigException
      */
-    public function applyFilter($loadFromPath, $imageSavePath)
+    public function applyFilter(ImageInterface $image, array $saveOptions)
     {
+        gc_collect_cycles();
+        
         $imagineEffectName = $this->effect->getImagineEffectName();
         
         if (!$this->effectDefinition($imagineEffectName)) {
@@ -120,35 +125,26 @@ final class StorageFilterChain extends ActiveRecord
         }
         
         if ($this->hasMissingRequiredEffectDefinition($imagineEffectName)) {
-            throw new InvalidConfigException("The requested effect mode does require some parameters which are not provided.");
+            throw new InvalidConfigException("The requested effect \"$imagineEffectName\" require some parameters which are not provided.");
         }
-        
-        switch ($imagineEffectName) {
-            // apply crop
-            case FilterInterface::EFFECT_CROP:
-                // run imagine crop method
-                $image = Image::crop($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
-                // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
-                break;
-                
-            // apply thumbnail
-            case FilterInterface::EFFECT_THUMBNAIL:
-                // run imagine thumbnail method
-                $image = Image::thumbnail($loadFromPath, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
-                // try to auto rotate based on exif data
-                Image::autoRotate($image)->save($imageSavePath, $this->effectChainValue($imagineEffectName, 'saveOptions'));
-                break;
 
-            // apply watermark
-            case FilterInterface::EFFECT_WATERMARK:
-                $image = Image::watermark($loadFromPath, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
-                break;
+        if ($imagineEffectName == FilterInterface::EFFECT_CROP) {
+            // crop
+            $image = Image::crop($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
+            return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
 
-            // apply text
-            case FilterInterface::EFFECT_TEXT:
-                $image = Image::text($loadFromPath, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
-                break;
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_THUMBNAIL) {
+            // thumbnail
+            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
+            return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_WATERMARK) {
+            // watermark
+            $image = Image::watermark($image, $this->effectChainValue($imagineEffectName, 'image'), $this->effectChainValue($imagineEffectName, 'start'));
+            return [$image, $saveOptions];
+        } elseif ($imagineEffectName == FilterInterface::EFFECT_TEXT) {
+            // text
+            $image = Image::text($image, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
+            return [$image, $saveOptions];
         }
     }
 
@@ -218,7 +214,7 @@ final class StorageFilterChain extends ActiveRecord
      * Get the value for a effect json key.
      *
      * @param string $key
-     * @return boolean
+     * @return boolean|mixed If existing the value is returned 
      */
     protected function getJsonValue($key)
     {

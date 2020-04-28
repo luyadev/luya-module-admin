@@ -35,7 +35,7 @@ class UserControllerTest extends AdminModelTestCase
             $this->assertSame([
                 [
                     'field' => 'email',
-                    'message' => 'account_changeemail_tokensenterror',
+                    'message' => 'Could not send verification code to before@test.com. Make sure the mail component is configured correctly.',
                 ]
             ], $update);
         }, function (PermissionScope $config) {
@@ -98,7 +98,7 @@ class UserControllerTest extends AdminModelTestCase
             $this->assertsame([
                 [
                     'field' => 'verificaton',
-                    'message' => 'user_register_2fa_verification_error'
+                    'message' => 'Invalid verification code, please enter the new code from the 2fa app.'
                 ]
             ], $data);
         });

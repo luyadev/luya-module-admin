@@ -39,7 +39,7 @@ use luya\admin\aws\DetailViewActiveWindow;
  *     }
  *
  *     if ($model->save()) {
- *         Logger::success("The model has been saved and validatet successfull");
+ *         Logger::success("The model has been saved and validatet successful");
  *     }
  * }
  * ```

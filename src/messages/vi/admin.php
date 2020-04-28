@@ -240,7 +240,7 @@ return [
 
     'api_storage_file_upload_folder_error' => 'Error while saveing the file in the storage folder. A permission error could cause this problem. Make sure the storage folder is writeable.',
     'model_user_oldpassword' => 'Previous (old) Password',
-    'js_account_update_profile_success' => 'The profile data has been successfull updated.',
+    'js_account_update_profile_success' => 'The profile data has been successful updated.',
     'dashboard_lastlogin_title' => 'Last User Logins',
     'layout_useronline_activity' => 'Activity',
     'layout_useronline_inactive' => 'inactive',
@@ -379,7 +379,7 @@ return [
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Schedule',
     'js_scheduler_new_value' => 'New value',
@@ -497,4 +497,23 @@ return [
     'reset_form_text' => 'Enter a new password for your account.',
     'reset_form_submit_btn' => 'Update password',
     'user_change_password_error' =>  'Error while saving new password.',
+
+// 3.1.0
+
+    'crop_source_image' => 'Source Image',
+    'crop_preview' => 'Preview',
+    'crop_btn_as_copy' => 'Save image as a copy',
+    'crop_btn_as_copy_hint' => 'When enabled, the image will be stored as <b>a new file</b>, otherwise the existing file will be replaced.',
+    'crop_btn_save_copy' => 'Save as a copy',
+    'crop_btn_save_replace' => 'Replace existing file',
+    'crop_size_free' => 'Free',
+    'crop_size_1to1' => '1:1',
+    'crop_size_desktop' => 'Desktop',
+    'crop_size_mobile' => 'Mobile',
+    'crop_modal_title' => 'Image Cropping',
+    'crop_success' => 'File has been cropped an saved.',
+    'file_caption_success' => 'Captions has been updated.',
+    'crop_quality_high' => 'High',
+    'crop_quality_medium' => 'Medium',
+    'crop_quality_low' => 'Low',
 ];

@@ -42,7 +42,7 @@ $this->beginPage()
     </div>
 </div>
 <div class="luya">
-    <div class="luya-mainnav" ng-class="{'luya-mainnav-small' : !isHover}">
+    <div class="luya-mainnav" ng-class="{'luya-mainnav-small' : !isHover, 'shadow-lg': showDebugBar}">
         <div class="mainnav" ng-class="{'mainnav-small' : !isHover}">
             <div class="mainnav-toggler-mobile">
                 <div class="mainnav-toggler-mobile-icon" ng-click="isOpen = !isOpen">
@@ -207,7 +207,7 @@ $this->beginPage()
     <div class="luyasearch" ng-class="{'luyasearch-open' : searchInputOpen, 'luyasearch-closed': !searchInputOpen, 'luyasearch-toggled': isHover}" zaa-esc="escapeSearchInput()">
         <div class="luyasearch-inner">
             <div class="luyasearch-form form-group">
-                <input id="global-search-input" focus-me="searchInputOpen" ng-model="searchQuery" type="search" class="luyasearch-input form-control" placeholder="<?= Admin::t('layout_filemanager_search_text'); ?>"/>
+                <input id="global-search-input" focus-me="searchInputOpen" ng-model-options="{ debounce: 1000 }" ng-model="searchQuery" type="search" class="luyasearch-input form-control" placeholder="<?= Admin::t('layout_filemanager_search_text'); ?>"/>
                 <div class="luyasearch-close" ng-click="closeSearchInput()">
                     <i class="material-icons luyasearch-close-icon">close</i>
                 </div>
@@ -258,11 +258,8 @@ $this->beginPage()
         </div>
     </div>
 
-    <div class="debug" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
+    <div class="debug shadow" ng-show="showDebugBar" ng-class="{'debug-toggled': isHover}" ng-init="debugTab=1">
         <ul class="nav nav-tabs debug-tabs">
-            <li class="nav-item" ng-click="showDebugBar=0">
-                <span class="nav-link">x</span>
-            </li>
             <li class="nav-item" ng-click="debugTab=1">
                 <span class="nav-link" ng-class="{'active': debugTab==1}">Network</span>
             </li>
@@ -271,6 +268,14 @@ $this->beginPage()
             </li>
             <li class="nav-item" ng-click="debugTab=3">
                 <span class="nav-link" ng-class="{'active': debugTab==3}">Packages</span>
+            </li>
+            <li class="nav-item" ng-click="debugTab=4">
+                <span class="nav-link" ng-class="{'active': debugTab==4}">OpenAPI</span>
+            </li>
+            <li class="nav-item" ng-click="showDebugBar=0">
+                <span class="nav-link">
+                    <i class="material-icons">close</i>
+                </span>
             </li>
         </ul>
         <div class="debug-panel debug-panel-network" ng-class="{'debug-panel-network-open': debugDetail}" ng-if="debugTab==1">
@@ -378,6 +383,36 @@ $this->beginPage()
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="debug-panel" ng-if="debugTab==4">
+            <div class="alert alert-info">
+                In order to fetch the latest OpenAPI file either set endpoint to public with <code>publicOpenApi</code> or define and use <code>remoteToken</code>
+                <span class="badge badge-secondary badge--inherit-font-size float-right">BETA</span>
+            </div>
+            <p>
+                Public OpenAPI File:
+                <span class="badge badge--inherit-font-size badge-<?= $this->context->module->publicOpenApi ? 'success' : 'danger' ?>"><?= Yii::$app->formatter->asBoolean($this->context->module->publicOpenApi); ?></span>
+            </p>
+            <p>
+                OpenAPI available with Remote Token:
+                <span class="badge badge--inherit-font-size badge-<?= !empty(Yii::$app->remoteToken) ? 'success' : 'danger' ?>"><?= Yii::$app->formatter->asBoolean(Yii::$app->remoteToken); ?></span>
+                <?php if (!empty(Yii::$app->remoteToken)): ?><span class="badge badge--inherit-font-size badge-info"><?= sha1(Yii::$app->remoteToken); ?></span><?php endif; ?>
+            </p>
+            
+            <?php if ($this->context->module->publicOpenApi || Yii::$app->remoteToken): ?>
+                <div class="card">
+                    <div class="card-header">Access</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            URL: <span class="badge badge--inherit-font-size badge-info"><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></span>
+                        </p>
+                        <p class="card-text">
+                            <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" target="_blank" class="btn btn-primary">Open Documentation</a>
+                            <span class="badge badge--inherit-font-size badge-secondary">Authentication is required</span>
+                        </p>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

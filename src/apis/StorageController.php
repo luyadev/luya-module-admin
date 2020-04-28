@@ -2,6 +2,7 @@
 
 namespace luya\admin\apis;
 
+use InvalidArgumentException;
 use Yii;
 use luya\Exception;
 use luya\admin\helpers\Storage;
@@ -24,6 +25,7 @@ use luya\admin\traits\TaggableTrait;
 use luya\admin\storage\BaseFileSystemStorage;
 use luya\admin\events\FileEvent;
 use yii\base\Action;
+use yii\base\InvalidParamException;
 
 /**
  * Filemanager and Storage API.
@@ -164,6 +166,39 @@ class StorageController extends RestController
         }
         
         return $model->toArray([], ['user', 'file', 'images', 'source', 'tags']);
+    }
+
+    /**
+     * Create or replace a certain file based on new cropped image informations.
+     *
+     * @return Item
+     * @since 3.1.0
+     */
+    public function actionFileCrop()
+    {
+        $data = Yii::$app->request->getBodyParam('distImage');
+        $fileName = Yii::$app->request->getBodyParam('fileName');
+        $ext = Yii::$app->request->getBodyParam('extension');
+
+        $saveAsCopy = Yii::$app->request->getBodyParam('saveAsCopy');
+        $fileId = Yii::$app->request->getBodyParam('fileId');
+
+        $file = StorageFile::findOne($fileId);
+
+        if (empty($data) || empty($fileName) || empty($ext)) {
+            throw new InvalidArgumentException("Invalid Params");
+        }
+
+        list($type, $data) = explode(';', $data);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
+
+        if (!$saveAsCopy && $fileId) {
+            Storage::replaceFileFromContent($file->name_new_compound, $data);
+            return Storage::refreshFile($fileId, $file->getServerSource());
+        }
+
+        return Storage::uploadFromContent($data, $file->name_new .'_copy.'.$ext, $file->folder_id);
     }
 
     /**
@@ -362,25 +397,7 @@ class StorageController extends RestController
                 }
                 
                 if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
-                    foreach (StorageImage::find()->where(['file_id' => $file->id])->all() as $img) {
-                        // remove the source
-                        if ($img->deleteSource()) {
-                            // recreate image filters
-                            $img->imageFilter($img->filter_id, false);
-                        }
-                    }
-                    
-                    // calculate new file files based on new file
-                    $model = StorageFile::findOne((int) $fileId);
-                    $fileHash = FileHelper::md5sum($newFileSource);
-                    $fileSize = @filesize($newFileSource);
-                    $model->updateAttributes([
-                        'hash_file' => $fileHash,
-                        'file_size' => $fileSize,
-                        'upload_timestamp' => time(),
-                    ]);
-                    $this->flushApiCache($model->folder_id, $pageId);
-                    return true;
+                    return Storage::refreshFile($file->id, $newFileSource);
                 }
             }
         }
