@@ -40,7 +40,13 @@ class UrlRuleRouteParser extends BasePathParser
         $this->patternRoute = $patternRoute;
         $this->controllerMapRoute = $controllerMapRoute;
         $this->rules = $rules;
-        $this->controller = Yii::$app->createController($controllerMapRoute)[0];
+        
+        $createController = Yii::$app->createController($controllerMapRoute);
+
+        if ($createController) {
+            $this->controller = $createController[0];
+        }
+        
 
         if ($this->controller) {
             $this->controllerSpecs = new ControllerSpecs($this->controller);

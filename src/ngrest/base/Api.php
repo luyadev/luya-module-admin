@@ -85,6 +85,12 @@ class Api extends RestActiveController
      * @since 1.2.3
      */
     public $cacheDependency;
+
+    /**
+     * @var boolean If enabled, the truncate action is attached to the API. In order to run the truncate action the delete permission is required.
+     * @since 3.2.0
+     */
+    public $truncateAction = false;
     
     /**
      * @inheritdoc
@@ -110,7 +116,7 @@ class Api extends RestActiveController
         ]);
 
         $this->addActionPermission(Auth::CAN_DELETE, [
-            'delete',
+            'delete', 'truncate',
         ]);
     }
     
@@ -372,6 +378,14 @@ class Api extends RestActiveController
                 'class' => 'luya\admin\ngrest\base\actions\OptionsAction',
             ],
         ];
+
+        if ($this->truncateAction) {
+            $actions['truncate'] = [
+                'class' => 'luya\admin\ngrest\base\actions\TruncateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ];
+        }
         
         if ($this->enableCors) {
             $actions['options']['class'] = 'luya\admin\ngrest\base\actions\OptionsAction';

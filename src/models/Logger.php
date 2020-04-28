@@ -9,8 +9,15 @@ use luya\admin\Module;
 use luya\admin\aws\DetailViewActiveWindow;
 
 /**
+ * Application Logger.
+ * 
  * Logger to store information when working in controllers and actions.
  *
+ * + {{luya\admin\models\Logger::info()}}
+ * + {{luya\admin\models\Logger::success()}}
+ * + {{luya\admin\models\Logger::success()}}
+ * + {{luya\admin\models\Logger::error()}}
+ * 
  * Sometimes its usefull to trace data from an action or controller in order to find out what happens an critical areas runing trough the system.
  *
  * An example of how to use the logger inside an order action:
@@ -43,12 +50,12 @@ use luya\admin\aws\DetailViewActiveWindow;
  * public function actionLogin()
  * {
  *     Yii::$app->user->login();
- *     Logger('User is logging in', 'user');
+ *     Logger::info('User is logging in', 'user');
  *
  *     Yii::$app->user->addToBasket('Product 1');
- *     Logger('Add Product to users Cart', 'basket');
+ *     Logger::info('Add Product to users Cart', 'basket');
  *
- *     Logger('Redirect the user to basket', 'user');
+ *     Logger::info('Redirect the user to basket', 'user');
  *     Yii::$app->user->redirect();
  * }
  * ```

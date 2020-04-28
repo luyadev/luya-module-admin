@@ -188,7 +188,7 @@ return [
     'ngrest_crud_group_prompt' => 'Nach Feld gruppieren',
     'ngrest_crud_filter_prompt' => 'Filter auswählen',
     'ngrest_crud_ajax_search_length' => 'Der Suchbegriff muss mindestens 3 Zeichen lang sein.',
-    'menu_system_logger' => 'Logger',
+    'menu_system_logger' => 'Applikations Log',
     'layout_filemanager_detail_replace_file' => 'Datei ersetzen',
     'layout_rightbar_languagelabel' => 'Oberflächen Sprache',
     'layout_rightbar_savebtn' => 'Speichern',
@@ -518,4 +518,14 @@ return [
     'crop_quality_high' => 'Hoch',
     'crop_quality_medium' => 'Mittel',
     'crop_quality_low' => 'Niedrig',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
+    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'ngrest_delete_all_button_label' => 'Delete all data',
+    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
 ];

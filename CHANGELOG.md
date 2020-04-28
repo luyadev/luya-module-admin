@@ -11,6 +11,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#478](https://github.com/luyadev/luya-module-admin/pull/478) Corrected `implode()` in `ngRestScopes()` in create model command template.
 + [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
 + [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.
++ [#459](https://github.com/luyadev/luya-module-admin/issues/459) New dropdown option to truncate the whole model data, if enabled.
 
 ## 3.1.0 (24. March 2020)
 
