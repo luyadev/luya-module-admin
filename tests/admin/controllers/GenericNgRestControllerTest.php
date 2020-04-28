@@ -4,6 +4,7 @@ namespace admintests\admin\controllers;
 
 use admintests\AdminModelTestCase;
 use luya\admin\controllers\ApiUserController;
+use luya\admin\controllers\ConfigController;
 use luya\admin\controllers\EffectController;
 use luya\admin\controllers\FilterController;
 use luya\admin\controllers\GroupController;
@@ -34,6 +35,7 @@ class GenericNgRestControllerTest extends AdminModelTestCase
         QueueLogErrorController::class,
         TagController::class,
         UserController::class,
+        ConfigController::class,
     ];
 
     public function testControllerGenericMethodsForCoverage()

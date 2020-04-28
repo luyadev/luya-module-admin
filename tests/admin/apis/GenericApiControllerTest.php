@@ -4,6 +4,7 @@ namespace admintests\admin\controllers;
 
 use admintests\AdminModelTestCase;
 use luya\admin\apis\ApiUserController;
+use luya\admin\apis\ConfigController;
 use luya\admin\apis\EffectController;
 use luya\admin\apis\FilterController;
 use luya\admin\apis\GroupController;
@@ -36,6 +37,7 @@ class GenericApiControllerTest extends AdminModelTestCase
         QueueLogErrorController::class,
         TagController::class,
         UserController::class,
+        ConfigController::class,
     ];
 
     public function testControllerGenericMethodsForCoverage()
