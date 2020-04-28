@@ -90,7 +90,7 @@ class Api extends RestActiveController
      * @var boolean If enabled, the truncate action is attached to the API. In order to run the truncate action the delete permission is required.
      * @since 3.2.0
      */
-    public $enableTruncate = false;
+    public $truncateAction = false;
     
     /**
      * @inheritdoc
@@ -379,7 +379,7 @@ class Api extends RestActiveController
             ],
         ];
 
-        if ($this->enableTruncate) {
+        if ($this->truncateAction) {
             $actions['truncate'] = [
                 'class' => 'luya\admin\ngrest\base\actions\TruncateAction',
                 'modelClass' => $this->modelClass,

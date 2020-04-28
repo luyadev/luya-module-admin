@@ -82,8 +82,9 @@ class Controller extends \luya\admin\base\Controller
     public $globalButtons = [];
 
     /**
-     * @var boolean Whether the CRUD dropdown shows a button with "Clear Data" which will then truncate the whole table content. Usefull for tables
-     * which contain only temporary informations like logs and errors. If the user does not have delete permission, the button is hidden.
+     * @var boolean Whether the CRUD dropdown shows a button with "Delete all data" which will then truncate the whole table content. Usefull for tables
+     * which contain only temporary informations like logs and errors. If the user does not have delete permission, the button is hidden. In order to
+     * make the clear buutton (truncates all the data) work, the {{luya\admin\ngrest\base\Api::$truncateAction}} must be enabled.
      * @since 3.0.0
      */
     public $clearButton = false;

@@ -18,7 +18,7 @@ class NgrestLogController extends \luya\admin\ngrest\base\Api
     /**
      * {@inheritDoc}
      */
-    public $enableTruncate = true;
+    public $truncateAction = true;
 
     /**
      * {@inheritDoc}

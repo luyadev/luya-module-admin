@@ -14,7 +14,7 @@ use yii\data\ActiveDataProvider;
  */
 class TagController extends Api
 {
-    public $enableTruncate = true;
+    public $truncateAction = true;
     /**
      * @var string The path to the tag model.
      */

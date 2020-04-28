@@ -20,5 +20,5 @@ class LoggerController extends Api
     /**
      * {@inheritDoc}
      */
-    public $enableTruncate = true;
+    public $truncateAction = true;
 }
