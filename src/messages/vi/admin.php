@@ -188,7 +188,7 @@ return [
     'ngrest_crud_group_prompt' => 'Nhóm bởi trường',
     'ngrest_crud_filter_prompt' => 'Chọn bộ lọc',
     'ngrest_crud_ajax_search_length' => 'Chuỗi tìm kiếm phải ít nhất 3 ký tự.',
-    'menu_system_logger' => 'Logging',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Thay thế tập tin',
     'layout_rightbar_languagelabel' => 'Ngôn ngữ',
     'layout_rightbar_savebtn' => 'Lưu',

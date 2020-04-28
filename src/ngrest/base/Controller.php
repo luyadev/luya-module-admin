@@ -7,14 +7,14 @@ use Exception;
 use yii\base\InvalidConfigException;
 use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderCrud;
-use luya\helpers\ArrayHelper;
 use luya\helpers\FileHelper;
 use yii\web\ForbiddenHttpException;
 
 /**
  * Base Controller for all NgRest Controllers.
  *
- * @property \luya\admin\ngrest\base\NgRestModel $model The model based from the modelClass instance
+ * @property NgRestModel $model The model based from the modelClass instance
+ * @property string $description A text descirption for the CRUD which is display below the CRUD title
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -117,6 +117,30 @@ class Controller extends \luya\admin\base\Controller
      * @since 2.0.0
      */
     public $renderCrud = RenderCrud::class;
+
+    private $_description;
+
+    /**
+     * Setter method for description
+     *
+     * @param string $description
+     * @since 3.2.0
+     */
+    public function setDescription($description)
+    {
+        $this->_description = $description;
+    }
+
+    /**
+     * Getter method for description
+     *
+     * @return string
+     * @since 3.2.0
+     */
+    public function getDescription()
+    {
+        return $this->_description;
+    }
     
     /**
      * @inheritdoc
@@ -172,6 +196,7 @@ class Controller extends \luya\admin\base\Controller
             $config->defaultOrder = [$userSortSettings['field'] => $userSortSettings['sort']];
         }
 
+        // check if delete permissions exists for the current user in this crud.
         if ($this->clearButton) {
             array_push($this->globalButtons, [
                 'icon' => 'delete',
@@ -182,6 +207,7 @@ class Controller extends \luya\admin\base\Controller
         
         // generate crud renderer
         $crud = Yii::createObject($this->renderCrud);
+        $crud->description = $this->description;
         $crud->setModel($this->model);
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);

@@ -176,7 +176,7 @@ return [
     'ngrest_crud_group_prompt' => 'Ομαδοποίηση με πεδίο',
     'ngrest_crud_filter_prompt' => 'Επιλέξτε Φίλτρο',
     'ngrest_crud_ajax_search_length' => 'Οι όροι αναζήτησης πρέπει να αποτελούνται από τουλάχιστον 3 χαρακτήρες.',
-    'menu_system_logger' => 'Logging',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Αντικατάσταση αρχείου',
     'layout_rightbar_languagelabel' => 'Γλώσσα Interface',
     'layout_rightbar_savebtn' => 'Αποθήκευση',

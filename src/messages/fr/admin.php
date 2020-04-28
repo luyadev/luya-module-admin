@@ -184,7 +184,7 @@ return [
     'ngrest_crud_group_prompt' => 'Groupe par champ',
     'ngrest_crud_filter_prompt' => 'Sélectionner un filtre',
     'ngrest_crud_ajax_search_length' => 'La requête de recherche doit comporter au moins 3 caractères',
-    'menu_system_logger' => 'Logger',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Remplacer le fichier',
     'layout_rightbar_languagelabel' => 'Langue de l\'interface',
     'layout_rightbar_savebtn' => 'Enregistrer',

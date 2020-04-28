@@ -187,7 +187,7 @@ return [
 "ngrest_crud_group_prompt" => "Grupuj według pola",
 'ngrest_crud_filter_prompt' => 'Wybierz filtr',
 'ngrest_crud_ajax_search_length' => 'Zapytanie musi mieć co najmniej 3 znaki.',
-"menu_system_logger" => "Logowanie",
+"menu_system_logger" => "App Logowanie",
 "layout_filemanager_detail_replace_file" => "Zastąp plik",
 "layout_rightbar_languagelabel" => "Język interfejsu",
 "layout_rightbar_savebtn" => "Zapisz",

@@ -172,7 +172,7 @@ return [
     'ngrest_crud_group_prompt' => 'Groeperen op veld',
     'ngrest_crud_filter_prompt' => 'Selecteer filter',
     'ngrest_crud_ajax_search_length' => 'De zoekopdracht moet een minimale lengte van 3 tekens hebben.',
-    'menu_system_logger' => 'Loggen',
+    'menu_system_logger' => 'Application Loggen',
     'layout_filemanager_detail_replace_file' => 'Bestand vervangen',
     'layout_rightbar_languagelabel' => 'Interfacetaal',
     'layout_rightbar_savebtn' => 'Opslaan',

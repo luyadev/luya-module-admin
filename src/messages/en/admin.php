@@ -188,7 +188,7 @@ return [
     'ngrest_crud_group_prompt' => 'Group by field',
     'ngrest_crud_filter_prompt' => 'Select filter',
     'ngrest_crud_ajax_search_length' => 'The search query must have a minimum length of 3 characters.',
-    'menu_system_logger' => 'Logging',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Replace file',
     'layout_rightbar_languagelabel' => 'Interface Language',
     'layout_rightbar_savebtn' => 'Save',
@@ -497,4 +497,12 @@ return [
     'reset_form_text' => 'Enter a new password for your account.',
     'reset_form_submit_btn' => 'Update password',
     'user_change_password_error' =>  'Error while saving new password.',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Display data which are raised by creating, updating or deleting items in the admin area.',
+    'logger_controller_description' => 'Application Logs which are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Create configuration keys and assign a certain value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
 ];

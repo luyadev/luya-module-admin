@@ -2,13 +2,32 @@
 
 namespace luya\admin\models;
 
-use yii\db\ActiveRecord;
 use luya\traits\RegistryTrait;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
 
 /**
- * This is the model class for table "admin_config".
+ * Admin Config Model.
+ * 
+ * To work with Admin Config values you have to create the configuration value in the admin UI and can afterwards recieve those values. Its also
+ * possible to create new registry values. The {{luya\admin\traits\RegistryTrait}} is responsible for get, set, has and remove.
+ * 
+ * + {{luya\admin\traits\RegistryTrait::get()}}
+ * + {{luya\admin\traits\RegistryTrait::set()}}
+ * + {{luya\admin\traits\RegistryTrait::has()}}
+ * + {{luya\admin\traits\RegistryTrait::remove()}}
+ * 
+ * Create a new Config with value if does not exists.
+ * 
+ * ```php
+ * if (!Config::has('myVariable')) {
+ *     Config::set('myVariable', 'myValue');
+ * }
+ * 
+ * $value = Config::get('myVariable');
+ * ``` 
+ * 
+ * > This system is widely used to store CMS informations like navigations ids en retrieve those late.
  *
  * @property string $name
  * @property string $value

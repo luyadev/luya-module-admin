@@ -13,7 +13,12 @@ use luya\admin\ngrest\base\Api;
 class LoggerController extends Api
 {
     /**
-     * @var string Path to the logger model.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\Logger';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $enableTruncate = true;
 }

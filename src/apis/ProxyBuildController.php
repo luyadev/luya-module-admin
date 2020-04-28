@@ -11,7 +11,12 @@ namespace luya\admin\apis;
 class ProxyBuildController extends \luya\admin\ngrest\base\Api
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\ProxyBuild';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $enableTruncate = true;
 }

@@ -5,12 +5,26 @@ namespace luya\admin\apis;
 /**
  * Ngrest Log Controller.
  * 
- * File has been created with `crud/create` command. 
+* @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
  */
 class NgrestLogController extends \luya\admin\ngrest\base\Api
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\NgrestLog';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $enableTruncate = true;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepareListQuery()
+    {
+        return parent::prepareListQuery()->with(['user']);
+    }
 }

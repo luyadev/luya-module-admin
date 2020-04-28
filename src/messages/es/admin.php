@@ -172,7 +172,7 @@ return [
     'ngrest_crud_group_prompt' => 'Agrupar por campo',
     'ngrest_crud_filter_prompt' => 'Seleccione filtro',
     'ngrest_crud_ajax_search_length' => 'La consulta de búsqueda debe tener al menos 3 caracteres.',
-    'menu_system_logger' => 'Log',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Reemplazar archivo',
     'layout_rightbar_languagelabel' => 'Idioma de interfaz',
     'layout_rightbar_savebtn' => 'Guardar',

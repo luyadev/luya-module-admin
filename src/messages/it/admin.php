@@ -176,7 +176,7 @@ return [
     'ngrest_crud_group_prompt' => 'Raggruppa per campo',
     'ngrest_crud_filter_prompt' => 'Seleziona Filtro',
     'ngrest_crud_ajax_search_length' => 'Il termine di ricerca deve essere di almeno 3 caratteri.',
-    'menu_system_logger' => 'Log',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Sostituisci file',
     'layout_rightbar_languagelabel' => 'Lingua',
     'layout_rightbar_savebtn' => 'Salva',

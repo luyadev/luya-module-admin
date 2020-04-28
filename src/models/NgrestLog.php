@@ -2,13 +2,13 @@
 
 namespace luya\admin\models;
 
+use luya\admin\aws\DetailViewActiveWindow;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 
 /**
  * Ngrest Log.
- * 
- * File has been created with `crud/create` command. 
  *
  * @property integer $id
  * @property integer $user_id
@@ -22,6 +22,9 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property string $pk_value
  * @property string $table_name
  * @property tinyint $is_delete
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
  */
 class NgrestLog extends NgRestModel
 {
@@ -82,17 +85,22 @@ class NgrestLog extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'user_id' => 'number',
-            'timestamp_create' => 'number',
+            'user_id' => [
+                'class' => SelectRelationActiveQuery::class, 
+                'query' => $this->getUser(),
+                'relation' => 'user',
+                'labelField' => 'firstname,lastname'
+            ],
+            'timestamp_create' => 'datetime',
             'route' => 'text',
             'api' => 'text',
-            'is_update' => 'number',
-            'is_insert' => 'number',
-            'attributes_json' => 'textarea',
-            'attributes_diff_json' => 'textarea',
+            'is_update' => 'toggleStatus',
+            'is_insert' => 'toggleStatus',
+            'attributes_json' => 'raw',
+            'attributes_diff_json' => 'raw',
             'pk_value' => 'text',
             'table_name' => 'text',
-            'is_delete' => 'number',
+            'is_delete' => 'toggleStatus',
         ];
     }
 
@@ -102,9 +110,27 @@ class NgrestLog extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['user_id', 'timestamp_create', 'route', 'api', 'is_update', 'is_insert', 'attributes_json', 'attributes_diff_json', 'pk_value', 'table_name', 'is_delete']],
-            [['create', 'update'], ['user_id', 'timestamp_create', 'route', 'api', 'is_update', 'is_insert', 'attributes_json', 'attributes_diff_json', 'pk_value', 'table_name', 'is_delete']],
-            ['delete', false],
+            ['list', ['user_id', 'timestamp_create', 'route', 'api', 'pk_value', 'table_name']],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => DetailViewActiveWindow::class],
+        ];
+    }
+
+    /**
+     * Get User
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

@@ -34,6 +34,12 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     const TYPE_UPDATE = 'update';
 
     /**
+     * @var string A description for the CRUD Title which is display below the title.
+     * @since 3.2.0
+     */
+    public $description;
+
+    /**
      * @var string The view file for create and update form rendering. Aliases are supported.
      * By default the location for this file is the viewPath {@see getViewPath()}
      *
