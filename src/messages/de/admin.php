@@ -522,10 +522,10 @@ return [
 // 3.2.0
 
     'menu_system_model_event_log' => 'Model Event Log',
-    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
-    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
-    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
-    'ngrest_delete_all_button_label' => 'Delete all data',
-    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
+    'ngrestlog_controller_description' => 'Einträge des Model Event Logs werden beim Erstellen, Aktualisieren und Löschen von Datensätzen in CRUD Views der Administration erzeugt.',
+    'logger_controller_description' => 'Einträge des Application Logs werden vom [Logger Model](https://luya.io/api/luya-admin-models-Logger) veranlasst.',
+    'config_controller_description' => 'Erstellen Sie einen Konfigurations-Key und weisen diesem einen Wert zu mittels [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Listet alle unerledigten Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
+    'ngrest_delete_all_button_label' => 'Alle Daten löschen',
+    'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
 ];
