@@ -5,6 +5,7 @@ namespace luya\admin\tests\admin\openapi;
 use admintests\AdminModelTestCase;
 use luya\admin\models\Config;
 use luya\admin\models\Logger;
+use luya\admin\models\NgrestLog;
 use luya\admin\models\ProxyBuild;
 use luya\admin\models\ProxyMachine;
 use luya\admin\models\QueueLog;
@@ -14,7 +15,6 @@ use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageImage;
 use luya\admin\openapi\Generator;
-use luya\admin\openapi\OpenApiGenerator;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\Bootstrap;
@@ -81,6 +81,7 @@ class GeneratorTest extends AdminModelTestCase
         new NgRestModelFixture(['modelClass' => Config::class]);
         new NgRestModelFixture(['modelClass' => QueueLog::class]);
         new NgRestModelFixture(['modelClass' => QueueLogError::class]);
+        new NgRestModelFixture(['modelClass' => NgrestLog::class]);
         $generator = new Generator($this->app->urlManager, $this->app->getModule('admin')->controllerMap);
 
         $paths = $generator->getPaths();

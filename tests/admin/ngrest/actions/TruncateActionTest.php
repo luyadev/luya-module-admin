@@ -14,11 +14,13 @@ class TruncateActionTest extends AdminModelTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testDeleteObjectNotFound()
+    public function testDeleteResponse204()
     {
         $user = new NgRestModelFixture([
             'modelClass' => User::class,
         ]);
+
+        $this->createAdminLangFixture([]);
 
         $ctrl = new UserController('user', $this->app);
         $delete = new TruncateAction('id', $ctrl, ['modelClass' => User::class]);
