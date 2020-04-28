@@ -505,4 +505,6 @@ return [
     'logger_controller_description' => 'Application Logs which are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
     'config_controller_description' => 'Create configuration keys and assign a certain value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
     'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'ngrest_delete_all_button_label' => 'Delete all data',
+    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
 ];

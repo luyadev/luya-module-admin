@@ -86,6 +86,10 @@ class Api extends RestActiveController
      */
     public $cacheDependency;
 
+    /**
+     * @var boolean If enabled, the truncate action is attached to the API. In order to run the truncate action the delete permission is required.
+     * @since 3.2.0
+     */
     public $enableTruncate = false;
     
     /**

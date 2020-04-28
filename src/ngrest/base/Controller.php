@@ -4,6 +4,8 @@ namespace luya\admin\ngrest\base;
 
 use Yii;
 use Exception;
+use luya\admin\components\Auth;
+use luya\admin\Module;
 use yii\base\InvalidConfigException;
 use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderCrud;
@@ -81,7 +83,7 @@ class Controller extends \luya\admin\base\Controller
 
     /**
      * @var boolean Whether the CRUD dropdown shows a button with "Clear Data" which will then truncate the whole table content. Usefull for tables
-     * which contain only temporary informations like logs and errors.
+     * which contain only temporary informations like logs and errors. If the user does not have delete permission, the button is hidden.
      * @since 3.0.0
      */
     public $clearButton = false;
@@ -197,10 +199,10 @@ class Controller extends \luya\admin\base\Controller
         }
 
         // check if delete permissions exists for the current user in this crud.
-        if ($this->clearButton) {
+        if ($this->clearButton && Yii::$app->auth->matchApi(Yii::$app->adminuser->getId(), $config->apiEndpoint, Auth::CAN_DELETE)) {
             array_push($this->globalButtons, [
                 'icon' => 'delete',
-                'label' => 'Clear Data',
+                'label' => Module::t('ngrest_delete_all_button_label'),
                 'ng-click' => "clearData()"
             ]);
         }

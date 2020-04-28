@@ -29,7 +29,7 @@
 
 
 		$scope.clearData = function() {
-			AdminToastService.confirm('Are you sure all data should be removed? This can not be undone', 'Remove all Data', function() {
+			AdminToastService.confirm(i18n['ngrest_delete_all_button_confirm_message'], i18n['ngrest_delete_all_button_label'], function() {
 				var toast = this;
 				$http.get($scope.config.apiEndpoint + '/truncate').then(function() {
 					toast.close();
