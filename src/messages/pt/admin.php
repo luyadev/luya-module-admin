@@ -518,4 +518,14 @@ return [
     'crop_quality_high' => 'High',
     'crop_quality_medium' => 'Medium',
     'crop_quality_low' => 'Low',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
+    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'ngrest_delete_all_button_label' => 'Delete all data',
+    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
 ];
