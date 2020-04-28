@@ -5,6 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.2.0
 
+> This release contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#467](https://github.com/luyadev/luya-module-admin/issues/467) Improve performance of applying multiple filters on an image.
 + [#478](https://github.com/luyadev/luya-module-admin/pull/478) Corrected `implode()` in `ngRestScopes()` in create model command template.
 + [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
 + [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.

@@ -4,6 +4,7 @@ namespace luya\admin\models;
 
 use Yii;
 use luya\admin\file\Item;
+use yii\imagine\Image;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
 use luya\admin\aws\StorageFilterImagesActiveWindow;
@@ -94,15 +95,20 @@ final class StorageFilter extends NgRestModel
      */
     public function applyFilterChain($source, $fileSavePath)
     {
-        $loadFrom = $source;
+        // load resource object before processing chain
+        $image = Image::getImagine()->open($source);
+        $saveOptions = [];
         
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter
-            $chain->applyFilter($loadFrom, $fileSavePath);
-            // override load from path for next iteration (if any).
-            $loadFrom = $fileSavePath;
+            list($image, $saveOptions) = $chain->applyFilter($image, $saveOptions);
         }
-        
+
+        // auto rotate & save
+        $image = Image::autoRotate($image)
+            ->save($fileSavePath, $saveOptions);
+
+        unset($image);
         return true;
     }
 
@@ -124,16 +130,21 @@ final class StorageFilter extends NgRestModel
             'identifier' => 'text',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function ngRestConfig($config)
+    public function ngRestScopes()
     {
-        $config->aw->load(StorageFilterImagesActiveWindow::class);
-        
-        $this->ngRestConfigDefine($config, 'list', ['name', 'identifier']);
-        
-        return $config;
+        return [
+            [['list'], ['name', 'identifier']],
+        ];
+    }
+
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => StorageFilterImagesActiveWindow::class],
+        ];
     }
 }
