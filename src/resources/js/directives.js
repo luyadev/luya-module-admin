@@ -1452,10 +1452,19 @@ zaa.directive("zaaRadio", function () {
             "id": "@fieldid",
             "initvalue": "@initvalue"
         },
-        controller: ['$scope', function ($scope) {
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
             $scope.setModelValue = function (value) {
                 $scope.model = value;
             };
+
+            $scope.init = function () {
+                if ($scope.model == undefined || $scope.model == null) {
+                    $scope.model = typeCastValue($scope.initvalue);
+                }
+            };
+            $timeout(function () {
+                $scope.init();
+            });
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -1683,7 +1692,7 @@ zaa.directive("zaaCheckbox", function () {
             }
 
             $scope.init = function () {
-                if ($scope.model == undefined && $scope.model == null) {
+                if ($scope.model == undefined || $scope.model == null) {
                     $scope.model = typeCastValue($scope.initvalue);
                 }
             };
