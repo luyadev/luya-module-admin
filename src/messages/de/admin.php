@@ -528,4 +528,9 @@ return [
     'queuelog_controller_description' => 'Listet alle unerledigten Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
     'ngrest_delete_all_button_label' => 'Alle Daten löschen',
     'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
+    'storageimage_controller_description' => 'Display all images which has been created by the [Storage System](https://luya.io/guide/app-storage), each image is associated with a File.',
+    'menu_group_log' => 'Logs',
+    'menu_images_item_images' => 'Images',
+    'filter_controller_description' => 'Filters are used to generate an image version of a file. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instruction how to create new filters.',
+    'menu_group_storage' => 'Storage',
 ];
