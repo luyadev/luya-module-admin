@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.2.0
+## 3.2.0 (29. April 2020)
 
 > This release requires LUYA Core version 1.3 and contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 
