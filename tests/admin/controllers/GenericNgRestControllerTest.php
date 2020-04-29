@@ -17,6 +17,7 @@ use luya\admin\controllers\ProxyBuildController;
 use luya\admin\controllers\ProxyMachineController;
 use luya\admin\controllers\QueueLogController;
 use luya\admin\controllers\QueueLogErrorController;
+use luya\admin\controllers\StorageImageController;
 use luya\admin\controllers\TagController;
 use luya\admin\controllers\UserController;
 use luya\admin\models\QueueLog;
@@ -42,6 +43,7 @@ class GenericNgRestControllerTest extends AdminModelTestCase
         TagController::class,
         UserController::class,
         ConfigController::class,
+        StorageImageController::class,
     ];
 
     public function testControllerGenericMethodsForCoverage()

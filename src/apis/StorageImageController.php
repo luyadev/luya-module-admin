@@ -5,7 +5,8 @@ namespace luya\admin\apis;
 /**
  * Storage Image Controller.
  * 
- * File has been created with `crud/create` command. 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0
  */
 class StorageImageController extends \luya\admin\ngrest\base\Api
 {

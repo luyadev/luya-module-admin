@@ -528,4 +528,5 @@ return [
     'queuelog_controller_description' => 'Listet alle unerledigten Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
     'ngrest_delete_all_button_label' => 'Alle Daten löschen',
     'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
+    'menu_group_log' => 'Protokolle',
 ];

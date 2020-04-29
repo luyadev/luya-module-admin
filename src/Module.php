@@ -496,9 +496,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
                     ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild')
                 ->group('menu_group_images')
-                    ->itemApi('Images', 'admin/storage-image/index', 'label', 'api-admin-storageimage')
-                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
-                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter');
+                    ->itemApi('menu_images_item_images', 'admin/storage-image/index', 'photo', 'api-admin-storageimage')
+                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
+                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect');
     }
 
     /**

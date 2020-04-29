@@ -526,4 +526,5 @@ return [
     'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
     'ngrest_delete_all_button_label' => 'Delete all data',
     'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
+    'menu_group_log' => 'Logs',
 ];

@@ -2,15 +2,26 @@
 
 namespace luya\admin\controllers;
 
+use luya\admin\Module;
+
 /**
  * Storage Image Controller.
  * 
- * File has been created with `crud/create` command. 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.2.0 
  */
 class StorageImageController extends \luya\admin\ngrest\base\Controller
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\StorageImage';
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDescription()
+    {
+        return Module::t('storageimage_controller_description');
+    }
 }

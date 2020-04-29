@@ -15,6 +15,7 @@ use luya\admin\apis\ProxyBuildController;
 use luya\admin\apis\ProxyMachineController;
 use luya\admin\apis\QueueLogController;
 use luya\admin\apis\QueueLogErrorController;
+use luya\admin\apis\StorageImageController;
 use luya\admin\apis\TagController;
 use luya\admin\apis\UserController;
 use luya\testsuite\fixtures\NgRestModelFixture;
@@ -38,6 +39,7 @@ class GenericApiControllerTest extends AdminModelTestCase
         TagController::class,
         UserController::class,
         ConfigController::class,
+        StorageImageController::class,
     ];
 
     public function testControllerGenericMethodsForCoverage()

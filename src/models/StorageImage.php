@@ -77,7 +77,7 @@ class StorageImage extends NgRestModel
      */
     public function extraFields()
     {
-        return ['file', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
+        return ['file', 'filter', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
     }
 
     /**
@@ -128,6 +128,9 @@ class StorageImage extends NgRestModel
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function ngRestFullQuerySearch($query)
     {
         return parent::ngRestFullQuerySearch($query)
@@ -149,6 +152,12 @@ class StorageImage extends NgRestModel
         return $this->hasOne(StorageFile::class, ['id' => 'file_id']);
     }
 
+    /**
+     * Get Storage Filter.
+     * 
+     * @return StorageFilter
+     * @since 3.2.0
+     */
     public function getFilter()
     {
         return $this->hasOne(StorageFilter::class, ['id' => 'filter_id']);

@@ -5,7 +5,7 @@ namespace luya\admin\apis;
 /**
  * Ngrest Log Controller.
  * 
-* @author Basil Suter <git@nadar.io>
+ * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
 class NgrestLogController extends \luya\admin\ngrest\base\Api

@@ -2,6 +2,7 @@
 
 namespace luya\admin\controllers;
 
+use luya\admin\Module;
 use luya\admin\ngrest\base\Controller;
 
 /**
@@ -13,4 +14,9 @@ use luya\admin\ngrest\base\Controller;
 class FilterController extends Controller
 {
     public $modelClass = 'luya\admin\models\StorageFilter';
+
+    public function getDescription()
+    {
+        return Module::t('filter_controller_description');
+    }
 }
