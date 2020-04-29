@@ -688,6 +688,16 @@
 
 		$scope.service = false;
 
+		/**
+		 * Someone clicks on the same menu entry.
+		 */
+		$scope.$on('secondMenuClick', function() {
+			if ($scope.isInitalized) {
+				$scope.loadList();
+				$scope.switchTo(0, true);
+			}
+		});
+
 		/***** CONFIG AND INIT *****/
 
 		$scope.data = {
@@ -698,9 +708,12 @@
 			updateId : 0
 		};
 
+		$scope.isInitalized = false;
+
 		$scope.$watch('config', function(n, o) {
 			$timeout(function() {
 				$scope.initServiceAndConfig().then(function() {
+					$scope.isInitalized = true;
 					$scope.loadList();
 				});
 			})
@@ -975,6 +988,8 @@
 			var id = item.route;
 			var res = id.split("/");
 			CrudTabService.clear();
+
+			$scope.$broadcast('secondMenuClick', { item : item });
 
 			$state.go('default.route', { moduleRouteId : res[0], controllerId : res[1], actionId : res[2]});
 		};
