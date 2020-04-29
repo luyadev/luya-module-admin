@@ -2,25 +2,26 @@
 
 namespace luya\admin\models;
 
+use admintests\admin\ngrest\plugins\SelectRelationActiveQueryTestSqlLite;
 use Yii;
-use yii\db\ActiveRecord;
-use luya\helpers\FileHelper;
+use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
+use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 
 /**
- * StorageImage Model.
+ * Storage Image.
  *
- * @property int $id
- * @property int $file_id
- * @property int $filter_id
- * @property int $resolution_width
- * @property int $resolution_height
- *
+ * @property integer $id
+ * @property integer $file_id
+ * @property integer $filter_id
+ * @property integer $resolution_width
+ * @property integer $resolution_height
+ * 
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-final class StorageImage extends ActiveRecord
+class StorageImage extends NgRestModel
 {
     /**
      * @inheritdoc
@@ -33,20 +34,50 @@ final class StorageImage extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public static function ngRestApiEndpoint()
+    {
+        return 'api-admin-storageimage';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'file_id' => Yii::t('app', 'File ID'),
+            'filter_id' => Yii::t('app', 'Filter ID'),
+            'resolution_width' => Yii::t('app', 'Resolution Width'),
+            'resolution_height' => Yii::t('app', 'Resolution Height'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['file_id'], 'required'],
-            [['filter_id', 'resolution_width', 'resolution_height'], 'safe'],
+            [['file_id', 'filter_id', 'resolution_width', 'resolution_height'], 'integer'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
     public function fields()
     {
         return ['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'source', 'file'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['file', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
     }
 
     /**
@@ -61,13 +92,66 @@ final class StorageImage extends ActiveRecord
             return false;
         }
     }
-    
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestAttributeTypes()
+    {
+        return [
+            'id' => 'number',
+            'file_id' => [
+                'class' => SelectRelationActiveQuery::class, 
+                'query' => $this->getFile(),
+                'relation' => 'file',
+                'labelField' => 'name_original'
+            ],
+            'filter_id' => [
+                'class' => SelectRelationActiveQuery::class, 
+                'query' => $this->getFilter(),
+                'relation' => 'filter',
+                'labelField' => 'name'
+            ],
+            'resolution_width' => 'number',
+            'resolution_height' => 'number',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestScopes()
+    {
+        return [
+            ['list', ['id', 'file_id', 'filter_id', 'resolution_width', 'resolution_height']],
+            ['delete', true],
+        ];
+    }
+
+    public function ngRestFullQuerySearch($query)
+    {
+        return parent::ngRestFullQuerySearch($query)
+     		->joinWith(['file', 'filter'])
+     		->orFilterWhere([
+                 'or',
+                 ['like', 'name_original', $query],
+                 ['like', 'name_new_compound', $query],
+                 ['like', 'identifier', $query],
+                 ['like', 'name', $query],
+             ]);
+    }
+
     /**
      * @return StorageFile
      */
     public function getFile()
     {
-        return $this->hasOne(StorageFile::className(), ['id' => 'file_id']);
+        return $this->hasOne(StorageFile::class, ['id' => 'file_id']);
+    }
+
+    public function getFilter()
+    {
+        return $this->hasOne(StorageFilter::class, ['id' => 'filter_id']);
     }
     
     /**
@@ -114,6 +198,7 @@ final class StorageImage extends ActiveRecord
      * > This should have been done already while uploading.
      *
      * @since 1.2.3
+     * @return StorageImage
      */
     public function getTinyCropImage()
     {
@@ -129,6 +214,7 @@ final class StorageImage extends ActiveRecord
      * > This should have been done already while uploading.
      *
      * @since 1.2.3
+     * @return StorageImage
      */
     public function getMediumThumbnailImage()
     {
@@ -139,7 +225,7 @@ final class StorageImage extends ActiveRecord
      * the relation for an storage image with the given filter identifier
      *
      * @param string $identifier The identifier of the filter to use.
-     * @return self
+     * @return StorageImage
      * @since 1.2.3
      */
     public function getFilterImage($identifier)
@@ -176,6 +262,8 @@ final class StorageImage extends ActiveRecord
     }
 
     /**
+     * Delete the source of this image.
+     * 
      * @return boolean
      */
     public function deleteSource()
@@ -183,16 +271,13 @@ final class StorageImage extends ActiveRecord
         return Yii::$app->storage->fileSystemDeleteFile($this->filter_id . '_' . $this->file->name_new_compound);
     }
 
+    /**
+     * Get all related images
+     *
+     * @return StorageImage[]
+     */
     public function getImages()
     {
         return $this->hasMany(self::class, ['file_id' => 'file_id']);
-    }
-    
-    /**
-     * Expand fields source and thumbnail.
-     */
-    public function extraFields()
-    {
-        return ['file', 'thumbnail', 'tinyCropImage', 'mediumThumbnailImage'];
     }
 }

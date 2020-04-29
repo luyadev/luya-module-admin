@@ -263,6 +263,8 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
         'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
         'api-admin-ngrestlog' => 'luya\admin\apis\NgrestLogController',
+        'api-admin-storageimage' => 'luya\admin\apis\StorageImageController',
+
     ];
 
     /**
@@ -486,15 +488,17 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
+                ->group('menu_group_log')
                     ->itemApi('menu_system_queue_errors', 'admin/queue-log-error/index', 'bug_report', 'api-admin-queuelogerror')
                     ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
                     ->itemApi('menu_system_model_event_log', 'admin/ngrest-log/index', 'archive', 'api-admin-ngrestlog')
-                ->group('menu_group_images')
-                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
-                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
                 ->group('menu_group_contentproxy')
                     ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
-                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
+                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild')
+                ->group('menu_group_images')
+                    ->itemApi('Images', 'admin/storage-image/index', 'label', 'api-admin-storageimage')
+                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
+                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter');
     }
 
     /**
