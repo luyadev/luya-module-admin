@@ -26,7 +26,7 @@ class Main extends \luya\web\Asset
      * @inheritdoc
      */
     public $js = [
-        'dist/vendor.js',
+        'dist/bower.js',
         'dist/main.js',
     ];
 
