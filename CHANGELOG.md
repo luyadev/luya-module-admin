@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.2.0
 
-> This release contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+> This release requires LUYA Core version 1.3 and contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 
 + [#467](https://github.com/luyadev/luya-module-admin/issues/467) Improve performance of applying multiple filters on an image.
 + [#478](https://github.com/luyadev/luya-module-admin/pull/478) Corrected `implode()` in `ngRestScopes()` in create model command template.
