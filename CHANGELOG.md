@@ -14,6 +14,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#459](https://github.com/luyadev/luya-module-admin/issues/459) New dropdown option to truncate the whole model data, if enabled.
 + [#284](https://github.com/luyadev/luya-module-admin/issues/284) Added initvalue option for zaaRadio directive.
 + [#349](https://github.com/luyadev/luya-module-admin/issues/349) Option to include ApiUsers log entries into the admin dashboard.
++ [#466](https://github.com/luyadev/luya-module-admin/issues/466) New view for all images which are generated from files applying a filter.
 
 ## 3.1.0 (24. March 2020)
 

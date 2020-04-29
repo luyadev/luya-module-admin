@@ -504,4 +504,5 @@ return [
     'menu_group_log' => 'Logs',
     'menu_images_item_images' => 'Images',
     'filter_controller_description' => 'Filters are used to generate an image version of a file. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instruction how to create new filters.',
+    'menu_group_storage' => 'Storage',
 ];
