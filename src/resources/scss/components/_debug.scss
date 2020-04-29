@@ -44,16 +44,24 @@ $tabs-height: 0;
         margin-left: 3px;
     }
 
-    .nav-link {
+    .nav-item {
+
         pointer-events: all;
 
         &:hover {
             color:theme-color(primary);
             border-bottom: 0px;
         }
-        &.active {
-            color:theme-color(primary);
-            border-bottom: 0px;
+
+        background-color:white;
+        border:0px;
+
+        .nav-link {
+
+            &.active {
+                color:theme-color(primary);
+                border-bottom: 0px;
+            }
         }
     }
 }
