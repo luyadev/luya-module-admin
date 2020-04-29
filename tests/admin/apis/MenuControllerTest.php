@@ -1,0 +1,36 @@
+<?php
+
+namespace luya\admin\tests\admin\apis;
+
+use admintests\AdminModelTestCase;
+use luya\admin\apis\MenuController;
+use luya\testsuite\scopes\PermissionScope;
+use luya\testsuite\traits\AdminDatabaseTableTrait;
+
+class MenuControllerTest extends AdminModelTestCase
+{
+    use AdminDatabaseTableTrait;
+
+    public function testLoadDataWithoutApiUser()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $this->createAdminLangFixture([]);
+            $scope->createAndAllowRoute('adminmodeltest/id/dashboard');
+            $ctrl = new MenuController('id', $this->app);
+            $response = $scope->runControllerAction($ctrl, 'dashboard', ['nodeId' => 1]);
+            $this->assertSame([], $response);
+        });
+    }
+
+    public function testLoadDataWithApiUser()
+    {
+        $this->app->getModule('admin')->dashboardLogDisplayApiUserData = 1;
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $this->createAdminLangFixture([]);
+            $scope->createAndAllowRoute('admin/id/dashboard');
+            $ctrl = new MenuController('id', $this->app->getModule('admin'));
+            $response = $scope->runControllerAction($ctrl, 'dashboard', ['nodeId' => 1]);
+            $this->assertSame([], $response);
+        });
+    }
+}

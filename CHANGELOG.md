@@ -13,6 +13,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.
 + [#459](https://github.com/luyadev/luya-module-admin/issues/459) New dropdown option to truncate the whole model data, if enabled.
 + [#284](https://github.com/luyadev/luya-module-admin/issues/284) Added initvalue option for zaaRadio directive.
++ [#349](https://github.com/luyadev/luya-module-admin/issues/349) Option to include ApiUsers log entries into the admin dashboard.
 
 ## 3.1.0 (24. March 2020)
 
