@@ -4,40 +4,48 @@ namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
 use luya\admin\apis\MenuController;
-use luya\testsuite\scopes\PermissionScope;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 
 class MenuControllerTest extends AdminModelTestCase
 {
     use AdminDatabaseTableTrait;
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testLoadDataWithoutApiUser()
     {
-        
-        PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
-            $this->createAdminLangFixture([]);
-            $scope->createAndAllowRoute('admin/id/dashboard');
-            $ctrl = new MenuController('id', $this->app->getModule('admin'));
-            $response = $scope->runControllerAction($ctrl, 'dashboard', ['nodeId' => 1]);
-            $this->assertSame([], $response);
-
-            $this->assertSame([], $ctrl->actionIndex());
-            $this->assertSame([], $ctrl->actionItems(1));
-        });
+        $this->createAdminLangFixture();
+        $this->createAdminNgRestLogFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+        $this->createAdminUserOnlineFixture();
+        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
+        $ctrl = new MenuController('id', $this->app->getModule('admin'));
+        $this->assertSame([], $ctrl->actionDashboard(1));
+        $this->assertSame([], $ctrl->actionIndex());
+        $this->assertSame([], $ctrl->actionItems(1));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testLoadDataWithApiUser()
     {
-        
-        PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
+        $this->createAdminLangFixture();
+        $this->createAdminNgRestLogFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+        $this->createAdminUserOnlineFixture();
+        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
         $this->app->getModule('admin')->dashboardLogDisplayApiUserData = 1;
-            $this->createAdminLangFixture([]);
-            $scope->createAndAllowRoute('admin/id/dashboard');
-            $ctrl = new MenuController('id', $this->app->getModule('admin'));
-            $response = $scope->runControllerAction($ctrl, 'dashboard', ['nodeId' => 1]);
-            $this->assertSame([], $response);
-        });
+        $ctrl = new MenuController('id', $this->app->getModule('admin'));
+        $this->assertSame([], $ctrl->actionDashboard(1));
+        $this->assertSame([], $ctrl->actionIndex());
+        $this->assertSame([], $ctrl->actionItems(1));
     }
 }
