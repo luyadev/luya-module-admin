@@ -77,7 +77,7 @@ class MenuController extends RestController
         ->limit(100)
         ->where([
             'and',
-            ['in', 'api', array_Keys($accessList)],
+            ['in', 'api', array_keys($accessList)],
             ['!=', 'user_id', 0],
         ]);
 

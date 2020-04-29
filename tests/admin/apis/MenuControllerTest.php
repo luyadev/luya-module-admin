@@ -13,8 +13,9 @@ class MenuControllerTest extends AdminModelTestCase
 
     public function testLoadDataWithoutApiUser()
     {
-        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
+        
         PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
             $this->createAdminLangFixture([]);
             $scope->createAndAllowRoute('admin/id/dashboard');
             $ctrl = new MenuController('id', $this->app->getModule('admin'));
@@ -28,9 +29,10 @@ class MenuControllerTest extends AdminModelTestCase
 
     public function testLoadDataWithApiUser()
     {
-        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
-        $this->app->getModule('admin')->dashboardLogDisplayApiUserData = 1;
+        
         PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
+        $this->app->getModule('admin')->dashboardLogDisplayApiUserData = 1;
             $this->createAdminLangFixture([]);
             $scope->createAndAllowRoute('admin/id/dashboard');
             $ctrl = new MenuController('id', $this->app->getModule('admin'));
