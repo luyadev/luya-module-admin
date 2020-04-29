@@ -932,6 +932,7 @@
 
 		$scope.loadDashboard = function() {
 			$scope.currentItem = null;
+			$scope.getDashboard($scope.moduleId);
 			return $state.go('default', { 'moduleId' : $scope.moduleId});
 		}
 

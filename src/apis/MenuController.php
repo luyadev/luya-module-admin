@@ -69,7 +69,7 @@ class MenuController extends RestController
 
         $log = [];
 
-        $data = (new Query())
+        $query = (new Query())
         ->select(['timestamp_create', 'api', 'user_id', 'admin_ngrest_log.id', 'is_update', 'is_delete', 'is_insert', 'admin_user.firstname', 'admin_user.lastname'])
         ->from('{{%admin_ngrest_log}}')
         ->leftJoin('{{%admin_user}}', '{{%admin_ngrest_log}}.user_id = {{%admin_user}}.id')
@@ -79,10 +79,13 @@ class MenuController extends RestController
             'and',
             ['in', 'api', array_Keys($accessList)],
             ['!=', 'user_id', 0],
-            ['=', 'is_api_user', 0],
-        ])->all();
+        ]);
 
-        foreach ($data as $row) {
+        if (!$this->module->dashboardLogDisplayApiUserData) {
+            $query->andWhere(['=', 'is_api_user', 0]);
+        }
+
+        foreach ($query->all() as $row) {
             $api = $accessList[$row['api']];
             $date = mktime(0, 0, 0, date('n', $row['timestamp_create']), date('j', $row['timestamp_create']), date('Y', $row['timestamp_create']));
             if ($row['is_update']) {

@@ -225,6 +225,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $apiUserAllowActionsWithoutPermissions = false;
 
     /**
+     * @var boolean Whether the api user log entries should be display in the module dashboard or not. This is disabled by default as ApiUsers might
+     * create and update a lot of data.
+     * @since 3.2.0 
+     */
+    public $dashboardLogDisplayApiUserData = false;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
