@@ -528,9 +528,9 @@ return [
     'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
     'ngrest_delete_all_button_label' => 'Delete all data',
     'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
-    'storageimage_controller_description' => 'Display all images which has been created by the [Storage System](https://luya.io/guide/app-storage), each image is associated with a File.',
+    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
     'menu_group_log' => 'Logs',
     'menu_images_item_images' => 'Images',
-    'filter_controller_description' => 'Filters are used to generate an image version of a file. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instruction how to create new filters.',
+    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
     'menu_group_storage' => 'Storage',
 ];
