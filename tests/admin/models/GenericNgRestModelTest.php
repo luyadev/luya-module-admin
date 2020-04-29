@@ -53,6 +53,8 @@ class GenericNgRestModelTest extends AdminModelTestCase
             $this->assertNotNull($item->attributeHints());
             $this->assertNotNull($item->attributeLabels());
             $this->assertNotNull($item->rules());
+            $this->assertTrue(is_array($item->extraFields()));
+            $this->assertTrue(is_array($item->fields()));
         }
     }
 }
