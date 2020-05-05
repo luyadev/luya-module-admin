@@ -83,7 +83,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     ];
     
     /**
-     * @array Provide dashboard objects from last user logins.
+     * @var array Provide dashboard objects from last user logins.
      */
     public $dashboardObjects = [
         [
