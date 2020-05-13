@@ -36,7 +36,7 @@ class Generator extends BaseObject
     public $controllerMapEndpointPrefix;
 
     /**
-     * @var array A list of of paths which should be filtered out. See {luya\helpers\StringHelper::filterMatch()}} for more condition syntax docs. Assuming to have
+     * @var array A list of of paths which should be filtered out. See {{luya\helpers\StringHelper::filterMatch()}} for more condition syntax docs. Assuming to have
      * a path `/admin/api-admin-user` a filter path to filter out all apis with `api-admin` would be `'filterPaths' => ['/admin/api-admin*']`.
      * @see {{luya\helpers\StringHelper::filterMatch()}} for function details.
      */
