@@ -38,16 +38,24 @@ class ActiveRecordToSchema
         $this->phpDocParser = new PhpDocParser(new ReflectionClass(get_class($activeRecord)));
     }
 
-    public function getProperties()
+    /**
+     * Get Properties
+     *
+     * @param boolean $virtualProperties Whether virtual properties from phpdoc block `@property` should be added or not
+     * @return array
+     */
+    public function getProperties($phpDocProperties = true)
     {
         $properties = [];
         foreach ($this->activeRecord->attributes() as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
         }
 
-        foreach ($this->phpDocParser->getProperties() as $prop) {
-            if (!array_key_exists($prop->getNormalizedName(), $properties)) {
-                $properties[$prop->getNormalizedName()] = $this->createSchema($prop->getNormalizedName());
+        if ($phpDocProperties) {
+            foreach ($this->phpDocParser->getProperties() as $prop) {
+                if (!array_key_exists($prop->getNormalizedName(), $properties)) {
+                    $properties[$prop->getNormalizedName()] = $this->createSchema($prop->getNormalizedName());
+                }
             }
         }
         
@@ -67,7 +75,7 @@ class ActiveRecordToSchema
             
             if ($object) {
                 $config = $this->baseSpecs->activeRecordToSchema($object, $type->getIsArray());
-                $config['title'] = $type->getClassPhpDocParser()->getShortSummary();
+                $config['title'] = $property->getDescription() ? $property->getDescription() : $type->getClassPhpDocParser()->getShortSummary();
                 $config['description'] = $type->getClassPhpDocParser()->getLongDescription(); // @TODO veryify if <br> or PHP_EOL (\n) works, redoc seems to work with <br/>
                 return new Schema($config);
             }

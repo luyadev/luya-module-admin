@@ -50,6 +50,7 @@ use WhichBrowser\Parser;
  * @property string|null $login_2fa_backup_key {@since 3.0.0}
  * @property string|null $password_verification_token {@since 3.0.0}
  * @property int|null $password_verification_token_timestamp {@since 3.0.0}
+ * @property Group[] $groups Expand groups for this user
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

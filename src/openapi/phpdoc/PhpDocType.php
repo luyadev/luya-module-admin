@@ -93,28 +93,48 @@ class PhpDocType
             return false;
         }
 
-        if (class_exists($this->rawName)) {
-            $this->_className = $this->rawName;
+        // array notation like Users[]
+        if (StringHelper::contains('[]', $this->rawName)) {
+            $className = str_replace("[]", '', $this->rawName);
+            if (($class = $this->testValidClassName($className))) {
+                $this->_className = $class;
+                return $this->name;
+            }
+        }
+
+        if (($class = $this->testValidClassName($this->rawName))) {
+            $this->_className = $class;
             return $this->name;
         }
 
+        if (($class = $this->testValidClassName($this->name))) {
+            $this->_className = $class;
+            return $class;
+        }
+
+        $this->_className = false;
+        return false;
+    }
+
+    protected function testValidClassName($className)
+    {
+        if (class_exists($className)) {
+            return $className;
+        }
+
         // test relative classNames when objects are in the same namespace
-        $absoluteClassName = $this->phpDocParser->reflection->getNamespaceName() . '\\' . $this->rawName;
+        $absoluteClassName = $this->phpDocParser->reflection->getNamespaceName() . '\\' . $className;
         if (class_exists($absoluteClassName)) {
-            $this->_className = $absoluteClassName;
-            return $this->name;
+            return $absoluteClassName;
         }
 
         // get the
 
-        $ensureClassName = $this->phpDocParser->ensureClassName($this->name);
-
+        $ensureClassName = $this->phpDocParser->ensureClassName($className);
         if ($ensureClassName && class_exists($ensureClassName)) {
-            $this->_className = $ensureClassName;
             return $ensureClassName;
         }
 
-        $this->_className = false;
         return false;
     }
 

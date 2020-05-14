@@ -27,6 +27,8 @@ class UserController extends Api
     public $modelClass = 'luya\admin\models\User';
     
     /**
+     * Profile
+     * 
      * Return informations about the current logged in user
      *
      * @return array
@@ -90,6 +92,7 @@ class UserController extends Api
     }
     
     /**
+     * Disable 2FA
      * Action to disable the two fa auth for this user.
      *
      * @return array
@@ -110,6 +113,8 @@ class UserController extends Api
     }
 
     /**
+     * Register 2FA Device
+     * 
      * Action to register new OTP device
      *
      * @return array
@@ -145,7 +150,7 @@ class UserController extends Api
     }
 
     /**
-     * Remove a device from the list
+     * Remove Device
      *
      * @return array
      * @since 3.0.0
@@ -164,7 +169,9 @@ class UserController extends Api
     }
 
     /**
-     * Action to change the password for the given User.
+     * Change Password
+     * 
+     * A request including body params `newpass`, `oldpass`, `newpassrepeat`.
      *
      * @return \luya\admin\models\UserChangePassword
      */
@@ -186,6 +193,8 @@ class UserController extends Api
     }
     
     /**
+     * Change E-Mail
+     * 
      * Action to change the email based on token input.
      *
      * @return boolean
@@ -213,7 +222,7 @@ class UserController extends Api
     }
     
     /**
-     * Update data for the current session user.
+     * Update Profile
      *
      * @return array
      */
@@ -253,7 +262,7 @@ class UserController extends Api
     }
     
     /**
-     * Change user settings.
+     * Change Settings
      *
      * @return boolean
      */
