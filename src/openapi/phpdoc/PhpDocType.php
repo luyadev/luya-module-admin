@@ -118,6 +118,8 @@ class PhpDocType
         return false;
     }
 
+    private $_phpDocParser;
+
     /**
      * Get PhpDocParser from className definition.
      *
@@ -125,7 +127,11 @@ class PhpDocType
      */
     public function getClassPhpDocParser()
     {
-        return new PhpDocParser(new ReflectionClass($this->getClassName()));
+        if ($this->_phpDocParser === null) {
+            $this->_phpDocParser = new PhpDocParser(new ReflectionClass($this->getClassName()));
+        }
+
+        return $this->_phpDocParser;
     }
 
     public function getNoramlizeName()

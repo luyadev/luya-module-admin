@@ -117,6 +117,8 @@ class Generator extends BaseObject
 
                 unset($array, $reflection, $property);
             }
+
+            unset($rule);
         }
 
         return $rules;
@@ -158,6 +160,9 @@ class Generator extends BaseObject
                     $this->addPath(new ActionRouteParser($controller, $actionName, $absoluteRoute, $controllerMapRoute));
                 }
             }
+
+            unset($controller);
+            gc_collect_cycles();
         }
     }
 
@@ -184,6 +189,9 @@ class Generator extends BaseObject
                 $this->_routes[] = $route;
             }
         }
+
+        unset($pathParser);
+        gc_collect_cycles();
     }
 
     /**

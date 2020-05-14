@@ -260,10 +260,14 @@ abstract class BaseSpecs implements SpecInterface
      */
     public function createActiveRecordSchema($activeRecordClassName)
     {
-        $object = Yii::createObject($activeRecordClassName);
+        try {
+            $object = Yii::createObject($activeRecordClassName);
 
-        if ($object instanceof ActiveRecord) {
-            return new ActiveRecordToSchema($this, $object);
+            if ($object instanceof ActiveRecord) {
+                return new ActiveRecordToSchema($this, $object);
+            }
+        } catch(\Exception $e) {
+            
         }
 
         return false;
