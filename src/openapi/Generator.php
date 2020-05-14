@@ -132,6 +132,7 @@ class Generator extends BaseObject
         foreach ($this->getUrlRules() as $controllerName => $config) {
             foreach ($config as $item) {
                 foreach ($item['rules'] as $patternRoute => $ruleConfig) {
+                    Yii::debug("Create new UrlRuleRouteParser for '{$patternRoute}', '{$controllerName}' and '{$item['endpointName']}'", __METHOD__);
                     $this->addPath(new UrlRuleRouteParser($patternRoute, $controllerName, $ruleConfig, $item['endpointName']));
                 }
             }
@@ -157,6 +158,7 @@ class Generator extends BaseObject
                 }
                 $absoluteRoute = $controllerMapRoute.'/'.$actionName;
                 if (!in_array($absoluteRoute, $this->_routes)) {
+                    Yii::debug("Create new ActionRouteParser for '{$actionName}' and '{$absoluteRoute}'", __METHOD__);
                     $this->addPath(new ActionRouteParser($controller, $actionName, $absoluteRoute, $controllerMapRoute));
                 }
             }
