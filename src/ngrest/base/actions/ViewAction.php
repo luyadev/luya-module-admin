@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\db\ActiveRecordInterface;
 
 /**
- * View Item
+ * View
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

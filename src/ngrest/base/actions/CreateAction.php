@@ -3,7 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 /**
- * Create Item
+ * Create
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use luya\traits\CacheableTrait;
 
 /**
- * List Items
+ * List
  * 
  * Returns all entries for the given model paginated by a number of elements.
  *

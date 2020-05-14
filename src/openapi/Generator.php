@@ -51,12 +51,15 @@ class Generator extends BaseObject
     public $ignoredApiActions = [
         'active-window-callback',
         'active-window-render',
+        'active-button',
         'unlock',
         'toggle-notification',
         'export',
         'permissions',
         'services',
         'options',
+        'list',
+        'relation-call',
     ];
 
     /**

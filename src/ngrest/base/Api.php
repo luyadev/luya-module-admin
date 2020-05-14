@@ -681,10 +681,10 @@ class Api extends RestActiveController
     }
     
     /**
-     * Filter Data
+     * Filter
      *
-     * @param string $filterName
-     * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
+     * @param string $filterName The filter name to apply.
+     * @param string $query An optional query to search inside the data.
      * @throws InvalidCallException
      * @return \yii\data\ActiveDataProvider
      */

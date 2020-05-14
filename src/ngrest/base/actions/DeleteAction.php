@@ -7,7 +7,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
- * Delete Item
+ * Delete
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
