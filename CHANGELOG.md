@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.x
 
++ [#499](https://github.com/luyadev/luya-module-admin/pull/499) Added missing RU translations.
 + [#489](https://github.com/luyadev/luya-module-admin/issues/489) Hide default LUYA NgRest CRUD actions for OpenApi generator. Improve overall performance to generate OpenApi.
 
 ## 3.2.0 (29. April 2020)
