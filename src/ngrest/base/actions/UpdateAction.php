@@ -8,7 +8,7 @@ use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * Updatem Item
+ * Update Item
  *
  * Updates the given model values. If saving was successful the new model with its new values will be returned.
  *

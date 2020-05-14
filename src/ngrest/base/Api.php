@@ -580,11 +580,11 @@ class Api extends RestActiveController
     }
     
     /**
-     * Search by Query
+     * Search
      *
      * Search querys with Pagination will be handled by this action.
      *
-     * @param string $query The search paramter, if empty post will be used.
+     * @param string $query The query to lookup the database, if query is empty a post request with `query` can be used instead.
      * @return \yii\data\ActiveDataProvider
      */
     public function actionSearch($query = null)
@@ -681,7 +681,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Filter data by Filter-Name
+     * Filter Data
      *
      * @param string $filterName
      * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
