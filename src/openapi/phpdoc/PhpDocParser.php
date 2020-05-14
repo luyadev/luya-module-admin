@@ -4,6 +4,7 @@ namespace luya\admin\openapi\phpdoc;
 
 use luya\helpers\StringHelper;
 use Reflector;
+use Yii;
 
 /**
  * Create Parser Object from reflection class to read PhpDocs.
@@ -24,6 +25,8 @@ class PhpDocParser
     {
         $this->reflection = new PhpDocReflection($reflection);
         $this->rows = $this->parseDocBlockToArrays($this->reflection);
+
+        Yii::debug("PhpDocParser for file '{$reflection->name}'", __METHOD__);
     }
 
     protected function parseDocBlockToArrays(PhpDocReflection $reflection)

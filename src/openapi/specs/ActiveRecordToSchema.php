@@ -45,14 +45,11 @@ class ActiveRecordToSchema
             $properties[$attributeName] = $this->createSchema($attributeName);
         }
 
-        /*
-        // @TODO allow to add virtual properties
         foreach ($this->phpDocParser->getProperties() as $prop) {
             if (!array_key_exists($prop->getNormalizedName(), $properties)) {
                 $properties[$prop->getNormalizedName()] = $this->createSchema($prop->getNormalizedName());
             }
         }
-        */
         
         return $properties;
     }
