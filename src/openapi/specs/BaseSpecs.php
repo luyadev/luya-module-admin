@@ -55,12 +55,17 @@ abstract class BaseSpecs implements SpecInterface
 
     abstract public function getControllerObject();
 
+    private $_phpDocParser;
     /**
      * @return PhpDocParser
      */
     protected function getPhpDocParser()
     {
-        return new PhpDocParser($this->getReflection());
+        if ($this->_phpDocParser === null) {
+            $this->_phpDocParser = new PhpDocParser($this->getReflection());
+        }
+        
+        return $this->_phpDocParser;
     }
 
     /**
