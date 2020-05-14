@@ -216,7 +216,10 @@ abstract class BaseSpecs implements SpecInterface
         ]);
     }
 
-    protected function modelContextToResponse($contextModel, $isArray = false)
+    public static $contexts = [];
+
+
+    protected function internalModelContextResolve($contextModel, $isArray = false)
     {
         $object = Yii::createObject($contextModel);
 
@@ -252,6 +255,21 @@ abstract class BaseSpecs implements SpecInterface
         ];
     }
 
+    protected function modelContextToResponse($contextModel, $isArray = false)
+    {
+        $key = md5(implode(",", [$contextModel, $isArray]));
+
+        if (array_key_exists($key, self::$contexts)) {
+            return self::$contexts[$key];
+        }
+
+        $response = $this->internalModelContextResolve($contextModel, $isArray);
+
+        self::$contexts[$key] = $response;
+
+        return $response;
+    }
+
     /**
      * create an ActiveRecordSchema from a className
      *
@@ -260,10 +278,15 @@ abstract class BaseSpecs implements SpecInterface
      */
     public function createActiveRecordSchema($activeRecordClassName)
     {
-        $object = Yii::createObject($activeRecordClassName);
+        try {
+            Yii::warning("Create object createActiveRecordSchema {$activeRecordClassName}", __METHOD__);
+            $object = Yii::createObject($activeRecordClassName);
 
-        if ($object instanceof ActiveRecord) {
-            return new ActiveRecordToSchema($this, $object);
+            if ($object instanceof ActiveRecord) {
+                return new ActiveRecordToSchema($this, $object);
+            }
+        } catch(\Exception $e) {
+            
         }
 
         return false;

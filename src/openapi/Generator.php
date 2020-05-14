@@ -51,12 +51,15 @@ class Generator extends BaseObject
     public $ignoredApiActions = [
         'active-window-callback',
         'active-window-render',
+        'active-button',
         'unlock',
         'toggle-notification',
         'export',
         'permissions',
         'services',
         'options',
+        'list',
+        'relation-call',
     ];
 
     /**
@@ -114,6 +117,8 @@ class Generator extends BaseObject
 
                 unset($array, $reflection, $property);
             }
+
+            unset($rule);
         }
 
         return $rules;
@@ -127,6 +132,7 @@ class Generator extends BaseObject
         foreach ($this->getUrlRules() as $controllerName => $config) {
             foreach ($config as $item) {
                 foreach ($item['rules'] as $patternRoute => $ruleConfig) {
+                    Yii::debug("Create new UrlRuleRouteParser for '{$patternRoute}', '{$controllerName}' and '{$item['endpointName']}'", __METHOD__);
                     $this->addPath(new UrlRuleRouteParser($patternRoute, $controllerName, $ruleConfig, $item['endpointName']));
                 }
             }
@@ -152,9 +158,13 @@ class Generator extends BaseObject
                 }
                 $absoluteRoute = $controllerMapRoute.'/'.$actionName;
                 if (!in_array($absoluteRoute, $this->_routes)) {
+                    Yii::debug("Create new ActionRouteParser for '{$actionName}' and '{$absoluteRoute}'", __METHOD__);
                     $this->addPath(new ActionRouteParser($controller, $actionName, $absoluteRoute, $controllerMapRoute));
                 }
             }
+
+            unset($controller);
+            gc_collect_cycles();
         }
     }
 
@@ -181,6 +191,9 @@ class Generator extends BaseObject
                 $this->_routes[] = $route;
             }
         }
+
+        unset($pathParser);
+        gc_collect_cycles();
     }
 
     /**

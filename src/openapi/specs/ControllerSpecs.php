@@ -15,7 +15,7 @@ class ControllerSpecs extends BaseSpecs
 {
     protected $reflection;
 
-    protected $controller;
+    public $controller;
 
     public function __construct(Controller $controller)
     {

@@ -47,7 +47,6 @@ class UrlRuleRouteParser extends BasePathParser
             $this->controller = $createController[0];
         }
         
-
         if ($this->controller) {
             $this->controllerSpecs = new ControllerSpecs($this->controller);
         }
@@ -110,7 +109,7 @@ class UrlRuleRouteParser extends BasePathParser
         if ($this->_operations !== null) {
             return $this->_operations;
         }
-        
+
         $operations = [];
 
         /** @var UrlRule $urlRule */
@@ -134,6 +133,8 @@ class UrlRuleRouteParser extends BasePathParser
         if (empty($urlRule->verb)) {
             return false;
         }
+
+        Yii::debug("Get Operation '{$urlRule->route}' with pattern '{$urlRule->pattern}'", __METHOD__);
 
         $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route), $verbName);
 

@@ -93,30 +93,52 @@ class PhpDocType
             return false;
         }
 
-        if (class_exists($this->rawName)) {
-            $this->_className = $this->rawName;
+        // array notation like Users[]
+        if (StringHelper::contains('[]', $this->rawName)) {
+            $className = str_replace("[]", '', $this->rawName);
+            if (($class = $this->testValidClassName($className))) {
+                $this->_className = $class;
+                return $this->name;
+            }
+        }
+
+        if (($class = $this->testValidClassName($this->rawName))) {
+            $this->_className = $class;
             return $this->name;
         }
 
-        // test relative classNames when objects are in the same namespace
-        $absoluteClassName = $this->phpDocParser->reflection->getNamespaceName() . '\\' . $this->rawName;
-        if (class_exists($absoluteClassName)) {
-            $this->_className = $absoluteClassName;
-            return $this->name;
-        }
-
-        // get the
-
-        $ensureClassName = $this->phpDocParser->ensureClassName($this->name);
-
-        if ($ensureClassName && class_exists($ensureClassName)) {
-            $this->_className = $ensureClassName;
-            return $ensureClassName;
+        if (($class = $this->testValidClassName($this->name))) {
+            $this->_className = $class;
+            return $class;
         }
 
         $this->_className = false;
         return false;
     }
+
+    protected function testValidClassName($className)
+    {
+        if (class_exists($className)) {
+            return $className;
+        }
+
+        // test relative classNames when objects are in the same namespace
+        $absoluteClassName = $this->phpDocParser->reflection->getNamespaceName() . '\\' . $className;
+        if (class_exists($absoluteClassName)) {
+            return $absoluteClassName;
+        }
+
+        // get the
+
+        $ensureClassName = $this->phpDocParser->ensureClassName($className);
+        if ($ensureClassName && class_exists($ensureClassName)) {
+            return $ensureClassName;
+        }
+
+        return false;
+    }
+
+    private $_phpDocParser;
 
     /**
      * Get PhpDocParser from className definition.
@@ -125,7 +147,11 @@ class PhpDocType
      */
     public function getClassPhpDocParser()
     {
-        return new PhpDocParser(new ReflectionClass($this->getClassName()));
+        if ($this->_phpDocParser === null) {
+            $this->_phpDocParser = new PhpDocParser(new ReflectionClass($this->getClassName()));
+        }
+
+        return $this->_phpDocParser;
     }
 
     public function getNoramlizeName()

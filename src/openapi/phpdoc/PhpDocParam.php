@@ -23,6 +23,26 @@ class PhpDocParam
     }
 
     /**
+     * Get name ($name) of the variable.
+     *
+     * @return void
+     */
+    public function getName()
+    {
+        return isset($this->definition[2]) ? trim($this->definition[2]) : '';
+    }
+
+    /**
+     * Get attribute name without dollaer.
+     *
+     * @return void
+     */
+    public function getNormalizedName()
+    {
+        return ltrim($this->getName(), '$');
+    }
+
+    /**
      * Description.
      *
      * @return string

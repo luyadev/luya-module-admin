@@ -5,9 +5,9 @@ namespace luya\admin\openapi;
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\Responses;
+use luya\admin\ngrest\base\Api;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
-use luya\helpers\Inflector;
 use yii\base\Controller;
 
 /**
@@ -29,6 +29,7 @@ class ActionRouteParser extends BasePathParser
     protected $controllerSpecs;
     protected $absoluteRoute;
     protected $controllerMapRoute;
+    protected $actionName;
 
     public function __construct(Controller $controller, $actionName, $absoluteRoute, $controllerMapRoute)
     {
@@ -36,6 +37,7 @@ class ActionRouteParser extends BasePathParser
         $this->actionSpecs = new ControllerActionSpecs($controller, $actionName, 'get');
         $this->absoluteRoute = $absoluteRoute;
         $this->controllerMapRoute = $controllerMapRoute;
+        $this->actionName = $actionName;
     }
 
     /**
@@ -78,6 +80,11 @@ class ActionRouteParser extends BasePathParser
      */
     public function isValid(): bool
     {
+        if ($this->controllerSpecs->controller instanceof Api && $this->actionName == 'filter') {
+            if (empty($this->controllerSpecs->controller->model->ngRestFilters())) {
+                return false;
+            }
+        }
         return true;
     }
 }

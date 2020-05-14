@@ -57,7 +57,6 @@ class ControllerActionSpecs extends BaseSpecs
         return $this->_actionObject;
     }
 
-    private $_reflection;
     /**
      * {@inheritDoc}
      */

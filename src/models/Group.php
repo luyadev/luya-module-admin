@@ -8,7 +8,7 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\GroupAuthActiveWindow;
 
 /**
- * This is the model class for table "admin_group".
+ * User Groups
  *
  * @property integer $id
  * @property string $name
