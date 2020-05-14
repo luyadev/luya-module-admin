@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.x
+
++ [#489](https://github.com/luyadev/luya-module-admin/issues/489) Hide default LUYA NgRest CRUD actions for OpenApi generator. Improve overall performance to generate OpenApi.
+
 ## 3.2.0 (29. April 2020)
 
 > This release requires LUYA Core version 1.3 and contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
