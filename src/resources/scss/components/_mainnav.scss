@@ -200,11 +200,12 @@
     display: inline-block;
     line-height: 22px;
     z-index: zindex(popover);
+    font-size:14px;
 }
 
 .mainnav-icon {
     font-size: 24px !important;
-    margin: 0 15px 0 0;
+    margin: 0  5px 0 0;
     transition: .1s ease-in-out color;
 
     .mainnav--horizontal & {
@@ -451,6 +452,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+
+    i {
+        margin: 0 5px 0 0;
+    }
 }
 
 .mainnav-timeout {
