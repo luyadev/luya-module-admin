@@ -279,16 +279,17 @@ abstract class BaseSpecs implements SpecInterface
      * create an ActiveRecordSchema from a className
      *
      * @param string|array $activeRecordClassName
+     * @param string $senderActiveRecordClassName The class name which has created the new active record, this is used to find circular reference which end in infinite loops.
      * @return ActiveRecordToSchema
      */
-    public function createActiveRecordSchema($activeRecordClassName)
+    public function createActiveRecordSchema($activeRecordClassName, $senderActiveRecordClassName = null)
     {
         try {
             Yii::warning("Create object createActiveRecordSchema {$activeRecordClassName}", __METHOD__);
             $object = Yii::createObject($activeRecordClassName);
 
             if ($object instanceof ActiveRecord) {
-                return new ActiveRecordToSchema($this, $object);
+                return new ActiveRecordToSchema($this, $object, $senderActiveRecordClassName);
             }
         } catch(\Exception $e) {
             

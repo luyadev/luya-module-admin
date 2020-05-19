@@ -31,11 +31,17 @@ class ActiveRecordToSchema
      */
     protected $baseSpecs;
 
-    public function __construct(BaseSpecs $baseSpecs, BaseActiveRecord $activeRecord)
+    /**
+     * @var string Contains the class which was the origin creator of the active record schema, this can be usused to determine circular references.
+     */
+    protected $senderActiveRecordClassName;
+
+    public function __construct(BaseSpecs $baseSpecs, BaseActiveRecord $activeRecord, $senderActiveRecordClassName = null)
     {
         $this->activeRecord = $activeRecord;
         $this->baseSpecs = $baseSpecs;
         $this->phpDocParser = new PhpDocParser(new ReflectionClass(get_class($activeRecord)));
+        $this->senderActiveRecordClassName = $senderActiveRecordClassName;
     }
 
     /**
@@ -69,9 +75,9 @@ class ActiveRecordToSchema
 
         $type = $property->getType();
         // handle php object type
-        if ($type->getIsClass() && !$this->isCircualrReference($type->getClassName())) {
+        if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {
             
-            $object = $this->baseSpecs->createActiveRecordSchema($type->getClassName());
+            $object = $this->baseSpecs->createActiveRecordSchema($type->getClassName(), get_class($this->activeRecord));
             
             if ($object) {
                 $config = $this->baseSpecs->activeRecordToSchema($object, $type->getIsArray());
@@ -88,8 +94,13 @@ class ActiveRecordToSchema
         ]);
     }
 
-    protected function isCircualrReference($class)
+    protected function isCircularReference($class)
     {
+        // sender class is the same as the destination class, circular reference detected.
+        if ($class == $this->senderActiveRecordClassName) {
+            return true;
+        }
+
         return trim(get_class($this->activeRecord), '\\') == trim($class, '\\');
     }
 
