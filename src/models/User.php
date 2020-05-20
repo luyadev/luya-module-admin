@@ -566,16 +566,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * @inheritdoc
      */
-    /*
-    public function getAuthToken()
-    {
-        return $this->auth_token;
-    }
-    */
-
-    /**
-     * @inheritdoc
-     */
     public function getAuthKey()
     {
         $userAgent = Yii::$app->request->userAgent;
