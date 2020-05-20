@@ -10,7 +10,9 @@ use yii\base\Event;
  */
 class UserAccessTokenLoginEvent extends Event
 {
-    public $tokenType;
+    public $type;
+
+    public $token;
     
     private $_user;
 

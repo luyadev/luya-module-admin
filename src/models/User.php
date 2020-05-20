@@ -547,7 +547,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         }
 
         $event = new UserAccessTokenLoginEvent();
-        $event->tokenType = $type;
+        $event->type = $type;
+        $event->token = $token;
         Yii::$app->adminuser->trigger(AdminUser::EVENT_USER_ACCESS_TOKEN_LOGIN, $event);
 
         if ($event->user) {
