@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.x
+## 3.3.0
 
 + [#499](https://github.com/luyadev/luya-module-admin/pull/499) Added missing RU translations.
 + [#489](https://github.com/luyadev/luya-module-admin/issues/489) Hide default LUYA NgRest CRUD actions for OpenApi generator. Improve overall performance to generate OpenApi.
