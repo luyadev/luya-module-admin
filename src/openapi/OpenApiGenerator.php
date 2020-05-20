@@ -62,7 +62,7 @@ class OpenApiGenerator
     {
         return new Info([
             'title' => Yii::$app->siteTitle,
-            'version' => '1.0.0',
+            'version' => Yii::$app->version,
         ]);
     }
 
