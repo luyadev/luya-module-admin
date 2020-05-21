@@ -41,6 +41,9 @@ use yii\queue\db\Command;
  */
 final class Module extends \luya\admin\base\Module implements CoreModuleInterface
 {
+
+    const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
+
     /**
      * This event gets trigger before some trys to download a file.
      *

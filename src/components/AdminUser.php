@@ -22,8 +22,6 @@ use luya\admin\models\UserLoginLockout;
  */
 class AdminUser extends User
 {
-    const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
-
     /**
      * @inheritdoc
      */
