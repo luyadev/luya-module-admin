@@ -14,6 +14,9 @@ use yii\base\InvalidConfigException;
  * In order to login a given user set `$event->login($user)` 
  * 
  * @property User $user
+ * 
+ * @since 3.3.0
+ * @author Basil Suter <git@nadar.io>
  */
 class UserAccessTokenLoginEvent extends Event
 {
