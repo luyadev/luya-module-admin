@@ -15,6 +15,7 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\admin\events\UserAccessTokenLoginEvent;
 use luya\helpers\Html;
 use luya\helpers\Url;
 use WhichBrowser\Parser;
@@ -543,8 +544,18 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         if (empty($token) || !is_scalar($token)) {
             throw new InvalidArgumentException("The provided access token is invalid.");
         }
+
+        $event = new UserAccessTokenLoginEvent();
+        $event->type = $type;
+        $event->token = $token;
+        Yii::$app->trigger(Module::EVENT_USER_ACCESS_TOKEN_LOGIN, $event);
+
+        if ($event->user) {
+            $user = $event->user;
+        } else {
+            $user = static::findOne(['auth_token' => $token]);
+        }
         
-        $user = static::findOne(['auth_token' => $token]);
         // if the given user can be found, udpate the api last activity timestamp.
         if ($user) {
             $user->updateAttributes(['api_last_activity' => time()]);

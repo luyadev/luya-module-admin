@@ -135,9 +135,4 @@ final class ApiUser extends User
             ['class' => ApiRequestInsightActiveWindow::class, 'label' => false],
         ];
     }
-    
-    public function attributeHints()
-    {
-        return ['id' => 'hinitnitnnt'];
-    }
 }
