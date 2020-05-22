@@ -41,13 +41,18 @@ use yii\queue\db\Command;
  */
 final class Module extends \luya\admin\base\Module implements CoreModuleInterface
 {
-
+    /**
+     * This event is triggered when an access token is trying to login. 
+     * 
+     * @var string User login by Access-Token event. 
+     * @since 3.3.0
+     */
     const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
 
     /**
-     * This event gets trigger before some trys to download a file.
+     * This event is triggered before a file is downloaded through the {{luya\admin\controllers\FileController}}.
      *
-     * @var string Event Name
+     * @var string Before File Download Event
      */
     const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
     
