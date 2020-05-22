@@ -15,7 +15,6 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
-use luya\admin\components\AdminUser;
 use luya\admin\events\UserAccessTokenLoginEvent;
 use luya\helpers\Html;
 use luya\helpers\Url;
