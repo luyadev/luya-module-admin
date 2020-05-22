@@ -169,9 +169,10 @@ abstract class BaseSpecs implements SpecInterface
         $response = new Response([]);
         $response->description = $return->getDescription();
 
-        
-        if ($this->getResponseContent()) {
-            $response->content = $this->getResponseContent();
+        $responseContent = $this->getResponseContent();
+
+        if (!empty($responseContent)) {
+            $response->content = $responseContent;
             $statusCode = 200;
         } else {
             $statusCode = 204;
@@ -179,7 +180,6 @@ abstract class BaseSpecs implements SpecInterface
 
         $responseCodes = [
             $statusCode => $response,
-            400 => new Response(['description' => 'Bad request.']),
             401 => new Response(['description' => 'Authentication failed.']),
             404 => new Response(['description' => 'The requested resource does not exist.']),
             405 => new Response(['description' => 'Method not allowed.']),
@@ -383,6 +383,16 @@ abstract class BaseSpecs implements SpecInterface
                 'application/json' => new MediaType([
                     'schema' => [
                         'type' => $type->name,
+                    ],
+                ])
+            ];
+        }
+
+        if ($type->getIsObject()) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'object',
                     ],
                 ])
             ];
