@@ -98,13 +98,13 @@ class PhpDocType
             $className = str_replace("[]", '', $this->rawName);
             if (($class = $this->testValidClassName($className))) {
                 $this->_className = $class;
-                return $this->name;
+                return $class;
             }
         }
 
         if (($class = $this->testValidClassName($this->rawName))) {
             $this->_className = $class;
-            return $this->name;
+            return $class;
         }
 
         if (($class = $this->testValidClassName($this->name))) {
@@ -128,8 +128,7 @@ class PhpDocType
             return $absoluteClassName;
         }
 
-        // get the
-
+        // Find alias defintion `XYZ as ABC`
         $ensureClassName = $this->phpDocParser->ensureClassName($className);
         if ($ensureClassName && class_exists($ensureClassName)) {
             return $ensureClassName;

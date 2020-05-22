@@ -41,7 +41,8 @@ class PhpDocParser
             'link' => [],
             'since' => [],
             'var' => [],
-            'property' => [], // @property <type> $firstname <description>
+            'property' => [], // @property <type> $firstname <description>,
+            'uses' => [], // @uses <type> <description>
         ];
 
         foreach (explode(PHP_EOL, $reflection->getDocComment()) as $row) {
@@ -122,6 +123,23 @@ class PhpDocParser
     }
 
     /**
+     * Get uses
+     *
+     * @return PhpDocUses[]
+     * @since 3.3.0
+     */
+    public function getUses()
+    {
+        $uses = [];
+
+        foreach ($this->rows['uses'] as $use) {
+            $uses[] = new PhpDocUses($this, $use);
+        }
+
+        return $uses;
+    }
+
+    /**
      *
      *
      * @param string $paramName
@@ -178,7 +196,7 @@ class PhpDocParser
     }
 
     /**
-     * Undocumented function
+     * Return
      *
      * @return PhpDocReturn
      */

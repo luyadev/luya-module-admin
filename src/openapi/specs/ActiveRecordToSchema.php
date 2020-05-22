@@ -3,10 +3,9 @@
 namespace luya\admin\openapi\specs;
 
 use cebe\openapi\spec\Schema;
-use luya\admin\models\ApiUser;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use ReflectionClass;
-use yii\db\BaseActiveRecord;
+use yii\base\Model;
 
 /**
  * Generate Schema Specs from Active Record.
@@ -17,7 +16,7 @@ use yii\db\BaseActiveRecord;
 class ActiveRecordToSchema
 {
     /**
-     * @var BaseActiveRecord
+     * @var Model
      */
     protected $activeRecord;
 
@@ -36,7 +35,7 @@ class ActiveRecordToSchema
      */
     protected $senderActiveRecordClassName;
 
-    public function __construct(BaseSpecs $baseSpecs, BaseActiveRecord $activeRecord, $senderActiveRecordClassName = null)
+    public function __construct(BaseSpecs $baseSpecs, Model $activeRecord, $senderActiveRecordClassName = null)
     {
         $this->activeRecord = $activeRecord;
         $this->baseSpecs = $baseSpecs;
