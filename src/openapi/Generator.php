@@ -11,6 +11,7 @@ use luya\helpers\StringHelper;
 use yii\base\BaseObject;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
+use yii\web\UrlRule as WebUrlRule;
 
 /**
  * Generate Path Objects from UrlManager and ControllerMap.
@@ -116,6 +117,14 @@ class Generator extends BaseObject
                 }
 
                 unset($array, $reflection, $property);
+            } elseif ($rule instanceof WebUrlRule) {
+                // add as config? 
+                // 'urlRule' => ['<RULE>', 'VERB', 'endpointName'];
+                $rule->verb = ['GET'];
+                $rules[$rule->route][] = ['rules' => [
+                    $rule->name => [$rule]
+                ], 'endpointName' => $rule->route];
+
             }
 
             unset($rule);
