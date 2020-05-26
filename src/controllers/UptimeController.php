@@ -6,7 +6,7 @@ use Yii;
 use luya\rest\Controller;
 
 /**
- * Uptime Tests Controller.
+ * Uptime Tests
  *
  * This controler is used for uptime status robots.
  *
