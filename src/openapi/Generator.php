@@ -100,7 +100,7 @@ class Generator extends BaseObject
      *
      * @param string $route The route which is handled by the rule
      * @param string|array $verb The verb or a liste of verbs, use `POST`, `GET`, `PUT`, `DELETE`. If not defined, GET will be used.
-     * @param string $endpointName An additional name for the endpoint, this name will be taken for groupping the rule.
+     * @param string $endpointName An additional name for the endpoint, this name will be taken for groupping the rule. If not defined the rule pattern will be taken
      * @since 3.3.0
      */
     public function assignUrlRule($route, $verb = 'GET', $endpointName = null)
@@ -141,7 +141,7 @@ class Generator extends BaseObject
                 $rule->verb = $assignedRule['verb'];
                 $rules[$rule->route][] = ['rules' => [
                     $rule->name => [$rule]
-                ], 'endpointName' => $assignedRule['endpointName']];
+                ], 'endpointName' => empty($assignedRule['endpointName']) ? $rule->name : $assignedRule['endpointName']];
 
             }
 

@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.0
 
++ [#503](https://github.com/luyadev/luya-module-admin/pull/503) An option to assign defined `yii\web\UrlRule` into the `luya\admin\openapi\Generator`.
 + [#500](https://github.com/luyadev/luya-module-admin/pull/500) Trigger an event (eventUserAccessTokenLogin) when an access token is requesting for a login.
 + [#499](https://github.com/luyadev/luya-module-admin/pull/499) Added missing RU translations.
 + [#489](https://github.com/luyadev/luya-module-admin/issues/489) Hide default LUYA NgRest CRUD actions for OpenApi generator. Improve overall performance to generate OpenApi.
