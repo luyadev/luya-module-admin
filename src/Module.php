@@ -279,6 +279,11 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'patterns' => [
                 'POST' => 'index',
             ]
+        ],
+        'api-admin-user' => [
+            'extraPatterns' => [
+                'POST change-password' => 'change-password',
+            ]
         ]
     ];
 
