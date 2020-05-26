@@ -14,6 +14,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\rest\Action;
@@ -56,10 +57,11 @@ abstract class BaseSpecs implements SpecInterface
     abstract public function getControllerObject();
 
     private $_phpDocParser;
+
     /**
      * @return PhpDocParser
      */
-    protected function getPhpDocParser()
+    public function getPhpDocParser()
     {
         if ($this->_phpDocParser === null) {
             $this->_phpDocParser = new PhpDocParser($this->getReflection());
@@ -288,7 +290,7 @@ abstract class BaseSpecs implements SpecInterface
             Yii::warning("Create object createActiveRecordSchema {$activeRecordClassName}", __METHOD__);
             $object = Yii::createObject($activeRecordClassName);
 
-            if ($object instanceof ActiveRecord) {
+            if ($object instanceof Model) {
                 return new ActiveRecordToSchema($this, $object, $senderActiveRecordClassName);
             }
         } catch(\Exception $e) {

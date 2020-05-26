@@ -9,6 +9,8 @@ use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\RequestBody;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
+use luya\admin\openapi\phpdoc\PhpDocUses;
+use luya\admin\openapi\specs\ActiveRecordToSchema;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
 use Yii;
@@ -175,6 +177,49 @@ class UrlRuleRouteParser extends BasePathParser
                     ])
                 ]
             ]);
+        } elseif (strtoupper($verbName) == 'POST') {
+            
+            // if its a post request endpoint and @uses is defined use this
+            // information as request body.
+            $useProperties = [];
+
+            /** @var PhpDocUses $use */
+            foreach ($actionSpecs->getPhpDocParser()->getUses() as $use) {
+                
+                if ($use->getType()->getIsClass()) {
+                    $schema = $actionSpecs->createActiveRecordSchema($use->getType()->getClassName());
+                    if ($schema) {
+                        $requestBody = new RequestBody([
+                            'content' => [
+                                'application/json' => new MediaType([
+                                    'schema' => [
+                                        'type' => 'object',
+                                        'properties' => $schema->getProperties()
+                                    ]
+                                ])
+                            ]
+                        ]);
+                    }
+                } else {
+                    $useProperties[$use->getDescription()] = new Schema([
+                        'type' => $use->getType()->getNoramlizeName(),
+                        'title' => $use->getDescription(),
+                    ]);
+                }
+            }
+
+            if (!empty($useProperties)) {
+                $requestBody = new RequestBody([
+                    'content' => [
+                        'application/json' => new MediaType([
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => $useProperties,
+                            ]
+                        ])
+                    ]
+                ]);
+            }
         }
 
         return new Operation(array_filter([

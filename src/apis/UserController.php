@@ -173,6 +173,7 @@ class UserController extends Api
      * 
      * A request including body params `newpass`, `oldpass`, `newpassrepeat`.
      *
+     * @uses UserChangePassword
      * @return \luya\admin\models\UserChangePassword
      */
     public function actionChangePassword()

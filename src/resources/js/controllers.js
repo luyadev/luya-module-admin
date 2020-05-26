@@ -1175,7 +1175,7 @@
 		$scope.notifications = [];
 
 		(function tick(){
-			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
+			$http.post('admin/api-admin-timestamp', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
 				$scope.notifications = response.data.notifications;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {
