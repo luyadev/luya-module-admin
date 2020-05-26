@@ -556,6 +556,7 @@ class Api extends RestActiveController
     /**
      * Toggle Notifications
      *
+     * @uses integer mute Whether should be muted or not
      * @return UserAuthNotification The user auth notification model. If model does not exists a new model will be created.
      * @since 2.0.0
      */
@@ -584,6 +585,7 @@ class Api extends RestActiveController
      *
      * Search querys with Pagination will be handled by this action.
      *
+     * @uses string $query The search term as post request.
      * @param string $query The query to lookup the database, if query is empty a post request with `query` can be used instead.
      * @return \yii\data\ActiveDataProvider
      */
@@ -761,6 +763,9 @@ class Api extends RestActiveController
     /**
      * Export Data
      *
+     * @uses integer header Whether header should be exported or not
+     * @uses string type The type csv oder xlsx
+     * @uses array attributes A list of attributes to export
      * @return array An array with the key `url` which contains the download path to the file
      * @throws ErrorException
      */

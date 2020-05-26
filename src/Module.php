@@ -272,7 +272,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
         'api-admin-ngrestlog' => 'luya\admin\apis\NgrestLogController',
         'api-admin-storageimage' => 'luya\admin\apis\StorageImageController',
+    ];
 
+    public $apiRules = [
+        'api-admin-timestamp' => [
+            'patterns' => [
+                'POST' => 'index',
+            ]
+        ]
     ];
 
     /**
