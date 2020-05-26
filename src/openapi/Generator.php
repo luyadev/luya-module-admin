@@ -11,6 +11,7 @@ use luya\helpers\StringHelper;
 use yii\base\BaseObject;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
+use yii\web\UrlRule as WebUrlRule;
 
 /**
  * Generate Path Objects from UrlManager and ControllerMap.
@@ -88,6 +89,25 @@ class Generator extends BaseObject
         $this->controllerMap = $controllerMap;
     }
 
+    private $_assignedUrlRules = [];
+
+    /**
+     * Assign an existing Rule to the UrlRules
+     * 
+     * By default only {{yii\rest\UrlRule}} will be take, as they contain informations about Verbs. In order to
+     * assign a "casual" {{yii\web\UrlRule}} this method can be used. Assuming a defined url rule `['v1/users/register' => 'user/register']`
+     * it can be assigned with `assignUrlRule('user/register', 'POST')`.
+     *
+     * @param string $route The route which is handled by the rule
+     * @param string|array $verb The verb or a liste of verbs, use `POST`, `GET`, `PUT`, `DELETE`. If not defined, GET will be used.
+     * @param string $endpointName An additional name for the endpoint, this name will be taken for groupping the rule. If not defined the rule pattern will be taken
+     * @since 3.3.0
+     */
+    public function assignUrlRule($route, $verb = 'GET', $endpointName = null)
+    {
+        $this->_assignedUrlRules[$route] = ['route' => $route, 'verb' => (array) $verb, 'endpointName' => $endpointName];
+    }
+
     /**
      * Get all Url Rules.
      *
@@ -116,6 +136,13 @@ class Generator extends BaseObject
                 }
 
                 unset($array, $reflection, $property);
+            } elseif ($rule instanceof WebUrlRule && array_key_exists($rule->route, $this->_assignedUrlRules)) {
+                $assignedRule = $this->_assignedUrlRules[$rule->route];
+                $rule->verb = $assignedRule['verb'];
+                $rules[$rule->route][] = ['rules' => [
+                    $rule->name => [$rule]
+                ], 'endpointName' => empty($assignedRule['endpointName']) ? $rule->name : $assignedRule['endpointName']];
+
             }
 
             unset($rule);

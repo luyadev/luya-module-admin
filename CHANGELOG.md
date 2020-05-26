@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.0
 
++ [#503](https://github.com/luyadev/luya-module-admin/pull/503) An option to assign defined `yii\web\UrlRule` into the `luya\admin\openapi\Generator`.
 + [#501](https://github.com/luyadev/luya-module-admin/pull/501) Implement PhpDoc `@uses` for handling OpenApi request body informations when verb type is `POST`.
 + [#500](https://github.com/luyadev/luya-module-admin/pull/500) Trigger an event (eventUserAccessTokenLogin) when an access token is requesting for a login.
 + [#499](https://github.com/luyadev/luya-module-admin/pull/499) Added missing RU translations.

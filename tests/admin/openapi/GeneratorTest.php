@@ -106,4 +106,21 @@ class GeneratorTest extends AdminModelTestCase
 
         $this->assertSame(['/admin/api-admin-remotes'], array_keys($generator->getPaths()));
     }
+
+    public function testAssignUrlRules()
+    {
+        $this->createAdminLangFixture();
+        $urlManager = new UrlManager([
+            'rules' => 
+                [
+                    'this/is/my/pattern' => 'admin/account/dashboard'
+                ]
+        
+        ]);
+
+        $generator = new Generator($urlManager, []);
+        $generator->assignUrlRule('admin/account/dashboard', 'POST', 'endpointname');
+
+        $this->assertSame(['/this/is/my/pattern'], array_keys($generator->getPaths()));
+    }
 }
