@@ -63,7 +63,7 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
             'query' => $find,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
             'pagination' => [
-                'page' => $page,
+                'page' => $page-1,
                 'pageSize' => 23,
             ]
         ]);
