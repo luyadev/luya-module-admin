@@ -6,6 +6,7 @@ use luya\admin\aws\DetailViewActiveWindow;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
+use luya\behaviors\JsonBehavior;
 
 /**
  * Ngrest Log.
@@ -34,6 +35,17 @@ class NgrestLog extends NgRestModel
     public static function tableName()
     {
         return '{{%admin_ngrest_log}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => JsonBehavior::class,
+                'attributes' => ['attributes_json', 'attributes_diff_json'],
+                'encodeBeforeValidate' => true,
+            ]
+        ];
     }
 
     /**
@@ -102,6 +114,18 @@ class NgrestLog extends NgRestModel
             'table_name' => 'text',
             'is_delete' => 'toggleStatus',
         ];
+    }
+
+    public function attributesAttributeDiff($attribute)
+    {
+        $oldValue = isset($this->attributes_diff_json[$attribute]) ? $this->attributes_diff_json[$attribute] : null;
+        $newValue = isset($this->attributes_json[$attribute]) ? $this->attributes_json[$attribute] : null;
+
+        if ($oldValue == $newValue) {
+            return false;
+        }
+        
+        return $oldValue;  
     }
 
     /**
