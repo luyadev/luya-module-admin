@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.3.1
+
++ [#510](https://github.com/luyadev/luya-module-admin/pull/510) Fixed regression from issue [#459](https://github.com/luyadev/luya-module-admin/issues/459) regarding user change history active window.
+
 ## 3.3.0 (26. Mai 2020)
 
 + [#503](https://github.com/luyadev/luya-module-admin/pull/503) An option to assign defined `yii\web\UrlRule` into the `luya\admin\openapi\Generator`.

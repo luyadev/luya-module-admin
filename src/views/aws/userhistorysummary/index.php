@@ -149,21 +149,26 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			    			</tr>
 			    		</thead>
 			    	<?php if ($log->is_insert): ?>
-			    		<?php foreach ($log->getAttributesJsonArray() as $key => $value): if (empty($value)): continue; endif; ?>
+			    		<?php foreach ($log->attributes_json as $key => $value): if (empty($value)): continue; endif; ?>
 			    		<tr>
 			    			<td><?= $key; ?></td>
-			    			<td></td>
+			    			<td>-</td>
 			    			<td><?= is_scalar($value) ? Html::encode($value) : VarDumper::dumpAsString($value); /* format data with formatter based on variable type */ ?></td>
 			    		</tr>
 			    		<?php endforeach; ?>
 				    <?php elseif ($log->is_update): ?>
-				    	<?php foreach ($log->getAttributesJsonArray() as $key => $value): $oldValue = $log->getAttributeFromJsonDiffArray($key); if (empty($value) && empty($oldValue)): continue; endif; ?>
+				    	<?php $changes = false; foreach ($log->attributes_json as $key => $value): $oldValue = $log->attributesAttributeDiff($key); if (empty($oldValue)): continue; endif; $changes = true; ?>
 			    		<tr>
 			    			<td><?= $key; ?></td>
 			    			<td><?= is_scalar($oldValue) ? Html::encode($oldValue) : VarDumper::dumpAsString($oldValue); ?></td>
 			    			<td><?= is_scalar($value) ? Html::encode($value) : VarDumper::dumpAsString($value); ?></td>
 			    		</tr>
-			    		<?php endforeach; ?>
+						<?php endforeach; ?>
+						<?php if (!$changes): ?>
+							<tr>
+								<td colspan="3">No changes</td>
+							</tr>
+						<?php endif; ?>
 				    	<?php else: ?>
 				    	<?php endif; ?>
 			    	</table>
