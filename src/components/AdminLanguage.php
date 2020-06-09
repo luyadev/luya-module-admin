@@ -88,7 +88,7 @@ class AdminLanguage extends Component
      *
      * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
      *
-     * @return array|boolean If noe default language, false is returned
+     * @return array|boolean If default language is not defiend false is returned.
      * @since 3.1
      */
     public function getDefaultLanguage()
@@ -104,7 +104,7 @@ class AdminLanguage extends Component
      */
     public function getDefaultLanguageShortCode()
     {
-        return $this->getDefaultLanguage() ? $this->getDefaultLanguage()['short_code'] : false;
+        return $this->getDefaultLanguage()['short_code'];
     }
     
     /**
@@ -114,7 +114,7 @@ class AdminLanguage extends Component
      */
     public function getActiveShortCode()
     {
-        return $this->getActiveLanguage() ? $this->getActiveLanguage()['short_code'] : false;
+        return $this->getActiveLanguage()['short_code'];
     }
     
     /**
@@ -124,7 +124,7 @@ class AdminLanguage extends Component
      */
     public function getActiveId()
     {
-        return $this->getActiveLanguage() ? (int) $this->getActiveLanguage()['id'] : false;
+        return (int) $this->getActiveLanguage()['id'];
     }
 
     private $_languages;
