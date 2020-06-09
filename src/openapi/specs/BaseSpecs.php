@@ -2,6 +2,7 @@
 
 namespace luya\admin\openapi\specs;
 
+use cebe\openapi\spec\Example;
 use cebe\openapi\spec\MediaType;
 use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\Response;
@@ -148,6 +149,27 @@ abstract class BaseSpecs implements SpecInterface
             ]);
         }
 
+        if (property_exists($this->getControllerObject(), 'filterSearchModelClass')) {
+            $datFilter = $this->getControllerObject()->filterSearchModelClass;
+            if (!empty($datFilter)) {
+                $dataFilterObject = Yii::createObject($datFilter);
+                // filter
+                $params[] = new Parameter([
+                    'name' => 'filter',
+                    'in' => 'query',
+                    'required' => false,
+                    'description' => 'It allows validating and building a filter condition passed via request. See https://luya.io/guide/ngrest-api#filtering',
+                    'example' => 'filter[from][gt]=123456&filter[to][lt]=123456',
+                    /* Multiple example are not yet rendered by redoc: */
+                    /* https://github.com/Redocly/redoc/issues/858 */
+                    /*
+                    'examples' => [
+                    ],
+                    */
+                    'schema' => $this->activeRecordToSchema(new ActiveRecordToSchema($this, $dataFilterObject), false)
+                ]);
+            }
+        }
 
         // _language
         $params[] = new Parameter([
@@ -263,7 +285,7 @@ abstract class BaseSpecs implements SpecInterface
 
     protected function modelContextToResponse($contextModel, $isArray = false)
     {
-        $key = md5(implode(",", [$contextModel, $isArray]));
+        $key = implode("", [$contextModel, $isArray]);
 
         if (array_key_exists($key, self::$contexts)) {
             return self::$contexts[$key];
@@ -352,6 +374,7 @@ abstract class BaseSpecs implements SpecInterface
         $modelClass = $this->getNgRestApiModelClass($this->getActionObject());
 
         if ($modelClass) {
+            // the index action should return an array of objects
             $isArray = ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false);
             return $this->modelContextToResponse($modelClass, $isArray);
         }
