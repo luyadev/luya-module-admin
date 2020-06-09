@@ -88,7 +88,7 @@ class AdminLanguage extends Component
      *
      * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
      *
-     * @return array
+     * @return array|boolean If noe default language, false is returned
      * @since 3.1
      */
     public function getDefaultLanguage()
@@ -104,7 +104,7 @@ class AdminLanguage extends Component
      */
     public function getDefaultLanguageShortCode()
     {
-        return $this->getDefaultLanguage()['short_code'];
+        return $this->getDefaultLanguage() ? $this->getDefaultLanguage()['short_code'] : false;
     }
     
     /**
