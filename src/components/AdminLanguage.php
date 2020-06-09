@@ -114,7 +114,7 @@ class AdminLanguage extends Component
      */
     public function getActiveShortCode()
     {
-        return $this->getActiveLanguage()['short_code'];
+        return $this->getActiveLanguage() ? $this->getActiveLanguage()['short_code'] : false;
     }
     
     /**
@@ -124,7 +124,7 @@ class AdminLanguage extends Component
      */
     public function getActiveId()
     {
-        return (int) $this->getActiveLanguage()['id'];
+        return $this->getActiveLanguage() ? (int) $this->getActiveLanguage()['id'] : false;
     }
 
     private $_languages;
