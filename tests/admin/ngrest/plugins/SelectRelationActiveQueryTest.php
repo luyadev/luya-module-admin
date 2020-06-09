@@ -81,7 +81,6 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $this->assertSame("John Doe", $online->user_id);
     }
 
-
     public function testI18nSingleLabelStringOnListFind()
     {
         $userFixture = new I18nUserFixture();
