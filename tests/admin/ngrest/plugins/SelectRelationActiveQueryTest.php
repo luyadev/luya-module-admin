@@ -113,9 +113,10 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $this->assertSame("Jojo", $lang2Online->user_id);
     }
 
+    /*
     private function getAdminLanguageMock()
     {
-        $mock = $this->createMock(AdminLanguage::className());
+        $mock = $this->createMock(AdminLanguage::class);
         $mock
             ->method('getLanguages')
             ->willReturn([
@@ -141,7 +142,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         
         return $mock;
     }
-
+    
     public function testI18nMixedLabelStringOnListFind()
     {
         $userFixture = new I18nUserFixture();
@@ -173,4 +174,6 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $this->assertSame("John john@luya.io", $lang1Online->user_id);
         $this->assertSame("Jojo john@luya.io", $lang2Online->user_id);
     }
+
+    */
 }
