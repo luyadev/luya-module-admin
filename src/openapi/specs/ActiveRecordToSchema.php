@@ -71,7 +71,6 @@ class ActiveRecordToSchema
     {
         $property = $this->phpDocParser->getProperty($attributeName);
         
-
         $type = $property->getType();
         // handle php object type
         if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {

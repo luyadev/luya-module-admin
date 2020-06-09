@@ -225,7 +225,6 @@ abstract class BaseSpecs implements SpecInterface
 
     public static $contexts = [];
 
-
     protected function internalModelContextResolve($contextModel, $isArray = false)
     {
         $object = Yii::createObject($contextModel);
@@ -353,7 +352,8 @@ abstract class BaseSpecs implements SpecInterface
         $modelClass = $this->getNgRestApiModelClass($this->getActionObject());
 
         if ($modelClass) {
-            return $this->modelContextToResponse($modelClass);
+            $isArray = ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false);
+            return $this->modelContextToResponse($modelClass, $isArray);
         }
 
         /** @var PhpDocType $type */
