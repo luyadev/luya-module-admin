@@ -20,11 +20,14 @@ class ControllerTest extends AdminModelTestCase
             $fixture = new NgRestModelFixture([
                 'modelClass' => User::class,
             ]);
+
+            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
     
+            $scope->createAndAllowApi(User::ngRestApiEndpoint());
             $scope->loginUser();
 
             $stub = new StubController('id', $this->app);
-            $html = $stub->actionIndex();
+            $html = $scope->runControllerAction($stub, 'index');
 
             $this->assertNotEmpty($html);
         });
