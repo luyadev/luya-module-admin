@@ -1045,34 +1045,40 @@ zaa.directive("zaaLink", ['$filter', function ($filter) {
             };
         }],
         template: function () {
-            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}"><div class="form-side form-side-label"><labelfor="{{id}}">{{label}}</label></div><div class="form-side">' +
-                '<div ng-if="!isEmpty(data.model)">' +
-                '<div class="link-selector">' +
-                '<div class="link-selector-actions">' +
-                '<div class="link-selector-btn btn btn-secondary" ng-click="data.modalState=0">' +
-                '<i class="material-icons left">insert_link</i>' +
-                '<span>' + i18n['js_link_change_value'] + '</span>' +
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                    '<labelfor="{{id}}">{{label}}</label>' +
                 '</div>' +
-                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
-                '</div><link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
+                '<div class="form-side">' +
+                    '<div ng-if="!isEmpty(data.model)">' +
+                        '<div class="link-selector">' +
+                            '<div class="link-selector-actions">' +
+                                '<div class="link-selector-btn btn btn-secondary" ng-click="data.modalState=0">' +
+                                    '<i class="material-icons left">insert_link</i>' +
+                                    '<span>' + i18n['js_link_change_value'] + '</span>' +
+                                '</div>' +
+                                '<span ng-hide="model | isEmpty" class="link-selector-reset" ng-click="unset()"><i class="material-icons">remove_circle</i></span>' +
+                            '</div>' +
+                            '<link-object-to-string class="ml-2" link="model"></link-object-to-string>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div ng-if="isEmpty(data.model)">' +
+                        '<div class="link-selector">' +
+                            '<div class="link-selector-actions">' +
+                                '<div class="link-selector__btn btn btn-secondary" ng-click="data.modalState=0">' +
+                                    '<i class="material-icons left">insert_link</i>' +
+                                    '<span>' + i18n['js_link_set_value'] + '</span>' +
+                                '</div>' +
+                                '<span style="margin-left:10px;">' + i18n['js_link_not_set'] + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">' +
+                        '<zaa-link-options data="data.model" uid="id" ng-if="!data.modalState"></zaa-link-options>' +
+                        '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">' + i18n['js_link_set_value'] + '</button></form>' +
+                    '</modal>' +
                 '</div>' +
-                '</div>' +
-                '<div ng-if="isEmpty(data.model)">' +
-                '<div class="link-selector">' +
-                '<div class="link-selector-actions">' +
-                '<div class="link-selector__btn btn btn-secondary" ng-click="data.modalState=0">' +
-                '<i class="material-icons left">insert_link</i>' +
-                '<span>' + i18n['js_link_set_value'] + '</span>' +
-                '</div>' +
-                '<span style="margin-left:10px;">' + i18n['js_link_not_set'] + '</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<modal is-modal-hidden="data.modalState" modal-title="{{label}}"><form ng-submit="data.modalState=1">' +
-                '<zaa-link-options data="data.model"></zaa-link-options>' +
-                '<button ng-click="data.modalState=1" class="btn btn-icon btn-save" type="submit">' + i18n['js_link_set_value'] + '</button></form>' +
-                '</modal>' +
-                '</div></div>';
+            '</div>';
         }
     }
 }]);
@@ -1092,7 +1098,8 @@ zaa.directive("zaaLinkOptions", function() {
     return {
         restrict : 'EA',
         scope : {
-            data : '='
+            data : '=',
+            uid : '='
         },
         templateUrl : 'linkoptions.html',
         controller : ['$scope', function($scope) {
@@ -2507,25 +2514,27 @@ zaa.directive("zaaMultipleInputs", function () {
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                 '<div class="form-side form-side-label">' +
-                '<label>{{label}}</label>' +
+                    '<label>{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side">' +
-                '<div class="list zaa-multiple-inputs">' +
-                '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
-                '<div ng-repeat="(msortKey,row) in model track by msortKey" class="list-item" ng-init="ensureRow(row)">' +
-                '<div ng-repeat="(mutliOptKey,opt) in options track by mutliOptKey"><zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector></div>' +
-                '<div class="list-buttons">' +
-                '<div class="btn-group" role="group">' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(msortKey)" ng-if="msortKey > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(msortKey)" ng-if="showDownButton(msortKey)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(msortKey)"><i class="material-icons">remove</i></button>' +
+                    '<div class="list zaa-multiple-inputs">' +
+                        '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
+                        '<div ng-repeat="(msortKey,row) in model track by msortKey" class="list-item" ng-init="ensureRow(row)">' +
+                            '<div ng-repeat="(mutliOptKey,opt) in options track by mutliOptKey">' +
+                                '<zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector>' +
+                            '</div>' +
+                            '<div class="list-buttons">' +
+                                '<div class="btn-group" role="group">' +
+                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(msortKey)" ng-if="msortKey > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                                    '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(msortKey)" ng-if="showDownButton(msortKey)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                                    '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(msortKey)"><i class="material-icons">remove</i></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
+                    '</div>' +
                 '</div>' +
-                '</div>' +
-                '</div>' +
-                '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+            '</div>';
         }
     }
 });

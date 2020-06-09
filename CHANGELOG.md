@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.1
 
++ [#512](https://github.com/luyadev/luya-module-admin/pull/512) Fixed a bug with multiple input types and zaaLink directives (none unique elements).
 + [#510](https://github.com/luyadev/luya-module-admin/pull/510) Fixed regression from issue [#459](https://github.com/luyadev/luya-module-admin/issues/459) regarding user change history active window.
 
 ## 3.3.0 (26. Mai 2020)
