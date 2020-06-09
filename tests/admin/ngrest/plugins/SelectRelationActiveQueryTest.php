@@ -115,7 +115,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
 
     private function getAdminLanguageMock()
     {
-        $mock = $this->createMock(AdminLanguage::className());
+        $mock = $this->createMock(AdminLanguage::class);
         $mock
             ->method('getLanguages')
             ->willReturn([
@@ -141,7 +141,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         
         return $mock;
     }
-
+    
     public function testI18nMixedLabelStringOnListFind()
     {
         $userFixture = new I18nUserFixture();

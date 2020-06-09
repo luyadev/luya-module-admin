@@ -88,7 +88,7 @@ class AdminLanguage extends Component
      *
      * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
      *
-     * @return array
+     * @return array|boolean If default language is not defiend false is returned.
      * @since 3.1
      */
     public function getDefaultLanguage()
