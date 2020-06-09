@@ -70,13 +70,3 @@ jobs:
           ./cc-test-reporter after-build -t clover
         if: matrix.php == '7.1'
         continue-on-error: true # if is fork
-
-  ## NODE
-  npm:
-    name: Node
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - run: yarn
-      - run: sudo apt-get install xvfb
-      - run: xvfb-run --auto-servernum yarn test
