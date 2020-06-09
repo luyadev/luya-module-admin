@@ -55,20 +55,20 @@ use luya\admin\helpers\Angular;
             <label><?= Admin::t('view_index_redirect_type'); ?></label>
         </div>
         <div class="form-side">
-            <input type="radio" ng-model="data.type" ng-value="1" id="redirect_internal">
-            <label for="redirect_internal" ng-click="data.type = 1"><?= Admin::t('view_index_redirect_internal'); ?></label>
+            <input type="radio" ng-model="data.type" ng-value="1" id="{{uid}}redirect_internal">
+            <label for="{{uid}}redirect_internal" ng-click="data.type = 1"><?= Admin::t('view_index_redirect_internal'); ?></label>
 
-            <input type="radio" ng-model="data.type" ng-value="2" id="redirect_external">
-            <label for="redirect_external" ng-click="data.type = 2"><?= Admin::t('view_index_redirect_external'); ?></label>
+            <input type="radio" ng-model="data.type" ng-value="2" id="{{uid}}redirect_external">
+            <label for="{{uid}}redirect_external" ng-click="data.type = 2"><?= Admin::t('view_index_redirect_external'); ?></label>
 
-			<input type="radio" ng-model="data.type" ng-value="3" id="to_file">
-            <label for="to_file" ng-click="data.type = 3"><?= Admin::t('view_index_redirect_file'); ?></label>
+			<input type="radio" ng-model="data.type" ng-value="3" id="{{uid}}to_file">
+            <label for="{{uid}}to_file" ng-click="data.type = 3"><?= Admin::t('view_index_redirect_file'); ?></label>
 
-			<input type="radio" ng-model="data.type" ng-value="4" id="to_mail">
-            <label for="to_mail" ng-click="data.type = 4"><?= Admin::t('view_index_redirect_mail'); ?></label>
+			<input type="radio" ng-model="data.type" ng-value="4" id="{{uid}}to_mail">
+            <label for="{{uid}}to_mail" ng-click="data.type = 4"><?= Admin::t('view_index_redirect_mail'); ?></label>
 
-            <input type="radio" ng-model="data.type" ng-value="5" id="to_telepone">
-            <label for="to_telephone" ng-click="data.type = 5"><?= Admin::t('view_index_redirect_telephone'); ?></label>
+            <input type="radio" ng-model="data.type" ng-value="5" id="{{uid}}to_telepone">
+            <label for="{{uid}}to_telephone" ng-click="data.type = 5"><?= Admin::t('view_index_redirect_telephone'); ?></label>
         </div>
     </div>
     <div class="form-group form-side-by-side">
