@@ -81,6 +81,8 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $this->assertSame("John Doe", $online->user_id);
     }
 
+
+    /*
     public function testI18nSingleLabelStringOnListFind()
     {
         $userFixture = new I18nUserFixture();
@@ -113,7 +115,6 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $this->assertSame("Jojo", $lang2Online->user_id);
     }
 
-    /*
     private function getAdminLanguageMock()
     {
         $mock = $this->createMock(AdminLanguage::class);
