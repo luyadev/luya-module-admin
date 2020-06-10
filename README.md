@@ -5,7 +5,7 @@
 # LUYA Administration Interface module
 
 [![LUYA](https://img.shields.io/badge/Powered%20by-LUYA-brightgreen.svg)](https://luya.io)
-[![Build Status](https://travis-ci.org/luyadev/luya-module-admin.svg?branch=master)](https://travis-ci.org/luyadev/luya-module-admin)
+![Tests](https://github.com/luyadev/luya-module-admin/workflows/Tests/badge.svg)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/26ce6892fcb4899cbd49/test_coverage)](https://codeclimate.com/github/luyadev/luya-module-admin/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/26ce6892fcb4899cbd49/maintainability)](https://codeclimate.com/github/luyadev/luya-module-admin/maintainability)
 [![Latest Stable Version](https://poser.pugx.org/luyadev/luya-module-admin/v/stable)](https://packagist.org/packages/luyadev/luya-module-admin)
