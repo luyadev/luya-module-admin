@@ -69,7 +69,7 @@ class UrlRuleRouteParser extends BasePathParser
             }
         }
 
-        return $route;
+        return '/'.ltrim($route, '/');
     }
 
     /**
