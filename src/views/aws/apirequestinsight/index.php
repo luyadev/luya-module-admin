@@ -9,7 +9,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
     // data table
 
     $scope.data = [];
-    $scope.page = 0;
+    $scope.page = 1;
     $scope.pageCount = 0;
     $scope.dataCount = 0;
 
@@ -27,7 +27,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
             $timeout.cancel($scope.queryPromise);
             cfpLoadingBar.start();
             $scope.queryPromise = $timeout(function() {
-                $scope.load(0, n);
+                $scope.load($scope.page, n);
             }, 1000);
         }
     })
