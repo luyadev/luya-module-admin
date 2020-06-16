@@ -6,7 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 3.3.1
 
 + [#517](https://github.com/luyadev/luya-module-admin/pull/517) Fix problem with OpenApi generator URL tokens like `<identifier:[a-z0-9]+>` which are now rendered correctly as `<identifier>`
-+ [#515](https://github.com/luyadev/luya-module-admin/pull/515) If {{luya\admin\ngrest\base\Api::$filterSearchModelClass}} is defined, this model will be taken into account for `filter` request param.
++ [#515](https://github.com/luyadev/luya-module-admin/pull/515) If property `luya\admin\ngrest\base\Api::$filterSearchModelClass` is defined, the filter model will be taken into account for `filter` request param.
 + [#511](https://github.com/luyadev/luya-module-admin/issues/511) Fixed a bug where OpenApi IndexAction should return an array instead of an object.
 + [#512](https://github.com/luyadev/luya-module-admin/pull/512) Fixed a bug with multiple input types and zaaLink directives (none unique elements).
 + [#510](https://github.com/luyadev/luya-module-admin/pull/510) Fixed regression from issue [#459](https://github.com/luyadev/luya-module-admin/issues/459) regarding user change history active window.
