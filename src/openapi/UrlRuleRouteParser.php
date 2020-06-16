@@ -231,10 +231,21 @@ class UrlRuleRouteParser extends BasePathParser
             }
         }
 
+        // check if an @method phpdoc is available for the current controller:
+        $phpDocMethod = $this->controllerSpecs->getPhpDocParser()->getMethod($actionSpecs->getActionName());
+
+        if ($phpDocMethod) {
+            $summary = $phpDocMethod->getNormalizedMethodName();
+            $description = $phpDocMethod->getDescription();
+        } else {
+            $summary = $actionSpecs->getSummary();
+            $description = $actionSpecs->getDescription();
+        }
+
         return new Operation(array_filter([
             'tags' => [$this->normalizeTag($this->endpointName)],
-            'summary' => $actionSpecs->getSummary(),
-            'description' => $actionSpecs->getDescription(),
+            'summary' => $summary,
+            'description' => $description,
             'operationId' => $this->generateOperationId($verbName),
             'parameters' => $params,
             'responses' => new Responses($actionSpecs->getResponses()),

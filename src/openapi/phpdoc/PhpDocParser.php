@@ -42,7 +42,8 @@ class PhpDocParser
             'since' => [],
             'var' => [],
             'property' => [], // @property <type> $firstname <description>,
-            'uses' => [], // @uses <type> <description>
+            'uses' => [], // @uses <type> <description>,
+            'method' => [], // @method <returnType> <actionName> <description>
         ];
 
         foreach (explode(PHP_EOL, $reflection->getDocComment()) as $row) {
@@ -56,11 +57,13 @@ class PhpDocParser
                 if (StringHelper::startsWith($row, '@param') || StringHelper::startsWith($row, '@property')) {
                     preg_match("/^(@[a-z]+)\s+([^\s]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
                     unset($matches[0]);
+                } elseif (StringHelper::startsWith($row, '@method')) {
+                    preg_match("/^(@[a-z]+)\s+([^\s]+)\s+([a-zA-Z]+)\((.*)\)\s+(.*)$/", $row, $matches, 0, 0);
+                    unset($matches[0]);
                 } else {
                     preg_match("/^(@[a-z]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
                     unset($matches[0]);
                 }
-
                 
                 if (isset($matches[1])) {
                     $rows[substr($matches[1], 1)][] = array_values($matches);
@@ -71,6 +74,22 @@ class PhpDocParser
         }
 
         return $rows;
+    }
+
+    public function getMethods()
+    {
+        $methods = [];
+        foreach ($this->rows['method'] as $method) {
+            $o = new PhpDocMethod($this, $method);
+            $methods[$o->getMethodName()] = $o;
+        }
+
+        return $methods;
+    }
+
+    public function getMethod($name)
+    {
+        return isset($this->getMethods()[$name]) ? $this->getMethods()[$name] : false;
     }
 
     /**

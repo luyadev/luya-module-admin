@@ -1,0 +1,78 @@
+<?php
+
+namespace luya\admin\openapi\phpdoc;
+
+use luya\helpers\Inflector;
+use luya\helpers\StringHelper;
+
+/**
+ * Php DOc Method
+ * 
+ * The @method phpdoc describer.
+ * 
+ * @author Basil <git@nadar.io>
+ * @since 3.x
+ */
+class PhpDocMethod
+{
+    protected $phpDocParser;
+
+    protected $definition;
+
+    public function __construct(PhpDocParser $phpDocParser, array $definition)
+    {
+        $this->phpDocParser = $phpDocParser;
+        $this->definition = $definition;
+    }
+
+    /**
+     * PhpDocType
+     *
+     * @return PhpDocType
+     */
+    public function getReturnType()
+    {
+        return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
+    }
+    
+    /**
+     * Method Name
+     * 
+     * Returns only the method name without arguments, for example actionView($id) should return actionView
+     *
+     * @return string
+     */
+    public function getMethodName()
+    {
+        return isset($this->definition[2]) ? trim($this->definition[2]) : false;
+    }
+
+    /**
+     * Returns a readable name for an action
+     * 
+     * For example the action is actionFooBar it will return `Foo Bar`.
+     *
+     * @return void
+     */
+    public function getNormalizedMethodName()
+    {
+        $methodName = StringHelper::replaceFirst('action', '', $this->getMethodName());
+
+        return Inflector::camel2words($methodName);
+    }
+
+    public function getMethodParams()
+    {
+        return isset($this->definition[3]) ? trim($this->definition[3]) : false;
+    }
+
+    /**
+     * Description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return isset($this->definition[4]) ? $this->definition[4] : '';
+    }
+}

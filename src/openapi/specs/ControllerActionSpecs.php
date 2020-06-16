@@ -57,6 +57,11 @@ class ControllerActionSpecs extends BaseSpecs
         return $this->_actionObject;
     }
 
+    public function getActionName()
+    {
+        return 'action'.Inflector::id2camel($this->actioName);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -65,7 +70,7 @@ class ControllerActionSpecs extends BaseSpecs
         if ($this->getActionObject() instanceof InlineAction) {
             // read data from: actionMethodName()
             $reflector = new ReflectionClass(get_class($this->getControllerObject()));
-            return $reflector->getMethod('action'.Inflector::id2camel($this->actioName));
+            return $reflector->getMethod($this->getActionName());
         }
 
         return new ReflectionClass(get_class($this->getActionObject()));
