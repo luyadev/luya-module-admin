@@ -60,7 +60,16 @@ class UrlRuleRouteParser extends BasePathParser
      */
     public function getPath() : string
     {
-        return '/'.str_replace(['<', ':\d[\d,]*>'], ['{', '}'], $this->patternRoute);
+        $route = $this->patternRoute;
+        preg_match_all('/\<(\w+)(.*?)\>/', $route, $matches);
+
+        if (isset($matches[2])) {
+            foreach ($matches[2] as $regex) {
+                $route = str_replace($regex, '', $route);
+            }
+        }
+
+        return '/'.ltrim($route, '/');
     }
 
     /**
