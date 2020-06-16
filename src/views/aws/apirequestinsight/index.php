@@ -27,7 +27,7 @@ zaa.bootstrap.register('InlineController', ['$scope', '$timeout', 'cfpLoadingBar
             $timeout.cancel($scope.queryPromise);
             cfpLoadingBar.start();
             $scope.queryPromise = $timeout(function() {
-                $scope.load($scope.page, n);
+                $scope.load(1, n);
             }, 1000);
         }
     })
