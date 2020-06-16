@@ -113,8 +113,11 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     private $_tabLabelAttribute;
     
     /**
-     *
-     * @param string $attribute
+     * Tab label attribute Setter.
+     * 
+     * The attribute must be declared in the {{luya\admin\ngrest\base\NgRestModel::ngRestScopes()}} list scope.
+     * 
+     * @param string $attribute The name of the attribute which should be taken.
      */
     public function setTabLabelAttribute($attribute)
     {
