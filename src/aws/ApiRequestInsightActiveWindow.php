@@ -63,7 +63,7 @@ class ApiRequestInsightActiveWindow extends ActiveWindow
             'query' => $find,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
             'pagination' => [
-                'page' => $page,
+                'page' => ($page - 1), // The default value is 0, meaning the first page. Angular Pagination takes 1 as first page
                 'pageSize' => 23,
             ]
         ]);
