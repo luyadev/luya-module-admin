@@ -11,7 +11,7 @@ use luya\helpers\StringHelper;
  * The @method phpdoc describer.
  * 
  * @author Basil <git@nadar.io>
- * @since 3.x
+ * @since 3.3.1
  */
 class PhpDocMethod
 {
@@ -61,6 +61,13 @@ class PhpDocMethod
         return Inflector::camel2words($methodName);
     }
 
+    /**
+     * Method Param Description
+     *
+     * Returns the defintion of the action inside the () params.
+     * 
+     * @return string
+     */
     public function getMethodParams()
     {
         return isset($this->definition[3]) ? trim($this->definition[3]) : false;
