@@ -23,4 +23,16 @@ class OpenApiController extends Controller
             ],
         ];
     }
+
+    /**
+     * Post information
+     * 
+     * Description of Save Action
+     * @uses string $username
+     * @uses int status
+     */
+    public function actionSaveUser()
+    {
+        //
+    }
 }
