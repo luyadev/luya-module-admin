@@ -1501,7 +1501,7 @@ zaa.directive("zaaRadio", function () {
     *
     * If an initvalue is provided, you can not reset the model to null.
     *
-    * Options value defintion:
+    * Options value definition:
     *
     * ```js
     * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]

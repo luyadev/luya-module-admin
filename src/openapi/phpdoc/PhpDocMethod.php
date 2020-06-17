@@ -15,10 +15,22 @@ use luya\helpers\StringHelper;
  */
 class PhpDocMethod
 {
+    /**
+     * @var PhpDocParser
+     */
     protected $phpDocParser;
 
+    /**
+     * @var array
+     */
     protected $definition;
 
+    /**
+     * Constructor
+     *
+     * @param PhpDocParser $phpDocParser
+     * @param array $definition
+     */
     public function __construct(PhpDocParser $phpDocParser, array $definition)
     {
         $this->phpDocParser = $phpDocParser;
@@ -26,7 +38,9 @@ class PhpDocMethod
     }
 
     /**
-     * PhpDocType
+     * Type
+     * 
+     * Returns a Type definition.
      *
      * @return PhpDocType
      */
@@ -64,7 +78,7 @@ class PhpDocMethod
     /**
      * Method Param Description
      *
-     * Returns the defintion of the action inside the () params.
+     * Returns the definition of the action inside the () params.
      * 
      * @return string
      */

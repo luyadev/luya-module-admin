@@ -104,7 +104,7 @@ class ProxyController extends Command
     /**
      * @var string If a table option is passed only this table will be synchronised. If false by default all tables will be synced. You
      * can define multible tables ab seperating those with a comma `table1,table2,table`. In order to define only tables with start
-     * with a given prefix you can use `app_*` using asterisks symbold to define wild card starts with string defintions.
+     * with a given prefix you can use `app_*` using asterisks symbold to define wild card starts with string definitions.
      * To exclude tables you can use a `!` before the tablename e.g. `!admin_*` or multible `!admin_*,!test_*`
      */
     public $table;

@@ -31,7 +31,7 @@ use luya\admin\helpers\Angular;
  * + onExpandFind: Equals to onFind but only for the view api of the model, which means the data which is used for edit.
  * + onSave: Before Update / Create of the new data set.
  *
- * @property string|array $sortField Sort field defintion (since 2.0.0)
+ * @property string|array $sortField Sort field definition (since 2.0.0)
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -182,7 +182,7 @@ abstract class Plugin extends Component implements TypesInterface
     /**
      * Setter method for sortField
      *
-     * @param string|array $field A sort field definition, this can be either a string `firstname` or an array with a defintion or multiple defintions
+     * @param string|array $field A sort field definition, this can be either a string `firstname` or an array with a definition or multiple definitions
      *
      * ```php
      * 'sortField' => [
@@ -243,7 +243,7 @@ abstract class Plugin extends Component implements TypesInterface
     }
 
     /**
-     * Getter method for a sortField defintion.
+     * Getter method for a sortField definition.
      *
      * If no sortField definition has been set, the plugin attribute name is used.
      *

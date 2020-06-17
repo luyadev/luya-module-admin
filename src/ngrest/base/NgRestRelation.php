@@ -9,7 +9,7 @@ use yii\db\ActiveQuery;
 use yii\base\InvalidConfigException;
 
 /**
- * NgRest Relation Defintion.
+ * NgRest Relation definition.
  *
  * An NgRest Relation defined which is used by {{luya\admin\ngrest\base\NgRestModel::ngRestRelations()}} array.
  *

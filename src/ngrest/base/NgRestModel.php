@@ -429,7 +429,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
-     * The a single object from a primary key defintion.
+     * The a single object from a primary key definition.
      *
      * @param string $condition The condition for primary keys like `1,23` or `1`.
      * @return NgRestActiveQuery
@@ -753,7 +753,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
     
     /**
-     * The NgRest config has an options property which can contain a variaty of defintions.
+     * The NgRest config has an options property which can contain a variaty of definitions.
      *
      * + saveCallback: This will trigere an angular callback after save/update of a new/existing record.
      *
@@ -795,7 +795,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * You can also use an array defintion to handle booth types at the same time
+     * You can also use an array definition to handle booth types at the same time
      *
      * ```php
      * public function ngRestConfig($config)
@@ -807,9 +807,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * @param \luya\admin\ngrest\ConfigBuilder $config The config which the defintion should be append
+     * @param \luya\admin\ngrest\ConfigBuilder $config The config which the definition should be append
      * @param string|array $assignedType This can be a string with a type or an array with multiple types
-     * @param array $fields An array with fields assign to types type based on the an `ngRestAttributeTypes` defintion.
+     * @param array $fields An array with fields assign to types type based on the an `ngRestAttributeTypes` definition.
      * @throws \yii\base\InvalidConfigException
      * @since 1.0.0
      */
@@ -877,7 +877,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         foreach ($this->ngRestScopes() as $arrayConfig) {
             if (!isset($arrayConfig[0]) && !isset($arrayConfig[1])) {
-                throw new InvalidConfigException("Invalid ngRestScope defintion. Definition must contain an array with two elements: `['create', []]`");
+                throw new InvalidConfigException("Invalid ngRestScope definition. Definition must contain an array with two elements: `['create', []]`");
             }
             
             $scope = $arrayConfig[0];
@@ -970,7 +970,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
-     * Get the NgRest Relation defintion object.
+     * Get the NgRest Relation definition object.
      *
      * @param integer $index
      * @return NgRestRelationInterface

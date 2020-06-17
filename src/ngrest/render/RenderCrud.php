@@ -667,7 +667,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Generate an array for every group withing the given pointer elemenets.
      *
-     * If there is no group defintion, it will generate a "default" group.
+     * If there is no group definition, it will generate a "default" group.
      *
      * @param [type] $pointerElements
      * @return array

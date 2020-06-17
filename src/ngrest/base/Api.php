@@ -123,7 +123,7 @@ class Api extends RestActiveController
     /**
      * Auto add those relations to queries.
      *
-     * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefintion in order to define
+     * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefinition in order to define
      * which relation should be us when.
      *
      * basic:
@@ -609,7 +609,7 @@ class Api extends RestActiveController
     /**
      * Generate Sort attributes
      *
-     * Generate an array of sortable attribute defintions from a ngrest config object.
+     * Generate an array of sortable attribute definitions from a ngrest config object.
      *
      * @param Config $config The Ngrest Config object
      * @return array Returns an array with sortable attributes.
