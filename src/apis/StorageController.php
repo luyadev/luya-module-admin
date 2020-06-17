@@ -473,7 +473,7 @@ class StorageController extends RestController
             }
         }
     
-        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload defintion.
+        // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload definition.
         Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
         return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null];
     }

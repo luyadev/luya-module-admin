@@ -128,7 +128,7 @@ class PhpDocType
             return $absoluteClassName;
         }
 
-        // Find alias defintion `XYZ as ABC`
+        // Find alias definition `XYZ as ABC`
         $ensureClassName = $this->phpDocParser->ensureClassName($className);
         if ($ensureClassName && class_exists($ensureClassName)) {
             return $ensureClassName;

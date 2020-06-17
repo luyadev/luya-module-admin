@@ -253,7 +253,7 @@ trait QueryTrait
      *
      * This will only appaend the first condition where id is bigger then 1 and ignore the second one
      *
-     * @param array $args The where defintion can be either an key-value pairing or a condition representen as array.
+     * @param array $args The where definition can be either an key-value pairing or a condition representen as array.
      * @return QueryTrait
      * @throws Exception
      */
@@ -281,7 +281,7 @@ trait QueryTrait
      *
      * See {{luya\admin\storage\QueryTrait::where()}}
      *
-     * @param array $args The where defintion can be either an key-value pairing or a condition representen as array.
+     * @param array $args The where definition can be either an key-value pairing or a condition representen as array.
      * @return \luya\admin\storage\QueryTrait
      */
     public function andWhere(array $args)

@@ -8,7 +8,7 @@ use luya\helpers\ArrayHelper;
 /**
  * Fast generated Dashboard Objects.
  *
- * The default object is the default class for all {{luya\admin\base\Module::$dashboardObjects}} items without a class defintion.
+ * The default object is the default class for all {{luya\admin\base\Module::$dashboardObjects}} items without a class definition.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

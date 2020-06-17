@@ -21,7 +21,7 @@ abstract class BasePathParser
     /**
      * Return a PathItem.
      *
-     * A PathItem represents a path within the openapi defintion. A path (or maybe also named as endpoint/route) can have multiple verbs.
+     * A PathItem represents a path within the openapi definition. A path (or maybe also named as endpoint/route) can have multiple verbs.
      * Like post, get, put
      *
      * @return PathItem

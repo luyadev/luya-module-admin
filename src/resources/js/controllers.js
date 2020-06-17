@@ -310,9 +310,9 @@
 			if ($scope.config.relationCall) {
 				var relations = $scope.$parent.$parent.config.relations;
 				var definition = relations[parseInt($scope.config.relationCall.arrayIndex)];
-				var linkDefintion = definition.relationLink;
+				var linkdefinition = definition.relationLink;
 
-				if (linkDefintion !== null && linkDefintion.hasOwnProperty(field)) {
+				if (linkdefinition !== null && linkdefinition.hasOwnProperty(field)) {
 					return parseInt($scope.config.relationCall.id);
 				}
 			}

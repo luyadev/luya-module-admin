@@ -5,7 +5,7 @@ namespace luya\admin\ngrest\base;
 /**
  * NgRest Relation Interface.
  *
- * Each relation defintion must be an instance of this class.
+ * Each relation definition must be an instance of this class.
  *
  * @author Basil Suter <basil@nadar.io>
  */

@@ -17,7 +17,6 @@ use luya\admin\models\StorageImage;
 use luya\admin\openapi\Generator;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
-use luya\web\Bootstrap;
 use luya\web\UrlManager;
 
 class GeneratorTest extends AdminModelTestCase

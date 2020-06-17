@@ -291,7 +291,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var array An array with all apis from every module, this property is assigned by the {{luya\web\Bootstrap::run()}} method.
      * @since 1.2.2
      */
-    public $apiDefintions = [];
+    public $apiDefintions = []; // typo...
     
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
@@ -304,7 +304,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $moduleMenus = [];
     
     /**
-     * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI defintion for current LUYA System (including all registered modules) or not.
+     * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI definition for current LUYA System (including all registered modules) or not.
      * @since 3.2.0
      */
     public $publicOpenApi = false;

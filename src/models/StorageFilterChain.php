@@ -201,7 +201,7 @@ final class StorageFilterChain extends ActiveRecord
     {
         $value = $this->getJsonValue($param);
         
-        // if there is no value defined, we used the default defintion from options
+        // if there is no value defined, we used the default definition from options
         if ($value === false) {
             $options = $this->effectDefinition($effect, 'options');
             $value = array_key_exists($param, $options) ? $options[$param] : false;

@@ -124,7 +124,7 @@ abstract class Filter extends BaseObject implements FilterInterface
     }
 
     /**
-     * Get an array with all the effect param options, based on the effect params defintion.
+     * Get an array with all the effect param options, based on the effect params definition.
      *
      * @param array $effectParams
      * @throws \luya\Exception When the vars key does not exists in the effect definition.
@@ -133,7 +133,7 @@ abstract class Filter extends BaseObject implements FilterInterface
     public function getEffectParamsList($effectParams)
     {
         if ($this->_effectParamsList === null) {
-            // see if the effect defintion contains a vars key
+            // see if the effect definition contains a vars key
             if (!array_key_exists('vars', $effectParams)) {
                 throw new Exception("Required 'vars' key not found in effect definition array.");
             }
@@ -148,10 +148,10 @@ abstract class Filter extends BaseObject implements FilterInterface
 
     /**
      * Returns a parsed effect chain for the current Filter. The method verifys if the provieded effect
-     * parameters are available in the effect defintions of luya.
+     * parameters are available in the effect definitions of luya.
      *
      * @return array Each row of the array must have "effect_id" and "effect_json_values" key.
-     * @throws \luya\Exception When effect option could be found in the effect defintions.
+     * @throws \luya\Exception When effect option could be found in the effect definitions.
      */
     public function getChain()
     {
