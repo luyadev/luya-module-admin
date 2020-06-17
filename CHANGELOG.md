@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.1
 
++ [#497](https://github.com/luyadev/luya-module-admin/issues/497) Do not render the dropdown values in `luyaSelect` until the dropdown is expanded. 
 + [#519](https://github.com/luyadev/luya-module-admin/pull/519) Use `@method` PhpDoc to override Yii Framework defined actions in `actions()` method, otherwise those will always have the same Summary and Description Text in the OpenApi file.
 + [#517](https://github.com/luyadev/luya-module-admin/pull/517) Fix problem with OpenApi generator URL tokens like `<identifier:[a-z0-9]+>` which are now rendered correctly as `<identifier>`
 + [#515](https://github.com/luyadev/luya-module-admin/pull/515) If property `luya\admin\ngrest\base\Api::$filterSearchModelClass` is defined, the filter model will be taken into account for `filter` request param.

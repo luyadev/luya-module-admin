@@ -1664,7 +1664,7 @@ zaa.directive("luyaSelect", function() {
                             '<div class="zaaselect-search">' +
                                 '<input class="zaaselect-search-input" type="search" focus-me="isOpen" ng-model="searchQuery" />' +
                             '</div>' +
-                            '<div class="zaaselect-overflow">' +
+                            '<div class="zaaselect-overflow" ng-if="isOpen">' +
                                 '<div class="zaaselect-item" ng-repeat="opt in options | filter:searchQuery">' +
                                     '<span class="zaaselect-label" ng-class="{\'zaaselect-label-active\': opt[optionsvalue] == model}" ng-click="opt[optionsvalue] == model ? false : setModelValue(opt)">{{opt[optionslabel]}}</span>' +
                                 '</div>' +
