@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.3.2
+
++ [#520](https://github.com/luyadev/luya-module-admin/issues/520) Checking class existance in getDiffCount() method in order to ensure, a row badge is only handled when the class exists. This might be a problem if a module has been removed but the notification information still persists.
+
 ## 3.3.1 (17. June 2020)
 
 + [#497](https://github.com/luyadev/luya-module-admin/issues/497) Do not render the dropdown values in `luyaSelect` until the dropdown is expanded. 
