@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.2
 
++ [#523](https://github.com/luyadev/luya-module-admin/issues/523) Fixed a bug where an empty options array in Angular Helper class leads into an error while setting the default $scope.model state in Radio Buttons.
 + [#520](https://github.com/luyadev/luya-module-admin/issues/520) Checking class existance in getDiffCount() method in order to ensure, a row badge is only handled when the class exists. This might be a problem if a module has been removed but the notification information still persists.
 
 ## 3.3.1 (17. June 2020)

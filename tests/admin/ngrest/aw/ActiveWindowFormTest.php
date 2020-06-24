@@ -62,13 +62,13 @@ zaa.bootstrap.register('TestController', ['$scope', '$controller', '$injector', 
 </script>
 <div ng-controller="TestController">
     <form ng-submit="sendButton('action')">
-    	<zaa-checkbox fieldid="model-zaa-checkbox" ng-init="" model="params.checkbox" label="checkboxLabel" options='[]' fieldname="model"></zaa-checkbox>
+    	<zaa-checkbox fieldid="model-zaa-checkbox" ng-init="" model="params.checkbox" label="checkboxLabel" fieldname="model"></zaa-checkbox>
 <zaa-checkbox-array fieldid="model-zaa-checkbox-array" ng-init="" model="params.checkboxList" label="checkboxListLabel" options='{"items":[{"label":"bar","value":"foo"}]}' fieldname="model"></zaa-checkbox-array>
 <zaa-radio fieldid="model-zaa-radio" ng-init="" model="params.radioList" label="radioListLabel" options='[{"label":"bar","value":"foo"}]' fieldname="model"></zaa-radio>
 <zaa-image-upload fieldid="model-zaa-image-upload" ng-init="" model="params.imageUpload" label="imageUploadLabel" options='{"no_filter":0}' fieldname="model"></zaa-image-upload>
-<zaa-file-upload fieldid="model-zaa-file-upload" ng-init="" model="params.fileupload" label="fileuploadLabel" options='[]' fieldname="model"></zaa-file-upload>
-<zaa-date fieldid="model-zaa-date" ng-init="" model="params.datepicker" label="datepickerLabel" options='[]' fieldname="model"></zaa-date>
-<zaa-datetime fieldid="model-zaa-datetime" ng-init="" model="params.datetimePicker" label="datetimepickerLabel" options='[]' fieldname="model"></zaa-datetime>
+<zaa-file-upload fieldid="model-zaa-file-upload" ng-init="" model="params.fileupload" label="fileuploadLabel" fieldname="model"></zaa-file-upload>
+<zaa-date fieldid="model-zaa-date" ng-init="" model="params.datepicker" label="datepickerLabel" fieldname="model"></zaa-date>
+<zaa-datetime fieldid="model-zaa-datetime" ng-init="" model="params.datetimePicker" label="datetimepickerLabel" fieldname="model"></zaa-datetime>
         <button class="btn btn-save btn-icon" type="submit">Subnit</button>
     </form>
 </div>
