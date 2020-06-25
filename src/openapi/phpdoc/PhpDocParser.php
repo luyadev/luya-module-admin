@@ -203,7 +203,11 @@ class PhpDocParser
     {
         $values = explode("|", $schema);
 
-        return current($values);
+        if (count($values) > 1) {
+            return $this->normalizeTypes(current($values));
+        }
+
+        return $schema;
     }
 
     /**
@@ -222,6 +226,16 @@ class PhpDocParser
         }
         if ($type == 'int') {
             $type = 'integer';
+        }
+
+        // convert types to number
+        if (in_array($type, ['float', 'double', 'int32', 'int64'])) {
+            $type = 'number';
+        }
+
+        // ensure uncovered types
+        if (!in_array($type, ['array', 'boolean', 'integer', 'number', 'object', 'string'])) {
+            return 'string';
         }
 
         return $type;

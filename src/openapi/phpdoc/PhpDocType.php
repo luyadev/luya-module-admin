@@ -37,7 +37,7 @@ class PhpDocType
 
     public function getIsScalar()
     {
-        return in_array($this->name, [
+        return in_array($this->getNoramlizeName(), [
             'bool',
             'boolean',
             'string',

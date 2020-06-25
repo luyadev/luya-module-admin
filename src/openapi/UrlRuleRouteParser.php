@@ -10,11 +10,12 @@ use cebe\openapi\spec\RequestBody;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
 use luya\admin\openapi\phpdoc\PhpDocUses;
-use luya\admin\openapi\specs\ActiveRecordToSchema;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
+use luya\helpers\ObjectHelper;
 use Yii;
 use yii\rest\CreateAction;
+use yii\rest\OptionsAction;
 use yii\rest\UpdateAction;
 use yii\web\UrlRule;
 
@@ -150,7 +151,7 @@ class UrlRuleRouteParser extends BasePathParser
         $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route), $verbName);
 
         $actionObject = $actionSpecs->getActionObject();
-        if (!$actionObject) {
+        if (!$actionObject || ObjectHelper::isInstanceOf($actionObject, OptionsAction::class, false)) {
             return false;
         }
 
@@ -182,7 +183,7 @@ class UrlRuleRouteParser extends BasePathParser
                 'required' => true,
                 'content' => [
                     'application/json' => new MediaType([
-                        'schema' => $actionSpecs->createSchemaFromClass($actionObject, false),
+                        'schema' => $actionSpecs->createActiveRecordSchemaFromObject($actionObject, false),
                     ])
                 ]
             ]);
@@ -196,7 +197,7 @@ class UrlRuleRouteParser extends BasePathParser
             foreach ($actionSpecs->getPhpDocParser()->getUses() as $use) {
                 
                 if ($use->getType()->getIsClass()) {
-                    $schema = $actionSpecs->createActiveRecordSchema($use->getType()->getClassName());
+                    $schema = $actionSpecs->createActiveRecordSchemaObjectFromClassName($use->getType()->getClassName());
                     if ($schema) {
                         $requestBody = new RequestBody([
                             'content' => [
