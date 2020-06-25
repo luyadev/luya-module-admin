@@ -75,18 +75,29 @@ class ActiveRecordToSchema
         // handle php object type
         if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {
             
-            $object = $this->baseSpecs->createActiveRecordSchema($type->getClassName(), get_class($this->activeRecord));
+            $object = $this->baseSpecs->createActiveRecordSchemaObjectFromClassName($type->getClassName(), get_class($this->activeRecord));
             
             if ($object) {
-                $config = $this->baseSpecs->activeRecordToSchema($object, $type->getIsArray());
+                $config = $this->baseSpecs->createSchemaFromActiveRecordToSchemaObject($object, $type->getIsArray());
                 $config['title'] = $property->getDescription() ? $property->getDescription() : $type->getClassPhpDocParser()->getShortSummary();
                 $config['description'] = $type->getClassPhpDocParser()->getLongDescription(); // @TODO veryify if <br> or PHP_EOL (\n) works, redoc seems to work with <br/>
                 return new Schema($config);
             }
         }
 
+        if ($type->getIsScalar()) {
+            return new Schema([
+                'type' => $type->getNoramlizeName(),
+                'title' => $this->activeRecord->getAttributeLabel($attributeName),
+                'description' => implode('<br>', array_filter([$this->activeRecord->getAttributeHint($attributeName), $property->getDescription()])), // @TODO veryify if <br> or PHP_EOL (\n) works, redoc seems to work with <br/>
+            ]);
+        }
+
         return new Schema([
-            'type' => empty($type->getNoramlizeName()) ? 'string' : $type->getNoramlizeName(),
+            'type' => $type->getNoramlizeName(),
+            'items' => [
+                'type' => 'string'
+            ],
             'title' => $this->activeRecord->getAttributeLabel($attributeName),
             'description' => implode('<br>', array_filter([$this->activeRecord->getAttributeHint($attributeName), $property->getDescription()])), // @TODO veryify if <br> or PHP_EOL (\n) works, redoc seems to work with <br/>
         ]);
@@ -100,13 +111,5 @@ class ActiveRecordToSchema
         }
 
         return trim(get_class($this->activeRecord), '\\') == trim($class, '\\');
-    }
-
-    public function guetQueryParams()
-    {
-        return [
-            'field' => [],
-            'expand' => [],
-        ];
     }
 }

@@ -403,7 +403,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function extraFields()
     {
-        return ['groups', 'lastloginTimestamp'];
+        return array_unique(array_merge(['groups', 'lastloginTimestamp'], parent::extraFields()));
     }
 
     /**

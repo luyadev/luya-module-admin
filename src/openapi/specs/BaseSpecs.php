@@ -15,6 +15,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;
+use yii\base\Controller;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -44,7 +45,7 @@ abstract class BaseSpecs implements SpecInterface
      * + post
      * + delete
      * + put
-     * + option
+     * + option§
      *
      * @return string
      */
@@ -55,6 +56,9 @@ abstract class BaseSpecs implements SpecInterface
      */
     abstract public function getActionObject();
 
+    /**
+     * @return Controller
+     */
     abstract public function getControllerObject();
 
     private $_phpDocParser;
@@ -120,15 +124,26 @@ abstract class BaseSpecs implements SpecInterface
                 'example' => 'id,email,firstname,lastname',
                 'schema' => new Schema(['type' => 'string']),
             ]);
+
+            $activeRecordClassName = $this->extractModelClassFromObject($this->getActionObject());
+            $activeRecord = $this->createObjectFromClassName($activeRecordClassName);
+
+            if ($activeRecord && method_exists($activeRecord, 'extraFields')) {
+               $expandExample = implode(",", $activeRecord->extraFields());
+            } else {
+                $expandExample = null;
+            }
+
             // expand
             $params[] = new Parameter([
                 'name' => 'expand',
                 'in' => 'query',
                 'required' => false,
                 'description' => 'Provide a comma seperated list of extra attributes (for example relations) which should be expand.',
-                'example' => 'user,groups',
+                'example' => $expandExample,
                 'schema' => new Schema(['type' => 'string']),
             ]);
+
             // page
             $params[] = new Parameter([
                 'name' => 'page',
@@ -166,7 +181,7 @@ abstract class BaseSpecs implements SpecInterface
                     'examples' => [
                     ],
                     */
-                    'schema' => $this->activeRecordToSchema(new ActiveRecordToSchema($this, $dataFilterObject), false)
+                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject(new ActiveRecordToSchema($this, $dataFilterObject), false)
                 ]);
             }
         }
@@ -180,6 +195,7 @@ abstract class BaseSpecs implements SpecInterface
             'example' => 'en',
             'schema' => new Schema(['type' => 'string']),
         ]);
+
         return $params;
     }
 
@@ -211,13 +227,82 @@ abstract class BaseSpecs implements SpecInterface
         ];
 
         if ($this->getVerbName() == 'post' || $this->getVerbName() == 'put') {
-            $responseCodes[422] = $this->getValidationStatusCode();
+            $responseCodes[422] = $this->getValidationResponseContent();
         }
 
         return $responseCodes;
     }
 
-    protected function getValidationStatusCode()
+    /**
+     * Generate the response content
+     *
+     * @return array
+     */
+    protected function getResponseContent()
+    {
+        $modelClass = $this->extractModelClassFromObject($this->getActionObject());
+
+        if ($modelClass) {
+            // the index action should return an array of objects
+            $isArray = ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false);
+            return $this->generateResponseArrayFromModel($modelClass, $isArray);
+        }
+
+        /** @var PhpDocType $type */
+        $type = $this->getPhpDocParser()->getReturn()->getType();
+
+        if (!$type) {
+            return [];
+        }
+
+        // handle php object type
+        if ($type->getIsClass()) {
+            return $this->generateResponseArrayFromModel($type->getClassName(), $type->getIsArray());
+        }
+
+        // handle type array
+        if ($type->getIsArray()) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'string'
+                        ],
+                    ],
+                ])
+            ];
+        }
+
+        if ($type->getIsScalar()) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => $type->getNoramlizeName(),
+                    ],
+                ])
+            ];
+        }
+
+        if ($type->getIsObject()) {
+            return [
+                'application/json' => new MediaType([
+                    'schema' => [
+                        'type' => 'object',
+                    ],
+                ])
+            ];
+        }
+
+        return [];
+    }
+
+    /**
+     * Get validation response for post requests
+     *
+     * @return Response
+     */
+    protected function getValidationResponseContent()
     {
         return new Response([
             'description' => 'Data validation failed. Check the response body for detailed error messages.',
@@ -247,9 +332,38 @@ abstract class BaseSpecs implements SpecInterface
 
     public static $contexts = [];
 
-    protected function internalModelContextResolve($contextModel, $isArray = false)
+    /**
+     * Generate an Array Response from ActiveRecord/Model class.
+     *
+     * @param string $contextModel
+     * @param boolean $isArray
+     * @return array|boolean
+     */
+    protected function generateResponseArrayFromModel($modelClassName, $isArray = false)
     {
-        $object = Yii::createObject($contextModel);
+        $key = implode("", [$modelClassName, $isArray]);
+
+        if (array_key_exists($key, self::$contexts)) {
+            return self::$contexts[$key];
+        }
+
+        $response = $this->internalGenerateResponseArrayFromModel($modelClassName, $isArray);
+
+        self::$contexts[$key] = $response;
+
+        return $response;
+    }
+
+    /**
+     * Internal generate the response for a given model class name
+     *
+     * @param string $modelClassName
+     * @param boolean $isArray
+     * @return array|boolean
+     */
+    private function internalGenerateResponseArrayFromModel($modelClassName, $isArray = false)
+    {
+        $object = $this->createObjectFromClassName($modelClassName);
 
         $schema = false;
 
@@ -278,39 +392,38 @@ abstract class BaseSpecs implements SpecInterface
 
         return [
             'application/json' => new MediaType([
-                'schema' => $this->activeRecordToSchema($schema, $isArray),
+                'schema' => $this->createSchemaFromActiveRecordToSchemaObject($schema, $isArray),
             ])
         ];
     }
 
-    protected function modelContextToResponse($contextModel, $isArray = false)
+    /**
+     * Extract the `modelClass` property value from any object
+     *
+     * @param object $actionObject
+     * @return string|boolean
+     */
+    protected function extractModelClassFromObject($actionObject)
     {
-        $key = implode("", [$contextModel, $isArray]);
-
-        if (array_key_exists($key, self::$contexts)) {
-            return self::$contexts[$key];
+        if (is_object($actionObject) && ObjectHelper::isInstanceOf($actionObject, [Api::class, Action::class], false)) {
+            return $this->getActionObject()->modelClass;
         }
 
-        $response = $this->internalModelContextResolve($contextModel, $isArray);
-
-        self::$contexts[$key] = $response;
-
-        return $response;
+        return false;
     }
 
     /**
-     * create an ActiveRecordSchema from a className
+     * Create the ActiveRecordToSchema object from an ActiveRecord/Model Class Name.
      *
      * @param string|array $activeRecordClassName
      * @param string $senderActiveRecordClassName The class name which has created the new active record, this is used to find circular reference which end in infinite loops.
-     * @return ActiveRecordToSchema
+     * @return ActiveRecordToSchema|boolean
      */
-    public function createActiveRecordSchema($activeRecordClassName, $senderActiveRecordClassName = null)
+    public function createActiveRecordSchemaObjectFromClassName($activeRecordClassName, $senderActiveRecordClassName = null)
     {
         try {
-            Yii::warning("Create object createActiveRecordSchema {$activeRecordClassName}", __METHOD__);
-            $object = Yii::createObject($activeRecordClassName);
-
+            Yii::warning("Create object createActiveRecordSchemaObjectFromClassName {$activeRecordClassName}", __METHOD__);
+            $object = $this->createObjectFromClassName($activeRecordClassName);
             if ($object instanceof Model) {
                 return new ActiveRecordToSchema($this, $object, $senderActiveRecordClassName);
             }
@@ -320,7 +433,47 @@ abstract class BaseSpecs implements SpecInterface
 
         return false;
     }
-    
+
+    /**
+     * Create the Object from a ClassName
+     *
+     * @param string $className
+     * @return object|boolean
+     */
+    public function createObjectFromClassName($className)
+    {
+        try {
+            Yii::info("Create object createObjectFromClassName {$className}", __METHOD__);
+            return Yii::createObject($className);
+        } catch(\Exception $e) {
+            Yii::warning("Error while creating the model class {$className}", __METHOD__);
+        }
+
+        return false;
+    }
+
+    /**
+     * Create an ActiveRecord Schema Array Response from an Object (Controller or Action Object).
+     *
+     * @param object $actionObject An Action or Controller object.
+     * @param boolean $asArray
+     * @return array|false
+     */
+    public function createActiveRecordSchemaFromObject($actionObject, $asArray = false)
+    {
+        $class = $this->extractModelClassFromObject($actionObject);
+
+        if ($class) {
+            $object = $this->createActiveRecordSchemaObjectFromClassName($class);
+
+            if ($object) {
+                return $this->createSchemaFromActiveRecordToSchemaObject($object, $asArray);
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Generate OpenAPI schema structure from ActiveRecordToSchema Object
      *
@@ -328,7 +481,7 @@ abstract class BaseSpecs implements SpecInterface
      * @param boolean $isArray
      * @return array
      */
-    public function activeRecordToSchema(ActiveRecordToSchema $activeRecord, $isArray = false)
+    public function createSchemaFromActiveRecordToSchemaObject(ActiveRecordToSchema $activeRecord, $isArray = false)
     {
         if ($isArray) {
             return [
@@ -343,86 +496,5 @@ abstract class BaseSpecs implements SpecInterface
             'type' => 'object',
             'properties' => $activeRecord->getProperties()
         ];
-    }
-
-    protected function getNgRestApiModelClass($actionObject)
-    {
-        if (ObjectHelper::isInstanceOf($actionObject, [Api::class, Action::class], false)) {
-            return $this->getActionObject()->modelClass;
-        }
-
-        return false;
-    }
-
-    public function createSchemaFromClass($actionObject, $asArray = false)
-    {
-        $class = $this->getNgRestApiModelClass($actionObject);
-
-        if ($class) {
-            $object = $this->createActiveRecordSchema($class);
-
-            if ($object) {
-                return $this->activeRecordToSchema($object, $asArray);
-            }
-        }
-
-        return false;
-    }
-
-    protected function getResponseContent()
-    {
-        $modelClass = $this->getNgRestApiModelClass($this->getActionObject());
-
-        if ($modelClass) {
-            // the index action should return an array of objects
-            $isArray = ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false);
-            return $this->modelContextToResponse($modelClass, $isArray);
-        }
-
-        /** @var PhpDocType $type */
-        $type = $this->getPhpDocParser()->getReturn()->getType();
-
-        if (!$type) {
-            return [];
-        }
-
-        // handle php object type
-        if ($type->getIsClass()) {
-            return $this->modelContextToResponse($type->getClassName(), $type->getIsArray());
-        }
-
-        // handle type array
-        if ($type->getIsArray()) {
-            return [
-                'application/json' => new MediaType([
-                    'schema' => [
-                        'type' => 'array',
-                        'items' => [],
-                    ],
-                ])
-            ];
-        }
-
-        if ($type->getIsScalar()) {
-            return [
-                'application/json' => new MediaType([
-                    'schema' => [
-                        'type' => $type->name,
-                    ],
-                ])
-            ];
-        }
-
-        if ($type->getIsObject()) {
-            return [
-                'application/json' => new MediaType([
-                    'schema' => [
-                        'type' => 'object',
-                    ],
-                ])
-            ];
-        }
-
-        return [];
     }
 }
