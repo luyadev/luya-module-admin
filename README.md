@@ -10,7 +10,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/26ce6892fcb4899cbd49/maintainability)](https://codeclimate.com/github/luyadev/luya-module-admin/maintainability)
 [![Latest Stable Version](https://poser.pugx.org/luyadev/luya-module-admin/v/stable)](https://packagist.org/packages/luyadev/luya-module-admin)
 [![Total Downloads](https://poser.pugx.org/luyadev/luya-module-admin/downloads)](https://packagist.org/packages/luyadev/luya-module-admin)
-[![Slack Support](https://img.shields.io/badge/Slack-luyadev-yellowgreen.svg)](https://slack.luya.io/)
 
 Administration Interface based on [AngularJs](https://angularjs.org/), [Bootstrap 4](https://getbootstrap.com) and [Yii 2 Framework](http://www.yiiframework.com/) (which is wrapped in the LUYA CORE).
 
