@@ -35,7 +35,7 @@ class UserModelTest extends AdminModelTestCase
         $user1->email = 'delete@luya.io';
         $user1->firstname = 'delete';
         $user1->lastname = 'delete';
-        $user1->is_deleted = 0;
+        $user1->is_deleted = 1;
 
         $this->assertTrue($user1->save());
 
@@ -47,6 +47,6 @@ class UserModelTest extends AdminModelTestCase
         $user2->lastname = 'delete';
 
         $this->assertFalse($user2->save());
-        $this->assertSame('Email "delete@luya.io" has already been taken.', $user2->getFirstError('email'));
+        $this->assertSame('The provided email address is already in use by a deleted account.', $user2->getFirstError('email'));
     }
 }
