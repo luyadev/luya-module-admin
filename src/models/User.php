@@ -238,7 +238,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['email'], 'unique', 'except' => ['login']],
             [['email'], function ($attribute) {
                 if (self::find()->where(['email' => $this->$attribute])->exists()) {
-                    $this->addError($attribute, 'The email exists already for a deleted account.');
+                    $this->addError($attribute, Module::t('user_model_email_deleted_account_exists'));
                 }
             }, 'except' => ['login']],
             [['auth_token'], 'unique'],
