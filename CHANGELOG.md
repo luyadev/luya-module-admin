@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.3.3
 
++ [#]() Fixed an issue with OpenApi path params.
 + [#527](https://github.com/luyadev/luya-module-admin/issues/527) Fixed a bug where deleted user emails where not validated when save or update an existing user account.
 
 ## 3.3.2 (28. June 2020)
