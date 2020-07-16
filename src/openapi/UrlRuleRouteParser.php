@@ -70,7 +70,7 @@ class UrlRuleRouteParser extends BasePathParser
             }
         }
 
-        return '/'.ltrim($route, '/');
+        return '/'.ltrim(str_replace(['<','>'], ['{', '}'], $route), '/');
     }
 
     /**
