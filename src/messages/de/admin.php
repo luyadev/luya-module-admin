@@ -188,7 +188,7 @@ return [
     'ngrest_crud_group_prompt' => 'Nach Feld gruppieren',
     'ngrest_crud_filter_prompt' => 'Filter auswählen',
     'ngrest_crud_ajax_search_length' => 'Der Suchbegriff muss mindestens 3 Zeichen lang sein.',
-    'menu_system_logger' => 'Logger',
+    'menu_system_logger' => 'Applikations Log',
     'layout_filemanager_detail_replace_file' => 'Datei ersetzen',
     'layout_rightbar_languagelabel' => 'Oberflächen Sprache',
     'layout_rightbar_savebtn' => 'Speichern',
@@ -381,7 +381,7 @@ return [
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Terminieren',
     'js_scheduler_new_value' => 'Neuer Wert',
@@ -516,6 +516,25 @@ return [
     'crop_success' => 'Datei wurde zugeschnitten und gespeichert.',
     'file_caption_success' => 'Datei Beschreibung wurde gespeichert.',
     'crop_quality_high' => 'Hoch',
-    'crop_quality_medium' => 'Mittel', 
+    'crop_quality_medium' => 'Mittel',
     'crop_quality_low' => 'Niedrig',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Einträge des Model Event Logs werden beim Erstellen, Aktualisieren und Löschen von Datensätzen in CRUD Views der Administration erzeugt.',
+    'logger_controller_description' => 'Einträge des Application Logs werden vom [Logger Model](https://luya.io/api/luya-admin-models-Logger) veranlasst.',
+    'config_controller_description' => 'Erstellen Sie einen Konfigurations-Key und weisen diesem einen Wert zu mittels [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Listet alle unerledigten Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
+    'ngrest_delete_all_button_label' => 'Alle Daten löschen',
+    'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
+    'storageimage_controller_description' => 'Zeigt alle Bilder an, die über das [Storage System](https://luya.io/guide/app-storage) erstellt wurden. Jedes Bild ist verknüpft mit einer Datei.',
+    'menu_group_log' => 'Protokolle',
+    'menu_images_item_images' => 'Bilder',
+    'filter_controller_description' => 'Filter kommen zum Einsatz, um verschiedene (z.B. skalierte oder beschnittene) Versionen eines Bildes zu erzeugen. Lesen Sie den [Image Filter Guide](https://luya.io/guide/app-filters), um zu erfahren, wie Sie eigene Filter erstellen können.',
+    'menu_group_storage' => 'Speicher',
+
+// 3.3.3
+
+    'user_model_email_deleted_account_exists' => 'Die angegebene E-Mail-Adresse wird bereits für ein gelöschtes Konto verwendet.',
 ];

@@ -153,10 +153,10 @@ class SelectModel extends Select
             $this->labelField = $model->attributes();
         }
         
-        $defintion = (array) $this->labelField;
+        $definition = (array) $this->labelField;
         
         $values = [];
-        foreach ($defintion as $field) {
+        foreach ($definition as $field) {
             $data = $model->i18nAttributeValue($field);
             
             if (is_array($data)) {

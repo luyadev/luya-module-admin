@@ -9,6 +9,17 @@
     padding: 5px 10px 10px;
     width: 100%;
 
+    &--horizontal {
+        width: 100%;
+        flex-direction: row;
+        flex: 0 0 100%;
+        height: auto;
+        padding: 10px 10px 10px 5px;
+        justify-content: space-between;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     @media (min-width: $mobile-nav-breakpoint) {
         display: flex;
         flex: 0 0 $mainnav-width;
@@ -17,6 +28,16 @@
         position: relative;
         user-select: none;
         width: $mainnav-width;
+
+        &--horizontal {
+            width: 100%;
+            flex-direction: row;
+            flex: 0 0 100%;
+            height: auto;
+            padding: 10px 10px 10px 5px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
 
         .mainnav-tooltip-big-wrapper {
             left: 170px;
@@ -82,6 +103,11 @@
 
 .mainnav-entry {
     margin-top: 5px;
+
+    .mainnav--horizontal & {
+        margin-left: 5px;
+        margin-top: 0;
+    }
 
     .mainnav-small & {
         text-align: left;
@@ -174,12 +200,17 @@
     display: inline-block;
     line-height: 22px;
     z-index: zindex(popover);
+    font-size:14px;
 }
 
 .mainnav-icon {
     font-size: 24px !important;
-    margin: 0 15px 0 0;
+    margin: 0  5px 0 0;
     transition: .1s ease-in-out color;
+
+    .mainnav--horizontal & {
+        margin: 0 5px 0 0;
+    }
 
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 0 0;
@@ -219,6 +250,10 @@
 
 .mainnav-label {
     @include google-chrome-font-offset-fix;
+
+    .mainnav--horizontal & {
+        white-space: nowrap;
+    }
 
     @media (min-width: $mobile-nav-breakpoint) {
         flex: 1 0;
@@ -417,6 +452,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+
+    i {
+        margin: 0 5px 0 0;
+    }
 }
 
 .mainnav-timeout {

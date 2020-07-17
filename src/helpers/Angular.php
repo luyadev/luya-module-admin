@@ -59,7 +59,7 @@ class Angular
         $opt = array_merge($mergeOptions, [
             'model' => $ngModel,
             'label' => $label,
-            'options' => $options,
+            'options' => empty($options) ? null : $options,
             'fieldid' => Inflector::camel2id(Inflector::camelize($ngModel.'-'.$type)),
             'fieldname' => Inflector::camel2id(Inflector::camelize($ngModel)),
         ]);

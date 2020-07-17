@@ -105,7 +105,7 @@ return [
     'view_index_redirect_external_link' => 'Внешняя ссылка',
     'view_index_redirect_external_link_help' => 'Внешние ссылки начинаются с http:// или https://',
 
-// added translation in 1.0.0-beta3:
+    // added translation in 1.0.0-beta3:
 
     'model_loginform_email_label' => 'E-mail',
     'model_loginform_password_label' => 'Пароль',
@@ -133,11 +133,11 @@ return [
     'js_dir_manager_rm_file_ok' => 'Файл был успешно удалён.',
     'js_zaa_server_proccess' => 'Сервер обрабатывает данные. Пожалуйста подождите',
 
-// added translation in 1.0.0-beta4:
+    // added translation in 1.0.0-beta4:
 
     'ngrest_crud_empty_row' => 'В этой таблице пока нет данных',
 
-// added translation in 1.0.0-beta5:
+    // added translation in 1.0.0-beta5:
 
     // aws/gallery
     'aws_gallery_empty' => 'Выберите несколько изображений слева, чтобы добавить их в галерею.',
@@ -146,13 +146,13 @@ return [
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Неактивен с',
 
-// added translations in 1.0.0-beta6
+    // added translations in 1.0.0-beta6
 
     'layout_debug_caching' => 'Кеширование',
     'debug_state_on' => 'Вкл.',
     'debug_state_off' => 'Выкл.',
 
-// added translations in 1.0.0-beta7
+    // added translations in 1.0.0-beta7
 
     'login_securetoken_mail_subject' => 'Код безопасности LUYA',
     'login_securetoken_mail' => 'Используйте следующий код для входа в свою админ-панель на:',
@@ -169,7 +169,7 @@ return [
     'mode_user_email' => 'E-mail',
     'mode_user_password' => 'Пароль',
 
-// added translations in 1.0.0-beta8
+    // added translations in 1.0.0-beta8
     'aws_tag_new' => 'Добавить новую запись',
     'aws_tag_add' => 'Добавить',
     'aws_tag_search' => 'Искать записи',
@@ -177,7 +177,7 @@ return [
     'dashboard_log_message_add' => 'Добавил новую запись в <strong>{container}</strong>.', // TODO: Consider user's gender
     'dashboard_log_message_edit' => 'Обновил запись в <strong>{container}</strong>.',
 
-// rc1
+    // rc1
 
     'layout_btn_help' => 'Помощь',
     'right_panel_support_title' => 'Информация и помощь',
@@ -185,7 +185,7 @@ return [
     'right_panel_support_support_title' => 'Поддержка',
     'right_panel_support_support_text' => 'Если у вас возникли вопросы, то обратитесь к своему вебмастеру или проконсультируйтесь на <a target="_blank" href="https://luya.io">luya.io</a>.',
 
-// rc2
+    // rc2
 
     'ngrest_crud_group_prompt' => 'Группировка по полю',
     'ngrest_crud_filter_prompt' => 'Фильтр',
@@ -197,7 +197,7 @@ return [
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
     'aws_changeapssword_minchar' => 'Пароль должен иметь минимум {min} символа.',
 
-// rc3
+    // rc3
 
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Название',
@@ -239,7 +239,7 @@ return [
     'callback_button_file_download_widget_success' => 'Файл подготовлен. Вы можете скачать его.',
 
 
-// rc4
+    // rc4
 
     'api_storage_file_upload_folder_error' => 'Ошибка при сохранении файла в папку хранилища. Ошибка разрешения может вызвать эту проблему. Убедитесь, что папка хранения доступна для записи.',
     'model_user_oldpassword' => 'Текущий пароль',
@@ -252,7 +252,7 @@ return [
     'menu_dashboard' => 'Панель',
     'js_link_not_set' => 'Нет ссылки',
 
-// 1.0.0
+    // 1.0.0
 
     'ngrest_button_delete' => 'Удалить',
     'js_dir_manager_rm_file_confirm_title' => 'Удалить файл',
@@ -279,7 +279,7 @@ return [
     'model_config_atr_is_system' => 'Системная переменная',
     'menu_system_item_config' => 'Конфигурационные переменные',
 
-// 1.1.0
+    // 1.1.0
 
     'model_user_is_deleted' => 'Удален',
     'model_user_name' => 'Имя',
@@ -324,14 +324,14 @@ return [
     'aw_apioverview_no_perm_groups' => 'Пользователь API должен быть привязан хотя бы к одной группе.',
     'aw_apioverview_no_access_token' => 'Для доступа к API пользователь должен иметь код доступа.',
 
-// 1.1.1
+    // 1.1.1
 
     'ngrest_crud_total_count' => '{{data.listArray.length}} из {{totalRows}}',
-    
-// 1.2.0
-    
-    'login_async_submission_limit_reached' => 'Достигнуто максимально возможное число отправок форм. Попробуйте позже. {time}.', // TODO: падежи и число
-    'model_loginform_max_user_attempts' => 'Достигнуто максимальное количество попыток входа в систему, попробуйте {time}.',  // TODO: падежи и число
+
+    // 1.2.0
+
+    'login_async_submission_limit_reached' => 'Достигнуто максимально возможное число отправок форм, попробуйте {time}.',
+    'model_loginform_max_user_attempts' => 'Достигнуто максимальное количество попыток входа в систему, попробуйте {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Неправильный e-mail или пароль. Попытка #{attempt} из {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Login lockout time',
     'account_changeemail_subject' => 'Подтверждение изменения вашего адреса электронной почты',
@@ -345,9 +345,9 @@ return [
     'layout_filemanager_col_file_disposition' => 'Способ скачивания',
     'layout_filemanager_col_file_disposition_download' => 'Сохранить на диск',
     'layout_filemanager_col_file_disposition_browser' => 'Открыть в браузере',
-    
-// 1.2.1
-    
+
+    // 1.2.1
+
     'mode_user_personal_info' => 'Персональные данные',
     'settings_general' => 'Общие настройки',
     'settings_developer_mode' => 'Режим разработчика',
@@ -355,9 +355,9 @@ return [
     'view_index_redirect_telephone' => 'номер телефона',
     'view_index_redirect_telephone_help' => 'Пожалуйста, введите правильный номер телефона (для ввода знака "+" необходимо перед ним поставить обратный слэш "\").',
     'missing_file_upload_permission' => 'Недостаточно прав для загрузки файлов.',
-    
-// 1.2.2
-    
+
+    // 1.2.2
+
     'button_no' => 'Нет',
     'crud_exportdata_btn' => 'Экспорт данных',
     'crud_exportdata_col_header' => 'Заголовок',
@@ -371,13 +371,13 @@ return [
     'dashboard_log_message_delete' => 'Удалил запись в <strong>{container}</strong>.', // TODO: Consider user's gender
     'model_tag_relations_count' => 'Кол-во использований',
 
-// 1.2.3
+    // 1.2.3
 
     'active_button_duplicate_label' => 'Дубликат',
     'active_button_duplicate_success' => 'Копия была создана.',
     'active_button_duplicate_error' => 'Ошибка при создании копии: {message}',
 
-// 2.0
+    // 2.0
 
     'model_tag_translation' => 'Перевод',
     'model_tag_translation_hint' => 'Опциональный перевод тега для указанного языка. Позволяет выводить тег в мульти-язычных сайтах.',
@@ -395,7 +395,7 @@ return [
     'js_dir_manager_rename_success' => 'Директория успешно переименована.',
     'layout_filemanager_search_no_results' => 'По запросы <strong>{{searchQuery}}</strong> файлы не найдены.',
     'layout_filemanager_empty_folder' => 'В данной директории файлов нет.',
-    'aw_requestinsight_warning' => 'Данная возможность главным образом используется для ознакомления с API. Не рекомендуется включать её на длительное время потому как будет производится сбор информации, что замедлит работу приложения.',
+    'aw_requestinsight_warning' => 'Данная возможность, главным образом, используется для ознакомления с API. Не рекомендуется включать её на длительное время, т.к. сбор информации будет замедлять работу приложения.',
     'aw_requestinsight_logger_active' => 'Insight для запросов активен!',
     'aw_requestinsight_btn_disable' => 'Отключить Insight',
     'aw_requestinsight_btn_enable' => 'Включить Insight',
@@ -409,7 +409,7 @@ return [
     'aw_requestinsight_col_count' => 'Количество',
     'aw_requestinsight_top_request_label' => 'Часто запрашиваемые URL',
     'aw_requestinsight_longest_response_label' => 'URL с долгим временем ответа',
-    'aw_requestinsight_data_pagination' => '{{data.length}} в {{dataCount}} запросов',
+    'aw_requestinsight_data_pagination' => '{{data.length}} в {{dataCount}} запросов', //TODO: plural forms
     'aw_requestinsight_toggle_logger_enabled' => 'Insight включен.',
     'aw_requestinsight_toggle_logger_disabled' => 'Insight выключен.',
     'aw_requestinsight_toggle_error' => 'Ошибка при включении Insight запросов.',
@@ -417,106 +417,125 @@ return [
     'aw_requestinsight_default_label' => 'Insight запросов',
     'login_noscript_error' => 'Необходимо включить Javascript, чтобы работать в LUYA.',
     'login_browsehappy' => 'Вы используете <strong>устаревший</strong> браузер. Пожалуйста, <a href="https://browsehappy.com/" target="_blank">обновите его</a>, чтобы повысить удобство и обеспечить лучшую защиту от угроз.',
-    'crud_notification_enable' => 'Enable Notification',
-    'crud_notification_disable' => 'Disable Notification',
-    'admin_button_execute' => '"{label}" executed',
+    'crud_notification_enable' => 'Включить уведомления',
+    'crud_notification_disable' => 'Отключить уведомления',
+    'admin_button_execute' => '"{label}" выполнено',
     'layout_btn_reload_admin' => 'Обновить&nbsp;страницу',
     'layout_btn_reload_cache' => 'Очистить&nbsp;кэш',
 
-// 2.0.1
+    // 2.0.1
 
     'js_dir_manager_file_replace_ok' => 'Файл успешно заменён.',
 
-// 2.0.3
+    // 2.0.3
 
     'status_true' => 'Да',
     'status_false' => 'Нет',
-    'js_jsonobject_newkey' => 'New key name',
-    
-// 2.2.0
-    
+    'js_jsonobject_newkey' => 'Новый ключ',
+
+    // 2.2.0
+
     'active_button_togglestatus_label' => 'Изменить статус',
     'active_button_togglestatus_error' => 'Не удалось изменить статус',
     'active_button_togglestatus_enabled' => 'Модель {modelName} включена',
     'active_button_togglestatus_disabled' => 'Модель {modelName} отключена',
     'layout_filemanager_detail_details' => 'Свойства файла',
 
-// 2.3.0
+    // 2.3.0
 
-    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
-    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
-    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
-    'aws_delete_relations_table_name' => 'Relation Table Name',
-    'aws_delete_relations_table_count' => 'Number of Entries',
-    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
+    'aws_delete_remove_success' => 'Тег и его связи были удалены.',
+    'aws_delete_remove_wrong_name' => 'Неправильное название тега.',
+    'aws_delete_relations_info' => 'Тег <b>{name}</b> использован <b>{count}</b> {count, plural, one{# раз} few{# раза} many{# раз} other{# раз}}. Он привязан к записям в следующих таблицах:',
+    'aws_delete_relations_table_name' => 'Название связанной таблицы',
+    'aws_delete_relations_table_count' => 'Число записей',
+    'aws_delete_relations_form_hint' => 'Чтобы подтвердить удаление тега, введите название тега и нажмите «Удалить».',
 
-// 2.4.0
+    // 2.4.0
 
-    'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
+    'aws_missing_callback_param_generic_errror' => 'Отсутствуют некоторые необходимые данные.',
 
-// 3.0.0
+    // 3.0.0
 
-    'device' => 'Device',
-    'last_login' => 'Last login',
-    'first_login' => 'First login',
-    'login_async_twofa_verify_error' => 'The one time secure code is invalid. Please use the latest code from your app and try again',
-    'login_async_twofa_wrong_backup_code' => 'The provided backup code is invalid.',
-    'login_autologin_label' => 'Remember this device',
-    'login_otp_label' => 'Enter the one time secure code from your 2FA application:',
-    'login_otp_placeholder' => 'One Time Code', // OTP, keep original name makes sense
-    'login_otp_backup' => 'Backup Code',
-    'login_otp_help' => 'Unable to access the App?',
-    'login_otp_help_toggler' => 'Enter the backup code',
-    'user_register_2fa_verification_error' => 'Invalid verification code, please enter the new code from the 2fa app.',
-    'settings_devices' => 'Devices',
-    'settings_devices_info' => 'A list of devices you will be automatically logged in without being prompted for a password.',
-    'settings_devices_empty' => 'There are no devices yet for your account.',
-    'settings_devices_this' => 'This device',
-    'settings_2fa' => 'Two-factor authentication (2FA)',
-    'settings_2fa_intro' => 'Two-factor authentication ensures that only people with the password and access to the second factor device can log in. Each time you log in, you will be prompted to enter the two-factor code.',
-    'settings_2fa_backup_code_hint' => 'Store the backup code {{twoFaBackupCode}} in a safe place, it won\'t be displayed again.',
-    'settings_2fa_success' => 'two-factor authentication was set up successfully.',
-    'settings_2fa_step1' => 'Scan the QR code',
-    'settings_2fa_step2' => 'Enter the code from the app',
-    'settings_2fa_modal_pretext' => 'The following backup code can be used in case you have no access to the authenticator app:',
-    'settings_2fa_modal_after' => 'This code will only be displayed once and can\'t be retrieved later. Please write it down and store it in a safe place.',
-    'settings_2fa_verify_code_label' => 'Verification Code',
-    'settings_2fa_verify_code_hint' => 'Enter the code from your device, do note it changes every few seconds.',
-    'login_async_secure_token_error' => 'Unable to send and store secure token.',
-    'menu_system_queue' => 'Queue',
-    'menu_system_queue_errors' => 'Queue Errors',
-    'login_forgot_password' => 'Forgot your Password?',
-    'login_invalid_reset_token' => 'The link to reset your password is not valid or has expired.',
-    'login_reset_password_success' => 'The password for your account was updated successfully.',
-    'reset_title' => 'Reset your Password',
-    'reset_text' => 'Enter your email address. An email with a link to reset your password will be sent to your inbox.',
-    'reset_success' => 'An email with a link to reset your password was sent. <b>Check your inbox</b> and click the link.',
-    'reset_submit_btn' => 'Send Email',
-    'reset_mail_error' => 'Unable to send email. There seems to be a problem with the mail configuration. Please contact your admin.',
-    'reset_email_subject' => 'Reset your Password',
-    'reset_email_text' => 'Click the link below to set a new password for your account.',
-    'reset_email_btn_label' => 'Reset your Password',
-    'reset_form_title' => 'Reset your Password',
-    'reset_form_text' => 'Enter a new password for your account.',
-    'reset_form_submit_btn' => 'Update password',
-    'user_change_password_error' =>  'Error while saving new password.',
+    'device' => 'Устройство',
+    'last_login' => 'Последний вход',
+    'first_login' => 'Первый вход',
+    'login_async_twofa_verify_error' => 'Одноразовый код безопасности недействителен. Пожалуйста, используйте последний код из вашего приложения и попробуйте снова',
+    'login_async_twofa_wrong_backup_code' => 'Предоставленный резервный код недействителен.',
+    'login_autologin_label' => 'Запомнить это устройство',
+    'login_otp_label' => 'Введите одноразовый код безопасности из вашего приложения с двухфакторной аутентификация:',
+    'login_otp_placeholder' => 'Одноразовый код', // OTP, keep original name makes sense
+    'login_otp_backup' => 'Резервный код',
+    'login_otp_help' => 'Нет доступа к приложению?',
+    'login_otp_help_toggler' => 'Введите резервный код',
+    'user_register_2fa_verification_error' => 'Неправильный проверочный код. Пожалуйста, введите новый код из вашего приложения с двухфакторной аутентификация:',
+    'settings_devices' => 'Устройства',
+    'settings_devices_info' => 'Список устройств, аутентификация на которых будет проходить без запроса пароля.',
+    'settings_devices_empty' => 'Для данной учетной записи нет установленных устройств.',
+    'settings_devices_this' => 'Это устройство',
+    'settings_2fa' => 'Двухфакторная аутентификация',
+    'settings_2fa_intro' => 'Двухфакторная аутентификация гарантирует, что только люди, знающие пароль и имеющие доступ ко второму устройству аутентификации могут войти в систему. Каждый раз при входе в систему, вам необходимо будет вводить одноразовый код.',
+    'settings_2fa_backup_code_hint' => 'Сохраните резервный код {{twoFaBackupCode}} в недоступном другим месте. Этот код больше не будет показан.',
+    'settings_2fa_success' => 'Двухфакторная аутентификация была успешно развернута.',
+    'settings_2fa_step1' => 'Отсканируйте QR код',
+    'settings_2fa_step2' => 'Введите код из приложения',
+    'settings_2fa_modal_pretext' => 'Следующий резервный код можно использовать, если у вас нет доступа к приложению для аутентификации:',
+    'settings_2fa_modal_after' => 'Этот код будет показан только один раз и не может быть получен позже. Пожалуйста, запишите его и храните в месте, недоступном другим.',
+    'settings_2fa_verify_code_label' => 'Проверочный код',
+    'settings_2fa_verify_code_hint' => 'Введите код с вашего устройства. Обратите внимание, что он меняется каждые несколько секунд.',
+    'login_async_secure_token_error' => 'Невозможно отправить и сохранить токен безопасности.',
+    'menu_system_queue' => 'Очередь',
+    'menu_system_queue_errors' => 'Ошибки очереди',
+    'login_forgot_password' => 'Забыли пароль?',
+    'login_invalid_reset_token' => 'Ссылка для сброса пароля недействительна или устарела.',
+    'login_reset_password_success' => 'Пароль для вашей учетной записи был успешно обновлен.',
+    'reset_title' => 'Сброс пароля',
+    'reset_text' => 'Введите ваш адрес электронной почты. Письмо со ссылкой для сброса пароля будет отправлено вам.',
+    'reset_success' => 'Письмо со ссылкой для сброса пароля было отправлено. <b>Проверьте свою почту</b> и перейдите по ссылке в письме.',
+    'reset_submit_btn' => 'Отправить письмо',
+    'reset_mail_error' => 'Невозможно отправить письмо. Возможно есть проблемы с конфигурацией почтового сервера. Пожалуйста, свяжитесь с вашим администратором.',
+    'reset_email_subject' => 'Сброс пароля',
+    'reset_email_text' => 'Перейдите по следующей ссылке, чтобы установить новый пароль для вашей учетной записи.',
+    'reset_email_btn_label' => 'Сбросить пароль',
+    'reset_form_title' => 'Сброс пароля',
+    'reset_form_text' => 'Введите новый пароль для вашей учетной записи.',
+    'reset_form_submit_btn' => 'Обновить пароль',
+    'user_change_password_error' =>  'Ошибка при сохранении пароля.',
 
-// 3.1.0
+    // 3.1.0
 
-    'crop_source_image' => 'Source Image',
-    'crop_preview' => 'Preview',
-    'crop_btn_as_copy' => 'Save image as a copy',
-    'crop_btn_as_copy_hint' => 'When enabled, the image will be stored as <b>a new file</b>, otherwise the existing file will be replaced.',
-    'crop_btn_save_copy' => 'Save as a copy',
-    'crop_btn_save_replace' => 'Replace existing file',
-    'crop_size_free' => 'Free',
+    'crop_source_image' => 'Исходное изображение',
+    'crop_preview' => 'Предварительный просмотр',
+    'crop_btn_as_copy' => 'Сохранить как копию',
+    'crop_btn_as_copy_hint' => 'При установленном флажке изображение будет сохранено в <b>новом файле</b>. В противном случае существующий файл будет заменен.',
+    'crop_btn_save_copy' => 'Сохранить как копию',
+    'crop_btn_save_replace' => 'Заменить существующий файл',
+    'crop_size_free' => 'произвольный размер',
     'crop_size_1to1' => '1:1',
-    'crop_size_desktop' => 'Desktop',
-    'crop_size_mobile' => 'Mobile',
-    'crop_modal_title' => 'Image Cropping',
-    'crop_success' => 'File has been cropped an saved.',
-    'file_caption_success' => 'Captions has been updated.',
-    'crop_quality_high' => 'High',
-    'crop_quality_medium' => 'Medium', 
-    'crop_quality_low' => 'Low',
+    'crop_size_desktop' => 'для настольных ПК',
+    'crop_size_mobile' => 'для мобильных устройств',
+    'crop_modal_title' => 'Кадрирование изображения',
+    'crop_success' => 'Изобраджение было кадрировано и сохранено.',
+    'file_caption_success' => 'Подписи были обновлены.',
+    'crop_quality_high' => 'высокое',
+    'crop_quality_medium' => 'среднее',
+    'crop_quality_low' => 'низкое',
+
+    // 3.2.0
+
+    'menu_system_model_event_log' => 'Журнал событий модели',
+    'ngrestlog_controller_description' => 'Обновляет журнале событий модели при создании, обновлении или удалении записей CRUD в админке.',
+    'logger_controller_description' => 'Добавляет записи в журнал приложения через [модель журнала](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Создает конфигурационные пары ключ-значение с помощью [модели конфигурации](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Перечисляет все необработанные задания очереди. Для правильной настройки обратитейсь к [описанию очереди](https://luya.io/guide/app-queue).',
+    'ngrest_delete_all_button_label' => 'Удалить все данные',
+    'ngrest_delete_all_button_confirm_message' => 'Вы уверены, что хотите стереть все данные? Это действие не может быть отменено!',
+    'storageimage_controller_description' => 'Показывает все изображения, созданные [системным хранилищем](https://luya.io/guide/app-storage). Каждое изображение связано с файлом.',
+    'menu_group_log' => 'Журналы',
+    'menu_images_item_images' => 'Изображения',
+    'filter_controller_description' => 'Фильтры используются для создания разных (например, масштабированных или кадрированных) версий изображения. Прочтите [руководство по фильтрам изображений](https://luya.io/guide/app-filters), чтобы узнать, как создавать свои собственные фильтры.',
+    'menu_group_storage' => 'Хранилище',
+
+// 3.3.3
+
+    'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 ];

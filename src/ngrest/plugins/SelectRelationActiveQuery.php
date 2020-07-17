@@ -32,7 +32,7 @@ use yii\base\InvalidConfigException;
  * }
  * ```
  *
- * > Important: Keep in mind that the relation class which is used inside the query defintion for `Client` must be an NgRest CRUD model with controller and API!
+ * > Important: Keep in mind that the relation class which is used inside the query definition for `Client` must be an NgRest CRUD model with controller and API!
  *
  * If you have composite keys or large to with big list, in order to preserve the assign on list find you can enable `asyncList`.
  *

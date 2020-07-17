@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use luya\admin\aws\DetailViewActiveWindow;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
 
@@ -74,6 +75,26 @@ final class StorageEffect extends NgRestModel
             'imagine_json_params' => ['textarea', 'encoding' => false],
         ];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestScopes()
+    {
+        return [
+            [['list'], ['identifier']],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestActiveWindows()
+    {
+        return [
+            ['class' => DetailViewActiveWindow::class],
+        ];
+    }
     
     /**
      * Returns the effect name ensured with lowercase.
@@ -84,15 +105,5 @@ final class StorageEffect extends NgRestModel
     public function getImagineEffectName()
     {
         return strtolower($this->imagine_name);
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function ngRestConfig($config)
-    {
-        $this->ngRestConfigDefine($config, 'list', ['identifier', 'imagine_json_params']);
-        
-        return $config;
     }
 }

@@ -74,7 +74,7 @@ class ActiveWindowFormWidget extends Widget
     public $fieldClass = '\luya\admin\ngrest\aw\ActiveWindowFormField';
     
     /**
-     * @var array This config options are automaticcally are used when creating a field based on the `fieldClass`.
+     * @var array This config options are automatically used when creating a field based on the `fieldClass`.
      */
     public $fieldConfig = [];
 

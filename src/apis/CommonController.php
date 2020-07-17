@@ -37,6 +37,8 @@ class CommonController extends RestController
     use CacheableTrait;
 
     /**
+     * Call Reload Button
+     *
      * Run the callback function of a reload button configure in {{luya\admin\Module::$reloadButtons}}
      *
      * @param integer|string $key The array key from reload buttons array
@@ -81,6 +83,7 @@ class CommonController extends RestController
      * Add a task to the scheduler.
      *
      * @return array
+     * @uses Scheduler
      * @since 2.0.0
      */
     public function actionSchedulerAdd()
@@ -157,6 +160,8 @@ class CommonController extends RestController
     /**
      * Set the lastest ngrest filter selection in the User Settings.
      *
+     * @uses string apiEndpoint
+     * @uses string filterName
      * @return boolean
      */
     public function actionNgrestFilter()
@@ -170,6 +175,9 @@ class CommonController extends RestController
     /**
      * Set the lastest ngrest curd list order direction in the User Settings.
      *
+     * @uses string apiEndpoint
+     * @uses string sort
+     * @uses string field
      * @return boolean
      */
     public function actionNgrestOrder()
@@ -259,6 +267,7 @@ class CommonController extends RestController
     /**
      * Save the last selected filemanager folder in the user settings.
      *
+     * @uses string folderId
      * @return boolean
      */
     public function actionSaveFilemanagerFolderState()
@@ -285,6 +294,7 @@ class CommonController extends RestController
     /**
      * Store the open and closed folders from the filemanager tree in the user settings.
      *
+     * @uses array data
      * @return boolean
      */
     public function actionFilemanagerFoldertreeHistory()

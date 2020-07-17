@@ -379,7 +379,7 @@ return [
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
-    'active_button_timestamp_success' => 'Timestamp has been set successfull.',
+    'active_button_timestamp_success' => 'Timestamp has been set successful.',
     'active_button_timestamp_error' => 'Error while storing timestamp.',
     'js_scheduler_show_datepicker' => 'Schedule',
     'js_scheduler_new_value' => 'New value',
@@ -514,6 +514,25 @@ return [
     'crop_success' => 'File has been cropped an saved.',
     'file_caption_success' => 'Captions has been updated.',
     'crop_quality_high' => 'High',
-    'crop_quality_medium' => 'Medium', 
+    'crop_quality_medium' => 'Medium',
     'crop_quality_low' => 'Low',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
+    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'ngrest_delete_all_button_label' => 'Delete all data',
+    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
+    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
+    'menu_group_log' => 'Logs',
+    'menu_images_item_images' => 'Images',
+    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
+    'menu_group_storage' => 'Storage',
+
+// 3.3.3
+
+    'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 ];

@@ -22,7 +22,15 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
     public function makeFixtures()
     {
         $this->logFixture = new NgRestModelFixture(['modelClass' => NgrestLog::class]);
-        $this->langFixture = $this->createAdminLangFixture([]);
+        $this->langFixture = $this->createAdminLangFixture([
+            1 => [
+                'id' => 1,
+                'name' => 'En',
+                'short_code' => 'en',
+                'is_default' => 1,
+                'is_deleted' => 0,
+            ]
+        ]);
 
         $this->tagFixture = new NgRestModelFixture([
             'modelClass' => Tag::class,

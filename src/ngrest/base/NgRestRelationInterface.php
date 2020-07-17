@@ -5,7 +5,7 @@ namespace luya\admin\ngrest\base;
 /**
  * NgRest Relation Interface.
  *
- * Each relation defintion must be an instance of this class.
+ * Each relation definition must be an instance of this class.
  *
  * @author Basil Suter <basil@nadar.io>
  */
@@ -61,7 +61,10 @@ interface NgRestRelationInterface
     public function getLabel();
     
     /**
-     * Get the attribute name for the tab label, if nonie given the label is displayed.
+     * Returns the tab label attribute name.
+     * 
+     * In order to change the tab label, any of the available and exposed attributes can be taken. The attribute must be defined in
+     * {{luya\admin\ngrest\base\NgRestModel::ngRestScopes()}} list scope. The tab can only display labels which are returned by the API.
      */
     public function getTabLabelAttribute();
     

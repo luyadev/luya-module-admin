@@ -15,18 +15,29 @@ class ControllerTest extends AdminModelTestCase
 
     public function testIndex()
     {
-        $fixture = new NgRestModelFixture([
-            'modelClass' => User::class,
-        ]);
-
+        
         PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $fixture = new NgRestModelFixture([
+                'modelClass' => User::class,
+            ]);
+
+            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
+    
+            $scope->createAndAllowApi(User::ngRestApiEndpoint());
             $scope->loginUser();
 
             $stub = new StubController('id', $this->app);
-            $html = $stub->actionIndex();
+            $html = $scope->runControllerAction($stub, 'index');
 
             $this->assertNotEmpty($html);
         });
+    }
+
+    public function testDescriptionSetterGetter()
+    {
+        $stub = new StubController('id', $this->app);
+        $stub->setDescription('foo');
+        $this->assertSame('foo', $stub->getDescription());
     }
 }
 

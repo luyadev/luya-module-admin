@@ -34,6 +34,12 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     const TYPE_UPDATE = 'update';
 
     /**
+     * @var string A description for the CRUD Title which is display below the title.
+     * @since 3.2.0
+     */
+    public $description;
+
+    /**
      * @var string The view file for create and update form rendering. Aliases are supported.
      * By default the location for this file is the viewPath {@see getViewPath()}
      *
@@ -661,7 +667,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Generate an array for every group withing the given pointer elemenets.
      *
-     * If there is no group defintion, it will generate a "default" group.
+     * If there is no group definition, it will generate a "default" group.
      *
      * @param [type] $pointerElements
      * @return array

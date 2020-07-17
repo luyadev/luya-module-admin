@@ -22,7 +22,7 @@ class RenderCrudTest extends AdminModelTestCase
         return new RenderCrud();
     }
     
-    public function testSettingButtonDefintion()
+    public function testSettingButtondefinition()
     {
         $crud = $this->getCrud();
         $crud->setSettingButtonDefinitions([

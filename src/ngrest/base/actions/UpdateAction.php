@@ -8,7 +8,9 @@ use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * UpdateAction for REST implementation.
+ * Update
+ *
+ * Updates the given model values. If saving was successful the new model with its new values will be returned.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

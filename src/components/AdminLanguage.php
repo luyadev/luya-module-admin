@@ -32,7 +32,7 @@ class AdminLanguage extends Component
      * @var callable A callable which can be configured in order to define where to take the default language short code from
      * as this has changed from version 3.0.x to 3.1. The active language is recieved trough Yii::$app->language since
      * version 3.1. In order to restore the old behavior use:
-     * 
+     *
      * ```php
      * 'activeShortCodeCallable' => function($adminLanguageObject) {
      *     return Yii::$app->composition->langShortCode;
@@ -85,10 +85,10 @@ class AdminLanguage extends Component
 
     /**
      * Returns the admin default language.
-     * 
+     *
      * This represents the default language of the admin `admin_lang` table with is_default=1 flag.
      *
-     * @return array
+     * @return array|boolean If default language is not defiend false is returned.
      * @since 3.1
      */
     public function getDefaultLanguage()
@@ -171,7 +171,7 @@ class AdminLanguage extends Component
     /**
      * Clear the cache data for admin language
      *
-     * @return boolean whether clearing was successfull or not.
+     * @return boolean whether clearing was successful or not.
      * @since 2.1.0
      */
     public function clearCache()

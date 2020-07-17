@@ -6,12 +6,12 @@ use Yii;
 use luya\rest\Controller;
 
 /**
- * Uptime Tests Controller.
- * 
+ * Uptime Tests
+ *
  * This controler is used for uptime status robots.
- * 
+ *
  * In order to call this controller use `https://mydomain.com/admin/uptime`.
- * 
+ *
  * @since 3.1.0
  * @author Basil Suter <git@nadar.io>
  */

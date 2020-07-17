@@ -27,6 +27,16 @@
 
 		$scope.tabService = CrudTabService;
 
+
+		$scope.clearData = function() {
+			AdminToastService.confirm(i18n['ngrest_delete_all_button_confirm_message'], i18n['ngrest_delete_all_button_label'], function() {
+				var toast = this;
+				$http.get($scope.config.apiEndpoint + '/truncate').then(function() {
+					toast.close();
+					$scope.loadList();
+				});
+			});
+		};
 		/***** TABS AND SWITCHES *****/
 
 		/**
@@ -300,9 +310,9 @@
 			if ($scope.config.relationCall) {
 				var relations = $scope.$parent.$parent.config.relations;
 				var definition = relations[parseInt($scope.config.relationCall.arrayIndex)];
-				var linkDefintion = definition.relationLink;
+				var linkdefinition = definition.relationLink;
 
-				if (linkDefintion !== null && linkDefintion.hasOwnProperty(field)) {
+				if (linkdefinition !== null && linkdefinition.hasOwnProperty(field)) {
 					return parseInt($scope.config.relationCall.id);
 				}
 			}
@@ -678,6 +688,16 @@
 
 		$scope.service = false;
 
+		/**
+		 * Someone clicks on the same menu entry.
+		 */
+		$scope.$on('secondMenuClick', function() {
+			if ($scope.isInitalized) {
+				$scope.loadList();
+				$scope.switchTo(0, true);
+			}
+		});
+
 		/***** CONFIG AND INIT *****/
 
 		$scope.data = {
@@ -688,9 +708,12 @@
 			updateId : 0
 		};
 
+		$scope.isInitalized = false;
+
 		$scope.$watch('config', function(n, o) {
 			$timeout(function() {
 				$scope.initServiceAndConfig().then(function() {
+					$scope.isInitalized = true;
 					$scope.loadList();
 				});
 			})
@@ -909,6 +932,7 @@
 
 		$scope.loadDashboard = function() {
 			$scope.currentItem = null;
+			$scope.getDashboard($scope.moduleId);
 			return $state.go('default', { 'moduleId' : $scope.moduleId});
 		}
 
@@ -965,6 +989,8 @@
 			var id = item.route;
 			var res = id.split("/");
 			CrudTabService.clear();
+
+			$scope.$broadcast('secondMenuClick', { item : item });
 
 			$state.go('default.route', { moduleRouteId : res[0], controllerId : res[1], actionId : res[2]});
 		};
@@ -1149,7 +1175,7 @@
 		$scope.notifications = [];
 
 		(function tick(){
-			$http.post('admin/api-admin-timestamp/index', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
+			$http.post('admin/api-admin-timestamp', {lastKeyStroke: $scope.lastKeyStroke}, {ignoreLoadingBar: true}).then(function(response) {
 				$scope.forceReload = response.data.forceReload;
 				$scope.notifications = response.data.notifications;
 				if ($scope.forceReload && !$scope.visibleAdminReloadDialog) {

@@ -2,19 +2,18 @@
 
 namespace luya\admin\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use luya\helpers\Json;
 
 /**
- * This is the model class for table "{{%admin_user_auth_notification}}".
+ * User Notifications by Auth Item
  *
  * @property int $id
  * @property int $user_id
  * @property int $auth_id
  * @property int $is_muted
- * @property string $model_latest_pk_value
+ * @property string $model_latest_pk_value An array with primary key values stored as json, f.e. `["1"]`
  * @property string $model_class
  * @property int $created_at
  * @property int $updated_at
@@ -93,11 +92,19 @@ class UserAuthNotification extends ActiveRecord
     public function getDiffCount()
     {
         $className = $this->model_class;
+
+        // if a module has been removed, the class might not exists anymore
+        // @see https://github.com/luyadev/luya-module-admin/issues/520
+        if (!class_exists($className)) {
+            return 0;
+        }
         
         $nowValue = array_sum($className::findLatestPrimaryKeyValue());
-
         $oldValue = array_sum(Json::decode($this->model_latest_pk_value));
 
-        return $nowValue - $oldValue;
+        $count = $nowValue - $oldValue;
+
+        // ensure negative values are handled as 0
+        return $count < 0 ? 0 : $count;
     }
 }

@@ -116,7 +116,7 @@ final class Tag extends NgRestModel
      * Returns the translation, but if empty returns the name.
      *
      * This ensures no empty translation value is returned.
-     * 
+     *
      * @return string
      * @since 3.2.0
      */

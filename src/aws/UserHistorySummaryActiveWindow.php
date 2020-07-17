@@ -47,7 +47,7 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
         return $this->render('index', [
             'model' => $this->model,
             'userLogins' => $this->model->getUserLogins()->limit(25)->all(),
-            'ngrestLogs' => $this->model->getNgrestLogs()->limit(25)->all(),
+            'ngrestLogs' => $this->model->getNgrestLogs()->orderBy(['timestamp_create' => SORT_DESC])->limit(25)->all(),
             'groups' => $groups,
         ]);
     }

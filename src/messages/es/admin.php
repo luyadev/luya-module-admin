@@ -172,7 +172,7 @@ return [
     'ngrest_crud_group_prompt' => 'Agrupar por campo',
     'ngrest_crud_filter_prompt' => 'Seleccione filtro',
     'ngrest_crud_ajax_search_length' => 'La consulta de búsqueda debe tener al menos 3 caracteres.',
-    'menu_system_logger' => 'Log',
+    'menu_system_logger' => 'Application Log',
     'layout_filemanager_detail_replace_file' => 'Reemplazar archivo',
     'layout_rightbar_languagelabel' => 'Idioma de interfaz',
     'layout_rightbar_savebtn' => 'Guardar',
@@ -495,6 +495,25 @@ return [
     'crop_success' => 'File has been cropped an saved.',
     'file_caption_success' => 'Captions has been updated.',
     'crop_quality_high' => 'High',
-    'crop_quality_medium' => 'Medium', 
+    'crop_quality_medium' => 'Medium',
     'crop_quality_low' => 'Low',
+
+// 3.2.0
+
+    'menu_system_model_event_log' => 'Model Event Log',
+    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
+    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'ngrest_delete_all_button_label' => 'Delete all data',
+    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
+    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
+    'menu_group_log' => 'Logs',
+    'menu_images_item_images' => 'Images',
+    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
+    'menu_group_storage' => 'Storage',
+
+// 3.3.3
+
+    'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 ];

@@ -15,6 +15,7 @@ use luya\admin\base\RestActiveController;
 use yii\base\InvalidArgumentException;
 use luya\validators\StrengthValidator;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\admin\events\UserAccessTokenLoginEvent;
 use luya\helpers\Html;
 use luya\helpers\Url;
 use WhichBrowser\Parser;
@@ -50,6 +51,7 @@ use WhichBrowser\Parser;
  * @property string|null $login_2fa_backup_key {@since 3.0.0}
  * @property string|null $password_verification_token {@since 3.0.0}
  * @property int|null $password_verification_token_timestamp {@since 3.0.0}
+ * @property Group[] $groups Expand groups for this user
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -234,6 +236,11 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['firstname', 'lastname', 'password', 'password_salt', 'cookie_token', 'api_allowed_ips', 'login_2fa_secret', 'login_2fa_backup_key'], 'string', 'max' => 255],
             [['email'], 'email'],
             [['email'], 'unique', 'except' => ['login']],
+            [['email'], function ($attribute) {
+                if (self::find()->where(['email' => $this->$attribute])->exists()) {
+                    $this->addError($attribute, Module::t('user_model_email_deleted_account_exists'));
+                }
+            }, 'except' => ['login']],
             [['auth_token'], 'unique'],
             [['settings'], 'string'],
             [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'is_request_logger_enabled', 'password_verification_token', 'password_verification_token_timestamp'], 'integer'],
@@ -401,7 +408,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function extraFields()
     {
-        return ['groups', 'lastloginTimestamp'];
+        return array_unique(array_merge(['groups', 'lastloginTimestamp'], parent::extraFields()));
     }
 
     /**
@@ -542,8 +549,18 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         if (empty($token) || !is_scalar($token)) {
             throw new InvalidArgumentException("The provided access token is invalid.");
         }
+
+        $event = new UserAccessTokenLoginEvent();
+        $event->type = $type;
+        $event->token = $token;
+        Yii::$app->trigger(Module::EVENT_USER_ACCESS_TOKEN_LOGIN, $event);
+
+        if ($event->user) {
+            $user = $event->user;
+        } else {
+            $user = static::findOne(['auth_token' => $token]);
+        }
         
-        $user = static::findOne(['auth_token' => $token]);
         // if the given user can be found, udpate the api last activity timestamp.
         if ($user) {
             $user->updateAttributes(['api_last_activity' => time()]);
@@ -561,16 +578,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return $this->id;
     }
-
-    /**
-     * @inheritdoc
-     */
-    /*
-    public function getAuthToken()
-    {
-        return $this->auth_token;
-    }
-    */
 
     /**
      * @inheritdoc

@@ -10,7 +10,12 @@ namespace luya\admin\apis;
 class QueueLogErrorController extends \luya\admin\ngrest\base\Api
 {
     /**
-     * @var string The path to the model which is the provider for the rules and fields.
+     * {@inheritDoc}
      */
     public $modelClass = 'luya\admin\models\QueueLogError';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $truncateAction = true;
 }

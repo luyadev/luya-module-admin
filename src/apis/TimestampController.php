@@ -6,7 +6,6 @@ use Yii;
 use luya\admin\models\UserOnline;
 use luya\admin\base\RestController;
 use luya\traits\CacheableTrait;
-use luya\admin\models\Config;
 use luya\admin\models\UserAuthNotification;
 
 /**
@@ -22,6 +21,7 @@ class TimestampController extends RestController
     /**
      * The timestamp action provider informations about currenct only users and if the ui needs to be refreshed.
      *
+     * @uses integer $lastKeyStroke
      * @return array
      */
     public function actionIndex()

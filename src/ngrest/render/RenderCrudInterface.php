@@ -72,14 +72,14 @@ interface RenderCrudInterface
     public function getModelSelection();
     
     /**
-     * Optional defintions for settings button. Those definitions are made in the ngrest crud controller.
+     * Optional definitions for settings button. Those definitions are made in the ngrest crud controller.
      *
      * @param array $buttons
      */
     public function setSettingButtonDefinitions(array $buttons);
     
     /**
-     * Get an array with additionals button defintions.
+     * Get an array with additionals button definitions.
      *
      * @return array
      */

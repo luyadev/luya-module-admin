@@ -178,7 +178,7 @@ class Storage
      * @param string $fileName The filename identifier key in order to find the file based on the locale files system.
      * @param string $newFileSource The path to the new file which is going to have the same name as the old file e.g. `path/of/new.jpg`.  $_FILES['tmp_name']
      * @param string $newFileName The new name of the file which is uploaded, mostly given from $_FILES['name']
-     * @return boolean Whether moving was successfull or not.
+     * @return boolean Whether moving was successful or not.
      */
     public static function replaceFile($fileName, $newFileSource, $newFileName)
     {

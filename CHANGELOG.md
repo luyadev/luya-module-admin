@@ -3,10 +3,47 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.2.0
+## 3.3.3
 
++ [#529](https://github.com/luyadev/luya-module-admin/pull/529) Fixed an issue with OpenApi path params.
++ [#527](https://github.com/luyadev/luya-module-admin/issues/527) Fixed a bug where deleted user emails where not validated when save or update an existing user account.
+
+## 3.3.2 (28. June 2020)
+
++ [#522](https://github.com/luyadev/luya-module-admin/issues/522) Fixed issue with not normalized attribute types in OpenApi file.
++ [#523](https://github.com/luyadev/luya-module-admin/issues/523) Fixed a bug where an empty options array in Angular Helper class leads into an error while setting the default $scope.model state in Radio Buttons.
++ [#520](https://github.com/luyadev/luya-module-admin/issues/520) Checking class existance in getDiffCount() method in order to ensure, a row badge is only handled when the class exists. This might be a problem if a module has been removed but the notification information still persists.
+
+## 3.3.1 (17. June 2020)
+
++ [#497](https://github.com/luyadev/luya-module-admin/issues/497) Do not render the dropdown values in `luyaSelect` until the dropdown is expanded. 
++ [#519](https://github.com/luyadev/luya-module-admin/pull/519) Use `@method` PhpDoc to override Yii Framework defined actions in `actions()` method, otherwise those will always have the same Summary and Description Text in the OpenApi file.
++ [#517](https://github.com/luyadev/luya-module-admin/pull/517) Fix problem with OpenApi generator URL tokens like `<identifier:[a-z0-9]+>` which are now rendered correctly as `<identifier>`
++ [#515](https://github.com/luyadev/luya-module-admin/pull/515) If property `luya\admin\ngrest\base\Api::$filterSearchModelClass` is defined, the filter model will be taken into account for `filter` request param.
++ [#511](https://github.com/luyadev/luya-module-admin/issues/511) Fixed a bug where OpenApi IndexAction should return an array instead of an object.
++ [#512](https://github.com/luyadev/luya-module-admin/pull/512) Fixed a bug with multiple input types and zaaLink directives (none unique elements).
++ [#510](https://github.com/luyadev/luya-module-admin/pull/510) Fixed regression from issue [#459](https://github.com/luyadev/luya-module-admin/issues/459) regarding user change history active window.
+
+## 3.3.0 (26. Mai 2020)
+
++ [#503](https://github.com/luyadev/luya-module-admin/pull/503) An option to assign defined `yii\web\UrlRule` into the `luya\admin\openapi\Generator`.
++ [#501](https://github.com/luyadev/luya-module-admin/pull/501) Implement PhpDoc `@uses` for handling OpenApi request body informations when verb type is `POST`.
++ [#500](https://github.com/luyadev/luya-module-admin/pull/500) Trigger an event (eventUserAccessTokenLogin) when an access token is requesting for a login.
++ [#499](https://github.com/luyadev/luya-module-admin/pull/499) Added missing RU translations.
++ [#489](https://github.com/luyadev/luya-module-admin/issues/489) Hide default LUYA NgRest CRUD actions for OpenApi generator. Improve overall performance to generate OpenApi.
+
+## 3.2.0 (29. April 2020)
+
+> This release requires LUYA Core version 1.3 and contains a signature change for a method. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#467](https://github.com/luyadev/luya-module-admin/issues/467) Improve performance of applying multiple filters on an image.
++ [#478](https://github.com/luyadev/luya-module-admin/pull/478) Corrected `implode()` in `ngRestScopes()` in create model command template.
 + [#475](https://github.com/luyadev/luya-module-admin/pull/475) Added new option to return a none empty tag title.
 + [#476](https://github.com/luyadev/luya-module-admin/pull/476) Ensure importers skip objects which are not of the certain type. This is importend when a folder is used for other data.
++ [#459](https://github.com/luyadev/luya-module-admin/issues/459) New dropdown option to truncate the whole model data, if enabled.
++ [#284](https://github.com/luyadev/luya-module-admin/issues/284) Added initvalue option for zaaRadio directive.
++ [#349](https://github.com/luyadev/luya-module-admin/issues/349) Option to include ApiUsers log entries into the admin dashboard.
++ [#466](https://github.com/luyadev/luya-module-admin/issues/466) New view for all images which are generated from files applying a filter.
 
 ## 3.1.0 (24. March 2020)
 

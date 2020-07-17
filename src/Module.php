@@ -42,9 +42,17 @@ use yii\queue\db\Command;
 final class Module extends \luya\admin\base\Module implements CoreModuleInterface
 {
     /**
-     * This event gets trigger before some trys to download a file.
+     * This event is triggered when an access token is trying to login. 
+     * 
+     * @var string User login by Access-Token event. 
+     * @since 3.3.0
+     */
+    const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
+
+    /**
+     * This event is triggered before a file is downloaded through the {{luya\admin\controllers\FileController}}.
      *
-     * @var string Event Name
+     * @var string Before File Download Event
      */
     const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
     
@@ -83,7 +91,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     ];
     
     /**
-     * @array Provide dashboard objects from last user logins.
+     * @var array Provide dashboard objects from last user logins.
      */
     public $dashboardObjects = [
         [
@@ -225,6 +233,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $apiUserAllowActionsWithoutPermissions = false;
 
     /**
+     * @var boolean Whether the api user log entries should be display in the module dashboard or not. This is disabled by default as ApiUsers might
+     * create and update a lot of data.
+     * @since 3.2.0 
+     */
+    public $dashboardLogDisplayApiUserData = false;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
@@ -255,13 +270,28 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-config' => 'luya\admin\apis\ConfigController',
         'api-admin-queuelog' => 'luya\admin\apis\QueueLogController',
         'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
+        'api-admin-ngrestlog' => 'luya\admin\apis\NgrestLogController',
+        'api-admin-storageimage' => 'luya\admin\apis\StorageImageController',
+    ];
+
+    public $apiRules = [
+        'api-admin-timestamp' => [
+            'patterns' => [
+                'POST' => 'index',
+            ]
+        ],
+        'api-admin-user' => [
+            'extraPatterns' => [
+                'POST change-password' => 'change-password',
+            ]
+        ]
     ];
 
     /**
      * @var array An array with all apis from every module, this property is assigned by the {{luya\web\Bootstrap::run()}} method.
      * @since 1.2.2
      */
-    public $apiDefintions = [];
+    public $apiDefintions = []; // typo...
     
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
@@ -273,6 +303,19 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      */
     public $moduleMenus = [];
     
+    /**
+     * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI definition for current LUYA System (including all registered modules) or not.
+     * @since 3.2.0
+     */
+    public $publicOpenApi = false;
+
+    /**
+     * @var array An array with filter conditions, see {{luya\admin\openapi\Generator::$filterPaths}} for more detailes
+     * @since 3.2.0
+     * @see {{luya\admin\openapi\Generator::$filterPaths}}
+     */
+    public $filterOpenApiPaths = [];
+
     /**
      * @inheritDoc
      */
@@ -356,7 +399,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'ngrest_select_no_selection', 'js_ngrest_toggler_success', 'js_filemanager_count_files_overlay', 'js_link_set_value', 'js_link_not_set', 'js_link_change_value', 'aws_changepassword_succes', 'js_account_update_profile_success', 'layout_filemanager_remove_dir_not_empty',
             'ngrest_button_delete', 'layout_btn_reload', 'js_dir_manager_rm_file_confirm_title', 'ngrest_crud_search_text', 'js_dir_manager_rm_folder_confirm_title', 'js_pagination_page', 'js_dir_manager_rename_success',
             'js_scheduler_show_datepicker', 'js_scheduler_new_value', 'js_scheduler_time', 'js_scheduler_save', 'js_scheduler_title_upcoming', 'js_scheduler_title_completed', 'js_scheduler_table_newvalue', 'js_scheduler_table_timestamp', 'js_dir_manager_file_replace_ok',
-            'js_jsonobject_newkey', 'menu_dashboard', 'file_caption_success',
+            'js_jsonobject_newkey', 'menu_dashboard', 'file_caption_success', 'ngrest_delete_all_button_confirm_message', 'ngrest_delete_all_button_label',
             // cropping
             'crop_source_image', 'crop_preview', 'crop_btn_as_copy', 'crop_btn_as_copy_hint', 'crop_btn_save_copy', 'crop_btn_save_replace','crop_size_free','crop_size_1to1','crop_size_desktop','crop_size_mobile', 'crop_success', 'crop_quality_high', 'crop_quality_medium', 'crop_quality_low'
         ];
@@ -464,15 +507,18 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
-                    ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
                     ->itemApi('menu_system_queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
+                ->group('menu_group_log')
                     ->itemApi('menu_system_queue_errors', 'admin/queue-log-error/index', 'bug_report', 'api-admin-queuelogerror')
-                ->group('menu_group_images')
-                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect')
-                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
+                    ->itemApi('menu_system_logger', 'admin/logger/index', 'notifications', 'api-admin-logger')
+                    ->itemApi('menu_system_model_event_log', 'admin/ngrest-log/index', 'archive', 'api-admin-ngrestlog')
                 ->group('menu_group_contentproxy')
                     ->itemApi('menu_group_contentproxy_machines', 'admin/proxy-machine/index', 'devices', 'api-admin-proxymachine')
-                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild');
+                    ->itemApi('menu_group_contentproxy_builds', 'admin/proxy-build/index', 'import_export', 'api-admin-proxybuild')
+                ->group('menu_group_storage')
+                    ->itemApi('menu_images_item_images', 'admin/storage-image/index', 'photo', 'api-admin-storageimage')
+                    ->itemApi('menu_images_item_filters', 'admin/filter/index', 'adjust', 'api-admin-filter')
+                    ->itemApi('menu_images_item_effects', 'admin/effect/index', 'blur_circular', 'api-admin-effect');
     }
 
     /**

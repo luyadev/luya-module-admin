@@ -7,9 +7,12 @@ use luya\Boot;
 use luya\Exception;
 use luya\admin\models\UserOnline;
 use luya\rest\Controller;
+use luya\admin\openapi\Generator;
+use luya\admin\openapi\OpenApiGenerator;
+use yii\web\ForbiddenHttpException;
 
 /**
- * Remove API, allows to collect system data with a valid $token.
+ * Remote API, allows to collect system data with a valid $token.
  *
  * The remote api can only access with the oken but is not secured by a loggged in user.
  *
@@ -29,6 +32,46 @@ class RemoteController extends Controller
     }
 
     /**
+     * Verify the remote token, if enabled.
+     *
+     * @param string $token
+     * @throws ForbiddenHttpException
+     */
+    protected function verifyToken($token)
+    {
+        if (empty(Yii::$app->remoteToken) || sha1(Yii::$app->remoteToken) !== $token) {
+            throw new ForbiddenHttpException('The provided remote token is wrong.');
+        }
+    }
+
+    /**
+     * Generate OpenApi Json File.
+     *
+     * You can either enable {{luya\module\Admin::$publicOpenApi}} or provider the {{luya\web\Application::$remoteToken}} to get
+     * an on-the-fly generated Json formated Open Api file.
+     *
+     * @param string $token The remote token to view the api.
+     * @return array The OpenApi Json Data.
+     * @since 3.2.0
+     */
+    public function actionOpenapi($token = null)
+    {
+        if ($token) {
+            $this->verifyToken($token);
+        } elseif (!$this->module->publicOpenApi) {
+            throw new ForbiddenHttpException("Rendering openApi is disabled by the module.");
+        }
+        $generator = new Generator(Yii::$app->urlManager, $this->module->controllerMap);
+        $generator->filterPaths = $this->module->filterOpenApiPaths;
+        $generator->controllerMapEndpointPrefix = 'admin/';
+
+        $openapi = new OpenApiGenerator($generator);
+
+        // always return as json
+        return $this->asJson($openapi->create()->getSerializableData());
+    }
+
+    /**
      * Retrieve administration informations if the token is valid.
      *
      * @param string $token The sha1 encrypted access token.
@@ -37,9 +80,7 @@ class RemoteController extends Controller
      */
     public function actionIndex($token)
     {
-        if (empty(Yii::$app->remoteToken) || sha1(Yii::$app->remoteToken) !== $token) {
-            throw new Exception('The provided remote token is wrong.');
-        }
+        $this->verifyToken($token);
         
         UserOnline::clearList($this->module->userIdleTimeout);
 

@@ -98,7 +98,7 @@ class NgRestActiveQuery extends ActiveQuery
     }
 
     /**
-     * Generate a pool where condition for a given ngRestPools() defintion.
+     * Generate a pool where condition for a given ngRestPools() definition.
      *
      * The defined pool must exists in the list of {{luya\admin\ngrest\base\NgRestModel::ngRestPools()}}. If not found
      * the where condition will not be added. If $exception is enabled an exception will be thrown when the pool identifier

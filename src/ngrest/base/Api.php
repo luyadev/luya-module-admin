@@ -85,6 +85,12 @@ class Api extends RestActiveController
      * @since 1.2.3
      */
     public $cacheDependency;
+
+    /**
+     * @var boolean If enabled, the truncate action is attached to the API. In order to run the truncate action the delete permission is required.
+     * @since 3.2.0
+     */
+    public $truncateAction = false;
     
     /**
      * @inheritdoc
@@ -110,14 +116,14 @@ class Api extends RestActiveController
         ]);
 
         $this->addActionPermission(Auth::CAN_DELETE, [
-            'delete',
+            'delete', 'truncate',
         ]);
     }
     
     /**
      * Auto add those relations to queries.
      *
-     * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefintion in order to define
+     * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefinition in order to define
      * which relation should be us when.
      *
      * basic:
@@ -369,9 +375,17 @@ class Api extends RestActiveController
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'options' => [
-                'class' => 'yii\rest\OptionsAction',
+                'class' => 'luya\admin\ngrest\base\actions\OptionsAction',
             ],
         ];
+
+        if ($this->truncateAction) {
+            $actions['truncate'] = [
+                'class' => 'luya\admin\ngrest\base\actions\TruncateAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ];
+        }
         
         if ($this->enableCors) {
             $actions['options']['class'] = 'luya\admin\ngrest\base\actions\OptionsAction';
@@ -472,7 +486,11 @@ class Api extends RestActiveController
     }
     
     /**
+     * User Unlock
+     *
      * Unlock this API for the current logged in user.
+     *
+     * @return void
      */
     public function actionUnlock()
     {
@@ -480,9 +498,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Service Action provides mutliple CRUD informations.
+     * Service Data
      *
-     * @return array
+     * @return array An array with all services information for the given ngrest model.
      */
     public function actionServices()
     {
@@ -535,6 +553,13 @@ class Api extends RestActiveController
         ];
     }
 
+    /**
+     * Toggle Notifications
+     *
+     * @uses integer mute Whether should be muted or not
+     * @return UserAuthNotification The user auth notification model. If model does not exists a new model will be created.
+     * @since 2.0.0
+     */
     public function actionToggleNotification()
     {
         $newMuteState = Yii::$app->request->getBodyParam('mute');
@@ -556,11 +581,12 @@ class Api extends RestActiveController
     }
     
     /**
-     * Generate a response with pagination disabled.
+     * Search
      *
      * Search querys with Pagination will be handled by this action.
      *
-     * @param string $query The search paramter, if empty post will be used.
+     * @uses string $query The search term as post request.
+     * @param string $query The query to lookup the database, if query is empty a post request with `query` can be used instead.
      * @return \yii\data\ActiveDataProvider
      */
     public function actionSearch($query = null)
@@ -581,10 +607,12 @@ class Api extends RestActiveController
     }
 
     /**
-     * Generate an array of sortable attribute defintions from a ngrest config object.
+     * Generate Sort attributes
+     *
+     * Generate an array of sortable attribute definitions from a ngrest config object.
      *
      * @param Config $config The Ngrest Config object
-     * @return array
+     * @return array Returns an array with sortable attributes.
      * @since 2.0.0
      */
     public function generateSortAttributes(Config $config)
@@ -598,7 +626,7 @@ class Api extends RestActiveController
     }
     
     /**
-     * Call the dataProvider for a foreign model.
+     * Get Relation Data
      *
      * @param mixed $arrayIndex
      * @param mixed $id
@@ -655,10 +683,10 @@ class Api extends RestActiveController
     }
     
     /**
-     * Filter the Api response by a defined Filtername.
+     * Filter
      *
-     * @param string $filterName
-     * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
+     * @param string $filterName The filter name to apply.
+     * @param string $query An optional query to search inside the data.
      * @throws InvalidCallException
      * @return \yii\data\ActiveDataProvider
      */
@@ -695,9 +723,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Renders the Callback for an ActiveWindow.
+     * Renders ActiveWindow Callback
      *
-     * @return string
+     * @return string Returns the rendered string from the callback.
      */
     public function actionActiveWindowCallback()
     {
@@ -709,9 +737,9 @@ class Api extends RestActiveController
     }
     
     /**
-     * Renders the index page of an ActiveWindow.
+     * Render ActiveWindow
      *
-     * @return array
+     * @return array An array with content, icon, label, title and requestDate
      */
     public function actionActiveWindowRender()
     {
@@ -733,9 +761,12 @@ class Api extends RestActiveController
     }
 
     /**
-     * Export the Data into a temp CSV.
+     * Export Data
      *
-     * @return array
+     * @uses integer header Whether header should be exported or not
+     * @uses string type The type csv oder xlsx
+     * @uses array attributes A list of attributes to export
+     * @return array An array with the key `url` which contains the download path to the file
      * @throws ErrorException
      */
     public function actionExport()
@@ -795,11 +826,11 @@ class Api extends RestActiveController
     }
 
     /**
-     * Trigger an Active Button handler.
+     * Active Button
      *
      * @param string $hash The hash from the class name.
      * @param string|integer $id
-     * @return void
+     * @return array|boolean
      * @since 1.2.3
      */
     public function actionActiveButton($hash, $id)

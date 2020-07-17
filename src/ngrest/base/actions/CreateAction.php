@@ -3,7 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 /**
- * CreateAction for REST implementation.
+ * Create
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

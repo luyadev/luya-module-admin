@@ -4,6 +4,7 @@ use luya\admin\Module;
 use luya\admin\helpers\Angular;
 use luya\helpers\ArrayHelper;
 use luya\helpers\Json;
+use yii\helpers\Markdown;
 
 /** @var $config \luya\admin\ngrest\ConfigInterface */
 /** @var $this \luya\admin\ngrest\render\RenderCrudView */
@@ -57,6 +58,9 @@ $filters = Angular::optionsArrayInput($filters);
                     </div>
                 </div>
             </div>
+            <?php if ($this->context->description): ?>
+                <p class="text-muted"><?= Markdown::processParagraph($this->context->description); ?></p>
+            <?php endif; ?>
         <?php endif; ?>
         <ul class="nav nav-tabs nav-tabs-mobile-icons">
             <li class="nav-item">

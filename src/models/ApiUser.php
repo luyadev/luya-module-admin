@@ -10,7 +10,7 @@ use luya\admin\aws\ApiRequestInsightActiveWindow;
 /**
  * User Model represents all Administration Users.
  *
- * @property integer $id
+ * @property integer $id User Primary Key
  * @property string $firstname
  * @property string $lastname
  * @property integer $title
