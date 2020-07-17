@@ -31,6 +31,14 @@ class NgRestModelTest extends AdminTestCase
         $this->assertArrayHasKey('NgRestEventBehavior', $behaviors);
         $this->assertArrayHasKey('LogBehavior', $behaviors);
     }
+    
+    public function testQueryBehaviorsAreAttached()
+    {
+        $query = TestNgRestModel::find();
+        $behaviors = $query->behaviors;
+        
+        $this->assertArrayHasKey('DummyBehavior', $behaviors);
+    }
 
     public function testGenericSearchFields()
     {
