@@ -110,10 +110,24 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
     
     /**
-     * Attach behaviours to ever new {\luya\admin\ngrest\base\NgRestActiveQuery} on find() and ngRestFind().
+     * Attach behaviours to every new {{\luya\admin\ngrest\base\NgRestActiveQuery}} on find() and ngRestFind().
+     * Returns a list of behaviors that the query component should behave as.
+     *
+     * The return value of this method should be an array of behavior objects or configurations
+     * indexed by behavior names. A behavior configuration can be either a string specifying
+     * the behavior class or an array of the following structure:
+     *
+     * ```php
+     * 'behaviorName' => [
+     *     'class' => 'BehaviorClass',
+     *     'property1' => 'value1',
+     *     'property2' => 'value2',
+     * ]
+     * ```
+     * @see {{\yii\base\Component::behaviors}}
      *
      * @return array
-     * @since 3.3.3
+     * @since 3.4.0
      */
     public static function findBehaviors()
     {
