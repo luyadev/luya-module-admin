@@ -132,6 +132,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * After attaching this behavior, it can be used like `MyModel::find()->active()->one()`.
      *
+     * > Whenever possible, directly create a custom Active Query, as it provices full IDE support. The behavior
+     * > does not, the example above will even show an IDE error because the mmethod `andWhere()` does not exsist
+     * > in the yii\base\Behavior class.
+     *
      * The return value of this method should be an array of behavior objects or configurations
      * indexed by behavior names. A behavior configuration can be either a string specifying
      * the behavior class or an array of the following structure:
