@@ -152,7 +152,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @return array
      * @since 3.4.0
      */
-    public static function findBehaviors()
+    public static function findActiveQueryBehaviors()
     {
         return [];
     }
@@ -166,7 +166,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $config = [];
     
-        foreach (static::findBehaviors() as $name => $class) {
+        foreach (static::findActiveQueryBehaviors() as $name => $class) {
             $config['as ' . $name] = $class;
         }
     
