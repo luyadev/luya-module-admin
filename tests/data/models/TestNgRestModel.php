@@ -23,7 +23,7 @@ class TestNgRestModel extends NgRestModel
         return 'foo-bar';
     }
     
-    public static function findBehaviors()
+    public static function findActiveQueryBehaviors()
     {
         return [
             'DummyBehavior' => StubBehavior::class
