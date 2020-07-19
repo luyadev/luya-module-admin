@@ -110,8 +110,27 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
     
     /**
+     * Attach behaviors to the Active Query.
+     *
      * Attach behaviours to every new {{\luya\admin\ngrest\base\NgRestActiveQuery}} on find() and ngRestFind().
      * Returns a list of behaviors that the query component should behave as.
+     *
+     * As behavior methods can be access from the inner class, use full functions can be used inside the active query.
+     * It also enables the option to share standardized behaviors with functions (conditions), for example a soft delete condition.
+     *
+     * A behavior example
+     *
+     * ```php
+     * class MySuperBehavioir extends yii\base\Behavior
+     * {
+     *     public function active($isActive = true)
+     *     {
+     *          return $this->andWhere(['is_active' => $isActive]);
+     *     }
+     * }
+     * ```
+     *
+     * After attaching this behavior, it can be used like `MyModel::find()->active()->one()`.
      *
      * The return value of this method should be an array of behavior objects or configurations
      * indexed by behavior names. A behavior configuration can be either a string specifying
