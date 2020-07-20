@@ -110,13 +110,67 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
     
     /**
+     * Attach behaviors to the Active Query.
+     *
+     * Attach behaviours to every new {{\luya\admin\ngrest\base\NgRestActiveQuery}} on find() and ngRestFind().
+     * Returns a list of behaviors that the query component should behave as.
+     *
+     * As behavior methods can be access from the inner class, use full functions can be used inside the active query.
+     * It also enables the option to share standardized behaviors with functions (conditions), for example a soft delete condition.
+     *
+     * A behavior example
+     *
+     * ```php
+     * class MySuperBehavioir extends yii\base\Behavior
+     * {
+     *     public function active($isActive = true)
+     *     {
+     *          return $this->andWhere(['is_active' => $isActive]);
+     *     }
+     * }
+     * ```
+     *
+     * After attaching this behavior, it can be used like `MyModel::find()->active()->one()`.
+     *
+     * > Whenever possible, directly create a custom Active Query, as it provices full IDE support. The behavior
+     * > does not, the example above will even show an IDE error because the mmethod `andWhere()` does not exsist
+     * > in the yii\base\Behavior class.
+     *
+     * The return value of this method should be an array of behavior objects or configurations
+     * indexed by behavior names. A behavior configuration can be either a string specifying
+     * the behavior class or an array of the following structure:
+     *
+     * ```php
+     * 'behaviorName' => [
+     *     'class' => 'BehaviorClass',
+     *     'property1' => 'value1',
+     *     'property2' => 'value2',
+     * ]
+     * ```
+     * @see {{\yii\base\Component::behaviors}}
+     *
+     * @return array
+     * @since 3.4.0
+     */
+    public static function findActiveQueryBehaviors()
+    {
+        return [];
+    }
+    
+    /**
      * {@inheritdoc}
      *
      * @return NgRestActiveQuery
      */
     public static function find()
     {
-        return new NgRestActiveQuery(get_called_class());
+        $config = [];
+    
+        foreach (static::findActiveQueryBehaviors() as $name => $class) {
+            $config['as ' . $name] = $class;
+        }
+    
+        return new NgRestActiveQuery(get_called_class(), $config);
     }
 
     /**

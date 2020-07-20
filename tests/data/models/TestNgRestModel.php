@@ -2,6 +2,7 @@
 
 namespace admintests\data\models;
 
+use admintests\data\stubs\StubBehavior;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\TaggableActiveWindow;
 
@@ -20,6 +21,13 @@ class TestNgRestModel extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'foo-bar';
+    }
+    
+    public static function findActiveQueryBehaviors()
+    {
+        return [
+            'DummyBehavior' => StubBehavior::class
+        ];
     }
     
     public function rules()
