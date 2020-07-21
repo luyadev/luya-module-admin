@@ -3,14 +3,9 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.4.0
-
-### Added
+## 3.4.0 (21. July 2020)
 
 + [#530](https://github.com/luyadev/luya-module-admin/pull/530) Attach query behaviors in `luya\admin\ngrest\base\NgRestModel::find`.
-
-### Fixed
-
 + [#529](https://github.com/luyadev/luya-module-admin/pull/529) Fixed an issue with OpenApi path params.
 + [#527](https://github.com/luyadev/luya-module-admin/issues/527) Fixed a bug where deleted user emails where not validated when save or update an existing user account.
 
