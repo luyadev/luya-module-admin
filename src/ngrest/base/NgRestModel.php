@@ -941,14 +941,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $fields = $arrayConfig[1];
             
             // parse the third config array elemet as buttonCondition
-            if ( isset($arrayConfig[2] ) && isset($arrayConfig[2]['buttonCondition']) && !empty($arrayConfig[2]['buttonCondition']) ) {
+            if (isset($arrayConfig[2] ) && isset($arrayConfig[2]['buttonCondition']) && !empty($arrayConfig[2]['buttonCondition'])) {
                 if (is_array($arrayConfig[2]['buttonCondition'])) {
                     foreach ($arrayConfig[2]['buttonCondition'] as $field => $value) {
                         $configOptions['buttonCondition'][] = [$scope, sprintf('%s==%s', $field, $value) ];
                         break; // consider only the frist condition
                     }
-                }
-                else {
+                } else {
                     $configOptions['buttonCondition'][] = [$scope, $arrayConfig[2]['buttonCondition'] ];
                 }
                 

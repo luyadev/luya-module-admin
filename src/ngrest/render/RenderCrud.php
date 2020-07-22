@@ -372,7 +372,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * `{field} == true` would return `item.field == true`.
      * 
      * Conditions needs to be defined in the model's ngRestScopes() along with fields definition
-     * indexed by buttonCondition and provide as a string or a [field=>value] array.
+     * indexed by buttonCondition and provided as a string or a [field=>value] array.
      * ```php
      * public function ngRestScopes()
      * {
@@ -381,7 +381,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      *     ]
      * } 
      * ```
-     * 
      * 
      * Conditions may be defined also in the model ngRestConfigOptions() along with other
      * options
@@ -402,32 +401,26 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * This will add an ng-Show = "item.created_by==1" for instance if the logged user is the admin.
      *
      *
-     * @param string $scope The scope aka button context like 'create' or 'update' used in the used
-     * in the model ngRestConfigOptions() definition
+     * @param string $scope The scope aka button context like 'create' or 'update' 
      * @return string Returns the condition with replaced field context like `item.create_id== 1` or  'true'
      * @throws InvalidConfigException
      * @since 1.2.0
      */
     public function getListButtonNgShowCondition($scope)
     {
-
                
         $buttonConditionConfigOption = $this->config->getOption('buttonCondition');
 
         // return true of no condition is defined
         if (empty($buttonConditionConfigOption)){
             return 'true';
-        }
-        // throw exception if configuration is wrong
-        else if ( !is_array($buttonConditionConfigOption) ) {
+        } elseif (!is_array($buttonConditionConfigOption)) { // throw exception if configuration is wrong
             throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition.");
         }
 
-
-
         $buttonCondition = '';
         foreach ($buttonConditionConfigOption as $arrayConfig) {
-            if ( count ($arrayConfig) < 2) {
+            if (count ($arrayConfig) < 2) {
                  throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition. buttonsCondition must be an array with two elements similar to ngRestScopes. Ex. `[ ['update', 'delete'], '{fieldname} == 1'´]`");
             }
 
@@ -440,8 +433,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             }
         }
 
-
-        if ( !$buttonCondition) {
+        if (!$buttonCondition) {
             return 'true';
         }
 
@@ -498,7 +490,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             }
             
             $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.'.$rel['tabLabelAttribute'];
-
+            
             $buttons[] = [
                 'ngShow' => 'true',
                 'ngClick' => 'addAndswitchToTab(item.'.$this->getPrimaryKey().', \''.$api['route'].'\', \''.$rel['arrayIndex'].'\', '.$label.', \''.$rel['modelClass'].'\')',
@@ -537,7 +529,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                 'label' => '',
             ];
         }
-         // do we have an edit button
+        // do we have an edit button
         if (count($this->getFields('update')) > 0 && $this->can(Auth::CAN_UPDATE)) {
             $buttons[] = [
                 'ngShow' => $this->getListButtonNgShowCondition('update'),
