@@ -15,6 +15,7 @@ use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
 use luya\admin\ngrest\Config;
 use luya\helpers\Inflector;
+use \luya\admin\ngrest\base\Plugin;
 
 /**
  * Render the Crud view.
@@ -438,20 +439,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         }
 
         // prepend context to $field if in format '{fieldname}'
-        preg_match_all('/{(.*?)}/', $buttonCondition, $matches, PREG_SET_ORDER);
-        $search = [];
-        $replace = [];
-        foreach ($matches as $match) {
-            $search[] = $match[0];
-            $replace[] = \luya\admin\ngrest\base\Plugin::LIST_CONTEXT_PREFIX  . $match[1];
-        }
-        $buttonCondition = str_replace($search, $replace, $buttonCondition);
-
-
-        return trim($buttonCondition);
+        return Config::getNgCondition(Plugin::LIST_CONTEXT_PREFIX, $buttonCondition);
 
     }
-
+ 
 
     /*
      * OLD

@@ -9,6 +9,7 @@ use luya\admin\ngrest\base\NgRestModel;
 use yii\base\InvalidConfigException;
 use yii\base\BaseObject;
 use luya\admin\ngrest\base\NgRestRelation;
+use luya\helpers\StringHelper;
 
 /**
  * Defines and holds an NgRest Config.
@@ -655,4 +656,65 @@ class Config extends BaseObject implements ConfigInterface
             }
         }
     }
+
+    /**
+     * Extract the context attribute name from the ngModel and replace with given $field name.
+     *
+     * If an empty field value is provided no content will be returned.
+     *
+     * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
+     * @param string $field The new field name to replace with the context field name.
+     * @return string Returns the string with the name field name like `data.create.$field`.
+     * @since 1.2.0
+     */
+    public static function replaceFieldFromNgModelContext($ngModel, $field)
+    {
+        if (empty($field)) {
+            return;
+        }
+
+        // get all keys
+        $parts = explode(".", $ngModel);
+        end($parts);
+        $key = key($parts);
+        // old last $field name
+        $oldField = $parts[$key];
+        if (StringHelper::endsWith($oldField, ']')) {
+            // its an i18n field which has ['en'] suffix, we should extra this and add to $field
+            if (preg_match('/\[.*\]/', $oldField, $matches) === 1) {
+                $field .= $matches[0];
+            }
+        }
+
+        // replace the last key with the new fieldname
+        $parts[$key] = $field;
+
+        return implode(".", $parts);
+    }
+
+    /**
+     * Get the ng-* condition from a given ngModel context.
+     *
+     * Evaluates condition string from a given ngModel context. A condition like
+     * `{field} == true` would return `data.create.field == true` for a ngModel context
+     * equal to data.create.
+     *
+     * @param string $ngModel The ngModel to get the context informations from.
+     * @param string $condition The condition to evaluate
+     * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
+     * @since 1.2.0
+     */
+    public static function getNgCondition($ngModel, $condition)
+    {
+        preg_match_all('/{(.*?)}/', $condition, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = self::replaceFieldFromNgModelContext($ngModel, $match[1]);
+        }
+
+        return trim(str_replace($search, $replace, $condition));
+    }
+
 }
