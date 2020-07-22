@@ -929,6 +929,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function ngRestConfig($config)
     {
+          
+        $configOptions = $this->ngRestConfigOptions();        
+
         foreach ($this->ngRestScopes() as $arrayConfig) {
             if (!isset($arrayConfig[0]) && !isset($arrayConfig[1])) {
                 throw new InvalidConfigException("Invalid ngRestScope definition. Definition must contain an array with two elements: `['create', []]`");
@@ -936,7 +939,21 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             
             $scope = $arrayConfig[0];
             $fields = $arrayConfig[1];
-
+            
+            // parse the third config array elemet as buttonCondition
+            if ( isset($arrayConfig[2] ) && isset($arrayConfig[2]['buttonCondition']) && !empty($arrayConfig[2]['buttonCondition']) ) {
+                if (is_array($arrayConfig[2]['buttonCondition'])) {
+                    foreach ($arrayConfig[2]['buttonCondition'] as $field => $value) {
+                        $configOptions['buttonCondition'][] = [$scope, sprintf('%s==%s', $field, $value) ];
+                        break; // consider only the frist condition
+                    }
+                }
+                else {
+                    $configOptions['buttonCondition'][] = [$scope, $arrayConfig[2]['buttonCondition'] ];
+                }
+                
+            }
+            
             if ($scope == 'delete' || (is_array($scope) && in_array('delete', $scope))) {
                 $config->delete = $fields;
             } else {
@@ -947,9 +964,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         foreach ($this->ngRestActiveWindows() as $windowConfig) {
             $config->aw->load($windowConfig);
         }
-        
-        if (!empty($this->ngRestConfigOptions())) {
-            $config->options = $this->ngRestConfigOptions();
+         
+        if (!empty($configOptions)) {
+            $config->options = $configOptions;
         }
     }
     

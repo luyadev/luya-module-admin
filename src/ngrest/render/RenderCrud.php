@@ -365,6 +365,102 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return "[". implode(",", $output) . "]";
     }
     
+    /**
+     * Get the ng-show condition for a given button
+     *
+     * Evaluates the ng-show condition from a list context. A condition like
+     * `{field} == true` would return `item.field == true`.
+     * 
+     * Conditions needs to be defined in the model's ngRestScopes() along with fields definition
+     * indexed by buttonCondition and provide as a string or a [field=>value] array.
+     * ```php
+     * public function ngRestScopes()
+     * {
+     *     return [
+     *       ['update', ['field1', 'field2', 'field3'], ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ]
+     *     ]
+     * } 
+     * ```
+     * 
+     * 
+     * Conditions may be defined also in the model ngRestConfigOptions() along with other
+     * options
+     * Exemple :
+     *
+     * ```php
+     *    public function ngRestConfigOptions()
+     *    {
+     *        return [
+     *            // ...
+     *            'buttonsCondition' => [
+     *                [ ['update', 'delete'], '{created_by}=='. \Yii::$app->adminuser->id  ],
+     *            ],
+     *        ];
+     *    }
+     * ```
+     * 
+     * This will add an ng-Show = "item.created_by==1" for instance if the logged user is the admin.
+     *
+     *
+     * @param string $scope The scope aka button context like 'create' or 'update' used in the used
+     * in the model ngRestConfigOptions() definition
+     * @return string Returns the condition with replaced field context like `item.create_id== 1` or  'true'
+     * @throws InvalidConfigException
+     * @since 1.2.0
+     */
+    public function getListButtonNgShowCondition($scope)
+    {
+
+               
+        $buttonConditionConfigOption = $this->config->getOption('buttonCondition');
+
+        // return true of no condition is defined
+        if (empty($buttonConditionConfigOption)){
+            return 'true';
+        }
+        // throw exception if configuration is wrong
+        else if ( !is_array($buttonConditionConfigOption) ) {
+            throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition.");
+        }
+
+
+
+        $buttonCondition = '';
+        foreach ($buttonConditionConfigOption as $arrayConfig) {
+            if ( count ($arrayConfig) < 2) {
+                 throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition. buttonsCondition must be an array with two elements similar to ngRestScopes. Ex. `[ ['update', 'delete'], '{fieldname} == 1'´]`");
+            }
+
+            // take the first entry of the array config as the config scope
+            // and check whether it applys to the given scppe
+            $configScope = array_shift($arrayConfig);
+            if ($configScope == $scope || (is_array($configScope) && in_array($scope, $configScope))) {
+                $buttonCondition = array_shift($arrayConfig);
+                break;
+            }
+        }
+
+
+        if ( !$buttonCondition) {
+            return 'true';
+        }
+
+        // prepend context to $field if in format '{fieldname}'
+        preg_match_all('/{(.*?)}/', $buttonCondition, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = \luya\admin\ngrest\base\Plugin::LIST_CONTEXT_PREFIX  . $match[1];
+        }
+        $buttonCondition = str_replace($search, $replace, $buttonCondition);
+
+
+        return trim($buttonCondition);
+
+    }
+
+
     /*
      * OLD
      */
@@ -402,8 +498,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             }
             
             $label = empty($rel['tabLabelAttribute']) ? "'{$rel['label']}'" : 'item.'.$rel['tabLabelAttribute'];
-            
+
             $buttons[] = [
+                'ngShow' => 'true',
                 'ngClick' => 'addAndswitchToTab(item.'.$this->getPrimaryKey().', \''.$api['route'].'\', \''.$rel['arrayIndex'].'\', '.$label.', \''.$rel['modelClass'].'\')',
                 'icon' => 'chrome_reader_mode',
                 'label' => $rel['label'],
@@ -414,6 +511,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             // get all activeWindows assign to the crud
             foreach ($this->getActiveWindows() as $hash => $config) {
                 $buttons[] = [
+                    'ngShow' => 'true',
                     'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
                     'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
                     'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
@@ -422,6 +520,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             // add active buttons.
             foreach ($this->config->getActiveButtons() as $btn) {
                 $buttons[] = [
+                    'ngShow' => 'true',
                     'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",
                     'icon' => $btn['icon'],
                     'label' => $btn['label'],
@@ -432,14 +531,16 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         // check if deletable is enabled
         if ($this->config->isDeletable() && $this->can(Auth::CAN_DELETE)) {
             $buttons[] = [
+                'ngShow' => $this->getListButtonNgShowCondition('delete'),
                 'ngClick' => 'deleteItem('.$this->getCompositionKeysForButtonActions('item').')',
                 'icon' => 'delete',
                 'label' => '',
             ];
         }
-        // do we have an edit button
+         // do we have an edit button
         if (count($this->getFields('update')) > 0 && $this->can(Auth::CAN_UPDATE)) {
             $buttons[] = [
+                'ngShow' => $this->getListButtonNgShowCondition('update'),
                 'ngClick' => 'toggleUpdate('.$this->getCompositionKeysForButtonActions('item').')',
                 'icon' => 'mode_edit',
                 'label' => '',
