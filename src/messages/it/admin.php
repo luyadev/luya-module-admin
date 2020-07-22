@@ -521,7 +521,7 @@ return [
     'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
     'menu_group_storage' => 'Storage',
 
-// 3.3.3
+// 3.4.0
 
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 ];

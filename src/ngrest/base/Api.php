@@ -123,6 +123,8 @@ class Api extends RestActiveController
     /**
      * Auto add those relations to queries.
      *
+     * > The relation will only eager load when available in **expand** get params. `?expand=user` f.e.
+     * 
      * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefinition in order to define
      * which relation should be us when.
      *
@@ -158,8 +160,8 @@ class Api extends RestActiveController
     /**
      * Get the relations for the corresponding action name.
      *
-     * Since version 1.2.3 it also checks if the $expand get param is provided for the given relations, otherwise
-     * the relation will not be joined trough `with`. This reduces the database querie time.
+     * > Since version 1.2.3 it also checks if the $expand get param is provided for the given relations, otherwise
+     * > the relation will not be joined trough `with`. This reduces the database querie time.
      *
      * @param string $actionName The action name like `index`, `list`, `search`, `relation-call`.
      * @return array An array with relation names.
@@ -167,8 +169,6 @@ class Api extends RestActiveController
      */
     public function getWithRelation($actionName)
     {
-        $rel = $this->withRelations();
-        
         $expand = Yii::$app->request->get('expand', null);
         $relationPrefixes = [];
         foreach (StringHelper::explode($expand, ',', true, true) as $relation) {
@@ -176,19 +176,21 @@ class Api extends RestActiveController
             $relationPrefixes[] = current(explode(".", $relation));
         }
 
-        // no expand param found, return empty join with array.
+        // no expand param found, return empty array which means no relations to load
         if (empty($relationPrefixes)) {
             return [];
         }
 
-        foreach ($rel as $relationName) {
+        $withRelations = $this->withRelations();
+
+        foreach ($withRelations as $relationName) {
             // it seem to be the advance strucutre for given actions.
-            if (is_array($relationName) &&  isset($rel[$actionName])) {
-                return $this->relationsFromExpand($rel[$actionName], $relationPrefixes);
+            if (is_array($relationName) && isset($withRelations[$actionName])) {
+                return $this->relationsFromExpand($withRelations[$actionName], $relationPrefixes);
             }
         }
         // simple structure
-        return $this->relationsFromExpand($rel, $relationPrefixes);
+        return $this->relationsFromExpand($withRelations, $relationPrefixes);
     }
 
     /**

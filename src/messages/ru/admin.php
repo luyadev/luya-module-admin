@@ -535,7 +535,7 @@ return [
     'filter_controller_description' => 'Фильтры используются для создания разных (например, масштабированных или кадрированных) версий изображения. Прочтите [руководство по фильтрам изображений](https://luya.io/guide/app-filters), чтобы узнать, как создавать свои собственные фильтры.',
     'menu_group_storage' => 'Хранилище',
 
-// 3.3.3
+// 3.4.0
 
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 ];
