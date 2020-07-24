@@ -57,6 +57,7 @@ class ActiveRecordToSchema
         if (empty($fields)) {
             $fields = $this->activeRecord->attributes();
         }
+        
         foreach ($fields as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
         }
