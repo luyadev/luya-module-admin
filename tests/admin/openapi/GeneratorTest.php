@@ -131,6 +131,7 @@ class GeneratorTest extends AdminModelTestCase
     {
         $this->createAdminLangFixture();
         $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
         $spec = new ControllerSpecs(new UserController('user', $this->app));
 
         $model = new User();
@@ -138,39 +139,43 @@ class GeneratorTest extends AdminModelTestCase
         $ars = new ActiveRecordToSchema($spec, $model);
 
         $props = $ars->getProperties();
-
         $this->assertSame([
             'id',
+            'title',
             'firstname',
             'lastname',
-            'title',
             'email',
+            'is_deleted',
+            'is_api_user',
+            'api_last_activity',
+            'auth_token',
+            'is_request_logger_enabled',
+            'email_verification_token_timestamp',
+            'login_attempt_lock_expiration',
+            'login_attempt',
+            'email_verification_token',
+            'api_allowed_ips',
+            'api_rate_limit',
+            'cookie_token',
+            'settings',
+            'force_reload',
+            'secure_token_timestamp',
+            'secure_token',
             'password',
             'password_salt',
-            'auth_token',
-            'is_deleted',
-            'secure_token',
-            'secure_token_timestamp',
-            'force_reload',
-            'settings',
-            'setting',
-            'is_api_user',
-            'api_rate_limit',
-            'api_allowed_ips',
-            'api_last_activity',
-            'email_verification_token',
-            'email_verification_token_timestamp',
-            'login_attempt',
-            'login_attempt_lock_expiration',
-            'is_request_logger_enabled',
             'login_2fa_enabled',
             'login_2fa_secret',
             'login_2fa_backup_key',
             'password_verification_token',
             'password_verification_token_timestamp',
-            'groups'
+            'setting',
+            'groups',
         ], array_keys($props));
 
-        $this->assertSame('asdf', $props['groups']->items);
+        $groupModelKeys = array_keys($ars->createSchema('groups')->items->properties);
+
+        $this->assertSame([
+            'id', 'name', 'text', 'is_deleted', 'users',
+        ], $groupModelKeys);
     }
 }
