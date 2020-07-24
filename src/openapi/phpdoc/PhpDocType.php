@@ -69,7 +69,7 @@ class PhpDocType
 
     public function getIsArray()
     {
-        return StringHelper::contains('[]', $this->name) || in_array($this->name, [
+        return StringHelper::contains('[]', $this->rawName) || in_array($this->name, [
             'array',
             'iterable',
         ]);
