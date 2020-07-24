@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 3.4.1
 
 + [#534](https://github.com/luyadev/luya-module-admin/pull/534) Using `fields()` when working with ActiveRecords as it represents the REST resource information. 
++ [#533](https://github.com/luyadev/luya-module-admin/pull/533) Fixed a bug where OpenApi property relations won't expand.
 
 ## 3.4.0 (21. July 2020)
 
