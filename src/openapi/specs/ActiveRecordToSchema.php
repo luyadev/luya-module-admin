@@ -52,15 +52,24 @@ class ActiveRecordToSchema
     public function getProperties($phpDocProperties = true)
     {
         $properties = [];
-        $fields = array_keys($this->activeRecord->fields());
-
-        if (empty($fields)) {
-            $fields = $this->activeRecord->attributes();
+        $attributeFields = [];
+        
+        $fields = $this->activeRecord->fields();
+        if (!empty($fields)) {
+            foreach ($fields as $key => $value) {
+                if (is_numeric($key)) {
+                    $attributeFields[] = $value;
+                } else {
+                    $attributeFields[] = $key;
+                }
+            }
+        } else {
+            $attributeFields = $this->activeRecord->attributes();
         }
         
-        foreach ($fields as $attributeName) {
+        foreach ($attributeFields as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
-        }
+        }     
 
         if ($phpDocProperties) {
             foreach ($this->phpDocParser->getProperties() as $prop) {
