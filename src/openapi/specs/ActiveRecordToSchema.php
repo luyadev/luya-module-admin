@@ -52,7 +52,13 @@ class ActiveRecordToSchema
     public function getProperties($phpDocProperties = true)
     {
         $properties = [];
-        foreach ($this->activeRecord->attributes() as $attributeName) {
+        $fields = array_keys($this->activeRecord->fields());
+
+        if (empty($fields)) {
+            $fields = $this->activeRecord->attributes();
+        }
+        
+        foreach ($fields as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
         }
 
