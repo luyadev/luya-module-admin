@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.4.1
+
++ [#533](https://github.com/luyadev/luya-module-admin/pull/533) Fixed a bug where OpenApi property relations won't expand.
+
 ## 3.4.0 (21. July 2020)
 
 + [#530](https://github.com/luyadev/luya-module-admin/pull/530) Attach query behaviors in `luya\admin\ngrest\base\NgRestModel::find`.
