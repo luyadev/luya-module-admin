@@ -3,6 +3,7 @@
 namespace luya\admin\tests\admin\openapi;
 
 use admintests\AdminModelTestCase;
+use luya\admin\apis\UserController;
 use luya\admin\models\Config;
 use luya\admin\models\Logger;
 use luya\admin\models\NgrestLog;
@@ -14,7 +15,10 @@ use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageImage;
+use luya\admin\models\User;
 use luya\admin\openapi\Generator;
+use luya\admin\openapi\specs\ActiveRecordToSchema;
+use luya\admin\openapi\specs\ControllerSpecs;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\UrlManager;
@@ -121,5 +125,52 @@ class GeneratorTest extends AdminModelTestCase
         $generator->assignUrlRule('admin/account/dashboard', 'POST', 'endpointname');
 
         $this->assertSame(['/this/is/my/pattern'], array_keys($generator->getPaths()));
+    }
+
+    public function testModelResponse()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $spec = new ControllerSpecs(new UserController('user', $this->app));
+
+        $model = new User();
+
+        $ars = new ActiveRecordToSchema($spec, $model);
+
+        $props = $ars->getProperties();
+
+        $this->assertSame([
+            'id',
+            'firstname',
+            'lastname',
+            'title',
+            'email',
+            'password',
+            'password_salt',
+            'auth_token',
+            'is_deleted',
+            'secure_token',
+            'secure_token_timestamp',
+            'force_reload',
+            'settings',
+            'setting',
+            'is_api_user',
+            'api_rate_limit',
+            'api_allowed_ips',
+            'api_last_activity',
+            'email_verification_token',
+            'email_verification_token_timestamp',
+            'login_attempt',
+            'login_attempt_lock_expiration',
+            'is_request_logger_enabled',
+            'login_2fa_enabled',
+            'login_2fa_secret',
+            'login_2fa_backup_key',
+            'password_verification_token',
+            'password_verification_token_timestamp',
+            'groups'
+        ], array_keys($props));
+
+        $this->assertSame('asdf', $props['groups']->items);
     }
 }
