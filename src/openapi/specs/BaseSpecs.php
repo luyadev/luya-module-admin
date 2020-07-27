@@ -8,6 +8,8 @@ use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\Response;
 use cebe\openapi\spec\Schema;
 use luya\admin\ngrest\base\Api;
+use luya\admin\openapi\events\PathParametersEvent;
+use luya\admin\openapi\Generator;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use luya\admin\openapi\phpdoc\PhpDocType;
 use luya\helpers\ObjectHelper;
@@ -16,6 +18,7 @@ use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;
 use yii\base\Controller;
+use yii\base\Event;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -116,7 +119,7 @@ abstract class BaseSpecs implements SpecInterface
 
         if (ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false)) {
             // fields
-            $params[] = new Parameter([
+            $params['fields'] = new Parameter([
                 'name' => 'fields',
                 'in' => 'query',
                 'required' => false,
@@ -135,7 +138,7 @@ abstract class BaseSpecs implements SpecInterface
             }
 
             // expand
-            $params[] = new Parameter([
+            $params['expand'] = new Parameter([
                 'name' => 'expand',
                 'in' => 'query',
                 'required' => false,
@@ -145,7 +148,7 @@ abstract class BaseSpecs implements SpecInterface
             ]);
 
             // page
-            $params[] = new Parameter([
+            $params['page'] = new Parameter([
                 'name' => 'page',
                 'in' => 'query',
                 'required' => false,
@@ -153,8 +156,9 @@ abstract class BaseSpecs implements SpecInterface
                 'example' => '1',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
+            
             // per-page
-            $params[] = new Parameter([
+            $params['per-page'] = new Parameter([
                 'name' => 'per-page',
                 'in' => 'query',
                 'required' => false,
@@ -169,7 +173,7 @@ abstract class BaseSpecs implements SpecInterface
             if (!empty($datFilter)) {
                 $dataFilterObject = Yii::createObject($datFilter);
                 // filter
-                $params[] = new Parameter([
+                $params['filter'] = new Parameter([
                     'name' => 'filter',
                     'in' => 'query',
                     'required' => false,
@@ -187,16 +191,25 @@ abstract class BaseSpecs implements SpecInterface
         }
 
         // _language
-        $params[] = new Parameter([
-            'name' => '_language',
+        $params['_lang'] = new Parameter([
+            'name' => '_lang',
             'in' => 'query',
             'required' => false,
-            'description' => 'Defines the application language to format locale specific content. The given language must be supported by the application.',
-            'example' => 'en',
+            'description' => 'Defines the application language to format locale specific content.',
+            'example' => '`en`, `fr_FR` or `de-ch`',
             'schema' => new Schema(['type' => 'string']),
         ]);
 
-        return $params;
+        $event = new PathParametersEvent([
+            'params' => $params,
+            'controllerClass' => get_class($this->getControllerObject()),
+            'actionClass' => get_class($this->getActionObject()),
+            'verbName' => $this->getVerbName(),
+        ]);
+
+        Event::trigger(Generator::class, Generator::EVENT_PATH_PARAMETERS, $event);
+
+        return $event->params;
     }
 
     /**

@@ -9,6 +9,7 @@ use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
 use luya\helpers\StringHelper;
 use yii\base\BaseObject;
+use yii\base\Component;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
 use yii\web\UrlRule as WebUrlRule;
@@ -19,8 +20,10 @@ use yii\web\UrlRule as WebUrlRule;
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
-class Generator extends BaseObject
+class Generator extends Component
 {
+    const EVENT_PATH_PARAMETERS = 'pathParameters';
+    
     /**
      * @var UrlManager
      */
