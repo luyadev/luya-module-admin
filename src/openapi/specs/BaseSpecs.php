@@ -191,7 +191,7 @@ abstract class BaseSpecs implements SpecInterface
         }
 
         // _language
-        $params[] = new Parameter([
+        $params['_lang'] = new Parameter([
             'name' => '_lang',
             'in' => 'query',
             'required' => false,

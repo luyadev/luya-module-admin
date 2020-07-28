@@ -214,7 +214,7 @@ class UrlRuleRouteParser extends BasePathParser
         }
 
         foreach ($actionSpecs->getParameters() as $param) {
-            if (!in_array($param->name, $registeredParams)) {
+            if ($param instanceof Parameter && !in_array($param->name, $registeredParams)) {
                 $params[] = $param;
             }
         }
