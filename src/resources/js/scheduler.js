@@ -283,9 +283,9 @@ zaa.directive("luyaSchedule", function() {
                                 '</div>' +
                                 '<div class="inlinemodal-content">' +
                                     '<div class="clearfix">' +
-                                        '<zaa-select model="newvalue" options="attributeValues" label="' + i18n['js_scheduler_new_value'] + '" />' +
-                                        '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="' + i18n['js_scheduler_show_datepicker'] + '" />'+
-                                        '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="' + i18n['js_scheduler_time'] + '" />' +
+                                        '<zaa-select model="newvalue" options="attributeValues" label="' + i18n['js_scheduler_new_value'] + '"></zaa-select>' +
+                                        '<zaa-checkbox model="showDatepicker" fieldid="{{getUniqueFormId(\'datepicker\')}}" label="' + i18n['js_scheduler_show_datepicker'] + '"></zaa-checkbox>'+
+                                        '<zaa-datetime ng-show="showDatepicker" model="timestamp" label="' + i18n['js_scheduler_time'] + '"></zaa-datetime>' +
                                         '<button type="button" class="btn btn-save btn-icon float-right" ng-click="saveNewJob()">' + i18n['js_scheduler_save'] + '</button>' +
                                     '</div>' +
                                     

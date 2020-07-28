@@ -144,7 +144,7 @@ use luya\admin\helpers\Angular;
         </div>
         <modal is-modal-hidden="modal.state" modal-title="<?= Admin::t('layout_select_file'); ?>">
 			<div ng-if="!modal.state">
-				<storage-file-manager selection="true" />
+				<storage-file-manager selection="true"></storage-file-manager>
 			</div>
 		</modal>
         <?php else: ?>
