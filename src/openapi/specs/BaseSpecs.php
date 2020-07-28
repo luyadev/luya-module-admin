@@ -205,6 +205,8 @@ abstract class BaseSpecs implements SpecInterface
             'controllerClass' => get_class($this->getControllerObject()),
             'actionClass' => get_class($this->getActionObject()),
             'verbName' => $this->getVerbName(),
+            'contextClass' => $this->getReflection()->getName(),
+            'sender' => $this,
         ]);
 
         Event::trigger(Generator::class, Generator::EVENT_PATH_PARAMETERS, $event);
