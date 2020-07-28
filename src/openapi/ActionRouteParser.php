@@ -50,7 +50,6 @@ class ActionRouteParser extends BasePathParser
             'summary' => $this->controllerSpecs->getSummary(),
             'description' => $this->controllerSpecs->getDescription(),
             'get' => new Operation([
-                'security' => [new SecurityRequirement(['BasicAuth'])],
                 'tags' => [$this->normalizeTag($this->controllerMapRoute)],
                 'summary' => $this->actionSpecs->getSummary(),
                 'description' => $this->actionSpecs->getDescription(),

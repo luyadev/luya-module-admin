@@ -89,9 +89,13 @@ class GeneratorTest extends AdminModelTestCase
         /** @var Operation $operation */
         $operation = $operations['GET'];
 
+        $this->assertNull($operation->security);
+        // since security is assigned in a global scope
+        /*
         $this->assertSame([
             'BasicAuth'
         ], (array) $operation->security[0]->getSerializableData());
+        */
     }
 
     public function testGetPaths()

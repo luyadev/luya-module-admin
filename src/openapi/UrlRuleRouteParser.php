@@ -286,7 +286,6 @@ class UrlRuleRouteParser extends BasePathParser
         }
 
         return new Operation(array_filter([
-            'security' => [new SecurityRequirement(['BasicAuth'])],
             'tags' => [$this->normalizeTag($this->endpointName)],
             'summary' => $summary,
             'description' => $description,
