@@ -4,7 +4,7 @@ use luya\admin\Module;
 ?>
 <div ng-controller="ActiveWindowGalleryController" class="row">
     <div class="col-md-8">
-    	<storage-file-manager selection="true" only-images="true" />
+    	<storage-file-manager selection="true" only-images="true"></storage-file-manager>
     </div>
     <div class="col-md-4">
         <h5><?= Module::t('aws_gallery_images')?></h5>
