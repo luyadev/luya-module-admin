@@ -18,6 +18,7 @@ use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageImage;
 use luya\admin\models\User;
+use luya\admin\openapi\events\PathParametersEvent;
 use luya\admin\openapi\Generator;
 use luya\admin\openapi\specs\ActiveRecordToSchema;
 use luya\admin\openapi\specs\ControllerSpecs;
@@ -25,6 +26,7 @@ use luya\admin\openapi\UrlRuleRouteParser;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\UrlManager;
+use yii\base\Event;
 use yii\web\UrlRule;
 
 class GeneratorTest extends AdminModelTestCase
@@ -208,5 +210,28 @@ class GeneratorTest extends AdminModelTestCase
         $this->assertSame([
             'id', 'name', 'text', 'is_deleted', 'users',
         ], $groupModelKeys);
+    }
+
+    public function testParamsEvents()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+
+        Event::on(Generator::class, Generator::EVENT_PATH_PARAMETERS, function(PathParametersEvent $e) {
+
+            unset($e->params['_lang']);
+
+            $e->params['foo'] = 'bar';
+        });
+
+        $spec = new ControllerSpecs(new UserController('user', $this->app));
+        $params = $spec->getParameters();
+
+        $this->assertSame([
+            'foo' => 'bar',
+        ], $params);
+
+
     }
 }
