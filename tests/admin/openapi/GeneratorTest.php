@@ -3,6 +3,8 @@
 namespace luya\admin\tests\admin\openapi;
 
 use admintests\AdminModelTestCase;
+use cebe\openapi\spec\Operation;
+use cebe\openapi\spec\PathItem;
 use luya\admin\apis\UserController;
 use luya\admin\models\Config;
 use luya\admin\models\Logger;
@@ -20,10 +22,12 @@ use luya\admin\openapi\events\PathParametersEvent;
 use luya\admin\openapi\Generator;
 use luya\admin\openapi\specs\ActiveRecordToSchema;
 use luya\admin\openapi\specs\ControllerSpecs;
+use luya\admin\openapi\UrlRuleRouteParser;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\UrlManager;
 use yii\base\Event;
+use yii\web\UrlRule;
 
 class GeneratorTest extends AdminModelTestCase
 {
@@ -67,6 +71,33 @@ class GeneratorTest extends AdminModelTestCase
                 ],
             ],
         ];
+    }
+
+
+    
+    public function testSecuritySchema()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+
+        $this->app->controllerMap = ['user' => UserController::class];
+        $routerParser = new UrlRuleRouteParser('user', 'user/index', [new UrlRule(['pattern' => 'user', 'route' => 'user/index', 'verb' => 'GET'])], 'user');
+
+        $operations = $routerParser->getOperations();
+        $this->assertSame('/user', $routerParser->getPath());
+        $this->assertArrayHasKey('GET', $operations);
+
+        /** @var Operation $operation */
+        $operation = $operations['GET'];
+
+        $this->assertNull($operation->security);
+        // since security is assigned in a global scope
+        /*
+        $this->assertSame([
+            'BasicAuth'
+        ], (array) $operation->security[0]->getSerializableData());
+        */
     }
 
     public function testGetPaths()

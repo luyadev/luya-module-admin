@@ -142,7 +142,7 @@ abstract class BaseSpecs implements SpecInterface
                 'name' => 'expand',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'Provide a comma seperated list of extra attributes (for example relations) which should be expand.',
+                'description' => 'A comma seperated list of extra attributes (for example relations) which should be expanded.',
                 'example' => $expandExample,
                 'schema' => new Schema(['type' => 'string']),
             ]);
@@ -152,7 +152,7 @@ abstract class BaseSpecs implements SpecInterface
                 'name' => 'page',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'The page which should be resolved, page always starts as 1.',
+                'description' => 'The page which should be resolved, page always starts at 1.',
                 'example' => '1',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
@@ -162,7 +162,7 @@ abstract class BaseSpecs implements SpecInterface
                 'name' => 'per-page',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'The amount of rows to return by a page. By default its 25 rows an usually can not exceed 100 rows.',
+                'description' => 'The amount of rows to return by a page. By default its 25 rows and usually can not exceed 100 rows.',
                 'example' => '100',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
@@ -191,11 +191,11 @@ abstract class BaseSpecs implements SpecInterface
         }
 
         // _language
-        $params['_lang'] = new Parameter([
+        $params[] = new Parameter([
             'name' => '_lang',
             'in' => 'query',
             'required' => false,
-            'description' => 'Defines the application language to format locale specific content.',
+            'description' => 'Defines the application language to format locale specific content or return the language specific content for multi language fields.',
             'example' => '`en`, `fr_FR` or `de-ch`',
             'schema' => new Schema(['type' => 'string']),
         ]);
