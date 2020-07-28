@@ -9,11 +9,13 @@ use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\RequestBody;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
+use cebe\openapi\spec\SecurityRequirement;
 use luya\admin\openapi\phpdoc\PhpDocUses;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
 use luya\helpers\ObjectHelper;
 use Yii;
+use yii\base\Controller;
 use yii\rest\CreateAction;
 use yii\rest\OptionsAction;
 use yii\rest\UpdateAction;
@@ -27,10 +29,29 @@ use yii\web\UrlRule;
  */
 class UrlRuleRouteParser extends BasePathParser
 {
+    /**
+     * @var string
+     */
     protected $patternRoute;
+
+    /**
+     * @var string
+     */
     protected $controllerMapRoute;
+
+    /**
+     * @var array An array with {{yii\web\UrlRule}} objects
+     */
     protected $rules;
+
+    /**
+     * @var Controller The created controller object from {{$controllerMapRoute}}.
+     */
     protected $controller;
+
+    /**
+     * @var string The endpoint name to categorzied operations together under the same tag.
+     */
     protected $endpointName;
 
     /**
@@ -38,6 +59,14 @@ class UrlRuleRouteParser extends BasePathParser
      */
     protected $controllerSpecs;
 
+    /**
+     * Generate new UrlRule Route Parser
+     *
+     * @param string $patternRoute The pattern which will be taken to generate the path for all routes, f.e. `my-users`.
+     * @param string $controllerMapRoute The controller map which will be taken to generate a new controller, f.e. `user/index`.
+     * @param array $rules An array with {{yii\web\UrlRule}} objects f.e `[new UrlRule(['pattern' => 'my-users', 'route' => 'user/index', 'verb' => 'GET'])]`
+     * @param string $endpointName The endpoint name is used to categorize all operations together into this tag f.e. `v1/my-users`.
+     */
     public function __construct($patternRoute, $controllerMapRoute, array $rules, $endpointName)
     {
         $this->patternRoute = $patternRoute;
@@ -116,6 +145,11 @@ class UrlRuleRouteParser extends BasePathParser
 
     private $_operations;
 
+    /**
+     * Return all operations
+     *
+     * @return array
+     */
     public function getOperations()
     {
         if ($this->_operations !== null) {
@@ -140,6 +174,13 @@ class UrlRuleRouteParser extends BasePathParser
         return $operations;
     }
 
+    /**
+     * Get the Operation
+     *
+     * @param UrlRule $urlRule
+     * @param string $verbName
+     * @return Operation|boolean Either the operation or false is returned.
+     */
     protected function getOperation(UrlRule $urlRule, $verbName)
     {
         if (empty($urlRule->verb)) {
@@ -151,6 +192,7 @@ class UrlRuleRouteParser extends BasePathParser
         $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route), $verbName);
 
         $actionObject = $actionSpecs->getActionObject();
+        
         if (!$actionObject || ObjectHelper::isInstanceOf($actionObject, OptionsAction::class, false)) {
             return false;
         }
@@ -244,6 +286,7 @@ class UrlRuleRouteParser extends BasePathParser
         }
 
         return new Operation(array_filter([
+            'security' => [new SecurityRequirement(['BasicAuth'])],
             'tags' => [$this->normalizeTag($this->endpointName)],
             'summary' => $summary,
             'description' => $description,
