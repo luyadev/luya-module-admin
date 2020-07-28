@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.4.1
 
++ [#539](https://github.com/luyadev/luya-module-admin/issues/539) Fix issue with angularjs directive closing tags which has been introduced in version 1.8.0
 + [#536](https://github.com/luyadev/luya-module-admin/issues/536) Fix issue where security schemas where added but not applied to the Operations.
 + [#534](https://github.com/luyadev/luya-module-admin/pull/534) Using `fields()` when working with ActiveRecords as it represents the REST resource information. 
 + [#533](https://github.com/luyadev/luya-module-admin/pull/533) Fixed a bug where OpenApi property relations won't expand.
