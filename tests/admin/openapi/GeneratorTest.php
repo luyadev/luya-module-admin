@@ -189,7 +189,6 @@ class GeneratorTest extends AdminModelTestCase
 
         Event::on(Generator::class, Generator::EVENT_PATH_PARAMETERS, function(PathParametersEvent $e) {
 
-            var_dump($e->sender);
             unset($e->params['_lang']);
 
             $e->params['foo'] = 'bar';

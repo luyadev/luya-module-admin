@@ -8,7 +8,6 @@ use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
 use luya\helpers\StringHelper;
-use yii\base\BaseObject;
 use yii\base\Component;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
@@ -22,6 +21,11 @@ use yii\web\UrlRule as WebUrlRule;
  */
 class Generator extends Component
 {
+    /**
+     * @event luya\admin\openapi\events\PathParametersEvent This event will be triggered when the paramters are collected for a given path. The main purpose
+     * is to add, remove or override existing params.
+     * @since 3.5.0
+     */
     const EVENT_PATH_PARAMETERS = 'pathParameters';
     
     /**

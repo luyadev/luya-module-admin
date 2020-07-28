@@ -17,7 +17,7 @@ use yii\base\Event;
  * + Replace a specific key by new object
  * 
  * @author Basil Suter <git@nadar.io>
- * @since 3.4.2
+ * @since 3.5.0
  */
 class PathParametersEvent extends Event
 {
