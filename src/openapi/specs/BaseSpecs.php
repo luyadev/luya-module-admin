@@ -170,7 +170,7 @@ abstract class BaseSpecs implements SpecInterface
 
         if (property_exists($this->getControllerObject(), 'filterSearchModelClass')) {
             $dataFilterModelClass = $this->getControllerObject()->filterSearchModelClass;
-            if (!empty($datFilter)) {
+            if (!empty($dataFilterModelClass)) {
                 // filter
                 $params['filter'] = new Parameter([
                     'name' => 'filter',
@@ -184,7 +184,7 @@ abstract class BaseSpecs implements SpecInterface
                     'examples' => [
                     ],
                     */
-                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject($this->createActiveRecordSchemaObjectFromClassName($dataFilterModelClass, $this->extractModelClassFromObject($this->getActionObject())), false)
+                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject($this->createActiveRecordSchemaObjectFromClassName($dataFilterModelClass), false)
                 ]);
             }
         }
