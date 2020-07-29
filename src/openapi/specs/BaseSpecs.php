@@ -8,6 +8,8 @@ use cebe\openapi\spec\Parameter;
 use cebe\openapi\spec\Response;
 use cebe\openapi\spec\Schema;
 use luya\admin\ngrest\base\Api;
+use luya\admin\openapi\events\PathParametersEvent;
+use luya\admin\openapi\Generator;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use luya\admin\openapi\phpdoc\PhpDocType;
 use luya\helpers\ObjectHelper;
@@ -16,6 +18,7 @@ use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;
 use yii\base\Controller;
+use yii\base\Event;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -116,7 +119,7 @@ abstract class BaseSpecs implements SpecInterface
 
         if (ObjectHelper::isInstanceOf($this->getActionObject(), [IndexAction::class], false)) {
             // fields
-            $params[] = new Parameter([
+            $params['fields'] = new Parameter([
                 'name' => 'fields',
                 'in' => 'query',
                 'required' => false,
@@ -135,41 +138,41 @@ abstract class BaseSpecs implements SpecInterface
             }
 
             // expand
-            $params[] = new Parameter([
+            $params['expand'] = new Parameter([
                 'name' => 'expand',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'Provide a comma seperated list of extra attributes (for example relations) which should be expand.',
+                'description' => 'A comma seperated list of extra attributes (for example relations) which should be expanded.',
                 'example' => $expandExample,
                 'schema' => new Schema(['type' => 'string']),
             ]);
 
             // page
-            $params[] = new Parameter([
+            $params['page'] = new Parameter([
                 'name' => 'page',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'The page which should be resolved, page always starts as 1.',
+                'description' => 'The page which should be resolved, page always starts at 1.',
                 'example' => '1',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
+            
             // per-page
-            $params[] = new Parameter([
+            $params['per-page'] = new Parameter([
                 'name' => 'per-page',
                 'in' => 'query',
                 'required' => false,
-                'description' => 'The amount of rows to return by a page. By default its 25 rows an usually can not exceed 100 rows.',
+                'description' => 'The amount of rows to return by a page. By default its 25 rows and usually can not exceed 100 rows.',
                 'example' => '100',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
         }
 
         if (property_exists($this->getControllerObject(), 'filterSearchModelClass')) {
-            $datFilter = $this->getControllerObject()->filterSearchModelClass;
-            if (!empty($datFilter)) {
-                $dataFilterObject = Yii::createObject($datFilter);
+            $dataFilterModelClass = $this->getControllerObject()->filterSearchModelClass;
+            if (!empty($dataFilterModelClass)) {
                 // filter
-                $params[] = new Parameter([
+                $params['filter'] = new Parameter([
                     'name' => 'filter',
                     'in' => 'query',
                     'required' => false,
@@ -181,22 +184,33 @@ abstract class BaseSpecs implements SpecInterface
                     'examples' => [
                     ],
                     */
-                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject(new ActiveRecordToSchema($this, $dataFilterObject), false)
+                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject($this->createActiveRecordSchemaObjectFromClassName($dataFilterModelClass), false)
                 ]);
             }
         }
 
         // _language
-        $params[] = new Parameter([
-            'name' => '_language',
+        $params['_lang'] = new Parameter([
+            'name' => '_lang',
             'in' => 'query',
             'required' => false,
-            'description' => 'Defines the application language to format locale specific content. The given language must be supported by the application.',
-            'example' => 'en',
+            'description' => 'Defines the application language to format locale specific content or return the language specific content for multi language fields.',
+            'example' => '`en`, `fr_FR` or `de-ch`',
             'schema' => new Schema(['type' => 'string']),
         ]);
 
-        return $params;
+        $event = new PathParametersEvent([
+            'params' => $params,
+            'controllerClass' => get_class($this->getControllerObject()),
+            'actionClass' => get_class($this->getActionObject()),
+            'verbName' => $this->getVerbName(),
+            'contextClass' => $this->getReflection()->getName(),
+            'sender' => $this,
+        ]);
+
+        Event::trigger(Generator::class, Generator::EVENT_PATH_PARAMETERS, $event);
+
+        return $event->params;
     }
 
     /**
@@ -444,6 +458,9 @@ abstract class BaseSpecs implements SpecInterface
     {
         try {
             Yii::info("Create object createObjectFromClassName {$className}", __METHOD__);
+            if (!Yii::$container->hasSingleton($className)) {
+                Yii::$container->setSingleton($className);
+            }
             return Yii::createObject($className);
         } catch(\Exception $e) {
             Yii::warning("Error while creating the model class {$className}", __METHOD__);

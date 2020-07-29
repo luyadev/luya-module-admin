@@ -5,6 +5,7 @@ namespace luya\admin\openapi;
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\Responses;
+use cebe\openapi\spec\SecurityRequirement;
 use luya\admin\ngrest\base\Api;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;

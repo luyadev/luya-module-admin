@@ -3,7 +3,11 @@
 namespace luya\admin\tests\admin\openapi;
 
 use admintests\AdminModelTestCase;
+use cebe\openapi\spec\Operation;
+use cebe\openapi\spec\PathItem;
+use luya\admin\apis\UserController;
 use luya\admin\models\Config;
+use luya\admin\models\Group;
 use luya\admin\models\Logger;
 use luya\admin\models\NgrestLog;
 use luya\admin\models\ProxyBuild;
@@ -14,10 +18,17 @@ use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageImage;
+use luya\admin\models\User;
+use luya\admin\openapi\events\PathParametersEvent;
 use luya\admin\openapi\Generator;
+use luya\admin\openapi\specs\ActiveRecordToSchema;
+use luya\admin\openapi\specs\ControllerSpecs;
+use luya\admin\openapi\UrlRuleRouteParser;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use luya\web\UrlManager;
+use yii\base\Event;
+use yii\web\UrlRule;
 
 class GeneratorTest extends AdminModelTestCase
 {
@@ -61,6 +72,33 @@ class GeneratorTest extends AdminModelTestCase
                 ],
             ],
         ];
+    }
+
+
+    
+    public function testSecuritySchema()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+
+        $this->app->controllerMap = ['user' => UserController::class];
+        $routerParser = new UrlRuleRouteParser('user', 'user/index', [new UrlRule(['pattern' => 'user', 'route' => 'user/index', 'verb' => 'GET'])], 'user');
+
+        $operations = $routerParser->getOperations();
+        $this->assertSame('/user', $routerParser->getPath());
+        $this->assertArrayHasKey('GET', $operations);
+
+        /** @var Operation $operation */
+        $operation = $operations['GET'];
+
+        $this->assertNull($operation->security);
+        // since security is assigned in a global scope
+        /*
+        $this->assertSame([
+            'BasicAuth'
+        ], (array) $operation->security[0]->getSerializableData());
+        */
     }
 
     public function testGetPaths()
@@ -121,5 +159,92 @@ class GeneratorTest extends AdminModelTestCase
         $generator->assignUrlRule('admin/account/dashboard', 'POST', 'endpointname');
 
         $this->assertSame(['/this/is/my/pattern'], array_keys($generator->getPaths()));
+    }
+
+    public function testModelResponse()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+        $spec = new ControllerSpecs(new UserController('user', $this->app));
+
+        $model = new User();
+
+        $ars = new ActiveRecordToSchema($spec, $model);
+
+        $props = $ars->getProperties();
+        $this->assertSame([
+            'id',
+            'title',
+            'firstname',
+            'lastname',
+            'email',
+            'is_deleted',
+            'is_api_user',
+            'api_last_activity',
+            'auth_token',
+            'is_request_logger_enabled',
+            'email_verification_token_timestamp',
+            'login_attempt_lock_expiration',
+            'login_attempt',
+            'email_verification_token',
+            'api_allowed_ips',
+            'api_rate_limit',
+            'cookie_token',
+            'settings',
+            'force_reload',
+            'secure_token_timestamp',
+            'secure_token',
+            'password',
+            'password_salt',
+            'login_2fa_enabled',
+            'login_2fa_secret',
+            'login_2fa_backup_key',
+            'password_verification_token',
+            'password_verification_token_timestamp',
+            'setting',
+            'groups',
+        ], array_keys($props));
+
+        $groupModelKeys = array_keys($ars->createSchema('groups')->items->properties);
+
+        $this->assertSame([
+            'id', 'name', 'text', 'is_deleted', 'users',
+        ], $groupModelKeys);
+    }
+
+    public function testParamsEvents()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+
+        Event::on(Generator::class, Generator::EVENT_PATH_PARAMETERS, function(PathParametersEvent $e) {
+
+            unset($e->params['_lang']);
+
+            $e->params['foo'] = 'bar';
+        });
+
+        $spec = new ControllerSpecs(new UserController('user', $this->app));
+        $params = $spec->getParameters();
+
+        $this->assertSame([
+            'foo' => 'bar',
+        ], $params);
+    }
+
+    public function testFilterParams()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
+
+        Event::off(Generator::class, Generator::EVENT_PATH_PARAMETERS);
+
+        $spec = new ControllerSpecs(new UserController('user', $this->app, ['filterSearchModelClass' => Group::class]));
+        $params = $spec->getParameters();
+
+        $this->assertSame(5, count($params['filter']->schema->properties)); // the user has 5 keys which are required.
     }
 }

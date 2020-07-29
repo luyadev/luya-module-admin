@@ -7,10 +7,10 @@ use luya\admin\Module;
 <div class="luya-content" ng-controller="AccountController">
     <collapse-container title="<?= Module::t('mode_user_personal_info') ?>" icon="face" class="mb-3">
         <form ng-submit="changePersonData(profile)">
-            <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]" />
-            <zaa-text autocomplete="given-name" fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname" />
-            <zaa-text autocomplete="family-name" fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname" />
-            <zaa-text autocomplete="email" fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email" />
+            <zaa-select fieldid="mode_user_title" model="profile.title" label="<?= Module::t('mode_user_title'); ?>" options="[{value:1, label:'<?= Module::t('model_user_title_mr'); ?>'}, {value:2, label:'<?= Module::t('model_user_title_mrs'); ?>'}]"></zaa-select>
+            <zaa-text autocomplete="given-name" fieldid="mode_user_firstname" label="<?= Module::t('mode_user_firstname'); ?>" model="profile.firstname"></zaa-text>
+            <zaa-text autocomplete="family-name" fieldid="mode_user_lastname" label="<?= Module::t('mode_user_lastname'); ?>" model="profile.lastname"></zaa-text>
+            <zaa-text autocomplete="email" fieldid="mode_user_email" label="<?= Module::t('mode_user_email'); ?>" model="profile.email"></zaa-text>
             <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
             
         </form>
@@ -20,7 +20,7 @@ use luya\admin\Module;
                 <p class="mb-0"><?= Module::t('account_changeemail_enterverificationtoken')?></p>
             </div>
             <form ng-submit="changeEmail()">
-                <zaa-text fieldid="mode_email_token" label="<?= Module::t('model_user_email_verification_token')?>" model="email.token" />
+                <zaa-text fieldid="mode_email_token" label="<?= Module::t('model_user_email_verification_token')?>" model="email.token"></zaa-text>
                 <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
             </form>
         </div>
@@ -53,10 +53,10 @@ use luya\admin\Module;
 
     <collapse-container title="<?= Module::t('mode_user_password') ?>" icon="vpn_key" class="mb-3">
         <form ng-submit="changePassword()">
-            <zaa-password autocomplete="current-password" fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass" />
+            <zaa-password autocomplete="current-password" fieldid="model_user_oldpassword" label="<?= Module::t('model_user_oldpassword'); ?>" model="pass.oldpass"></zaa-password>
             <hr class="mb-4" />
-            <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass" />
-            <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat" />
+            <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass" label="<?= Module::t('aws_changepassword_new_pass'); ?>" model="pass.newpass"></zaa-password>
+            <zaa-password autocomplete="new-password" fieldid="aws_changepassword_new_pass_retry" label="<?= Module::t('aws_changepassword_new_pass_retry'); ?>" model="pass.newpassrepeat"></zaa-password>
             <button class="btn btn-save btn-icon" type="submit"><?= Module::t('layout_rightbar_savebtn'); ?></button>
         </form>
     </collapse-container>

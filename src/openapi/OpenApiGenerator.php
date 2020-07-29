@@ -47,7 +47,7 @@ class OpenApiGenerator
     public function __construct(Generator $generator)
     {
         if (!class_exists(OpenApi::class)) {
-            throw new InvalidConfigException("The composer package cebe/php-openapi must be installed to generate the OpenAPI file.");
+            throw new InvalidConfigException("The composer package `cebe/php-openapi` must be installed to generate the OpenAPI file.");
         }
         
         $this->generator = $generator;

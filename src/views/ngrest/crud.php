@@ -136,7 +136,7 @@ $filters = Angular::optionsArrayInput($filters);
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <luya-select ng-model="config.filter" initvalue="0" ng-change="changeNgRestFilter()" options='<?= Json::htmlEncode($filters); ?>' />
+                        <luya-select ng-model="config.filter" initvalue="0" ng-change="changeNgRestFilter()" options='<?= Json::htmlEncode($filters); ?>'></luya-select>
                     </div>
                     <?php endif; ?>
                 </div>

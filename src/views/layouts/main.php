@@ -403,9 +403,10 @@ $this->beginPage()
                 <div class="card">
                     <div class="card-header">Access</div>
                     <div class="card-body">
-                        <p class="card-text">
-                            URL: <span class="badge badge--inherit-font-size badge-info"><?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?></span>
-                        </p>
+                        <div class="form-group">
+                            <label>OpenApi JSON Link</label>
+                            <input type="text" readonly value="<?= Url::toRoute(['/admin/api-admin-remote/openapi', 'token' => Yii::$app->remoteToken ? sha1(Yii::$app->remoteToken) : null], true); ?>"  class="form-control" />
+                        </div>
                         <p class="card-text">
                             <a href="<?= Url::toRoute(['/admin/default/api-doc']); ?>" target="_blank" class="btn btn-primary">Open Documentation</a>
                             <span class="badge badge--inherit-font-size badge-secondary">Authentication is required</span>
