@@ -234,14 +234,13 @@ class GeneratorTest extends AdminModelTestCase
         ], $params);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testFilterParams()
     {
         $this->createAdminLangFixture();
         $this->createAdminUserFixture();
         $this->createAdminGroupFixture(1);
+
+        Event::off(Generator::class, Generator::EVENT_PATH_PARAMETERS);
 
         $spec = new ControllerSpecs(new UserController('user', $this->app, ['filterSearchModelClass' => Group::class]));
         $params = $spec->getParameters();
