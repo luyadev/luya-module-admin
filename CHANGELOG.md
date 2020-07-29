@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.5.0
 
++ [#541](https://github.com/luyadev/luya-module-admin/pull/541) Fix memory problem in OpenApi generator because of circular references.
 + [#537](https://github.com/luyadev/luya-module-admin/pull/537) Add new event to customize the params for an OpenApi generated Path.
 
 ## 3.4.1 (28. July 2020)

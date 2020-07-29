@@ -169,9 +169,8 @@ abstract class BaseSpecs implements SpecInterface
         }
 
         if (property_exists($this->getControllerObject(), 'filterSearchModelClass')) {
-            $datFilter = $this->getControllerObject()->filterSearchModelClass;
-            if (!empty($datFilter)) {
-                $dataFilterObject = Yii::createObject($datFilter);
+            $dataFilterModelClass = $this->getControllerObject()->filterSearchModelClass;
+            if (!empty($dataFilterModelClass)) {
                 // filter
                 $params['filter'] = new Parameter([
                     'name' => 'filter',
@@ -185,7 +184,7 @@ abstract class BaseSpecs implements SpecInterface
                     'examples' => [
                     ],
                     */
-                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject(new ActiveRecordToSchema($this, $dataFilterObject), false)
+                    'schema' => $this->createSchemaFromActiveRecordToSchemaObject($this->createActiveRecordSchemaObjectFromClassName($dataFilterModelClass), false)
                 ]);
             }
         }
@@ -459,6 +458,9 @@ abstract class BaseSpecs implements SpecInterface
     {
         try {
             Yii::info("Create object createObjectFromClassName {$className}", __METHOD__);
+            if (!Yii::$container->hasSingleton($className)) {
+                Yii::$container->setSingleton($className);
+            }
             return Yii::createObject($className);
         } catch(\Exception $e) {
             Yii::warning("Error while creating the model class {$className}", __METHOD__);

@@ -7,6 +7,7 @@ use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use luya\admin\apis\UserController;
 use luya\admin\models\Config;
+use luya\admin\models\Group;
 use luya\admin\models\Logger;
 use luya\admin\models\NgrestLog;
 use luya\admin\models\ProxyBuild;
@@ -231,7 +232,19 @@ class GeneratorTest extends AdminModelTestCase
         $this->assertSame([
             'foo' => 'bar',
         ], $params);
+    }
 
+    public function testFilterParams()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminGroupFixture(1);
 
+        Event::off(Generator::class, Generator::EVENT_PATH_PARAMETERS);
+
+        $spec = new ControllerSpecs(new UserController('user', $this->app, ['filterSearchModelClass' => Group::class]));
+        $params = $spec->getParameters();
+
+        $this->assertSame(5, count($params['filter']->schema->properties)); // the user has 5 keys which are required.
     }
 }
