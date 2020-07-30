@@ -3629,7 +3629,8 @@ zaa.directive('imageEdit', function() {
             $http.get('/admin/api-admin-storage/file-info?id=' + $scope.fileId).then(function(response) {
                 $scope.file = response.data;
                 $scope.cropperConfig.resultImageFormat = $scope.file.mime_type;
-                $scope.cropperImage = $scope.file.source;
+                // use the LUYA file controller proxy which ensures accessability, which does not work when using s3 filesystem f.e.
+                $scope.cropperImage = $scope.file.file.href;
             });
 
             $scope.saveAsCopy = true;
