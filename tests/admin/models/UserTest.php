@@ -4,6 +4,7 @@ namespace admintests\models;
 
 use admintests\AdminTestCase;
 use admintests\data\fixtures\UserFixture;
+use luya\admin\models\User;
 
 class UserTest extends AdminTestCase
 {
@@ -19,5 +20,16 @@ class UserTest extends AdminTestCase
         $user->update(true, ['firstname']);
         
         $this->assertSame('&lt;script&gt;alert(0)&lt;/script&gt;', $user->firstname);
+    }
+    
+    public function testFindByEmail()
+    {
+        $model = new UserFixture();
+        $model->load();
+        $user = User::findByEmail('jane@luya.io');
+        $this->assertSame('Jane', $user->firstname);
+    
+        $user = User::findByEmail('deleted@luya.io');
+        $this->assertNull($user);
     }
 }

@@ -36,6 +36,16 @@ class UserFixture extends ActiveFixture
                 'password' => 'nohash',
                 'is_deleted' => 0,
                 'is_api_user' => 0,
+            ],
+            'user3' => [
+                'id' => 3,
+                'title' => 3,
+                'firstname' => 'Is',
+                'lastname' => 'Deleted',
+                'email' => 'deleted@luya.io',
+                'password' => 'nohash',
+                'is_deleted' => 1,
+                'is_api_user' => 0,
             ]
         ];
     }
