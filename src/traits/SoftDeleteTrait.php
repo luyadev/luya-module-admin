@@ -50,7 +50,7 @@ trait SoftDeleteTrait
         $query = [];
         
         foreach (static::fieldStateDescriber() as $field => $value) {
-            $query[self::tableName().'.'.$field] = (is_array($value)) ? $value[1] : !$value;
+            $query[static::tableName().'.'.$field] = (is_array($value)) ? $value[1] : !$value;
         }
         
         return $query;
