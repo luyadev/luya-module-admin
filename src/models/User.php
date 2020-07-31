@@ -167,7 +167,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestFilters()
     {
         return [
-            'Removed' => self::find()->where(['is_deleted' => true, 'is_api_user' => false]),
+            'Removed' => self::find()->andWhere(['is_api_user' => false]),
         ];
     }
     
@@ -318,14 +318,6 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     /**
      * @inheritdoc
      */
-    public static function find()
-    {
-        return parent::find()->where(['is_deleted' => false]);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function changePassword($newpass)
     {
         $this->password = $newpass;
@@ -464,7 +456,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findByEmail($email)
     {
-        return self::find()->where(['email' => $email, 'is_deleted' => false, 'is_api_user' => false])->one();
+        return self::find()->andWhere(['email' => $email, 'is_api_user' => false])->one();
     }
 
     /**
