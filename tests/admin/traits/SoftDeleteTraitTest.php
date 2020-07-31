@@ -14,7 +14,8 @@ class SoftDeleteTraitTest extends AdminTestCase
     {
         $model = new UserFixture();
         $model->load();
-        
+    
+        $this->app->db->createCommand()->truncateTable('admin_user_group');
         $this->app->db->createCommand()->insert('admin_user_group', [
             'user_id' => 2,
             'group_id' => 1,
@@ -24,24 +25,25 @@ class SoftDeleteTraitTest extends AdminTestCase
             'group_id' => 1,
         ])->execute();
     
-        $userQuery = User::find()->indexBy('id')->prepare(null);
-        $this->assertEquals(['{{%admin_user}}.is_deleted' => false], $userQuery->where);
+    
+        $userQuery = User::find()->indexBy('id');
+        $this->assertEquals(['{{%admin_user}}.is_deleted' => false], $userQuery->prepare(null)->where);
     
         $users = $userQuery->all();
         $this->assertCount(2, $users);
-        $this->assertEquals('john@luya.io', $users[1]['email']);
-        $this->assertEquals('jane@luya.io', $users[2]['email']);
+        $this->assertEquals('john@luya.io', $users[1]->email);
+        $this->assertEquals('jane@luya.io', $users[2]->email);
         
-        $userQuery = User::find()->joinWith('groups')->prepare(null);
+        $userQuery = User::find()->indexBy('id')->joinWith('groups');
         $this->assertEquals([
             'and',
             ['{{%admin_user}}.is_deleted' => false],
             ['{{%admin_group}}.is_deleted' => false],
-        ], $userQuery->where);
+        ], $userQuery->prepare(null)->where);
         
         $users = $userQuery->all();
         $this->assertCount(1, $users);
-        $this->assertEquals('jane@luya.io', $users[2]['email']);
-        $this->assertEquals('Test Group', $users[2]->groups[0]->name);
+        $this->assertEquals('jane@luya.io', $users[2]->email);
+        $this->assertEquals('Administrator', $users[2]->groups[0]->name);
     }
 }
