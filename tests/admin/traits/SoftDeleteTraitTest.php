@@ -15,7 +15,7 @@ class SoftDeleteTraitTest extends AdminTestCase
         $model = new UserFixture();
         $model->load();
     
-        $this->app->db->createCommand()->truncateTable('admin_user_group');
+        $this->app->db->createCommand()->truncateTable('admin_user_group')->execute();
         $this->app->db->createCommand()->insert('admin_user_group', [
             'user_id' => 2,
             'group_id' => 1,
@@ -25,7 +25,6 @@ class SoftDeleteTraitTest extends AdminTestCase
             'group_id' => 1,
         ])->execute();
     
-    
         $userQuery = User::find()->indexBy('id');
         $this->assertEquals(['{{%admin_user}}.is_deleted' => false], $userQuery->prepare(null)->where);
     
@@ -34,7 +33,7 @@ class SoftDeleteTraitTest extends AdminTestCase
         $this->assertEquals('john@luya.io', $users[1]->email);
         $this->assertEquals('jane@luya.io', $users[2]->email);
         
-        $userQuery = User::find()->indexBy('id')->joinWith('groups');
+        $userQuery = User::find()->indexBy('id')->innerJoinWith('groups');
         $this->assertEquals([
             'and',
             ['{{%admin_user}}.is_deleted' => false],
