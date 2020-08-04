@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.5.0
 
++ [#545](https://github.com/luyadev/luya-module-admin/issues/545) Fix issue where primary key values where not correct type casted (a string was returned instead of integer). This was due to Text NgRestPlugin encoding its value when assigning to the model for security reasons.
 + [#542](https://github.com/luyadev/luya-module-admin/issues/542) Add tablename in the where condition to support join relations with `luya\admin\traits\SoftDeleteTrait`.
 + [#543](https://github.com/luyadev/luya-module-admin/issues/543) Ensure all images are routed trough LUYA file controller in order to fix issue with cropping images when working with 3rd party storage systems.
 + [#541](https://github.com/luyadev/luya-module-admin/pull/541) Fix memory problem in OpenApi generator because of circular references.

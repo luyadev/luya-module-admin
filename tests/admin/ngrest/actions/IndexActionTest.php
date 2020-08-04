@@ -48,7 +48,7 @@ class IndexActionTest extends AdminTestCase
         $r = $ctrl->runAction('index');
         
         $this->assertSame([
-            ['id' => "1", 'name' => 'barfoo'], // as the data is cached, the serializer wont type case the values afterwards - there for its id="1" instead of id=1
+            ['id' => 1, 'name' => 'barfoo'], // properly type casted since https://github.com/luyadev/luya-module-admin/pull/547
         ], $r);
     }
 }

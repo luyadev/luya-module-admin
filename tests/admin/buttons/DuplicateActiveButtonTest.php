@@ -38,7 +38,7 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
         $model->users = [1];
         $model->save();
 
-        $this->assertSame("1", $model->id);
+        $this->assertSame(1, $model->id); // properly type casted since https://github.com/luyadev/luya-module-admin/pull/547
 
         // wont work as alias is unique
         $this->assertSame([
@@ -64,7 +64,7 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
         $model->translation = ['de' => 'DEBAR', 'en' => 'ENBAR'];
         $model->save();
 
-        $this->assertSame("1", $model->id);
+        $this->assertSame(1, $model->id); // properly type casted since https://github.com/luyadev/luya-module-admin/pull/547
 
         // wont work as alias is unique
         $this->assertSame([
