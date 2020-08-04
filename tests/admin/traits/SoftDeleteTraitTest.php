@@ -7,6 +7,7 @@ use admintests\AdminTestCase;
 use admintests\data\fixtures\UserFixture;
 use luya\admin\models\Group;
 use luya\admin\models\User;
+use luya\admin\models\UserOnline;
 use luya\testsuite\fixtures\NgRestModelFixture;
 
 class SoftDeleteTraitTest extends AdminModelTestCase
@@ -93,5 +94,16 @@ class SoftDeleteTraitTest extends AdminModelTestCase
         $this->assertCount(1, $users);
         $this->assertEquals('jane@luya.io', $users[2]->email);
         $this->assertEquals('Administrator', $users[2]->groups[0]->name);
+    }
+
+    public function testAliasTableNamesInSoftDeleteWhereCondition()
+    {
+        $this->createAdminUserOnlineFixture();
+        $this->createAdminUserFixture();
+        
+        // will faile
+        $query = UserOnline::find()->select(['lock_pk', 'lock_table', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->where(['!=', 'u.id', 1])->joinWith('user as u')->createCommand()->queryAll();
+
+        $this->assertSame(0, count($query));
     }
 }
