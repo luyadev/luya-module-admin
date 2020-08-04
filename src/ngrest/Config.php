@@ -246,8 +246,9 @@ class Config extends BaseObject implements ConfigInterface
     private $_defaultOrder;
     
     /**
-     *
-     * @return string
+     * Returns an array with default order options.
+     * 
+     * @return array
      */
     public function getDefaultOrder()
     {
@@ -400,7 +401,7 @@ class Config extends BaseObject implements ConfigInterface
      *
      * @param string $pointer
      * @param boolean $defaultValue
-     * @return string
+     * @return string|array If default value is an array, an array is returned as default value
      */
     public function getPointer($pointer, $defaultValue = false)
     {
