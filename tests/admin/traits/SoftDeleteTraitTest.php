@@ -5,15 +5,64 @@ namespace admintests\admin\traits;
 use admintests\AdminModelTestCase;
 use admintests\AdminTestCase;
 use admintests\data\fixtures\UserFixture;
+use luya\admin\models\Group;
 use luya\admin\models\User;
-use luya\admin\models\UserGroup;
+use luya\testsuite\fixtures\NgRestModelFixture;
 
-class SoftDeleteTraitTest extends AdminTestCase
+class SoftDeleteTraitTest extends AdminModelTestCase
 {
+
     public function testFindWithRelation()
     {
-        $model = new UserFixture();
-        $model->load();
+        new NgRestModelFixture([
+            'modelClass' => User::class,
+            'fixtureData' => [
+                'user1' => [
+                    'id' => 1,
+                    'title' => 1,
+                    'firstname' => 'John',
+                    'lastname' => 'Doe',
+                    'email' => 'john@luya.io',
+                    'password' => 'nohash',
+                    'is_deleted' => 0,
+                    'is_api_user' => 0,
+                ],
+                'user2' => [
+                    'id' => 2,
+                    'title' => 2,
+                    'firstname' => 'Jane',
+                    'lastname' => 'Doe',
+                    'email' => 'jane@luya.io',
+                    'password' => 'nohash',
+                    'is_deleted' => 0,
+                    'is_api_user' => 0,
+                ],
+                'user3' => [
+                    'id' => 3,
+                    'title' => 3,
+                    'firstname' => 'Is',
+                    'lastname' => 'Deleted',
+                    'email' => 'deleted@luya.io',
+                    'password' => 'nohash',
+                    'is_deleted' => 1,
+                    'is_api_user' => 0,
+                ]
+            ]
+        ]);
+
+
+        $this->createAdminUserGroupTable();
+
+        $groupFixture = new NgRestModelFixture([
+            'modelClass' => Group::class,
+            'fixtureData' => [
+                'tester' => [
+                    'id' => 1,
+                    'name' => 'Administrator',
+                    'is_deleted' => 0,
+                ],
+            ],
+        ]);
     
         $this->app->db->createCommand()->truncateTable('admin_user_group')->execute();
         $this->app->db->createCommand()->insert('admin_user_group', [
