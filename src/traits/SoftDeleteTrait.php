@@ -50,7 +50,7 @@ trait SoftDeleteTrait
         $query = [];
         
         foreach (static::fieldStateDescriber() as $field => $value) {
-            $query[static::tableName().'.'.$field] = (is_array($value)) ? $value[1] : !$value;
+            $query["{{%$field}}"] = is_array($value) ? $value[1] : !$value;
         }
         
         return $query;
@@ -103,7 +103,7 @@ trait SoftDeleteTrait
     {
         $update = [];
         foreach (static::fieldStateDescriber() as $field => $value) {
-            $update[$field] = (is_array($value)) ? $value[0] : $value;
+            $update["{{%$field}}"] = is_array($value) ? $value[0] : $value;
         }
         return $update;
     }
