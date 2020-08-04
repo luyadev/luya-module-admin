@@ -648,7 +648,7 @@ class Config extends BaseObject implements ConfigInterface
                     'name' => $pk,
                     'alias' => $alias,
                     'type' => [
-                        'class' => 'luya\admin\ngrest\plugins\Text',
+                        'class' => 'luya\admin\ngrest\plugins\Number',
                         'args' => [],
                     ],
                 ]);
