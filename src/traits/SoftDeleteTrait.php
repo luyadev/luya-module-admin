@@ -7,6 +7,10 @@ namespace luya\admin\traits;
  *
  * To override a match your custom field desribers (describers which is deleted and find state) you
  * can override the static `fieldStateDescriber()` method as described in the description of the method.
+ * 
+ * > Its important to know the limitation of SoftDeleteTrait, when aliasing the table in a Query which makes
+ * > use of the SoftDeleteTrait, this will throw an error (@see https://github.com/luyadev/luya-module-admin/issues/546).
+ * > Therefore instead use the full tableName as alias.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

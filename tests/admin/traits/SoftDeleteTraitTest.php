@@ -102,7 +102,12 @@ class SoftDeleteTraitTest extends AdminModelTestCase
         $this->createAdminUserFixture();
         
         // will faile
-        $query = UserOnline::find()->select(['lock_pk', 'lock_table', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->where(['!=', 'u.id', 1])->joinWith('user as u')->createCommand()->queryAll();
+        $query = UserOnline::find()
+            ->select(['lock_pk', 'lock_table', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
+            ->where(['!=', 'admin_user.id', 1])
+            ->joinWith('user')
+            ->asArray()
+            ->all();
 
         $this->assertSame(0, count($query));
     }
