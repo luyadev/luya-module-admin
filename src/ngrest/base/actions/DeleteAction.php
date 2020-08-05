@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\base\actions;
 
 use Yii;
+use yii\rest\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -12,7 +13,7 @@ use yii\web\ServerErrorHttpException;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-class DeleteAction extends \yii\rest\DeleteAction
+class DeleteAction extends Action
 {
     /**
      * Run the delete action with enhanced error checking methods.
@@ -31,7 +32,9 @@ class DeleteAction extends \yii\rest\DeleteAction
             call_user_func($this->checkAccess, $this->id, $model);
         }
 
-        if ($model->delete() === false) {
+        $deleteState = $model->delete();
+
+        if ($deleteState === false) {
             
             // custom implementation of LUYA in order to throw more informations when delete errors happen.
             if ($model->hasErrors()) {
@@ -49,6 +52,7 @@ class DeleteAction extends \yii\rest\DeleteAction
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
 
-        Yii::$app->getResponse()->setStatusCode(204);
+
+        Yii::$app->getResponse()->setStatusCode(204)->send();
     }
 }
