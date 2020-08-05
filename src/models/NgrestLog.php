@@ -135,6 +135,7 @@ class NgrestLog extends NgRestModel
     {
         return [
             ['list', ['user_id', 'timestamp_create', 'route', 'api', 'pk_value', 'table_name']],
+            ['delete', true],
         ];
     }
 
