@@ -86,6 +86,7 @@ class QueueLog extends NgRestModel
     {
         return [
             ['list', ['title', 'push_timestamp', 'run_timestamp', 'end_timestamp', 'is_error']],
+            ['delete', true],
         ];
     }
 
