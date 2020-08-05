@@ -549,7 +549,7 @@ class Api extends RestActiveController
             '_settings' => $settings,
             '_notifcation_mute_state' => $notificationMuteState,
             '_locked' => [
-                'data' => UserOnline::find()->select(['lock_pk', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->joinWith('user as u')->where(['lock_table' => $modelClass::tableName()])->createCommand()->queryAll(),
+                'data' => UserOnline::find()->select(['lock_pk', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])->joinWith('user')->where(['lock_table' => $modelClass::tableName()])->asArray()->all(),
                 'userId' => Yii::$app->adminuser->id,
             ],
         ];
