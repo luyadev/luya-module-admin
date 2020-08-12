@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.5.1 ()
 
-+ [#551](https://github.com/luyadev/luya-module-admin/issues/551) `user_id` column is not found and missing in select condition.
++ [#551](https://github.com/luyadev/luya-module-admin/issues/551) Added missing `user_id` column in select condition which throws an error for certrain sql mode configurations.
 
 ## 3.5.0 (11. August 2020)
 
