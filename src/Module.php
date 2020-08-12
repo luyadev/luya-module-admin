@@ -300,6 +300,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected menu items from all admin modules and build the menu.
+     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
      */
     public $moduleMenus = [];
     

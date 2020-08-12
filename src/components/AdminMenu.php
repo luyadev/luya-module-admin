@@ -37,7 +37,7 @@ class AdminMenu extends \yii\base\Component
      */
     public function getAdminModuleMenus()
     {
-        return Yii::$app->getModule('admin')->moduleMenus;
+        return Yii::$app->getAdminModulesMenus();
     }
     
     private $_menu;
