@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.5.1 (12. August 2020)
+
++ [#551](https://github.com/luyadev/luya-module-admin/issues/551) Added missing `user_id` column in select condition which throws an error for certrain sql mode configurations.
+
 ## 3.5.0 (11. August 2020)
 
 + [#545](https://github.com/luyadev/luya-module-admin/issues/545) Fix issue where primary key values where not correct type casted (a string was returned instead of integer). This was due to Text NgRestPlugin encoding its value when assigning to the model for security reasons.

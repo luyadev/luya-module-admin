@@ -66,7 +66,7 @@ class TimestampController extends RestController
             'useronline' => UserOnline::getList(),
             'forceReload' => Yii::$app->adminuser->identity->force_reload,
             'locked' => UserOnline::find()
-                ->select(['lock_pk', 'lock_table', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
+                ->select(['user_id', 'lock_pk', 'lock_table', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
                 ->where(['!=', 'admin_user.id', $userId])
                 ->joinWith('user')
                 ->asArray()
