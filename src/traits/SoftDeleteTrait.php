@@ -7,6 +7,10 @@ namespace luya\admin\traits;
  *
  * To override a match your custom field desribers (describers which is deleted and find state) you
  * can override the static `fieldStateDescriber()` method as described in the description of the method.
+ * 
+ * > Its important to know the limitation of SoftDeleteTrait, when aliasing the table in a Query which makes
+ * > use of the SoftDeleteTrait, this will throw an error (@see https://github.com/luyadev/luya-module-admin/issues/546).
+ * > Therefore instead use the full tableName as alias.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -50,7 +54,7 @@ trait SoftDeleteTrait
         $query = [];
         
         foreach (static::fieldStateDescriber() as $field => $value) {
-            $query[static::tableName().'.'.$field] = (is_array($value)) ? $value[1] : !$value;
+            $query[static::tableName().'.'.$field] = is_array($value) ? $value[1] : !$value;
         }
         
         return $query;
@@ -103,7 +107,7 @@ trait SoftDeleteTrait
     {
         $update = [];
         foreach (static::fieldStateDescriber() as $field => $value) {
-            $update[$field] = (is_array($value)) ? $value[0] : $value;
+            $update[$field] = is_array($value) ? $value[0] : $value;
         }
         return $update;
     }

@@ -108,7 +108,7 @@ class QueueLogError extends NgRestModel
     {
         return [
             ['list', ['code', 'message', 'created_at']],
-            ['delete', false],
+            ['delete', true],
         ];
     }
 

@@ -94,4 +94,25 @@ class ApiUserControllerTest extends AdminModelTestCase
 
         $this->assertTrue($this->invokeMethod($ctrl, 'hasOpenEmailValidation', [$user->getModel('yes')]));
     }
+
+    public function testServicesAction()
+    {
+        $this->createAdminLangFixture();
+        $api = new StubApiUserApiController('apiuser', $this->app);
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($api) {
+            $scope->createApi('apiuser');
+            $scope->allowApi('apiuser');
+
+            // this will actually delete the login user.
+            $reponse = $scope->runControllerAction($api, 'services');
+
+            $this->assertArrayHasKey('service', $reponse);
+            $this->assertArrayHasKey('_authId', $reponse);
+            $this->assertArrayHasKey('_tags', $reponse);
+            $this->assertArrayHasKey('_hints', $reponse);
+            $this->assertArrayHasKey('_settings', $reponse);
+            $this->assertArrayHasKey('_notifcation_mute_state', $reponse);
+            $this->assertArrayHasKey('_locked', $reponse);
+        });
+    }
 }

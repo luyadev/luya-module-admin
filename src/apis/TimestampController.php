@@ -65,7 +65,12 @@ class TimestampController extends RestController
             'idleStrokeDashoffset' => $strokeOffset,
             'useronline' => UserOnline::getList(),
             'forceReload' => Yii::$app->adminuser->identity->force_reload,
-            'locked' => UserOnline::find()->select(['lock_pk', 'lock_table', 'last_timestamp', 'u.firstname', 'u.lastname', 'u.id'])->where(['!=', 'u.id', $userId])->joinWith('user as u')->createCommand()->queryAll(),
+            'locked' => UserOnline::find()
+                ->select(['user_id', 'lock_pk', 'lock_table', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
+                ->where(['!=', 'admin_user.id', $userId])
+                ->joinWith('user')
+                ->asArray()
+                ->all(),
         ];
         
         return $data;
