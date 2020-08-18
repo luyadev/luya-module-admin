@@ -53,7 +53,7 @@ jobs:
           mysql -h 127.0.0.1 --port 8888 -u root myapp_test < tests/data/sql/1.0.0.sql 
 
       ## run unit tests
-      - name: PHP Unit tests for PHP 
+      - name: PHP Unit tests for 7.0, 7.2, 7.3, 7.4, 8.0 
         run: vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
         if: matrix.php == '7.4' || matrix.php == '7.3' || matrix.php == '7.2' || matrix.php == '7.0' || matrix.php == '8.0'
 
