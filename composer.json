@@ -80,9 +80,6 @@
    "config":{
       "fxp-asset":{
          "enabled":false
-      },
-      "platform":{
-         "php":"7.1"
       }
    },
    "repositories":[
