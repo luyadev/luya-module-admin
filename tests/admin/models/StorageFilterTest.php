@@ -168,7 +168,7 @@ class StorageFilterTest extends AdminModelTestCase
         $this->assertTrue($chainModel->save());
         $chainModel->eventAfterFind();
         $this->expectException(InvalidConfigException::class);
-        $chainModel->applyFilter($this->getMockBuilder(ImageInterface::class)->getMock(), []);
+        $chainModel->applyFilter(new ImageInterfaceMock(), []);
     }
 
     public function testInvalidParamConfig()
@@ -200,7 +200,7 @@ class StorageFilterTest extends AdminModelTestCase
         $this->assertTrue($chainModel->save());
         $chainModel->eventAfterFind();
         $this->expectException(InvalidConfigException::class);
-        $chainModel->applyFilter($this->getMockBuilder(ImageInterface::class)->getMock(), []);
+        $chainModel->applyFilter(new ImageInterfaceMock(), []);
     }
 
     public function testTextEffectWhichFaileDueToMissingExtensions()
@@ -257,4 +257,9 @@ class StorageFilterTest extends AdminModelTestCase
         $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
 
     }
+}
+
+class ImageInterfaceMock implements ImageInterface
+{
+
 }
