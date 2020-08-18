@@ -46,7 +46,7 @@ class CrudControllerTest extends AdminConsoleTestCase
     
     public function testFindModelFolderIsModelFolderAvailable()
     {
-        $ctrl = new CrudController('id', Yii::$app);
+        $ctrl = new CrudController('id', $this->app);
     
         $this->generateAdminUserSchema();
         $testShema = Yii::$app->db->getTableSchema('{{%admin_user}}', true);
@@ -261,7 +261,7 @@ EOT;
     
     public function testModelWithoutI18n()
     {
-        $ctrl = new CrudController('id', Yii::$app);
+        $ctrl = new CrudController('id', $this->app);
         
         new ActiveRecordFixture([
             'modelClass' => Lang::class,
