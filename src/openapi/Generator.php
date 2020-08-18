@@ -88,10 +88,7 @@ class Generator extends Component
      * ]
      * ```
      * + The key is the endpointName to resolve, lets say the url.
-     * + Value is an array containing `class` and `module`
-     */
-    public function __construct(UrlManager $urlManager, array $controllerMap = [])
-    {
+     * + Value is an arrayoperationId
         $this->urlManager = $urlManager;
         $this->controllerMap = $controllerMap;
     }
@@ -245,5 +242,26 @@ class Generator extends Component
         ksort($paths);
 
         return $paths;
+    }
+
+    public static $_operationIds = [];
+
+    public static function generateUniqueOperationId($operationId)
+    {
+        if (in_array($operationId, self::$_operationIds)) {
+            // is numeric last char, means we can count up
+            $lastChar = substr($operationId, -1);
+
+            if (is_numeric($lastChar)) {
+                $lastChar++;
+
+                return self::generateUniqueOperationId(substr($operationId, 0, -1) . $lastChar);
+            } else {
+                return self::generateUniqueOperationId($operationId . "1");
+            }
+        }
+
+        self::$_operationIds[] = $operationId;
+        return $operationId;
     }
 }
