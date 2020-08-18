@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['7.1', '7.2', '7.3', '7.4']
       
     services:
       mysql:
@@ -59,9 +59,8 @@ jobs:
 
       - name: PHP Unit tests for 7.4, 8.0 
         run: | 
-          composer require luyadev/luya-testsuite:dev-version-2 --dev
           ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '7.4' || matrix.php == '8.0'
+        if: matrix.php == '7.4'
 
       ## unit test with coverage
       - name: PHP Unit tests for PHP 7.1
