@@ -88,8 +88,7 @@ class Generator extends Component
      * ]
      * ```
      * + The key is the endpointName to resolve, lets say the url.
-     * + Value is an arrayoperationId
-     * + Value is an array containing `class` and `module`	     * + Value is an arrayoperationId
+     * + + Value is an array containing `class` and `module`
      */	
     public function __construct(UrlManager $urlManager, array $controllerMap = [])	
     {
