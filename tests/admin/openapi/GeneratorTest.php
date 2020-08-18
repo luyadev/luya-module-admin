@@ -4,7 +4,6 @@ namespace luya\admin\tests\admin\openapi;
 
 use admintests\AdminModelTestCase;
 use cebe\openapi\spec\Operation;
-use cebe\openapi\spec\PathItem;
 use luya\admin\apis\UserController;
 use luya\admin\models\Config;
 use luya\admin\models\Group;
@@ -246,5 +245,12 @@ class GeneratorTest extends AdminModelTestCase
         $params = $spec->getParameters();
 
         $this->assertSame(5, count($params['filter']->schema->properties)); // the user has 5 keys which are required.
+    }
+
+    public function testUniqOperationIdGeneraator()
+    {
+        $this->assertSame('test', Generator::generateUniqueOperationId('test'));
+        $this->assertSame('test1', Generator::generateUniqueOperationId('test'));
+        $this->assertSame('test2', Generator::generateUniqueOperationId('test'));
     }
 }
