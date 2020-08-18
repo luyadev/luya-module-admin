@@ -246,6 +246,15 @@ class Generator extends Component
 
     public static $_operationIds = [];
 
+    /**
+     * Generate an unique operation Id
+     *
+     * If a given operationId is already used a number will be added to the end and increased whenever the same operation appears.
+     * 
+     * @param string $operationId
+     * @return string
+     * @since 3.5.2
+     */
     public static function generateUniqueOperationId($operationId)
     {
         if (in_array($operationId, self::$_operationIds)) {
