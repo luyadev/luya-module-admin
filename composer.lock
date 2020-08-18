@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71680bbd2242cab37f3b73771d28fe45",
+    "content-hash": "51c05dec5e72258ee2d61574178b744c",
     "packages": [
         {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -1375,7 +1375,7 @@
             "version": "v1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/angular/bower-angular.git",
+                "url": "git@github.com:angular/bower-angular.git",
                 "reference": "ebe29b77d2dc4a7ab602daf9301ab910672b6b41"
             },
             "dist": {
@@ -1520,7 +1520,7 @@
             "version": "v3.0.19",
             "source": {
                 "type": "git",
-                "url": "https://github.com/stevermeister/ngWig.git",
+                "url": "git@github.com:stevermeister/ngWig.git",
                 "reference": "42f06afc5e9eddeaf576eec205a54046d619be3b"
             },
             "dist": {
@@ -2528,6 +2528,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -3424,16 +3425,16 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v4.3.1",
+            "version": "v4.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "8fa0d3010112dca5dd6dd501173415856001ba8b"
+                "reference": "5f2480a90ab911babc53039835fe78c6fc12646d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/8fa0d3010112dca5dd6dd501173415856001ba8b",
-                "reference": "8fa0d3010112dca5dd6dd501173415856001ba8b",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/5f2480a90ab911babc53039835fe78c6fc12646d",
+                "reference": "5f2480a90ab911babc53039835fe78c6fc12646d",
                 "shasum": ""
             },
             "replace": {
@@ -3451,12 +3452,12 @@
             ],
             "authors": [
                 {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
                     "name": "Mark Otto",
                     "email": "markdotto@gmail.com"
+                },
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
                 }
             ],
             "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
@@ -3471,7 +3472,13 @@
                 "sass",
                 "web"
             ],
-            "time": "2019-02-13T16:01:40+00:00"
+            "funding": [
+                {
+                    "url": "https://opencollective.com/bootstrap",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2020-08-06T16:22:43+00:00"
         },
         {
             "name": "twig/twig",

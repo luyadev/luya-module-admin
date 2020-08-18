@@ -38,7 +38,7 @@
    },
    "require-dev":{
       "luyadev/luya-testsuite":"^1.0",
-      "twbs/bootstrap":"~4.3.0",
+      "twbs/bootstrap":"^4.3",
       "bower-asset/angular":"^1.7",
       "bower-asset/angular-loading-bar":"0.9.0",
       "bower-asset/ui-router":"~0.4.0",
