@@ -59,9 +59,8 @@ jobs:
 
       - name: PHP Unit tests for 7.4, 8.0 
         run: | 
-          wget -O phpunit https://phar.phpunit.de/phpunit-9.phar
-          chmod +x phpunit
-          ./phpunit --verbose --configuration actions.phpunit.xml
+          composer require luyadev/luya-testsuite:"dev-version-2 as 1.1.1" --dev
+          ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
         if: matrix.php == '7.4' || matrix.php == '8.0'
 
       ## unit test with coverage
