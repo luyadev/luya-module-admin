@@ -170,6 +170,7 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
             ]
         ]);
 
+        $this->assertSameTrimmed('<p>Deutsch <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'de'));
         $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
         $this->assertSameTrimmed('<p>Francais <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'fr')); // <p>Francais <em>foo</em></p>
         $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
