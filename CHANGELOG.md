@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.5.2
 
++ [#559](https://github.com/luyadev/luya-module-admin/pull/559) Add method to return a language specific NgRest Model value.
 + [#556](https://github.com/luyadev/luya-module-admin/issues/556) Generate unique OpenApi operationIds.
 
 ## 3.5.1 (12. August 2020)

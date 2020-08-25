@@ -279,14 +279,16 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @param string $language The language short code.
      * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database. 
      * @return mixed|null Returns the value, either raw or converted trough the assigned plugin. If the language is not found (maybe not set already) null is returned.
+     * @since 3.5.2
      */
     public function i18nAttributeLanguageValue($attributeName, $language, $raw = false)
     {
         // get the decoded value from old attribute value.
         $array = I18n::decode($this->getOldAttribute($attributeName));
 
+        // if language is available in the array
         if (isset($array[$language])) {
-
+            // return the raw value from the database
             if ($raw) {
                 return $array[$language];
             }
