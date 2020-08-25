@@ -270,6 +270,34 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     }
 
     /**
+     * Returns the value of an i18n attribute for the given language.
+     * 
+     * This method is commonly used in order to retrieve a value for a given language even though
+     * the application language is different.
+     *
+     * @param string $attributeName The name of the attribute to find the value.
+     * @param string $language The language short code.
+     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database. 
+     * @return mixed|null Returns the value, either raw or converted trough the assigned plugin. If the language is not found (maybe not set already) null is returned.
+     */
+    public function i18nAttributeLanguageValue($attributeName, $language, $raw = false)
+    {
+        // get the decoded value from old attribute value.
+        $array = I18n::decode($this->getOldAttribute($attributeName));
+
+        if (isset($array[$language])) {
+
+            if ($raw) {
+                return $array[$language];
+            }
+
+            return $this->runI18nContextOnFindPlugin($attributeName, $array[$language]);
+        }
+
+        return null;
+    }
+
+    /**
      * Checks whether given attribute is in the list of i18n fields, if so
      * the field value will be decoded and the value for the current active
      * language is returned.
