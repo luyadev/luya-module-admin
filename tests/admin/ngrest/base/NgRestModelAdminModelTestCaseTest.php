@@ -42,6 +42,7 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 
         $this->assertSame('English', $model->translation);
         $this->assertSame('English', $model->i18nAttributeValue('translation'));
+        $this->assertSame(['translation' => 'English'], $model->i18nAttributesValue(['translation']));
 
         $lang->cleanup();
         $fixture->cleanup();
