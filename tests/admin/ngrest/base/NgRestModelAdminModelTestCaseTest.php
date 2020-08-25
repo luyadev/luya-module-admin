@@ -90,6 +90,49 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
         $fixture->cleanup();
     }
 
+    public function testI18nAttributeLanguageValue()
+    {
+        $lang = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'English',
+                    'short_code' => 'en',
+                    'is_default' => 0,
+                    'is_deleted' => 0,
+                ],
+                'id2' => [
+                    'id' => 2,
+                    'name' => 'French',
+                    'short_code' => 'fr',
+                    'is_default' => 1,
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Tag::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'name',
+                    'translation' => '{"de":"Deutsch", "en": "", "fr": "Francais"}',
+                ]
+            ]
+        ]);
+
+        $model = $fixture->getModel('id1');
+
+        $this->assertEmpty($model->translation);
+        $this->assertSame('Deutsch', $model->i18nAttributeLanguageValue('translation', 'de'));
+        $this->assertSame('Francais', $model->i18nAttributeLanguageValue('translation', 'fr'));
+
+        $lang->cleanup();
+        $fixture->cleanup();
+    }
+
     public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
     {
         $lang = new NgRestModelFixture([
