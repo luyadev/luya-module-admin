@@ -42,6 +42,7 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 
         $this->assertSame('English', $model->translation);
         $this->assertSame('English', $model->i18nAttributeValue('translation'));
+        $this->assertSame(['translation' => 'English'], $model->i18nAttributesValue(['translation']));
 
         $lang->cleanup();
         $fixture->cleanup();
@@ -90,6 +91,51 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
         $fixture->cleanup();
     }
 
+    public function testI18nAttributeLanguageValue()
+    {
+        $lang = new NgRestModelFixture([
+            'modelClass' => Lang::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'English',
+                    'short_code' => 'en',
+                    'is_default' => 0,
+                    'is_deleted' => 0,
+                ],
+                'id2' => [
+                    'id' => 2,
+                    'name' => 'French',
+                    'short_code' => 'fr',
+                    'is_default' => 1,
+                    'is_deleted' => 0,
+                ]
+            ]
+        ]);
+
+        $fixture = new NgRestModelFixture([
+            'modelClass' => Tag::class,
+            'fixtureData' => [
+                'id1' => [
+                    'id' => 1,
+                    'name' => 'name',
+                    'translation' => '{"de":"Deutsch", "en": "", "fr": "Francais"}',
+                ]
+            ]
+        ]);
+
+        $model = $fixture->getModel('id1');
+
+        $this->assertEmpty($model->translation);
+        $this->assertSame('Deutsch', $model->i18nAttributeLanguageValue('translation', 'de'));
+        $this->assertSame('Francais', $model->i18nAttributeLanguageValue('translation', 'fr'));
+        $this->assertSame('Francais', $model->i18nAttributeLanguageValue('translation', 'fr', true));
+        $this->assertNull($model->i18nAttributeLanguageValue('translation', 'xyz'));
+
+        $lang->cleanup();
+        $fixture->cleanup();
+    }
+
     public function testI18nAttributeFallbackValueWithMarkdownTextConverter()
     {
         $lang = new NgRestModelFixture([
@@ -125,6 +171,7 @@ class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
             ]
         ]);
 
+        $this->assertSameTrimmed('<p>Deutsch <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'de'));
         $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
         $this->assertSameTrimmed('<p>Francais <em>foo</em></p>', $fixture->getModel('id1')->i18nAttributeFallbackValue('lastname', 'fr')); // <p>Francais <em>foo</em></p>
         $this->assertSameTrimmed('', $fixture->getModel('id1')->lastname); // <p>Francais <em>foo</em></p>
