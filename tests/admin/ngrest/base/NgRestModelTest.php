@@ -57,6 +57,7 @@ class NgRestModelTest extends AdminTestCase
         $results = $tag->genericSearch('John');
         
         $this->assertSame('john', $results->one()->name);
+        $this->assertSame('john', $results->one()->i18nAttributeFallbackValue('name'));
     }
     
     public function testGetNgRestConfig()

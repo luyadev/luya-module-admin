@@ -5,9 +5,14 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.6.0
 
-> This requires LUYA core 1.6.3
+> This requires LUYA core 1.7
 
-+ []() Use new `Yii::$app->getAdminModulesMenus()` method in order to retrieve module data.
++ [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()` method in order to retrieve module data.
+
+## 3.5.2 (26. August 2020)
+
++ [#559](https://github.com/luyadev/luya-module-admin/pull/559) Add method to return a language specific NgRest Model value.
++ [#556](https://github.com/luyadev/luya-module-admin/issues/556) Generate unique OpenApi operationIds.
 
 ## 3.5.1 (12. August 2020)
 
