@@ -40,7 +40,7 @@ class DefaultController extends Controller
         parent::init();
     
         // get controller based assets
-        foreach ($this->module->assets as $class) {
+        foreach (Yii::$app->getAdminModulesAssets() as $class) {
             $this->registerAsset($class);
         }
     }
