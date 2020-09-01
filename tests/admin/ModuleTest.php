@@ -12,5 +12,7 @@ class ModuleTest extends AdminModelTestCase
         $module = new Module('admin');
 
         $this->assertArrayHasKey(64, $module->getJsTranslationMessages());
+
+        $module->setJsTranslations([]); // call for 100% coverage reason
     }
 }
