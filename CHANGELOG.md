@@ -7,7 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 > This requires LUYA core 1.7
 
-+ [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()` method in order to retrieve module data.
++ [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()`, `Yii::$app->getAdminModulesJsTranslationMessages()` and `Yii::$app->getAdminModulesAssets()` method in order to retrieve module data. This fixes a bug with admin modules which does not have an `admin` in the module name f.e. `'usertoken' => 'luya\admin\usertoken\Module'`.
 
 ## 3.5.2 (26. August 2020)
 
