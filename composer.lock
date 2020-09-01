@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "148b29195d655e882d164fe4d7fb7dbd",
+    "content-hash": "32f7e66ee1f7994a530b75d75c8f2a3b",
     "packages": [
         {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -583,16 +583,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.6.2",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "266ac375cf58c7deffe60581beb55fbb476810a6"
+                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/266ac375cf58c7deffe60581beb55fbb476810a6",
-                "reference": "266ac375cf58c7deffe60581beb55fbb476810a6",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/112b225e58e5f15012309fcdcda12a49dce6a4f5",
+                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5",
                 "shasum": ""
             },
             "require": {
@@ -927,16 +927,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.4.11",
+            "version": "v3.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "65e70bab62f3da7089a8d4591fb23fbacacb3479"
+                "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/65e70bab62f3da7089a8d4591fb23fbacacb3479",
-                "reference": "65e70bab62f3da7089a8d4591fb23fbacacb3479",
+                "url": "https://api.github.com/repos/symfony/process/zipball/af8d812d75fcdf2eae30928b42396fe17df137e4",
+                "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4",
                 "shasum": ""
             },
             "require": {
@@ -986,7 +986,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-23T08:31:43+00:00"
+            "time": "2020-07-16T09:41:49+00:00"
         },
         {
             "name": "whichbrowser/parser",

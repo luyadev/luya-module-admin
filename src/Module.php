@@ -295,11 +295,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
+     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
      */
     public $assets = [];
     
     /**
      * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected menu items from all admin modules and build the menu.
+     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
      */
     public $moduleMenus = [];
     
@@ -405,8 +407,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         ];
     }
     
-    private $_jsTranslations = [];
-    
     /**
      * Getter method for the js translations array.
      *
@@ -415,7 +415,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public function getJsTranslations()
     {
         $translations = [];
-        foreach ($this->_jsTranslations as $module => $data) {
+        foreach (Yii::$app->getAdminModulesJsTranslationMessages() as $module => $data) {
             foreach ($data as $key) {
                 $translations[$key] = Yii::t($module, $key, [], Yii::$app->language);
             }
@@ -429,10 +429,11 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * This setter method is used by the {{luya\web\Bootstrap::run()}} to assign all js transaltion files from the admin modules.
      *
      * @param array $translations
+     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0 
      */
     public function setJsTranslations(array $translations)
     {
-        $this->_jsTranslations = $translations;
+        // deprecated, messages are now loaded with Yii::$app->getAdminModulesJsTranslationMessages()
     }
     
     private $_reloadButtons = [];
