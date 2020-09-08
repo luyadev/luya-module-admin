@@ -8,6 +8,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 > This requires LUYA core 1.7
 
 + [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()`, `Yii::$app->getAdminModulesJsTranslationMessages()` and `Yii::$app->getAdminModulesAssets()` method in order to retrieve module data. This fixes a bug with admin modules which does not have an `admin` in the module name f.e. `'usertoken' => 'luya\admin\usertoken\Module'`.
++ [#561](https://github.com/luyadev/luya-module-admin/pull/561) Disable LUYA admin auth checks when cors is enabled and request method is options.
 
 ## 3.5.2 (26. August 2020)
 

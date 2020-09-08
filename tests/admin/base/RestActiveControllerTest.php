@@ -2,12 +2,19 @@
 
 namespace luya\admin\tests\admin\base;
 
-use admintests\AdminTestCase;
+use admintests\AdminModelTestCase;
 use luya\admin\base\RestActiveController;
 
-class RestActiveControllerTest extends AdminTestCase
+class RestActiveControllerTest extends AdminModelTestCase
 {
     public function testCheckEndpointAccess()
     {
+        $_SERVER['REQUEST_METHOD'] = 'OPTIONS';
+        $this->createAdminLangFixture();
+        $sub = new class('id', $this->app) extends RestActiveController {
+            public $modelClass = 'User';
+        };
+        $sub->enableCors = true;
+        $this->assertTrue($sub->isActionAuthOptional('unknown'));
     }
 }

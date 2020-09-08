@@ -88,6 +88,10 @@ trait AdminRestBehaviorTrait
 
     /**
      * Wether the given action id does not required authentication or not.
+     * 
+     * > {@since 3.6.0} this will also return true when cors is enabled and the request method is OPTIONS. As the `optional` actions list
+     * > is passed to the authenticator behavior, this is the place where authentication happens and is done anyhow before `isActionAuthOptional()
+     * > is used in `beforeAction()` checks.
      *
      * @param string $actionId
      * @return boolean
@@ -95,6 +99,10 @@ trait AdminRestBehaviorTrait
      */
     public function isActionAuthOptional($actionId)
     {
+        if ($this->enableCors && Yii::$app->request->isOptions) {
+            return true;
+        }
+
         return in_array($actionId, $this->authOptional);
     }
     
