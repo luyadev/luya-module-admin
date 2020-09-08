@@ -78,11 +78,11 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $this->attachBehaviors([
             'NgRestEventBehavior' => [
-                'class' => NgRestEventBehavior::className(),
+                'class' => NgRestEventBehavior::class,
                 'plugins' => $this->getNgRestConfig()->getPlugins(),
             ],
             'LogBehavior' => [
-                'class' => LogBehavior::className(),
+                'class' => LogBehavior::class,
                 'api' => static::ngRestApiEndpoint(),
             ],
         ]);

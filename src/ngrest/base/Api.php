@@ -443,7 +443,7 @@ class Api extends RestActiveController
      *
      * @param string $modelClass the full qualified path to the model
      * @param string $id The id which is a string, for example 1 or for composite keys its 1,4
-     * @param string $relationContext The name of the context, which is actually the action like `searach` or `index`.
+     * @param string $relationContext The name of the context, which is actually the action like `search` or `index`.
      * @return yii\db\ActiveRecord|boolean
      */
     public function findModelClassObject($modelClass, $id, $relationContext)
