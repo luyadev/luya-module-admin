@@ -540,7 +540,7 @@ return [
 
 // 3.6.0
 
-    'i18n_required_validator_invalid_format' => 'The attribute \"{attribute}\" must be of type array.',
-    'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is required.',
-    'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
+    'i18n_required_validator_invalid_format' => 'Das Attribut \"{attribute}\" muss vom Typ Array sein.',
+    'i18n_required_validator_missing_key' => 'Der Sprach-Key \"{lang}\" ist erforderlich.',
+    'i18n_required_validator_invalid_empty_value' => 'Der Wert für die Sprache \"{lang}\" kann nicht leer sein.',
 ];
