@@ -23,10 +23,19 @@ use yii\validators\Validator;
  */
 class I18nRequiredValidator extends Validator
 {
+    /**
+     * @var string Message if the input format is invalid. This message will be passed trough Yii::t.
+     */
     public $invalidFormatMessage = "i18n_required_validator_invalid_format";
 
+    /**
+     * @var string Message if an language key does not exists in the array. This message will be passed trough Yii::t.
+     */
     public $missingKeyMessage = "i18n_required_validator_missing_key";
 
+    /**
+     * @var string Message if a given value is empty. This message will be passed trough Yii::t.
+     */
     public $emptyValueMessage = "i18n_required_validator_invalid_empty_value";
 
     /**
@@ -36,6 +45,7 @@ class I18nRequiredValidator extends Validator
     {
         $array = $model->{$attribute};
 
+        // As due to the ngrest plugin concept the value is already parsed from array to json.
         if (Json::isJson($array)) {
             $array = Json::decode($array);
         }
@@ -44,6 +54,7 @@ class I18nRequiredValidator extends Validator
             return $this->addError($model, $attribute, Module::t($this->invalidFormatMessage, ['attribute' => $attribute]));
         }
 
+        /** @var $langShortCode The language short code */
         foreach (Lang::find()->select(['short_code'])->asArray()->column() as $langShortCode) {
             if (!array_key_exists($langShortCode, $array)) {
                 $this->addError($model, $attribute, Module::t($this->missingKeyMessage,  ['lang' => $langShortCode]));
