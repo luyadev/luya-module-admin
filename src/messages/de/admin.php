@@ -537,4 +537,10 @@ return [
 // 3.4.0
 
     'user_model_email_deleted_account_exists' => 'Die angegebene E-Mail-Adresse wird bereits für ein gelöschtes Konto verwendet.',
+
+// 3.6.0
+
+    'i18n_required_validator_invalid_format' => 'Das Attribut \"{attribute}\" muss vom Typ Array sein.',
+    'i18n_required_validator_missing_key' => 'Der Sprach-Key \"{lang}\" ist erforderlich.',
+    'i18n_required_validator_invalid_empty_value' => 'Der Wert für die Sprache \"{lang}\" kann nicht leer sein.',
 ];
