@@ -536,4 +536,10 @@ return [
 // 3.4.0
 
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
+
+// 3.6.0
+
+    'i18n_required_validator_invalid_format' => 'The given attribute \"{attribute}\" must be type of array.',
+    'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is missing and is required.',
+    'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
 ];
