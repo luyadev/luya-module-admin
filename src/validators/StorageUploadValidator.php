@@ -81,6 +81,10 @@ class StorageUploadValidator extends Validator
     {
         $files = $this->uploadToFiles($model, $attribute);
 
+        if (empty($files) || $model->hasErrors($attribute)) {
+            return;
+        }
+
         if (!$this->multiple) {
             $file = reset($files);
             return $model->$attribute = $file->getSourceAbsolute();
