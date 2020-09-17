@@ -7,6 +7,7 @@ use yii\validators\Validator;
 use yii\web\UploadedFile;
 use luya\base\DynamicModel;
 use luya\helpers\Json;
+use yii\base\Model;
 
 /**
  * Storage Upload Validator.
@@ -98,6 +99,13 @@ class StorageUploadValidator extends Validator
         $model->$attribute = Json::encode($data);
     }
 
+    /**
+     * Files to Storage Item
+     *
+     * @param Model $model
+     * @param string $attribute
+     * @return array
+     */
     public function uploadToFiles($model, $attribute)
     {
         $files = $this->multiple ? UploadedFile::getInstances($model, $attribute) : UploadedFile::getInstance($model, $attribute);
