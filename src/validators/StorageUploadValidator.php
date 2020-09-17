@@ -48,7 +48,7 @@ use yii\base\Model;
  * ```
  *
  * @author Basil Suter <basil@nadar.io>
- * @since 1.0.0
+ * @since 3.6.0
  */
 class StorageUploadValidator extends Validator
 {

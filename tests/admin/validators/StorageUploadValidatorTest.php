@@ -22,6 +22,13 @@ class StorageUploadValidatorTest extends AdminModelTestCase
             'size' => 98174
         ];
 
+        $model->file_id = [
+            'name' => 'MyFile.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => '/tmp/php/php6hst32',
+            'error' => UPLOAD_ERR_OK,
+            'size' => 98174
+        ];
         $response = $validator->validateAttribute($model, 'file_id');
         
         $this->assertNull($response);

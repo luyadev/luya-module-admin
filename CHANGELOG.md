@@ -10,6 +10,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()`, `Yii::$app->getAdminModulesJsTranslationMessages()` and `Yii::$app->getAdminModulesAssets()` method in order to retrieve module data. This fixes a bug with admin modules which does not have an `admin` in the module name f.e. `'usertoken' => 'luya\admin\usertoken\Module'`.
 + [#561](https://github.com/luyadev/luya-module-admin/pull/561) Disable LUYA admin auth checks when cors is enabled and request method is options.
 + [#562](https://github.com/luyadev/luya-module-admin/pull/562) New `luya\admin\validators\I18nRequiredValidator` validator in order to validate i18n attributes an its content. The validator checks if all language short codes exist and if the corresponding value is empty.
++ [#565](https://github.com/luyadev/luya-module-admin/pull/565) Add new `luya\admin\validators\StorageUploadValidator` which assignes the file absolute path as value.
 
 ## 3.5.2 (26. August 2020)
 
