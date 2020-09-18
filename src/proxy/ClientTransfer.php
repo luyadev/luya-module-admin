@@ -62,14 +62,14 @@ class ClientTransfer extends BaseObject
                 ]);
                 
                 if (!$curl->error) {
-                    if ($this->storageUpload($file->serverSource, $curl->response)) {
-                        $md5 = FileHelper::md5sum(Yii::$app->storage->fileSystemContent($file->serverSource));
+                    if ($this->storageUpload($file->name, $curl->response)) {
+                        $md5 = FileHelper::md5sum(Yii::$app->storage->fileSystemContent($file->name));
                         if ($md5 == $file->getFileHash()) {
                             $fileCount++;
                             $this->build->command->outputInfo('[+] File ' . $file->name . ' ('.$file->systemFileName.') downloaded.');
                         } else {
                             $this->build->command->outputError('[!] Downloaded file checksum "'.$md5.'" does not match server checksum "'.$file->getFileHash().'" for file ' . $file->systemFileName.'.');
-                            @unlink($file->serverSource);
+                            
                         }
                     }
                 } else {
@@ -99,7 +99,7 @@ class ClientTransfer extends BaseObject
                 ]);
             
                 if (!$curl->error) {
-                    if ($this->storageUpload($image->serverSource, $curl->response)) {
+                    if ($this->storageUpload($image->name, $curl->response)) {
                         $imageCount++;
                         $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
                     }
