@@ -6,6 +6,7 @@ use Curl\Curl;
 use luya\admin\file\Query;
 use luya\traits\CacheableTrait;
 use luya\helpers\FileHelper;
+use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -61,8 +62,8 @@ class ClientTransfer extends BaseObject
                 ]);
                 
                 if (!$curl->error) {
-                    if (FileHelper::writeFile($file->serverSource, $curl->response)) {
-                        $md5 = FileHelper::md5sum($file->serverSource);
+                    if ($this->storageUpload($file->serverSource, $curl->response)) {
+                        $md5 = FileHelper::md5sum(Yii::$app->storage->fileSystemContent($file->serverSource));
                         if ($md5 == $file->getFileHash()) {
                             $fileCount++;
                             $this->build->command->outputInfo('[+] File ' . $file->name . ' ('.$file->systemFileName.') downloaded.');
@@ -98,7 +99,7 @@ class ClientTransfer extends BaseObject
                 ]);
             
                 if (!$curl->error) {
-                    if (FileHelper::writeFile($image->serverSource, $curl->response)) {
+                    if ($this->storageUpload($image->serverSource, $curl->response)) {
                         $imageCount++;
                         $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
                     }
@@ -117,5 +118,17 @@ class ClientTransfer extends BaseObject
         $curl->get($this->build->requestCloseUrl, ['buildToken' => $this->build->buildToken]);
         
         return true;
+    }
+
+    public function storageUpload($fileName, $content)
+    {
+        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+        FileHelper::writeFile($fromTempFile, $content);
+
+        $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
+
+        FileHelper::unlink($fromTempFile);
+
+        return $result
     }
 }
