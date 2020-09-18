@@ -129,6 +129,6 @@ class ClientTransfer extends BaseObject
 
         FileHelper::unlink($fromTempFile);
 
-        return $result
+        return $result;
     }
 }
