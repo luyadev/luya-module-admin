@@ -7,6 +7,7 @@ use Yii;
 use Exception;
 use Curl\Curl;
 use luya\admin\file\Query;
+use luya\admin\image\Item;
 use luya\traits\CacheableTrait;
 use luya\helpers\FileHelper;
 use yii\base\BaseObject;
@@ -105,7 +106,7 @@ class ClientTransfer extends BaseObject
         
         // sync images
         foreach ((new \luya\admin\image\Query())->all() as $image) {
-            /* @var $image \luya\admin\image\Item */
+            /** @var Item $image */
             if (!$image->fileExists) {
                 $curl = new Curl();
                 $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
@@ -116,7 +117,7 @@ class ClientTransfer extends BaseObject
                 ]);
             
                 if (!$curl->error) {
-                    if ($this->storageUpload($image->name, $curl->response)) {
+                    if ($this->storageUpload($image->systemFileName, $curl->response)) {
                         $imageCount++;
                         $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
                     }
