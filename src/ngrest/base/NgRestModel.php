@@ -202,11 +202,31 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     private $_i18nOldValues = [];
 
+    /**
+     * Set the old json value from a i18n database value.
+     * 
+     * This method is used when the ngrest plugins are overiding the values from the database. Therefore the original database
+     * values can be stored here in order to retrieve those informations in later stage. f.e. when accessing language values for another
+     * language the current application language
+     *
+     * @param string $attributeName The attribute name associated with the json value
+     * @param string $value A json with the values f.e. `{"de":"foobar","en":"foobaz"}`
+     * @since 3.6.0
+     * @see {{getI18nOldValue()}}
+     */
     public function setI18nOldValue($attributeName, $value)
     {
         $this->_i18nOldValues[$attributeName] = $value;
     }
 
+    /**
+     * Get the old/original i18n value from the database.
+     *
+     * @param string $attributeName
+     * @return string The json value from either the old value setter array or the active record getOldAttribute() method.
+     * @since 3.6.0
+     * @see {{setI18nOldValue()}}
+     */
     public function getI18nOldValue($attributeName)
     {
         return array_key_exists($attributeName, $this->_i18nOldValues) ? $this->_i18nOldValues[$attributeName] : $this->getOldAttribute($attributeName);
