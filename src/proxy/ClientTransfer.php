@@ -2,13 +2,15 @@
 
 namespace luya\admin\proxy;
 
-use Curl\Curl;
+
+use Yii;
 use Exception;
+use Curl\Curl;
 use luya\admin\file\Query;
 use luya\traits\CacheableTrait;
 use luya\helpers\FileHelper;
-use Yii;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 
 /**
  * Admin Proxy commands Transfer Files.
@@ -19,9 +21,21 @@ use yii\base\BaseObject;
 class ClientTransfer extends BaseObject
 {
     use CacheableTrait;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->build === null) {
+            throw new InvalidConfigException("The build property can not be empty.");
+        }
+    }
     
     /**
-     * @var \luya\admin\proxy\ClientBuild
+     * @var ClientBuild
      */
     public $build;
     
@@ -72,6 +86,8 @@ class ClientTransfer extends BaseObject
                             $this->build->command->outputError('[!] Downloaded file checksum "'.$md5.'" does not match server checksum "'.$file->getFileHash().'" for file ' . $file->systemFileName.'.');
                             
                         }
+                    } else {
+                        $this->build->command->outputError('[!] Unable to temporary store the file ' . $file->systemFileName.'.');
                     }
                 } else {
                     $this->build->command->outputError('[!] File ' . $file->systemFileName. ' download request error: "'. $curl->error_message.'".');
@@ -129,13 +145,17 @@ class ClientTransfer extends BaseObject
 
             $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
 
+            if (!$result) {
+                return false;
+            }
+
             $md5 = FileHelper::md5sum($fromTempFile);
 
             FileHelper::unlink($fromTempFile);
 
             return $md5;
         } catch (Exception $e) {
-            false
+            return false;
         }
     }
 }
