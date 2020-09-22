@@ -327,7 +327,7 @@ class ClientTable extends BaseObject
         return $data;
     }
 
-    protected function cleanUpBatchInsertFields($fields)
+    protected function cleanUpBatchInsertFields(array $fields)
     {
         $data = [];
         foreach ($fields as $field) {

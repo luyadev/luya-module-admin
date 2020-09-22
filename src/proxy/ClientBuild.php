@@ -79,6 +79,24 @@ class ClientBuild extends BaseObject
     
     private $_buildConfig;
 
+    /**
+     * The build config is assigned from the remote server containing all tables.
+     *
+     * @param array $config An array with a key tables. Example config
+     * ```php
+     * $config = [
+     *     'tables' => [
+     *         'admin_ngrest_log' => [
+     *              'pks' => 1,
+     *              'name' => 'admin_ngrest_log'
+     *              'rows' => 2000, // the total amount of rows
+     *              'fields' => ['foo', 'bar'],
+     *              'offset_total' => 10,
+     *         ]
+     *     ]
+     * ];
+     * ```
+     */
     public function setBuildConfig(array $config)
     {
         $this->_buildConfig = $config;

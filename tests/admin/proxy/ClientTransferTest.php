@@ -33,13 +33,29 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
 
         $this->createAdminStorageFileFixture();
         $this->createAdminStorageImageFixture();
+
+        $this->createAdminGroupFixture([
+
+        ]);
     }
 
     public function testTransfer()
     {
-        $build = new ClientBuild($this->getCommand(), $this->app->db, [
+        $command = $this->getCommand();
+
+        $this->app->controller = $command;
+        
+        $build = new ClientBuild($command, $this->app->db, [
             'buildConfig' => [
-                'tables' => [],
+                'tables' => [
+                    'admin_group' => [
+                        'pks' => 1,
+                        'name' => 'admin_group',
+                        'rows' => 1, // the total amount of rows
+                        'fields' => ['id', 'name', 'text', 'is_deleted'],
+                        'offset_total' => 10,
+                    ]
+                ],
             ],
         ]);
 
