@@ -67,7 +67,7 @@ class ClientTransfer extends BaseObject
         
         // sync files
         foreach ((new Query())->where(['is_deleted' => false])->all() as $file) {
-            /* @var $file \luya\admin\file\Item */
+            /** @var \luya\admin\file\Item $file */
             if (!$file->fileExists) {
                 $curl = new Curl();
                 $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
@@ -78,7 +78,7 @@ class ClientTransfer extends BaseObject
                 ]);
                 
                 if (!$curl->error) {
-                    $md5 = $this->storageUpload($file->name, $curl->response);
+                    $md5 = $this->storageUpload($file->systemFileName, $curl->response);
                     if ($md5) {
                         if ($md5 == $file->getFileHash()) {
                             $fileCount++;
