@@ -704,13 +704,14 @@ abstract class Plugin extends Component implements TypesInterface
     {
         if ($this->isAttributeWriteable($event) && $this->onBeforeFind($event)) {
             if ($this->i18n) {
-
+                $oldValue = $event->sender->getAttribute($this->name);
+                $event->sender->setI18nOldValue($this->name, $oldValue);
                 // get the new array value from an i18n json attribute
-                $value = I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue);
+                $value = I18n::decodeFindActive($oldValue, $this->i18nEmptyValue);
                 // set the new attribute value
                 $event->sender->setAttribute($this->name, $value);
                 // override the old attribute value in order to ensure this attribute is not marked as dirty
-                // see: 
+                // see: https://github.com/luyadev/luya-module-admin/pull/567
                 $event->sender->setOldAttribute($this->name, $value);
             }
             

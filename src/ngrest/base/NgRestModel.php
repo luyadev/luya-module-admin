@@ -200,6 +200,18 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return in_array($attributeName, $this->i18n);
     }
 
+    private $_i18nOldValues = [];
+
+    public function setI18nOldValue($attributeName, $value)
+    {
+        $this->_i18nOldValues[$attributeName] = $value;
+    }
+
+    public function getI18nOldValue($attributeName)
+    {
+        return array_key_exists($attributeName, $this->_i18nOldValues) ? $this->_i18nOldValues[$attributeName] : $this->getOldAttribute($attributeName);
+    }
+
     /**
      * Returns the value for an i18n field before it was casted to the output for the current active language if empty.
      *
@@ -222,7 +234,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
         if (empty($value) && $this->isI18n($attributeName)) {
             // get the decoded value from old attribute value.
-            $array = I18n::decode($this->getOldAttribute($attributeName));
+            $array = I18n::decode($this->getI18nOldValue($attributeName));
 
             if ($preferredLanguage && isset($array[$preferredLanguage]) && !empty($array[$preferredLanguage])) {
                 return $this->runI18nContextOnFindPlugin($attributeName, $array[$preferredLanguage]);
@@ -284,7 +296,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     public function i18nAttributeLanguageValue($attributeName, $language, $raw = false)
     {
         // get the decoded value from old attribute value.
-        $array = I18n::decode($this->getOldAttribute($attributeName));
+        $array = I18n::decode($this->getI18nOldValue($attributeName));
 
         // if language is available in the array
         if (isset($array[$language])) {
