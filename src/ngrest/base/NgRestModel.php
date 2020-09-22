@@ -213,6 +213,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @param string $value A json with the values f.e. `{"de":"foobar","en":"foobaz"}`
      * @since 3.6.0
      * @see {{getI18nOldValue()}}
+     * @see https://github.com/luyadev/luya-module-admin/pull/567
      */
     public function setI18nOldValue($attributeName, $value)
     {
@@ -226,6 +227,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @return string The json value from either the old value setter array or the active record getOldAttribute() method.
      * @since 3.6.0
      * @see {{setI18nOldValue()}}
+     * @see https://github.com/luyadev/luya-module-admin/pull/567
      */
     public function getI18nOldValue($attributeName)
     {
