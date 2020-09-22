@@ -3,6 +3,7 @@
 namespace luya\admin\proxy;
 
 use Curl\Curl;
+use Exception;
 use luya\admin\file\Query;
 use luya\traits\CacheableTrait;
 use luya\helpers\FileHelper;
@@ -62,8 +63,8 @@ class ClientTransfer extends BaseObject
                 ]);
                 
                 if (!$curl->error) {
-                    if ($this->storageUpload($file->name, $curl->response)) {
-                        $md5 = FileHelper::md5sum(Yii::$app->storage->fileSystemContent($file->name));
+                    $md5 = $this->storageUpload($file->name, $curl->response);
+                    if ($md5) {
                         if ($md5 == $file->getFileHash()) {
                             $fileCount++;
                             $this->build->command->outputInfo('[+] File ' . $file->name . ' ('.$file->systemFileName.') downloaded.');
@@ -122,13 +123,19 @@ class ClientTransfer extends BaseObject
 
     public function storageUpload($fileName, $content)
     {
-        $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
-        FileHelper::writeFile($fromTempFile, $content);
+        try {
+            $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+            FileHelper::writeFile($fromTempFile, $content);
 
-        $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
+            $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
 
-        FileHelper::unlink($fromTempFile);
+            $md5 = FileHelper::md5sum($fromTempFile);
 
-        return $result;
+            FileHelper::unlink($fromTempFile);
+
+            return $md5;
+        } catch (Exception $e) {
+            false
+        }
     }
 }
