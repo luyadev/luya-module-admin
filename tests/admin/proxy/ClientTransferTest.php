@@ -31,7 +31,23 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
     {
         parent::afterSetup();
 
-        $this->createAdminStorageFileFixture();
+        $this->createAdminStorageFileFixture([
+            1 => [
+                'id' => 1,
+                'is_hidden' => 0,
+                'folder_id' => 0,
+                'name_original' => 'test.jpg',
+                'name_new' => 'test',
+                'name_new_compound' => 'test.jpg',
+                'mime_type' => 'image/jpeg',
+                'extension' => 'jpg',
+                'hash_file' => 'unknwon',
+                'hash_name' => 'foobar',
+                'upload_timestamp' => time(),
+                'upload_user_id' => 1,
+                'is_deleted' => 0,
+            ]
+        ]);
         $this->createAdminStorageImageFixture();
 
         $this->createAdminGroupFixture([
@@ -44,7 +60,7 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
         $command = $this->getCommand();
 
         $this->app->controller = $command;
-        
+
         $build = new ClientBuild($command, $this->app->db, [
             'buildConfig' => [
                 'tables' => [
