@@ -60,4 +60,22 @@ class I18nRequiredValidatorTest extends AdminModelTestCase
         $validator->validateAttribute($model, 'i18n');
         $this->assertSame('The value for language \"en\" can not be empty.', $model->getFirstError('i18n'));
     }
+
+    public function testSkipIfUnchanged()
+    {
+        $fixture = $this->createAdminLangFixture([
+            1 => [
+                'id' => 1,
+                'short_code' => 'en',
+                'is_deleted' => 0,
+            ]
+        ]);
+        
+        $model = $fixture->newModel;
+
+        $validator = new I18nRequiredValidator();
+        $validator->skipIfUnchanged = true;
+        $this->assertNull($validator->validateAttribute($model, 'short_code'));
+        $this->assertEmpty($model->getFirstError('i18n'));
+    }
 }
