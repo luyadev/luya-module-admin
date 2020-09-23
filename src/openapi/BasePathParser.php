@@ -81,6 +81,6 @@ abstract class BasePathParser
         
         $operation = $verb . '-'. str_replace("/", " ", $path); // replace slashes with newlines
         $camelCase = Inflector::slug($operation, '-', true, false);
-        return Inflector::id2camel($camelCase);
+        return Generator::generateUniqueOperationId(Inflector::id2camel($camelCase));
     }
 }

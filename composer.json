@@ -28,7 +28,7 @@
       "issues":"https://github.com/luyadev/luya-module-admin/issues"
    },
    "require":{
-      "luyadev/luya-core":"^1.3",
+      "luyadev/luya-core":"^1.7",
       "yiisoft/yii2-imagine":"^2.1",
       "yiisoft/yii2-queue":"^2.0",
       "flowjs/flow-php-server":"^1.0",
@@ -38,7 +38,7 @@
    },
    "require-dev":{
       "luyadev/luya-testsuite":"^1.0",
-      "twbs/bootstrap":"~4.3.0",
+      "twbs/bootstrap":"^4.3",
       "bower-asset/angular":"^1.7",
       "bower-asset/angular-loading-bar":"0.9.0",
       "bower-asset/ui-router":"~0.4.0",
@@ -80,9 +80,6 @@
    "config":{
       "fxp-asset":{
          "enabled":false
-      },
-      "platform":{
-         "php":"7.1"
       }
    },
    "repositories":[

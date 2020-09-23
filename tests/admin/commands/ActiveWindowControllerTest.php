@@ -2,8 +2,9 @@
 
 namespace admintests\admin\commands;
 
-use Yii;
 use admintests\AdminConsoleTestCase;
+use Yii;
+use admintests\AdminTestCase;
 use luya\admin\commands\ActiveWindowController;
 
 class ActiveWindowControllerTest extends AdminConsoleTestCase

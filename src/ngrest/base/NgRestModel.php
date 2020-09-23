@@ -78,11 +78,11 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $this->attachBehaviors([
             'NgRestEventBehavior' => [
-                'class' => NgRestEventBehavior::className(),
+                'class' => NgRestEventBehavior::class,
                 'plugins' => $this->getNgRestConfig()->getPlugins(),
             ],
             'LogBehavior' => [
-                'class' => LogBehavior::className(),
+                'class' => LogBehavior::class,
                 'api' => static::ngRestApiEndpoint(),
             ],
         ]);
@@ -200,6 +200,40 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return in_array($attributeName, $this->i18n);
     }
 
+    private $_i18nOldValues = [];
+
+    /**
+     * Set the old json value from a i18n database value.
+     * 
+     * This method is used when the ngrest plugins are overiding the values from the database. Therefore the original database
+     * values can be stored here in order to retrieve those informations in later stage. f.e. when accessing language values for another
+     * language the current application language
+     *
+     * @param string $attributeName The attribute name associated with the json value
+     * @param string $value A json with the values f.e. `{"de":"foobar","en":"foobaz"}`
+     * @since 3.6.0
+     * @see {{getI18nOldValue()}}
+     * @see https://github.com/luyadev/luya-module-admin/pull/567
+     */
+    public function setI18nOldValue($attributeName, $value)
+    {
+        $this->_i18nOldValues[$attributeName] = $value;
+    }
+
+    /**
+     * Get the old/original i18n value from the database.
+     *
+     * @param string $attributeName
+     * @return string The json value from either the old value setter array or the active record getOldAttribute() method.
+     * @since 3.6.0
+     * @see {{setI18nOldValue()}}
+     * @see https://github.com/luyadev/luya-module-admin/pull/567
+     */
+    public function getI18nOldValue($attributeName)
+    {
+        return array_key_exists($attributeName, $this->_i18nOldValues) ? $this->_i18nOldValues[$attributeName] : $this->getOldAttribute($attributeName);
+    }
+
     /**
      * Returns the value for an i18n field before it was casted to the output for the current active language if empty.
      *
@@ -222,7 +256,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
         if (empty($value) && $this->isI18n($attributeName)) {
             // get the decoded value from old attribute value.
-            $array = I18n::decode($this->getOldAttribute($attributeName));
+            $array = I18n::decode($this->getI18nOldValue($attributeName));
 
             if ($preferredLanguage && isset($array[$preferredLanguage]) && !empty($array[$preferredLanguage])) {
                 return $this->runI18nContextOnFindPlugin($attributeName, $array[$preferredLanguage]);
@@ -267,6 +301,36 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         unset($plugin, $senderContext);
 
         return $convertedValue;
+    }
+
+    /**
+     * Returns the value of an i18n attribute for the given language.
+     * 
+     * This method is commonly used in order to retrieve a value for a given language even though
+     * the application language is different.
+     *
+     * @param string $attributeName The name of the attribute to find the value.
+     * @param string $language The language short code.
+     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database. 
+     * @return mixed|null Returns the value, either raw or converted trough the assigned plugin. If the language is not found (maybe not set already) null is returned.
+     * @since 3.5.2
+     */
+    public function i18nAttributeLanguageValue($attributeName, $language, $raw = false)
+    {
+        // get the decoded value from old attribute value.
+        $array = I18n::decode($this->getI18nOldValue($attributeName));
+
+        // if language is available in the array
+        if (isset($array[$language])) {
+            // return the raw value from the database
+            if ($raw) {
+                return $array[$language];
+            }
+
+            return $this->runI18nContextOnFindPlugin($attributeName, $array[$language]);
+        }
+
+        return null;
     }
 
     /**

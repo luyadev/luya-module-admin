@@ -12,7 +12,7 @@ class AdminConsoleTestCase extends BaseTestSuite
 {
     public function getConfigArray()
     {
-        return include(__DIR__ .'/data/configs/admin.php');
+        return include(__DIR__ .'/data/configs/console.php');
     }
     
     public function bootApplication(Boot $boot)

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.6.0
+
+> This requires LUYA core 1.7
+
++ [#567](https://github.com/luyadev/luya-module-admin/pull/567) Do not marke i18n values as dirty when they are populated from the database, store the original json value from the database in a new `setI18nOldValue()` method instead.
++ [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()`, `Yii::$app->getAdminModulesJsTranslationMessages()` and `Yii::$app->getAdminModulesAssets()` method in order to retrieve module data. This fixes a bug with admin modules which does not have an `admin` in the module name f.e. `'usertoken' => 'luya\admin\usertoken\Module'`.
++ [#561](https://github.com/luyadev/luya-module-admin/pull/561) Disable LUYA admin auth checks when cors is enabled and request method is options.
++ [#562](https://github.com/luyadev/luya-module-admin/pull/562) New `luya\admin\validators\I18nRequiredValidator` validator in order to validate i18n attributes an its content. The validator checks if all language short codes exist and if the corresponding value is empty.
+
+## 3.5.2 (26. August 2020)
+
++ [#559](https://github.com/luyadev/luya-module-admin/pull/559) Add method to return a language specific NgRest Model value.
++ [#556](https://github.com/luyadev/luya-module-admin/issues/556) Generate unique OpenApi operationIds.
+
 ## 3.5.1 (12. August 2020)
 
 + [#551](https://github.com/luyadev/luya-module-admin/issues/551) Added missing `user_id` column in select condition which throws an error for certrain sql mode configurations.
@@ -14,7 +28,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#543](https://github.com/luyadev/luya-module-admin/issues/543) Ensure all images are routed trough LUYA file controller in order to fix issue with cropping images when working with 3rd party storage systems.
 + [#541](https://github.com/luyadev/luya-module-admin/pull/541) Fix memory problem in OpenApi generator because of circular references.
 + [#537](https://github.com/luyadev/luya-module-admin/pull/537) Add new event to customize the params for an OpenApi generated Path.
-
+  
 ## 3.4.1 (28. July 2020)
 
 + [#539](https://github.com/luyadev/luya-module-admin/issues/539) Fix issue with angularjs directive closing tags which has been introduced in version 1.8.0
