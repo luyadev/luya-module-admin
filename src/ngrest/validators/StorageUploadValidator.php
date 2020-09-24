@@ -40,7 +40,7 @@ class StorageUploadValidator extends ValidatorsStorageUploadValidator
         }
         
         $files = $this->uploadToFiles($model, $attribute);
-
+        
         if (!$this->multiple) {
             $file = reset($files);
             return $model->$attribute = $file->id;
