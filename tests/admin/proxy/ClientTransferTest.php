@@ -83,5 +83,6 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
 
         $this->assertNotNull($transfer->start());
 
+        $this->assertSame('334c4a4c42fdb79d7ebc3e73b517e6f8', $transfer->storageUpload('foobar.jpg', 'none'));
     }
 }

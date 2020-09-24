@@ -138,10 +138,20 @@ class ClientTransfer extends BaseObject
         return true;
     }
 
+    /**
+     * Upload file to storage.
+     * 
+     * Upload the given filename with its content into the websites storage system and return the md5 checksum of the uploaded file.
+     *
+     * @param string $fileName
+     * @param string $content
+     * @return string|false Either returns the md5 hash of the uploaded file or false if something went wrong
+     * @since 3.6.0
+     */
     public function storageUpload($fileName, $content)
     {
         try {
-            $fromTempFile = @tempnam(sys_get_temp_dir(), 'uploadFromContent');
+            $fromTempFile = @tempnam(sys_get_temp_dir(), 'clientTransferUpload');
             FileHelper::writeFile($fromTempFile, $content);
 
             $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
