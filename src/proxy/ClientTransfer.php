@@ -45,7 +45,7 @@ class ClientTransfer extends BaseObject
         $this->flushHasCache();
         
         foreach ($this->build->getTables() as $name => $table) {
-            /* @var $table \luya\admin\proxy\ClientTable */
+            /** @var \luya\admin\proxy\ClientTable $table  */
             if (!$table->isComplet()) {
                 if ($this->build->optionStrict) {
                     $this->build->command->outputInfo('Rows Expected: ' . $table->getRows());

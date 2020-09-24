@@ -23,6 +23,8 @@ use luya\admin\storage\BaseFileSystemStorage;
  */
 class DummyFileSystem extends BaseFileSystemStorage
 {
+    public $fileExists = true;
+
     /**
      * @inheritdoc
      */
@@ -52,7 +54,7 @@ class DummyFileSystem extends BaseFileSystemStorage
      */
     public function fileSystemExists($fileName)
     {
-        return true;
+        return $this->fileExists;
     }
     
     /**

@@ -60,6 +60,8 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
         $command = $this->getCommand();
 
         $this->app->controller = $command;
+        $this->app->storage->fileExists = false;
+        $this->app->storage->addDummyFile(['id' => 1]);
 
         $build = new ClientBuild($command, $this->app->db, [
             'buildConfig' => [
