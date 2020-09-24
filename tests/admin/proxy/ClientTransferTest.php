@@ -77,6 +77,9 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
             ],
         ]);
 
+        $build->fileProviderUrl = 'https://luya.io/images/logo/0.2x/luya_logo@0.2x.png';
+        $build->imageProviderUrl = 'https://luya.io/images/logo/0.2x/luya_logo@0.2x.png';
+
         $transfer = new ClientTransfer([
             'build' => $build,
         ]);

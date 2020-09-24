@@ -298,11 +298,11 @@ class ClientTable extends BaseObject
     /**
      * Write the given data to the database.
      *
-     * @param $data
+     * @param array $data
      * @throws \yii\db\Exception
      * @return int
      */
-    private function insertData($data)
+    private function insertData(array $data)
     {
         $inserted = $this->getDb()->createCommand()->batchInsert(
             $this->getName(),
@@ -313,7 +313,13 @@ class ClientTable extends BaseObject
         return $inserted;
     }
 
-    protected function cleanUpMatchRow($row)
+    /**
+     * Clean Up matching Rows
+     *
+     * @param array $row
+     * @return array
+     */
+    protected function cleanUpMatchRow(array $row)
     {
         $data = [];
         foreach ($row as $key => $item) {
@@ -327,6 +333,12 @@ class ClientTable extends BaseObject
         return $data;
     }
 
+    /**
+     * Clean Up Batch Insert Fields
+     *
+     * @param array $fields
+     * @return array
+     */
     protected function cleanUpBatchInsertFields(array $fields)
     {
         $data = [];

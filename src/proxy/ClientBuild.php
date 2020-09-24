@@ -33,8 +33,14 @@ class ClientBuild extends BaseObject
     
     public $requestCloseUrl;
     
+    /**
+     * @var string The Url to the remote storage system which provides the file returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
+     */
     public $fileProviderUrl;
     
+    /**
+     * @var string The Url to the remote storage system which provides the image returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
+     */
     public $imageProviderUrl;
     
     public $machineIdentifier;
