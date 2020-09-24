@@ -74,9 +74,7 @@ class StorageUploadValidator extends Validator
     public $isHidden = true;
     
     /**
-     *
      * {@inheritDoc}
-     * @see \yii\validators\Validator::validateAttribute()
      */
     public function validateAttribute($model, $attribute)
     {

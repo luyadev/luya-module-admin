@@ -29,6 +29,9 @@ use yii\base\InvalidConfigException;
  */
 class StorageUploadValidator extends ValidatorsStorageUploadValidator
 {
+    /**
+     * {@inheritDoc}
+     */
     public function validateAttribute($model, $attribute)
     {
         if (!$model instanceof NgRestModelInterface) {
@@ -40,7 +43,7 @@ class StorageUploadValidator extends ValidatorsStorageUploadValidator
         }
         
         $files = $this->uploadToFiles($model, $attribute);
-        
+
         if (!$this->multiple) {
             $file = reset($files);
             return $model->$attribute = $file->id;
