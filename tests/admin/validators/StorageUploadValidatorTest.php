@@ -29,4 +29,15 @@ class StorageUploadValidatorTest extends AdminModelTestCase
 
         $this->assertContains('myfile', $response);
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testEmptyFilesArray()
+    {
+        $_FILES = [];
+        $validator = new StorageUploadValidator();
+        $model = new DynamicModel(['file_id' => 0]);
+        $this->assertNull($validator->validateAttribute($model, 'file_id'));
+    }
 }
