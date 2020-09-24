@@ -13,24 +13,20 @@ class StorageUploadValidatorTest extends AdminModelTestCase
         $validator = new StorageUploadValidator();
 
         $model = new DynamicModel(['file_id' => 0]);
+        $this->createAdminStorageFileFixture();
+        $this->createAdminNgRestLogFixture();
 
-        $_FILES['file_id'] = [
+        $_FILES['DynamicModel[file_id]'] = [
             'name' => 'MyFile.jpg',
             'type' => 'image/jpeg',
-            'tmp_name' => '/tmp/php/php6hst32',
-            'error' => UPLOAD_ERR_OK,
-            'size' => 98174
-        ];
-
-        $model->file_id = [
-            'name' => 'MyFile.jpg',
-            'type' => 'image/jpeg',
-            'tmp_name' => '/tmp/php/php6hst32',
+            'tmp_name' => dirname(__DIR__) . '/../data/image.jpg',
             'error' => UPLOAD_ERR_OK,
             'size' => 98174
         ];
         $response = $validator->validateAttribute($model, 'file_id');
         
-        $this->assertNull($response);
+        $validator->uploadToFiles($model, 'file_id');
+
+        $this->assertContains('myfile', $response);
     }
 }

@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdcf043dd5732f95dd134394351f08eb",
+    "content-hash": "25ce8ce21a5a0ece3e355be1c0dbc284",
     "packages": [
         {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -300,16 +300,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.9",
+            "version": "8.12.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "674b79ae3362409d08e550cb196d982485a76225"
+                "reference": "befffd590d1e2333bbb6d712541ccccf5fc08f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/674b79ae3362409d08e550cb196d982485a76225",
-                "reference": "674b79ae3362409d08e550cb196d982485a76225",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/befffd590d1e2333bbb6d712541ccccf5fc08f1f",
+                "reference": "befffd590d1e2333bbb6d712541ccccf5fc08f1f",
                 "shasum": ""
             },
             "require": {
@@ -364,7 +364,7 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2020-08-31T09:51:44+00:00"
+            "time": "2020-09-22T07:23:22+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -583,16 +583,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5"
+                "reference": "b6aadae17b4aacfc9618658740957fdea79aaa8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/112b225e58e5f15012309fcdcda12a49dce6a4f5",
-                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/b6aadae17b4aacfc9618658740957fdea79aaa8c",
+                "reference": "b6aadae17b4aacfc9618658740957fdea79aaa8c",
                 "shasum": ""
             },
             "require": {
@@ -637,7 +637,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2020-08-26T09:03:03+00:00"
+            "time": "2020-09-23T14:45:00+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1858,16 +1858,16 @@
         },
         {
             "name": "luyadev/luya-testsuite",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-testsuite.git",
-                "reference": "37be5ecca6d5695ca4f214588f082bbc08e8e120"
+                "reference": "2f7d50d7788c4ce0b50ab26b5745e7d2ba4cf898"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/37be5ecca6d5695ca4f214588f082bbc08e8e120",
-                "reference": "37be5ecca6d5695ca4f214588f082bbc08e8e120",
+                "url": "https://api.github.com/repos/luyadev/luya-testsuite/zipball/2f7d50d7788c4ce0b50ab26b5745e7d2ba4cf898",
+                "reference": "2f7d50d7788c4ce0b50ab26b5745e7d2ba4cf898",
                 "shasum": ""
             },
             "require": {
@@ -1912,7 +1912,7 @@
                 "module",
                 "php"
             ],
-            "time": "2020-09-17T18:39:45+00:00"
+            "time": "2020-09-22T16:12:09+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3738,9 +3738,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "luyadev/luya-testsuite": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
