@@ -2,11 +2,16 @@
 
 namespace luya\admin\proxy;
 
+
+use Yii;
+use Exception;
 use Curl\Curl;
 use luya\admin\file\Query;
+use luya\admin\image\Item;
 use luya\traits\CacheableTrait;
 use luya\helpers\FileHelper;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 
 /**
  * Admin Proxy commands Transfer Files.
@@ -17,9 +22,21 @@ use yii\base\BaseObject;
 class ClientTransfer extends BaseObject
 {
     use CacheableTrait;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->build === null) {
+            throw new InvalidConfigException("The build property can not be empty.");
+        }
+    }
     
     /**
-     * @var \luya\admin\proxy\ClientBuild
+     * @var ClientBuild
      */
     public $build;
     
@@ -28,7 +45,7 @@ class ClientTransfer extends BaseObject
         $this->flushHasCache();
         
         foreach ($this->build->getTables() as $name => $table) {
-            /* @var $table \luya\admin\proxy\ClientTable */
+            /** @var \luya\admin\proxy\ClientTable $table  */
             if (!$table->isComplet()) {
                 if ($this->build->optionStrict) {
                     $this->build->command->outputInfo('Rows Expected: ' . $table->getRows());
@@ -50,7 +67,7 @@ class ClientTransfer extends BaseObject
         
         // sync files
         foreach ((new Query())->where(['is_deleted' => false])->all() as $file) {
-            /* @var $file \luya\admin\file\Item */
+            /** @var \luya\admin\file\Item $file */
             if (!$file->fileExists) {
                 $curl = new Curl();
                 $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
@@ -61,15 +78,17 @@ class ClientTransfer extends BaseObject
                 ]);
                 
                 if (!$curl->error) {
-                    if (FileHelper::writeFile($file->serverSource, $curl->response)) {
-                        $md5 = FileHelper::md5sum($file->serverSource);
+                    $md5 = $this->storageUpload($file->systemFileName, $curl->response);
+                    if ($md5) {
                         if ($md5 == $file->getFileHash()) {
                             $fileCount++;
                             $this->build->command->outputInfo('[+] File ' . $file->name . ' ('.$file->systemFileName.') downloaded.');
                         } else {
                             $this->build->command->outputError('[!] Downloaded file checksum "'.$md5.'" does not match server checksum "'.$file->getFileHash().'" for file ' . $file->systemFileName.'.');
-                            @unlink($file->serverSource);
+                            
                         }
+                    } else {
+                        $this->build->command->outputError('[!] Unable to temporary store the file ' . $file->systemFileName.'.');
                     }
                 } else {
                     $this->build->command->outputError('[!] File ' . $file->systemFileName. ' download request error: "'. $curl->error_message.'".');
@@ -87,7 +106,7 @@ class ClientTransfer extends BaseObject
         
         // sync images
         foreach ((new \luya\admin\image\Query())->all() as $image) {
-            /* @var $image \luya\admin\image\Item */
+            /** @var Item $image */
             if (!$image->fileExists) {
                 $curl = new Curl();
                 $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
@@ -98,7 +117,7 @@ class ClientTransfer extends BaseObject
                 ]);
             
                 if (!$curl->error) {
-                    if (FileHelper::writeFile($image->serverSource, $curl->response)) {
+                    if ($this->storageUpload($image->systemFileName, $curl->response)) {
                         $imageCount++;
                         $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
                     }
@@ -117,5 +136,37 @@ class ClientTransfer extends BaseObject
         $curl->get($this->build->requestCloseUrl, ['buildToken' => $this->build->buildToken]);
         
         return true;
+    }
+
+    /**
+     * Upload file to storage.
+     * 
+     * Upload the given filename with its content into the websites storage system and return the md5 checksum of the uploaded file.
+     *
+     * @param string $fileName
+     * @param string $content
+     * @return string|false Either returns the md5 hash of the uploaded file or false if something went wrong
+     * @since 3.6.0
+     */
+    public function storageUpload($fileName, $content)
+    {
+        try {
+            $fromTempFile = @tempnam(sys_get_temp_dir(), 'clientTransferUpload');
+            FileHelper::writeFile($fromTempFile, $content);
+
+            $result = Yii::$app->storage->fileSystemSaveFile($fromTempFile, $fileName);
+
+            if (!$result) {
+                return false;
+            }
+
+            $md5 = FileHelper::md5sum($fromTempFile);
+
+            FileHelper::unlink($fromTempFile);
+
+            return $md5;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }
