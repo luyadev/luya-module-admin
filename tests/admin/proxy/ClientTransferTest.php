@@ -48,8 +48,17 @@ class ClientTransferTest extends AdminConsoleSqLiteTestCase
                 'is_deleted' => 0,
             ]
         ]);
-        $this->createAdminStorageImageFixture();
+        $this->createAdminStorageImageFixture([
+            1 => [
+                'id' => 1,
+                'file_id' => 1,
+                'filter_id' => 1,
+                'resolution_width' => 1234,
+                'resolution_height' => 1234,
+            ]
+        ]);
 
+        $this->createAdminStorageFilterFixture();
         $this->createAdminGroupFixture([
 
         ]);
