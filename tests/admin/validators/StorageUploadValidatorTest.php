@@ -5,16 +5,14 @@ namespace luya\admin\tests\admin\validators;
 use admintests\AdminModelTestCase;
 use luya\admin\validators\StorageUploadValidator;
 use luya\base\DynamicModel;
+use yii\web\UploadedFile;
 
 class StorageUploadValidatorTest extends AdminModelTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSingleUploadValdiator()
     {
+        UploadedFile::reset();
         $validator = new StorageUploadValidator();
-
         $model = new DynamicModel(['file_id' => 0]);
         $this->createAdminStorageFileFixture();
         $this->createAdminNgRestLogFixture();
@@ -33,11 +31,9 @@ class StorageUploadValidatorTest extends AdminModelTestCase
         $this->assertContains('myfile', $response);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testMultiUploadValidtor()
     {
+        UploadedFile::reset();
         $validator = new StorageUploadValidator();
         $validator->multiple = true;
 
@@ -58,11 +54,9 @@ class StorageUploadValidatorTest extends AdminModelTestCase
         $this->assertContains('["', $model->file_id); // its a json!
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testEmptyFilesArray()
     {
+        UploadedFile::reset();
         $_FILES = [];
         $validator = new StorageUploadValidator();
         $model = new DynamicModel(['file_id' => 0]);
