@@ -5,6 +5,7 @@ namespace luya\admin\validators;
 use luya\admin\models\Lang;
 use luya\admin\Module;
 use luya\helpers\Json;
+use yii\db\BaseActiveRecord;
 use yii\validators\Validator;
 
 /**
@@ -47,10 +48,22 @@ class I18nRequiredValidator extends Validator
     public $emptyValueMessage = "i18n_required_validator_invalid_empty_value";
 
     /**
+     * @var boolean If enabled and the attribute value has not changed (not dirty) the validation will be skipped.
+     */
+    public $skipIfUnchanged = false;
+
+    /**
      * {@inheritDoc}
      */
     public function validateAttribute($model, $attribute)
     {
+        // if skip if unchanged is enabled and active record and the attribute has not changed, skip this validation rule.   
+        if ($this->skipIfUnchanged && $model instanceof BaseActiveRecord) {
+            if (!$model->isAttributeChanged($attribute)) {
+                return;
+            }
+        }
+        
         $array = $model->{$attribute};
 
         // As due to the ngrest plugin concept the value is already parsed from array to json.

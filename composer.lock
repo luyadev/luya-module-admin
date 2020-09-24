@@ -11,7 +11,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -583,16 +583,16 @@
         },
         {
             "name": "luyadev/luya-core",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luyadev/luya-core.git",
-                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5"
+                "reference": "b6aadae17b4aacfc9618658740957fdea79aaa8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/112b225e58e5f15012309fcdcda12a49dce6a4f5",
-                "reference": "112b225e58e5f15012309fcdcda12a49dce6a4f5",
+                "url": "https://api.github.com/repos/luyadev/luya-core/zipball/b6aadae17b4aacfc9618658740957fdea79aaa8c",
+                "reference": "b6aadae17b4aacfc9618658740957fdea79aaa8c",
                 "shasum": ""
             },
             "require": {
@@ -637,7 +637,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2020-08-26T09:03:03+00:00"
+            "time": "2020-09-23T14:45:00+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
