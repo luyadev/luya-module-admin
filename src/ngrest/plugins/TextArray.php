@@ -46,6 +46,9 @@ class TextArray extends Plugin
         return $data;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function onBeforeSave($event)
     {
         // if its not i18n casted field we have to serialize the file array as json and abort further event excution.
@@ -57,6 +60,9 @@ class TextArray extends Plugin
         return true;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function onBeforeExpandFind($event)
     {
         if (!$this->i18n) {
@@ -67,6 +73,9 @@ class TextArray extends Plugin
         return true;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function onBeforeFind($event)
     {
         if (!$this->i18n) {
@@ -77,8 +86,19 @@ class TextArray extends Plugin
         return true;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, $this->transformList($event->sender->getAttribute($this->name)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function onListFind($event)
+    {
+        $this->writeAttribute($event, implode(", ", $this->transformList($this->jsonDecode($event->sender->getAttribute($this->name)))));
     }
 }
