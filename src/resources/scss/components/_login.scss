@@ -189,7 +189,7 @@
 
 .login-input {
     border: solid 1px $gray-300;
-    border-radius: 0.25rem;
+    border-radius: $border-radius;
     display: block;
     font-weight: 300;
     margin-bottom: 10px;

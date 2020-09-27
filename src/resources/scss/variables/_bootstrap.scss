@@ -62,7 +62,7 @@ $nav-link-padding: $nav-link-padding-vertical $nav-link-padding-horizontal;
 
 $nav-tab-active-background-color: $white; // Custom
 
-$nav-tabs-border-radius: 3px;
+$nav-tabs-border-radius: 0.25rem;
 $nav-tabs-border-width: 1px;
 $nav-tabs-active-link-hover-color: theme-color(primary);
 
@@ -70,7 +70,7 @@ $nav-tabs-active-link-hover-color: theme-color(primary);
 // Forms
 // ==================================================
 
-$input-border-radius: 0;
+$input-border-radius: 0.25rem;
 $input-border-color: map-get($grays, 600);
 $input-btn-border-width: 1px;
 

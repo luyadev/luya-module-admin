@@ -13,7 +13,7 @@
     background-color: $white;
     border: 1px solid map-get($grays, 600);
 
-    border-radius: 0.25rem;
+    border-radius: $border-radius;
     cursor: pointer;
     display: block;
     padding: 0;
@@ -88,7 +88,7 @@
 .zaaselect-search-input {
     background-color: map-get($grays, 100);
     border: 1px solid map-get($grays, 600);
-    border-radius: 0.25rem;
+    border-radius: $border-radius;
     display: block;
     outline: 0;
     padding: 5px 10px;
@@ -105,13 +105,13 @@
 
     &:not(.zaaselect-label-active):hover {
         background-color: rgba(0, 0, 0, .15);
-        border-radius: 0.25rem;
+        border-radius: $border-radius;
     }
 
     &-active {
         background-color: theme-color(primary);
         color: $white;
         cursor: default;
-        border-radius: 0.25rem;
+        border-radius: $border-radius;
     }
 }
