@@ -13,24 +13,41 @@ use luya\admin\ngrest\base\Plugin;
  */
 class TextArray extends Plugin
 {
+    /**
+     * {@inheritDoc}
+     */
     public $i18nEmptyValue = [];
     
+    /**
+     * {@inheritDoc}
+     */
     public function renderList($id, $ngModel)
     {
         return $this->createListTag($ngModel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function renderCreate($id, $ngModel)
     {
         return $this->createFormTag('zaa-list-array', $id, $ngModel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function renderUpdate($id, $ngModel)
     {
         return $this->renderCreate($id, $ngModel);
     }
     
-    
+    /**
+     * Transform the array into the internal array notation with a key named `value`.
+     *
+     * @param mixed $listArrayValue
+     * @return array
+     */
     private function transformList($listArrayValue)
     {
         if (empty($listArrayValue)) {
