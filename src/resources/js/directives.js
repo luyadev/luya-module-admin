@@ -1811,7 +1811,7 @@ zaa.directive("zaaCheckboxArray", function () {
 
                 '<div class="input-group mb-3">' +
                 '<div class="input-group-prepend">' +
-                '<div class="input-group-text">' +
+                '<div class="input-group-text crud-append">' +
                 '<i class="material-icons">search</i>' +
                 '</div>' +
                 '</div>' +
@@ -1950,7 +1950,7 @@ zaa.directive("zaaDatetime", function () {
                 '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
-                '<div class="input-group-text">' +
+                '<div class="input-group-text crud-append">' +
                 '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
                 '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
                 '</div>' +
@@ -1965,7 +1965,7 @@ zaa.directive("zaaDatetime", function () {
                 '</div>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend zaa-datetime-time-colon">' +
-                '<div class="input-group-text">:</div>' +
+                '<div class="input-group-text crud-append">:</div>' +
                 '</div>' +
                 '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
                 '</div>' +
@@ -2066,7 +2066,7 @@ zaa.directive("zaaDate", function () {
                 '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
-                '<div class="input-group-text">' +
+                '<div class="input-group-text crud-append">' +
                 '<i class="material-icons" ng-hide="datePickerToggler">date_range</i>' +
                 '<i class="material-icons" ng-show="datePickerToggler">close</i>' +
                 '</div>' +
