@@ -13,6 +13,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#562](https://github.com/luyadev/luya-module-admin/pull/562) New `luya\admin\validators\I18nRequiredValidator` validator in order to validate i18n attributes an its content. The validator checks if all language short codes exist and if the corresponding value is empty.
 + [#577](https://github.com/luyadev/luya-module-admin/pull/566/) Ensure the `admin/proxy` command also works with different file systems then the local storage.
 + [#565](https://github.com/luyadev/luya-module-admin/pull/565) Add new `luya\admin\validators\StorageUploadValidator` which assignes the file absolute path as value.
++ [#569](https://github.com/luyadev/luya-module-admin/pull/569) Improve the view when using TextArray ngrest plugin in CRUD overview.
 
 ## 3.5.2 (26. August 2020)
 
