@@ -112,15 +112,15 @@ $filters = Angular::optionsArrayInput($filters);
             <div class="tab-padded">
                 <div class="row mt-2">
                     <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
-                            <div class="input-group-append" ng-hide="config.searchQuery">
-                                <div class="input-group-text crud-append">
+                        <div class="input-group input-group--append-clickable mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
                                     <i class="material-icons">search</i>
                                 </div>
                             </div>
-                            <span class="input-group-append" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
-                                <div class="input-group-text crud-append">
+                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
+                            <span class="input-group-append" ng-if="config.searchQuery" ng-click="config.searchQuery = ''">
+                                <div class="input-group-text">
                                     <i class="material-icons">clear</i>
                                 </div>
                             </span>
