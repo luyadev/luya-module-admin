@@ -14,6 +14,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#577](https://github.com/luyadev/luya-module-admin/pull/566/) Ensure the `admin/proxy` command also works with different file systems then the local storage.
 + [#565](https://github.com/luyadev/luya-module-admin/pull/565) Add new `luya\admin\validators\StorageUploadValidator` which assignes the file absolute path as value.
 + [#569](https://github.com/luyadev/luya-module-admin/pull/569) Improve the view when using TextArray ngrest plugin in CRUD overview.
++ [#571](https://github.com/luyadev/luya-module-admin/pull/571) Ensure the user_id is selected in any SQL query mode, therefore fixed `yii\base\ErrorException: Undefined index: user_id` bug when open a CRUD. [see #551](https://github.com/luyadev/luya-module-admin/issues/551)
 
 ## 3.5.2 (26. August 2020)
 
