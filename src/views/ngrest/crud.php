@@ -14,6 +14,12 @@ use yii\helpers\Markdown;
 $this->beginPage();
 $this->beginBody();
 
+
+$groups = [];
+
+foreach ($config->getPointer('list') as $p) {
+    $groups[$p['name']] = $p['alias'];
+} 
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
 $filters = Angular::optionsArrayInput($filters);
 ?>
@@ -112,27 +118,22 @@ $filters = Angular::optionsArrayInput($filters);
             <div class="tab-padded">
                 <div class="row mt-2">
                     <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-prepend" ng-hide="config.searchQuery">
+                        <div class="input-group input-group--append-clickable mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="material-icons">search</i>
                                 </div>
                             </div>
-                            <span class="input-group-prepend" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
+                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
+                            <span class="input-group-append" ng-if="config.searchQuery" ng-click="config.searchQuery = ''">
                                 <div class="input-group-text">
                                     <i class="material-icons">clear</i>
                                 </div>
                             </span>
-                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <select class="form-control" ng-change="changeGroupByField()" ng-model="config.groupByField">
-                            <option value="0"><?= Module::t('ngrest_crud_group_prompt'); ?></option>
-                            <?php foreach ($config->getPointer('list') as $item): ?>
-                                <option value="<?= $item['name']; ?>"><?= $item['alias']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <luya-select ng-model="config.groupByField" initvalue="0" ng-change="changeGroupByField()" options='<?= Json::htmlEncode(Angular::optionsArrayInput($groups)); ?>'></luya-select>
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">

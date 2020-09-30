@@ -1809,15 +1809,16 @@ zaa.directive("zaaCheckboxArray", function () {
                 '</div>' +
                 '<div class="form-side">' +
 
-                '<div class="input-group mb-3">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">' +
-                '<i class="material-icons">search</i>' +
-                '</div>' +
-                '</div>' +
-                '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
-
-                '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
+                '<div class="position-relative mb-3">' +
+                    '<div class="input-group">' +
+                        '<div class="input-group-prepend">' +
+                            '<div class="input-group-text">' +
+                                '<i class="material-icons">search</i>' +
+                            '</div>' +
+                        '</div>' +
+                        '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
+                    '</div>' +
+                    '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
                 '</div>' +
 
                 '<div class="form-check" ng-repeat="(k, item) in optionitems track by k">' +
@@ -1947,7 +1948,7 @@ zaa.directive("zaaDatetime", function () {
                 '<label>{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side form-inline datepicker-wrapper">' +
-                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<datepicker class="input-group input-group--append-clickable" date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
                 '<div class="input-group-text">' +
@@ -1958,16 +1959,13 @@ zaa.directive("zaaDatetime", function () {
                 '</datepicker>' +
                 '<div ng-show="model!=null && date!=null" class="hour-selection">' +
                 '<div class="input-group">' +
-                    '<div class="input-group-prepend align-items-center">' +
-                        '<i class="material-icons pr-2">access_time</i>' +
-                    '</div>' +
                     '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend zaa-datetime-time-colon">' +
                 '<div class="input-group-text">:</div>' +
                 '</div>' +
-                '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
+                '<input class="form-control form-control--force-border zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '</div>' +
                 '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
@@ -2063,7 +2061,7 @@ zaa.directive("zaaDate", function () {
                 '<label>{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side datepicker-wrapper">' +
-                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<datepicker class="input-group input-group--append-clickable" date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
                 '<div class="input-group-text">' +
@@ -2595,10 +2593,10 @@ zaa.directive("zaaJsonObject", function () {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="input-group">' +
+                '<div class="input-group input-group--append-clickable">' +
                     '<input type="text" class="form-control" placeholder="'+i18n['js_jsonobject_newkey']+'" aria-label="'+i18n['js_jsonobject_newkey']+'" ng-model="newKey">' +
                     '<div class="input-group-append">' +
-                        '<button class="btn btn-sm btn-success" type="button" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></button>' +
+                        '<div class="input-group-text" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></div>' +
                     '</div>' +
                 '</div>'+
                 '</div>' +
