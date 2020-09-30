@@ -14,6 +14,12 @@ use yii\helpers\Markdown;
 $this->beginPage();
 $this->beginBody();
 
+
+$groups = [];
+
+foreach ($config->getPointer('list') as $p) {
+    $groups[$p['name']] = $p['alias'];
+} 
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
 $filters = Angular::optionsArrayInput($filters);
 ?>
@@ -127,12 +133,7 @@ $filters = Angular::optionsArrayInput($filters);
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <select class="form-control" ng-change="changeGroupByField()" ng-model="config.groupByField">
-                            <option value="0"><?= Module::t('ngrest_crud_group_prompt'); ?></option>
-                            <?php foreach ($config->getPointer('list') as $item): ?>
-                                <option value="<?= $item['name']; ?>"><?= $item['alias']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <luya-select ng-model="config.groupByField" initvalue="0" ng-change="changeGroupByField()" options='<?= Json::htmlEncode(Angular::optionsArrayInput($groups)); ?>'></luya-select>
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
