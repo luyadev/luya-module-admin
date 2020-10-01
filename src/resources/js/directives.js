@@ -2060,7 +2060,7 @@ zaa.directive("zaaDate", function () {
                 '<div class="form-side form-side-label">' +
                 '<label>{{label}}</label>' +
                 '</div>' +
-                '<div class="form-side datepicker-wrapper">' +
+                '<div class="form-side form-inline datepicker-wrapper">' +
                 '<datepicker class="input-group input-group--append-clickable" date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
