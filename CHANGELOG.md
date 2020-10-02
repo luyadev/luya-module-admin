@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.7.0
+
++ [#574](https://github.com/luyadev/luya-module-admin/pull/574) Add new toasts design (stronger colors).
+
 ## 3.6.1 (1. October 2020)
 
 + [#572](https://github.com/luyadev/luya-module-admin/pull/572) Fixed "zaa-date" datepicker width issue.
