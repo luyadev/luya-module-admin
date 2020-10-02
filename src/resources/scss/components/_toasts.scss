@@ -27,22 +27,14 @@
     }
 
     .alert {
-        position: relative;
-        margin-bottom: 5px;
-        padding: $content-padding-x $content-padding-y $content-padding-x 20px;
+        padding:10px 15px;
+        font-weight: 300;
+        font-size:16px;
+        margin-bottom: 0px;
+        margin-top:20px;
     }
 
     &-icon {
-        position: absolute;
-        left: 5px;
-        top: 13px;
-    }
-
-    &-close {
-        position: absolute;
-        right: 1px;
-        top: 3px;
-        font-size: 12px;
-        opacity: .3;
+        font-weight: bold;
     }
 }
