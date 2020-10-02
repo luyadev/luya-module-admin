@@ -5,7 +5,7 @@ namespace luya\admin\tests\admin\controllers;
 use admintests\AdminModelTestCase;
 use luya\admin\controllers\DefaultController;
 use luya\admin\models\UserDevice;
-use luya\cms\admin\controllers\DefaultController as ControllersDefaultController;
+use luya\admin\controllers\DefaultController as ControllersDefaultController;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\web\Response;
 
@@ -32,8 +32,12 @@ class DefaultControllerTest extends AdminModelTestCase
 
     public function testRenderDefault()
     {
+        $this->createAdminUserFixture();
+        $this->createAdminUserLoginFixture();
         $ctrl = new ControllersDefaultController('default', $this->app->getModule('admin'));
 
-        $this->assertNotEmpty($ctrl->actionIndex());
+        $r = $ctrl->actionIndex();
+
+        $this->assertNotEmpty($r);
     }
 }
