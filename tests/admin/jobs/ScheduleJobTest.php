@@ -8,6 +8,7 @@ use luya\admin\models\Scheduler;
 use luya\admin\models\Tag;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
+use yii\base\InvalidCallException;
 
 class ScheuldeJobTest extends AdminConsoleSqLiteTestCase
 {
@@ -48,5 +49,17 @@ class ScheuldeJobTest extends AdminConsoleSqLiteTestCase
         $tag = Tag::findOne(1);
 
         $this->assertSame('foobar', $tag->name);
+    }
+
+    public function testNotFoundScheduler()
+    {
+        new NgRestModelFixture([
+            'modelClass' => Scheduler::class,
+        ]);
+        $job = new ScheduleJob();
+        $job->schedulerId = 2;
+
+        $this->expectException(InvalidCallException::class);
+        $job->execute($this->app->adminqueue);
     }
 }
