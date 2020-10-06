@@ -2,6 +2,18 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 3.6 to 3.7
+
++ [#576](https://github.com/luyadev/luya-module-admin/pull/576) Using the `yii\mutex\MysqlMutex` over `yii\mutex\FileMutex` as default mutex handler for admin queue components. This is due to less file permission conflicts when running cli consoles and runtime folder. In order to ensure the old behavior use the configuration below:
+```php
+'modules' => [
+    'admin' => [
+        'class' => 'luya\admin\Module',
+        'queueMutexClass' => 'yii\mutex\FileMutex',
+    ]
+]
+```
+
 ## from 3.1 to 3.2
 
 + [#484](https://github.com/luyadev/luya-module-admin/pull/484) Changed `applyFilter()` method signature in class `luya\admin\modles\StorageFilterChain` from `applyFilter($loadFromPath, $imageSavePath)` to `applyFilter(ImageInterface $image, array $saveOptions)`. Since version 3.2 the applyFilter requires an instance of `Imagine\Image\ImageInterface` and returns an array containing two elements, the image object and the saving options. This method is internally used to apply the filter chain and is typically not used in an application. If you are, for some reason, calling this method update to the new signature.

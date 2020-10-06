@@ -24,6 +24,7 @@ class NgRestTestCase extends BaseNgRestTestCase
             'modules' => [
                 'admin' => [
                     'class' => 'luya\admin\Module',
+                    'queueMutexClass' => 'yii\mutex\FileMutex',
                 ],
             ],
         ];

@@ -5,6 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.7.0
 
+> This release contains a behavior change where MysqlMutex is default instead of FileMutex. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#576](https://github.com/luyadev/luya-module-admin/pull/576) Use `MysqlMutex` as default Mutex class for the Admin Queue instead of `FileMutex` due to people have problems with file permissiosn when running the queue in cli mode. MysqlMutex is also the better approach when multiple works might run on different workloads.
 + [#575](https://github.com/luyadev/luya-module-admin/pull/575) New hungarian language option.
 + [#574](https://github.com/luyadev/luya-module-admin/pull/574) Add new toasts design (stronger colors).
 + [#577](https://github.com/luyadev/luya-module-admin/pull/577) Queue Scheduler Job loads only the target attribute into the model.

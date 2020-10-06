@@ -39,6 +39,7 @@ class AdminModelTestCase extends WebApplicationTestCase
             'modules' => [
                 'admin' => [
                     'class' => 'luya\admin\Module',
+                    'queueMutexClass' => 'yii\mutex\FileMutex',
                 ],
             ],
         ];
