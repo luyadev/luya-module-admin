@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.7.0
 
++ [#575](https://github.com/luyadev/luya-module-admin/pull/575) New hungarian language option.
 + [#574](https://github.com/luyadev/luya-module-admin/pull/574) Add new toasts design (stronger colors).
 
 ## 3.6.1 (1. October 2020)
