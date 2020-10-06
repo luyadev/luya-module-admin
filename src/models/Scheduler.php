@@ -71,7 +71,7 @@ class Scheduler extends \yii\db\ActiveRecord
     public function triggerJob()
     {
         $class = $this->model_class;
-        $model = $class::ngRestFind()->byPrimaryKey($this->primary_key)->one();
+        $model = $class::ngRestFind()->select(array_merge($class::primaryKey(), [$this->target_attribute_name]))->byPrimaryKey($this->primary_key)->one();
 
         if ($model) {
             $oldValue = $model->{$this->target_attribute_name};
