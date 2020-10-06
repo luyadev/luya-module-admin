@@ -26,6 +26,17 @@ class ScheulderTest extends AdminModelTestCase
         new NgRestModelFixture([
             'modelClass' => Tag::class,
         ]);
+
+
+        $this->createAdminLangFixture([
+            1 => [
+                'id' => 1,
+                'name' => 'en',
+                'short_code' => 'en',
+                'is_default' => 1,
+                'is_deleted' => 0,
+            ]
+        ]);
     }
 
     public function testNotFoundModel()
@@ -41,7 +52,6 @@ class ScheulderTest extends AdminModelTestCase
     public function testUnableToSaveDueToValidationError()
     {
         $this->createAdminNgRestLogFixture();
-        $this->createAdminLangFixture();
 
         $tag = new Tag();
         $tag->name = 'unique';
