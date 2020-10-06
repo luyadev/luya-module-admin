@@ -550,7 +550,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'adminqueue' => [
                 'class' => 'yii\queue\db\Queue',
                 'db' => 'db',
-                'mutex' => 'yii\mutex\FileMutex',
+                'mutex' => 'yii\mutex\MysqlMutex',
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior',
