@@ -12,6 +12,7 @@ This document will help you upgrading from a LUYA admin module version into anot
         'queueMutexClass' => 'yii\mutex\FileMutex',
     ]
 ]
+```
 
 ## from 3.1 to 3.2
 
