@@ -217,6 +217,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 2.0.4
      */
     public $bootstrapQueueCli = true;
+
+    /**
+     * @var string The mutex class which should be used for the admin queue component. Changed from `yii\mutex\FileMutex` to `yii\mutex\MysqlMutex` as a database connection
+     * is required in the admin area and there are no conflicts with file permissions when running in cli mode. In order to ensure the old behavior use the FileMutex class.
+     * @since 3.7.0
+     */
+    public $queueMutexClass = 'yii\mutex\MysqlMutex';
     
     /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
@@ -550,7 +557,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'adminqueue' => [
                 'class' => 'yii\queue\db\Queue',
                 'db' => 'db',
-                'mutex' => 'yii\mutex\MysqlMutex',
+                'mutex' => $this->queueMutexClass,
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior',
