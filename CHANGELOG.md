@@ -12,6 +12,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#575](https://github.com/luyadev/luya-module-admin/pull/575) New hungarian language option.
 + [#574](https://github.com/luyadev/luya-module-admin/pull/574) Add new toasts design (stronger colors).
 + [#577](https://github.com/luyadev/luya-module-admin/pull/577) Queue Scheduler Job loads only the target attribute into the model.
++ [#579](https://github.com/luyadev/luya-module-admin/pull/579) Updated Portuguese translation files.
 
 ## 3.6.1 (1. October 2020)
 
