@@ -132,7 +132,7 @@ abstract class BaseSpecs implements SpecInterface
             $activeRecord = $this->createObjectFromClassName($activeRecordClassName);
 
             if ($activeRecord && method_exists($activeRecord, 'extraFields')) {
-               $expandExample = implode(",", $activeRecord->extraFields());
+                $expandExample = implode(",", $activeRecord->extraFields());
             } else {
                 $expandExample = null;
             }
@@ -355,7 +355,7 @@ abstract class BaseSpecs implements SpecInterface
      */
     protected function generateResponseArrayFromModel($modelClassName, $isArray = false)
     {
-        $key = implode("", [$modelClassName, $isArray]);
+        $key = implode("", [$modelClassName, (int) $isArray]);
 
         if (array_key_exists($key, self::$contexts)) {
             return self::$contexts[$key];
@@ -381,9 +381,13 @@ abstract class BaseSpecs implements SpecInterface
 
         $schema = false;
 
-        if ($object instanceof ActiveRecord) {
-            // ensure the active record table exists
-            if (Yii::$app->db->getTableSchema($object::tableName(), true)) {
+        if ($object instanceof Model) {
+            // if its an active record model (which inhertis from model), additionaly check for whether the table exists or not
+            if ($object instanceof ActiveRecord) {
+                if (Yii::$app->db->getTableSchema($object::tableName(), true)) {
+                    $schema = new ActiveRecordToSchema($this, $object);
+                }
+            } else {
                 $schema = new ActiveRecordToSchema($this, $object);
             }
         } elseif ($object instanceof ActiveDataProvider) {
