@@ -209,7 +209,7 @@ class ProxyController extends Controller
             $file = Yii::$app->storage->getFile($fileId);
             /* @var $file \luya\admin\file\Item */
             if ($file->fileExists) {
-                return Yii::$app->response->sendFile($file->serverSource, null, ['mimeType' => $file->mimeType])->send();
+                return Yii::$app->response->sendContentAsFile($file->getContent(), $file->serverSource, null, ['mimeType' => $file->mimeType])->send();
             }
             
             throw new NotFoundHttpException("The requested file '".$file->serverSource."' does not exist in the storage folder.");
