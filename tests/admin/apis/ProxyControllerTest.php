@@ -111,4 +111,31 @@ class ProxyControllerTest extends AdminModelTestCase
         $this->expectException(HeadersAlreadySentException::class);
         $ctrl->actionFileProvider('machine', 'token', 1);
     }
+
+    public function testActionIndex()
+    {
+        $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
+        $response = $ctrl->actionIndex('machine', sha1('machine'));
+
+        $this->assertArrayHasKey('providerUrl', $response);
+        $this->assertArrayHasKey('requestCloseUrl', $response);
+        $this->assertArrayHasKey('fileProviderUrl', $response);
+        $this->assertArrayHasKey('imageProviderUrl', $response);
+        $this->assertArrayHasKey('buildToken', $response);
+        $this->assertArrayHasKey('config', $response);
+
+        $this->assertArrayHasKey('rowsPerRequest', $response['config']);
+        $this->assertArrayHasKey('tables', $response['config']);    
+        $this->assertArrayHasKey('storageFilesCount', $response['config']);
+    }
+
+    public function testActionDataProvider()
+    {
+        $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
+        $create = $ctrl->actionIndex('machine', sha1('machine'));
+
+        $response = $ctrl->actionDataProvider('machine', sha1($create['buildToken']), 'admin_storage_image', 10);
+
+        $this->assertEmpty($response);
+    }
 }
