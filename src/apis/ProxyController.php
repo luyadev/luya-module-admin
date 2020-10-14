@@ -147,7 +147,7 @@ class ProxyController extends Controller
             throw new ForbiddenHttpException("The expiration time ".date("d.m.Y H:i:s", $build->expiration_time)." has exceeded.");
         }
         
-        if ($build->proxyMachine->identifier !== $machine) {
+        if (!$build->proxyMachine || $build->proxyMachine->identifier !== $machine) {
             throw new ForbiddenHttpException("Invalid machine identifier for current build.");
         }
         
@@ -208,11 +208,11 @@ class ProxyController extends Controller
             
             $file = Yii::$app->storage->getFile($fileId);
             /* @var $file \luya\admin\file\Item */
-            if ($file->fileExists) {
+            if ($file && $file->fileExists) {
                 return Yii::$app->response->sendContentAsFile($file->getContent(), $file->serverSource, null, ['mimeType' => $file->mimeType])->send();
             }
             
-            throw new NotFoundHttpException("The requested file '".$file->serverSource."' does not exist in the storage folder.");
+            throw new NotFoundHttpException("The requested file '".$fileId."' does not exist in the storage folder.");
         }
     }
     
@@ -236,11 +236,11 @@ class ProxyController extends Controller
     
             $image = Yii::$app->storage->getImage($imageId);
             /* @var $image \luya\admin\image\Item */
-            if ($image->fileExists) {
+            if ($image && $image->fileExists) {
                 return Yii::$app->response->sendFile($image->serverSource)->send();
             }
             
-            throw new NotFoundHttpException("The requested image '".$image->serverSource."' does not exist in the storage folder.");
+            throw new NotFoundHttpException("The requested image '".$imageId."' does not exist in the storage folder.");
         }
     }
     

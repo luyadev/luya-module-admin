@@ -14,6 +14,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#577](https://github.com/luyadev/luya-module-admin/pull/577) Queue Scheduler Job loads only the target attribute into the model.
 + [#579](https://github.com/luyadev/luya-module-admin/pull/579) Updated Portuguese translation files.
 + [#580](https://github.com/luyadev/luya-module-admin/pull/580) Fix issue where the OpenApi parser does not return models which are instance of `yii\base\Model`.
++ [#581](https://github.com/luyadev/luya-module-admin/pull/581) Ensure the proxy api to synchronise files uses the `sendContentAsFile` in order to support 3rd party storage systems like AWS.
 
 ## 3.6.1 (1. October 2020)
 
