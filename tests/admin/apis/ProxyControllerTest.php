@@ -7,7 +7,9 @@ use luya\admin\apis\ProxyController;
 use luya\admin\models\ProxyBuild;
 use luya\admin\models\ProxyMachine;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use yii\base\ErrorException;
 use yii\web\ForbiddenHttpException;
+use yii\web\HeadersAlreadySentException;
 use yii\web\NotFoundHttpException;
 
 class ProxyControllerTest extends AdminModelTestCase
@@ -57,6 +59,13 @@ class ProxyControllerTest extends AdminModelTestCase
 
         $this->createAdminStorageFileFixture();
         $this->createAdminStorageImageFixture();
+
+
+        $this->app->storage->addDummyFile(['id' => 1]);
+        $this->app->storage->insertDummyFiles();
+
+        $this->app->storage->addDummyImage(['id' => 1]);
+        $this->app->storage->insertDummyImages();
     }
 
     public function testActionImageProviderUnableToFindBuild()
@@ -71,6 +80,13 @@ class ProxyControllerTest extends AdminModelTestCase
     {
         $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
         $this->expectException(NotFoundHttpException::class);
+        $ctrl->actionImageProvider('machine', 'token', 2000);
+    }
+
+    public function testActionImageProvide()
+    {
+        $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
+        $this->expectException(ErrorException::class);
         $ctrl->actionImageProvider('machine', 'token', 1);
     }
 
@@ -86,6 +102,13 @@ class ProxyControllerTest extends AdminModelTestCase
     {
         $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
         $this->expectException(NotFoundHttpException::class);
+        $ctrl->actionFileProvider('machine', 'token', 2000);
+    }
+
+    public function testActionFileProvide()
+    {
+        $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
+        $this->expectException(HeadersAlreadySentException::class);
         $ctrl->actionFileProvider('machine', 'token', 1);
     }
 }

@@ -43,7 +43,7 @@ class ProxyBuild extends NgRestModel
             [['machine_id', 'timestamp', 'expiration_time'], 'integer'],
             [['is_complet'], 'boolean'],
             [['config'], 'string'],
-            [['build_token'], 'string', 'max' => 180],
+            [['build_token'], 'string', 'max' => 190],
             [['build_token'], 'unique'],
         ];
     }
