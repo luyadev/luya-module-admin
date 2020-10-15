@@ -86,7 +86,7 @@ class ProxyControllerTest extends AdminModelTestCase
     public function testActionImageProvide()
     {
         $ctrl = new ProxyController('proxy', $this->app->getModule('admin'));
-        $this->expectException(ErrorException::class);
+        $this->expectException(HeadersAlreadySentException::class);
         $ctrl->actionImageProvider('machine', 'token', 1);
     }
 

@@ -237,7 +237,7 @@ class ProxyController extends Controller
             $image = Yii::$app->storage->getImage($imageId);
             /* @var $image \luya\admin\image\Item */
             if ($image && $image->fileExists) {
-                return Yii::$app->response->sendContentAsFile($image->getContent, $image->systemFileName)->send();
+                return Yii::$app->response->sendContentAsFile($image->getContent(), $image->systemFileName)->send();
             }
             
             throw new NotFoundHttpException("The requested image '".$imageId."' does not exist in the storage folder.");
