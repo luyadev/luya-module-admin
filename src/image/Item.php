@@ -22,6 +22,7 @@ use luya\admin\storage\ItemAbstract;
  * @property integer $resolutionHeight Get the image resolution height.
  * @property \luya\admin\file\Item $file The file object where the image was created from.
  * @property string $systemFileName the system file name.
+ * @property string $content The the image file content.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -148,6 +149,7 @@ class Item extends ItemAbstract
     }
     
     /**
+     * Get the filename on the filesystem.
      *
      * @return string
      * @since 1.2.0
@@ -157,6 +159,17 @@ class Item extends ItemAbstract
         return $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
     }
     
+    /**
+     * Get the content of the image
+     *
+     * @return string
+     * @since 3.7.0
+     */
+    public function getContent()
+    {
+        return Yii::$app->storage->fileSystemContent($this->systemFileName);
+    }
+
     /**
      * Get the image resolution width in Pixel.
      *
