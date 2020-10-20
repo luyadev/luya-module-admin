@@ -31,6 +31,15 @@ use luya\admin\models\Tag;
  * }
  * ```
  *
+ * To get all records with one or more tags matching:
+ * ```php
+ * $matchTags = [1, 2, 3];
+ * Model::find()
+ *     ->joinWith(['tags'])
+ *     ->andWhere(['in', 'tag_id', $matchTags])
+ *     ->all();
+ * ```
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.2
  */
