@@ -16,18 +16,17 @@ use luya\admin\traits\TaggableTrait;
  * Usage example of registering the Tag Active Window:
  *
  * ```php
- * $config->aw->load(['class' => '\luya\admin\aws\TagActiveWindow']);
+ * public function ngRestActiveWindows()
+ * {
+ *     return [
+ *          ['class' => TaggableActiveWindow::class]
+ *     ];
+ * }
  * ```
  *
- * If you want to define a specific table name instead of the table name where the active window is attached to use:
+ * If you have assigned the {{luya\admin\aws\TaggableActiveWindow}} aws to an ngrest model you can use the {{luya\admin\traits\TaggableTrait}} to access the data.
  *
- * ```php
- * $config->aw->load(['class' => '\luya\admin\aws\TagActiveWindow', 'tableName' => 'virtualTableName']);
- * ```
- *
- * If you have assigned the {{luya\admin\aws\TagActiveWindow}} aws to an ngrest model you can use the {{luya\admin\traits\TagsTrait}} to access the data.
- *
- * For example when the {{luya\admin\traits\TagsTrait}} is used you can get the data for an active record:
+ * For example when the {{luya\admin\traits\TaggableTrait}} is used you can get the data for an active record:
  *
  * ```php
  * $tags = Model::findOne(1)->tags;
