@@ -42,7 +42,7 @@ class RenderCrudView extends View
             'apiListQueryString' => $this->context->apiQueryString('list'),
             'apiUpdateQueryString' => $this->context->apiQueryString('update'),
             'apiServicesQueryString' => $this->context->apiQueryString('services'),
-            'apiExportQueryString' => $this->context->apiQueryString('export'),
+            'apiExportQueryString' => $this->context->apiQueryString('list'), // list for export will also expand i18n values which is requried when exporting ngrest filters
             'apiEndpoint' => $this->context->getApiEndpoint(),
             'list' => $this->context->getFields('list'),
             'create' => $this->context->getFields('create'),

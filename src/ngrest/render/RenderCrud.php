@@ -129,8 +129,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $attributes = [];
         foreach ($this->model->attributes() as $key) {
-            $attributes[$key] = $this->model->getAttributeLabel($key) . ' ('.$key.')';
+            $attributes[$key] = $this->model->getAttributeLabel($key);
         }
+        
+        asort($attributes);
         
         return $attributes;
     }

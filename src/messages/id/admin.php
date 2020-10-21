@@ -541,4 +541,5 @@ return [
     'i18n_required_validator_invalid_format' => 'Attribut  \"{attribute}\" harus berupa array.',
     'i18n_required_validator_missing_key' => 'Kunci bahasa \"{lang}\" hilang dan diwajibkan.',
     'i18n_required_validator_invalid_empty_value' => 'Nilai untuk bahasa \"{lang}\" tidak dapat kosong.',
+    'crud_exportdata_col_filter' => 'Filter',
 ];

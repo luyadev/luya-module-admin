@@ -33,6 +33,9 @@ $filters = Angular::optionsArrayInput($filters);
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
                 <modal is-modal-hidden="isExportModalHidden" modal-title="<?= Module::t('crud_exportdata_btn'); ?>">
                     <div ng-if="!isExportModalHidden">
+                        <?php if (!empty($filters)): ?>
+                        <?= Angular::select('exportdata.filter', Module::t('crud_exportdata_col_filter'), $filters); ?>
+                        <?php endif; ?>
                         <?= Angular::radio('exportdata.type', Module::t('crud_exportdata_col_format'), ['xlsx' => Module::t('crud_exportdata_col_format_xlsx'), 'csv' => Module::t('crud_exportdata_col_format_csv')]); ?>
                         <?php // Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]);?>
                         <?= Angular::checkboxArray('exportdata.attributes', Module::t('crud_exportdata_col_columns'), $downloadAttributes, ['preselect' => true]); ?>
