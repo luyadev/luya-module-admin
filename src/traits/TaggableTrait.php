@@ -9,7 +9,7 @@ use luya\admin\models\Tag;
  *
  * This trait can be assigned in order to read the tag data for an ActiveRecord model.
  *
- * See {{luya\admin\aws\TaggableActiveWindowin}} order to atach the TagActiveWindow.
+ * See {{luya\admin\aws\TaggableActiveWindow}} order to atach the TagActiveWindow.
  *
  * When the TagsTrait is attached to an {{luya\admin\ngrest\base\NgRestModel}} use the trait as below:
  *
