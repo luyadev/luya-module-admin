@@ -11,6 +11,7 @@ use luya\admin\Module;
 use luya\helpers\FileHelper;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
+use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 class UserControllerTest extends AdminModelTestCase
@@ -144,5 +145,13 @@ class UserControllerTest extends AdminModelTestCase
         $response = $ctrl->actionExport();
 
         $this->assertArrayHasKey('url', $response);
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+            'filter' => 'Does not exists',
+        ]);
+
+        $this->expectException(InvalidCallException::class);
+        $response = $ctrl->actionExport();
     }
 }
