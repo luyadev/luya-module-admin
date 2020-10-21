@@ -8,6 +8,7 @@ use luya\admin\apis\UserController;
 use luya\admin\components\Auth;
 use luya\admin\models\UserDevice;
 use luya\admin\Module;
+use luya\helpers\FileHelper;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
 use yii\web\NotFoundHttpException;
@@ -106,6 +107,7 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testExportWithoutFilter()
     {
+        FileHelper::createDirectory(Yii::getAlias('@runtime'));
         $this->createAdminLangFixture();
         $this->createAdminUserFixture();
         $this->createAdminUserAuthNotificationTable();
@@ -125,6 +127,7 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testExportFilter()
     {
+        FileHelper::createDirectory(Yii::getAlias('@runtime'));
         $this->createAdminLangFixture();
         $this->createAdminUserFixture();
         $this->createAdminUserAuthNotificationTable();
