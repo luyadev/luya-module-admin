@@ -136,9 +136,10 @@
 
 		$scope.isExportModalHidden = true;
 
-		$scope.exportdata = {header:1,type:"xlsx"};
+		$scope.exportdata = {header:1, type:"xlsx"};
 
 		$scope.toggleExportModal = function() {
+			$scope.exportdata.filter = $scope.config.filter;
 			$scope.isExportModalHidden = !$scope.isExportModalHidden;
 		};
 

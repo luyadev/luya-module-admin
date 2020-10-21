@@ -8,8 +8,10 @@ use luya\admin\apis\UserController;
 use luya\admin\components\Auth;
 use luya\admin\models\UserDevice;
 use luya\admin\Module;
+use luya\helpers\FileHelper;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
+use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 class UserControllerTest extends AdminModelTestCase
@@ -102,5 +104,54 @@ class UserControllerTest extends AdminModelTestCase
                 ]
             ], $data);
         });
+    }
+
+    public function testExportWithoutFilter()
+    {
+        FileHelper::createDirectory(Yii::getAlias('@runtime'));
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserAuthNotificationTable();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+        ]);
+        $ctrl = new UserController('id', $this->app->getModule('admin'));
+
+        $response = $ctrl->actionExport();
+
+        $this->assertArrayHasKey('url', $response);
+    }
+
+    public function testExportFilter()
+    {
+        FileHelper::createDirectory(Yii::getAlias('@runtime'));
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserAuthNotificationTable();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+            'filter' => 'Removed',
+        ]);
+        $ctrl = new UserController('id', $this->app->getModule('admin'));
+
+        $response = $ctrl->actionExport();
+
+        $this->assertArrayHasKey('url', $response);
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+            'filter' => 'Does not exists',
+        ]);
+
+        $this->expectException(InvalidCallException::class);
+        $response = $ctrl->actionExport();
     }
 }

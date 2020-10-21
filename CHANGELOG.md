@@ -15,6 +15,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#579](https://github.com/luyadev/luya-module-admin/pull/579) Updated Portuguese translation files.
 + [#580](https://github.com/luyadev/luya-module-admin/pull/580) Fix issue where the OpenApi parser does not return models which are instance of `yii\base\Model`.
 + [#581](https://github.com/luyadev/luya-module-admin/pull/581) Ensure the proxy api to synchronise files uses the `sendContentAsFile` in order to support 3rd party storage systems like AWS.
++ [#583](https://github.com/luyadev/luya-module-admin/pull/583) Its now possible to export CRUD data for a given filter. Using `ngRestFilters()` data to display the filters in the export mask in preselect the current active filter.
 
 ## 3.6.1 (1. October 2020)
 

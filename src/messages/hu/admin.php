@@ -458,4 +458,5 @@ return [
     'i18n_required_validator_invalid_format' => 'A megadott (z)\\ "{attribútum}\\” attribútumnak tömbtípusnak kell lennie.',
     'i18n_required_validator_missing_key' => 'A (z)\\ "{lang}\\” nyelvi kulcs hiányzik, és szükséges.',
     'i18n_required_validator_invalid_empty_value' => 'A (z)\\ "{lang}\\” nyelv értéke nem lehet üres.',
+    'crud_exportdata_col_filter' => 'Filter',
 ];

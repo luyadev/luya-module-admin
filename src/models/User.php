@@ -167,7 +167,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function ngRestFilters()
     {
         return [
-            'Removed' => self::find()->andWhere(['is_api_user' => false]),
+            'Removed' => self::find()->where(['is_api_user' => false, 'is_deleted' => true]),
         ];
     }
     

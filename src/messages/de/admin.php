@@ -543,4 +543,5 @@ return [
     'i18n_required_validator_invalid_format' => 'Das Attribut \"{attribute}\" muss vom Typ Array sein.',
     'i18n_required_validator_missing_key' => 'Der Sprach-Key \"{lang}\" ist erforderlich.',
     'i18n_required_validator_invalid_empty_value' => 'Der Wert für die Sprache \"{lang}\" kann nicht leer sein.',
+    'crud_exportdata_col_filter' => 'Filter',
 ];

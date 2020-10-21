@@ -781,6 +781,7 @@ class Api extends RestActiveController
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
+        $filter = Yii::$app->request->getBodyParam('filter', null);
         $fields = ArrayHelper::getColumn($attributes, 'value');
         
         switch (strtolower($type)) {
@@ -793,8 +794,21 @@ class Api extends RestActiveController
                 $extension = 'xlsx';
                 break;
         }
+
+        if (!empty($filter)) {
+            $filter = Html::encode($filter);
+            $filtersList = $this->model->ngRestFilters();
+
+            if (!array_key_exists($filter, $filtersList)) {
+                throw new InvalidCallException("The requested filter '$filter' does not exists in the filter list.");
+            }
+
+            $query = $filtersList[$filter]->select($fields);
+        } else {
+            $query = $this->prepareListQuery()->select($fields);
+        }
         
-        $query = $this->prepareListQuery()->select($fields);
+        
 
         if (!in_array($type, ['xlsx', 'csv'])) {
             throw new InvalidConfigException("Invalid export type");
