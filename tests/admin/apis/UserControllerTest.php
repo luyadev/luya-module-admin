@@ -103,4 +103,43 @@ class UserControllerTest extends AdminModelTestCase
             ], $data);
         });
     }
+
+    public function testExportWithoutFilter()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserAuthNotificationTable();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+        ]);
+        $ctrl = new UserController('id', $this->app->getModule('admin'));
+
+        $response = $ctrl->actionExport();
+
+        $this->assertArrayHasKey('url', $response);
+    }
+
+    public function testExportFilter()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminUserFixture();
+        $this->createAdminUserAuthNotificationTable();
+        $this->createAdminUserGroupTable();
+        $this->createAdminAuthTable();
+        $this->createAdminGroupAuthTable();
+
+        Yii::$app->request->setBodyParams([
+            'type' => 'csv',
+            'filter' => 'Removed',
+        ]);
+        $ctrl = new UserController('id', $this->app->getModule('admin'));
+
+        $response = $ctrl->actionExport();
+
+        $this->assertArrayHasKey('url', $response);
+    }
 }
