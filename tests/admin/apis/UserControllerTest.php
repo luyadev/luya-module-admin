@@ -109,21 +109,15 @@ class UserControllerTest extends AdminModelTestCase
     public function testExportWithoutFilter()
     {
         PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $scope->createAndAllowApi('user');
+            $scope->createAndAllowApi('api-admin-user');
             FileHelper::createDirectory(Yii::getAlias('@runtime'));
-            $this->createAdminLangFixture();
-            $this->createAdminUserFixture();
-            $this->createAdminUserAuthNotificationTable();
-            $this->createAdminUserGroupTable();
-            $this->createAdminAuthTable();
-            $this->createAdminGroupAuthTable();
 
             Yii::$app->request->setBodyParams([
                 'type' => 'csv',
             ]);
-            $ctrl = new UserController('id', $this->app->getModule('admin'));
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
 
-            $response = $ctrl->actionExport();
+            $response = $scope->runControllerAction($ctrl, 'export');
 
             $this->assertArrayHasKey('url', $response);
         });
@@ -132,22 +126,16 @@ class UserControllerTest extends AdminModelTestCase
     public function testExportFilter()
     {
         PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $scope->createAndAllowApi('user');
+            $scope->createAndAllowApi('api-admin-user');
             FileHelper::createDirectory(Yii::getAlias('@runtime'));
-            $this->createAdminLangFixture();
-            $this->createAdminUserFixture();
-            $this->createAdminUserAuthNotificationTable();
-            $this->createAdminUserGroupTable();
-            $this->createAdminAuthTable();
-            $this->createAdminGroupAuthTable();
 
             Yii::$app->request->setBodyParams([
                 'type' => 'csv',
                 'filter' => 'Removed',
             ]);
-            $ctrl = new UserController('id', $this->app->getModule('admin'));
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
 
-            $response = $ctrl->actionExport();
+            $response = $scope->runControllerAction($ctrl, 'export');
 
             $this->assertArrayHasKey('url', $response);
 
@@ -157,7 +145,7 @@ class UserControllerTest extends AdminModelTestCase
             ]);
 
             $this->expectException(InvalidCallException::class);
-            $response = $ctrl->actionExport();
+            $response = $scope->runControllerAction($ctrl, 'export');
         });
     }
 }
