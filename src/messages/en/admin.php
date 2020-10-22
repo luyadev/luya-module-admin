@@ -511,7 +511,7 @@ return [
     'crop_size_desktop' => 'Desktop',
     'crop_size_mobile' => 'Mobile',
     'crop_modal_title' => 'Image Cropping',
-    'crop_success' => 'File has been cropped an saved.',
+    'crop_success' => 'File has been cropped and saved.',
     'file_caption_success' => 'Captions has been updated.',
     'crop_quality_high' => 'High',
     'crop_quality_medium' => 'Medium',
