@@ -706,7 +706,6 @@ zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
                         $scope.input.showWindow = false;
                     });
                 } else {
-                    console.log($scope.$parent);
                     if (typeof $scope.$parent.loadService == 'function') {
                         $scope.$parent.loadService();
                     }
@@ -1558,6 +1557,8 @@ zaa.directive("zaaSelect", function () {
  * A selection based on a CRUD view.
  * 
  * <zaa-select-crud options={'route': 'module/controller/index', 'api':'admin/api-module-controller', 'fields':['id','title']}></zaa-select-crud>
+ * 
+ * @since 3.7.0
  */
 zaa.directive("zaaSelectCrud", function() {
     return {
