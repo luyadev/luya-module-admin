@@ -108,50 +108,56 @@ class UserControllerTest extends AdminModelTestCase
 
     public function testExportWithoutFilter()
     {
-        FileHelper::createDirectory(Yii::getAlias('@runtime'));
-        $this->createAdminLangFixture();
-        $this->createAdminUserFixture();
-        $this->createAdminUserAuthNotificationTable();
-        $this->createAdminUserGroupTable();
-        $this->createAdminAuthTable();
-        $this->createAdminGroupAuthTable();
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('user');
+            FileHelper::createDirectory(Yii::getAlias('@runtime'));
+            $this->createAdminLangFixture();
+            $this->createAdminUserFixture();
+            $this->createAdminUserAuthNotificationTable();
+            $this->createAdminUserGroupTable();
+            $this->createAdminAuthTable();
+            $this->createAdminGroupAuthTable();
 
-        Yii::$app->request->setBodyParams([
-            'type' => 'csv',
-        ]);
-        $ctrl = new UserController('id', $this->app->getModule('admin'));
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+            ]);
+            $ctrl = new UserController('id', $this->app->getModule('admin'));
 
-        $response = $ctrl->actionExport();
+            $response = $ctrl->actionExport();
 
-        $this->assertArrayHasKey('url', $response);
+            $this->assertArrayHasKey('url', $response);
+        });
     }
 
     public function testExportFilter()
     {
-        FileHelper::createDirectory(Yii::getAlias('@runtime'));
-        $this->createAdminLangFixture();
-        $this->createAdminUserFixture();
-        $this->createAdminUserAuthNotificationTable();
-        $this->createAdminUserGroupTable();
-        $this->createAdminAuthTable();
-        $this->createAdminGroupAuthTable();
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('user');
+            FileHelper::createDirectory(Yii::getAlias('@runtime'));
+            $this->createAdminLangFixture();
+            $this->createAdminUserFixture();
+            $this->createAdminUserAuthNotificationTable();
+            $this->createAdminUserGroupTable();
+            $this->createAdminAuthTable();
+            $this->createAdminGroupAuthTable();
 
-        Yii::$app->request->setBodyParams([
-            'type' => 'csv',
-            'filter' => 'Removed',
-        ]);
-        $ctrl = new UserController('id', $this->app->getModule('admin'));
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                'filter' => 'Removed',
+            ]);
+            $ctrl = new UserController('id', $this->app->getModule('admin'));
 
-        $response = $ctrl->actionExport();
+            $response = $ctrl->actionExport();
 
-        $this->assertArrayHasKey('url', $response);
+            $this->assertArrayHasKey('url', $response);
 
-        Yii::$app->request->setBodyParams([
-            'type' => 'csv',
-            'filter' => 'Does not exists',
-        ]);
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                'filter' => 'Does not exists',
+            ]);
 
-        $this->expectException(InvalidCallException::class);
-        $response = $ctrl->actionExport();
+            $this->expectException(InvalidCallException::class);
+            $response = $ctrl->actionExport();
+        });
     }
 }
