@@ -2761,11 +2761,19 @@ zaa.directive('storageImageCrudList', function () {
                 if (n != o) {
                     $scope.imageSrc = null;
                 }
+
+                if (n) {
+                    $scope.evaluateImages();
+                }
             });
 
             $scope.$on('requestImageSourceReady', function () {
+                $scope.evaluateImages();
+            });
+
+            $scope.evaluateImages = function() {
                 // now access trough getImage of images service
-                if ($scope.imageId != 0) {
+                if ($scope.imageId != 0 && !$scope.imageSrc) {
                     ServiceImagesData.getImage($scope.imageId).then(function (response) {
                         if (response.tinyCropImage) {
                             $scope.imageSrc = response.tinyCropImage.source;
@@ -2779,10 +2787,10 @@ zaa.directive('storageImageCrudList', function () {
                         }
                     });
                 }
-            });
+            };
         }],
         template: function () {
-            return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
+            return '<img ng-show="imageSrc" ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid rounded border" />';
         }
     }
 });
