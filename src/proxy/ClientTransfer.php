@@ -2,7 +2,6 @@
 
 namespace luya\admin\proxy;
 
-
 use Yii;
 use Exception;
 use Curl\Curl;
@@ -85,7 +84,6 @@ class ClientTransfer extends BaseObject
                             $this->build->command->outputInfo('[+] File ' . $file->name . ' ('.$file->systemFileName.') downloaded.');
                         } else {
                             $this->build->command->outputError('[!] Downloaded file checksum "'.$md5.'" does not match server checksum "'.$file->getFileHash().'" for file ' . $file->systemFileName.'.');
-                            
                         }
                     } else {
                         $this->build->command->outputError('[!] Unable to temporary store the file ' . $file->systemFileName.'.');
@@ -140,7 +138,7 @@ class ClientTransfer extends BaseObject
 
     /**
      * Upload file to storage.
-     * 
+     *
      * Upload the given filename with its content into the websites storage system and return the md5 checksum of the uploaded file.
      *
      * @param string $fileName

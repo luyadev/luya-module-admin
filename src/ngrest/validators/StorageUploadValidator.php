@@ -12,9 +12,9 @@ use yii\base\InvalidConfigException;
  *
  * Compared to the {{luya\admin\validators\StorageUploadValidator}}, this validator will assigned the value
  * suited for NgRest model attributes with {{luya\admin\ngrest\plugins\File}} attribute type.
- * 
+ *
  * Therfore its required to use for the given attribute:
- * 
+ *
  * ```php
  * public function ngrestAttributeTypes()
  * {

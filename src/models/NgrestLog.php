@@ -23,7 +23,7 @@ use luya\behaviors\JsonBehavior;
  * @property string $pk_value
  * @property string $table_name
  * @property tinyint $is_delete
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -98,7 +98,7 @@ class NgrestLog extends NgRestModel
     {
         return [
             'user_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getUser(),
                 'relation' => 'user',
                 'labelField' => 'firstname,lastname'
@@ -125,7 +125,7 @@ class NgrestLog extends NgRestModel
             return false;
         }
         
-        return $oldValue;  
+        return $oldValue;
     }
 
     /**

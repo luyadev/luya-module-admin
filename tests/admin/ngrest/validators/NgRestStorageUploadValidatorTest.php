@@ -11,7 +11,6 @@ class NgRestStorageUploadValidatorTest extends AdminModelTestCase
 {
     public function testSingleUploadValdiator()
     {
-
         $this->createAdminStorageFileFixture();
         $this->createAdminNgRestLogFixture();
         $this->createAdminStorageImageFixture();

@@ -19,7 +19,7 @@ $groups = [];
 
 foreach ($config->getPointer('list') as $p) {
     $groups[$p['name']] = $p['alias'];
-} 
+}
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
 $filters = Angular::optionsArrayInput($filters);
 ?>

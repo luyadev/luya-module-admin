@@ -43,7 +43,7 @@ abstract class BaseSpecs implements SpecInterface
 
     /**
      * Get the context verbname:
-     * 
+     *
      * + get
      * + post
      * + delete
@@ -445,8 +445,7 @@ abstract class BaseSpecs implements SpecInterface
             if ($object instanceof Model) {
                 return new ActiveRecordToSchema($this, $object, $senderActiveRecordClassName);
             }
-        } catch(\Exception $e) {
-            
+        } catch (\Exception $e) {
         }
 
         return false;
@@ -466,7 +465,7 @@ abstract class BaseSpecs implements SpecInterface
                 Yii::$container->setSingleton($className);
             }
             return Yii::createObject($className);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Yii::warning("Error while creating the model class {$className}", __METHOD__);
         }
 

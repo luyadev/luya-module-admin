@@ -132,7 +132,6 @@ final class StorageFilterChain extends ActiveRecord
             // crop
             $image = Image::crop($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'));
             return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
-
         } elseif ($imagineEffectName == FilterInterface::EFFECT_THUMBNAIL) {
             // thumbnail
             $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
@@ -214,7 +213,7 @@ final class StorageFilterChain extends ActiveRecord
      * Get the value for a effect json key.
      *
      * @param string $key
-     * @return boolean|mixed If existing the value is returned 
+     * @return boolean|mixed If existing the value is returned
      */
     protected function getJsonValue($key)
     {

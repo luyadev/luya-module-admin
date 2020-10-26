@@ -29,8 +29,7 @@ class TimestampControllerTest extends AdminModelTestCase
             $this->assertArrayHasKey('useronline', $response);
             $this->assertArrayHasKey('forceReload', $response);
             $this->assertArrayHasKey('locked', $response);
-
-        }, function(PermissionScope $config) {
+        }, function (PermissionScope $config) {
             $config->userFixtureData = ['is_api_user' => 0];
         });
     }

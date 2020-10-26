@@ -10,23 +10,23 @@ use yii\validators\Validator;
 
 /**
  * Validate Required i18n Attributes.
- * 
+ *
  * Ensure the i18n attribute is correctly and also checks if all language keys are given and the values for each language is not empty.
- * 
+ *
  * Example usage:
- * 
+ *
  * ```php
  * [['title', 'location'], I18nRequiredValidator::class],
  * ```
- * 
- * In {{luya\admin\ngrest\base\NgRestModel}} scenarios it might be common to use 
- * 
+ *
+ * In {{luya\admin\ngrest\base\NgRestModel}} scenarios it might be common to use
+ *
  * ```php
  * [$this->i18n, I18nRequiredValidator::class],
  * ```
- * 
+ *
  * The validator will only validate if the attribute is available, therfore set the required validator if the attribute is required.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.6.0
  */
@@ -57,7 +57,7 @@ class I18nRequiredValidator extends Validator
      */
     public function validateAttribute($model, $attribute)
     {
-        // if skip if unchanged is enabled and active record and the attribute has not changed, skip this validation rule.   
+        // if skip if unchanged is enabled and active record and the attribute has not changed, skip this validation rule.
         if ($this->skipIfUnchanged && $model instanceof BaseActiveRecord) {
             if (!$model->isAttributeChanged($attribute)) {
                 return;
@@ -78,7 +78,7 @@ class I18nRequiredValidator extends Validator
         /** @var $langShortCode The language short code */
         foreach (Lang::find()->select(['short_code'])->asArray()->column() as $langShortCode) {
             if (!array_key_exists($langShortCode, $array)) {
-                $this->addError($model, $attribute, Module::t($this->missingKeyMessage,  ['lang' => $langShortCode]));
+                $this->addError($model, $attribute, Module::t($this->missingKeyMessage, ['lang' => $langShortCode]));
             } elseif (empty($array[$langShortCode])) {
                 $this->addError($model, $attribute, Module::t($this->emptyValueMessage, ['lang' => $langShortCode]));
             }

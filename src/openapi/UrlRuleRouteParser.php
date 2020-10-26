@@ -237,7 +237,6 @@ class UrlRuleRouteParser extends BasePathParser
 
             /** @var PhpDocUses $use */
             foreach ($actionSpecs->getPhpDocParser()->getUses() as $use) {
-                
                 if ($use->getType()->getIsClass()) {
                     $schema = $actionSpecs->createActiveRecordSchemaObjectFromClassName($use->getType()->getClassName());
                     if ($schema) {

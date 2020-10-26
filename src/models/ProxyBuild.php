@@ -16,7 +16,7 @@ use luya\admin\aws\DetailViewActiveWindow;
  * @property string $config
  * @property integer $is_complet
  * @property integer $expiration_time
- * 
+ *
  * @property ProxyMachine $proxyMachine
  * @property array $arrayConfig
  *

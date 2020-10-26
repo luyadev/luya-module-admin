@@ -39,7 +39,7 @@ class UserAccessTokenLoginEventTest extends AdminModelTestCase
     {
         $this->createAdminUserFixture();
 
-        $this->app->on(Module::EVENT_USER_ACCESS_TOKEN_LOGIN, function(UserAccessTokenLoginEvent $event) {
+        $this->app->on(Module::EVENT_USER_ACCESS_TOKEN_LOGIN, function (UserAccessTokenLoginEvent $event) {
             $event->login(new User());
         });
 

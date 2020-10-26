@@ -247,7 +247,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      * Returns an array with default order options.
-     * 
+     *
      * @return array
      */
     public function getDefaultOrder()

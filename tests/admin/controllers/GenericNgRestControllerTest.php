@@ -51,16 +51,13 @@ class GenericNgRestControllerTest extends AdminModelTestCase
         $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
 
         foreach ($this->controllers as $ctrl) {
-
             $ctrlObject = Yii::createObject(['class' => $ctrl], ['foo', $this->app]);
             $this->app->clear('adminmenu');
             $this->app->clear('auth');
 
             
 
-            PermissionScope::run($this->app, function(PermissionScope $scope) use ($ctrl, $ctrlObject) {
-
-                
+            PermissionScope::run($this->app, function (PermissionScope $scope) use ($ctrl, $ctrlObject) {
                 $class = $ctrlObject->modelClass;
                 $ctrl = Yii::createObject(['class' => $ctrl], [$class::ngRestApiEndpoint(), $this->app]);
                 $this->app->setComponents(['adminmenu' => ['class' => AdminMenu::class]]);
@@ -76,12 +73,10 @@ class GenericNgRestControllerTest extends AdminModelTestCase
                 ]);
     
                 $ctrl->setDescription('foo');
-                $this->assertNotNull($ctrl->getDescription()); 
+                $this->assertNotNull($ctrl->getDescription());
                 
                 $scope->runControllerAction($ctrl, 'index');
             });
-
-            
         }
     }
 }

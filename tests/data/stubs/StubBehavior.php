@@ -6,5 +6,4 @@ use yii\base\Behavior;
 
 class StubBehavior extends Behavior
 {
-    
 }

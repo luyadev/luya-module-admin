@@ -7,9 +7,9 @@ use yii\rest\Action;
 
 /**
  * Truncate Table
- * 
+ *
  * This truncates all the data for the given modelClass.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

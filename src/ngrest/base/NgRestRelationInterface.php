@@ -62,7 +62,7 @@ interface NgRestRelationInterface
     
     /**
      * Returns the tab label attribute name.
-     * 
+     *
      * In order to change the tab label, any of the available and exposed attributes can be taken. The attribute must be defined in
      * {{luya\admin\ngrest\base\NgRestModel::ngRestScopes()}} list scope. The tab can only display labels which are returned by the API.
      */

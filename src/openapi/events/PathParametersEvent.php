@@ -7,15 +7,15 @@ use yii\base\Event;
 
 /**
  * Path Paramters Event
- * 
+ *
  * This event is triggered when the paramters for a PathItem are generated.
- * 
+ *
  * The main intention is to have an option to
- * 
+ *
  * + add globalised params for every action, for example `_format`.
  * + Remove specific params by key, assuming this is not used or should be replaced by a more accurate specific text.
  * + Replace a specific key by new object
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.5.0
  */
@@ -48,7 +48,7 @@ class PathParametersEvent extends Event
     public $verbName;
 
     /**
-     * @var BaseSpecs The base spec class which triggers the event. 
+     * @var BaseSpecs The base spec class which triggers the event.
      */
     public $sender;
 }

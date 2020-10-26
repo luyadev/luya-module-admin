@@ -42,9 +42,9 @@ use yii\queue\db\Command;
 final class Module extends \luya\admin\base\Module implements CoreModuleInterface
 {
     /**
-     * This event is triggered when an access token is trying to login. 
-     * 
-     * @var string User login by Access-Token event. 
+     * This event is triggered when an access token is trying to login.
+     *
+     * @var string User login by Access-Token event.
      * @since 3.3.0
      */
     const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
@@ -244,7 +244,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * @var boolean Whether the api user log entries should be display in the module dashboard or not. This is disabled by default as ApiUsers might
      * create and update a lot of data.
-     * @since 3.2.0 
+     * @since 3.2.0
      */
     public $dashboardLogDisplayApiUserData = false;
 
@@ -438,7 +438,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * This setter method is used by the {{luya\web\Bootstrap::run()}} to assign all js transaltion files from the admin modules.
      *
      * @param array $translations
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0 
+     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
      */
     public function setJsTranslations(array $translations)
     {

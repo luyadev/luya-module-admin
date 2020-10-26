@@ -8,7 +8,7 @@ use luya\traits\CacheableTrait;
 
 /**
  * List
- * 
+ *
  * Returns all entries for the given model paginated by a number of elements.
  *
  * @author Basil Suter <basil@nadar.io>

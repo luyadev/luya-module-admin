@@ -8,13 +8,13 @@ use yii\base\InvalidConfigException;
 
 /**
  * Login by access token event
- * 
+ *
  * This event is raised during the {{luya\admin\models\User::findIdentityByAccessToken()}} process.
- * 
- * In order to login a given user set `$event->login($user)` 
- * 
+ *
+ * In order to login a given user set `$event->login($user)`
+ *
  * @property User $user
- * 
+ *
  * @since 3.3.0
  * @author Basil Suter <git@nadar.io>
  */

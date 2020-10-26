@@ -47,7 +47,6 @@ class GenericApiControllerTest extends AdminModelTestCase
         $this->createAdminLangFixture();
         $this->createAdminUserAuthNotificationTable();
         foreach ($this->controllers as $ctrl) {
-
             $ctrl = Yii::createObject(['class' => $ctrl], ['id', $this->app]);
 
             new NgRestModelFixture([

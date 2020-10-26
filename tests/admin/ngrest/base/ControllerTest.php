@@ -15,7 +15,6 @@ class ControllerTest extends AdminModelTestCase
 
     public function testIndex()
     {
-        
         PermissionScope::run($this->app, function (PermissionScope $scope) {
             $fixture = new NgRestModelFixture([
                 'modelClass' => User::class,

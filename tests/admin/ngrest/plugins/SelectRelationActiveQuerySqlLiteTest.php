@@ -212,5 +212,4 @@ class TestModel extends NgRestModel
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-    
 };

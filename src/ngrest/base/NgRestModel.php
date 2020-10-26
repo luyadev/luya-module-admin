@@ -204,7 +204,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Set the old json value from a i18n database value.
-     * 
+     *
      * This method is used when the ngrest plugins are overiding the values from the database. Therefore the original database
      * values can be stored here in order to retrieve those informations in later stage. f.e. when accessing language values for another
      * language the current application language
@@ -305,13 +305,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Returns the value of an i18n attribute for the given language.
-     * 
+     *
      * This method is commonly used in order to retrieve a value for a given language even though
      * the application language is different.
      *
      * @param string $attributeName The name of the attribute to find the value.
      * @param string $language The language short code.
-     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database. 
+     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database.
      * @return mixed|null Returns the value, either raw or converted trough the assigned plugin. If the language is not found (maybe not set already) null is returned.
      * @since 3.5.2
      */

@@ -82,6 +82,4 @@ class SelectRelationActiveQueryTest extends AdminTestCase
 
         $this->assertSame("John Doe", $online->user_id);
     }
-
-    
 }

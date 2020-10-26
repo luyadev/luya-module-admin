@@ -17,7 +17,7 @@ use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
  * @property integer $filter_id
  * @property integer $resolution_width
  * @property integer $resolution_height
- * 
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -101,13 +101,13 @@ class StorageImage extends NgRestModel
         return [
             'id' => 'number',
             'file_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getFile(),
                 'relation' => 'file',
                 'labelField' => 'name_original'
             ],
             'filter_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getFilter(),
                 'relation' => 'filter',
                 'labelField' => 'name'
@@ -134,8 +134,8 @@ class StorageImage extends NgRestModel
     public function ngRestFullQuerySearch($query)
     {
         return parent::ngRestFullQuerySearch($query)
-     		->joinWith(['file', 'filter'])
-     		->orFilterWhere([
+             ->joinWith(['file', 'filter'])
+             ->orFilterWhere([
                  'or',
                  ['like', 'name_original', $query],
                  ['like', 'name_new_compound', $query],
@@ -154,7 +154,7 @@ class StorageImage extends NgRestModel
 
     /**
      * Get Storage Filter.
-     * 
+     *
      * @return StorageFilter
      * @since 3.2.0
      */
@@ -272,7 +272,7 @@ class StorageImage extends NgRestModel
 
     /**
      * Delete the source of this image.
-     * 
+     *
      * @return boolean
      */
     public function deleteSource()

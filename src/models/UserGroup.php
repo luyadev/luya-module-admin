@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 
 /**
  * User Group Relation
- * 
+ *
  * The relation between a {{luya\admin\models\User}} and a {{luya\admin\models\Group}}.
  *
  * @property int $id
@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property int|null $group_id
  * @property Group $group
  * @property User $user
- * 
+ *
  * @since 3.3.0
  * @author Basil Suter <git@nadar.io>
  */

@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 
 /**
  * Group Auth Relation
- * 
+ *
  * The relation between and {{luya\admin\models\Auth}} and {{luya\admin\models\Group}}.
  *
  * @property int|null $group_id
@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property int|null $crud_delete
  * @property Group $group
  * @property Auth $auth
- * 
+ *
  * @since 3.3.0
  * @author Basil Suter <git@nadar.io>
  */

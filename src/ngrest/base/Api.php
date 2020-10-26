@@ -124,7 +124,7 @@ class Api extends RestActiveController
      * Auto add those relations to queries.
      *
      * > The relation will only eager load when available in **expand** get params. `?expand=user` f.e.
-     * 
+     *
      * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefinition in order to define
      * which relation should be us when.
      *

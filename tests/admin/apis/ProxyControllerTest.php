@@ -125,7 +125,7 @@ class ProxyControllerTest extends AdminModelTestCase
         $this->assertArrayHasKey('config', $response);
 
         $this->assertArrayHasKey('rowsPerRequest', $response['config']);
-        $this->assertArrayHasKey('tables', $response['config']);    
+        $this->assertArrayHasKey('tables', $response['config']);
         $this->assertArrayHasKey('storageFilesCount', $response['config']);
     }
 

@@ -147,7 +147,7 @@ class GeneratorTest extends AdminModelTestCase
     {
         $this->createAdminLangFixture();
         $urlManager = new UrlManager([
-            'rules' => 
+            'rules' =>
                 [
                     'this/is/my/pattern' => 'admin/account/dashboard'
                 ]
@@ -218,8 +218,7 @@ class GeneratorTest extends AdminModelTestCase
         $this->createAdminUserFixture();
         $this->createAdminGroupFixture(1);
 
-        Event::on(Generator::class, Generator::EVENT_PATH_PARAMETERS, function(PathParametersEvent $e) {
-
+        Event::on(Generator::class, Generator::EVENT_PATH_PARAMETERS, function (PathParametersEvent $e) {
             unset($e->params['_lang']);
 
             $e->params['foo'] = 'bar';

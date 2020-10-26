@@ -4,7 +4,7 @@ namespace luya\admin\apis;
 
 /**
  * Storage Image Controller.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
