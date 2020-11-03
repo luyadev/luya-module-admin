@@ -16,6 +16,7 @@ use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\components\Auth;
+use luya\admin\models\Tag;
 use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
@@ -529,7 +530,9 @@ class Api extends RestActiveController
 
         // check if taggable exists, if yes return all used tags for the
         if (ObjectHelper::isTraitInstanceOf($this->model, TaggableTrait::class)) {
-            $tags = $this->model->findTags();
+            $tags = ArrayHelper::toArray($this->model->findTags(), [
+                Tag::class => ['id', 'name']
+            ]);
         } else {
             $tags = false;
         }

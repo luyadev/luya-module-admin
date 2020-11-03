@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 3.7.1
 
 + [#587](https://github.com/luyadev/luya-module-admin/pull/587) Fixed a bug where it was not possible to update the current admin user due to wrong unique email validation.
++ [#588](https://github.com/luyadev/luya-module-admin/pull/588) Fixed a bug where the CRUD Tags filter does not appear anymore.
 
 ## 3.7.0 (26. October 2020)
 
