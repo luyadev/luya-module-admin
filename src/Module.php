@@ -281,6 +281,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
         'api-admin-ngrestlog' => 'luya\admin\apis\NgrestLogController',
         'api-admin-storageimage' => 'luya\admin\apis\StorageImageController',
+        'api-admin-property' => 'luya\admin\apis\PropertyController',
     ];
 
     public $apiRules = [
@@ -516,6 +517,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
+                    ->itemApi('menu_system_item_property', 'admin/property/index', 'widgets', 'api-admin-property')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
                 ->group('menu_group_log')
