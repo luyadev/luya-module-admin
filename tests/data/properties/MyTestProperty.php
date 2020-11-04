@@ -20,4 +20,9 @@ class MyTestProperty extends Property
     {
         return 'Label';
     }
+    
+    public function help()
+    {
+        return 'this is a help dialog';
+    }
 }
