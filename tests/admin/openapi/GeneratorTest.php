@@ -9,6 +9,7 @@ use luya\admin\models\Config;
 use luya\admin\models\Group;
 use luya\admin\models\Logger;
 use luya\admin\models\NgrestLog;
+use luya\admin\models\Property;
 use luya\admin\models\ProxyBuild;
 use luya\admin\models\ProxyMachine;
 use luya\admin\models\QueueLog;
@@ -103,6 +104,7 @@ class GeneratorTest extends AdminModelTestCase
     public function testGetPaths()
     {
         $this->createAdminLangFixture();
+        new NgRestModelFixture(['modelClass' => Property::class]);
         new NgRestModelFixture(['modelClass' => Logger::class]);
         $this->createAdminUserFixture();
         $this->createAdminGroupFixture(1);

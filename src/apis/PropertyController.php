@@ -5,7 +5,8 @@ namespace luya\admin\apis;
 /**
  * Property Controller.
  * 
- * File has been created with `crud/create` command. 
+ * @author Basil Suter <git@nadar.io>
+ * @since 3.7.0
  */
 class PropertyController extends \luya\admin\ngrest\base\Api
 {

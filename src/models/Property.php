@@ -42,10 +42,9 @@ class Property extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'module_name' => Yii::t('app', 'Module Name'),
-            'var_name' => Yii::t('app', 'Var Name'),
-            'class_name' => Yii::t('app', 'Class Name'),
+            'module_name' => 'Module Name',
+            'var_name' => 'Var Name',
+            'class_name' => 'Class Name',
         ];
     }
 
