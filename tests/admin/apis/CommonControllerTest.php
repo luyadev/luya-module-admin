@@ -4,8 +4,10 @@ namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
 use luya\admin\apis\CommonController;
+use luya\admin\models\Property;
 use luya\admin\models\Tag;
 use luya\admin\models\TagRelation;
+use luya\admin\tests\data\properties\MyTestProperty;
 use luya\testsuite\fixtures\ActiveRecordFixture;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
@@ -79,6 +81,45 @@ class CommonControllerTest extends AdminModelTestCase
             $response = $scope->runControllerAction($ctrl, 'tags');
 
             $this->assertSame([], $response);
+        });
+    }
+    
+    public function testDataProperties()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $this->createAdminLangFixture([]);
+            new NgRestModelFixture([
+                'modelClass' => Property::class,
+                'fixtureData' => [
+                    1 => [
+                        'id' => 1,
+                        'module_name' => 'admin',
+                        'var_name' => 'foobar',
+                        'class_name' => MyTestProperty::class,
+                    ]
+                ],
+            ]);
+            $scope->createAndAllowRoute('adminmodeltest/id/data-properties');
+            $ctrl = new CommonController('id', $this->app);
+            $tag = new NgRestModelFixture([
+                'modelClass' => Tag::class,
+                'fixtureData' => [
+                ]
+            ]);
+            $response = $scope->runControllerAction($ctrl, 'data-properties');
+
+            $this->assertSame([
+                [
+                    'id' => 1,
+                    'var_name' => 'barfoo',
+                    'option_json' => [],
+                    'label' => 'Label',
+                    'type' => 'zaa-text',
+                    'default_value' => false,
+                    'help' => null,
+                    'i18n' => false,
+                ]
+            ], $response);
         });
     }
 }

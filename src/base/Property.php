@@ -141,6 +141,17 @@ abstract class Property extends Component implements TypesInterface
     }
 
     /**
+     * Return a help text which will be display along with the attribute.
+     *
+     * @return string
+     * @since 3.8.0
+     */
+    public function help()
+    {
+        return null;
+    }
+
+    /**
      * If the property is requested in admin context and there is no value
      * the `defaultValue()` value response will be used.
      *

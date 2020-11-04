@@ -3,10 +3,10 @@
 namespace luya\admin\models;
 
 use Yii;
-use yii\db\ActiveRecord;
+use luya\admin\ngrest\base\NgRestModel;
 
 /**
- * ADMIN PROPERTY
+ * Admin Property
  *
  * Base classes for CMS properties which are set by import process.
  *
@@ -18,7 +18,7 @@ use yii\db\ActiveRecord;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-final class Property extends ActiveRecord
+class Property extends NgRestModel
 {
     /**
      * @inheritdoc
@@ -26,6 +26,26 @@ final class Property extends ActiveRecord
     public static function tableName()
     {
         return '{{%admin_property}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function ngRestApiEndpoint()
+    {
+        return 'api-admin-property';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'module_name' => 'Module Name',
+            'var_name' => 'Var Name',
+            'class_name' => 'Class Name',
+        ];
     }
 
     /**
@@ -45,13 +65,23 @@ final class Property extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public function ngRestAttributeTypes()
     {
         return [
-            'id' => 'ID',
-            'module_name' => 'Module Name',
-            'var_name' => 'Var Name',
-            'class_name' => 'Class Name',
+            'module_name' => 'raw',
+            'var_name' => 'raw',
+            'class_name' => 'raw',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestScopes()
+    {
+        return [
+            ['list', ['module_name', 'var_name', 'class_name']],
+            ['delete', false],
         ];
     }
     
