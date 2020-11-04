@@ -546,5 +546,5 @@ return [
 // 3.7.0
 
     'menu_system_item_property' => 'Properties',
-    'property_controller_description' => 'Properties can be attached to a [page](https://luya.io/guide/app-cmsproperties) (or other any custom integration). This provides a list of all available properties.',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases.',
 ];
