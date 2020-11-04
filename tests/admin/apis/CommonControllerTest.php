@@ -116,7 +116,7 @@ class CommonControllerTest extends AdminModelTestCase
                     'label' => 'Label',
                     'type' => 'zaa-text',
                     'default_value' => false,
-                    'help' => 'this is a help dialog',
+                    'help' => null,
                     'i18n' => false,
                 ]
             ], $response);
