@@ -43,6 +43,9 @@ trait AdminRestBehaviorTrait
         foreach (Yii::$app->adminLanguage->languages as $lang) {
             array_push($this->languages, $lang['short_code']);
         }
+
+        // disable session for rest usage
+        Yii::$app->adminuser->enableSession = false;
     }
     
     /**
