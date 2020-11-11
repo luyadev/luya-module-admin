@@ -4,7 +4,7 @@ namespace luya\admin\apis;
 
 /**
  * Property Controller.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.8.0
  */

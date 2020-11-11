@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.8.0
+## 3.8.0 (11. November 2020)
 
 + [#589](https://github.com/luyadev/luya-module-admin/pull/589) Add new help() method for page properties, added CRUD view for properties.
 + [#591](https://github.com/luyadev/luya-module-admin/pull/591) Disable session login for rest api calls.

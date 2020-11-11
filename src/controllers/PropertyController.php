@@ -6,7 +6,7 @@ use luya\admin\Module;
 
 /**
  * Property Controller.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.8.0
  */

@@ -221,7 +221,6 @@ class UrlRuleRouteParser extends BasePathParser
 
         $requestBody = false;
         if ($actionObject instanceof UpdateAction || $actionObject instanceof CreateAction) {
-
             $schema = $actionSpecs->createActiveRecordSchemaFromObject($actionObject, false);
 
             if (!$schema) {
