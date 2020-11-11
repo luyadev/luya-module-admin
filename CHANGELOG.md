@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#589](https://github.com/luyadev/luya-module-admin/pull/589) Add new help() method for page properties, added CRUD view for properties.
 + [#591](https://github.com/luyadev/luya-module-admin/pull/591) Disable session login for rest api calls.
++ [#592](https://github.com/luyadev/luya-module-admin/pull/592) Fixed a bug where storage uploader without selected files throws an exception.
 
 ## 3.7.1 (4. November 2020)
 
