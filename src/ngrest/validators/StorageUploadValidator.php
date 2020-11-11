@@ -45,6 +45,11 @@ class StorageUploadValidator extends ValidatorsStorageUploadValidator
         $files = $this->uploadToFiles($model, $attribute);
 
         if (!$this->multiple) {
+            // if there has no file uploaded, do nothing.
+            // in order to ensure a file needs to be uploaded, use the required validator
+            if (empty($files)) {
+                return;
+            }
             $file = reset($files);
             return $model->$attribute = $file->id;
         }
