@@ -6,7 +6,7 @@ namespace luya\admin\apis;
  * Property Controller.
  * 
  * @author Basil Suter <git@nadar.io>
- * @since 3.7.0
+ * @since 3.8.0
  */
 class PropertyController extends \luya\admin\ngrest\base\Api
 {
