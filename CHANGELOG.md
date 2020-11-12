@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.9.0
+
++ [#170](https://github.com/luyadev/luya-module-admin/issues/170) Added new `ngRestExport()` method to NgRestModel in order to apply formatting of values to the downloadable export.
+
 ## 3.8.0 (11. November 2020)
 
 + [#589](https://github.com/luyadev/luya-module-admin/pull/589) Add new help() method for page properties, added CRUD view for properties.
