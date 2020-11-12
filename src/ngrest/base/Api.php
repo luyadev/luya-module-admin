@@ -28,6 +28,7 @@ use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveQueryInterface;
 use luya\admin\models\UserAuthNotification;
+use yii\db\ActiveQuery;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -149,6 +150,7 @@ class Api extends RestActiveController
      * + index
      * + list
      * + search
+     * + export
      *
      * @return array
      * @since 1.2.2
@@ -787,6 +789,10 @@ class Api extends RestActiveController
         $filter = Yii::$app->request->getBodyParam('filter', null);
         $fields = ArrayHelper::getColumn($attributes, 'value');
         
+        if (!in_array($type, ['xlsx', 'csv'])) {
+            throw new InvalidConfigException("Invalid export type");
+        }
+
         switch (strtolower($type)) {
             case "csv":
                 $mime = 'application/csv';
@@ -806,15 +812,15 @@ class Api extends RestActiveController
                 throw new InvalidCallException("The requested filter '$filter' does not exists in the filter list.");
             }
 
-            $query = $filtersList[$filter]->select($fields);
+            $query = $filtersList[$filter]->select($fields)->with($this->getWithRelation('export'));
         } else {
-            $query = $this->prepareListQuery()->select($fields);
+            $query = $this->prepareListQuery()->with($this->getWithRelation('export'))->select($fields);
         }
-        
-        
 
-        if (!in_array($type, ['xlsx', 'csv'])) {
-            throw new InvalidConfigException("Invalid export type");
+        $exportFormatter = $this->model->ngRestExport();
+
+        if (!empty($exportFormatter)) {
+            $query = $this->formatExportValues($query, $exportFormatter);
         }
 
         $tempData = ExportHelper::$type($query, $fields, (bool) $header);
@@ -847,6 +853,30 @@ class Api extends RestActiveController
         }
         
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
+    }
+
+    private function formatExportValues(ActiveQuery $query, array $formatter)
+    {
+        $data = [];
+        foreach ($query->batch() as $batch) {
+            foreach ($batch as $key => $model) {
+                foreach ($model as $attribute => $value) {
+                    if (array_key_exists($attribute, $formatter)) {
+                        $formatAs = $formatter[$attribute];
+                        if (is_callable($formatAs)) {
+                            $data[$key][$attribute] = call_user_func($formatAs, $model);
+                        } else {
+                            $data[$key][$attribute] = Yii::$app->formatter->format($value, $formatAs);
+                        }
+                        
+                    } else {
+                        $data[$key][$attribute] = $value;
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
     /**
