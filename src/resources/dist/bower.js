@@ -1,8 +1,8 @@
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*
- AngularJS v1.8.0
- (c) 2010-2020 Google, Inc. http://angularjs.org
+ AngularJS v1.8.2
+ (c) 2010-2020 Google LLC. http://angularjs.org
  License: MIT
 */
 (function (z) {
@@ -21,7 +21,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     return function () {
       var d = arguments[0],
           c;
-      c = "[" + (a ? a + ":" : "") + d + "] http://errors.angularjs.org/1.8.0/" + (a ? a + "/" : "") + d;
+      c = "[" + (a ? a + ":" : "") + d + "] http://errors.angularjs.org/1.8.2/" + (a ? a + "/" : "") + d;
 
       for (d = 1; d < arguments.length; d++) {
         c = c + (1 == d ? "?" : "&") + "p" + (d - 1) + "=";
@@ -886,7 +886,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         $$cookieReader: pg
       });
     }]).info({
-      angularVersion: "1.8.0"
+      angularVersion: "1.8.2"
     });
   }
 
@@ -1800,14 +1800,31 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return this.directive(a, c);
     };
 
-    this.aHrefSanitizationWhitelist = function (a) {
-      return w(a) ? (b.aHrefSanitizationWhitelist(a), this) : b.aHrefSanitizationWhitelist();
+    this.aHrefSanitizationTrustedUrlList = function (a) {
+      return w(a) ? (b.aHrefSanitizationTrustedUrlList(a), this) : b.aHrefSanitizationTrustedUrlList();
     };
 
-    this.imgSrcSanitizationWhitelist = function (a) {
-      return w(a) ? (b.imgSrcSanitizationWhitelist(a), this) : b.imgSrcSanitizationWhitelist();
+    Object.defineProperty(this, "aHrefSanitizationWhitelist", {
+      get: function get() {
+        return this.aHrefSanitizationTrustedUrlList;
+      },
+      set: function set(a) {
+        this.aHrefSanitizationTrustedUrlList = a;
+      }
+    });
+
+    this.imgSrcSanitizationTrustedUrlList = function (a) {
+      return w(a) ? (b.imgSrcSanitizationTrustedUrlList(a), this) : b.imgSrcSanitizationTrustedUrlList();
     };
 
+    Object.defineProperty(this, "imgSrcSanitizationWhitelist", {
+      get: function get() {
+        return this.imgSrcSanitizationTrustedUrlList;
+      },
+      set: function set(a) {
+        this.imgSrcSanitizationTrustedUrlList = a;
+      }
+    });
     var n = !0;
 
     this.debugInfoEnabled = function (a) {
@@ -3101,7 +3118,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     };
 
     var d = this.interceptors = [],
-        c = this.xsrfWhitelistedOrigins = [];
+        c = this.xsrfTrustedOrigins = [];
+    Object.defineProperty(this, "xsrfWhitelistedOrigins", {
+      get: function get() {
+        return this.xsrfTrustedOrigins;
+      },
+      set: function set(a) {
+        this.xsrfTrustedOrigins = a;
+      }
+    });
     this.$get = ["$browser", "$httpBackend", "$$cookieReader", "$cacheFactory", "$rootScope", "$q", "$injector", "$sce", function (e, f, g, k, h, l, m, p) {
       function n(b) {
         function c(a, b) {
@@ -4959,11 +4984,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     var a = /^\s*(https?|s?ftp|mailto|tel|file):/,
         b = /^\s*((https?|ftp|file|blob):|data:image\/)/;
 
-    this.aHrefSanitizationWhitelist = function (b) {
+    this.aHrefSanitizationTrustedUrlList = function (b) {
       return w(b) ? (a = b, this) : a;
     };
 
-    this.imgSrcSanitizationWhitelist = function (a) {
+    this.imgSrcSanitizationTrustedUrlList = function (a) {
       return w(a) ? (b = a, this) : b;
     };
 
@@ -5002,16 +5027,33 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     var a = ["self"],
         b = [];
 
-    this.resourceUrlWhitelist = function (b) {
+    this.trustedResourceUrlList = function (b) {
       arguments.length && (a = Pd(b));
       return a;
     };
 
-    this.resourceUrlBlacklist = function (a) {
+    Object.defineProperty(this, "resourceUrlWhitelist", {
+      get: function get() {
+        return this.trustedResourceUrlList;
+      },
+      set: function set(a) {
+        this.trustedResourceUrlList = a;
+      }
+    });
+
+    this.bannedResourceUrlList = function (a) {
       arguments.length && (b = Pd(a));
       return b;
     };
 
+    Object.defineProperty(this, "resourceUrlBlacklist", {
+      get: function get() {
+        return this.bannedResourceUrlList;
+      },
+      set: function set(a) {
+        this.bannedResourceUrlList = a;
+      }
+    });
     this.$get = ["$injector", "$$sanitizeUri", function (d, c) {
       function e(a, b) {
         var c;
@@ -6476,11 +6518,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       Yc = !1,
       Pa = 3,
       Pe = {
-    full: "1.8.0",
+    full: "1.8.2",
     major: 1,
     minor: 8,
-    dot: 0,
-    codeName: "nested-vaccination"
+    dot: 2,
+    codeName: "meteoric-mining"
   };
 
   U.expando = "ng339";
