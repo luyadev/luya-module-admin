@@ -5,6 +5,8 @@ namespace luya\admin\tests\admin\apis;
 use admintests\AdminModelTestCase;
 use luya\admin\apis\NgrestLogController;
 use luya\admin\models\NgrestLog;
+use luya\testsuite\scopes\PermissionScope;
+use Yii;
 use yii\base\InvalidConfigException;
 
 class NgrestLogControllerTest extends AdminModelTestCase
@@ -20,12 +22,19 @@ class NgrestLogControllerTest extends AdminModelTestCase
         $api->actionExport();
     }
 
-    public function testExport()
+    public function testExportAndFormatter()
     {
-        $this->createAdminLangFixture();
-        $this->createAdminUserFixture();
-        $this->createAdminNgRestLogFixture([
-            1 => [
+
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('ngrest');
+            $this->app->request->setBodyParams(['type' => 'csv']);
+
+            $api = new NgrestLogController('ngrest', $this->app->getModule('admin'));
+
+            $this->assertArrayHasKey('url', $scope->runControllerAction($api, 'export'));
+
+            $log = new NgrestLog();
+            $log->attributes = [
                 'id' => 1,
                 'user_id' => 1,
                 'timestamp_create' => 123123123,
@@ -35,31 +44,22 @@ class NgrestLogControllerTest extends AdminModelTestCase
                 'is_insert' => 0,
                 'attributes_json' => '{}',
                 'attributes_diff_json' => '{}',
-                'pk_value' => 1,
+                'pk_value' => "1",
                 'table_name' => 'foo',
                 'is_delete' => 1,
-            ]
-        ]);
-        $this->createAdminUserAuthNotificationTable(); 
-        $this->createAdminUserGroupTable();
-        $this->createAdminAuthTable();
-        $this->createAdminGroupAuthTable();
+            ];
 
-        $this->app->request->setBodyParams(['type' => 'csv']);
+            $this->assertTrue($log->save());
 
-        $api = new NgrestLogController('log', $this->app->getModule('admin'));
+            $export = $this->invokeMethod($api, 'formatExportValues', [NgrestLog::find(), [
+                'is_update' => 'boolean',
+                'table_name' => function($model) {
+                    return md5($model->table_name);
+                }
+            ]]);
 
-        $this->assertArrayHasKey('url', $api->actionExport());
-
-
-        $export = $this->invokeMethod($api, 'formatExportValues', [NgrestLog::find(), [
-            'is_update' => 'boolean',
-            'table_name' => function($model) {
-                return md5($model->table_name);
-            }
-        ]]);
-
-        $this->assertSame('acbd18db4cc2f85cedef654fccc4a4d8', $export[0]['table_name']);
-        $this->assertSame('Yes', $export[0]['is_update']);
+            $this->assertSame('acbd18db4cc2f85cedef654fccc4a4d8', $export[0]['table_name']);
+            $this->assertSame('Yes', $export[0]['is_update']);
+        });
     }
 }
