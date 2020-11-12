@@ -2619,8 +2619,8 @@ zaa.directive("zaaJsonObject", function () {
                 '<div class="list zaa-json-array">' +
                 '<div ng-repeat="(key,value) in model" class="list-item">' +
                 '<div class="input-group">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">{{key}}</div>' +
+                '<div class="input-group-prepend border-right">' +
+                '<div class="input-group-text text-muted">{{key}}</div>' +
                 '</div>' +
                 '<input class="form-control" type="text" ng-model="model[key]" />' +
                 '</div>' +
