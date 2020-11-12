@@ -24,9 +24,18 @@ class JsonObjectTest extends AdminModelTestCase
             'i18n' => false,
         ]);
         
+
+        $this->assertNotEmpty($plugin->renderList('id', 'model'));
+        $this->assertNotEmpty($plugin->renderCreate('id', 'model'));
+        $this->assertNotEmpty($plugin->renderUpdate('id', 'model'));
+
         $model->query = '{"foo":"bar","baz":"foo"}';
-        $plugin->onListFind($event);
-        $this->assertSame('{"foo":"bar","baz":"foo"}', $model->query);
+        $plugin->onBeforeExpandFind($event);
+        $this->assertSame(['foo' => 'bar', 'baz' => 'foo'], $model->query);
+
+        $model->query = ['abc' => 'def'];
+        $plugin->onBeforeSave($event);
+        $this->assertSame('{"abc":"def"}', $model->query);
 
         $model->query = '{"foo":"bar","baz":"foo"}';
         $plugin->onAfterFind($event);
