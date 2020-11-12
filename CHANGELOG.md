@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.9.0
 
++ [#595](https://github.com/luyadev/luya-module-admin/pull/595) Added new NgRest Plugin `JsonObject` which will store a JSON object in the database and return an assoc array in the model.
 + [#170](https://github.com/luyadev/luya-module-admin/issues/170) Added new `ngRestExport()` method to NgRestModel in order to apply formatting of values to the downloadable export.
 
 ## 3.8.0 (11. November 2020)
