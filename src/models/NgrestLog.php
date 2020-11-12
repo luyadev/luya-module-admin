@@ -158,4 +158,17 @@ class NgrestLog extends NgRestModel
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestExport()
+    {
+        return [
+            'timestamp_create' => 'datetime',
+            'is_update' => 'boolean',
+            'is_insert' => 'boolean',
+            'is_delete' => 'boolean',
+        ];
+    }
 }

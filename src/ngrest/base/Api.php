@@ -855,12 +855,21 @@ class Api extends RestActiveController
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
     }
 
+    /**
+     * Format the ActiveQuery values based on formatter array definition see {{luya\admin\ngrest\base\NgRestModel::ngRestExport()}}.
+     *
+     * @param ActiveQuery $query
+     * @param array $formatter
+     * @return array
+     * @since 3.9.0
+     */
     private function formatExportValues(ActiveQuery $query, array $formatter)
     {
         $data = [];
         foreach ($query->batch() as $batch) {
             foreach ($batch as $key => $model) {
                 foreach ($model as $attribute => $value) {
+                    // if formatter is defined for the given attribute
                     if (array_key_exists($attribute, $formatter)) {
                         $formatAs = $formatter[$attribute];
                         if (is_callable($formatAs)) {
@@ -868,7 +877,6 @@ class Api extends RestActiveController
                         } else {
                             $data[$key][$attribute] = Yii::$app->formatter->format($value, $formatAs);
                         }
-                        
                     } else {
                         $data[$key][$attribute] = $value;
                     }
