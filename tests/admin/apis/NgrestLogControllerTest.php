@@ -26,10 +26,10 @@ class NgrestLogControllerTest extends AdminModelTestCase
     {
 
         PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $scope->createAndAllowApi('ngrest');
+            $scope->createAndAllowApi('api-admin-ngrestlog');
             $this->app->request->setBodyParams(['type' => 'csv']);
 
-            $api = new NgrestLogController('ngrest', $this->app->getModule('admin'));
+            $api = new NgrestLogController('api-admin-ngrestlog', $this->app->getModule('admin'));
 
             $this->assertArrayHasKey('url', $scope->runControllerAction($api, 'export'));
 
