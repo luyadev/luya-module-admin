@@ -45,6 +45,11 @@ class FileController extends \luya\web\Controller
                 
                 // update the model count stats
                 $model->updateCounters(['passthrough_file_stats' => 1]);
+                
+                // disable proxy buffering for ningx http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering
+                // If nginx proxy_buffering is enabled, this might run into a memory problem because nginx will store its content in the memory
+                // or an a temporary file otherwise.
+                Yii::$app->response->headers->set('X-Accel-Buffering', 'no');
 
                 return Yii::$app->response->sendContentAsFile($fileData->content, $model->name_original, [
                     'inline' => (bool) $model->inline_disposition,
