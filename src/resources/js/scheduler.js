@@ -267,7 +267,7 @@ zaa.directive("luyaSchedule", function() {
         template: function () {
             return '<div class="scheduler" ng-class="{\'inlinemodal--open\' : isVisible}">'+
                         '<button ng-click="toggleWindow()" type="button" class="scheduler-btn btn btn-link">' +
-                            '<i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
+                            '<i class="material-icons">schedule</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
                         '</button>' +
                         '<div class="inlinemodal" style="display: none;" ng-class="modalPositionClass" zaa-esc="escModal()">' +
                             '<div class="inlinemodal-inner">' +
