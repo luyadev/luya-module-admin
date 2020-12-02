@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 3.9.1 (2. December 2020)
+
++ [#]() Fixed PHP Exception in Auth Model.
+
 ## 3.9.0 (24. November 2020)
 
 + [#596](https://github.com/luyadev/luya-module-admin/pull/596) Added new migration for session storage, the table name is `admin_session` and can be configured as `session' => ['class' => 'yii\web\DbSession', 'sessionTable' => 'admin_session']`.
