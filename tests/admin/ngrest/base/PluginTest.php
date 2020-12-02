@@ -23,10 +23,9 @@ class PluginTest extends AdminTestCase
      */
     public $plugini18n;
     
-    public function setUp()
+    public function afterSetup()
     {
-        parent::setUp();
-        
+        parent::afterSetup();
         $this->plugin = new StubPlugin(['name' => 'myField', 'alias' => 'Stub Label', 'i18n' => false]);
         $this->plugini18n = new StubPlugin(['name' => 'myField', 'alias' => 'Stub Label', 'i18n' => true]);
     }
