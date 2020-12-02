@@ -12,6 +12,7 @@ use luya\admin\models\UserLogin;
 use luya\admin\ngrest\Config;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
+use yii\base\InvalidConfigException;
 
 class ConfigTest extends AdminModelTestCase
 {
@@ -24,6 +25,8 @@ class ConfigTest extends AdminModelTestCase
     {
         $cfg = new Config(['apiEndpoint' => 'rest-url', 'primaryKey' => ['id']]);
         $cfg->setConfig(['foo' => 'bar']);
+
+        $this->expectException(InvalidConfigException::class);
         $cfg->setConfig(['not' => 'valid']); // will throw exception: Cant set config if config is not empty
     }
 
