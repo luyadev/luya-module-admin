@@ -5,12 +5,10 @@ namespace admintests\admin\ngrest\base;
 use admintests\AdminTestCase;
 use admintests\data\models\I18nUser;
 use admintests\data\stubs\StubPlugin;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\Text;
 use luya\base\DynamicModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\Event;
-use yii\db\ActiveRecord;
 
 class PluginTest extends AdminTestCase
 {

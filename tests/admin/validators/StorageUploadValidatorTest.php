@@ -28,7 +28,7 @@ class StorageUploadValidatorTest extends AdminModelTestCase
         
         $validator->uploadToFiles($model, 'file_id');
 
-        $this->assertContains('myfile', $response);
+        $this->assertStringContainsString('myfile', $response);
     }
 
     public function testMultiUploadValidtor()
@@ -50,8 +50,8 @@ class StorageUploadValidatorTest extends AdminModelTestCase
         ];
         $response = $validator->validateAttribute($model, 'file_id');
         
-        $this->assertContains('myfile', $model->file_id);
-        $this->assertContains('["', $model->file_id); // its a json!
+        $this->assertStringContainsString('myfile', $model->file_id);
+        $this->assertStringContainsString('["', $model->file_id); // its a json!
     }
 
     public function testEmptyFilesArray()

@@ -78,8 +78,8 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $aws->itemId = 1;
 
         $html = $aws->index();
-        $this->assertContains('test1', $html);
-        $this->assertContains('test2', $html);
+        $this->assertStringContainsString('test1', $html);
+        $this->assertStringContainsString('test2', $html);
 
         $this->assertSame('foobar', $aws->getTitle());
 
