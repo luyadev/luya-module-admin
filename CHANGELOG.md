@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 3.9.1 (2. December 2020)
 
-+ [#]() Fixed PHP Exception in Auth Model.
++ [#606](https://github.com/luyadev/luya-module-admin/pull/606) Fixed PHP Exception in Auth Model.
 
 ## 3.9.0 (24. November 2020)
 
