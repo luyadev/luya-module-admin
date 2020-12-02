@@ -18,9 +18,6 @@ class ConfigTest extends AdminModelTestCase
 {
     use DatabaseTableTrait;
 
-    /**
-     * @expectedException yii\base\InvalidConfigException
-     */
     public function testSetConfigException()
     {
         $cfg = new Config(['apiEndpoint' => 'rest-url', 'primaryKey' => ['id']]);
