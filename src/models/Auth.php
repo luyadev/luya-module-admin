@@ -1,6 +1,6 @@
 <?php
 
-namespace luya\admin \models;
+namespace luya\admin\models;
 
 use Yii;
 
