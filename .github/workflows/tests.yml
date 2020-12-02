@@ -3,7 +3,7 @@ name: Tests
 on: [push, pull_request]
 
 env:
-  DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --ignore-platform-reqs"
+  DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction"
   PHPUNIT_EXCLUDE_GROUP: mssql,oci,wincache,xcache,zenddata,cubrid
   CC_TEST_REPORTER_ID: c8387c181b15919319ac86be13d5e5022ec09aed1b8460572a793431080a52e3
 jobs:
@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['7.1', '7.2', '7.3', '7.4']
+        php: ['7.1', '7.2', '7.3', '7.4', '8.0']
       
     services:
       mysql:
@@ -55,12 +55,12 @@ jobs:
       ## run unit tests
       - name: PHP Unit tests for 7.0, 7.2, 7.3
         run: vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '7.3' || matrix.php == '7.2' || matrix.php == '7.0'
+        if: matrix.php == '7.3' || matrix.php == '7.2'
 
       - name: PHP Unit tests for 7.4, 8.0 
         run: | 
           ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '7.4'
+        if: matrix.php == '7.4' || matrix.php == '8.0'
 
       ## unit test with coverage
       - name: PHP Unit tests for PHP 7.1

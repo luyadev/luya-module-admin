@@ -50,6 +50,6 @@ class NgRestStorageUploadValidatorTest extends AdminModelTestCase
         ];
         $validator->validateAttribute($model, 'file_id');
         
-        $this->assertContains('[{"fileId":1,"caption":null,"hiddenStorageUploadSource":"', $model->file_id);
+        $this->assertStringContainsString('[{"fileId":1,"caption":null,"hiddenStorageUploadSource":"', $model->file_id);
     }
 }

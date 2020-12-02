@@ -6,24 +6,22 @@ use admintests\AdminModelTestCase;
 use luya\admin\apis\UserController;
 use luya\admin\buttons\TimestampActiveButton;
 use luya\admin\models\Group;
-use luya\admin\models\NgrestLog;
 use luya\admin\models\User;
-use luya\admin\models\UserLogin;
 use luya\admin\ngrest\Config;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
+use yii\base\InvalidConfigException;
 
 class ConfigTest extends AdminModelTestCase
 {
     use DatabaseTableTrait;
 
-    /**
-     * @expectedException yii\base\InvalidConfigException
-     */
     public function testSetConfigException()
     {
         $cfg = new Config(['apiEndpoint' => 'rest-url', 'primaryKey' => ['id']]);
         $cfg->setConfig(['foo' => 'bar']);
+
+        $this->expectException(InvalidConfigException::class);
         $cfg->setConfig(['not' => 'valid']); // will throw exception: Cant set config if config is not empty
     }
 

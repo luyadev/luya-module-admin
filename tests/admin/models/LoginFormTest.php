@@ -34,8 +34,8 @@ class LoginFormTest extends AdminModelTestCase
         $token = 'testtoken';
         $emailBody = User::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail'));
 
-        $this->assertContains($token, $emailBody);
-        $this->assertContains(Module::t('login_securetoken_mail_subject'), $emailBody);
-        $this->assertContains(Module::t('login_securetoken_mail'), $emailBody);
+        $this->assertStringContainsString($token, $emailBody);
+        $this->assertStringContainsString(Module::t('login_securetoken_mail_subject'), $emailBody);
+        $this->assertStringContainsString(Module::t('login_securetoken_mail'), $emailBody);
     }
 }

@@ -5,12 +5,10 @@ namespace admintests\admin\ngrest\base;
 use admintests\AdminTestCase;
 use admintests\data\models\I18nUser;
 use admintests\data\stubs\StubPlugin;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\Text;
 use luya\base\DynamicModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\Event;
-use yii\db\ActiveRecord;
 
 class PluginTest extends AdminTestCase
 {
@@ -23,10 +21,9 @@ class PluginTest extends AdminTestCase
      */
     public $plugini18n;
     
-    public function setUp()
+    public function afterSetup()
     {
-        parent::setUp();
-        
+        parent::afterSetup();
         $this->plugin = new StubPlugin(['name' => 'myField', 'alias' => 'Stub Label', 'i18n' => false]);
         $this->plugini18n = new StubPlugin(['name' => 'myField', 'alias' => 'Stub Label', 'i18n' => true]);
     }

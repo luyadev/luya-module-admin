@@ -52,6 +52,6 @@ class RestControllerTest extends NgRestTestCase
     {
         $ctrl = new TestController('controllerid', $this->app);
 
-        $this->assertTrue($this->runControllerAction($ctrl, 'no-auth'), [], false);
+        $this->assertTrue($this->runControllerAction($ctrl, 'no-auth', [], false));
     }
 }

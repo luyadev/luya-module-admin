@@ -5,6 +5,8 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.0.0
 
++ [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.
+
 ## 3.9.0 (24. November 2020)
 
 + [#596](https://github.com/luyadev/luya-module-admin/pull/596) Added new migration for session storage, the table name is `admin_session` and can be configured as `session' => ['class' => 'yii\web\DbSession', 'sessionTable' => 'admin_session']`.
