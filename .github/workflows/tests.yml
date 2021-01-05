@@ -41,6 +41,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: apc, curl, dom, imagick, intl, mbstring, mcrypt, memcached, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
           ini-values: date.timezone='UTC'
+          coverage: xdebug
 
       ## install composer
       - name: Install dependencies
