@@ -724,8 +724,8 @@ abstract class BaseFileSystemStorage extends Component
         $resolution = Storage::getImageResolution($tempFile);
         // now copy the file to the storage system
         $this->fileSystemSaveFile($tempFile, $fileName);
-        unlink($tempFile);
-        unlink($fromTempFile);
+        FileHelper::unlink($tempFile);
+        FileHelper::unlink($fromTempFile);
 
         $this->flushImageArray();
 
