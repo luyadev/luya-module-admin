@@ -345,6 +345,7 @@ $this->beginPage()
                         <th><?= Admin::t('layout_debug_table_value'); ?></th>
                     </tr>
                     </thead>
+                    <tr><td>Version</td><td><?= Yii::$app->version; ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_luya_version'); ?>:</td><td><?= \luya\Boot::VERSION; ?></td></tr>
                     <tr><td>Vendor:</td><td><?= strftime("%c", Yii::$app->getPackageInstaller()->getTimestamp()); ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_id'); ?>:</td><td><?= Yii::$app->id ?></td></tr>
