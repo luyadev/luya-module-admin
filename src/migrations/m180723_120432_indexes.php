@@ -44,9 +44,6 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_is_deleted', '{{%admin_proxy_machine}}', ['is_deleted']);
         $this->createIndex('index_identifier_is_deleted', '{{%admin_proxy_machine}}', ['identifier', 'is_deleted']);
         
-        // admin_storage_effect
-        $this->createIndex('index_identifier', '{{%admin_storage_effect}}', ['identifier']);
-        
         // admin_storage_file
         $this->createIndex('index_upload_user_id', '{{%admin_storage_file}}', ['upload_user_id']);
         $this->createIndex('index_id_hash_name_is_deleted', '{{%admin_storage_file}}', ['id', 'hash_name', 'is_deleted']);
