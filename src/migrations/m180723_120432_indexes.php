@@ -65,7 +65,7 @@ class m180723_120432_indexes extends Migration
         
         // admin_user
         $this->createIndex('index_email', '{{%admin_user}}', ['email']);
-        $this->createIndex('index_auth_token', '{{%admin_user}}', ['auth_token']);
+        $this->createIndex('index_admin_user_auth_token', '{{%admin_user}}', ['auth_token']);
         $this->createIndex('index_is_deleted_auth_token', '{{%admin_user}}', ['is_deleted', 'auth_token']);
         $this->createIndex('index_is_deleted_id', '{{%admin_user}}', ['is_deleted', 'id']);
         
@@ -77,7 +77,7 @@ class m180723_120432_indexes extends Migration
         // admin_user_login
         $this->createIndex('index_admin_user_login_user_id', '{{%admin_user_login}}', ['user_id']);
         $this->createIndex('index_ip', '{{%admin_user_login}}', ['ip']);
-        $this->createIndex('index_auth_token', '{{%admin_user_login}}', ['auth_token']);
+        $this->createIndex('index_admin_user_login_auth_token', '{{%admin_user_login}}', ['auth_token']);
         $this->createIndex('index_is_destroyed', '{{%admin_user_login}}', ['is_destroyed']);
         $this->createIndex('index_user_id_timestamp_create', '{{%admin_user_login}}', ['user_id', 'timestamp_create']);
         
