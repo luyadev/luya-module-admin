@@ -49,9 +49,6 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_id_hash_name_is_deleted', '{{%admin_storage_file}}', ['id', 'hash_name', 'is_deleted']);
         $this->createIndex('index_name_new_compound', '{{%admin_storage_file}}', ['name_new_compound']);
         
-        // admin_storage_filter
-        $this->createIndex('index_identifier', '{{%admin_storage_filter}}', ['identifier']);
-        
         // admin_storage_filter_chain
         $this->createIndex('index_filter_id', '{{%admin_storage_filter_chain}}', ['filter_id']);
         $this->createIndex('index_effect_id', '{{%admin_storage_filter_chain}}', ['effect_id']);
