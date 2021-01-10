@@ -28,7 +28,7 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_short_code', '{{%admin_lang}}', ['short_code']);
         
         // admin_ngrest_log
-        $this->createIndex('index_user_id', '{{%admin_ngrest_log}}', ['user_id']);
+        $this->createIndex('index_admin_ngrest_log_user_id', '{{%admin_ngrest_log}}', ['user_id']);
         
         // admin_property
         $this->createIndex('index_var_name', '{{%admin_property}}', ['var_name']);
@@ -70,19 +70,19 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_is_deleted_id', '{{%admin_user}}', ['is_deleted', 'id']);
         
         // admin_user_group
-        $this->createindex('index_user_id', '{{%admin_user_group}}', ['user_id']);
+        $this->createindex('index_admin_user_group_user_id', '{{%admin_user_group}}', ['user_id']);
         $this->createIndex('index_group_id', '{{%admin_user_group}}', ['group_id']);
         $this->createIndex('index_user_id_group_id', '{{%admin_user_group}}', ['user_id', 'group_id']);
         
         // admin_user_login
-        $this->createIndex('index_user_id', '{{%admin_user_login}}', ['user_id']);
+        $this->createIndex('index_admin_user_login_user_id', '{{%admin_user_login}}', ['user_id']);
         $this->createIndex('index_ip', '{{%admin_user_login}}', ['ip']);
         $this->createIndex('index_auth_token', '{{%admin_user_login}}', ['auth_token']);
         $this->createIndex('index_is_destroyed', '{{%admin_user_login}}', ['is_destroyed']);
         $this->createIndex('index_user_id_timestamp_create', '{{%admin_user_login}}', ['user_id', 'timestamp_create']);
         
         // admin_user_online
-        $this->createIndex('index_user_id', '{{%admin_user_online}}', ['user_id']);
+        $this->createIndex('index_admin_user_online_user_id', '{{%admin_user_online}}', ['user_id']);
     }
     
 
