@@ -20,7 +20,7 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_name', '{{%admin_config}}', ['name']);
      
         // admin_group_auth
-        $this->createIndex('index_group_id', '{{%admin_group_auth}}', ['group_id']);
+        $this->createIndex('index_admin_group_auth_group_id', '{{%admin_group_auth}}', ['group_id']);
         $this->createIndex('index_auth_id', '{{%admin_group_auth}}', ['auth_id']);
         $this->createIndex('index_group_id_auth_id', '{{%admin_group_auth}}', ['group_id', 'auth_id']);
         
@@ -71,7 +71,7 @@ class m180723_120432_indexes extends Migration
         
         // admin_user_group
         $this->createindex('index_admin_user_group_user_id', '{{%admin_user_group}}', ['user_id']);
-        $this->createIndex('index_group_id', '{{%admin_user_group}}', ['group_id']);
+        $this->createIndex('index_admin_user_group_group_id', '{{%admin_user_group}}', ['group_id']);
         $this->createIndex('index_user_id_group_id', '{{%admin_user_group}}', ['user_id', 'group_id']);
         
         // admin_user_login
