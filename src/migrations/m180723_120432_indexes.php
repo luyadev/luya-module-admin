@@ -54,7 +54,7 @@ class m180723_120432_indexes extends Migration
         $this->createIndex('index_effect_id', '{{%admin_storage_filter_chain}}', ['effect_id']);
         
         // admin_storage_image
-        $this->createIndex('index_filter_id', '{{%admin_storage_image}}', ['filter_id']);
+        $this->createIndex('index_image_filter_id', '{{%admin_storage_image}}', ['filter_id']);
         $this->createIndex('index_file_id_filter_id', '{{%admin_storage_image}}', ['file_id', 'filter_id']);
         
         // admin_tag_relation
