@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#610](https://github.com/luyadev/luya-module-admin/pull/610) Added API endpoint to display all groups where the current loggedin user belongs to `admin/api-user-group/me`.
 + [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.
++ [#608](https://github.com/luyadev/luya-module-admin/pull/608) Use FileHelper::unlink method instead of PHP's `unlink` in order to prevent thrown exceptions.
 
 ## 3.9.0 (24. November 2020)
 
