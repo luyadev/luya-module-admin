@@ -2,6 +2,7 @@
 
 namespace luya\admin\models;
 
+use luya\admin\helpers\Angular;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
@@ -124,6 +125,21 @@ final class Lang extends NgRestModel
             [['list', 'create', 'update'], ['name', 'short_code', 'is_default']],
             [['delete'], true],
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['is_default'] = function($value) {
+            return Angular::typeCast($value->is_default);
+        };
+        $fields['is_deleted'] = function($value) {
+            return Angular::typeCast($value->is_deleted);
+        };
+        return $fields;
     }
     
     /**

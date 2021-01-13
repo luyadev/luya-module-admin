@@ -22,6 +22,26 @@ use luya\admin\base\TypesInterface;
 class Angular
 {
     /**
+     * Type Cast values.
+     * 
+     * This is important as the angularjs admin is required to have integer values for boolean values,
+     * since pgsql does return boolean values we have to type cast those value, this is the purpose of
+     * this function.
+     *
+     * @param mixed $value
+     * @return mixed
+     * @since 4.0.0
+     */
+    public static function typeCast($value)
+    {
+        if (is_bool($value)) {
+            $value = (int) $value;
+        }
+
+        return $value;
+    }
+    
+    /**
      * Internal method to use to create the angular injector helper method like in angular context of directives.js
      *
      * ```
