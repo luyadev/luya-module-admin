@@ -6,7 +6,6 @@ use luya\admin\Module;
 use luya\admin\traits\SoftDeleteTrait;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\GroupAuthActiveWindow;
-use luya\admin\ngrest\plugins\SelectAsync;
 
 /**
  * User Groups
@@ -51,7 +50,7 @@ final class Group extends NgRestModel
             [['text'], 'string'],
             [['is_deleted'], 'boolean'],
             [['name'], 'string', 'max' => 255],
-            [['users', 'xyz'], 'safe'],
+            [['users'], 'safe'],
         ];
     }
 
@@ -60,7 +59,7 @@ final class Group extends NgRestModel
      */
     public function extraFields()
     {
-        return ['users', 'xyz'];
+        return ['users'];
     }
     
     /**
@@ -101,9 +100,6 @@ final class Group extends NgRestModel
                 'labelField' => ['firstname', 'lastname', 'email'],
                 'labelTemplate' =>  '%s %s (%s)'
             ],
-            'xyz' => [
-                'class' => SelectAsync::class,
-            ]
         ];
     }
     
@@ -124,7 +120,7 @@ final class Group extends NgRestModel
     {
         return [
             [['list'], ['name', 'text']],
-            [['create', 'update'], ['name', 'text', 'users', 'xyz']],
+            [['create', 'update'], ['name', 'text', 'users']],
             [['delete'], true],
         ];
     }

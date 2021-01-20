@@ -1569,7 +1569,7 @@ zaa.directive("zaaAsyncApiSelect", function () {
             "id": "@fieldid",
             "initvalue": "@initvalue",
         },
-        controller: ['$scope', '$http', function ($scope, $http) {
+        controller: ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
             $scope.options = [];
             if ($scope.optionsvalue == undefined) {
                 $scope.optionsvalue = 'id';
@@ -1578,15 +1578,17 @@ zaa.directive("zaaAsyncApiSelect", function () {
                 $scope.optionslabel = 'title';
             }
 
-            $http.get($scope.api).then(function(value) {
-                const items = [];
-                angular.forEach(value.data, function (item) {
-                    items.push({
-                        label: item[$scope.optionslabel],
-                        value: item[$scope.optionsvalue]
-                    })
-                });
-                $scope.options = items;
+            $scope.$watch('api', function(apiUrl) {
+                $http.get(apiUrl).then(function(value) {
+                    const items = [];
+                    angular.forEach(value.data, function (item) {
+                        items.push({
+                            label: item[$scope.optionslabel],
+                            value: item[$scope.optionsvalue]
+                        })
+                    });
+                    $scope.options = items;
+                })
             })
         }],
         template: function () {
