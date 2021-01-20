@@ -1554,6 +1554,55 @@ zaa.directive("zaaSelect", function () {
 });
 
 /**
+ * Select form based on API Request
+ */
+zaa.directive("zaaAsyncApiSelect", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "api":"@api",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid",
+            "initvalue": "@initvalue",
+        },
+        controller: ['$scope', '$http', function ($scope, $http) {
+            $scope.options = [];
+            if ($scope.optionsvalue == undefined) {
+                $scope.optionsvalue = 'id';
+            }
+            if ($scope.optionslabel == undefined) {
+                $scope.optionslabel = 'title';
+            }
+
+            $http.get($scope.api).then(function(value) {
+                const items = [];
+                angular.forEach(value.data, function (item) {
+                    items.push({
+                        label: item[$scope.optionslabel],
+                        value: item[$scope.optionsvalue]
+                    })
+                });
+                $scope.options = items;
+            })
+        }],
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                    '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">'+
+                    '<luya-select ng-model="model" options="options" id="{{id}}" initvalue="{{initvalue}}"></luya-select>' +
+                '</div>' +
+            '</div>';
+        }
+    }
+});
+
+/**
  * A selection based on a CRUD view.
  * 
  * <zaa-select-crud options={'route': 'module/controller/index', 'api':'admin/api-module-controller', 'fields':['id','title']}></zaa-select-crud>
