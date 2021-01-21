@@ -8,7 +8,7 @@ use luya\helpers\Json;
 /**
  * Select Dropdown from an API
  * 
- * Whenever the API changes a call will be made to the API which returns results which will be available in the select.
+ * Whenever the API changes (trough angularjs two way binding of variables) a call will be made to the API which returns the select values.
  *
  * Therefore this can also be used als "dependent select" feature known as "depdrop"
  * 
