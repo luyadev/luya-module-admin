@@ -385,7 +385,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string Returns the string with the name field name like `data.create.$field`.
      * @since 1.2.0
      */
-    protected function replaceFieldFromNgModelContext($ngModel, $field)
+    protected function replaceFieldFromNgModelContext($ngModel, $field, $angularJsVariable = false)
     {
         if (empty($field)) {
             return;
@@ -407,7 +407,9 @@ abstract class Plugin extends Component implements TypesInterface
         // replace the last key with the new fieldname
         $parts[$key] = $field;
         
-        return implode(".", $parts);
+        $variable = implode(".", $parts);
+
+        return $angularJsVariable ? '{{'.$variable.'}}' : $variable;
     }
 
     /**
@@ -429,6 +431,39 @@ abstract class Plugin extends Component implements TypesInterface
     }
     
     /**
+     * The given string will be variablized and prefixed with current condition.
+     *
+     * For example when you like to access an attribute you can use the variable name in curly
+     * braces. This will ensure the correct angularjs context value  will be taken.
+     * 
+     * For example:
+     * 
+     * ```
+     * admin/api-admin-user/search?query={firstname}
+     * ```
+     * 
+     * This will replace `{firstname}` by `data.create.firstname` or if enabled it will be `{{data.create.firstname}}`
+     * 
+     * @param string $ngModel
+     * @param string $string
+     * @param boolean $angularJsVariable Whether the output should be enclosed in curly brackets or not {{}}
+     * @return string
+     * @since 4.0.0
+     */
+    protected function variablizeContext($ngModel, $string, $angularJsVariable)
+    {
+        preg_match_all('/{(.*?)}/', $string, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1], $angularJsVariable);
+        }
+        
+        return str_replace($search, $replace, $string);
+    }
+
+    /**
      * Get the ng-show condition from a given ngModel context.
      *
      * Evaluates the ng-show condition from a given ngModel context. A condition like
@@ -440,15 +475,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function getNgShowCondition($ngModel)
     {
-        preg_match_all('/{(.*?)}/', $this->condition, $matches, PREG_SET_ORDER);
-        $search = [];
-        $replace = [];
-        foreach ($matches as $match) {
-            $search[] = $match[0];
-            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1]);
-        }
-        
-        return str_replace($search, $replace, $this->condition);
+        return $this->variablizeContext($ngModel, $this->condition, false);
     }
     
     /**
