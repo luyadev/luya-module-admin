@@ -88,7 +88,8 @@ class Scheduler extends \yii\db\ActiveRecord
     }
 
     /**
-     * Ensure if the given class is an ngrest model and permission exists.
+     * Ensure if the given class is an ngrest model and permission exists. If its not 
+     * an ngrest model, there is no permission system and trigger permission is granted (@since 4.0)
      *
      * @param string $class
      * @return boolean
@@ -98,7 +99,7 @@ class Scheduler extends \yii\db\ActiveRecord
         $model = new $class();
 
         if (!$model instanceof NgRestModelInterface) {
-            return false;
+            return true;
         }
 
         return Yii::$app->adminmenu->getApiDetail($class::ngRestApiEndpoint());
