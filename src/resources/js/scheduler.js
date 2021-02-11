@@ -170,7 +170,7 @@ zaa.directive("luyaSchedule", function() {
             var minSpace = 300;
 
             // The max width of the modal, defined in the scss component inlinemodal
-            var maxWidth = 1100;
+            var maxWidth = 1000;
 
             // Get the button position and align the modal to the right if
             // it hast at least "minSpaceRight" spacing to the right
