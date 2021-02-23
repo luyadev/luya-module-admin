@@ -12,7 +12,7 @@ namespace luya\admin\aws;
  * {
  *    public function changePassword($newPassword)
  *    {
- *        return $this->updateAttribute('password', Yii::$app->security->generatePasswordHash($newPassword));
+ *        return $this->updateAttributes(['password' => Yii::$app->security->generatePasswordHash($newPassword)]);
  *    }
  * }
  * ```
