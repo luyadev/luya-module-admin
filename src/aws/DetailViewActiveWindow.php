@@ -48,7 +48,7 @@ use luya\admin\ngrest\base\ActiveWindow;
 class DetailViewActiveWindow extends ActiveWindow
 {
     /**
-     * @var string The name of the module where the active windows is located in order to finde the view path.
+     * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
     

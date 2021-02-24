@@ -46,9 +46,9 @@ use luya\admin\traits\TaggableTrait;
 class TaggableActiveWindow extends ActiveWindow
 {
     /**
-     * @var string The name of the module where the active windows is located in order to finde the view path.
+     * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
-    public $module = 'admin';
+    public $module = '@admin';
     
     /**
      * When removing Tag Active Window in 2.0 this can be removed.
