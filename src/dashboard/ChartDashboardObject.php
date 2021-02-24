@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 /**
 * ECharts library dashboard object.
 *
-* The see all possible configuration options visit: https://ecomfe.github.io/echarts-examples/public/index.html
+* The see all possible configuration options visit: https://echarts.apache.org/examples/en/index.html
 *
 * Example usage:
 *
@@ -22,7 +22,7 @@ use yii\helpers\ArrayHelper;
 * ];
 * ```
 *
-* doughnut echarts (http://echarts.baidu.com/demo.html#pie-doughnut) example response:
+* Doughnut echarts (https://echarts.apache.org/examples/en/editor.html?c=pie-doughnut) example response:
 *
 * ```php
 * public function actionSale()
@@ -60,7 +60,7 @@ use yii\helpers\ArrayHelper;
 * }
 * ```
 *
-* A api response example for a line diagram:
+* An API response example for a line diagram:
 *
 * ```php
 * return [
@@ -73,7 +73,7 @@ use yii\helpers\ArrayHelper;
 * ];
 * ```
 *
-* Read more about echarts: https://github.com/ecomfe/echarts
+* Read more about echarts: https://github.com/apache/echarts
 *
 * @author Oom <baqianxin@163.com>
 * @since 1.0.2
