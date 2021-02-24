@@ -10,7 +10,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.
 + [#608](https://github.com/luyadev/luya-module-admin/pull/608) Use FileHelper::unlink method instead of PHP's `unlink` in order to prevent thrown exceptions.
 + [#609](https://github.com/luyadev/luya-module-admin/issues/609) Fixed generic issues when using PostgreSQL.
-+ [#]() Changed echarts library to major [Version 5.0](https://github.com/apache/echarts/releases/tag/5.0.0)
++ [#620](https://github.com/luyadev/luya-module-admin/pull/620) Changed echarts library to major [Version 5.0](https://github.com/apache/echarts/releases/tag/5.0.0)
 
 ## 3.9.0 (24. November 2020)
 
