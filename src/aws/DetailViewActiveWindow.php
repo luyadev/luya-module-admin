@@ -5,7 +5,7 @@ namespace luya\admin\aws;
 use luya\admin\ngrest\base\ActiveWindow;
 
 /**
- * Diplay Detail from ActiveRecord.
+ * Display details from ActiveRecord.
  *
  * This ActiveWindow uses the {{yii\widgets\DetailView}} Widget in order to display the data.
  *
