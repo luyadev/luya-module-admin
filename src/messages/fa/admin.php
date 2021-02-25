@@ -528,4 +528,8 @@ return [
 
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+
+// 4.0.0
+
+    'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
 ];

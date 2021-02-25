@@ -100,6 +100,8 @@ class LoginController extends Controller
         return $this->render('index', [
             'autologout' => $autologout,
             'resetPassword' => $this->module->resetPassword,
+            'disableLogin' => $this->module->disableLogin,
+            'disableLoginMessage' => $this->module->disableLoginMessage ? $this->module->disableLoginMessage : Module::t('disabled_login_text'),
         ]);
     }
 
