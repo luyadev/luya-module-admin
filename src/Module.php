@@ -249,6 +249,18 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $dashboardLogDisplayApiUserData = false;
 
     /**
+     * @var boolean If enabled, the login form is diabled and maintenance message is displayed, which can be configured trough $disableLoginMessage.
+     * @since 4.0.0
+     */
+    public $disableLogin = false;
+
+    /**
+     * @var string An optional message which is disapyled when the login is disabled.
+     * @since 4.0.0
+     */
+    public $disableLoginMessage;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
