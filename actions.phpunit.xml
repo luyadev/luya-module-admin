@@ -10,16 +10,12 @@
          convertWarningsToExceptions="true"
 >
     <testsuites>
-        <testsuite name="Package Test Suite">
-            <directory>./tests</directory>
+        <testsuite name="LUYA TESTS">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
-        <blacklist>
-            <directory>./vendor</directory>
-            <directory>./tests</directory>
-        </blacklist>
-        <whitelist processUncoveredFilesFromWhitelist="false">
+        <whitelist>
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>

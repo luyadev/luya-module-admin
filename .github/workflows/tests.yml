@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 env:
   DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction"
-  PHPUNIT_EXCLUDE_GROUP: mssql,oci,wincache,xcache,zenddata,cubrid
   CC_TEST_REPORTER_ID: c8387c181b15919319ac86be13d5e5022ec09aed1b8460572a793431080a52e3
 jobs:
 
@@ -39,7 +38,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: apc, curl, dom, imagick, intl, mbstring, mcrypt, memcached, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
+          extensions: curl, dom, imagick, intl, mbstring, mcrypt, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
           ini-values: date.timezone='UTC'
           coverage: xdebug
 
