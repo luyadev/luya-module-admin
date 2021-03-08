@@ -44,6 +44,11 @@ class LogController extends Command
      * @var integer
      */
     private $_referenceTimestamp;
+    /**
+     * Holds the old entries number found during age check 
+     * @var integer
+     */
+    private $_oldRowsCount;
 
     /**
      * @inheritdoc
@@ -62,14 +67,19 @@ class LogController extends Command
     {
         if ( $this->_validateRows() && $this->_validateYears() && $this->_validateTables($logTableName)) {
             // clean old log entries for each log tbale provided
-
             $this->_referenceTimestamp = strtotime(sprintf("-%s year", $this->years));
-
             foreach ($this->_dbLogTables as $logTableName=>$timestampField){
                 // output header
                 $this->outputInfo( sprintf("\nChecking log table %s", $logTableName ));
                 $this->outputInfo( str_repeat("-", 80) );
-                $this->_doClean($logTableName, $timestampField);
+                
+                $removed = $this->_doClean($logTableName, $timestampField);
+                if ($removed > 0) {
+                    $this->outputSuccess(sprintf("%s entries removed", $removed));
+                }
+                else {
+                    $this->outputInfo("No log entries renoved.");
+                }
             }
         }
     } // END actionCleanup()
@@ -116,7 +126,7 @@ class LogController extends Command
 
     private function _doClean($logTableName, $timestampField){
 
-        if ( $this->_checkEntriesCount($logTableName) && $oldRowsCount=$this->_checkEntriesAge($logTableName, $timestampField)) {
+        if ( $this->_moreThanMinimumRowsFound($logTableName) && $this->_olderThanMiniumYearsFound($logTableName, $timestampField)) {
 
             if ($this->interactive) {
                 if (!$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
@@ -124,22 +134,14 @@ class LogController extends Command
                     return;
                 }
             }
-
-            $removed = $this->dryRun? $oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
+            return $this->dryRun? $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
                 ':timestampLimit' => $this->_referenceTimestamp,
             ])->execute();
-
-            if ($removed) {
-                $this->outputSuccess(sprintf("%s entries removed", $removed));
-            }
-            else {
-                $this->outputInfo("No log entries renoved.");
-            }
         }
     } // END _doClean()
 
 
-    private function _checkEntriesCount($logTableName){
+    private function _moreThanMinimumRowsFound($logTableName){
          // check entries count towards minimum threshold
         $totalRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}}")->queryScalar();
         $this->output(sprintf("Total entries found : $totalRowsCount (minimum to keep %s)",  $this->rows));
@@ -150,18 +152,19 @@ class LogController extends Command
         return true;
     }
 
-    private function _checkEntriesAge($logTableName, $timestampField){
+    private function _olderThanMiniumYearsFound($logTableName, $timestampField){
         //check entries age towards minimum years threshold
-        $oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
+        $this->_oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
             ':timestampLimit' => $this->_referenceTimestamp,
         ])->queryScalar();
 
-        $this->output(sprintf("Total old entries : $oldRowsCount (reference date %s)",  date('d-M-Y H:i:s', $this->_referenceTimestamp)));
+        $this->output(sprintf("Total old entries : $this->_oldRowsCount (reference date %s)",  date('d-M-Y H:i:s', $this->_referenceTimestamp)));
 
-        if ($oldRowsCount == 0) {
+        if ($this->_oldRowsCount == 0) {
             $this->outputInfo("Log entries are  not old enough to delete.");
+            return false;
         }
-        return $oldRowsCount;
+        return true;
     }
 
 } // END LogController class
