@@ -54,7 +54,6 @@ class LogController extends Command
      */
     public function actionCleanup($logTableName)
     {
-
         // validate the minimum rows option
         $this->rows  = (int)$this->rows;
         if ($this->rows < 0){
@@ -87,51 +86,56 @@ class LogController extends Command
 
         // clean old log entries for each log tbale provided
         foreach ($logTableList as $logTableName){
-            // get the timestamp field form the tables definition
-            $timestampField = $this->_dbLogTables[$logTableName];
-
-            // output header
-            $this->outputInfo( sprintf("\nChecking log table %s", $logTableName ));
-            $this->outputInfo( str_repeat("-", 80) );
-
-            // check entries count towards minimum threshold
-            $totalRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}}")->queryScalar();
-            $this->output(sprintf("Total entries found : $totalRowsCount (minimum to keep %s)",  $this->rows));
-            if ($totalRowsCount < $this->rows) {
-                $this->outputInfo("Log entries do not execeed minium to keep.");
-                continue;
-            }
-
-            //check entries age towards minimum years threshold
-            $referenceTimestamp = strtotime(sprintf("-%s year", $this->years));
-            $oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
-                ':timestampLimit' => $referenceTimestamp,
-            ])->queryScalar();
-
-            $this->output(sprintf("Total old entries : $oldRowsCount (reference date %s)",  date('d-M-Y H:i:s', $referenceTimestamp)));
-
-            if ($oldRowsCount == 0) {
-                $this->outputInfo("Log entries are  not old enough to delete.");
-                continue;
-            }
-
-            if ($this->interactive) {
-                if (!$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
-                    $this->outputError("Log entries clean-up aborted.");
-                    continue;
-                }
-            }
-
-            $removed = $this->dryRun? $oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
-                ':timestampLimit' => $referenceTimestamp,
-            ])->execute();
-
-            if ($removed) {
-                $this->outputSuccess(sprintf("%s entries removed", $removed));
-            }
-            else {
-                $this->outputInfo("No log entries renoved.");
-            }
-        } // END foreach
+            $this->_doClean($logTableName);
+        }        
     } // END actionCleanup()
+    
+    private function _doClean($logTableName){
+        // get the timestamp field form the tables definition
+        $timestampField = $this->_dbLogTables[$logTableName];
+
+        // output header
+        $this->outputInfo( sprintf("\nChecking log table %s", $logTableName ));
+        $this->outputInfo( str_repeat("-", 80) );
+
+        // check entries count towards minimum threshold
+        $totalRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}}")->queryScalar();
+        $this->output(sprintf("Total entries found : $totalRowsCount (minimum to keep %s)",  $this->rows));
+        if ($totalRowsCount < $this->rows) {
+            $this->outputInfo("Log entries do not execeed minium to keep.");
+            return;
+        }
+
+        //check entries age towards minimum years threshold
+        $referenceTimestamp = strtotime(sprintf("-%s year", $this->years));
+        $oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
+            ':timestampLimit' => $referenceTimestamp,
+        ])->queryScalar();
+
+        $this->output(sprintf("Total old entries : $oldRowsCount (reference date %s)",  date('d-M-Y H:i:s', $referenceTimestamp)));
+
+        if ($oldRowsCount == 0) {
+            $this->outputInfo("Log entries are  not old enough to delete.");
+            return;
+        }
+
+        if ($this->interactive) {
+            if (!$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
+                $this->outputError("Log entries clean-up aborted.");
+                return;
+            }
+        }
+
+        $removed = $this->dryRun? $oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
+            ':timestampLimit' => $referenceTimestamp,
+        ])->execute();
+
+        if ($removed) {
+            $this->outputSuccess(sprintf("%s entries removed", $removed));
+        }
+        else {
+            $this->outputInfo("No log entries renoved.");
+        }
+    } // END _doClean()
+    
 } // END LogController class
