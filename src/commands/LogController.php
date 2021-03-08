@@ -71,19 +71,34 @@ class LogController extends Command
             foreach ($this->_dbLogTables as $logTableName=>$timestampField){
                 // output header
                 $this->outputInfo( sprintf("\nChecking log table %s", $logTableName ));
-                $this->outputInfo( str_repeat("-", 80) );
-                
-                $removed = $this->_doClean($logTableName, $timestampField);
-                if ($removed > 0) {
-                    $this->outputSuccess(sprintf("%s entries removed", $removed));
-                }
-                else {
-                    $this->outputInfo("No log entries renoved.");
-                }
+                $this->outputInfo( str_repeat("-", 80) );                
+                $this->_doClean($logTableName, $timestampField);
             }
         }
     } // END actionCleanup()
 
+    private function _doClean($logTableName, $timestampField){
+        if ( $this->_moreThanMinimumRowsFound($logTableName) && $this->_olderThanMiniumYearsFound($logTableName, $timestampField) && $this->_removalConfirmed($logTableName)) {
+            $removed = $this->dryRun ?  $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
+                ':timestampLimit' => $this->_referenceTimestamp,
+            ])->execute();
+            if ($removed > 0) {
+               $this->outputSuccess(sprintf("%s entries removed", $removed));
+            }
+            else {
+               $this->outputInfo("No log entries renoved.");
+            }
+        }
+    } // END _doClean()
+
+    private function _removalConfirmed($logTableName){
+        if ($this->interactive && !$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
+            $this->outputError("Log entries clean-up aborted.");
+            return false;
+        } 
+        return true;
+    }
+    
     private function _validateRows(){
         // validate the minimum rows option
         $this->rows  = (int)$this->rows;
@@ -123,23 +138,6 @@ class LogController extends Command
         }
         return true;
     }
-
-    private function _doClean($logTableName, $timestampField){
-
-        if ( $this->_moreThanMinimumRowsFound($logTableName) && $this->_olderThanMiniumYearsFound($logTableName, $timestampField)) {
-
-            if ($this->interactive) {
-                if (!$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
-                    $this->outputError("Log entries clean-up aborted.");
-                    return;
-                }
-            }
-            return $this->dryRun? $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
-                ':timestampLimit' => $this->_referenceTimestamp,
-            ])->execute();
-        }
-    } // END _doClean()
-
 
     private function _moreThanMinimumRowsFound($logTableName){
          // check entries count towards minimum threshold
