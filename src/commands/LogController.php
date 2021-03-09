@@ -9,12 +9,20 @@ use luya\console\Command;
  * LUYA Admin Logdata cleanup command.
  *
  * Cleanup ngrest and cms log data.
+ * 
+ * Example to cleanup all available log tables
+ * 
+ * ```php
+ * ./vendor/bin/luya admin/log/cleanup all
+ * ```
  *
  * @author Rochdi Bazine <https://github.com/rochdi80tn>
  * @since 4.0.0
  */
 class LogController extends Command
 {
+    const ALL_TABLES = 'ALL';
+    
     /**
      * @var boolean Whether to perform a dry run or not.
      */
@@ -59,7 +67,8 @@ class LogController extends Command
 
     /**
      * Clean up logs older than a given threshold.
-     * @param string the log tables to clean separated by comma
+     * 
+     * @param string the log tables to clean separated by comma if `all` is provided, all available log tables will be cleanedup
      */
     public function actionCleanup($logTableName)
     {
@@ -75,6 +84,12 @@ class LogController extends Command
         }
     }
 
+    /**
+     * Cleanup the table name with the given time
+     *
+     * @param string $logTableName
+     * @param integer $timestampField
+     */
     private function doClean($logTableName, $timestampField)
     {
         if ($this->moreThanMinimumRowsFound($logTableName) && $this->olderThanMiniumYearsFound($logTableName, $timestampField) && $this->removalConfirmed($logTableName)) {
@@ -89,19 +104,29 @@ class LogController extends Command
         }
     }
 
+    /**
+     * Confirm
+     *
+     * @param string $logTableName
+     * @return boolean
+     */
     private function removalConfirmed($logTableName)
     {
-        if ($this->interactive && !$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
+        if ($this->interactive && !$this->confirm("Do you want to delete the extra entries from \"$logTableName\" table?")) {
             $this->outputError("Log entries clean-up aborted.");
             return false;
         }
-        
+
         return true;
     }
     
+    /**
+     * validate the minimum rows option
+     *
+     * @return boolean
+     */
     private function validateRows()
     {
-        // validate the minimum rows option
         $this->rows  = (int)$this->rows;
         if ($this->rows < 0) {
             $this->outputError("Minimum rows to keep should be positive.");
@@ -111,11 +136,15 @@ class LogController extends Command
         return true;
     }
 
+    /**
+     * validate the years option
+     *
+     * @return boolean
+     */
     private function validateYears()
     {
-        // validate the years option
-        $this->years = (int)$this->years;
-        if ($this->years< 0) {
+        $this->years = (int) $this->years;
+        if ($this->years < 0) {
             $this->outputError("Minimum Years to keep should be positive.");
             return false;
         }
@@ -123,20 +152,26 @@ class LogController extends Command
         return true;
     }
 
+    /**
+     * Validate the log table name whether its in the list of valid tables
+     *
+     * @param string $logTableName
+     * @return boolean
+     */
     private function validateTables($logTableName)
     {
-        // validate the log table names argument
-        if (strtoupper($logTableName)!='ALL') {
+        
+        if (strtoupper($logTableName) !== self::ALL_TABLES) {
             // extarct the table names and check them towards the known list of log tables
             $logTableList = explode(',', $logTableName);
             $wrongTableNames = array_diff($logTableList, array_keys($this->_dbLogTables));
             if ($wrongTableNames) {
                 $this->outputInfo("Please specifiy a valid log table to clean among below list:");
-                $this->outputInfo("  - " . join("\n  - ", array_keys($this->_dbLogTables)));
-                $this->outputError(sprintf("Error. Invalid table name '%s'", join("', '", $wrongTableNames)));
+                $this->outputInfo("  - " . implode("\n  - ", array_keys($this->_dbLogTables)));
+                $this->outputError(sprintf("Error. Invalid table name '%s'", implode("', '", $wrongTableNames)));
                 return false;
             } else {
-                // keep oonly provided table names
+                // keep only provided table names
                 $this->_dbLogTables = array_flip(array_intersect(array_flip($this->_dbLogTables), $logTableList));
             }
         }
@@ -144,9 +179,14 @@ class LogController extends Command
         return true;
     }
 
+    /**
+     * check entries count towards minimum threshold
+     *
+     * @param string $logTableName
+     * @return boolean
+     */
     private function moreThanMinimumRowsFound($logTableName)
     {
-        // check entries count towards minimum threshold
         $totalRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}}")->queryScalar();
         $this->output(sprintf("Total entries found : $totalRowsCount (minimum to keep %s)", $this->rows));
         if ($totalRowsCount < $this->rows) {
@@ -157,9 +197,15 @@ class LogController extends Command
         return true;
     }
 
+    /**
+     * check entries age towards minimum years threshold
+     *
+     * @param string $logTableName
+     * @param integer $timestampField
+     * @return boolean
+     */
     private function olderThanMiniumYearsFound($logTableName, $timestampField)
     {
-        //check entries age towards minimum years threshold
         $this->_oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
             ':timestampLimit' => $this->_referenceTimestamp,
         ])->queryScalar();
