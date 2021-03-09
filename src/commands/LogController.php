@@ -16,6 +16,12 @@ use luya\console\Command;
  * ./vendor/bin/luya admin/log/cleanup all
  * ```
  *
+ * In order to cleanup all data without year or amount persistence use
+ *
+ *```php
+ * ./vendor/bin/luya admin/log/cleanup all --rows=0 --years=0
+ * ```
+ *
  * @author Rochdi Bazine <https://github.com/rochdi80tn>
  * @since 4.0.0
  */
