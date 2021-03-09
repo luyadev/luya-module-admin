@@ -14,7 +14,7 @@ class SelectAsyncApiTest extends AdminTestCase
             'name' => 'selectasyncapi',
             'alias' => 'selectasyncapi',
             'i18n' => false,
-            'api' => 'api/{otherfield}&foo={{bar}}',    
+            'api' => 'api/{otherfield}&foo={{bar}}',
         ]);
 
         $this->assertSame('<async-value api="api/{{otherfield}}&amp;foo={{{bar}}}" model="ngmodel" fields="[&quot;title&quot;]"></async-value>', $plugin->renderList('id', 'ngmodel'));

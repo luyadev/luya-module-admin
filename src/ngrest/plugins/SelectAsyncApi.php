@@ -7,11 +7,11 @@ use luya\helpers\Json;
 
 /**
  * Select Dropdown from an API
- * 
+ *
  * Whenever the API changes (trough angularjs two way binding of variables) a call will be made to the API which returns the select values.
  *
  * Therefore this can also be used als "dependent select" feature known as "depdrop"
- * 
+ *
  * ```php
  * [
  *     'class' => SelectAsyncApi::class,
@@ -20,9 +20,9 @@ use luya\helpers\Json;
  *     'valueField' => 'id'
  * ]
  * ```
- * 
+ *
  * The above example illustrates that whenever the value of the field `name` changes, the given value will be popuplated to the api request.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
  */
@@ -31,7 +31,7 @@ class SelectAsyncApi extends Plugin
     /**
      * @var string Example api would be `admin/api-admin-user`. Its even possible to add parameters from other fields, becuase the api
      * will be called whenever the api changes (there is a watcher registered).
-     *  
+     *
      * ````
      * 'api' => 'admin/api-admin-user?title={name}'
      * ```
@@ -40,8 +40,8 @@ class SelectAsyncApi extends Plugin
 
     /**
      * @var string The api which should be take to determine the list entry, if not defined {{$api}} will be taken. The main purpose of this
-     * is that the list api usually do not need to query data, it should just display the selected value in the list view. Therfore this could 
-     * look like `admin/api-admin-user` without params as the list async request will add the `/{id}?fields={id}` to the api url. 
+     * is that the list api usually do not need to query data, it should just display the selected value in the list view. Therfore this could
+     * look like `admin/api-admin-user` without params as the list async request will add the `/{id}?fields={id}` to the api url.
      */
     public $listApi;
 
@@ -57,7 +57,7 @@ class SelectAsyncApi extends Plugin
 
     /**
      * @var boolean If enabled all variables with curly brackets will be convereted into the relative context of the attribute. For example
-     * `{firstname}` would be converted to `data.create.firstname` or `data.update.firstname` based on the correct context. If disabled you 
+     * `{firstname}` would be converted to `data.create.firstname` or `data.update.firstname` based on the correct context. If disabled you
      * can use double curly brackets to access the angular scope `{{data.update.firstname}}` but won't have the option to auto change its context.
      */
     public $variablizeApi = true;

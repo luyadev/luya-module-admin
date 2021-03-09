@@ -41,5 +41,4 @@ class LogControllerTest extends AdminConsoleSqLiteTestCase
         $ctrl->rows = -1;
         $this->assertFalse($this->invokeMethod($ctrl, 'validateRows'));
     }
-
 }

@@ -899,7 +899,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     
     /**
      * Format the values for export generator.
-     * 
+     *
      * When exporting data, it might be convient to format certain values, by default the {{luya\components\Formatter}} will be used. Its
      * also possible to provide a closure function to interact with the model. When handling large amount of data to export, this might
      * make problems because it will generate a model for each row. Therfore an empty array response will improve performance because {{ngRestExport()}}
@@ -917,10 +917,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *     ];
      * }
      * ```
-     * 
+     *
      * When using a relation call `$model->category->title` it might usefull to eager load this relation, therefore take a look at {{luya\admin\ngrest\base\Api::withRelations()}}.
      * Therfore the withRelations() can be configured in the api controller of the given NgRest model:
-     * 
+     *
      * ```php
      * public function withRelations()
      * {
@@ -929,7 +929,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *     ];
      * }
      * ```
-     * 
+     *
      * @return array An array where the key is the attribute and value is either the formatter to use or a closure where the first param is the model itself.
      * @since 3.9.0
      */

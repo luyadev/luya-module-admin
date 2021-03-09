@@ -97,7 +97,7 @@ class Scheduler extends \yii\db\ActiveRecord
     }
 
     /**
-     * Ensure if the given class is an ngrest model and permission exists. If its not 
+     * Ensure if the given class is an ngrest model and permission exists. If its not
      * an ngrest model, there is no permission system and trigger permission is granted (@since 4.0)
      *
      * @param string $class

@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 /**
  * Yii Session Table
- * 
+ *
  * ```php
  * session' => [
  *     'class' => 'yii\web\DbSession',

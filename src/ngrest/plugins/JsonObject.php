@@ -7,21 +7,21 @@ use luya\helpers\Json;
 
 /**
  * Generate a Key Value Object.
- * 
+ *
  * The plugin internally stores a json object with key and value, the JsonObject plugin will transform
  * this input into an associative array with key and value.
- * 
+ *
  * Example output when using JsonObject
- * 
+ *
  * ```php
  * [
  *     'foo' => 'bar',
  *     'baz' => 'foo',
  * ]
  * ```
- * 
+ *
  * While the keys and the value can be insereted from the admin UI.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.9.0
  */

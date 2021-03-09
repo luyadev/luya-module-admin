@@ -23,7 +23,7 @@ class Angular
 {
     /**
      * Type Cast values.
-     * 
+     *
      * This is important as the angularjs admin is required to have integer values for boolean values,
      * since pgsql does return boolean values we have to type cast those value, this is the purpose of
      * this function.

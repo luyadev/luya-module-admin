@@ -133,10 +133,10 @@ final class Lang extends NgRestModel
     public function fields()
     {
         $fields = parent::fields();
-        $fields['is_default'] = function($value) {
+        $fields['is_default'] = function ($value) {
             return Angular::typeCast($value->is_default);
         };
-        $fields['is_deleted'] = function($value) {
+        $fields['is_deleted'] = function ($value) {
             return Angular::typeCast($value->is_deleted);
         };
         return $fields;

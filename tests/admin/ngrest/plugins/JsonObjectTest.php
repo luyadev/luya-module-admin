@@ -50,6 +50,5 @@ class JsonObjectTest extends AdminModelTestCase
         $plugin->i18n = true;
         $plugin->onBeforeExpandFind($event);
         $this->assertSame('{"foo":"bar","baz":"foo"}', $model->query);
-        
     }
 }
