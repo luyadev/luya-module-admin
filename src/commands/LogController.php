@@ -6,16 +6,15 @@ use Yii;
 use luya\console\Command;
 
 /**
- * LUYA Admin Log command.
+ * LUYA Admin Logdata cleanup command.
  *
  * Cleanup ngrest and cms log data.
  *
- * @author
- * @since
+ * @author Rochdi Bazine <https://github.com/rochdi80tn>
+ * @since 4.0.0
  */
 class LogController extends Command
 {
-
     /**
      * @var boolean Whether to perform a dry run or not.
      */
@@ -40,13 +39,13 @@ class LogController extends Command
     ];
 
     /**
-     * Holds the minium timestamp to keep entries
-     * @var integer
+     * @var integer Holds the minium timestamp to keep entries
      */
     private $_referenceTimestamp;
+    
     /**
-     * Holds the old entries number found during age check
-     * @var integer
+     * 
+     * @var integer Holds the old entries number found during age check
      */
     private $_oldRowsCount;
 
@@ -55,31 +54,30 @@ class LogController extends Command
      */
     public function options($actionID)
     {
-        parent::options($actionID);
-        return ['logTable', 'dryRun', 'rows', 'years', 'interactive'];
+        return array_merge(['dryRun', 'rows', 'years'], parent::options($actionID));
     }
 
     /**
      * Clean up logs older than a given threshold.
-     * @param the log tables to clean separated by comma
+     * @param string the log tables to clean separated by comma
      */
     public function actionCleanup($logTableName)
     {
-        if ($this->_validateRows() && $this->_validateYears() && $this->_validateTables($logTableName)) {
+        if ($this->validateRows() && $this->validateYears() && $this->validateTables($logTableName)) {
             // clean old log entries for each log tbale provided
             $this->_referenceTimestamp = strtotime(sprintf("-%s year", $this->years));
-            foreach ($this->_dbLogTables as $logTableName=>$timestampField) {
+            foreach ($this->_dbLogTables as $logTableName => $timestampField) {
                 // output header
                 $this->outputInfo(sprintf("\nChecking log table %s", $logTableName));
                 $this->outputInfo(str_repeat("-", 80));
-                $this->_doClean($logTableName, $timestampField);
+                $this->doClean($logTableName, $timestampField);
             }
         }
-    } // END actionCleanup()
+    }
 
-    private function _doClean($logTableName, $timestampField)
+    private function doClean($logTableName, $timestampField)
     {
-        if ($this->_moreThanMinimumRowsFound($logTableName) && $this->_olderThanMiniumYearsFound($logTableName, $timestampField) && $this->_removalConfirmed($logTableName)) {
+        if ($this->moreThanMinimumRowsFound($logTableName) && $this->olderThanMiniumYearsFound($logTableName, $timestampField) && $this->removalConfirmed($logTableName)) {
             $removed = $this->dryRun ?  $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
                 ':timestampLimit' => $this->_referenceTimestamp,
             ])->execute();
@@ -89,18 +87,19 @@ class LogController extends Command
                 $this->outputInfo("No log entries renoved.");
             }
         }
-    } // END _doClean()
+    }
 
-    private function _removalConfirmed($logTableName)
+    private function removalConfirmed($logTableName)
     {
         if ($this->interactive && !$this->confirm("Do you want to delete the extra entries from $logTableName table?")) {
             $this->outputError("Log entries clean-up aborted.");
             return false;
         }
+        
         return true;
     }
     
-    private function _validateRows()
+    private function validateRows()
     {
         // validate the minimum rows option
         $this->rows  = (int)$this->rows;
@@ -108,10 +107,11 @@ class LogController extends Command
             $this->outputError("Minimum rows to keep should be positive.");
             return false;
         }
+
         return true;
     }
 
-    private function _validateYears()
+    private function validateYears()
     {
         // validate the years option
         $this->years = (int)$this->years;
@@ -119,10 +119,11 @@ class LogController extends Command
             $this->outputError("Minimum Years to keep should be positive.");
             return false;
         }
+
         return true;
     }
 
-    private function _validateTables($logTableName)
+    private function validateTables($logTableName)
     {
         // validate the log table names argument
         if (strtoupper($logTableName)!='ALL') {
@@ -139,10 +140,11 @@ class LogController extends Command
                 $this->_dbLogTables = array_flip(array_intersect(array_flip($this->_dbLogTables), $logTableList));
             }
         }
+
         return true;
     }
 
-    private function _moreThanMinimumRowsFound($logTableName)
+    private function moreThanMinimumRowsFound($logTableName)
     {
         // check entries count towards minimum threshold
         $totalRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}}")->queryScalar();
@@ -151,10 +153,11 @@ class LogController extends Command
             $this->outputInfo("Log entries do not execeed minium to keep.");
             return false;
         }
+
         return true;
     }
 
-    private function _olderThanMiniumYearsFound($logTableName, $timestampField)
+    private function olderThanMiniumYearsFound($logTableName, $timestampField)
     {
         //check entries age towards minimum years threshold
         $this->_oldRowsCount = Yii::$app->db->createCommand("SELECT count(*) as count FROM {{%$logTableName}} WHERE $timestampField < :timestampLimit", [
@@ -164,9 +167,10 @@ class LogController extends Command
         $this->output(sprintf("Total old entries : $this->_oldRowsCount (reference date %s)", date('d-M-Y H:i:s', $this->_referenceTimestamp)));
 
         if ($this->_oldRowsCount == 0) {
-            $this->outputInfo("Log entries are  not old enough to delete.");
+            $this->outputInfo("Log entries are not old enough to delete.");
             return false;
         }
+
         return true;
     }
-} // END LogController class
+}
