@@ -9,9 +9,9 @@ use luya\console\Command;
  * LUYA Admin Logdata cleanup command.
  *
  * Cleanup ngrest and cms log data.
- * 
+ *
  * Example to cleanup all available log tables
- * 
+ *
  * ```php
  * ./vendor/bin/luya admin/log/cleanup all
  * ```
@@ -52,7 +52,7 @@ class LogController extends Command
     private $_referenceTimestamp;
     
     /**
-     * 
+     *
      * @var integer Holds the old entries number found during age check
      */
     private $_oldRowsCount;
@@ -67,7 +67,7 @@ class LogController extends Command
 
     /**
      * Clean up logs older than a given threshold.
-     * 
+     *
      * @param string the log tables to clean separated by comma if `all` is provided, all available log tables will be cleanedup
      */
     public function actionCleanup($logTableName)
@@ -160,7 +160,6 @@ class LogController extends Command
      */
     private function validateTables($logTableName)
     {
-        
         if (strtoupper($logTableName) !== self::ALL_TABLES) {
             // extarct the table names and check them towards the known list of log tables
             $logTableList = explode(',', $logTableName);

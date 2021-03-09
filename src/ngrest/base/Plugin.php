@@ -435,15 +435,15 @@ abstract class Plugin extends Component implements TypesInterface
      *
      * For example when you like to access an attribute you can use the variable name in curly
      * braces. This will ensure the correct angularjs context value  will be taken.
-     * 
+     *
      * For example:
-     * 
+     *
      * ```
      * admin/api-admin-user/search?query={firstname}
      * ```
-     * 
+     *
      * This will replace `{firstname}` by `data.create.firstname` or if enabled it will be `{{data.create.firstname}}`
-     * 
+     *
      * @param string $ngModel
      * @param string $string
      * @param boolean $angularJsVariable Whether the output should be enclosed in curly brackets or not {{}}

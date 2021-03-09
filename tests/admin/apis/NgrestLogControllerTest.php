@@ -24,7 +24,6 @@ class NgrestLogControllerTest extends AdminModelTestCase
 
     public function testExportAndFormatter()
     {
-
         PermissionScope::run($this->app, function (PermissionScope $scope) {
             $scope->createAndAllowApi('api-admin-ngrestlog');
             $this->app->request->setBodyParams(['type' => 'csv']);
@@ -53,7 +52,7 @@ class NgrestLogControllerTest extends AdminModelTestCase
 
             $export = $this->invokeMethod($api, 'formatExportValues', [NgrestLog::find(), [
                 'is_update' => 'boolean',
-                'table_name' => function($model) {
+                'table_name' => function ($model) {
                     return md5($model->table_name);
                 }
             ]]);

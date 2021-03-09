@@ -33,7 +33,7 @@ class GroupController extends Api
 
     /**
      * Loggedin User Groups
-     * 
+     *
      * Returns all groups where the current loggedin (me) belongs to.
      *
      * @return Group[]
