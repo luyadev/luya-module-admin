@@ -93,7 +93,7 @@ class LogController extends Command
     private function doClean($logTableName, $timestampField)
     {
         if ($this->moreThanMinimumRowsFound($logTableName) && $this->olderThanMiniumYearsFound($logTableName, $timestampField) && $this->removalConfirmed($logTableName)) {
-            $removed = $this->dryRun ?  $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
+            $removed = $this->dryRun ? $this->_oldRowsCount : Yii::$app->db->createCommand()->delete("{{%$logTableName}}", "$timestampField < :timestampLimit", [
                 ':timestampLimit' => $this->_referenceTimestamp,
             ])->execute();
             if ($removed > 0) {
@@ -127,7 +127,7 @@ class LogController extends Command
      */
     private function validateRows()
     {
-        $this->rows  = (int)$this->rows;
+        $this->rows = (int) $this->rows;
         if ($this->rows < 0) {
             $this->outputError("Minimum rows to keep should be positive.");
             return false;
