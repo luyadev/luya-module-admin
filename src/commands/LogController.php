@@ -8,21 +8,48 @@ use luya\console\Command;
 /**
  * LUYA Admin Logdata cleanup command.
  *
- * Cleanup ngrest and cms log data.
+ * This database maintenance command will cleanup ngrest and cms log data.
  *
- * Example to cleanup all available log tables
+ * USAGE
  *
- * ```php
+ * ```sh
+ * ./vendor/bin/luya admin/log/cleanup <logTableName> [--years=YYY] [--rows=XXX] [--interactive=0] [--dry-run]
+ * ```
+ *
+ * The  logTableName is a comma separated string of db tables to cleanup. If `all`
+ * is provided, all available log tables will be cleanedup. Entries older than
+ * YYY years will be removed if there is at least XXX rows in the log table.
+ *
+ * The command will ask for user confirmation prior to actual entries removal from
+ * each log table. In order to perform a silent cleanup (useful in a cron job
+ * for instance), use the `--interactive=0` option.
+ *
+ * A dry run can be performed to see how many entries will be removed using the
+ * `--dry-run` option.
+ *
+ *
+ * EXAMPLES
+ *
+ * To cleanup all available log tables use
+ *
+ * ```sh
  * ./vendor/bin/luya admin/log/cleanup all
  * ```
  *
  * In order to cleanup all data without year or amount persistence use
  *
- *```php
+ *```sh
  * ./vendor/bin/luya admin/log/cleanup all --rows=0 --years=0
  * ```
  *
- * @author Rochdi Bazine <https://github.com/rochdi80tn>
+ * To see how many entries will be deleted from `admin_ngrest_log` table only
+ * when more than 2000 entries are present and for those older than 2 years, use
+ *
+ *```sh
+ * ./vendor/bin/luya admin/log/cleanup admin_ngrest_log --dry-run --rows=2000 --years=2 --interactive=0
+ * ```
+ *
+ * @author Rochdi Bazine <rochdi80tn@gmail.com>
  * @since 4.0.0
  */
 class LogController extends Command
