@@ -130,9 +130,9 @@ class LogController extends Command
                 ':timestampLimit' => $this->_referenceTimestamp,
             ])->execute();
             if ($removed > 0) {
-                $this->outputSuccess(sprintf("%s entries removed", $removed));
+                $this->outputSuccess(sprintf("%s entries %sremoved", $removed, $this->dryRun ? 'will be ':''));
             } else {
-                $this->outputInfo("No log entries renoved.");
+                $this->outputInfo("No log entries removed.");
             }
         }
     }
