@@ -352,6 +352,26 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
         return $this->getIsCompositeItem() ? $this->getItemIds() : $this->getItemIds()[0];
     }
     
+    private $_condition;
+    
+    /**
+     * Setter method for the button ng-show condition
+     * @param string $condition
+     */
+    public function setCondition($condition)
+    {
+        $this->_condition = $condition;
+    }
+    
+    /**
+     * Get the button condition or empty of not set
+     * @inheritdoc
+     */
+    public function getCondition()
+    {
+        return empty($this->_condition) ? '' : $this->_condition;
+    }
+    
     /**
      * @inheritdoc
      */

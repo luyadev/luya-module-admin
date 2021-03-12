@@ -131,6 +131,26 @@ abstract class ActiveButton extends BaseObject
     {
         return $this->_icon ?: $this->getDefaultIcon();
     }
+    
+    private $_condition;
+    
+    /**
+     * Setter method for the button ng-show condition
+     * @param string $condition
+     */
+    public function setCondition($condition)
+    {
+        $this->_condition = $condition;
+    }
+    
+    /**
+     * Get the button condition or empty of not set
+     * @inheritdoc
+     */
+    public function getCondition()
+    {
+        return empty($this->_condition) ? '' : $this->_condition;
+    }
 
     private $_events = [];
 
