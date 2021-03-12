@@ -1032,7 +1032,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @inheritdoc
      */
     public function ngRestConfig($config)
-    {
+    {        
         foreach ($this->ngRestScopes() as $arrayConfig) {
             if (!isset($arrayConfig[0]) && !isset($arrayConfig[1])) {
                 throw new InvalidConfigException("Invalid ngRestScope definition. Definition must contain an array with two elements: `['create', []]`");
@@ -1040,7 +1040,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             
             $scope = $arrayConfig[0];
             $fields = $arrayConfig[1];
-
+            
             if ($scope == 'delete' || (is_array($scope) && in_array('delete', $scope))) {
                 $config->delete = $fields;
             } else {
@@ -1051,10 +1051,49 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         foreach ($this->ngRestActiveWindows() as $windowConfig) {
             $config->aw->load($windowConfig);
         }
+        // get the scope based config options if no ngRestConfigOptions() are defined
+        $config->options = !empty($this->ngRestConfigOptions())? $this->ngRestConfigOptions() : $this->getNgRestScopeConfigOptions($config);
+    }
         
-        if (!empty($this->ngRestConfigOptions())) {
-            $config->options = $this->ngRestConfigOptions();
+    /**
+     * Return the scope definition third entry looking for button condition
+     * Currently support only buttonCondition 
+     *
+     * Example of returned array :
+     * 
+     * ```php
+     * [
+     *    "buttonCondition" => [
+     *       0 => ["update",  "{title}>1"],
+     *       0 => ["delete",  "{title}==2 && {firstname}=='bar'"]
+     *    ]
+     * ]
+     * 
+     * @return array buttonCondition indexed array
+     */
+    public function getNgRestScopeConfigOptions($config)
+    {
+        $configOptions = [];
+        foreach ($this->ngRestScopes() as $arrayConfig) {
+            if (isset($arrayConfig[2]) && isset($arrayConfig[2]['buttonCondition']) && !empty($arrayConfig[2]['buttonCondition'])) {
+                $buttonConditionConfig = $arrayConfig[2]['buttonCondition'];
+                if (is_array($buttonConditionConfig)) {
+                    $conditions = [];
+                    foreach ($buttonConditionConfig as $field => $value) {
+                        $conditions [] = sprintf('%s==%s', $field, $value);
+                    }
+                    $buttonConditionConfig = implode(' && ', $conditions);
+                }
+                $scope = $arrayConfig[0];
+                if (is_string($scope)) {
+                    $scope  =[$scope];
+                }
+                foreach ($scope as $single_scope) {
+                    $configOptions['buttonCondition'][] = [$single_scope, $buttonConditionConfig];
+                }
+            }
         }
+        return $configOptions;
     }
     
     private $_config;
