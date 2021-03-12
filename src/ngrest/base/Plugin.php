@@ -385,7 +385,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string Returns the string with the name field name like `data.create.$field`.
      * @since 1.2.0
      */
-    protected function replaceFieldFromNgModelContext($ngModel, $field, $angularJsVariable = false)
+    public static function replaceFieldFromNgModelContext($ngModel, $field, $angularJsVariable = false)
     {
         if (empty($field)) {
             return;
@@ -450,14 +450,14 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string
      * @since 4.0.0
      */
-    protected function variablizeContext($ngModel, $string, $angularJsVariable)
+    public static function variablizeContext($ngModel, $string, $angularJsVariable)
     {
         preg_match_all('/{(.*?)}/', $string, $matches, PREG_SET_ORDER);
         $search = [];
         $replace = [];
         foreach ($matches as $match) {
             $search[] = $match[0];
-            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1], $angularJsVariable);
+            $replace[] = self::replaceFieldFromNgModelContext($ngModel, $match[1], $angularJsVariable);
         }
         
         return str_replace($search, $replace, $string);
