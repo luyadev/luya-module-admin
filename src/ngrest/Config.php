@@ -161,6 +161,7 @@ class Config extends BaseObject implements ConfigInterface
                     'hash' => $hash,
                     'label' => $object->getLabel(),
                     'icon' => $object->getIcon(),
+                    'condition' => $object->getCondition(),
                 ];
             }
 
