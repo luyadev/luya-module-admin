@@ -13,6 +13,7 @@ use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 use yii\base\InvalidConfigException;
 use luya\admin\ngrest\render\RenderCrud;
+
 class ButtonConditionConfigTest extends AdminModelTestCase
 {
     use DatabaseTableTrait;
@@ -25,20 +26,20 @@ class ButtonConditionConfigTest extends AdminModelTestCase
  
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         
-        $activeWindows=$ngRestCfg->getPointer('aw');        
+        $activeWindows=$ngRestCfg->getPointer('aw');
         
-        $changePasswordActiveWindow = array_shift($activeWindows);                
-        $this->assertArrayHasKey('condition',$changePasswordActiveWindow['objectConfig']);
+        $changePasswordActiveWindow = array_shift($activeWindows);
+        $this->assertArrayHasKey('condition', $changePasswordActiveWindow['objectConfig']);
         $this->assertEquals($changePasswordActiveWindow['objectConfig']['condition'], '{firstname}==\'foo\'');
         
         $context = new RenderCrud([
             'config' => $ngRestCfg,
-        ]); 
+        ]);
 
         // test the RenderCrud::listContextVariablize()
         $this->assertSame(
-                $context->listContextVariablize($changePasswordActiveWindow['objectConfig']['condition']),
-                'item.firstname==\'foo\''
+            $context->listContextVariablize($changePasswordActiveWindow['objectConfig']['condition']),
+            'item.firstname==\'foo\''
         );
           
         $fixture->cleanup();
@@ -90,18 +91,18 @@ class ButtonConditionConfigTest extends AdminModelTestCase
         
         $context = new RenderCrud([
             'config' => $ngRestCfg,
-        ]); 
+        ]);
 
         
-        $deleteCondition = $context->getConfigButtonCondition('delete');        
+        $deleteCondition = $context->getConfigButtonCondition('delete');
         $this->assertSame(
-                $deleteCondition ,
-                '{title}==2 && {firstname}==\'bar\''
+            $deleteCondition,
+            '{title}==2 && {firstname}==\'bar\''
         );
         
         $this->assertSame(
-                $context->listContextVariablize($deleteCondition ),
-                'item.title==2 && item.firstname==\'bar\''
+            $context->listContextVariablize($deleteCondition),
+            'item.title==2 && item.firstname==\'bar\''
         );
         
         $fixture->cleanup();
@@ -127,7 +128,6 @@ class ButtonConditionConfigTest extends AdminModelTestCase
         
         $fixture->cleanup();
     }
-   
 }
 
 class ScopeBasedConditionUserModel extends User

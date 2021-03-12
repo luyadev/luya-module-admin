@@ -1032,7 +1032,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @inheritdoc
      */
     public function ngRestConfig($config)
-    {        
+    {
         foreach ($this->ngRestScopes() as $arrayConfig) {
             if (!isset($arrayConfig[0]) && !isset($arrayConfig[1])) {
                 throw new InvalidConfigException("Invalid ngRestScope definition. Definition must contain an array with two elements: `['create', []]`");
@@ -1057,10 +1057,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         
     /**
      * Return the scope definition third entry looking for button condition
-     * Currently support only buttonCondition 
+     * Currently support only buttonCondition
      *
      * Example of returned array :
-     * 
+     *
      * ```php
      * [
      *    "buttonCondition" => [
@@ -1068,7 +1068,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *       0 => ["delete",  "{title}==2 && {firstname}=='bar'"]
      *    ]
      * ]
-     * 
+     *
      * @return array buttonCondition indexed array
      */
     public function getNgRestScopeConfigOptions($config)
