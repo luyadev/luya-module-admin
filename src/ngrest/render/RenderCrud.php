@@ -413,19 +413,20 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         // return empty string of no condition is defined
         if (empty($buttonConditionConfigOption)) {
             return '';
-        } elseif (!is_array($buttonConditionConfigOption)) { // throw exception if configuration is wrong
+        }
+        
+        if (!is_array($buttonConditionConfigOption)) { // throw exception if configuration is wrong
             throw new InvalidConfigException(sprintf("Invalid buttonsCondition ngRestConfigOptions definition for '%s' scope.", $scope));
         }
 
         foreach ($buttonConditionConfigOption as $arrayConfig) {
-            if (count($arrayConfig) < 2) {
-                throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition. buttonsCondition must be an array with two elements similar to ngRestScopes. Ex. `[ ['update', 'delete'], '{fieldname} == 1'´]`");
-            }
-
             // take the first entry of the array config as the config scope
             // and check whether it applys to the given scppe
             $configScope = !is_array($arrayConfig[0])?[$arrayConfig[0]]:$arrayConfig[0];
             if (in_array($scope, $configScope)) {
+                if (!isset($arrayConfig[1])) {
+                    throw new InvalidConfigException("Invalid buttonsCondition ngRestConfigOptions definition. buttonsCondition must be an array with two elements similar to ngRestScopes. Ex. `[ ['update', 'delete'], '{fieldname} == 1'´]`");
+                }
                 return $arrayConfig[1];
             }
         }

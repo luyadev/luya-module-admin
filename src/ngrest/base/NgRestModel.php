@@ -1064,8 +1064,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * ```php
      * [
      *    "buttonCondition" => [
-     *       0 => ["update",  "{title}>1"],
-     *       0 => ["delete",  "{title}==2 && {firstname}=='bar'"]
+     *       ["update",  "{title}>1"],
+     *       ["delete",  "{title}==2 && {firstname}=='bar'"]
      *    ]
      * ]
      *
@@ -1095,25 +1095,20 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     private function ngRestConfigButtonCondition($arrayConfig)
     {
-        if (!isset($arrayConfig[2])) {
-            return '';
-        }
-        if (!isset($arrayConfig[2]['buttonCondition'])) {
-            return '';
-        }
-        
-        if (is_string($arrayConfig[2]['buttonCondition'])) {
-            return $arrayConfig[2]['buttonCondition'];
-        }
-        
-        if (is_array($arrayConfig[2]['buttonCondition'])) {
+        if (!isset($arrayConfig[2]) || !isset($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = '';
+        } elseif (is_string($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = $arrayConfig[2]['buttonCondition'];
+        } elseif (is_array($arrayConfig[2]['buttonCondition'])) {
             $conditions = [];
             foreach ($arrayConfig[2]['buttonCondition'] as $field => $value) {
                 $conditions [] = sprintf('%s==%s', $field, $value);
             }
-            return implode(' && ', $conditions);
+            $buttonCondition = implode(' && ', $conditions);
+        } else {
+            $buttonCondition = '';
         }
-        return '';
+        return $buttonCondition;
     }
         
     
