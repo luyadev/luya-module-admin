@@ -59,6 +59,7 @@ class ConfigTest extends AdminModelTestCase
                 'hash' => '0b825e122b29fedf9d68ed51404e408968ede7f5',
                 'label' => 'Timestamp',
                 'icon' => 'update',
+                'condition' => '',
             ]
         ], $cfg->getActiveButtons());
 

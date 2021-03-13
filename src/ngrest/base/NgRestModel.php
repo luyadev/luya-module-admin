@@ -1052,7 +1052,10 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->aw->load($windowConfig);
         }
         // get the scope based config options if no ngRestConfigOptions() are defined
-        $config->options = !empty($this->ngRestConfigOptions())? $this->ngRestConfigOptions() : $this->getNgRestScopeConfigOptions($config);
+        $configOptions = !empty($this->ngRestConfigOptions())? $this->ngRestConfigOptions() : $this->getNgRestScopeConfigOptions($config);
+        if (!empty($configOptions)) {
+            $config->options = $configOptions;
+        }
     }
         
     /**
