@@ -7,7 +7,7 @@ use luya\admin\Module;
 use yii\base\Model;
 
 /**
- * Admin Login Form Model.
+ * Admin User Login Form Model.
  *
  * @property \luya\admin\models\User $user The user model.
  *
@@ -17,24 +17,39 @@ use yii\base\Model;
 final class LoginForm extends Model
 {
     /**
-     * @var string the Email property.
+     * @var string the Email of the user try to login
      */
     public $email;
     
     /**
-     * @var string The passwort property
+     * @var string The passwort of the user try to login
      */
     public $password;
 
+    /**
+     * @var boolean Whether auto login is enabled or not.
+     */
     public $autologin = false;
+    
+    /**
+     * @var integer The number of allowed login attempts for the given user. If the amount is exceed the login form will validate an error
+     */
+    public $allowedAttempts = 7;
+    
+    /**
+     * @var integer The number of seconds the user is locked out. Defaults to 30 minutes. The lockout timestamp will be stored in the user model
+     */
+    public $lockoutTime = 1800;
+    
+    /**
+     * @var integer The number of seconds until the sent secure token gets invalid.
+     */
+    public $secureTokenExpirationTime = 600;
 
-    public $attempts = 0;
-    
-    public $allowedAttempts = 10;
-    
-    public $lockoutTime = (60 * 60);
-    
-    public $secureTokenExpirationTime = (60 * 7);
+    /**
+     * @var integer The number of attempts this user has already made.
+     */
+    protected $attempts = 0;
     
     /**
      * @inheritdoc
