@@ -15,7 +15,8 @@ use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
 use luya\admin\ngrest\Config;
 use luya\helpers\Inflector;
-use \luya\admin\ngrest\base\Plugin;
+use luya\admin\ngrest\base\Plugin;
+use luya\admin\helpers\Angular;
 
 /**
  * Render the Crud view.
@@ -448,7 +449,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         }
 
         // prepend context to $field if in format '{fieldname}'
-        return Plugin::variablizeContext(Plugin::LIST_CONTEXT_PREFIX, $condition, false);
+        return Angular::variablizeContext(Plugin::LIST_CONTEXT_PREFIX, $condition, false);
     }
     
     /*

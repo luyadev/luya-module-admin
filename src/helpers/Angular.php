@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\base\InvalidConfigException;
 use luya\admin\base\TypesInterface;
+use luya\helpers\StringHelper;
 
 /**
  * Helper Method to create angular tags.
@@ -512,5 +513,76 @@ class Angular
     public static function readonly($ngModel, $label, array $options = [])
     {
         return self::injector(TypesInterface::TYPE_READONLY, $ngModel, $label, [], $options);
+    }
+
+    /**
+      * Extract the context attribute name from the ngModel and replace with given $field name.
+      *
+      * If an empty field value is provided no content will be returned.
+      *
+      * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
+      * @param string $field The new field name to replace with the context field name.
+      * @return string Returns the string with the name field name like `data.create.$field`.
+      * @since 1.2.0
+      */
+    public static function replaceFieldFromNgModelContext($ngModel, $field, $angularJsVariable = false)
+    {
+        if (empty($field)) {
+            return;
+        }
+
+        // get all keys
+        $parts = explode(".", $ngModel);
+        end($parts);
+        $key = key($parts);
+        // old last $field name
+        $oldField = $parts[$key];
+        if (StringHelper::endsWith($oldField, ']')) {
+            // its an i18n field which has ['en'] suffix, we should extra this and add to $field
+            if (preg_match('/\[.*\]/', $oldField, $matches) === 1) {
+                $field .= $matches[0];
+            }
+        }
+
+        // replace the last key with the new fieldname
+        $parts[$key] = $field;
+        
+        $variable = implode(".", $parts);
+
+        return $angularJsVariable ? '{{'.$variable.'}}' : $variable;
+    }
+
+    
+    /**
+     * The given string will be variablized and prefixed with current condition.
+     *
+     * For example when you like to access an attribute you can use the variable name in curly
+     * braces. This will ensure the correct angularjs context value  will be taken.
+     *
+     * For example:
+     *
+     * ```
+     * admin/api-admin-user/search?query={firstname}
+     * ```
+     *
+     * This will replace `{firstname}` by `data.create.firstname` or if enabled it will be `{{data.create.firstname}}`
+     *
+     * @param string $ngModel
+     * @param string $string
+     * @param boolean $angularJsVariable Whether the output should be enclosed in curly brackets or not {{}}
+     * @return string
+     * @since 4.0.0
+     */
+    public static function variablizeContext($ngModel, $string, $angularJsVariable)
+    {
+        preg_match_all('/{(.*?)}/', $string, $matches, PREG_SET_ORDER);
+        $search = [];
+        $replace = [];
+        foreach ($matches as $match) {
+            $search[] = $match[0];
+            $replace[] = self::replaceFieldFromNgModelContext($ngModel, $match[1], $angularJsVariable);
+        }
+        
+        return str_replace($search, $replace, $string);
     }
 }

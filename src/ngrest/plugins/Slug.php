@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\helpers\Angular;
 
 /**
  * Create a slugable input field.
@@ -54,7 +55,7 @@ class Slug extends Plugin
     {
         return $this->createFormTag('zaa-slug', $id, $ngModel, [
             'placeholder' => $this->placeholder,
-            'listener' => $this->replaceFieldFromNgModelContext($ngModel, $this->listener),
+            'listener' => Angular::replaceFieldFromNgModelContext($ngModel, $this->listener),
         ]);
     }
 
