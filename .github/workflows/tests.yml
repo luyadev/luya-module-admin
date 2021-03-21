@@ -21,12 +21,11 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_USER: root
           MYSQL_DATABASE: myapp_test
         ports:
-          - "33306:3306"
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=5
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       ## checkout the repoistory 
@@ -50,7 +49,7 @@ jobs:
       - name: Setup database
         run: |
           sudo /etc/init.d/mysql start
-          mysql -h 127.0.0.1 --port 33306 -u root myapp_test < tests/data/sql/1.0.0.sql 
+          mysql -h 127.0.0.1 --port 3306 -u root myapp_test < tests/data/sql/1.0.0.sql 
 
       ## run unit tests
       - name: PHP Unit tests for 7.0, 7.2, 7.3
