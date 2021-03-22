@@ -380,6 +380,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * {
      *     return [
      *       ['update', ['field1', 'field2', 'field3'], ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ]
+     *       ['delete', true, ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ]
      *     ]
      * }
      * ```
