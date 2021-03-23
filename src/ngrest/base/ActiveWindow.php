@@ -357,6 +357,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     /**
      * Setter method for the button ng-show condition
      * @param string $condition
+     * @since 4.0.0
      */
     public function setCondition($condition)
     {
@@ -366,6 +367,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     /**
      * Get the button condition or empty of not set
      * @inheritdoc
+     * @since 4.0.0
      */
     public function getCondition()
     {

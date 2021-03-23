@@ -137,6 +137,7 @@ abstract class ActiveButton extends BaseObject
     /**
      * Setter method for the button ng-show condition
      * @param string $condition
+     * @since 4.0.0
      */
     public function setCondition($condition)
     {
@@ -146,6 +147,7 @@ abstract class ActiveButton extends BaseObject
     /**
      * Get the button condition or empty of not set
      * @inheritdoc
+     * @since 4.0.0
      */
     public function getCondition()
     {
