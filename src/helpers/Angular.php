@@ -522,8 +522,9 @@ class Angular
       *
       * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
       * @param string $field The new field name to replace with the context field name.
+      * @param boolean $angularJsVariable Whether the output should be enclosed in curly brackets or not {{}}
       * @return string Returns the string with the name field name like `data.create.$field`.
-      * @since 1.2.0
+      * @since 4.0.0
       */
     public static function replaceFieldFromNgModelContext($ngModel, $field, $angularJsVariable = false)
     {
