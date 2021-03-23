@@ -181,21 +181,6 @@ class NgrestLog extends NgRestModel
         ];
     }
 
-    /*
-     * @property integer $id
- * @property integer $user_id
- * @property integer $timestamp_create
- * @property string $route
- * @property string $api
- * @property tinyint $is_update
- * @property tinyint $is_insert
- * @property text $attributes_json
- * @property text $attributes_diff_json
- * @property string $pk_value
- * @property string $table_name
- * @property tinyint $is_delete
- * */
-
     /**
      * Get User
      *
