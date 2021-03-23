@@ -1052,7 +1052,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->aw->load($windowConfig);
         }
         // get the scope based config options if no ngRestConfigOptions() are defined
-        $configOptions = !empty($this->ngRestConfigOptions())? $this->ngRestConfigOptions() : $this->getNgRestScopeConfigOptions($config);
+        $configOptions = empty($this->ngRestConfigOptions())? $this->getNgRestScopeConfigOptions($config) : $this->ngRestConfigOptions();
         if (!empty($configOptions)) {
             $config->options = $configOptions;
         }
@@ -1071,7 +1071,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *       ["delete",  "{title}==2 && {firstname}=='bar'"]
      *    ]
      * ]
-     *
+     * ```
+     * 
      * @return array buttonCondition indexed array
      * @since 4.0.0
      */
