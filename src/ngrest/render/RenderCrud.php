@@ -379,7 +379,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * public function ngRestScopes()
      * {
      *     return [
-     *       ['update', ['field1', 'field2', 'field3'], ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ]
+     *       ['update', ['field1', 'field2', 'field3'], ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ],
      *       ['delete', true, ['buttonCondition' => ['{created_by}' => Yii::$app->adminuser->id]] ]
      *     ]
      * }
@@ -390,15 +390,15 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * Example :
      *
      * ```php
-     *    public function ngRestConfigOptions()
-     *    {
-     *        return [
-     *            // ...
-     *            'buttonsCondition' => [
-     *                [ ['update', 'delete'], '{created_by}=='. \Yii::$app->adminuser->id  ],
-     *            ],
-     *        ];
-     *    }
+     * public function ngRestConfigOptions()
+     * {
+     *     return [
+     *         // ...
+     *         'buttonsCondition' => [
+     *             [ ['update', 'delete'], '{created_by}=='. \Yii::$app->adminuser->id  ],
+     *         ],
+     *     ];
+     * }
      * ```
      *
      * This will add an ng-Show = "item.created_by==1" for instance if the logged user is the admin.
