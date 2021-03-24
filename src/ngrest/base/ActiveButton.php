@@ -5,6 +5,7 @@ namespace luya\admin\ngrest\base;
 use Yii;
 use yii\base\BaseObject;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
+use luya\admin\ngrest\NgRestPermissionLevelInterface;
 
 /**
  * Active Button Base Class.
@@ -60,7 +61,7 @@ use luya\admin\ngrest\NgRestButtonConditionInterface;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
-abstract class ActiveButton extends BaseObject implements NgRestButtonConditionInterface 
+abstract class ActiveButton extends BaseObject implements NgRestButtonConditionInterface, NgRestPermissionLevelInterface
 {
     /**
      * @var string The loadList event name
@@ -154,7 +155,29 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     {
         return empty($this->_condition) ? '' : $this->_condition;
     }
-
+    
+    private $_permissionLevel = Auth;
+    
+    /**
+     * Setter method for the ActiveWindow button displaying permission level
+     * @param int $permissionLevel
+     * @since 4.0.0
+     */
+    public function setPermissionLevel($permissionLevel)
+    {
+        $this->_permissionLevel = $permissionLevel;
+    }
+    
+    /**
+     * Get the button displaying permission level or empty of not set
+     * @inheritdoc
+     * @since 4.0.0
+     */
+    public function getPermissionLevel()
+    {
+        return $this->_permissionLevel === null ? null : $this->_permissionLevel;
+    }
+    
     private $_events = [];
 
     /**
