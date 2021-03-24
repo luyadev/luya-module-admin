@@ -60,6 +60,7 @@ class ConfigTest extends AdminModelTestCase
                 'label' => 'Timestamp',
                 'icon' => 'update',
                 'condition' => '',
+                'permissionLevel' => null,
             ]
         ], $cfg->getActiveButtons());
 
