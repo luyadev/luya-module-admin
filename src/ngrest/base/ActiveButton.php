@@ -156,7 +156,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
         return empty($this->_condition) ? '' : $this->_condition;
     }
     
-    private $_permissionLevel = Auth;
+    private $_permissionLevel = null;
     
     /**
      * Setter method for the ActiveWindow button displaying permission level
