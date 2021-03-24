@@ -19,7 +19,7 @@ class PermissionLevelConfigTest extends AdminModelTestCase
     public function testActiveButtonButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
-            'modelClass' => ScopeBasedConditionUserModel::class,
+            'modelClass' => PermissionLevelUserModel::class,
         ]);
  
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
@@ -34,7 +34,7 @@ class PermissionLevelConfigTest extends AdminModelTestCase
     public function testActiveWindowsButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
-            'modelClass' => ScopeBasedConditionUserModel::class,
+            'modelClass' => PermissionLevelUserModel::class,
         ]);
  
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
@@ -48,7 +48,7 @@ class PermissionLevelConfigTest extends AdminModelTestCase
     }   
 }
 
-class ScopeBasedConditionUserModel extends User
+class PermissionLevelUserModel extends User
 {    
     /**
      * @inheritdoc
