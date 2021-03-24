@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\helpers\Angular;
 use luya\helpers\Json;
 
 /**
@@ -75,7 +76,7 @@ class SelectAsyncApi extends Plugin
      */
     public function getResolvedApi($ngModel)
     {
-        return $this->variablizeApi ? $this->variablizeContext($ngModel, $this->api, true) : $this->api;
+        return $this->variablizeApi ? Angular::variablizeContext($ngModel, $this->api, true) : $this->api;
     }
 
     /**
@@ -86,7 +87,7 @@ class SelectAsyncApi extends Plugin
      */
     public function getResolvedListApi($ngModel)
     {
-        return $this->variablizeListApi ? $this->variablizeContext($ngModel, $this->listApi, true) : $this->listApi;
+        return $this->variablizeListApi ? Angular::variablizeContext($ngModel, $this->listApi, true) : $this->listApi;
     }
 
     /**

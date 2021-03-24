@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\base;
 
 use Yii;
 use yii\base\BaseObject;
+use luya\admin\ngrest\NgRestButtonConditionInterface;
 
 /**
  * Active Button Base Class.
@@ -59,7 +60,7 @@ use yii\base\BaseObject;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
-abstract class ActiveButton extends BaseObject
+abstract class ActiveButton extends BaseObject implements NgRestButtonConditionInterface 
 {
     /**
      * @var string The loadList event name
@@ -130,6 +131,28 @@ abstract class ActiveButton extends BaseObject
     public function getIcon()
     {
         return $this->_icon ?: $this->getDefaultIcon();
+    }
+    
+    private $_condition;
+    
+    /**
+     * Setter method for the button ng-show condition
+     * @param string $condition
+     * @since 4.0.0
+     */
+    public function setCondition($condition)
+    {
+        $this->_condition = $condition;
+    }
+    
+    /**
+     * Get the button condition or empty of not set
+     * @inheritdoc
+     * @since 4.0.0
+     */
+    public function getCondition()
+    {
+        return empty($this->_condition) ? '' : $this->_condition;
     }
 
     private $_events = [];

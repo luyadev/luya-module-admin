@@ -1040,7 +1040,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             
             $scope = $arrayConfig[0];
             $fields = $arrayConfig[1];
-
+            
             if ($scope == 'delete' || (is_array($scope) && in_array('delete', $scope))) {
                 $config->delete = $fields;
             } else {
@@ -1051,11 +1051,70 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         foreach ($this->ngRestActiveWindows() as $windowConfig) {
             $config->aw->load($windowConfig);
         }
-        
-        if (!empty($this->ngRestConfigOptions())) {
-            $config->options = $this->ngRestConfigOptions();
+        // get the scope based config options if no ngRestConfigOptions() are defined
+        $configOptions = empty($this->ngRestConfigOptions())? $this->getNgRestScopeConfigOptions($config) : $this->ngRestConfigOptions();
+        if (!empty($configOptions)) {
+            $config->options = $configOptions;
         }
     }
+        
+    /**
+     * Return the scope definition third entry looking for button condition
+     * Currently support only buttonCondition
+     *
+     * Example of returned array :
+     *
+     * ```php
+     * [
+     *    "buttonCondition" => [
+     *       ["update",  "{title}>1"],
+     *       ["delete",  "{title}==2 && {firstname}=='bar'"]
+     *    ]
+     * ]
+     * ```
+     * 
+     * @return array buttonCondition indexed array
+     * @since 4.0.0
+     */
+    public function getNgRestScopeConfigOptions($config)
+    {
+        $configOptions = [];
+        foreach ($this->ngRestScopes() as $arrayConfig) {
+            $scope = is_string($arrayConfig[0]) ? [$arrayConfig[0]]:$arrayConfig[0];
+            $buttonConditionConfig =  $this->ngRestConfigButtonCondition($arrayConfig);
+            
+            if (!empty($buttonConditionConfig)) {
+                foreach ($scope as $single_scope) {
+                    $configOptions['buttonCondition'][] = [$single_scope, $buttonConditionConfig];
+                }
+            }
+        }
+        return $configOptions;
+    }
+    
+    /**
+     * Lookup butoon condition from config
+     * If condition is a set of field=>value array, return an AND linked string
+     * @return string extracted buttonCondtion
+     */
+    private function ngRestConfigButtonCondition($arrayConfig)
+    {
+        if (!isset($arrayConfig[2]) || !isset($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = '';
+        } elseif (is_string($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = $arrayConfig[2]['buttonCondition'];
+        } elseif (is_array($arrayConfig[2]['buttonCondition'])) {
+            $conditions = [];
+            foreach ($arrayConfig[2]['buttonCondition'] as $field => $value) {
+                $conditions [] = sprintf('%s==%s', $field, $value);
+            }
+            $buttonCondition = implode(' && ', $conditions);
+        } else {
+            $buttonCondition = '';
+        }
+        return $buttonCondition;
+    }
+        
     
     private $_config;
     
