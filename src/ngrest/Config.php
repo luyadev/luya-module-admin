@@ -162,6 +162,7 @@ class Config extends BaseObject implements ConfigInterface
                     'label' => $object->getLabel(),
                     'icon' => $object->getIcon(),
                     'condition' => $object->getCondition(),
+                    'permissionLevel' => $object->getPermissionLevel(),
                 ];
             }
 
