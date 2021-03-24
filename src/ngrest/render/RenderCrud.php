@@ -499,8 +499,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             ];
         }
         
-        // get all activeWindows assign to the crud
-        foreach ($this->getActiveWindows() as $hash => $config) {
+            // get all activeWindows assign to the crud
+            foreach ($this->getActiveWindows() as $hash => $config) {
             if (!isset($config['objectConfig']['permissionLevel']) || (isset($config['objectConfig']['permissionLevel']) && $this->can($config['objectConfig']['permissionLevel']))) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize(isset($config['objectConfig']['condition']) ? $config['objectConfig']['condition'] : ''),
@@ -510,8 +510,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                 ];
             }
         }
-        // add active buttons.
-        foreach ($this->config->getActiveButtons() as $btn) {
+            // add active buttons.
+            foreach ($this->config->getActiveButtons() as $btn) {
             if (($btn['permissionLevel'] === null) || ($btn['permissionLevel'] !== null && $this->can($btn['permissionLevel']))) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize($btn['condition']),
