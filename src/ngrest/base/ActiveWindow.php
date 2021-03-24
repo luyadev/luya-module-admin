@@ -11,6 +11,7 @@ use luya\helpers\Url;
 use luya\helpers\FileHelper;
 use yii\base\BaseObject;
 use yii\base\InvalidCallException;
+use luya\admin\ngrest\NgRestButtonConditionInterface;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -26,7 +27,7 @@ use yii\base\InvalidCallException;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface
+abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface 
 {
     /**
      * @var string $suffix The suffix to use for all classes

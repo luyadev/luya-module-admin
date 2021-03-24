@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\base;
 
 use Yii;
 use yii\base\BaseObject;
+use luya\admin\ngrest\NgRestButtonConditionInterface;
 
 /**
  * Active Button Base Class.
@@ -59,7 +60,7 @@ use yii\base\BaseObject;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
-abstract class ActiveButton extends BaseObject
+abstract class ActiveButton extends BaseObject implements NgRestButtonConditionInterface 
 {
     /**
      * @var string The loadList event name
