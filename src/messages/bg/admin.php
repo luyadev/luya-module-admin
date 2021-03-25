@@ -92,6 +92,17 @@ return [
     'api_storage_image_upload_error' => 'Възникна следната грешка при качване на изображение \'{error}\'.',
     'api_storage_file_upload_success' => 'Файловете са качени успешно.',
     'api_sotrage_file_upload_error' => 'Възникна следната грешка',
+	'api_sotrage_file_upload_empty_error' => 'Няма намерени файлове за качване. Избрахте ли някакви файлове? ',
+     'aws_changepassword_info' => 'Моля, въведете нова парола за този потребител. Паролата трябва да има минимална дължина от 8 знака. ',
+     'aws_changepassword_succes' => 'Паролата е криптирана и съхранена успешно.',
+     'aws_changepassword_new_pass' => 'Нова парола',
+     'aws_changepassword_new_pass_retry' => 'Повторение на нова парола',
+     'view_index_redirect_type' => 'Връзка с',
+     'view_index_redirect_internal' => 'вътрешна страница',
+     'view_index_redirect_external' => 'външен URL',
+     'view_index_redirect_internal_select' => 'Изберете вътрешната страница, към която трябва да се препрати.',
+     'view_index_redirect_external_link' => 'Външна връзка',
+     'view_index_redirect_external_link_help' => 'Външните връзки започват с http:// или https:// (за абсолютни вътрешни връзки вместо това използвайте //)',
 
 // added translation in 1.0.0-beta3:
 
