@@ -90,6 +90,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'th' => 'ภาษาไทย',
         'hu' => 'Magyar',
         'id' => 'Bahasa',
+        'bg' => 'Български',
     ];
     
     /**
