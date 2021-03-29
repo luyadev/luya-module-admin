@@ -11,6 +11,7 @@ use luya\admin\ngrest\Config;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use yii\base\InvalidConfigException;
+use luya\admin\components\Auth;
 
 class ConfigTest extends AdminModelTestCase
 {
@@ -48,7 +49,7 @@ class ConfigTest extends AdminModelTestCase
                 'apiEndpoint' => 'api-admin-group',
                 'arrayIndex' => 0,
                 'modelClass' => 'YWRtaW50ZXN0c1xhZG1pblxuZ3Jlc3RcU3R1YlVzZXJNb2RlbA==',
-                'tabLabelAttribute' => null,
+                'tabLabelAttribute' => Auth::CAN_UPDATE,
                 'relationLink' => [
                     'id' => 'group_id'
                 ]
@@ -60,7 +61,7 @@ class ConfigTest extends AdminModelTestCase
                 'label' => 'Timestamp',
                 'icon' => 'update',
                 'condition' => '',
-                'permissionLevel' => null,
+                'permissionLevel' => Auth::CAN_UPDATE,
             ]
         ], $cfg->getActiveButtons());
 

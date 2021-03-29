@@ -21,13 +21,17 @@ class PermissionLevelConfigTest extends AdminModelTestCase
         $fixture = new NgRestModelFixture([
             'modelClass' => PermissionLevelUserModel::class,
         ]);
- 
+
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         $activeButtons = $ngRestCfg->getActiveButtons();
-        
+
         $this->assertArrayHasKey('permissionLevel', $activeButtons[0]);
         $this->assertEquals(Auth::CAN_VIEW, $activeButtons[0]['permissionLevel']);        
-        
+
+        // check default value (if not explicitly set)
+        $this->assertArrayHasKey('permissionLevel', $activeButtons[1]);
+        $this->assertEquals(Auth::CAN_UPDATE, $activeButtons[1]['permissionLevel']);
+
         $fixture->cleanup();
     }
     
@@ -40,10 +44,15 @@ class PermissionLevelConfigTest extends AdminModelTestCase
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         
         $activeWindows=$ngRestCfg->getPointer('aw');
+
         $changePasswordActiveWindow = array_shift($activeWindows);
         $this->assertArrayHasKey('permissionLevel', $changePasswordActiveWindow['objectConfig']);
-        $this->assertEquals(Auth::CAN_UPDATE, $changePasswordActiveWindow['objectConfig']['permissionLevel']);
-        
+        $this->assertEquals(Auth::CAN_DELETE, $changePasswordActiveWindow['objectConfig']['permissionLevel']);
+
+        $userHistoryActiveWindow = array_shift($activeWindows);
+        $this->assertArrayHasKey('permissionLevel', $userHistoryActiveWindow['objectConfig']);
+        $this->assertEquals('', $userHistoryActiveWindow['objectConfig']['permissionLevel']);
+
         $fixture->cleanup();
     }   
 }
@@ -67,8 +76,8 @@ class PermissionLevelUserModel extends User
     public function ngRestActiveWindows()
     {
         return [
-            ['class' => ChangePasswordActiveWindow::class, 'label' => false, 'permissionLevel' => Auth::CAN_UPDATE],
-            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false],
+            ['class' => ChangePasswordActiveWindow::class, 'label' => false, 'permissionLevel' => Auth::CAN_DELETE],
+            ['class' => UserHistorySummaryActiveWindow::class, 'label' => false, 'permissionLevel' => ''],
         ];
     }
 }

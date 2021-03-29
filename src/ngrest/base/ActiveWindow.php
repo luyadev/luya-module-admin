@@ -13,6 +13,7 @@ use yii\base\BaseObject;
 use yii\base\InvalidCallException;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
+use luya\admin\components\Auth;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -372,7 +373,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
         return empty($this->_condition) ? '' : $this->_condition;
     }
     
-    private $_permissionLevel = null;
+    private $_permissionLevel = Auth::CAN_UPDATE;
     
     /**
      * @inheritdoc
@@ -387,7 +388,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
      */
     public function getPermissionLevel()
     {
-        return $this->_permissionLevel === null  ? null : $this->_permissionLevel;
+        return $this->_permissionLevel;
     }
     
     /**

@@ -512,7 +512,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         }
         // add active buttons.
         foreach ($this->config->getActiveButtons() as $btn) {
-            if (($btn['permissionLevel'] === null) || ($btn['permissionLevel'] !== null && $this->can($btn['permissionLevel']))) {
+            if (($btn['permissionLevel'] == '') || ($btn['permissionLevel'] !== '' && $this->can($btn['permissionLevel']))) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize($btn['condition']),
                     'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",

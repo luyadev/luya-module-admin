@@ -6,6 +6,7 @@ use Yii;
 use yii\base\BaseObject;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
+use luya\admin\components\Auth;
 
 /**
  * Active Button Base Class.
@@ -152,7 +153,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
         return empty($this->_condition) ? '' : $this->_condition;
     }
     
-    private $_permissionLevel = null;
+    private $_permissionLevel = Auth::CAN_UPDATE;
     
     /**
      * @inheritdoc
@@ -167,7 +168,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
      */
     public function getPermissionLevel()
     {
-        return $this->_permissionLevel === null ? null : $this->_permissionLevel;
+        return $this->_permissionLevel;
     }
     
     private $_events = [];
