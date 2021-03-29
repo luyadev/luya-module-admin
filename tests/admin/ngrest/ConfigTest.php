@@ -49,7 +49,7 @@ class ConfigTest extends AdminModelTestCase
                 'apiEndpoint' => 'api-admin-group',
                 'arrayIndex' => 0,
                 'modelClass' => 'YWRtaW50ZXN0c1xhZG1pblxuZ3Jlc3RcU3R1YlVzZXJNb2RlbA==',
-                'tabLabelAttribute' => Auth::CAN_UPDATE,
+                'tabLabelAttribute' => null,
                 'relationLink' => [
                     'id' => 'group_id'
                 ]

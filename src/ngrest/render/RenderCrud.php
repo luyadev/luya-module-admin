@@ -17,6 +17,7 @@ use luya\admin\ngrest\Config;
 use luya\helpers\Inflector;
 use luya\admin\ngrest\base\Plugin;
 use luya\admin\helpers\Angular;
+use luya\admin\components\Auth;
 
 /**
  * Render the Crud view.
@@ -501,7 +502,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         
         // get all activeWindows assign to the crud
         foreach ($this->getActiveWindows() as $hash => $config) {
-            if (!isset($config['objectConfig']['permissionLevel']) || (isset($config['objectConfig']['permissionLevel']) && $this->can($config['objectConfig']['permissionLevel']))) {
+            if ($this->can(isset($config['objectConfig']['permissionLevel']) ? $config['objectConfig']['permissionLevel'] : Auth::CAN_UPDATE )) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize(isset($config['objectConfig']['condition']) ? $config['objectConfig']['condition'] : ''),
                     'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
