@@ -137,9 +137,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     private $_condition;
     
     /**
-     * Setter method for the button ng-show condition
-     * @param string $condition
-     * @since 4.0.0
+     * @inheritdoc
      */
     public function setCondition($condition)
     {
@@ -147,9 +145,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     }
     
     /**
-     * Get the button condition or empty of not set
      * @inheritdoc
-     * @since 4.0.0
      */
     public function getCondition()
     {
@@ -159,9 +155,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     private $_permissionLevel = null;
     
     /**
-     * Setter method for the ActiveWindow button displaying permission level
-     * @param int $permissionLevel
-     * @since 4.0.0
+     * @inheritdoc
      */
     public function setPermissionLevel($permissionLevel)
     {
@@ -169,9 +163,7 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     }
     
     /**
-     * Get the button displaying permission level or empty of not set
      * @inheritdoc
-     * @since 4.0.0
      */
     public function getPermissionLevel()
     {

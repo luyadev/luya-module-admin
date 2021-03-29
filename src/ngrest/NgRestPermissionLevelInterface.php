@@ -3,7 +3,7 @@
 namespace luya\admin\ngrest;
 
 /**
- * Ngrest Button Condition Interface
+ * Ngrest Button Permission Condition Interface
  *
  * @author Rochdi Bazine <rochdi80tn@gmail.com>
  * @since 4.0.0
