@@ -499,9 +499,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             ];
         }
         
-        if ($this->can(Auth::CAN_UPDATE)) {
-            // get all activeWindows assign to the crud
-            foreach ($this->getActiveWindows() as $hash => $config) {
+        // get all activeWindows assign to the crud
+        foreach ($this->getActiveWindows() as $hash => $config) {
+            if ((isset($config['objectConfig']['permissionLevel']) && $config['objectConfig']['permissionLevel'] == '') || $this->can(isset($config['objectConfig']['permissionLevel'])?$config['objectConfig']['permissionLevel']:Auth::CAN_UPDATE)) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize(isset($config['objectConfig']['condition']) ? $config['objectConfig']['condition'] : ''),
                     'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
@@ -509,8 +509,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
                     'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
                 ];
             }
-            // add active buttons.
-            foreach ($this->config->getActiveButtons() as $btn) {
+        }
+        // add active buttons.
+        foreach ($this->config->getActiveButtons() as $btn) {
+            if (($btn['permissionLevel'] == '') || ($btn['permissionLevel'] !== '' && $this->can($btn['permissionLevel']))) {
                 $buttons[] = [
                     'ngShow' => $this->listContextVariablize($btn['condition']),
                     'ngClick' => "callActiveButton('{$btn['hash']}', ".$this->getCompositionKeysForButtonActions('item').", \$event)",

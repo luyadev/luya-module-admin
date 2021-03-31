@@ -12,6 +12,8 @@ use luya\helpers\FileHelper;
 use yii\base\BaseObject;
 use yii\base\InvalidCallException;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
+use luya\admin\ngrest\NgRestPermissionLevelInterface;
+use luya\admin\components\Auth;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -27,7 +29,7 @@ use luya\admin\ngrest\NgRestButtonConditionInterface;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface 
+abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface, NgRestPermissionLevelInterface
 {
     /**
      * @var string $suffix The suffix to use for all classes
@@ -356,9 +358,7 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     private $_condition;
     
     /**
-     * Setter method for the button ng-show condition
-     * @param string $condition
-     * @since 4.0.0
+     * @inheritdoc
      */
     public function setCondition($condition)
     {
@@ -366,13 +366,29 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     }
     
     /**
-     * Get the button condition or empty of not set
      * @inheritdoc
-     * @since 4.0.0
      */
     public function getCondition()
     {
         return empty($this->_condition) ? '' : $this->_condition;
+    }
+    
+    private $_permissionLevel = Auth::CAN_UPDATE;
+    
+    /**
+     * @inheritdoc
+     */
+    public function setPermissionLevel($permissionLevel)
+    {
+        $this->_permissionLevel = $permissionLevel;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getPermissionLevel()
+    {
+        return $this->_permissionLevel;
     }
     
     /**
