@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
     backupGlobals="false"
@@ -10,18 +9,18 @@
     convertWarningsToExceptions="true"
 >
     <testsuites>
-        <testsuite name="LUYA TESTS">
-            <directory>./tests</directory>
-        </testsuite>
+    <testsuite name="Package Test Suite">
+        <directory>./tests</directory>
+    </testsuite>
     </testsuites>
-   <filter>
+    <filter>
+        <blacklist>
+            <directory>./vendor</directory>
+            <directory>./tests</directory>
+        </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="false">
-            <directory suffix=".php">./src</directory>
-            <exclude>
-                <directory>./vendor</directory>
-                <directory>./tests</directory>
-            </exclude>
-        </whitelist>
+        <directory suffix=".php">./src</directory>
+    </whitelist>
     </filter>
     <php>
         <const name="DB_DSN" value="mysql:host=127.0.0.1;port=33306;dbname=myapp_test" />

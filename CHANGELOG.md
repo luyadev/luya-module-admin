@@ -17,6 +17,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#626](https://github.com/luyadev/luya-module-admin/pull/626) Fixed issue with blameable behavior in console command context.
 + [#627](https://github.com/luyadev/luya-module-admin/pull/627) Added option to set a button condition to show or hide crud update, delete, ngRestActiveButtons and ngRestActiveWindows buttons.
 + [#630](https://github.com/luyadev/luya-module-admin/pull/630) Added option to define permission level for ActiveWindows and ActiveButtons, default behavior `Auth::CAN_UPDATE` is maintained for BC.
++ [#604](https://github.com/luyadev/luya-module-admin/issues/604) Added "Save", "Save and close" and "Create", "Create and close" buttons next to CRUD forms.
 
 ## 3.9.0 (24. November 2020)
 

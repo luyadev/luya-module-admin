@@ -532,4 +532,8 @@ return [
 // 4.0.0
 
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
+    'button_save_and_close' => 'Save and close',
+    'button_create_and_close' => 'Create and close',
+    'button_create' => 'Create',
+    'button_cancel' => 'Cancel',
 ];

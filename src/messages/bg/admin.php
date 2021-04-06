@@ -545,4 +545,8 @@ return [
 // 4.0.0
 
     'disabled_login_text' => 'Понастоящем формулярът за вход е деактивиран поради поддръжка. Моля, опитайте отново по-късно.',
+    'button_save_and_close' => 'Save and close',
+    'button_create_and_close' => 'Create and close',
+    'button_create' => 'Create',
+    'button_cancel' => 'Cancel',
 ];

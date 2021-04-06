@@ -374,16 +374,19 @@
 			return false;
 		};
 
-		$scope.submitUpdate = function () {
+		$scope.submitUpdate = function (close) {
 			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_update']);
 				$scope.loadList($scope.pager.currentPage).then(function() {
 					$scope.applySaveCallback();
-					$scope.switchTo(0, true);
+					if (close) {
+						$scope.switchTo(0, true);
+					}
 					$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
 					$timeout(function() {
 						$scope.highlightPkValue = null;
 					}, $scope.highlightTimeout);
+
 				});
 
 			}, function(response) {
@@ -391,12 +394,14 @@
 			});
 		};
 
-		$scope.submitCreate = function() {
+		$scope.submitCreate = function(close) {
 			$http.post($scope.config.apiEndpoint, angular.toJson($scope.data.create, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_success']);
 				$scope.loadList().then(function() {
 					$scope.applySaveCallback();
-					$scope.switchTo(0, true);
+					if (close) {
+						$scope.switchTo(0, true);
+					}
 					$scope.resetData();
 					$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
 					$timeout(function() {
