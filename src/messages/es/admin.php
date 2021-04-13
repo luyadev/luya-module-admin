@@ -536,4 +536,5 @@ return [
     'button_create_and_close' => 'Create and close',
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
+    'button_create_and_new' => 'Create and new',
 ];

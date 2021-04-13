@@ -557,4 +557,5 @@ return [
     'button_create_and_close' => 'Erstellen und schliesen',
     'button_create' => 'Erstellen',
     'button_cancel' => 'Abbrechen',
+    'button_create_and_new' => 'Erstellen und neu',
 ];

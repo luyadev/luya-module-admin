@@ -36,7 +36,8 @@ use luya\admin\Module;
         <button type="submit" class="btn btn-save btn-icon"><?= Module::t($type == 2 ? 'button_save_and_close' : 'button_create_and_close'); ?></button>
         
         <?php if ($type == 1): ?>
-            <button type="button" class="btn btn-save btn-icon" ng-click="submitCreate(false)"><?= Module::t('button_create'); ?></button>
+            <button type="button" class="btn btn-save btn-icon" ng-click="submitCreate(false)"><?= Module::t('button_create_and_new'); ?></button>
+            <button type="button" class="btn btn-save btn-icon" ng-click="submitCreate(false,true)"><?= Module::t('button_create'); ?></button>
             <button type="button" class="btn btn-link float-right" ng-click="closeCreate()"><?= Module::t('button_cancel'); ?></button>
         <?php else: ?>
             <button type="button" class="btn btn-save btn-icon" ng-click="submitUpdate(false)"><?= Module::t('button_save'); ?></button>

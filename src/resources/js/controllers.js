@@ -394,7 +394,7 @@
 			});
 		};
 
-		$scope.submitCreate = function(close) {
+		$scope.submitCreate = function(close, redirect) {
 			$http.post($scope.config.apiEndpoint, angular.toJson($scope.data.create, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_success']);
 				$scope.loadList().then(function() {
@@ -407,6 +407,10 @@
 					$timeout(function() {
 						$scope.highlightPkValue = null;
 					}, $scope.highlightTimeout);
+
+					if (redirect) {
+						$scope.toggleUpdate(response.data.id)
+					}
 				});
 			}, function(data) {
 				$scope.printErrors(data.data);
