@@ -2351,6 +2351,12 @@ zaa.directive("zaaImageUpload", function () {
     }
 });
 
+/**
+ * options: {
+ *     description: true/false,
+ *     filter: true/false
+ * }
+ */
 zaa.directive("zaaImageArrayUpload", function () {
     return {
         restrict: "E",
@@ -2406,6 +2412,22 @@ zaa.directive("zaaImageArrayUpload", function () {
                 }
                 return false;
             };
+
+            $scope.isDescriptionEnabled = function() {
+                if ($scope.options && $scope.options.hasOwnProperty('description')) {
+                    return $scope.options.description
+                }
+
+                return true;
+            }
+
+            $scope.noFiltersOption = function() {
+                if ($scope.options && $scope.options.hasOwnProperty('filter')) {
+                    return !$scope.options.filter
+                }
+
+                return false;
+            }
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -2416,24 +2438,24 @@ zaa.directive("zaaImageArrayUpload", function () {
                 '<div class="list zaa-file-array-upload">' +
                 '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
                 '<div ng-repeat="(key,image) in model track by key" class="list-item">' +
-                '<div class="list-section">' +
-                '<div class="list-left">' +
-                '<storage-image-upload ng-model="image.imageId" options="options"></storage-image-upload>' +
-                '</div>' +
-                '<div class="list-right">' +
-                '<div class="form-group">' +
-                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
-                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="list-buttons">' +
-                '<div class="btn-group" role="group">' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                '</div>' +
-                '</div>' +
+                    '<div class="list-section">' +
+                        '<div class="list-left">' +
+                            '<storage-image-upload ng-model="image.imageId" options="{no_filter: noFiltersOption()}"></storage-image-upload>' +
+                        '</div>' +
+                        '<div class="list-right" ng-show="isDescriptionEnabled()">' +
+                            '<div class="form-group">' +
+                                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
+                                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="list-buttons">' +
+                        '<div class="btn-group" role="group">' +
+                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
                 '</div>' +
@@ -2961,6 +2983,10 @@ zaa.directive('storageFileUpload', function () {
  * + fileId watcher applys filter
  * + filter can not find a file for id 0
  * + ngModel set to 0
+ * 
+ * options: {
+ *    no_filter: true/false
+ * }
  */
 zaa.directive('storageImageUpload', function () {
     return {

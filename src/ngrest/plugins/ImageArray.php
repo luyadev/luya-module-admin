@@ -42,6 +42,19 @@ class ImageArray extends Plugin
      * @var boolean Whether to return a {{luya\admin\image\Iterator}} instead of an array with image ids value from the database.
      */
     public $imageIterator = false;
+
+    /**
+     * @var boolean Whether each image can have an optional description or not. If disabled, the description field does not appear.
+     * @since 4.0.0
+     */
+    public $description = true;
+
+    /**
+     * @var boolean Whether the image filters can be selected (with a dropdown) or not. If disabled, the user is not able to select any filter for
+     * the selected image.
+     * @since 4.0.0
+     */
+    public $filter = true;
     
     /**
      * @inheritdoc
@@ -56,7 +69,9 @@ class ImageArray extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-image-array-upload', $id, $ngModel);
+        return $this->createFormTag('zaa-image-array-upload', $id, $ngModel, [
+            'options' => ['description' => $this->description, 'filter' => $this->filter]
+        ]);
     }
 
     /**
