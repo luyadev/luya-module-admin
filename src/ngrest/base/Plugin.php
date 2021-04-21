@@ -327,6 +327,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nFieldEncode($value)
     {
+        trigger_error('deprecated, use I18n::encode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::encode($value);
     }
     
@@ -342,6 +343,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nFieldDecode($value, $onEmptyValue = '')
     {
+        trigger_error('deprecated, use I18n::decode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::decode($value, $onEmptyValue);
     }
     
@@ -356,6 +358,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nDecodedGetActive(array $fieldValues)
     {
+        trigger_error('deprecated, use I18n::findActive instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::findActive($fieldValues);
     }
     

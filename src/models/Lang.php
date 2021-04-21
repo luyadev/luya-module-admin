@@ -158,6 +158,7 @@ final class Lang extends NgRestModel
      */
     public static function getQuery()
     {
+        trigger_error('deprecated, use Yii::$app->adminLanguage instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return self::find()->asArray()->orderBy(['is_default' => SORT_DESC])->where(['is_deleted' => false])->indexBy('short_code')->all();
     }
 
@@ -169,6 +170,7 @@ final class Lang extends NgRestModel
      */
     public static function getDefault()
     {
+        trigger_error('deprecated, use Yii::$app->adminLanguage instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         if (self::$_langInstance === null) {
             self::$_langInstance = self::find()->where(['is_default' => true, 'is_deleted' => false])->asArray()->one();
         }
@@ -186,6 +188,7 @@ final class Lang extends NgRestModel
      */
     public static function findActive()
     {
+        trigger_error('deprecated, use Yii::$app->adminLanguage instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         if (self::$_langInstanceFindActive === null) {
             $langShortCode = Yii::$app->composition->getKey('langShortCode');
     
