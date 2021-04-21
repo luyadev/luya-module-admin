@@ -34,7 +34,7 @@ use yii\queue\db\Command;
  * ```
  *
  * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
- * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
+ * @property array $jsTranslations Take a look at {{luya\admin\Module::getJsTranslations()}}.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
