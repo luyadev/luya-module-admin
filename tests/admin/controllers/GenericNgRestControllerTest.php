@@ -48,7 +48,6 @@ class GenericNgRestControllerTest extends AdminModelTestCase
 
     public function testControllerGenericMethodsForCoverage()
     {
-        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
 
         foreach ($this->controllers as $ctrl) {
             $ctrlObject = Yii::createObject(['class' => $ctrl], ['foo', $this->app]);

@@ -20,7 +20,6 @@ class ControllerTest extends AdminModelTestCase
                 'modelClass' => User::class,
             ]);
 
-            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
     
             $scope->createAndAllowApi(User::ngRestApiEndpoint());
             $scope->loginUser();

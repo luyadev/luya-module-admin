@@ -34,7 +34,7 @@ use yii\queue\db\Command;
  * ```
  *
  * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
- * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
+ * @property-read array $jsTranslations Take a look at {{luya\admin\Module::getJsTranslations()}}.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -315,19 +315,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.2
      */
     public $apiDefintions = []; // typo...
-    
-    /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
-     */
-    public $assets = [];
-    
-    /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected menu items from all admin modules and build the menu.
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
-     */
-    public $moduleMenus = [];
-    
+
     /**
      * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI definition for current LUYA System (including all registered modules) or not.
      * @since 3.2.0
@@ -444,19 +432,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             }
         }
         return $translations;
-    }
-    
-    /**
-     * Setter for js translations files.
-     *
-     * This setter method is used by the {{luya\web\Bootstrap::run()}} to assign all js transaltion files from the admin modules.
-     *
-     * @param array $translations
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
-     */
-    public function setJsTranslations(array $translations)
-    {
-        // deprecated, messages are now loaded with Yii::$app->getAdminModulesJsTranslationMessages()
     }
     
     private $_reloadButtons = [];
