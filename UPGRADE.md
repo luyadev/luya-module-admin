@@ -2,6 +2,14 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 3.x t 4.0
+
++ Run the migrate command, as new migrations are available.
++ [#634](https://github.com/luyadev/luya-module-admin/pull/634) Removed deprecated properties and methods
+  - `luya\admin\Module::$assets` removed
+  - `luya\admin\Module::$moduleMenus` removed
+  - `luya\admin\Module::setJsTranslations()` removed
+
 ## from 3.6 to 3.7
 
 + [#576](https://github.com/luyadev/luya-module-admin/pull/576) Using the `yii\mutex\MysqlMutex` over `yii\mutex\FileMutex` as default mutex handler for admin queue components. This is due to less file permission conflicts when running cli consoles and runtime folder. In order to ensure the old behavior use the configuration below:
