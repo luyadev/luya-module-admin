@@ -4,6 +4,9 @@ namespace luya\admin\models;
 
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\traits\SoftDeleteTrait;
+use luya\admin\traits\SortableTrait;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Admin Property
@@ -14,12 +17,29 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property string $module_name
  * @property string $var_name
  * @property string $class_name
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property integer|boolean $is_deleted
+ * @property integer $sort_index
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
 class Property extends NgRestModel
 {
+    use SortableTrait;
+    use SoftDeleteTrait;
+
+    /**
+     * The field which should by used to sort.
+     *
+     * @return string
+     */
+    public static function sortableField()
+    {
+        return 'sort_index';
+    }
+
     /**
      * @inheritdoc
      */
@@ -34,6 +54,18 @@ class Property extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'api-admin-property';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+            ]
+        ];
     }
 
     /**
@@ -58,6 +90,8 @@ class Property extends NgRestModel
             [['module_name'], 'string', 'max' => 120],
             [['var_name'], 'string', 'max' => 40],
             [['class_name'], 'string', 'max' => 200],
+            [['created_at', 'updated_at', 'sort_index'], 'integer'],
+            [['is_deleted'], 'boolean'],
             [['var_name'], 'unique'],
         ];
     }
@@ -71,6 +105,7 @@ class Property extends NgRestModel
             'module_name' => 'raw',
             'var_name' => 'raw',
             'class_name' => 'raw',
+            'sort_index' => 'sortable',
         ];
     }
 
@@ -80,7 +115,7 @@ class Property extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['module_name', 'var_name', 'class_name']],
+            ['list', ['module_name', 'var_name', 'class_name', 'sortable']],
             ['delete', false],
         ];
     }

@@ -12,6 +12,7 @@ use luya\admin\filters\MediumThumbnail;
 use luya\admin\traits\TaggableTrait;
 use luya\admin\helpers\I18n;
 use luya\helpers\Json;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -27,6 +28,7 @@ use luya\helpers\Json;
  * @property string $hash_file
  * @property string $hash_name
  * @property integer $upload_timestamp
+ * @property integer $update_timestamp
  * @property integer $file_size
  * @property integer $upload_user_id
  * @property integer $is_deleted
@@ -52,8 +54,7 @@ final class StorageFile extends ActiveRecord
         parent::init();
         
         // ensure upload timestamp and upload_user_id if empty.
-        $this->on(self::EVENT_BEFORE_INSERT, function ($event) {
-            $this->upload_timestamp = time();
+        $this->on(self::EVENT_BEFORE_INSERT, function () {
             if (empty($this->upload_user_id)) {
                 if (Yii::$app instanceof Application && !Yii::$app->adminuser->isGuest) {
                     $this->upload_user_id = Yii::$app->adminuser->getId();
@@ -69,6 +70,11 @@ final class StorageFile extends ActiveRecord
     {
         return [
             LogBehavior::class,
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'upload_timestamp',
+                'updatedAtAttribute' => 'update_timestamp',
+            ]
         ];
     }
 
@@ -97,7 +103,7 @@ final class StorageFile extends ActiveRecord
             [['name_original', 'name_new', 'mime_type', 'name_new_compound', 'extension', 'hash_file', 'hash_name'], 'required'],
             [['folder_id', 'file_size', 'is_deleted'], 'safe'],
             [['is_hidden'], 'boolean'],
-            [['inline_disposition', 'upload_timestamp', 'upload_user_id'], 'integer'],
+            [['inline_disposition', 'upload_timestamp', 'upload_user_id', 'update_timestamp'], 'integer'],
             [['caption'], 'string'],
         ];
     }
