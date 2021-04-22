@@ -24,6 +24,11 @@ class m210422_134420_v4_update extends Migration
 
         $this->addColumn('{{%admin_storage_image}}', 'created_at', $this->integer());
         $this->addColumn('{{%admin_storage_image}}', 'updated_at', $this->integer());
+
+        $this->addColumn('{{%admin_property}}', 'created_at', $this->integer());
+        $this->addColumn('{{%admin_property}}', 'updated_at', $this->integer());
+        $this->addColumn('{{%admin_property}}', 'is_deleted', $this->boolean()->defaultValue(false));
+        $this->addColumn('{{%admin_property}}', 'sort_index', $this->integer());
     }
 
     /**
@@ -35,5 +40,10 @@ class m210422_134420_v4_update extends Migration
 
         $this->dropColumn('{{%admin_storage_image}}', 'created_at');
         $this->dropColumn('{{%admin_storage_image}}', 'updated_at');
+
+        $this->dropColumn('{{%admin_property}}', 'created_at');
+        $this->dropColumn('{{%admin_property}}', 'updated_at');
+        $this->dropColumn('{{%admin_property}}', 'is_deleted');
+        $this->dropColumn('{{%admin_property}}', 'sort_index');
     }
 }
