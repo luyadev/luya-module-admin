@@ -5,7 +5,6 @@ namespace luya\admin\models;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
-use luya\admin\traits\SortableTrait;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -27,18 +26,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class Property extends NgRestModel
 {
-    use SortableTrait;
     use SoftDeleteTrait;
-
-    /**
-     * The field which should by used to sort.
-     *
-     * @return string
-     */
-    public static function sortableField()
-    {
-        return 'sort_index';
-    }
 
     /**
      * @inheritdoc
@@ -54,6 +42,34 @@ class Property extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'api-admin-property';
+    }
+
+     /**
+     * Overrides the ngRestFind() method of the ActiveRecord
+     * @return \yii\db\ActiveQuery
+     */
+    public static function ngRestFind()
+    {
+        return parent::ngRestFind()->orderBy(['sort_index' => SORT_ASC]);
+    }
+    
+    /**
+     * Overrides the find() method of the ActiveRecord
+     * @return \yii\db\ActiveQuery
+     */
+    public static function find()
+    {
+        return parent::find()->orderBy(['sort_index' => SORT_ASC]);
+    }
+    
+    /**
+     * Disable the list ordering.
+     *
+     * @return boolean
+     */
+    public function ngRestListOrder()
+    {
+        return false;
     }
 
     /**
@@ -115,8 +131,8 @@ class Property extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['module_name', 'var_name', 'class_name', 'sortable']],
-            ['delete', false],
+            ['list', ['module_name', 'var_name', 'class_name', 'sort_index']],
+            ['delete', true],
         ];
     }
     
