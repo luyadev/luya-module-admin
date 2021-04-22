@@ -317,18 +317,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $apiDefintions = []; // typo...
 
     /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
-     * @deprecated Deprecated since version 3.6.0 will be removed when requirment has been raised to luya core 2.0
-     */
-    public $assets = [];
-
-    /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected menu items from all admin modules and build the menu.
-     * @deprecated Deprecated since version 3.6.0 will be removed when requirment has been raised to luya core 2.0
-     */
-    public $moduleMenus = [];
-
-    /**
      * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI definition for current LUYA System (including all registered modules) or not.
      * @since 3.2.0
      */
