@@ -13,7 +13,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#609](https://github.com/luyadev/luya-module-admin/issues/609) Fixed generic issues when using PostgreSQL.
 + [#620](https://github.com/luyadev/luya-module-admin/pull/620) Changed echarts library to major [Version 5.0](https://github.com/apache/echarts/releases/tag/5.0.0)
 + [#603](https://github.com/luyadev/luya-module-admin/issues/603) Added option to disable the login form and display a maintenance message instead.
-+ [#623](https://github.com/luyadev/luya-module-admin/pull/623) New command to cleanup ngrest log and cms log tables `./luya admin/log/cleanup app`.
++ [#623](https://github.com/luyadev/luya-module-admin/pull/623) New command to cleanup ngrest log and cms log tables `./luya admin/log/cleanup all`.
 + [#626](https://github.com/luyadev/luya-module-admin/pull/626) Fixed issue with blameable behavior in console command context.
 + [#627](https://github.com/luyadev/luya-module-admin/pull/627) Added option to set a button condition to show or hide crud update, delete, ngRestActiveButtons and ngRestActiveWindows buttons.
 + [#630](https://github.com/luyadev/luya-module-admin/pull/630) Added option to define permission level for ActiveWindows and ActiveButtons, default behavior `Auth::CAN_UPDATE` is maintained for BC.
