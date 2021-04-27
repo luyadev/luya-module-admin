@@ -50,7 +50,7 @@ class Property extends NgRestModel
      */
     public static function ngRestFind()
     {
-        return parent::ngRestFind()->orderBy(['sort_index' => SORT_ASC]);
+        return parent::ngRestFind()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
     }
     
     /**
@@ -59,7 +59,7 @@ class Property extends NgRestModel
      */
     public static function find()
     {
-        return parent::find()->orderBy(['sort_index' => SORT_ASC]);
+        return parent::find()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
     }
     
     /**
