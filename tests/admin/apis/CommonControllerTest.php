@@ -96,6 +96,7 @@ class CommonControllerTest extends AdminModelTestCase
                         'module_name' => 'admin',
                         'var_name' => 'foobar',
                         'class_name' => MyTestProperty::class,
+                        'is_deleted' => 0
                     ]
                 ],
             ]);

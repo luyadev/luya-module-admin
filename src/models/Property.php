@@ -4,6 +4,8 @@ namespace luya\admin\models;
 
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\traits\SoftDeleteTrait;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Admin Property
@@ -14,12 +16,18 @@ use luya\admin\ngrest\base\NgRestModel;
  * @property string $module_name
  * @property string $var_name
  * @property string $class_name
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property integer|boolean $is_deleted
+ * @property integer $sort_index
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
 class Property extends NgRestModel
 {
+    use SoftDeleteTrait;
+
     /**
      * @inheritdoc
      */
@@ -34,6 +42,46 @@ class Property extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'api-admin-property';
+    }
+
+     /**
+     * Overrides the ngRestFind() method of the ActiveRecord
+     * @return \yii\db\ActiveQuery
+     */
+    public static function ngRestFind()
+    {
+        return parent::ngRestFind()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
+    }
+    
+    /**
+     * Overrides the find() method of the ActiveRecord
+     * @return \yii\db\ActiveQuery
+     */
+    public static function find()
+    {
+        return parent::find()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
+    }
+    
+    /**
+     * Disable the list ordering.
+     *
+     * @return boolean
+     */
+    public function ngRestListOrder()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+            ]
+        ];
     }
 
     /**
@@ -58,6 +106,8 @@ class Property extends NgRestModel
             [['module_name'], 'string', 'max' => 120],
             [['var_name'], 'string', 'max' => 40],
             [['class_name'], 'string', 'max' => 200],
+            [['created_at', 'updated_at', 'sort_index'], 'integer'],
+            [['is_deleted'], 'boolean'],
             [['var_name'], 'unique'],
         ];
     }
@@ -71,6 +121,7 @@ class Property extends NgRestModel
             'module_name' => 'raw',
             'var_name' => 'raw',
             'class_name' => 'raw',
+            'sort_index' => 'sortable',
         ];
     }
 
@@ -80,8 +131,8 @@ class Property extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['module_name', 'var_name', 'class_name']],
-            ['delete', false],
+            ['list', ['module_name', 'var_name', 'class_name', 'sort_index']],
+            ['delete', true],
         ];
     }
     

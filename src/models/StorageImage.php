@@ -8,6 +8,7 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Storage Image.
@@ -17,6 +18,8 @@ use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
  * @property integer $filter_id
  * @property integer $resolution_width
  * @property integer $resolution_height
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -40,6 +43,18 @@ class StorageImage extends NgRestModel
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+            ]
+        ];
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -60,7 +75,7 @@ class StorageImage extends NgRestModel
     {
         return [
             [['file_id'], 'required'],
-            [['file_id', 'filter_id', 'resolution_width', 'resolution_height'], 'integer'],
+            [['file_id', 'filter_id', 'resolution_width', 'resolution_height', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 

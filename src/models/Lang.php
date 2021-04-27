@@ -170,7 +170,7 @@ final class Lang extends NgRestModel
      */
     public static function getDefault()
     {
-        trigger_error('deprecated, use Yii::$app->adminLanguage instead. Will be removed in version 5.0', E_USER_DEPRECATED);
+        trigger_error('deprecated, use Yii::$app->adminLanguage->defaultLanguage[\'id\'] instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         if (self::$_langInstance === null) {
             self::$_langInstance = self::find()->where(['is_default' => true, 'is_deleted' => false])->asArray()->one();
         }
