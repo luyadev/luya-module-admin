@@ -3,6 +3,7 @@
 namespace luya\admin\storage;
 
 use luya\Exception;
+use luya\helpers\ArrayHelper;
 
 /**
  * Query Data from Files, Filters and Images.
@@ -167,6 +168,23 @@ trait QueryTrait
             }
         }
 
+        if ($this->_order !== null) {
+            if (!empty($this->_order['ids'])) {
+                // id order 
+                $indexedData = [];
+                foreach ($this->_order['ids'] as $indexId) {
+                    $column = ArrayHelper::searchColumn($data, current($this->_order['keys']), $indexId);
+                    if ($column) {
+                        $indexedData[$indexId] = $column;
+                    }
+                }
+                $data = $indexedData;
+                unset($indexedData);
+            } else {
+                ArrayHelper::multisort($data, $this->_order['keys'], $this->_order['directions']);
+            }
+        }
+
         return $data;
     }
     
@@ -289,6 +307,64 @@ trait QueryTrait
         return $this->where($args);
     }
     
+    private $_order;
+
+    /**
+     * Order the query by one or multiple fields asc or desc.
+     *
+     * Use following PHP constants for directions:
+     *
+     * + SORT_ASC: 1..10, A..Z
+     * + SORT_DESC: 10..1, Z..A
+     *
+     * Example using orderBy:
+     *
+     * ```php
+     * $query = new Query()->orderBy(['id => SORT_ASC])->all();
+     * ```
+     *
+     * In rare cases you like to sort for certain existing order structure, for example when an explicit order is given
+     * from an user input, then you can provide an array of that value. The limitation for this order behavior is that
+     * only elements in the list will be taken, other elements will be removed from the result array. This means if an
+     * id is not present in that array of orderding by id, this will be removed.
+     * 
+     * Example usage:
+     * 
+     * ```
+     * (new Query())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [3,2,1]])->all();
+     * ```
+     * 
+     * The above example will return those elements in the order of `3,2,1`.
+     * 
+     * Example usage which will remove elements:
+     * 
+     * ```
+     * (new Query())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [2,1]])->all();
+     * ```
+     * 
+     * The above example will return only the order elements `2,1` and element with id 3 is gone
+     * 
+     * @param array $order An array with fields to sort where key is the field and value the direction.
+     * @return \luya\admin\storage\QueryTrait
+     * @since 4.0.0
+     */
+    public function orderBy(array $order)
+    {
+        $orderBy = ['keys' => [], 'directions' => [], 'ids' => []];
+        
+        foreach ($order as $key => $direction) {
+            $orderBy['keys'][] = $key;
+            $orderBy['directions'][] = $direction;
+            if (is_array($direction)) {
+                $orderBy['ids'] = $direction;
+            }
+        }
+        
+        $this->_order = $orderBy;
+        
+        return $this;
+    }
+
     private $_binds;
     
     /**
