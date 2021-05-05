@@ -76,6 +76,6 @@ class Query extends BaseObject
      */
     public function createIteratorObject(array $data)
     {
-        return Yii::createObject(['class' => Iterator::className(), 'data' => $data]);
+        return Yii::createObject(['class' => Iterator::class, 'data' => $data]);
     }
 }

@@ -22,6 +22,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#630](https://github.com/luyadev/luya-module-admin/pull/630) Added option to define permission level for ActiveWindows and ActiveButtons, default behavior `Auth::CAN_UPDATE` is maintained for BC.
 + [#604](https://github.com/luyadev/luya-module-admin/issues/604) Added "Save", "Save and close" and "Create", "Create and close" buttons next to CRUD forms.
 + [#313](https://github.com/luyadev/luya-module-admin/issues/313) Add option to disable text and filter in image array zaa directive and ngrest plugin.
++ [#638](https://github.com/luyadev/luya-module-admin/pull/638) Added new `orderBy()` method for `file`, `image` and `folder` iterator of storage system, this fixes the issue that `fileArray` and `imageArray` plugin where sorted wrong when `$fileIterator` is enabled.
 
 ## 3.9.0 (24. November 2020)
 

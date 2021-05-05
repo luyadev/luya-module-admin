@@ -176,4 +176,38 @@ class QueryTraitTest extends AdminTestCase
             $this->assertEquals(3, $item->id);
         }
     }
+
+    public function testSorting()
+    {
+        $x = (new FixtureQueryTrait())->where(['in', 'id', [1,2,3]])->all();
+
+        $arr = array_values(iterator_to_array($x));
+        $this->assertSame(1, $arr[0]->id);
+        $this->assertSame(2, $arr[1]->id);
+        $this->assertSame(3, $arr[2]->id);
+
+        // sort now
+        $y = (new FixtureQueryTrait())->where(['in', 'id', [1,2,3]])->orderBy(['id' => SORT_DESC])->all();
+
+        $arr2 = array_values(iterator_to_array($y));
+        $this->assertSame(3, $arr2[0]->id);
+        $this->assertSame(2, $arr2[1]->id);
+        $this->assertSame(1, $arr2[2]->id);
+
+        // sort by id ordering
+        $z = (new FixtureQueryTrait())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [3,1,2]])->all();
+
+        $arr3 = array_values(iterator_to_array($z));
+        $this->assertSame(3, $arr3[0]->id);
+        $this->assertSame(1, $arr3[1]->id);
+        $this->assertSame(2, $arr3[2]->id);
+
+        // sort by id ordering but remove one
+        $a = (new FixtureQueryTrait())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [3,2]])->all();
+
+        $arr4 = array_values(iterator_to_array($a));
+        $this->assertSame(3, $arr2[0]->id);
+        $this->assertSame(2, $arr2[1]->id);
+        $this->assertSame(2, count($arr4));
+    }
 }

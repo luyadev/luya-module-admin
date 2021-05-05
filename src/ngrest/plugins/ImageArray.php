@@ -155,6 +155,8 @@ class ImageArray extends Plugin
             }
         }
         
-        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'imageId')])->bind($binds)->all();
+        $imageIds = ArrayHelper::getColumn($values, 'imageId');
+
+        return (new Query())->where(['in', 'id', $imageIds])->orderBy(['id' => $imageIds])->bind($binds)->all();
     }
 }
