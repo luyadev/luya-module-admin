@@ -4,13 +4,6 @@ use yii\db\Migration;
 
 /**
  * Yii Session Table
- *
- * ```php
- * session' => [
- *     'class' => 'yii\web\DbSession',
- *     'sessionTable' => 'admin_session',
- * ],
- * ```
  */
 class m210422_134420_v4_update extends Migration
 {
