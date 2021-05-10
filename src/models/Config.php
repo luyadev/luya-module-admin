@@ -103,8 +103,8 @@ final class Config extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'value' => 'text',
-            'name' => 'slug',
+            'value' => 'textarea',
+            'name' => 'text',
             'is_system' => ['hidden', 'value' => 0],
         ];
     }
