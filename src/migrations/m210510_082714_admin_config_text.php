@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Yii Session Table
  */
-class m210422_134420_v4_update extends Migration
+class m210510_082714_admin_config_text extends Migration
 {
     /**
      * {@inheritdoc}
