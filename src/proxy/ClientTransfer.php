@@ -40,6 +40,11 @@ class ClientTransfer extends BaseObject
         }
     }
 
+    /**
+     * Start DB Sync
+     * 
+     * @since 4.0.0
+     */
     protected function startDb()
     {
         if ($this->build->db->schema instanceof \yii\db\mysql\Schema) {
@@ -51,6 +56,11 @@ class ClientTransfer extends BaseObject
         }
     }
 
+    /**
+     * Start Storage Files Sync
+     * 
+     * @since 4.0.0
+     */
     protected function startFiles()
     {
         $fileCount = 0;
@@ -91,6 +101,11 @@ class ClientTransfer extends BaseObject
         $this->build->command->outputInfo("[=] {$fileCount} Files downloaded.");
     }
 
+    /**
+     * Start Storage Images Sync
+     * 
+     * @since 4.0.0
+     */
     protected function startImages()
     {
         $imageCount = 0;
