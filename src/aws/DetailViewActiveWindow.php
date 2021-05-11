@@ -15,11 +15,22 @@ use luya\admin\ngrest\base\ActiveWindow;
  * public function ngRestActiveWindows()
  * {
  *     return [
- *         ['class' => 'luya\admin\aws\DetailViewActiveWindow', 'attributes' => [
- *             'title', // nothing define will use `text`
- *             'description:html', // renders html tags
- *             'timestamp:datetime', // unix timetsamp to readable date
- *             'description:text:My Description' // Changes the label to `My Description`
+ *         [
+ *              'class' => 'luya\admin\aws\DetailViewActiveWindow', 
+ *              'attributes' => [
+ *                  'title', // nothing define will use `text`
+ *                  'description:html', // renders html tags
+ *                  'timestamp:datetime', // unix timetsamp to readable date
+ *                  'description:text:My Description' // Changes the label to `My Description`,
+ *                  // using a function to generated custom content
+ *                  [
+ *                       'label' => 'cli',
+ *                       'format' => 'html',
+ *                       'value' => function($model) {
+ *                           return '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '<code>';
+ *                       }
+ *                   ]
+ *               ],
  *         ]]
  *     ];
  * }

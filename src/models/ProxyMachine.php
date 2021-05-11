@@ -2,9 +2,11 @@
 
 namespace luya\admin\models;
 
+use luya\admin\aws\DetailViewActiveWindow;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
+use luya\helpers\Url;
 
 /**
  * Proxy Machine.
@@ -113,6 +115,30 @@ class ProxyMachine extends NgRestModel
             [['list'], ['name', 'identifier', 'access_token', 'is_disabled']],
             [['create', 'update'], ['name']],
             [['delete'], true],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestActiveWindows()
+    {
+        return [
+            [
+                'class' => DetailViewActiveWindow::class,
+                'attributes' => [
+                    'name',
+                    'identifier',
+                    'access_token',
+                    [
+                        'label' => 'cli',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            return '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '</code>';
+                        }
+                    ]
+                ]
+            ]
         ];
     }
 }

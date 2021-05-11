@@ -14,6 +14,8 @@ use yii\base\InvalidConfigException;
 
 /**
  * Client Transfer Process
+ * 
+ * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
