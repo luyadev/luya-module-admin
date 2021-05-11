@@ -13,13 +13,19 @@ use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 
 /**
- * Admin Proxy commands Transfer Files.
+ * Client Transfer Process
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
 class ClientTransfer extends BaseObject
 {
+    const ONLY_STORAGE = 'storage';
+    
+    const ONLY_DB = 'db';
+
+    public $only;
+
     use CacheableTrait;
 
     /**
@@ -33,27 +39,9 @@ class ClientTransfer extends BaseObject
             throw new InvalidConfigException("The build property can not be empty.");
         }
     }
-    
-    /**
-     * @var ClientBuild
-     */
-    public $build;
-    
-    public function start()
+
+    protected function startDb()
     {
-        $this->flushHasCache();
-        
-        foreach ($this->build->getTables() as $name => $table) {
-            /** @var \luya\admin\proxy\ClientTable $table  */
-            if (!$table->isComplet()) {
-                if ($this->build->optionStrict) {
-                    $this->build->command->outputInfo('Rows Expected: ' . $table->getRows());
-                    $this->build->command->outputInfo('Rows Downloaded: ' . $table->getContentRowCount());
-                    return $this->build->command->outputError('Incomplet build, stop execution: ' . $name);
-                }
-            }
-        }
-    
         if ($this->build->db->schema instanceof \yii\db\mysql\Schema) {
             $this->build->command->outputInfo('Using local database ' . $this->build->db->createCommand('SELECT DATABASE()')->queryScalar());
         }
@@ -61,9 +49,11 @@ class ClientTransfer extends BaseObject
         foreach ($this->build->getTables() as $name => $table) {
             $table->syncData();
         }
-        
+    }
+
+    protected function startFiles()
+    {
         $fileCount = 0;
-        
         // sync files
         foreach ((new Query())->where(['is_deleted' => false])->all() as $file) {
             /** @var \luya\admin\file\Item $file */
@@ -99,9 +89,11 @@ class ClientTransfer extends BaseObject
         }
         
         $this->build->command->outputInfo("[=] {$fileCount} Files downloaded.");
-        
+    }
+
+    protected function startImages()
+    {
         $imageCount = 0;
-        
         // sync images
         foreach ((new \luya\admin\image\Query())->all() as $image) {
             /** @var Item $image */
@@ -128,6 +120,25 @@ class ClientTransfer extends BaseObject
         }
         
         $this->build->command->outputInfo("[=] {$imageCount} Images downloaded.");
+    }
+    
+    /**
+     * @var ClientBuild
+     */
+    public $build;
+    
+    public function start()
+    {
+        $this->flushHasCache();
+        
+        if (empty($this->only) || $this->only == self::ONLY_DB) {
+            $this->startDb();
+        }
+        
+        if (empty($this->only) || $this->only == self::ONLY_STORAGE) {
+            $this->startFiles();
+            $this->startImages();
+        }
         
         // close the build
         $curl = new Curl();
