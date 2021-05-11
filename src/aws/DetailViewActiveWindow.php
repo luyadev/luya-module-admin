@@ -97,6 +97,18 @@ class DetailViewActiveWindow extends ActiveWindow
      *   Please refer to [[\yii\helpers\BaseHtml::renderTagAttributes()]] for the supported syntax.
      */
     public $attributes;
+
+    /**
+     * @var string A text (can include html) which shown before the detail view table.
+     * @since 4.0.0
+     */
+    public $intro;
+
+    /**
+     * @var string A text (can include html) which shown after the detail view table.
+     * @since 4.0.0
+     */
+    public $outro;
     
     /**
      * @inheritdoc
@@ -122,6 +134,8 @@ class DetailViewActiveWindow extends ActiveWindow
     public function index()
     {
         return $this->render('index', [
+            'intro' => $this->intro,
+            'outro' => $this->outro,
             'model' => $this->model,
             'attributes' => $this->attributes,
         ]);

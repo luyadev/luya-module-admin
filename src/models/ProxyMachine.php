@@ -126,6 +126,7 @@ class ProxyMachine extends NgRestModel
         return [
             [
                 'class' => DetailViewActiveWindow::class,
+                'intro' => 'For more details about how to use the sync command, take a look at the <a class="text-primary" href="https://luya.io/api/luya-admin-commands-ProxyController" target="_blank">admin/proxy guide</a>.',
                 'attributes' => [
                     'name',
                     'identifier',
