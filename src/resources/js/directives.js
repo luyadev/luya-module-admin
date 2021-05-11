@@ -3403,6 +3403,7 @@ zaa.directive("storageFileManager", function () {
                         $scope.searchPromise = $timeout(function () {
                             $scope.getFilesForCurrentPage().then(function () {
                                 $scope.searchLoading = false;
+                                cfpLoadingBar.complete()
                             });
                         }, 1000);
                     } else {
@@ -3521,15 +3522,21 @@ zaa.directive("storageFileManager", function () {
 
                 $scope.fileDetailFolder = false;
 
+                $scope.detailLoading = false
+
 
                 $scope.openFileDetail = function (file, force) {
                     if ($scope.fileDetail.id == file.id && force !== true) {
                         $scope.closeFileDetail();
                     } else {
-
+                        cfpLoadingBar.start();
+                        $scope.detailLoading = true;
                         ServiceFilesData.getFile(file.id, force).then(function (responseFile) {
                             $scope.fileDetailFull = responseFile;
                             $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
+                            $scope.detailLoading = false
+                            cfpLoadingBar.complete()
+                            
                         }, function () {
 
                         });
