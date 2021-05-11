@@ -49,11 +49,12 @@ class ClientBuild extends BaseObject
     
     public $storageFilesCount;
     
+    /**
+     * @deprecated Deprecated since version 4, will be removed in 5. No replacement.
+     */
     public $optionStrict;
 
     public $syncRequestsCount;
-    
-    private $_optionTable;
     
     public function setOptionTable($table)
     {
@@ -61,6 +62,8 @@ class ClientBuild extends BaseObject
             $this->_optionTable = explode(",", $table);
         }
     }
+    
+    private $_optionTable;
     
     public function getOptionTable()
     {

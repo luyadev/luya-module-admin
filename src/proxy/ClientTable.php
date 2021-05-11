@@ -11,7 +11,7 @@ use yii\helpers\Console;
 use yii\helpers\Json;
 
 /**
- * Admin Proxy comands Sync Database.
+ * Prepare Client Tables
  *
  * @property \yii\db\TableSchema $schema Schema object
  * @property Connection $db Database connection. By default `Yii::$app->db` will be used.

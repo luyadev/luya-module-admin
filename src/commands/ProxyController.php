@@ -33,23 +33,15 @@ use luya\console\Command;
  * ./vendor/bin/luya admin/proxy --url=https://example.com --idf=lcp58e35acb4ca69 --token=ESOH1isB3ka_dF09ozkDJewpeecGCdUw
  * ```
  *
- * Options:
+ * ## Sync specific Table
  *
  * ```sh
- * ./vendor/bin/luya admin/proxy --strict=0
  * ./vendor/bin/luya admin/proxy --table=admin_user
  * ```
- *
- * For example in order to sync a large table without strict compare check
- *
- * ```sh
- * ./vendor/bin/luya admin/proxy --strict=0 --table=large_table,another_table
- * ```
- *
  * which is equals to:
  *
  * ```sh
- * ./vendor/bin/luya admin/proxy -s=0 -t=large_table
+ * ./vendor/bin/luya admin/proxy -t=large_table
  * ```
  *
  * Using wildcard to use table with a given prefix use:
@@ -67,12 +59,26 @@ use luya\console\Command;
  * ```
  *
  * The above exmaple would exclude all tables starting *crawler*.
- *
- * In order to clear the proxy config run:
- *
+ * 
+ * ## Storage or DB
+ * 
+ * In order to switch where either only the files/images or the table data should be synced use the
+ * `only` argument:
+ * 
  * ```sh
- * ./vendor/bin/luya admin/proxy/clear
+ * ./vendor/bin/luya admin/proxy --only=storage
+ * ./vendor/bin/luya admin/proxy --only=db
  * ```
+ * 
+ * or as short code
+ * 
+ * ```sh
+ * ./vendor/bin/luya admin/proxy -o=storage
+ * ./vendor/bin/luya admin/proxy -o=db
+ * ```
+ * 
+ * + storage: files and images
+ * + db: database table rows
  *
  * @property Module $module
  *
@@ -98,6 +104,7 @@ class ProxyController extends Command
      * @var boolean Whether the isComplet sync check should be done after finish or not. If a table has a lot of traffic sometimes
      * there is a difference between the exchange of table informations (build) and transfer the data. In order to prevent
      * the exception message you can disable the strict compare mode. In order to ensure strict comparing enable $strict.
+     * @deprecated Deprecated since version 4, will be removed in 5. No replacement.
      */
     public $strict = false;
 
@@ -110,11 +117,10 @@ class ProxyController extends Command
     public $table;
 
     /**
-     * @var string The production environment Domain where your LUYA application is running in production mode make so to use the right protocolo
+     * @var string The production environment Domain where your LUYA application is running in production mode make so to use the right protocol
      * examples:
      * - https://luya.io
      * - http://www.example.com
-     *
      */
     public $url;
 
@@ -139,11 +145,17 @@ class ProxyController extends Command
     public $db = 'db';
 
     /**
+     * @var string either `db` or `storage` are valid values.
+     * @since 4.0.0
+     */
+    public $only;
+
+    /**
      * @inheritdoc
      */
     public function options($actionID)
     {
-        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount', 'db']);
+        return array_merge(parent::options($actionID), ['strict', 'table', 'url', 'idf', 'token', 'syncRequestsCount', 'db', 'only']);
     }
 
     /**
@@ -151,7 +163,7 @@ class ProxyController extends Command
      */
     public function optionAliases()
     {
-        return array_merge(parent::optionAliases(), ['s' => 'strict', 't' => 'table', 'u' => 'url', 'i' => 'idf', 'tk' => 'token']);
+        return array_merge(parent::optionAliases(), ['s' => 'strict', 't' => 'table', 'u' => 'url', 'i' => 'idf', 'tk' => 'token', 'o' => 'only']);
     }
 
     /**
@@ -222,7 +234,7 @@ class ProxyController extends Command
                 'machineToken' => sha1($token),
             ]);
 
-            $process = new ClientTransfer(['build' => $build]);
+            $process = new ClientTransfer(['build' => $build, 'only' => $this->only]);
             if ($process->start()) {
                 // as the admin_config table is synced to, we have to restore the current active config which has been used.
                 Config::set(self::CONFIG_VAR_IDENTIFIER, $identifier);
