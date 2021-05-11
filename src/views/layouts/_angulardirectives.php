@@ -385,105 +385,115 @@ use luya\admin\helpers\Angular;
     </div>
 
     <div class="file-detail-view shadow" ng-class="{'open': fileDetail}">
-
-        <div class="file-detail-view-head">
-            <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
-            <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
-            <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)" ng-show="fileDetail.isImage"><i class="material-icons">crop</i></button>
-            <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
-            <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
-        </div>
-
-        <p class="mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
-
-
-        <modal is-modal-hidden="isFileEditHidden" modal-title="<?= Admin::t('crop_modal_title'); ?>">
-            <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id" on-success="cropSuccess()"></image-edit>
-        </modal>
-
-        <div ng-if="fileDetail.isImage" class="mt-3 text-center">
-            <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
-                <div class="text-center">
-                    <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}?{{fileDetailFull.upload_timestamp}}" />
-                </div>
-            </modal>
-            <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}?{{fileDetailFull.upload_timestamp}}" />
-        </div>
-        <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_detail_details'); ?>">
-        <input type="text" class="form-control form-control-sm" readonly select-on-click ng-model="fileDetailFull.source" />
-        <table class="table table-hover table-align-middle mt-3">
-            <tbody>
-            <tr>
-                <td><small><?= Admin::t('model_pk_id'); ?></small></td>
-                <td>{{ fileDetail.id }}</td>
-            </tr>
-            <tr>
-                <td><small>Folder</small></td>
-                <td>
-                    <a ng-show="fileDetailFolder" ng-click="changeCurrentFolderId(fileDetailFolder.id)">{{ fileDetailFolder.name }}</a>
-                    <a ng-show="!fileDetailFolder" ng-click="changeCurrentFolderId(0)"><?= Admin::t('layout_filemanager_root_dir'); ?></a>
-                </td>
-            </tr>
-            <tr>
-                <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>
-                <td>{{fileDetailFull.upload_timestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
-            </tr>
-            <tr>
-                <td><small><?= Admin::t('layout_filemanager_col_type'); ?></small></td>
-                <td>{{ fileDetailFull.extension }}</td>
-            </tr>
-            <tr>
-                <td><small><?= Admin::t('layout_filemanager_col_size'); ?></small></td>
-                <td>{{ fileDetail.sizeReadable }}</td>
-            </tr>
-            <tr>
-                <td><small><?= Admin::t('layout_filemanager_col_downloads'); ?></small></td>
-                <td>{{ fileDetailFull.passthrough_file_stats }}</td>
-            </tr>
-            <tr>
-                <td><small><?= Admin::t('layout_filemanager_col_upload_user'); ?></small></td>
-                <td>{{ fileDetailFull.user.firstname}} {{ fileDetailFull.user.lastname}}</td>
-            </tr>
-            <tr ng-if="fileDetailFull">
-                <td><small><?= Admin::t('layout_filemanager_col_file_disposition'); ?></small></td>
-                <td>
-                    <select class="form-control form-control-sm" ng-model="fileDetailFull.inline_disposition">
-                        <option ng-value="0"><?= Admin::t('layout_filemanager_col_file_disposition_download'); ?></option>
-                        <option ng-value="1"><?= Admin::t('layout_filemanager_col_file_disposition_browser'); ?></option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input class="form-control form-control-sm" type="text" ng-model="fileDetailFull.name_original" />
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        
-        <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
-        </collapse-container>
-        <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_file_captions'); ?>">
-        <form class="bg-faded">
-            <div class="form-group" ng-repeat="(key, cap) in fileDetailFull.file.captionArray">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="fileDetailFull.file.captionArray[key]">
-                    <span class="flag flag--{{key}}">
-                        <span class="flag-fallback">{{key}}</span>
-                    </span>
-                </div>
+        <div ng-if="detailLoading">
+            <div class="loading-indicator mt-5" style="height:30px;">
+                <div class="rect1"></div><!--
+                --><div class="rect2"></div><!--
+                --><div class="rect3"></div><!--
+                --><div class="rect4"></div><!--
+                --><div class="rect5"></div>
             </div>
-            <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
-        </form>
-        </collapse-container>
-        <collapse-container class="mt-3" ng-show="tags.length > 0" title="<?= Admin::t('menu_system_item_tags'); ?>">
-        <span style="font-size:15px;" 
-            ng-repeat="tag in tags"
-            ng-click="saveTagRelation(tag, fileDetailFull)"
-            ng-class="{'badge-primary font-weight-bold text-bold': fileHasTag(tag), 'badge-secondary': !fileHasTag(tag)}"
-            class="badge badge-pill mx-1 mb-2"
-        >{{tag.name}}</span>
-        </collapse-container>
+        </div>
+        <div ng-if="!detailLoading">
+            <div class="file-detail-view-head">
+                <a class="btn btn-icon btn-download" ng-href="{{fileDetailFull.file.href}}?{{fileDetailFull.upload_timestamp}}" target="_blank">Download</a>
+                <button type="button" class="btn btn-icon btn-replace ml-2" type="file" ngf-keep="false" ngf-select="replaceFile($file, $invalidFiles)">Replace</button>
+                <button type="button" class="btn ml-2" ng-click="editFile(fileDetail)" ng-show="fileDetail.isImage"><i class="material-icons">crop</i></button>
+                <button type="button" class="btn btn-icon btn-delete ml-2" ng-click="removeFile(fileDetail)"></button>
+                <button type="button" class="btn btn-icon btn-cancel file-detail-view-close" ng-click="closeFileDetail()"></button>
+            </div>
+
+            <p class="mt-3" ng-show="!nameEditMode">{{ fileDetailFull.name_original }}</p>
+
+
+            <modal is-modal-hidden="isFileEditHidden" modal-title="<?= Admin::t('crop_modal_title'); ?>">
+                <image-edit ng-if="!isFileEditHidden" file-id="fileDetailFull.id" on-success="cropSuccess()"></image-edit>
+            </modal>
+
+            <div ng-if="fileDetail.isImage" class="mt-3 text-center">
+                <modal is-modal-hidden="largeImagePreviewState" modal-title="{{ fileDetailFull.file.name }}">
+                    <div class="text-center">
+                        <img class="img-fluid" alt="{{ fileDetailFull.file.name }}" ng-src="{{fileDetailFull.file.source}}?{{fileDetailFull.upload_timestamp}}" />
+                    </div>
+                </modal>
+                <img class="img-fluid" alt="{{ fileDetail.name }}" ng-click="largeImagePreviewState=!largeImagePreviewState" title="{{ fileDetailFull.name }}" style="border:1px solid #F0F0F0" ng-src="{{fileDetail.createThumbnailMedium.source}}?{{fileDetailFull.upload_timestamp}}" />
+            </div>
+            <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_detail_details'); ?>">
+            <input type="text" class="form-control form-control-sm" readonly select-on-click ng-model="fileDetailFull.source" />
+            <table class="table table-hover table-align-middle mt-3">
+                <tbody>
+                <tr>
+                    <td><small><?= Admin::t('model_pk_id'); ?></small></td>
+                    <td>{{ fileDetail.id }}</td>
+                </tr>
+                <tr>
+                    <td><small>Folder</small></td>
+                    <td>
+                        <a ng-show="fileDetailFolder" ng-click="changeCurrentFolderId(fileDetailFolder.id)">{{ fileDetailFolder.name }}</a>
+                        <a ng-show="!fileDetailFolder" ng-click="changeCurrentFolderId(0)"><?= Admin::t('layout_filemanager_root_dir'); ?></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><small><?= Admin::t('layout_filemanager_col_date'); ?></small></td>
+                    <td>{{fileDetailFull.upload_timestamp * 1000 | date:"dd.MM.yyyy, HH:mm"}}</td>
+                </tr>
+                <tr>
+                    <td><small><?= Admin::t('layout_filemanager_col_type'); ?></small></td>
+                    <td>{{ fileDetailFull.extension }}</td>
+                </tr>
+                <tr>
+                    <td><small><?= Admin::t('layout_filemanager_col_size'); ?></small></td>
+                    <td>{{ fileDetail.sizeReadable }}</td>
+                </tr>
+                <tr>
+                    <td><small><?= Admin::t('layout_filemanager_col_downloads'); ?></small></td>
+                    <td>{{ fileDetailFull.passthrough_file_stats }}</td>
+                </tr>
+                <tr>
+                    <td><small><?= Admin::t('layout_filemanager_col_upload_user'); ?></small></td>
+                    <td>{{ fileDetailFull.user.firstname}} {{ fileDetailFull.user.lastname}}</td>
+                </tr>
+                <tr ng-if="fileDetailFull">
+                    <td><small><?= Admin::t('layout_filemanager_col_file_disposition'); ?></small></td>
+                    <td>
+                        <select class="form-control form-control-sm" ng-model="fileDetailFull.inline_disposition">
+                            <option ng-value="0"><?= Admin::t('layout_filemanager_col_file_disposition_download'); ?></option>
+                            <option ng-value="1"><?= Admin::t('layout_filemanager_col_file_disposition_browser'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input class="form-control form-control-sm" type="text" ng-model="fileDetailFull.name_original" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            
+            <button type="button" class="btn btn-icon btn-save" ng-click="updateFileData()"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
+            </collapse-container>
+            <collapse-container class="mt-3" title="<?= Admin::t('layout_filemanager_file_captions'); ?>">
+            <form class="bg-faded">
+                <div class="form-group" ng-repeat="(key, cap) in fileDetailFull.file.captionArray">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="fileDetailFull.file.captionArray[key]">
+                        <span class="flag flag--{{key}}">
+                            <span class="flag-fallback">{{key}}</span>
+                        </span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-icon btn-save" ng-click="storeFileCaption(fileDetailFull.file)"><?= Admin::t('layout_filemanager_file_captions_save_btn'); ?></button>
+            </form>
+            </collapse-container>
+            <collapse-container class="mt-3" ng-show="tags.length > 0" title="<?= Admin::t('menu_system_item_tags'); ?>">
+            <span style="font-size:15px;" 
+                ng-repeat="tag in tags"
+                ng-click="saveTagRelation(tag, fileDetailFull)"
+                ng-class="{'badge-primary font-weight-bold text-bold': fileHasTag(tag), 'badge-secondary': !fileHasTag(tag)}"
+                class="badge badge-pill mx-1 mb-2"
+            >{{tag.name}}</span>
+            </collapse-container>
+        </div>
     </div>
 </script>
 
