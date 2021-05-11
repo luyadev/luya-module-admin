@@ -9,6 +9,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#635](https://github.com/luyadev/luya-module-admin/pull/635) New migration database file, as new attributes are available for properties, images and files
 + [#298](https://github.com/luyadev/luya-module-admin/issues/298) Added new NgRest Plugin `SelectAsyncApi` which can be used to change the select based on certain context variables in real time, its also known as "dependent select".
++ [#642](https://github.com/luyadev/luya-module-admin/pull/642) Example usage for admin/proxy machine in detail window.
 + [#610](https://github.com/luyadev/luya-module-admin/pull/610) Added API endpoint to display all groups where the current loggedin user belongs to `admin/api-user-group/me`.
 + [#602](https://github.com/luyadev/luya-module-admin/issues/602) Fixed bug in ngrest model detail view.
 + [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.

@@ -12,6 +12,8 @@ use yii\helpers\Json;
 
 /**
  * Prepare Client Tables
+ * 
+ * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @property \yii\db\TableSchema $schema Schema object
  * @property Connection $db Database connection. By default `Yii::$app->db` will be used.
