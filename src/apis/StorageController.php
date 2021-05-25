@@ -104,7 +104,7 @@ class StorageController extends RestController
                 ['like', 'caption', $search],
                 ['=', 'id', $search],
             ]);
-        } elseif (!empty($folderId)) {
+        } else {
             $query->andWhere(['folder_id' => $folderId]);
         }
 
