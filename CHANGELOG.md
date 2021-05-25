@@ -27,6 +27,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#639](https://github.com/luyadev/luya-module-admin/pull/639) The LUYA `Config::set()` can now store larger amount of data, using `text()` instead of `string()`.
 + [#640](https://github.com/luyadev/luya-module-admin/pull/640) Added new `--only` option ( or `-o`) for `admin/proxy` command. Possible values are `db` or `storage`.
 + [#641](https://github.com/luyadev/luya-module-admin/pull/641) Added loading indicator for filemanager file detail.
++ [#643](https://github.com/luyadev/luya-module-admin/issues/643) Fixed issue where the root folder where displaying all files from the storage system.
 
 ## 3.9.0 (24. November 2020)
 
