@@ -3,15 +3,13 @@
 namespace luya\admin\tests\admin\base;
 
 use admintests\AdminTestCase;
-use luya\admin\base\CheckboxArrayProperty;
-use luya\admin\base\CheckboxProperty;
 use luya\admin\base\RadioProperty;
 
 class RadioPropertyTest extends AdminTestCase
 {
     public function testDefaultAdminValue()
     {
-        $prop = new StubCheckoxArrayProperty();
+        $prop = new StubRadioProperty();
 
         $this->assertSame(false, $prop->defaultValue());
 
@@ -25,7 +23,7 @@ class RadioPropertyTest extends AdminTestCase
     }
 }
 
-class StubCheckoxArrayProperty extends RadioProperty
+class StubRadioProperty extends RadioProperty
 {
     public function varName()
     {
