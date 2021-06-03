@@ -5,14 +5,14 @@ namespace luya\admin\base;
 use luya\admin\helpers\Angular;
 
 /**
- * Checkbox Array Property.
+ * Radio Select Property.
  *
- * Provide items to select and returns the selected items.
+ * Radio input to select a given item from the list and returns its value.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class CheckboxArrayProperty extends Property
+abstract class RadioProperty extends Property
 {
     /**
      * Key value array for the options.
@@ -26,7 +26,7 @@ abstract class CheckboxArrayProperty extends Property
      */
     public function type()
     {
-        return self::TYPE_CHECKBOX_ARRAY;
+        return self::TYPE_RADIO;
     }
 
     /**
@@ -34,6 +34,6 @@ abstract class CheckboxArrayProperty extends Property
      */
     public function options()
     {
-        return ['items' => Angular::optionsArrayInput($this->items())];
+        return Angular::optionsArrayInput($this->items());
     }
 }
