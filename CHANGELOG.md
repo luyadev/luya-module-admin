@@ -28,7 +28,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#640](https://github.com/luyadev/luya-module-admin/pull/640) Added new `--only` option ( or `-o`) for `admin/proxy` command. Possible values are `db` or `storage`.
 + [#641](https://github.com/luyadev/luya-module-admin/pull/641) Added loading indicator for filemanager file detail.
 + [#643](https://github.com/luyadev/luya-module-admin/issues/643) Fixed issue where the root folder where displaying all files from the storage system.
-+ []() New predifined radio input page property `luya\admin\base\RadioProperty`
++ [#645](https://github.com/luyadev/luya-module-admin/pull/645) New predifined radio input page property `luya\admin\base\RadioProperty`
 
 ## 3.9.0 (24. November 2020)
 
