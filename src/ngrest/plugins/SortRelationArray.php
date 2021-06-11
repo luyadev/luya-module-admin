@@ -2,17 +2,27 @@
 
 namespace luya\admin\ngrest\plugins;
 
-/**
+use luya\admin\traits\LazyDataLoadTrait;/**
  * Sort Relation Array Plugin.
- *
  * Generate a multi selectable and sortable list based on an arry input.
- *
  * Example usage:
- *
  * ```php
  * public function ngRestAttributeTypes()
  * {
  *     'genres' => ['sortRelationArray', 'data' => [1 => 'Jazz', 2 => 'Funk', 3 => 'Soul']
+ * }
+ * ```
+ *
+ * Or use a closure for lazy data load:
+ *
+ * ```php
+ * public function ngRestAttributeTypes()
+ * {
+ *     return [
+ *         'genres' => ['sortRelationArray', 'data' => function () {
+ *               return new Query()->all();
+ *          }],
+ *     ];
  * }
  * ```
  *
@@ -21,6 +31,8 @@ namespace luya\admin\ngrest\plugins;
  */
 class SortRelationArray extends SortRelation
 {
+    use LazyDataLoadTrait;
+    
     private $_data;
     
     /**
@@ -29,7 +41,7 @@ class SortRelationArray extends SortRelation
     public function getData()
     {
         $data = [];
-        foreach ($this->_data as $value => $label) {
+        foreach ($this->loadData($this->_data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
         
