@@ -18,6 +18,10 @@
 
 .zaa-datetime-time-colon {
     z-index: z-index(above-content);
+    
+    .input-group-text {
+        border: none;
+    }
 }
 
 .zaa-datetime-hour-input,

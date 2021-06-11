@@ -2,7 +2,7 @@
 
 namespace luya\admin\base;
 
-use yii\helpers\Json;
+use luya\admin\helpers\Angular;
 
 /**
  * Checkbox Array Property.
@@ -14,6 +14,11 @@ use yii\helpers\Json;
  */
 abstract class CheckboxArrayProperty extends Property
 {
+    /**
+     * Key value array for the options.
+     *
+     * @return array An array with a key and and a value, the key will be stored when selecting data.
+     */
     abstract public function items();
     
     /**
@@ -29,23 +34,6 @@ abstract class CheckboxArrayProperty extends Property
      */
     public function options()
     {
-        $options = [];
-        foreach ($this->items as $value => $label) {
-            $options = ['value' => $value, 'label' => $label];
-        }
-        
-        return ['items' => $options];
-    }
-
-    public function getAdminValue()
-    {
-        $value = parent::getValue();
-        return Json::decode($value);
-    }
-    
-    public function getValue()
-    {
-        $value = parent::getValue();
-        return Json::decode($value);
+        return ['items' => Angular::optionsArrayInput($this->items())];
     }
 }

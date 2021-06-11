@@ -26,6 +26,5 @@ class TruncateActionTest extends AdminModelTestCase
         $delete = new TruncateAction('id', $ctrl, ['modelClass' => User::class]);
 
         $this->assertNull($delete->run());
-        
     }
 }

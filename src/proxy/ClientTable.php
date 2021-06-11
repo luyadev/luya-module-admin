@@ -11,7 +11,9 @@ use yii\helpers\Console;
 use yii\helpers\Json;
 
 /**
- * Admin Proxy comands Sync Database.
+ * Prepare Client Tables
+ * 
+ * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @property \yii\db\TableSchema $schema Schema object
  * @property Connection $db Database connection. By default `Yii::$app->db` will be used.
@@ -298,11 +300,11 @@ class ClientTable extends BaseObject
     /**
      * Write the given data to the database.
      *
-     * @param $data
+     * @param array $data
      * @throws \yii\db\Exception
      * @return int
      */
-    private function insertData($data)
+    private function insertData(array $data)
     {
         $inserted = $this->getDb()->createCommand()->batchInsert(
             $this->getName(),
@@ -313,7 +315,13 @@ class ClientTable extends BaseObject
         return $inserted;
     }
 
-    protected function cleanUpMatchRow($row)
+    /**
+     * Clean Up matching Rows
+     *
+     * @param array $row
+     * @return array
+     */
+    protected function cleanUpMatchRow(array $row)
     {
         $data = [];
         foreach ($row as $key => $item) {
@@ -327,7 +335,13 @@ class ClientTable extends BaseObject
         return $data;
     }
 
-    protected function cleanUpBatchInsertFields($fields)
+    /**
+     * Clean Up Batch Insert Fields
+     *
+     * @param array $fields
+     * @return array
+     */
+    protected function cleanUpBatchInsertFields(array $fields)
     {
         $data = [];
         foreach ($fields as $field) {

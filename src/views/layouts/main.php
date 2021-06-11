@@ -345,6 +345,7 @@ $this->beginPage()
                         <th><?= Admin::t('layout_debug_table_value'); ?></th>
                     </tr>
                     </thead>
+                    <tr><td>Version</td><td><?= Yii::$app->version; ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_luya_version'); ?>:</td><td><?= \luya\Boot::VERSION; ?></td></tr>
                     <tr><td>Vendor:</td><td><?= strftime("%c", Yii::$app->getPackageInstaller()->getTimestamp()); ?></td></tr>
                     <tr><td><?= Admin::t('layout_debug_id'); ?>:</td><td><?= Yii::$app->id ?></td></tr>
@@ -438,12 +439,11 @@ $this->beginPage()
         </div>
     </div>
     <div class="toasts-toast" ng-if="item.type != 'confirm'" style="transform: translateY(-{{ ($index * 100) }}%);">
-        <div class="alert" ng-click="item.close()" ng-class="{'alert-success': item.type == 'success', 'alert-danger': item.type == 'error', 'alert-warning': item.type == 'warning', 'alert-info': item.type == 'info'}">
+        <div class="alert text-white" ng-click="item.close()" ng-class="{'alert-success': item.type == 'success', 'alert-danger': item.type == 'error', 'alert-warning': item.type == 'warning', 'alert-info': item.type == 'info'}">
             <i class="material-icons toasts-toast-icon" ng-show="item.type == 'success'">check_circle</i>
             <i class="material-icons toasts-toast-icon" ng-show="item.type == 'error'">error_outline</i>
             <i class="material-icons toasts-toast-icon" ng-show="item.type == 'warning'">warning</i>
             <i class="material-icons toasts-toast-icon" ng-show="item.type == 'info'">info_outline</i>
-            <i class="material-icons toasts-toast-close" ng-click="item.close()">close</i>
             <span>{{item.message}}</span>
         </div>
     </div>

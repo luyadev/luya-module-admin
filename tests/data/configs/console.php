@@ -14,6 +14,7 @@ return [
     'modules' => [
         'admin' => [
             'class' => 'luya\admin\Module',
+            'queueMutexClass' => 'yii\mutex\FileMutex',
         ],
         'crudmodulefolderadmin' => [
             'class' => 'admintests\data\modules\crudmodulefolder\admin\Module',

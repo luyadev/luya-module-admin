@@ -170,7 +170,7 @@ zaa.directive("luyaSchedule", function() {
             var minSpace = 300;
 
             // The max width of the modal, defined in the scss component inlinemodal
-            var maxWidth = 1100;
+            var maxWidth = 1000;
 
             // Get the button position and align the modal to the right if
             // it hast at least "minSpaceRight" spacing to the right
@@ -267,7 +267,7 @@ zaa.directive("luyaSchedule", function() {
         template: function () {
             return '<div class="scheduler" ng-class="{\'inlinemodal--open\' : isVisible}">'+
                         '<button ng-click="toggleWindow()" type="button" class="scheduler-btn btn btn-link">' +
-                            '<i class="material-icons">timelapse</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
+                            '<i class="material-icons">schedule</i><span ng-hide="onlyIcon">{{valueToLabel(value)}}</span>' +
                         '</button>' +
                         '<div class="inlinemodal" style="display: none;" ng-class="modalPositionClass" zaa-esc="escModal()">' +
                             '<div class="inlinemodal-inner">' +

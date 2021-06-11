@@ -9,7 +9,6 @@ use yii\helpers\Html;
 use luya\Exception;
 use luya\admin\helpers\I18n;
 use luya\helpers\ArrayHelper;
-use luya\helpers\StringHelper;
 use luya\admin\base\TypesInterface;
 use luya\admin\helpers\Angular;
 
@@ -328,6 +327,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nFieldEncode($value)
     {
+        trigger_error('deprecated, use I18n::encode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::encode($value);
     }
     
@@ -343,6 +343,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nFieldDecode($value, $onEmptyValue = '')
     {
+        trigger_error('deprecated, use I18n::decode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::decode($value, $onEmptyValue);
     }
     
@@ -357,6 +358,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function i18nDecodedGetActive(array $fieldValues)
     {
+        trigger_error('deprecated, use I18n::findActive instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::findActive($fieldValues);
     }
     
@@ -373,41 +375,6 @@ abstract class Plugin extends Component implements TypesInterface
     public function createTag($name, $content, array $options = [])
     {
         return Html::tag($name, $content, $options);
-    }
-
-    /**
-     * Extract the context attribute name from the ngModel and replace with given $field name.
-     *
-     * If an empty field value is provided no content will be returned.
-     *
-     * @param string $ngModel Context like `data.create.fieldname` or `data.update.fieldname`.
-     * @param string $field The new field name to replace with the context field name.
-     * @return string Returns the string with the name field name like `data.create.$field`.
-     * @since 1.2.0
-     */
-    protected function replaceFieldFromNgModelContext($ngModel, $field)
-    {
-        if (empty($field)) {
-            return;
-        }
-
-        // get all keys
-        $parts = explode(".", $ngModel);
-        end($parts);
-        $key = key($parts);
-        // old last $field name
-        $oldField = $parts[$key];
-        if (StringHelper::endsWith($oldField, ']')) {
-            // its an i18n field which has ['en'] suffix, we should extra this and add to $field
-            if (preg_match('/\[.*\]/', $oldField, $matches) === 1) {
-                $field .= $matches[0];
-            }
-        }
-
-        // replace the last key with the new fieldname
-        $parts[$key] = $field;
-        
-        return implode(".", $parts);
     }
 
     /**
@@ -429,26 +396,18 @@ abstract class Plugin extends Component implements TypesInterface
     }
     
     /**
-     * Get the ng-show condition from a given ngModel context.
-     *
-     * Evaluates the ng-show condition from a given ngModel context. A condition like
-     * `{field} == true` would return `data.create.field == true`.
-     *
-     * @param string $ngModel The ngModel to get the context informations from.
-     * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
-     * @since 1.2.0
-     */
+      * Get the ng-show condition from a given ngModel context.
+      *
+      * Evaluates the ng-show condition from a given ngModel context. A condition like
+      * `{field} == true` would return `data.create.field == true`.
+      *
+      * @param string $ngModel The ngModel to get the context informations from.
+      * @return string Returns the condition with replaced field context like `data.create.fieldname == 0`
+      * @since 1.2.0
+      */
     public function getNgShowCondition($ngModel)
     {
-        preg_match_all('/{(.*?)}/', $this->condition, $matches, PREG_SET_ORDER);
-        $search = [];
-        $replace = [];
-        foreach ($matches as $match) {
-            $search[] = $match[0];
-            $replace[] = $this->replaceFieldFromNgModelContext($ngModel, $match[1]);
-        }
-        
-        return str_replace($search, $replace, $this->condition);
+        return Angular::variablizeContext($ngModel, $this->condition, false);
     }
     
     /**

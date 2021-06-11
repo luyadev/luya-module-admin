@@ -9,7 +9,7 @@ use luya\admin\models\Tag;
  *
  * This trait can be assigned in order to read the tag data for an ActiveRecord model.
  *
- * See {{luya\admin\aws\TagActiveWindow}} in order to atach the TagActiveWindow.
+ * See {{luya\admin\aws\TaggableActiveWindow}} order to atach the TagActiveWindow.
  *
  * When the TagsTrait is attached to an {{luya\admin\ngrest\base\NgRestModel}} use the trait as below:
  *
@@ -29,6 +29,15 @@ use luya\admin\models\Tag;
  * foreach (News::find()->with(['tags'])->all() as $news) {
  *     var_dump($news->tags);
  * }
+ * ```
+ *
+ * To get all records with one or more tags matching:
+ * ```php
+ * $matchTags = [1, 2, 3];
+ * Model::find()
+ *     ->joinWith(['tags'])
+ *     ->andWhere(['in', 'tag_id', $matchTags])
+ *     ->all();
  * ```
  *
  * @author Basil Suter <basil@nadar.io>

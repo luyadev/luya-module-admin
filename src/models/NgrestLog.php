@@ -7,6 +7,8 @@ use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\behaviors\JsonBehavior;
+use luya\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 /**
  * Ngrest Log.
@@ -23,7 +25,7 @@ use luya\behaviors\JsonBehavior;
  * @property string $pk_value
  * @property string $table_name
  * @property tinyint $is_delete
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */
@@ -98,7 +100,7 @@ class NgrestLog extends NgRestModel
     {
         return [
             'user_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getUser(),
                 'relation' => 'user',
                 'labelField' => 'firstname,lastname'
@@ -125,7 +127,7 @@ class NgrestLog extends NgRestModel
             return false;
         }
         
-        return $oldValue;  
+        return $oldValue;
     }
 
     /**
@@ -145,7 +147,37 @@ class NgrestLog extends NgRestModel
     public function ngRestActiveWindows()
     {
         return [
-            ['class' => DetailViewActiveWindow::class],
+            [
+                'class' => DetailViewActiveWindow::class,
+                'attributes' => [
+                    [
+                        'attribute' => 'user_id',
+                        'value' => function($model) {
+                            return $model->user->email;
+                        }
+                    ],
+                    'timestamp_create:datetime',
+                    'route',
+                    'api',
+                    [
+                        'attribute' => 'attributes_json',
+                        'value' => function($model) {
+                            return VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json));
+                        }
+                    ],
+                    [
+                        'attribute' => 'attributes_diff_json',
+                        'value' => function($model) {
+                            return VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json));
+                        }
+                    ],
+                    'table_name:raw',
+                    'pk_value:raw',
+                    'is_updated:boolean',
+                    'is_insert:boolean',
+                    'is_delete:boolean',
+                ]
+            ],
         ];
     }
 
@@ -157,5 +189,18 @@ class NgrestLog extends NgRestModel
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestExport()
+    {
+        return [
+            'timestamp_create' => 'datetime',
+            'is_update' => 'boolean',
+            'is_insert' => 'boolean',
+            'is_delete' => 'boolean',
+        ];
     }
 }

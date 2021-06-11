@@ -666,8 +666,10 @@ zaa.directive("collapseContainer", [function() {
  * If modelSelection and modelSetter is enabled, you can select a given row based in its primary key which will triggered the ngrest of the parent CRUD form.
  *
  * ```
- * <crud-loader api="admin/api-admin-proxy" alias="Name of the CRUD Active Window"></crud-loader>
+ * <crud-loader api="forms/form/index" alias="Name of the CRUD Active Window"></crud-loader>
  * ```
+ * 
+ * > It actuall does not take the api endpoint, because it needs to render all the html and therfore the api parameter takes the ngrest controller route like `<module>/<apicontroller>/index`.
  */
 zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
     return {
@@ -704,14 +706,18 @@ zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
                         $scope.input.showWindow = false;
                     });
                 } else {
-                    $scope.$parent.loadService();
+                    if (typeof $scope.$parent.loadService == 'function') {
+                        $scope.$parent.loadService();
+                    }
                     $scope.input.showWindow = true;
                 }
             };
 
             $scope.$watch('input.showWindow', function (n, o) {
                 if (n !== o && n == 1) {
-                    $scope.$parent.loadService();
+                    if (typeof $scope.$parent.loadService == 'function') {
+                        $scope.$parent.loadService();
+                    }
                 }
             });
 
@@ -1001,7 +1007,7 @@ zaa.directive("zaaTagArray", function() {
 });
 
 /**
- * <zaa-link model="linkinfo" />
+ * <zaa-link model="linkinfo"></zaa-link>
  */
 zaa.directive("zaaLink", ['$filter', function ($filter) {
     return {
@@ -1292,7 +1298,7 @@ zaa.directive("zaaDecimal", function () {
 });
 
 /**
- * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>" />
+ * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
  */
 zaa.directive("zaaText", function () {
     return {
@@ -1369,7 +1375,7 @@ zaa.directive("zaaAsyncValue", function () {
  * Can be used to just fetch a value from an api async.
  *
  * ```
- * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]" />
+ * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]"></async-value>
  * ```
  *
  * @since 1.2.2
@@ -1446,7 +1452,7 @@ zaa.directive("zaaPassword", function () {
 });
 
 /**
- * <zaa-radio model="model" options="[{label:'foo', value: 'bar'}, {...}]">
+ * <zaa-radio model="model" options="[{label:'foo', value: 'bar'}, {...}]"></zaa-radio>
  */
 zaa.directive("zaaRadio", function () {
     return {
@@ -1497,22 +1503,22 @@ zaa.directive("zaaRadio", function () {
  *
  * ```js
  * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules" />
-    * ```
-    *
-    * If an initvalue is provided, you can not reset the model to null.
-    *
-    * Options value definition:
-    *
-    * ```js
-    * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
-    * ```
-    *
-    * In order to change the value and label keys which should be used to take the value and label keys within the given array use:
-    *
-    * ```js
-    * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id" />
-    * ```
-    */
+ * ```
+ *
+ * If an initvalue is provided, you can not reset the model to null.
+ *
+ * Options value definition:
+ *
+ * ```js
+ * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
+ * ```
+ *
+ * In order to change the value and label keys which should be used to take the value and label keys within the given array use:
+ *
+ * ```js
+ * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id"></zaa-select>
+ * ```
+ */
 zaa.directive("zaaSelect", function () {
     return {
         restrict: "E",
@@ -1524,7 +1530,8 @@ zaa.directive("zaaSelect", function () {
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
-            "initvalue": "@initvalue"
+            "initvalue": "@initvalue",
+            "clearable" : "<",
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
             if ($scope.optionsvalue == undefined) {
@@ -1533,6 +1540,10 @@ zaa.directive("zaaSelect", function () {
             if ($scope.optionslabel == undefined) {
                 $scope.optionslabel = 'label';
             }
+
+            if ($scope.clearable == undefined) {
+                $scope.clearable = true;
+            }
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -1540,7 +1551,91 @@ zaa.directive("zaaSelect", function () {
                     '<label for="{{id}}">{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side">'+
-                    '<luya-select ng-model="model" options="options" id="{{id}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
+                    '<luya-select ng-model="model" options="options" id="{{id}}" clearable="clearable" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
+                '</div>' +
+            '</div>';
+        }
+    }
+});
+
+/**
+ * Select form based on API Request
+ */
+zaa.directive("zaaAsyncApiSelect", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "api":"@api",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid",
+            "initvalue": "@initvalue",
+        },
+        controller: ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+            $scope.options = [];
+            if ($scope.optionsvalue == undefined) {
+                $scope.optionsvalue = 'id';
+            }
+            if ($scope.optionslabel == undefined) {
+                $scope.optionslabel = 'title';
+            }
+
+            $scope.$watch('api', function(apiUrl) {
+                $http.get(apiUrl).then(function(value) {
+                    const items = [];
+                    angular.forEach(value.data, function (item) {
+                        items.push({
+                            label: item[$scope.optionslabel],
+                            value: item[$scope.optionsvalue]
+                        })
+                    });
+                    $scope.options = items;
+                })
+            })
+        }],
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                    '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">'+
+                    '<luya-select ng-model="model" options="options" id="{{id}}" initvalue="{{initvalue}}"></luya-select>' +
+                '</div>' +
+            '</div>';
+        }
+    }
+});
+
+/**
+ * A selection based on a CRUD view.
+ * 
+ * <zaa-select-crud options={'route': 'module/controller/index', 'api':'admin/api-module-controller', 'fields':['id','title']}></zaa-select-crud>
+ * 
+ * @since 3.7.0
+ */
+zaa.directive("zaaSelectCrud", function() {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=",
+            "options": "=",
+            "api":"@api",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid",
+            "initvalue": "@initvalue"
+        },
+        template: function () {
+            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                '<div class="form-side form-side-label">' +
+                    '<label for="{{id}}">{{label}}</label>' +
+                '</div>' +
+                '<div class="form-side">'+
+                    '<async-value model="model" api="{{options.api}}" fields="options.fields"></async-value>' + 
+                    '<crud-loader api="{{options.route}}" model-setter="model" model-selection="1" alias="{{label}}"></crud-loader>' +
                 '</div>' +
             '</div>';
         }
@@ -1557,6 +1652,7 @@ zaa.directive("luyaSelect", function() {
             "optionslabel": "@optionslabel",
             "id": "@fieldid",
             "initvalue": "@initvalue",
+            "clearable": "<",
             ngChange : "&"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
@@ -1570,6 +1666,8 @@ zaa.directive("luyaSelect", function() {
             if ($scope.optionslabel == undefined || $scope.optionslabel == "") {
                 $scope.optionslabel = 'label';
             }
+
+            
 
             if (angular.isNumber($scope.model)) {
                 $scope.model = typeCastValue($scope.model);
@@ -1595,9 +1693,11 @@ zaa.directive("luyaSelect", function() {
                             $scope.model = $scope.initvalue;
                         }
                     }
-
-                    
                 });
+
+                if ($scope.clearable == undefined) {
+                    $scope.clearable = true;
+                }
             });
 
             /* methods */
@@ -1657,7 +1757,7 @@ zaa.directive("luyaSelect", function() {
                         '</select>' +
                         '<div class="zaaselect-selected">' +
                             '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
-                            '<i class="material-icons zaaselect-clear-icon" ng-click="setModelValue(initvalue)">clear</i>' +
+                            '<i class="material-icons zaaselect-clear-icon" ng-show="clearable" ng-click="setModelValue(initvalue)">clear</i>' +
                             '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
                         '</div>' +
                         '<div class="zaaselect-dropdown">' +
@@ -1809,15 +1909,16 @@ zaa.directive("zaaCheckboxArray", function () {
                 '</div>' +
                 '<div class="form-side">' +
 
-                '<div class="input-group mb-3">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">' +
-                '<i class="material-icons">search</i>' +
-                '</div>' +
-                '</div>' +
-                '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
-
-                '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
+                '<div class="position-relative mb-3">' +
+                    '<div class="input-group">' +
+                        '<div class="input-group-prepend">' +
+                            '<div class="input-group-text">' +
+                                '<i class="material-icons">search</i>' +
+                            '</div>' +
+                        '</div>' +
+                        '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
+                    '</div>' +
+                    '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
                 '</div>' +
 
                 '<div class="form-check" ng-repeat="(k, item) in optionitems track by k">' +
@@ -1947,7 +2048,7 @@ zaa.directive("zaaDatetime", function () {
                 '<label>{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side form-inline datepicker-wrapper">' +
-                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<datepicker class="input-group input-group--append-clickable" date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
                 '<div class="input-group-text">' +
@@ -1958,16 +2059,13 @@ zaa.directive("zaaDatetime", function () {
                 '</datepicker>' +
                 '<div ng-show="model!=null && date!=null" class="hour-selection">' +
                 '<div class="input-group">' +
-                    '<div class="input-group-prepend align-items-center">' +
-                        '<i class="material-icons pr-2">access_time</i>' +
-                    '</div>' +
                     '<input class="form-control zaa-datetime-hour-input" type="text" ng-model="hour" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '<div class="input-group">' +
                 '<div class="input-group-prepend zaa-datetime-time-colon">' +
                 '<div class="input-group-text">:</div>' +
                 '</div>' +
-                '<input class="form-control zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
+                '<input class="form-control form-control--force-border zaa-datetime-minute-input" type="text" ng-model="min" ng-change="autoRefactor()" />' +
                 '</div>' +
                 '</div>' +
                 '<div ng-show="model && getIsResetable()"><button type="button" ng-click="reset()" class="ml-2 btn btn-icon btn-cancel"></nutton></div>' +
@@ -2062,8 +2160,8 @@ zaa.directive("zaaDate", function () {
                 '<div class="form-side form-side-label">' +
                 '<label>{{label}}</label>' +
                 '</div>' +
-                '<div class="form-side datepicker-wrapper">' +
-                '<datepicker date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
+                '<div class="form-side form-inline datepicker-wrapper">' +
+                '<datepicker class="input-group input-group--append-clickable" date-set="{{pickerPreselect.toString()}}" date-week-start-day="1" datepicker-toggle="false" datepicker-show="{{datePickerToggler}}" date-format="dd.MM.yyyy">' +
                 '<input class="form-control datepicker-date-input" ng-model="date" type="text" ng-focus="openDatePicker()" />' +
                 '<div class="input-group-append" ng-click="toggleDatePicker()">' +
                 '<div class="input-group-text">' +
@@ -2265,6 +2363,12 @@ zaa.directive("zaaImageUpload", function () {
     }
 });
 
+/**
+ * options: {
+ *     description: true/false,
+ *     filter: true/false
+ * }
+ */
 zaa.directive("zaaImageArrayUpload", function () {
     return {
         restrict: "E",
@@ -2320,6 +2424,22 @@ zaa.directive("zaaImageArrayUpload", function () {
                 }
                 return false;
             };
+
+            $scope.isDescriptionEnabled = function() {
+                if ($scope.options && $scope.options.hasOwnProperty('description')) {
+                    return $scope.options.description
+                }
+
+                return true;
+            }
+
+            $scope.noFiltersOption = function() {
+                if ($scope.options && $scope.options.hasOwnProperty('filter')) {
+                    return !$scope.options.filter
+                }
+
+                return false;
+            }
         }],
         template: function () {
             return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -2330,24 +2450,24 @@ zaa.directive("zaaImageArrayUpload", function () {
                 '<div class="list zaa-file-array-upload">' +
                 '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
                 '<div ng-repeat="(key,image) in model track by key" class="list-item">' +
-                '<div class="list-section">' +
-                '<div class="list-left">' +
-                '<storage-image-upload ng-model="image.imageId" options="options"></storage-image-upload>' +
-                '</div>' +
-                '<div class="list-right">' +
-                '<div class="form-group">' +
-                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
-                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="list-buttons">' +
-                '<div class="btn-group" role="group">' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
-                '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
-                '</div>' +
-                '</div>' +
+                    '<div class="list-section">' +
+                        '<div class="list-left">' +
+                            '<storage-image-upload ng-model="image.imageId" options="{no_filter: noFiltersOption()}"></storage-image-upload>' +
+                        '</div>' +
+                        '<div class="list-right" ng-show="isDescriptionEnabled()">' +
+                            '<div class="form-group">' +
+                                '<label for="{{image.id}}">' + i18n['js_dir_image_description'] + '</label>' +
+                                '<textarea ng-model="image.caption" id="{{image.id}}" class="zaa-file-array-upload-description form-control" auto-grow></textarea>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="list-buttons">' +
+                        '<div class="btn-group" role="group">' +
+                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveUp(key)" ng-if="key > 0"><i class="material-icons">keyboard_arrow_up</i></button>' +
+                            '<button type="button" class="btn btn-sm btn-outline-info" ng-click="moveDown(key)" ng-if="showDownButton(key)"><i class="material-icons">keyboard_arrow_down</i></button>' +
+                            '<button type="button" class="btn btn-sm btn-outline-danger" ng-click="remove(key)"><i class="material-icons">remove</i></button>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<button ng-click="add()" type="button" class="btn btn-sm btn-success list-add-button"><i class="material-icons">add</i></button>' +
                 '</div>' +
@@ -2543,7 +2663,7 @@ zaa.directive("zaaMultipleInputs", function () {
  * Generates a json OBJECT (!) with a key and a value for the given key. Its like a flat json.
  *
  * ```js
- * <zaa-json-object model="mymodel" label="Key Value Input" />
+ * <zaa-json-object model="mymodel" label="Key Value Input"></zaa-json-object>
  * ```
  * @since 2.0.3
  */
@@ -2584,8 +2704,8 @@ zaa.directive("zaaJsonObject", function () {
                 '<div class="list zaa-json-array">' +
                 '<div ng-repeat="(key,value) in model" class="list-item">' +
                 '<div class="input-group">' +
-                '<div class="input-group-prepend">' +
-                '<div class="input-group-text">{{key}}</div>' +
+                '<div class="input-group-prepend border-right">' +
+                '<div class="input-group-text text-muted">{{key}}</div>' +
                 '</div>' +
                 '<input class="form-control" type="text" ng-model="model[key]" />' +
                 '</div>' +
@@ -2595,10 +2715,10 @@ zaa.directive("zaaJsonObject", function () {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="input-group">' +
+                '<div class="input-group input-group--append-clickable">' +
                     '<input type="text" class="form-control" placeholder="'+i18n['js_jsonobject_newkey']+'" aria-label="'+i18n['js_jsonobject_newkey']+'" ng-model="newKey">' +
                     '<div class="input-group-append">' +
-                        '<button class="btn btn-sm btn-success" type="button" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></button>' +
+                        '<div class="input-group-text" ng-click="add(newKey);newKey=null;"><i class="material-icons">add</i></div>' +
                     '</div>' +
                 '</div>'+
                 '</div>' +
@@ -2715,18 +2835,7 @@ zaa.directive('storageFileDisplay', function () {
         scope: {
             fileId: '@fileId'
         },
-        controller: ['$scope', '$filter', 'ServiceFilesData', function ($scope, $filter, ServiceFilesData) {
-
-            // ServiceFilesData inheritance
-
-            /*
-            $scope.filesData = ServiceFilesData.data;
-
-            $scope.$on('service:FilesData', function(event, data) {
-                $scope.filesData = data;
-            });
-            */
-
+        controller: ['$scope', '$filter', 'ServiceFilesData', function ($scope, $filter, ServiceFilesData) { 
             // controller
 
             $scope.fileId = 0;
@@ -2763,11 +2872,19 @@ zaa.directive('storageImageCrudList', function () {
                 if (n != o) {
                     $scope.imageSrc = null;
                 }
+
+                if (n) {
+                    $scope.evaluateImages();
+                }
             });
 
             $scope.$on('requestImageSourceReady', function () {
+                $scope.evaluateImages();
+            });
+
+            $scope.evaluateImages = function() {
                 // now access trough getImage of images service
-                if ($scope.imageId != 0) {
+                if ($scope.imageId != 0 && !$scope.imageSrc) {
                     ServiceImagesData.getImage($scope.imageId).then(function (response) {
                         if (response.tinyCropImage) {
                             $scope.imageSrc = response.tinyCropImage.source;
@@ -2781,10 +2898,10 @@ zaa.directive('storageImageCrudList', function () {
                         }
                     });
                 }
-            });
+            };
         }],
         template: function () {
-            return '<div ng-show="imageSrc"><img ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid" /></div>';
+            return '<img ng-show="imageSrc" ng-src="{{imageSrc}}" alt="{{imageSrc}}" class="img-fluid rounded border" />';
         }
     }
 });
@@ -2878,6 +2995,10 @@ zaa.directive('storageFileUpload', function () {
  * + fileId watcher applys filter
  * + filter can not find a file for id 0
  * + ngModel set to 0
+ * 
+ * options: {
+ *    no_filter: true/false
+ * }
  */
 zaa.directive('storageImageUpload', function () {
     return {
@@ -3294,6 +3415,7 @@ zaa.directive("storageFileManager", function () {
                         $scope.searchPromise = $timeout(function () {
                             $scope.getFilesForCurrentPage().then(function () {
                                 $scope.searchLoading = false;
+                                cfpLoadingBar.complete()
                             });
                         }, 1000);
                     } else {
@@ -3412,15 +3534,21 @@ zaa.directive("storageFileManager", function () {
 
                 $scope.fileDetailFolder = false;
 
+                $scope.detailLoading = false
+
 
                 $scope.openFileDetail = function (file, force) {
                     if ($scope.fileDetail.id == file.id && force !== true) {
                         $scope.closeFileDetail();
                     } else {
-
+                        cfpLoadingBar.start();
+                        $scope.detailLoading = true;
                         ServiceFilesData.getFile(file.id, force).then(function (responseFile) {
                             $scope.fileDetailFull = responseFile;
                             $scope.fileDetailFolder = $scope.foldersData[responseFile.folder_id];
+                            $scope.detailLoading = false
+                            cfpLoadingBar.complete()
+                            
                         }, function () {
 
                         });

@@ -5,7 +5,7 @@ namespace luya\admin\aws;
 use luya\admin\ngrest\base\ActiveWindow;
 
 /**
- * Diplay Detail from ActiveRecord.
+ * Display details from ActiveRecord.
  *
  * This ActiveWindow uses the {{yii\widgets\DetailView}} Widget in order to display the data.
  *
@@ -15,11 +15,22 @@ use luya\admin\ngrest\base\ActiveWindow;
  * public function ngRestActiveWindows()
  * {
  *     return [
- *         ['class' => 'luya\admin\aws\DetailViewActiveWindow', 'attributes' => [
- *             'title', // nothing define will use `text`
- *             'description:html', // renders html tags
- *             'timestamp:datetime', // unix timetsamp to readable date
- *             'description:text:My Description' // Changes the label to `My Description`
+ *         [
+ *              'class' => 'luya\admin\aws\DetailViewActiveWindow', 
+ *              'attributes' => [
+ *                  'title', // nothing define will use `text`
+ *                  'description:html', // renders html tags
+ *                  'timestamp:datetime', // unix timetsamp to readable date
+ *                  'description:text:My Description' // Changes the label to `My Description`,
+ *                  // using a function to generated custom content
+ *                  [
+ *                       'label' => 'cli',
+ *                       'format' => 'html',
+ *                       'value' => function($model) {
+ *                           return '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '<code>';
+ *                       }
+ *                   ]
+ *               ],
  *         ]]
  *     ];
  * }
@@ -48,7 +59,7 @@ use luya\admin\ngrest\base\ActiveWindow;
 class DetailViewActiveWindow extends ActiveWindow
 {
     /**
-     * @var string The name of the module where the active windows is located in order to finde the view path.
+     * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
     
@@ -86,6 +97,18 @@ class DetailViewActiveWindow extends ActiveWindow
      *   Please refer to [[\yii\helpers\BaseHtml::renderTagAttributes()]] for the supported syntax.
      */
     public $attributes;
+
+    /**
+     * @var string A text (can include html) which shown before the detail view table.
+     * @since 4.0.0
+     */
+    public $intro;
+
+    /**
+     * @var string A text (can include html) which shown after the detail view table.
+     * @since 4.0.0
+     */
+    public $outro;
     
     /**
      * @inheritdoc
@@ -111,6 +134,8 @@ class DetailViewActiveWindow extends ActiveWindow
     public function index()
     {
         return $this->render('index', [
+            'intro' => $this->intro,
+            'outro' => $this->outro,
             'model' => $this->model,
             'attributes' => $this->attributes,
         ]);

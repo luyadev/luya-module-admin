@@ -8,6 +8,7 @@ use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Storage Image.
@@ -17,7 +18,9 @@ use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
  * @property integer $filter_id
  * @property integer $resolution_width
  * @property integer $resolution_height
- * 
+ * @property integer $created_at
+ * @property integer $updated_at
+ *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -37,6 +40,18 @@ class StorageImage extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'api-admin-storageimage';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+            ]
+        ];
     }
 
     /**
@@ -60,7 +75,7 @@ class StorageImage extends NgRestModel
     {
         return [
             [['file_id'], 'required'],
-            [['file_id', 'filter_id', 'resolution_width', 'resolution_height'], 'integer'],
+            [['file_id', 'filter_id', 'resolution_width', 'resolution_height', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -101,13 +116,13 @@ class StorageImage extends NgRestModel
         return [
             'id' => 'number',
             'file_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getFile(),
                 'relation' => 'file',
                 'labelField' => 'name_original'
             ],
             'filter_id' => [
-                'class' => SelectRelationActiveQuery::class, 
+                'class' => SelectRelationActiveQuery::class,
                 'query' => $this->getFilter(),
                 'relation' => 'filter',
                 'labelField' => 'name'
@@ -134,8 +149,8 @@ class StorageImage extends NgRestModel
     public function ngRestFullQuerySearch($query)
     {
         return parent::ngRestFullQuerySearch($query)
-     		->joinWith(['file', 'filter'])
-     		->orFilterWhere([
+             ->joinWith(['file', 'filter'])
+             ->orFilterWhere([
                  'or',
                  ['like', 'name_original', $query],
                  ['like', 'name_new_compound', $query],
@@ -154,7 +169,7 @@ class StorageImage extends NgRestModel
 
     /**
      * Get Storage Filter.
-     * 
+     *
      * @return StorageFilter
      * @since 3.2.0
      */
@@ -272,7 +287,7 @@ class StorageImage extends NgRestModel
 
     /**
      * Delete the source of this image.
-     * 
+     *
      * @return boolean
      */
     public function deleteSource()

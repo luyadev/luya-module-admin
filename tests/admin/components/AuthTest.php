@@ -9,9 +9,9 @@ class AuthTest extends AdminTestCase
 {
     public $auth;
 
-    public function setUp()
+    public function afterSetup()
     {
-        parent::setUp();
+        parent::afterSetup();
 
         $this->auth = new Auth();
     }

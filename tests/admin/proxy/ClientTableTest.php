@@ -25,7 +25,7 @@ class ClientTableTest extends AdminConsoleTestCase
         $table = new ClientTableMock($build, ['name' => 'temp_synctest', 'rows' => 0]);
     
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('#Connection lost. Server has gone away?#');
+        $this->expectExceptionMessageMatches('#Connection lost. Server has gone away?#');
         $table->syncData();
     }
 }

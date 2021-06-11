@@ -724,8 +724,8 @@ abstract class BaseFileSystemStorage extends Component
         $resolution = Storage::getImageResolution($tempFile);
         // now copy the file to the storage system
         $this->fileSystemSaveFile($tempFile, $fileName);
-        unlink($tempFile);
-        unlink($fromTempFile);
+        FileHelper::unlink($tempFile);
+        FileHelper::unlink($fromTempFile);
 
         $this->flushImageArray();
 
@@ -767,7 +767,7 @@ abstract class BaseFileSystemStorage extends Component
                 ->select(['folder.id', 'name', 'parent_id', 'timestamp_create', 'COUNT(file.id) filesCount'])
                 ->where(['folder.is_deleted' => false])
                 ->orderBy(['name' => SORT_ASC, 'parent_id' => SORT_ASC])
-                ->leftJoin('{{%admin_storage_file}} as file', 'folder.id=file.folder_id AND file.is_deleted = 0')
+                ->leftJoin('{{%admin_storage_file}} as file', 'folder.id=file.folder_id AND file.is_deleted = :deleted', [':deleted' => false])
                 ->groupBy(['folder.id'])
                 ->indexBy(['id']);
             $this->_foldersArray = $this->getQueryCacheHelper($query, self::CACHE_KEY_FOLDER);

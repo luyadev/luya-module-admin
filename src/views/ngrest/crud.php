@@ -14,6 +14,12 @@ use yii\helpers\Markdown;
 $this->beginPage();
 $this->beginBody();
 
+
+$groups = [];
+
+foreach ($config->getPointer('list') as $p) {
+    $groups[$p['name']] = $p['alias'];
+}
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
 $filters = Angular::optionsArrayInput($filters);
 ?>
@@ -27,6 +33,9 @@ $filters = Angular::optionsArrayInput($filters);
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
                 <modal is-modal-hidden="isExportModalHidden" modal-title="<?= Module::t('crud_exportdata_btn'); ?>">
                     <div ng-if="!isExportModalHidden">
+                        <?php if (!empty($filters)): ?>
+                        <?= Angular::select('exportdata.filter', Module::t('crud_exportdata_col_filter'), $filters); ?>
+                        <?php endif; ?>
                         <?= Angular::radio('exportdata.type', Module::t('crud_exportdata_col_format'), ['xlsx' => Module::t('crud_exportdata_col_format_xlsx'), 'csv' => Module::t('crud_exportdata_col_format_csv')]); ?>
                         <?php // Angular::radio('exportdata.header', Module::t('crud_exportdata_col_header'), [1 => Module::t('button_yes'), 0 => Module::t('button_no')]);?>
                         <?= Angular::checkboxArray('exportdata.attributes', Module::t('crud_exportdata_col_columns'), $downloadAttributes, ['preselect' => true]); ?>
@@ -112,27 +121,22 @@ $filters = Angular::optionsArrayInput($filters);
             <div class="tab-padded">
                 <div class="row mt-2">
                     <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div class="input-group-prepend" ng-hide="config.searchQuery">
+                        <div class="input-group input-group--append-clickable mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="material-icons">search</i>
                                 </div>
                             </div>
-                            <span class="input-group-prepend" ng-show="config.searchQuery" ng-click="config.searchQuery = ''">
+                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
+                            <span class="input-group-append" ng-if="config.searchQuery" ng-click="config.searchQuery = ''">
                                 <div class="input-group-text">
                                     <i class="material-icons">clear</i>
                                 </div>
                             </span>
-                            <input class="form-control" ng-model="config.searchQuery" type="text" placeholder="<?= Module::t('ngrest_crud_search_text'); ?>">
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
-                        <select class="form-control" ng-change="changeGroupByField()" ng-model="config.groupByField">
-                            <option value="0"><?= Module::t('ngrest_crud_group_prompt'); ?></option>
-                            <?php foreach ($config->getPointer('list') as $item): ?>
-                                <option value="<?= $item['name']; ?>"><?= $item['alias']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <luya-select ng-model="config.groupByField" initvalue="0" ng-change="changeGroupByField()" options='<?= Json::htmlEncode(Angular::optionsArrayInput($groups)); ?>'></luya-select>
                     </div>
                     <?php if (!empty($config->getFilters())): ?>
                     <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
@@ -201,7 +205,7 @@ $filters = Angular::optionsArrayInput($filters);
                                         <i class="crud-buttons-toggler material-icons">more_vert</i>
                                         <div class="crud-buttons-pan">
                                             <?php foreach ($this->context->getButtons() as $item): ?>
-                                                <button type="button" class="crud-buttons-button" ng-click="<?= $item['ngClick']; ?>">
+                                                <button type="button" class="crud-buttons-button" ng-show="<?= $item['ngShow']; ?>" ng-click="<?= $item['ngClick']; ?>">
                                                     <i class="crud-buttons-button-icon material-icons"><?= $item['icon']; ?></i>
                                                     <?php if (!empty($item["label"])): ?>
                                                         <span class="btn-crud-label"><?= $item["label"] ?></span>

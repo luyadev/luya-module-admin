@@ -193,4 +193,13 @@ interface TypesInterface
      * @since 2.0.3
      */
     const TYPE_JSON_OBJECT = 'zaa-json-object';
+
+    /**
+     * @var string A select based on an existing CRUD, therefore the route to the controller and the api must be declared.
+     * ```
+     * 'options' => ['route' => '<module>/<controller>/index', 'api' => 'admin/<api-endpoint-name>', 'fields' => ['title']]]
+     * ```
+     * @since 3.7.0
+     */
+    const TYPE_SELECT_CRUD = 'zaa-select-crud';
 }

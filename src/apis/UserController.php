@@ -28,7 +28,7 @@ class UserController extends Api
     
     /**
      * Profile
-     * 
+     *
      * Return informations about the current logged in user
      *
      * @return array
@@ -114,7 +114,7 @@ class UserController extends Api
 
     /**
      * Register 2FA Device
-     * 
+     *
      * Action to register new OTP device
      *
      * @return array
@@ -170,7 +170,7 @@ class UserController extends Api
 
     /**
      * Change Password
-     * 
+     *
      * A request including body params `newpass`, `oldpass`, `newpassrepeat`.
      *
      * @uses UserChangePassword
@@ -195,7 +195,7 @@ class UserController extends Api
     
     /**
      * Change E-Mail
-     * 
+     *
      * Action to change the email based on token input.
      *
      * @return boolean

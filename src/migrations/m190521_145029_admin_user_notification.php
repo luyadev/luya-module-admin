@@ -23,8 +23,8 @@ class m190521_145029_admin_user_notification extends Migration
             'updated_at' => $this->integer(),
         ]);
 
-        $this->createIndex('user_id', '{{%admin_user_auth_notification}}', ['user_id']);
-        $this->createIndex('auth_id', '{{%admin_user_auth_notification}}', ['auth_id']);
+        $this->createIndex('index_admin_user_auth_notification_user_id', '{{%admin_user_auth_notification}}', ['user_id']);
+        $this->createIndex('index_admin_user_auth_notification_auth_id', '{{%admin_user_auth_notification}}', ['auth_id']);
     }
 
     /**

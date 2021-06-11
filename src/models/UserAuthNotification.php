@@ -45,7 +45,8 @@ class UserAuthNotification extends ActiveRecord
     {
         return [
             [['user_id', 'auth_id'], 'required'],
-            [['user_id', 'auth_id', 'is_muted', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'auth_id', 'created_at', 'updated_at'], 'integer'],
+            [['is_muted'], 'boolean'],
             [['model_latest_pk_value', 'model_class'], 'string'],
         ];
     }

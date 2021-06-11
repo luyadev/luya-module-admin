@@ -543,4 +543,19 @@ return [
     'i18n_required_validator_invalid_format' => 'Das Attribut \"{attribute}\" muss vom Typ Array sein.',
     'i18n_required_validator_missing_key' => 'Der Sprach-Key \"{lang}\" ist erforderlich.',
     'i18n_required_validator_invalid_empty_value' => 'Der Wert für die Sprache \"{lang}\" kann nicht leer sein.',
+    'crud_exportdata_col_filter' => 'Filter',
+
+// 3.7.0
+
+    'menu_system_item_property' => 'Properties',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+
+// 4.0.0
+
+    'disabled_login_text' => 'Das Anmeldeformular ist derzeit aufgrund von Wartungsarbeiten deaktiviert. Bitte versuchen Sie es später erneut.',
+    'button_save_and_close' => 'Speichern und schliessen',
+    'button_create_and_close' => 'Erstellen und schliesen',
+    'button_create' => 'Erstellen',
+    'button_cancel' => 'Abbrechen',
+    'button_create_and_new' => 'Erstellen und neu',
 ];

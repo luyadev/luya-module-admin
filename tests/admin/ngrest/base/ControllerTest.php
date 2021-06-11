@@ -15,13 +15,11 @@ class ControllerTest extends AdminModelTestCase
 
     public function testIndex()
     {
-        
         PermissionScope::run($this->app, function (PermissionScope $scope) {
             $fixture = new NgRestModelFixture([
                 'modelClass' => User::class,
             ]);
 
-            $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
     
             $scope->createAndAllowApi(User::ngRestApiEndpoint());
             $scope->loginUser();

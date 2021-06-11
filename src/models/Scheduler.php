@@ -71,7 +71,16 @@ class Scheduler extends \yii\db\ActiveRecord
     public function triggerJob()
     {
         $class = $this->model_class;
-        $model = $class::ngRestFind()->byPrimaryKey($this->primary_key)->one();
+
+        $model = new $class();
+
+        if ($model instanceof NgRestModelInterface) {
+            $find = $class::ngRestFind()->byPrimaryKey($this->primary_key);
+        } else {
+            $find = $class::find()->andWhere(['id' => $this->primary_key]);
+        }
+
+        $model = $find->select(array_merge($class::primaryKey(), [$this->target_attribute_name]))->one();
 
         if ($model) {
             $oldValue = $model->{$this->target_attribute_name};
@@ -88,7 +97,8 @@ class Scheduler extends \yii\db\ActiveRecord
     }
 
     /**
-     * Ensure if the given class is an ngrest model and permission exists.
+     * Ensure if the given class is an ngrest model and permission exists. If its not
+     * an ngrest model, there is no permission system and trigger permission is granted (@since 4.0)
      *
      * @param string $class
      * @return boolean
@@ -98,7 +108,7 @@ class Scheduler extends \yii\db\ActiveRecord
         $model = new $class();
 
         if (!$model instanceof NgRestModelInterface) {
-            return false;
+            return true;
         }
 
         return Yii::$app->adminmenu->getApiDetail($class::ngRestApiEndpoint());

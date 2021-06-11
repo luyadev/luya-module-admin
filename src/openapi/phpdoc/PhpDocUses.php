@@ -4,7 +4,7 @@ namespace luya\admin\openapi\phpdoc;
 
 /**
  * Uses PhpDoc Annotation Parser
- * 
+ *
  * @since 3.3.0
  * @author Basil Suter <git@nadar.io>
  */

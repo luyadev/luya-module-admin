@@ -204,7 +204,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Set the old json value from a i18n database value.
-     * 
+     *
      * This method is used when the ngrest plugins are overiding the values from the database. Therefore the original database
      * values can be stored here in order to retrieve those informations in later stage. f.e. when accessing language values for another
      * language the current application language
@@ -305,13 +305,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
 
     /**
      * Returns the value of an i18n attribute for the given language.
-     * 
+     *
      * This method is commonly used in order to retrieve a value for a given language even though
      * the application language is different.
      *
      * @param string $attributeName The name of the attribute to find the value.
      * @param string $language The language short code.
-     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database. 
+     * @param boolean $raw If enabled the value will not be parsed through the assigned ngRestAttribute plugin and just returns the raw value from the database.
      * @return mixed|null Returns the value, either raw or converted trough the assigned plugin. If the language is not found (maybe not set already) null is returned.
      * @since 3.5.2
      */
@@ -897,6 +897,46 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return [];
     }
     
+    /**
+     * Format the values for export generator.
+     *
+     * When exporting data, it might be convient to format certain values, by default the {{luya\components\Formatter}} will be used. Its
+     * also possible to provide a closure function to interact with the model. When handling large amount of data to export, this might
+     * make problems because it will generate a model for each row. Therfore an empty array response will improve performance because {{ngRestExport()}}
+     * will be ignored.
+     *
+     * ```php
+     * public function ngRestExport()
+     * {
+     *     return [
+     *         'created_at' => 'datetime',
+     *         'comment' => 'ntext',
+     *         'category_id' => function($model) {
+     *             return $model->category->title;
+     *         }
+     *     ];
+     * }
+     * ```
+     *
+     * When using a relation call `$model->category->title` it might usefull to eager load this relation, therefore take a look at {{luya\admin\ngrest\base\Api::withRelations()}}.
+     * Therfore the withRelations() can be configured in the api controller of the given NgRest model:
+     *
+     * ```php
+     * public function withRelations()
+     * {
+     *     return [
+     *          'export' => ['category'],
+     *     ];
+     * }
+     * ```
+     *
+     * @return array An array where the key is the attribute and value is either the formatter to use or a closure where the first param is the model itself.
+     * @since 3.9.0
+     */
+    public function ngRestExport()
+    {
+        return [];
+    }
     
     /**
      * Inject data from the model into the config, usage exmple in ngRestConfig method context:
@@ -1000,7 +1040,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             
             $scope = $arrayConfig[0];
             $fields = $arrayConfig[1];
-
+            
             if ($scope == 'delete' || (is_array($scope) && in_array('delete', $scope))) {
                 $config->delete = $fields;
             } else {
@@ -1011,11 +1051,70 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         foreach ($this->ngRestActiveWindows() as $windowConfig) {
             $config->aw->load($windowConfig);
         }
-        
-        if (!empty($this->ngRestConfigOptions())) {
-            $config->options = $this->ngRestConfigOptions();
+        // get the scope based config options if no ngRestConfigOptions() are defined
+        $configOptions = empty($this->ngRestConfigOptions())? $this->getNgRestScopeConfigOptions($config) : $this->ngRestConfigOptions();
+        if (!empty($configOptions)) {
+            $config->options = $configOptions;
         }
     }
+        
+    /**
+     * Return the scope definition third entry looking for button condition
+     * Currently support only buttonCondition
+     *
+     * Example of returned array :
+     *
+     * ```php
+     * [
+     *    "buttonCondition" => [
+     *       ["update",  "{title}>1"],
+     *       ["delete",  "{title}==2 && {firstname}=='bar'"]
+     *    ]
+     * ]
+     * ```
+     * 
+     * @return array buttonCondition indexed array
+     * @since 4.0.0
+     */
+    public function getNgRestScopeConfigOptions($config)
+    {
+        $configOptions = [];
+        foreach ($this->ngRestScopes() as $arrayConfig) {
+            $scope = is_string($arrayConfig[0]) ? [$arrayConfig[0]]:$arrayConfig[0];
+            $buttonConditionConfig =  $this->ngRestConfigButtonCondition($arrayConfig);
+            
+            if (!empty($buttonConditionConfig)) {
+                foreach ($scope as $single_scope) {
+                    $configOptions['buttonCondition'][] = [$single_scope, $buttonConditionConfig];
+                }
+            }
+        }
+        return $configOptions;
+    }
+    
+    /**
+     * Lookup butoon condition from config
+     * If condition is a set of field=>value array, return an AND linked string
+     * @return string extracted buttonCondtion
+     */
+    private function ngRestConfigButtonCondition($arrayConfig)
+    {
+        if (!isset($arrayConfig[2]) || !isset($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = '';
+        } elseif (is_string($arrayConfig[2]['buttonCondition'])) {
+            $buttonCondition = $arrayConfig[2]['buttonCondition'];
+        } elseif (is_array($arrayConfig[2]['buttonCondition'])) {
+            $conditions = [];
+            foreach ($arrayConfig[2]['buttonCondition'] as $field => $value) {
+                $conditions [] = sprintf('%s==%s', $field, $value);
+            }
+            $buttonCondition = implode(' && ', $conditions);
+        } else {
+            $buttonCondition = '';
+        }
+        return $buttonCondition;
+    }
+        
     
     private $_config;
     

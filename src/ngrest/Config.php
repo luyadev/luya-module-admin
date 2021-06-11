@@ -161,6 +161,8 @@ class Config extends BaseObject implements ConfigInterface
                     'hash' => $hash,
                     'label' => $object->getLabel(),
                     'icon' => $object->getIcon(),
+                    'condition' => $object->getCondition(),
+                    'permissionLevel' => $object->getPermissionLevel(),
                 ];
             }
 
@@ -247,7 +249,7 @@ class Config extends BaseObject implements ConfigInterface
     
     /**
      * Returns an array with default order options.
-     * 
+     *
      * @return array
      */
     public function getDefaultOrder()

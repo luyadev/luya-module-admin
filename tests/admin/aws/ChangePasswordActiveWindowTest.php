@@ -9,9 +9,9 @@ class ChangePasswordActiveWindowTest extends AdminTestCase
 {
     public $aws;
 
-    public function setUp()
+    public function afterSetup()
     {
-        parent::setUp();
+        parent::afterSetup();
         $this->aws = Yii::createObject(['class' => 'luya\admin\aws\ChangePasswordActiveWindow']);
     }
 

@@ -202,7 +202,7 @@ class CommonController extends RestController
      */
     public function actionDataLanguages()
     {
-        return Lang::find()->asArray()->all();
+        return Lang::find()->all();
     }
     
     /**
@@ -222,6 +222,7 @@ class CommonController extends RestController
                 'label' => $object->label(),
                 'type' => $object->type(),
                 'default_value' => $object->defaultValue(),
+                'help' => $object->help(),
                 'i18n' => $object->i18n,
             ];
         }

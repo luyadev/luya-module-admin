@@ -40,7 +40,7 @@ class StorageFilterTest extends AdminModelTestCase
         $model->name = 'Foo';
         $this->assertTrue($model->save());
 
-        // effect 
+        // effect
         $effect = new NgRestModelFixture([
             'modelClass' => StorageEffect::class,
             'fixtureData' => [
@@ -142,7 +142,6 @@ class StorageFilterTest extends AdminModelTestCase
         /// APPLY THE CHAIN!
 
         $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
-
     }
 
     public function testUnknownEffectName()
@@ -226,7 +225,7 @@ class StorageFilterTest extends AdminModelTestCase
         $model->name = 'Foo';
         $this->assertTrue($model->save());
 
-        // effect 
+        // effect
         new NgRestModelFixture([
             'modelClass' => StorageEffect::class,
             'fixtureData' => [
@@ -261,7 +260,6 @@ class StorageFilterTest extends AdminModelTestCase
 
         $this->expectException(\Exception::class);
         $model->applyFilterChain(Yii::getAlias('@app/tests/data/image.jpg'), Yii::getAlias('@app/tests/data/runtime/image_result_'.time().'.jpg'));
-
     }
 }
 
@@ -270,18 +268,19 @@ class StorageFilterTest extends AdminModelTestCase
  */
 class ImageInterfaceMock implements ImageInterface
 {
-/**
-     * Returns the image content as a binary string.
-     *
-     * @param string $format
-     * @param array $options
-     *
-     * @throws \Imagine\Exception\RuntimeException
-     *
-     * @return string binary
-     */
+    /**
+         * Returns the image content as a binary string.
+         *
+         * @param string $format
+         * @param array $options
+         *
+         * @throws \Imagine\Exception\RuntimeException
+         *
+         * @return string binary
+         */
     public function get($format, array $options = array())
-    {}
+    {
+    }
 
     /**
      * Returns the image content as a PNG binary string.
@@ -291,7 +290,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return string binary
      */
     public function __toString()
-    {}
+    {
+    }
 
     /**
      * Instantiates and returns a DrawerInterface instance for image drawing.
@@ -299,13 +299,15 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Draw\DrawerInterface
      */
     public function draw()
-    {}
+    {
+    }
 
     /**
      * @return \Imagine\Effects\EffectsInterface
      */
     public function effects()
-    {}
+    {
+    }
 
     /**
      * Returns current image size.
@@ -313,7 +315,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\BoxInterface
      */
     public function getSize()
-    {}
+    {
+    }
 
     /**
      * Transforms creates a grayscale mask from current image, returns a new
@@ -322,7 +325,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return static
      */
     public function mask()
-    {}
+    {
+    }
 
     /**
      * Returns array of image colors as Imagine\Image\Palette\Color\ColorInterface instances.
@@ -330,7 +334,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\Palette\Color\ColorInterface[]
      */
     public function histogram()
-    {}
+    {
+    }
 
     /**
      * Returns color at specified positions of current image.
@@ -342,7 +347,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\Palette\Color\ColorInterface
      */
     public function getColorAt(PointInterface $point)
-    {}
+    {
+    }
 
     /**
      * Returns the image layers when applicable.
@@ -353,7 +359,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\LayersInterface
      */
     public function layers()
-    {}
+    {
+    }
 
     /**
      * Enables or disables interlacing.
@@ -365,7 +372,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return $this
      */
     public function interlace($scheme)
-    {}
+    {
+    }
 
     /**
      * Return the current color palette.
@@ -373,7 +381,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\Palette\PaletteInterface
      */
     public function palette()
-    {}
+    {
+    }
 
     /**
      * Set a palette for the image. Useful to change colorspace.
@@ -385,7 +394,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return $this
      */
     public function usePalette(PaletteInterface $palette)
-    {}
+    {
+    }
 
     /**
      * Applies a color profile on the Image.
@@ -397,7 +407,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return $this
      */
     public function profile(ProfileInterface $profile)
-    {}
+    {
+    }
 
     /**
      * Returns the Image's meta data.
@@ -405,7 +416,8 @@ class ImageInterfaceMock implements ImageInterface
      * @return \Imagine\Image\Metadata\MetadataBag
      */
     public function metadata()
-    {}
+    {
+    }
 
     /**
      * Copies current source image into a new ImageInterface instance.
@@ -416,7 +428,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function copy()
     {
-
     }
 
     /**
@@ -433,7 +444,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function crop(PointInterface $start, BoxInterface $size)
     {
-
     }
 
     /**
@@ -448,7 +458,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function resize(BoxInterface $size, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-
     }
 
     /**
@@ -465,7 +474,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function rotate($angle, ColorInterface $background = null)
     {
-
     }
 
     /**
@@ -486,7 +494,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function paste(ImageInterface $image, PointInterface $start, $alpha = 100)
     {
-
     }
 
     /**
@@ -504,7 +511,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function save($path = null, array $options = array())
     {
-
     }
 
     /**
@@ -519,7 +525,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function show($format, array $options = array())
     {
-
     }
 
     /**
@@ -531,7 +536,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function flipHorizontally()
     {
-
     }
 
     /**
@@ -543,7 +547,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function flipVertically()
     {
-
     }
 
     /**
@@ -555,7 +558,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function strip()
     {
-
     }
 
     /**
@@ -572,7 +574,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function thumbnail(BoxInterface $size, $settings = self::THUMBNAIL_INSET, $filter = ImageInterface::FILTER_UNDEFINED)
     {
-
     }
 
     /**
@@ -584,7 +585,6 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function applyMask(ImageInterface $mask)
     {
-
     }
 
     /**
@@ -598,6 +598,5 @@ class ImageInterfaceMock implements ImageInterface
      */
     public function fill(FillInterface $fill)
     {
-
     }
 }

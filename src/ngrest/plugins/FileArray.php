@@ -139,7 +139,9 @@ class FileArray extends Plugin
                 $binds[$item['fileId']] = ['caption' => $item['caption']];
             }
         }
+
+        $fileIds = ArrayHelper::getColumn($values, 'fileId');
         
-        return (new Query())->where(['in', 'id', ArrayHelper::getColumn($values, 'fileId')])->bind($binds)->all();
+        return (new Query())->where(['in', 'id', $fileIds])->bind($binds)->orderBy(['id' => $fileIds])->all();
     }
 }

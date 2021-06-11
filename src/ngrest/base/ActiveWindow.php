@@ -11,6 +11,9 @@ use luya\helpers\Url;
 use luya\helpers\FileHelper;
 use yii\base\BaseObject;
 use yii\base\InvalidCallException;
+use luya\admin\ngrest\NgRestButtonConditionInterface;
+use luya\admin\ngrest\NgRestPermissionLevelInterface;
+use luya\admin\components\Auth;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -26,7 +29,7 @@ use yii\base\InvalidCallException;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface
+abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface, NgRestPermissionLevelInterface
 {
     /**
      * @var string $suffix The suffix to use for all classes
@@ -350,6 +353,42 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
     public function getItemId()
     {
         return $this->getIsCompositeItem() ? $this->getItemIds() : $this->getItemIds()[0];
+    }
+    
+    private $_condition;
+    
+    /**
+     * @inheritdoc
+     */
+    public function setCondition($condition)
+    {
+        $this->_condition = $condition;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getCondition()
+    {
+        return empty($this->_condition) ? '' : $this->_condition;
+    }
+    
+    private $_permissionLevel = Auth::CAN_UPDATE;
+    
+    /**
+     * @inheritdoc
+     */
+    public function setPermissionLevel($permissionLevel)
+    {
+        $this->_permissionLevel = $permissionLevel;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getPermissionLevel()
+    {
+        return $this->_permissionLevel;
     }
     
     /**

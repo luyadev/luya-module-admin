@@ -69,7 +69,7 @@ class ActiveRecordToSchema
         
         foreach ($attributeFields as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
-        }     
+        }
 
         if ($phpDocProperties) {
             foreach ($this->phpDocParser->getProperties() as $prop) {
@@ -89,7 +89,6 @@ class ActiveRecordToSchema
         $type = $property->getType();
         // handle php object type
         if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {
-            
             $object = $this->baseSpecs->createActiveRecordSchemaObjectFromClassName($type->getClassName(), array_merge([get_class($this->activeRecord)], $this->senderActiveRecordClassName));
             
             if ($object) {

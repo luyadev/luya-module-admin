@@ -10,6 +10,8 @@ use yii\db\Connection;
 
 /**
  * Admin Proxy Build.
+ * 
+ * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -33,8 +35,14 @@ class ClientBuild extends BaseObject
     
     public $requestCloseUrl;
     
+    /**
+     * @var string The Url to the remote storage system which provides the file returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
+     */
     public $fileProviderUrl;
     
+    /**
+     * @var string The Url to the remote storage system which provides the image returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
+     */
     public $imageProviderUrl;
     
     public $machineIdentifier;
@@ -43,11 +51,12 @@ class ClientBuild extends BaseObject
     
     public $storageFilesCount;
     
+    /**
+     * @deprecated Deprecated since version 4, will be removed in 5. No replacement.
+     */
     public $optionStrict;
 
     public $syncRequestsCount;
-    
-    private $_optionTable;
     
     public function setOptionTable($table)
     {
@@ -55,6 +64,8 @@ class ClientBuild extends BaseObject
             $this->_optionTable = explode(",", $table);
         }
     }
+    
+    private $_optionTable;
     
     public function getOptionTable()
     {
@@ -79,6 +90,24 @@ class ClientBuild extends BaseObject
     
     private $_buildConfig;
 
+    /**
+     * The build config is assigned from the remote server containing all tables.
+     *
+     * @param array $config An array with a key tables. Example config
+     * ```php
+     * $config = [
+     *     'tables' => [
+     *         'admin_ngrest_log' => [
+     *              'pks' => 1,
+     *              'name' => 'admin_ngrest_log'
+     *              'rows' => 2000, // the total amount of rows
+     *              'fields' => ['foo', 'bar'],
+     *              'offset_total' => 10,
+     *         ]
+     *     ]
+     * ];
+     * ```
+     */
     public function setBuildConfig(array $config)
     {
         $this->_buildConfig = $config;

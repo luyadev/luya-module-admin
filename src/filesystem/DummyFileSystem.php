@@ -24,6 +24,18 @@ use luya\admin\storage\BaseFileSystemStorage;
 class DummyFileSystem extends BaseFileSystemStorage
 {
     /**
+     * @var boolean
+     * @since 3.6.0
+     */
+    public $fileExists = true;
+    
+    /**
+     * @var boolean
+     * @since 3.6.0
+     */
+    public $fileSaved = true;
+
+    /**
      * @inheritdoc
      */
     public function fileHttpPath($fileName)
@@ -52,7 +64,7 @@ class DummyFileSystem extends BaseFileSystemStorage
      */
     public function fileSystemExists($fileName)
     {
-        return true;
+        return $this->fileExists;
     }
     
     /**
@@ -68,7 +80,7 @@ class DummyFileSystem extends BaseFileSystemStorage
      */
     public function fileSystemSaveFile($source, $fileName)
     {
-        return true;
+        return $this->fileSaved;
     }
     
     /**

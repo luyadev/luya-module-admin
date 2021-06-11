@@ -34,7 +34,7 @@ use yii\queue\db\Command;
  * ```
  *
  * @property array $reloadButtons Take a look at {{luya\admin\Module::setReloadButtons()}}.
- * @property array $jsTranslations Take a look at {{luya\admin\Module::setJsTranslations()}}.
+ * @property-read array $jsTranslations Take a look at {{luya\admin\Module::getJsTranslations()}}.
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -42,9 +42,9 @@ use yii\queue\db\Command;
 final class Module extends \luya\admin\base\Module implements CoreModuleInterface
 {
     /**
-     * This event is triggered when an access token is trying to login. 
-     * 
-     * @var string User login by Access-Token event. 
+     * This event is triggered when an access token is trying to login.
+     *
+     * @var string User login by Access-Token event.
      * @since 3.3.0
      */
     const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
@@ -64,7 +64,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
-     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl, th
+     * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl, th, hu, id, bg
      */
     public $interfaceLanguage = 'en';
     
@@ -88,6 +88,9 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'cn' => '中文简体',
         'nl' => 'Dutch',
         'th' => 'ภาษาไทย',
+        'hu' => 'Magyar',
+        'id' => 'Bahasa',
+        'bg' => 'Български',
     ];
     
     /**
@@ -216,6 +219,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 2.0.4
      */
     public $bootstrapQueueCli = true;
+
+    /**
+     * @var string The mutex class which should be used for the admin queue component. Changed from `yii\mutex\FileMutex` to `yii\mutex\MysqlMutex` as a database connection
+     * is required in the admin area and there are no conflicts with file permissions when running in cli mode. In order to ensure the old behavior use the FileMutex class.
+     * @since 3.7.0
+     */
+    public $queueMutexClass = 'yii\mutex\MysqlMutex';
     
     /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
@@ -235,9 +245,21 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     /**
      * @var boolean Whether the api user log entries should be display in the module dashboard or not. This is disabled by default as ApiUsers might
      * create and update a lot of data.
-     * @since 3.2.0 
+     * @since 3.2.0
      */
     public $dashboardLogDisplayApiUserData = false;
+
+    /**
+     * @var boolean If enabled, the login form is diabled and maintenance message is displayed, which can be configured trough $disableLoginMessage.
+     * @since 4.0.0
+     */
+    public $disableLogin = false;
+
+    /**
+     * @var string An optional message which is disapyled when the login is disabled.
+     * @since 4.0.0
+     */
+    public $disableLoginMessage;
 
     /**
      * @var array A configuration array with all tags shipped by default with the admin module.
@@ -272,6 +294,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'api-admin-queuelogerror' => 'luya\admin\apis\QueueLogErrorController',
         'api-admin-ngrestlog' => 'luya\admin\apis\NgrestLogController',
         'api-admin-storageimage' => 'luya\admin\apis\StorageImageController',
+        'api-admin-property' => 'luya\admin\apis\PropertyController',
     ];
 
     public $apiRules = [
@@ -292,19 +315,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.2
      */
     public $apiDefintions = []; // typo...
-    
-    /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected asset files to assign.
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
-     */
-    public $assets = [];
-    
-    /**
-     * @var array This property is used by the {{luya\web\Bootstrap::run()}} method in order to set the collected menu items from all admin modules and build the menu.
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0
-     */
-    public $moduleMenus = [];
-    
+
     /**
      * @var boolean Whether a **PUBLIC** available endpoint should created returning an OpenAPI definition for current LUYA System (including all registered modules) or not.
      * @since 3.2.0
@@ -423,19 +434,6 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         return $translations;
     }
     
-    /**
-     * Setter for js translations files.
-     *
-     * This setter method is used by the {{luya\web\Bootstrap::run()}} to assign all js transaltion files from the admin modules.
-     *
-     * @param array $translations
-     * @deprecated Deprecated since version 3.6.0 will be removed in version 4.0 
-     */
-    public function setJsTranslations(array $translations)
-    {
-        // deprecated, messages are now loaded with Yii::$app->getAdminModulesJsTranslationMessages()
-    }
-    
     private $_reloadButtons = [];
 
     /**
@@ -507,6 +505,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
                 ->group('menu_group_system')
                     ->itemApi('menu_system_item_config', 'admin/config/index', 'storage', 'api-admin-config')
                     ->itemApi('menu_system_item_language', 'admin/lang/index', 'language', 'api-admin-lang')
+                    ->itemApi('menu_system_item_property', 'admin/property/index', 'widgets', 'api-admin-property')
                     ->itemApi('menu_system_item_tags', 'admin/tag/index', 'tag', 'api-admin-tag')
                     ->itemApi('menu_system_queue', 'admin/queue-log/index', 'schedule', 'api-admin-queuelog')
                 ->group('menu_group_log')
@@ -549,7 +548,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'adminqueue' => [
                 'class' => 'yii\queue\db\Queue',
                 'db' => 'db',
-                'mutex' => 'yii\mutex\FileMutex',
+                'mutex' => $this->queueMutexClass,
                 'tableName' => 'admin_queue',
                 'channel' => 'default',
                 'as log' => 'luya\admin\behaviors\QueueLogBehavior',

@@ -28,7 +28,7 @@
       "issues":"https://github.com/luyadev/luya-module-admin/issues"
    },
    "require":{
-      "luyadev/luya-core":"^1.7",
+      "luyadev/luya-core":"dev-master as 2.0",
       "yiisoft/yii2-imagine":"^2.1",
       "yiisoft/yii2-queue":"^2.0",
       "flowjs/flow-php-server":"^1.0",
@@ -37,8 +37,8 @@
       "robthree/twofactorauth":"^1.7"
    },
    "require-dev":{
-      "luyadev/luya-testsuite":"^1.0",
-      "twbs/bootstrap":"^4.3",
+      "luyadev/luya-testsuite":"^2.0",
+      "twbs/bootstrap":"^4.5",
       "bower-asset/angular":"^1.7",
       "bower-asset/angular-loading-bar":"0.9.0",
       "bower-asset/ui-router":"~0.4.0",
@@ -48,9 +48,9 @@
       "bower-asset/twigjs-bower":"~0.10.5",
       "bower-asset/angular-filter":"~0.5.15",
       "bower-asset/bowser":"^1.9",
-      "bower-asset/echarts":"4.5.0",
+      "bower-asset/echarts":"^5.0",
       "bower-asset/ui-cropper":"^1.0",
-      "unglue/client":"^1.4.1",
+      "unglue/client":"^1.5.3",
       "cebe/php-openapi":"^1.4"
    },
    "suggest": {

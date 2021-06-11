@@ -7,9 +7,9 @@ use luya\helpers\StringHelper;
 
 /**
  * Php DOc Method
- * 
+ *
  * The @method phpdoc describer.
- * 
+ *
  * @author Basil <git@nadar.io>
  * @since 3.3.1
  */
@@ -39,7 +39,7 @@ class PhpDocMethod
 
     /**
      * Type
-     * 
+     *
      * Returns a Type definition.
      *
      * @return PhpDocType
@@ -51,7 +51,7 @@ class PhpDocMethod
     
     /**
      * Method Name
-     * 
+     *
      * Returns only the method name without arguments, for example actionView($id) should return actionView
      *
      * @return string
@@ -63,7 +63,7 @@ class PhpDocMethod
 
     /**
      * Returns a readable name for an action
-     * 
+     *
      * For example the action is actionFooBar it will return `Foo Bar`.
      *
      * @return void
@@ -79,7 +79,7 @@ class PhpDocMethod
      * Method Param Description
      *
      * Returns the definition of the action inside the () params.
-     * 
+     *
      * @return string
      */
     public function getMethodParams()

@@ -59,7 +59,7 @@ class ControllerActionSpecs extends BaseSpecs
 
     /**
      * Returns a full qualified action name.
-     * 
+     *
      * This is mainly used for {{yii\base\Controller::actions()}} definition.
      *
      * @return string Assuming the actionName is `update-row` then it will return `actionUpdateRow`.

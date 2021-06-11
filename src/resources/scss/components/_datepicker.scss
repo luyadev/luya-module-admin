@@ -17,20 +17,22 @@ datepicker {
     width: 100%;
 }
 
+._720kb-datepicker-calendar {
+    margin-top: 40px;
+    margin-left: 0;
+    border-radius: 0px;
+    border: 1px solid map_get($grays, 600);
+    box-shadow: $modal-content-box-shadow-sm-up;
+    border-radius: $border-radius;
+    min-width: 300px;
+}
+
 ._720kb-datepicker-calendar-header {
     background-color: map_get($grays, 600) !important;
 }
 
 ._720kb-datepicker-calendar-days-header {
     background-color: map_get($grays, 400) !important;
-}
-
-._720kb-datepicker-calendar {
-    margin-top: 40px;
-    margin-left: 0;
-    border-radius: 0px;
-    border:1px solid map_get($grays, 600);
-    box-shadow: $modal-content-box-shadow-sm-up;
 }
 
 ._720kb-datepicker-active {

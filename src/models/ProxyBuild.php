@@ -16,6 +16,8 @@ use luya\admin\aws\DetailViewActiveWindow;
  * @property string $config
  * @property integer $is_complet
  * @property integer $expiration_time
+ *
+ * @property ProxyMachine $proxyMachine
  * @property array $arrayConfig
  *
  * @author Basil Suter <basil@nadar.io>
@@ -41,7 +43,7 @@ class ProxyBuild extends NgRestModel
             [['machine_id', 'timestamp', 'expiration_time'], 'integer'],
             [['is_complet'], 'boolean'],
             [['config'], 'string'],
-            [['build_token'], 'string', 'max' => 255],
+            [['build_token'], 'string', 'max' => 190],
             [['build_token'], 'unique'],
         ];
     }
@@ -62,6 +64,11 @@ class ProxyBuild extends NgRestModel
         ];
     }
     
+    /**
+     * ProxyMachine relation
+     *
+     * @return ProxyMachine
+     */
     public function getProxyMachine()
     {
         return $this->hasOne(ProxyMachine::class, ['id' => 'machine_id']);
@@ -77,6 +84,11 @@ class ProxyBuild extends NgRestModel
     
     private $_arrayConfig;
     
+    /**
+     * Get an array from the config json
+     *
+     * @return array
+     */
     public function getArrayConfig()
     {
         if ($this->_arrayConfig === null) {
@@ -86,18 +98,29 @@ class ProxyBuild extends NgRestModel
         return $this->_arrayConfig;
     }
     
+    /**
+     * Get rowsPerRequest from json config
+     *
+     * @return integer
+     */
     public function getRowsPerRequest()
     {
         return $this->arrayConfig['rowsPerRequest'];
     }
     
+    /**
+     * Get the full configuration for a given table
+     *
+     * @param string $table
+     * @return array|false False if the table is not found
+     */
     public function getTableConfig($table)
     {
         return isset($this->arrayConfig['tables'][$table]) ? $this->arrayConfig['tables'][$table] : false;
     }
     
     /**
-     * @return array An array define the field types of each field
+     * {@inheritDoc}
      */
     public function ngRestAttributeTypes()
     {
@@ -109,22 +132,26 @@ class ProxyBuild extends NgRestModel
             'expiration_time' => 'datetime',
         ];
     }
-    
+
     /**
-     * Define the NgRestConfig for this model with the ConfigBuilder object.
-     *
-     * @param \luya\admin\ngrest\ConfigBuilder $config The current active config builder object.
-     * @return \luya\admin\ngrest\ConfigBuilder
+     * {@inheritDoc}
      */
-    public function ngRestConfig($config)
+    public function ngRestScopes()
     {
-        $config->aw->load([
-            'class' => DetailViewActiveWindow::class,
-        ]);
-        
-        // define fields for types based from ngrestAttributeTypes
-        $this->ngRestConfigDefine($config, 'list', ['machine_id', 'build_token', 'expiration_time', 'is_complet']);
-        
-        return $config;
+        return [
+            [['list'], ['machine_id', 'build_token', 'expiration_time', 'is_complet']]
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestActiveWindows()
+    {
+        return [
+            [
+                'class' => DetailViewActiveWindow::class,
+            ]
+        ];
     }
 }

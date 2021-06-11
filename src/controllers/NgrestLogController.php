@@ -6,7 +6,7 @@ use luya\admin\Module;
 
 /**
  * Ngrest Log Controller.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 3.2.0
  */

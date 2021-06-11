@@ -15,17 +15,17 @@ class BaseFileSystemStorageTest extends AdminTestCase
     
     public function testHttpPath()
     {
-        $this->assertContains('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileHttpPath('foo.jpg'));
+        $this->assertStringContainsString('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileHttpPath('foo.jpg'));
     }
     
     public function testAbsoluteHttpPath()
     {
-        $this->assertContains('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileAbsoluteHttpPath('foo.jpg'));
+        $this->assertStringContainsString('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileAbsoluteHttpPath('foo.jpg'));
     }
     
     public function testServerPath()
     {
-        $this->assertContains('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileServerPath('foo.jpg'));
+        $this->assertStringContainsString('storage'.DIRECTORY_SEPARATOR.'foo.jpg', $this->getStorage()->fileServerPath('foo.jpg'));
     }
     
     public function testBaseFileSystemStorage()

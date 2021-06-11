@@ -145,4 +145,15 @@ class ImageArrayTest extends AdminTestCase
             $this->assertSame('bazfoo', $obj->caption);
         }
     }
+
+    public function testCreateTemplate()
+    {
+        $plugin = new ImageArray([
+            'alias' => 'id',
+            'name' => 'id',
+            'i18n' => false,
+        ]);
+
+        $this->assertSame('<zaa-image-array-upload options=\'{"description":true,"filter":true}\' fieldid="id" model="model" label="id" fieldname="id" i18n=""></zaa-image-array-upload>', $plugin->renderCreate('id', 'model'));
+    }
 }

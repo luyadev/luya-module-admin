@@ -22,7 +22,6 @@ class MenuControllerTest extends AdminModelTestCase
         $this->createAdminAuthTable();
         $this->createAdminGroupAuthTable();
         $this->createAdminUserOnlineFixture();
-        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
         $ctrl = new MenuController('id', $this->app->getModule('admin'));
         $this->assertSame([], $ctrl->actionDashboard(1));
         $this->assertSame([], $ctrl->actionIndex());
@@ -41,7 +40,6 @@ class MenuControllerTest extends AdminModelTestCase
         $this->createAdminAuthTable();
         $this->createAdminGroupAuthTable();
         $this->createAdminUserOnlineFixture();
-        $this->app->getModule('admin')->moduleMenus = ['admin' => $this->app->getModule('admin')->getMenu()];
         $this->app->getModule('admin')->dashboardLogDisplayApiUserData = 1;
         $ctrl = new MenuController('id', $this->app->getModule('admin'));
         $this->assertSame([], $ctrl->actionDashboard(1));

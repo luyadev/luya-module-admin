@@ -21,6 +21,6 @@ EOT;
     {
         $html = CallbackButtonWidget::widget(['label' => 'label', 'callback' => 'cb']);
     
-        $this->assertContains('sendButton("cb", [])', $html);
+        $this->assertStringContainsString('sendButton("cb", [])', $html);
     }
 }

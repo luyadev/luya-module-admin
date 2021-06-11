@@ -90,7 +90,7 @@ class Generator extends Component
      * + The key is the endpointName to resolve, lets say the url.
      * + Value is an array containing `class` and `module`
      */
-    public function __construct(UrlManager $urlManager, array $controllerMap = [])	
+    public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
         $this->urlManager = $urlManager;
         $this->controllerMap = $controllerMap;
@@ -100,7 +100,7 @@ class Generator extends Component
 
     /**
      * Assign an existing Rule to the UrlRules
-     * 
+     *
      * By default only {{yii\rest\UrlRule}} will be take, as they contain informations about Verbs. In order to
      * assign a "casual" {{yii\web\UrlRule}} this method can be used. Assuming a defined url rule `['v1/users/register' => 'user/register']`
      * it can be assigned with `assignUrlRule('user/register', 'POST')`.
@@ -149,7 +149,6 @@ class Generator extends Component
                 $rules[$rule->route][] = ['rules' => [
                     $rule->name => [$rule]
                 ], 'endpointName' => empty($assignedRule['endpointName']) ? $rule->name : $assignedRule['endpointName']];
-
             }
 
             unset($rule);
@@ -214,7 +213,6 @@ class Generator extends Component
     private function addPath(BasePathParser $pathParser)
     {
         if ($pathParser->isValid()) {
-
             if (!empty($this->filterPaths)) {
                 if (StringHelper::filterMatch($pathParser->getPath(), $this->filterPaths)) {
                     return;
@@ -253,7 +251,7 @@ class Generator extends Component
      * Generate an unique operation Id
      *
      * If a given operationId is already used a number will be added to the end and increased whenever the same operation appears.
-     * 
+     *
      * @param string $operationId
      * @return string
      * @since 3.5.2

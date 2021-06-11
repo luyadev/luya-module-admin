@@ -221,11 +221,17 @@ class UrlRuleRouteParser extends BasePathParser
 
         $requestBody = false;
         if ($actionObject instanceof UpdateAction || $actionObject instanceof CreateAction) {
+            $schema = $actionSpecs->createActiveRecordSchemaFromObject($actionObject, false);
+
+            if (!$schema) {
+                return false;
+            }
+
             $requestBody = new RequestBody([
                 'required' => true,
                 'content' => [
                     'application/json' => new MediaType([
-                        'schema' => $actionSpecs->createActiveRecordSchemaFromObject($actionObject, false),
+                        'schema' => $schema,
                     ])
                 ]
             ]);
@@ -237,7 +243,6 @@ class UrlRuleRouteParser extends BasePathParser
 
             /** @var PhpDocUses $use */
             foreach ($actionSpecs->getPhpDocParser()->getUses() as $use) {
-                
                 if ($use->getType()->getIsClass()) {
                     $schema = $actionSpecs->createActiveRecordSchemaObjectFromClassName($use->getType()->getClassName());
                     if ($schema) {

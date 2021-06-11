@@ -16,6 +16,7 @@ use luya\helpers\Json;
 use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\components\Auth;
+use luya\admin\models\Tag;
 use luya\admin\models\UserOnline;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
@@ -27,6 +28,7 @@ use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveQueryInterface;
 use luya\admin\models\UserAuthNotification;
+use yii\db\ActiveQuery;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -124,7 +126,7 @@ class Api extends RestActiveController
      * Auto add those relations to queries.
      *
      * > The relation will only eager load when available in **expand** get params. `?expand=user` f.e.
-     * 
+     *
      * This can be either an array with relations which will be passed to `index, list and view` or an array with a subdefinition in order to define
      * which relation should be us when.
      *
@@ -148,6 +150,7 @@ class Api extends RestActiveController
      * + index
      * + list
      * + search
+     * + export
      *
      * @return array
      * @since 1.2.2
@@ -529,7 +532,9 @@ class Api extends RestActiveController
 
         // check if taggable exists, if yes return all used tags for the
         if (ObjectHelper::isTraitInstanceOf($this->model, TaggableTrait::class)) {
-            $tags = $this->model->findTags();
+            $tags = ArrayHelper::toArray($this->model->findTags(), [
+                Tag::class => ['id', 'name']
+            ]);
         } else {
             $tags = false;
         }
@@ -550,7 +555,7 @@ class Api extends RestActiveController
             '_notifcation_mute_state' => $notificationMuteState,
             '_locked' => [
                 'data' => UserOnline::find()
-                    ->select(['lock_pk', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
+                    ->select(['user_id', 'lock_pk', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
                     ->where(['lock_table' => $modelClass::tableName()])
                     ->joinWith('user')
                     ->asArray()
@@ -781,8 +786,13 @@ class Api extends RestActiveController
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
+        $filter = Yii::$app->request->getBodyParam('filter', null);
         $fields = ArrayHelper::getColumn($attributes, 'value');
         
+        if (!in_array($type, ['xlsx', 'csv'])) {
+            throw new InvalidConfigException("Invalid export type");
+        }
+
         switch (strtolower($type)) {
             case "csv":
                 $mime = 'application/csv';
@@ -793,11 +803,24 @@ class Api extends RestActiveController
                 $extension = 'xlsx';
                 break;
         }
-        
-        $query = $this->prepareListQuery()->select($fields);
 
-        if (!in_array($type, ['xlsx', 'csv'])) {
-            throw new InvalidConfigException("Invalid export type");
+        if (!empty($filter)) {
+            $filter = Html::encode($filter);
+            $filtersList = $this->model->ngRestFilters();
+
+            if (!array_key_exists($filter, $filtersList)) {
+                throw new InvalidCallException("The requested filter '$filter' does not exists in the filter list.");
+            }
+
+            $query = $filtersList[$filter]->select($fields)->with($this->getWithRelation('export'));
+        } else {
+            $query = $this->prepareListQuery()->with($this->getWithRelation('export'))->select($fields);
+        }
+
+        $exportFormatter = $this->model->ngRestExport();
+
+        if (!empty($exportFormatter)) {
+            $query = $this->formatExportValues($query, $exportFormatter);
         }
 
         $tempData = ExportHelper::$type($query, $fields, (bool) $header);
@@ -830,6 +853,38 @@ class Api extends RestActiveController
         }
         
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
+    }
+
+    /**
+     * Format the ActiveQuery values based on formatter array definition see {{luya\admin\ngrest\base\NgRestModel::ngRestExport()}}.
+     *
+     * @param ActiveQuery $query
+     * @param array $formatter
+     * @return array
+     * @since 3.9.0
+     */
+    private function formatExportValues(ActiveQuery $query, array $formatter)
+    {
+        $data = [];
+        foreach ($query->batch() as $batch) {
+            foreach ($batch as $key => $model) {
+                foreach ($model as $attribute => $value) {
+                    // if formatter is defined for the given attribute
+                    if (array_key_exists($attribute, $formatter)) {
+                        $formatAs = $formatter[$attribute];
+                        if (is_callable($formatAs)) {
+                            $data[$key][$attribute] = call_user_func($formatAs, $model);
+                        } else {
+                            $data[$key][$attribute] = Yii::$app->formatter->format($value, $formatAs);
+                        }
+                    } else {
+                        $data[$key][$attribute] = $value;
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
     /**

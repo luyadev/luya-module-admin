@@ -5,6 +5,7 @@ namespace luya\admin\apis;
 use Yii;
 use luya\admin\models\UserOnline;
 use luya\admin\base\RestController;
+use luya\admin\helpers\Angular;
 use luya\traits\CacheableTrait;
 use luya\admin\models\UserAuthNotification;
 
@@ -64,7 +65,7 @@ class TimestampController extends RestController
             'idlePercentage' => $percentage,
             'idleStrokeDashoffset' => $strokeOffset,
             'useronline' => UserOnline::getList(),
-            'forceReload' => Yii::$app->adminuser->identity->force_reload,
+            'forceReload' => Angular::typeCast(Yii::$app->adminuser->identity->force_reload),
             'locked' => UserOnline::find()
                 ->select(['user_id', 'lock_pk', 'lock_table', 'last_timestamp', 'firstname', 'lastname', 'admin_user.id'])
                 ->where(['!=', 'admin_user.id', $userId])

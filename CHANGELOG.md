@@ -3,7 +3,71 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 3.6.0
+## 4.0.0
+
+> This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#635](https://github.com/luyadev/luya-module-admin/pull/635) New migration database file, as new attributes are available for properties, images and files
++ [#298](https://github.com/luyadev/luya-module-admin/issues/298) Added new NgRest Plugin `SelectAsyncApi` which can be used to change the select based on certain context variables in real time, its also known as "dependent select".
++ [#642](https://github.com/luyadev/luya-module-admin/pull/642) Example usage for admin/proxy machine in detail window.
++ [#610](https://github.com/luyadev/luya-module-admin/pull/610) Added API endpoint to display all groups where the current loggedin user belongs to `admin/api-user-group/me`.
++ [#602](https://github.com/luyadev/luya-module-admin/issues/602) Fixed bug in ngrest model detail view.
++ [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.
++ [#608](https://github.com/luyadev/luya-module-admin/pull/608) Use FileHelper::unlink method instead of PHP's `unlink` in order to prevent thrown exceptions.
++ [#609](https://github.com/luyadev/luya-module-admin/issues/609) Fixed generic issues when using PostgreSQL.
++ [#620](https://github.com/luyadev/luya-module-admin/pull/620) Changed echarts library to major [Version 5.0](https://github.com/apache/echarts/releases/tag/5.0.0)
++ [#603](https://github.com/luyadev/luya-module-admin/issues/603) Added option to disable the login form and display a maintenance message instead.
++ [#623](https://github.com/luyadev/luya-module-admin/pull/623) New command to cleanup ngrest log and cms log tables `./luya admin/log/cleanup all`.
++ [#626](https://github.com/luyadev/luya-module-admin/pull/626) Fixed issue with blameable behavior in console command context.
++ [#627](https://github.com/luyadev/luya-module-admin/pull/627) Added option to set a button condition to show or hide crud update, delete, ngRestActiveButtons and ngRestActiveWindows buttons.
++ [#630](https://github.com/luyadev/luya-module-admin/pull/630) Added option to define permission level for ActiveWindows and ActiveButtons, default behavior `Auth::CAN_UPDATE` is maintained for BC.
++ [#604](https://github.com/luyadev/luya-module-admin/issues/604) Added "Save", "Save and close" and "Create", "Create and close" buttons next to CRUD forms.
++ [#313](https://github.com/luyadev/luya-module-admin/issues/313) Add option to disable text and filter in image array zaa directive and ngrest plugin.
++ [#638](https://github.com/luyadev/luya-module-admin/pull/638) Added new `orderBy()` method for `file`, `image` and `folder` iterator of storage system, this fixes the issue that `fileArray` and `imageArray` plugin where sorted wrong when `$fileIterator` is enabled.
++ [#639](https://github.com/luyadev/luya-module-admin/pull/639) The LUYA `Config::set()` can now store larger amount of data, using `text()` instead of `string()`.
++ [#640](https://github.com/luyadev/luya-module-admin/pull/640) Added new `--only` option ( or `-o`) for `admin/proxy` command. Possible values are `db` or `storage`.
++ [#641](https://github.com/luyadev/luya-module-admin/pull/641) Added loading indicator for filemanager file detail.
++ [#643](https://github.com/luyadev/luya-module-admin/issues/643) Fixed issue where the root folder where displaying all files from the storage system.
++ [#645](https://github.com/luyadev/luya-module-admin/pull/645) New predifined radio input page property `luya\admin\base\RadioProperty`
+
+## 3.9.0 (24. November 2020)
+
++ [#596](https://github.com/luyadev/luya-module-admin/pull/596) Added new migration for session storage, the table name is `admin_session` and can be configured as `session' => ['class' => 'yii\web\DbSession', 'sessionTable' => 'admin_session']`.
++ [#595](https://github.com/luyadev/luya-module-admin/pull/595) Added new NgRest Plugin `JsonObject` which will store a JSON object in the database and return an assoc array in the model.
++ [#170](https://github.com/luyadev/luya-module-admin/issues/170) Added new `ngRestExport()` method to NgRestModel in order to apply formatting of values to the downloadable export.
+
+## 3.8.0 (11. November 2020)
+
++ [#589](https://github.com/luyadev/luya-module-admin/pull/589) Add new help() method for page properties, added CRUD view for properties.
++ [#591](https://github.com/luyadev/luya-module-admin/pull/591) Disable session login for rest api calls.
++ [#592](https://github.com/luyadev/luya-module-admin/pull/592) Fixed a bug where storage uploader without selected files throws an exception.
+
+## 3.7.1 (4. November 2020)
+
++ [#587](https://github.com/luyadev/luya-module-admin/pull/587) Fixed a bug where it was not possible to update the current admin user due to wrong unique email validation.
++ [#588](https://github.com/luyadev/luya-module-admin/pull/588) Fixed a bug where the CRUD Tags filter does not appear anymore.
+
+## 3.7.0 (26. October 2020)
+
+> This release contains a behavior change where MysqlMutex is default instead of FileMutex. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#576](https://github.com/luyadev/luya-module-admin/pull/576) Use `MysqlMutex` as default Mutex class for the Admin Queue instead of `FileMutex` due to people have problems with file permissions when running the queue in cli mode. MysqlMutex is also the better approach when multiple works might run on different workloads.
++ [#578](https://github.com/luyadev/luya-module-admin/pull/578) New bahasa (Indonesian) language option.
++ [#575](https://github.com/luyadev/luya-module-admin/pull/575) New hungarian language option.
++ [#574](https://github.com/luyadev/luya-module-admin/pull/574) Add new toasts design (stronger colors).
++ [#577](https://github.com/luyadev/luya-module-admin/pull/577) Queue Scheduler Job loads only the target attribute into the model.
++ [#579](https://github.com/luyadev/luya-module-admin/pull/579) Updated Portuguese translation files.
++ [#580](https://github.com/luyadev/luya-module-admin/pull/580) Fix issue where the OpenApi parser does not return models which are instance of `yii\base\Model`.
++ [#581](https://github.com/luyadev/luya-module-admin/pull/581) Ensure the proxy api to synchronise files uses the `sendContentAsFile` in order to support 3rd party storage systems like AWS.
++ [#583](https://github.com/luyadev/luya-module-admin/pull/583) Its now possible to export CRUD data for a given filter. Using `ngRestFilters()` data to display the filters in the export mask in preselect the current active filter.
++ [#504](https://github.com/luyadev/luya-module-admin/issues/504) Fixed a bug where images in CRUD list disappear when switch from list to create form and back again.
++ [#585](https://github.com/luyadev/luya-module-admin/pull/585) Added new `zaa-select-crud` directive which allows to select a row from an existing ngrest crud in a modal dialog.
+
+## 3.6.1 (1. October 2020)
+
++ [#572](https://github.com/luyadev/luya-module-admin/pull/572) Fixed "zaa-date" datepicker width issue.
+
+## 3.6.0 (30. September 2020)
 
 > This requires LUYA core 1.7
 
@@ -11,6 +75,11 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#533](https://github.com/luyadev/luya-module-admin/pull/553) Use new `Yii::$app->getAdminModulesMenus()`, `Yii::$app->getAdminModulesJsTranslationMessages()` and `Yii::$app->getAdminModulesAssets()` method in order to retrieve module data. This fixes a bug with admin modules which does not have an `admin` in the module name f.e. `'usertoken' => 'luya\admin\usertoken\Module'`.
 + [#561](https://github.com/luyadev/luya-module-admin/pull/561) Disable LUYA admin auth checks when cors is enabled and request method is options.
 + [#562](https://github.com/luyadev/luya-module-admin/pull/562) New `luya\admin\validators\I18nRequiredValidator` validator in order to validate i18n attributes an its content. The validator checks if all language short codes exist and if the corresponding value is empty.
++ [#577](https://github.com/luyadev/luya-module-admin/pull/566/) Ensure the `admin/proxy` command also works with different file systems then the local storage.
++ [#565](https://github.com/luyadev/luya-module-admin/pull/565) Add new `luya\admin\validators\StorageUploadValidator` which assignes the file absolute path as value.
++ [#569](https://github.com/luyadev/luya-module-admin/pull/569) Improve the view when using TextArray ngrest plugin in CRUD overview.
++ [#571](https://github.com/luyadev/luya-module-admin/pull/571) Ensure the user_id is selected in any SQL query mode, therefore fixed `yii\base\ErrorException: Undefined index: user_id` bug when open a CRUD. [see #551](https://github.com/luyadev/luya-module-admin/issues/551)
++ [#570](https://github.com/luyadev/luya-module-admin/pull/570) Added border radius to all form input fields. Improved CRUD search and group by buttons.
 
 ## 3.5.2 (26. August 2020)
 

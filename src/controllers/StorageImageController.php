@@ -6,9 +6,9 @@ use luya\admin\Module;
 
 /**
  * Storage Image Controller.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
- * @since 3.2.0 
+ * @since 3.2.0
  */
 class StorageImageController extends \luya\admin\ngrest\base\Controller
 {

@@ -26,7 +26,7 @@ class m200128_141129_v3_update extends Migration
             'updated_at' => $this->integer(),
         ]);
 
-        $this->createIndex('user_id', '{{%admin_user_device}}', ['user_id']);
+        $this->createIndex('index_admin_user_device_user_id', '{{%admin_user_device}}', ['user_id']);
         // user 2fa
         $this->addColumn('{{%admin_user}}', 'login_2fa_enabled', $this->boolean()->defaultValue(false));
         $this->addColumn('{{%admin_user}}', 'login_2fa_secret', $this->string());
@@ -45,7 +45,7 @@ class m200128_141129_v3_update extends Migration
             'updated_at' => $this->integer(),
         ]);
 
-        $this->createIndex('queue_log_id', '{{%admin_queue_log_error}}', 'queue_log_id');
+        $this->createIndex('index_admin_queue_log_error_queue_log_id', '{{%admin_queue_log_error}}', 'queue_log_id');
 
         // user login lockout
         $this->createTable('{{%admin_user_login_lockout}}', [
@@ -57,7 +57,7 @@ class m200128_141129_v3_update extends Migration
             'updated_at' => $this->integer(),
         ]);
 
-        $this->createIndex('user_id', '{{%admin_user_login_lockout}}', 'user_id');
+        $this->createIndex('index_admin_user_login_lockout_user_id', '{{%admin_user_login_lockout}}', 'user_id');
 
         // password restore link
         $this->addColumn('{{%admin_user}}', 'password_verification_token', $this->string(40));

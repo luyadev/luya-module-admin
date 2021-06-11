@@ -323,7 +323,7 @@ return [
 
 // 1.1.1
 
-    'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
+    'ngrest_crud_total_count' => '{{data.listArray.length}} sur {{totalRows}}',
     
 // 1.2.0
     
@@ -422,7 +422,7 @@ return [
 
 // 2.0.1
 
-    'js_dir_manager_file_replace_ok' => 'Le fichier a été replacé avec succès.',
+    'js_dir_manager_file_replace_ok' => 'Le fichier a été remplacé avec succès.',
 
 // 2.0.3
 
@@ -440,105 +440,120 @@ return [
 
 // 2.3.0
 
-    'aws_delete_remove_success' => 'The tag and its relations have been removed.',
-    'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
-    'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
-    'aws_delete_relations_table_name' => 'Relation Table Name',
-    'aws_delete_relations_table_count' => 'Number of Entries',
-    'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
+    'aws_delete_remove_success' => 'Le tag et ses relations ont été supprimés.',
+    'aws_delete_remove_wrong_name' => 'Le nom du tag est incorrect.',
+    'aws_delete_relations_info' => 'Le tag <b>{name}</b> est utilisé <b>{count}</b> fois. Il est assigné aux entrées suivantes dans les tables suivantes :',
+    'aws_delete_relations_table_name' => 'Relation nom de la table',
+    'aws_delete_relations_table_count' => 'Nombre d\'entrées',
+    'aws_delete_relations_form_hint' => 'Afin de supprimer ce tag, veuillez entrer le nom du tag et pressez \"Supprimer\".',
 
 // 2.4.0
 
-    'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
+    'aws_missing_callback_param_generic_errror' => 'Des données requises sont manquantes.',
 
 // 3.0.0
 
-    'device' => 'Device',
-    'last_login' => 'Last login',
-    'first_login' => 'First login',
-    'login_async_twofa_verify_error' => 'The one time secure code is invalid. Please use the latest code from your app and try again',
-    'login_async_twofa_wrong_backup_code' => 'The provided backup code is invalid.',
-    'login_autologin_label' => 'Remember this device',
-    'login_otp_label' => 'Enter the one time secure code from your 2FA application:',
+    'device' => 'Appareil',
+    'last_login' => 'Dernier login',
+    'first_login' => 'Premier login',
+    'login_async_twofa_verify_error' => 'Le code à utilisation unique est invalide. Veuillez utiliser le dernier code de votre application est essayez à nouveau.',
+    'login_async_twofa_wrong_backup_code' => 'Le code de récupération fourni est invalide.',
+    'login_autologin_label' => 'Se souvenir de cet appareil',
+    'login_otp_label' => 'Entrez le code d\'utilisation unique de votre application 2FA:',
     'login_otp_placeholder' => 'One Time Code', // OTP, keep original name makes sense
-    'login_otp_backup' => 'Backup Code',
-    'login_otp_help' => 'Unable to access the App?',
-    'login_otp_help_toggler' => 'Enter the backup code',
-    'user_register_2fa_verification_error' => 'Invalid verification code, please enter the new code from the 2fa app.',
-    'settings_devices' => 'Devices',
-    'settings_devices_info' => 'A list of devices you will be automatically logged in without being prompted for a password.',
-    'settings_devices_empty' => 'There are no devices yet for your account.',
-    'settings_devices_this' => 'This device',
-    'settings_2fa' => 'Two-factor authentication (2FA)',
-    'settings_2fa_intro' => 'Two-factor authentication ensures that only people with the password and access to the second factor device can log in. Each time you log in, you will be prompted to enter the two-factor code.',
-    'settings_2fa_backup_code_hint' => 'Store the backup code {{twoFaBackupCode}} in a safe place, it won\'t be displayed again.',
-    'settings_2fa_success' => 'two-factor authentication was set up successfully.',
-    'settings_2fa_step1' => 'Scan the QR code',
-    'settings_2fa_step2' => 'Enter the code from the app',
-    'settings_2fa_modal_pretext' => 'The following backup code can be used in case you have no access to the authenticator app:',
-    'settings_2fa_modal_after' => 'This code will only be displayed once and can\'t be retrieved later. Please write it down and store it in a safe place.',
-    'settings_2fa_verify_code_label' => 'Verification Code',
-    'settings_2fa_verify_code_hint' => 'Enter the code from your device, do note it changes every few seconds.',
-    'login_async_secure_token_error' => 'Unable to send and store secure token.',
+    'login_otp_backup' => 'Code de récupération',
+    'login_otp_help' => 'Impossible d\'accéder à l\'application ?',
+    'login_otp_help_toggler' => 'Entrez le code de récupération',
+    'user_register_2fa_verification_error' => 'Code de vérification non valide, veuillez saisir le nouveau code de l\'application 2FA.',
+    'settings_devices' => 'Appareils',
+    'settings_devices_info' => 'Une liste d\'appareils auxquels vous serez automatiquement connecté sans avoir à saisir de mot de passe.',
+    'settings_devices_empty' => 'Il n\'y a pas encore d\'appareils pour votre compte.',
+    'settings_devices_this' => 'Cet appareil',
+    'settings_2fa' => 'Authentification à deux facteurs (2FA)',
+    'settings_2fa_intro' => 'L\'authentification à deux facteurs assure que seules les personnes possédant le mot de passe et ayant accès au deuxième périphérique peuvent se connecter. Chaque fois que vous vous connectez, vous serez invité à entrer le code à deux facteurs.',
+    'settings_2fa_backup_code_hint' => 'Stockez le code de sauvegarde {{twoFaBackupCode}} dans un endroit sûr, il ne sera plus affiché.',
+    'settings_2fa_success' => 'L\'authentification à deux facteurs a été configurée avec succès.',
+    'settings_2fa_step1' => 'Scannez le QR code',
+    'settings_2fa_step2' => 'Entrez le code de l\'application',
+    'settings_2fa_modal_pretext' => 'Le code de sauvegarde suivant peut être utilisé si vous n\'avez pas accès à l\'application d\'authentification:',
+    'settings_2fa_modal_after' => 'Ce code ne sera affiché qu\'une seule fois et ne pourra pas être récupéré plus tard. Veuillez l\'écrire et le conserver dans un endroit sûr.',
+    'settings_2fa_verify_code_label' => 'Code de vérification',
+    'settings_2fa_verify_code_hint' => 'Entrez le code de votre appareil, notez qu\'il change toutes les quelques secondes.',
+    'login_async_secure_token_error' => 'Impossible d\'envoyer et de stocker le jeton sécurisé.',
     'menu_system_queue' => 'Queue',
-    'menu_system_queue_errors' => 'Queue Errors',
-    'login_forgot_password' => 'Forgot your Password?',
-    'login_invalid_reset_token' => 'The link to reset your password is not valid or has expired.',
-    'login_reset_password_success' => 'The password for your account was updated successfully.',
-    'reset_title' => 'Reset your Password',
-    'reset_text' => 'Enter your email address. An email with a link to reset your password will be sent to your inbox.',
-    'reset_success' => 'An email with a link to reset your password was sent. <b>Check your inbox</b> and click the link.',
-    'reset_submit_btn' => 'Send Email',
-    'reset_mail_error' => 'Unable to send email. There seems to be a problem with the mail configuration. Please contact your admin.',
-    'reset_email_subject' => 'Reset your Password',
-    'reset_email_text' => 'Click the link below to set a new password for your account.',
-    'reset_email_btn_label' => 'Reset your Password',
-    'reset_form_title' => 'Reset your Password',
-    'reset_form_text' => 'Enter a new password for your account.',
-    'reset_form_submit_btn' => 'Update password',
-    'user_change_password_error' =>  'Error while saving new password.',
+    'menu_system_queue_errors' => 'File d\'attente des erreurs',
+    'login_forgot_password' => 'Mot de passe oublié?',
+    'login_invalid_reset_token' => 'Le lien pour réinitialiser votre mot de passe n\'est pas valide ou a expiré.',
+    'login_reset_password_success' => 'Le mot de passe de votre compte a été mis à jour avec succès.',
+    'reset_title' => 'Réinitialisez votre mot de passe',
+    'reset_text' => 'Entrez votre adresse email. Un e-mail contenant un lien pour réinitialiser votre mot de passe sera envoyé dans votre boîte de réception.',
+    'reset_success' => 'Un e-mail contenant un lien pour réinitialiser votre mot de passe a été envoyé. <b>Vérifiez votre boîte de réception</b> et cliquez sur le lien.',
+    'reset_submit_btn' => 'Envoyez l\'email',
+    'reset_mail_error' => 'Impossible d\'envoyer des emails. Il semble y avoir un problème avec la configuration de la messagerie. Veuillez contacter votre administrateur.',
+    'reset_email_subject' => 'Réinitialisez votre mot de passe',
+    'reset_email_text' => 'Cliquez sur le lien ci-dessous pour définir un nouveau mot de passe pour votre compte.',
+    'reset_email_btn_label' => 'Réinitialisez votre mot de passe',
+    'reset_form_title' => 'Réinitialisez votre mot de passe',
+    'reset_form_text' => 'Entrez un nouveau mot de passe pour votre compte.',
+    'reset_form_submit_btn' => 'Mettre à jour votre mot de passe',
+    'user_change_password_error' =>  'Erreur lors de l\'enregistrement du nouveau mot de passe.',
 
 // 3.1.0
 
-    'crop_source_image' => 'Source Image',
-    'crop_preview' => 'Preview',
-    'crop_btn_as_copy' => 'Save image as a copy',
-    'crop_btn_as_copy_hint' => 'When enabled, the image will be stored as <b>a new file</b>, otherwise the existing file will be replaced.',
-    'crop_btn_save_copy' => 'Save as a copy',
-    'crop_btn_save_replace' => 'Replace existing file',
-    'crop_size_free' => 'Free',
+    'crop_source_image' => 'Image source',
+    'crop_preview' => 'Aperçu',
+    'crop_btn_as_copy' => 'Enregistrer l\'image en tant que copie',
+    'crop_btn_as_copy_hint' => 'Lorsqu\'elle est activée, l\'image sera stockée en tant que <b>nouveau fichier</b>, sinon le fichier existant sera remplacé.',
+    'crop_btn_save_copy' => 'Sauvegarder en tant que copie',
+    'crop_btn_save_replace' => 'Remplacer le fichier existant',
+    'crop_size_free' => 'Libre',
     'crop_size_1to1' => '1:1',
-    'crop_size_desktop' => 'Desktop',
+    'crop_size_desktop' => 'Bureau',
     'crop_size_mobile' => 'Mobile',
-    'crop_modal_title' => 'Image Cropping',
-    'crop_success' => 'File has been cropped an saved.',
-    'file_caption_success' => 'Captions has been updated.',
-    'crop_quality_high' => 'High',
-    'crop_quality_medium' => 'Medium',
-    'crop_quality_low' => 'Low',
+    'crop_modal_title' => 'Recadrage de l\'image',
+    'crop_success' => 'L\'image a été recadrée et enregistrée.',
+    'file_caption_success' => 'Sous-titre mis à jour.',
+    'crop_quality_high' => 'Elevée',
+    'crop_quality_medium' => 'Moyenne',
+    'crop_quality_low' => 'Basse',
 
 // 3.2.0
 
-    'menu_system_model_event_log' => 'Model Event Log',
-    'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
-    'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
-    'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Lists all unprocessed queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
-    'ngrest_delete_all_button_label' => 'Delete all data',
-    'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
-    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
+    'menu_system_model_event_log' => 'Journal des événements du modèle',
+    'ngrestlog_controller_description' => 'Les entrées du journal d\'événements du modèle sont capturées lors de la création, de la mise à jour ou de la suppression d\'enregistrements dans les vues CRUD de l\'administrateur.',
+    'logger_controller_description' => 'Les entrées du journal d\'application sont déclenchées par [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
+    'config_controller_description' => 'Créez des clés de configuration et attribuez une valeur à l\'aide de [Config Model](https://luya.io/api/luya-admin-models-Config).',
+    'queuelog_controller_description' => 'Répertorie tous les travaux de file d\'attente non traités, lisez [Queue Guide](https://luya.io/guide/app-queue) pour une configuration correcte.',
+    'ngrest_delete_all_button_label' => 'Supprimer toutes les données',
+    'ngrest_delete_all_button_confirm_message' => 'Êtes-vous sûr de supprimer toutes les données? Cette action est irréversible!',
+    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Chaque image est associée à un fichier.',
     'menu_group_log' => 'Logs',
     'menu_images_item_images' => 'Images',
-    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
-    'menu_group_storage' => 'Storage',
+    'filter_controller_description' => 'Les filtres sont utilisés pour générer différentes versions (par exemple, mises à l\'échelle ou recadrage) d\'une image. Lisez le [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
+    'menu_group_storage' => 'Stockage',
 
 // 3.4.0
 
-    'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
+    'user_model_email_deleted_account_exists' => 'L\'adresse e-mail fournie est déjà utilisée par un compte supprimé.',
 
 // 3.6.0
 
-    'i18n_required_validator_invalid_format' => 'The given attribute \"{attribute}\" must be type of array.',
-    'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is missing and is required.',
-    'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
+    'i18n_required_validator_invalid_format' => 'L\'attribut donné \"{attribute}\" doit être un tableau.',
+    'i18n_required_validator_missing_key' => 'Le code de langue \"{lang}\" est manquant et requis.',
+    'i18n_required_validator_invalid_empty_value' => 'Le champ langue \"{lang}\" ne peut être vide.',
+    'crud_exportdata_col_filter' => 'Filtrer',
+
+// 3.7.0
+
+    'menu_system_item_property' => 'Properties',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+
+// 4.0.0
+
+    'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
+    'button_save_and_close' => 'Save and close',
+    'button_create_and_close' => 'Create and close',
+    'button_create' => 'Create',
+    'button_cancel' => 'Cancel',
+    'button_create_and_new' => 'Create and new',
 ];

@@ -8,7 +8,7 @@ use yii\rest\IndexAction;
 
 /**
  * Controller Summary
- * 
+ *
  * Controller Description
  * @method Lang[] actionIndex() Return the data models ..
  */
@@ -26,7 +26,7 @@ class OpenApiController extends Controller
 
     /**
      * Post information
-     * 
+     *
      * Description of Save Action
      * @uses string $username
      * @uses int status

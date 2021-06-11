@@ -14,34 +14,40 @@ $spinner = Svg::widget([
     <!-- E-Mail & Password Form -->
     <form class="login-form shadow-lg rounded" method="post" id="loginForm">
 
-        <?php if (Yii::$app->session->getFlash('invalid_reset_token')): ?>
-            <p class="alert alert-warning mb-5"><?= Module::t('login_invalid_reset_token'); ?></p>
-        <?php endif; ?>
+        <?php if ($disableLogin): ?>
+            <p class="alert alert-light">
+                <?= $disableLoginMessage; ?>
+            </p>
+        <?php else: ?>
+            <?php if (Yii::$app->session->getFlash('invalid_reset_token')): ?>
+                <p class="alert alert-warning mb-5"><?= Module::t('login_invalid_reset_token'); ?></p>
+            <?php endif; ?>
 
-        <?php if (Yii::$app->session->getFlash('reset_password_success')): ?>
-            <p class="alert alert-success mb-5"><?= Module::t('login_reset_password_success'); ?></p>
-        <?php endif; ?>
+            <?php if (Yii::$app->session->getFlash('reset_password_success')): ?>
+                <p class="alert alert-success mb-5"><?= Module::t('login_reset_password_success'); ?></p>
+            <?php endif; ?>
 
-        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-        <div class="login-inputs">
-            <div class="login-form-field form-group">
-                <input class="login-input" id="email" name="login[email]" type="email" autocomplete="email" tabindex="1" required />
-                <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>
+            <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+            <div class="login-inputs">
+                <div class="login-form-field form-group">
+                    <input class="login-input" id="email" name="login[email]" type="email" autocomplete="email" tabindex="1" required />
+                    <label for="email" class="login-input-label"><?= Module::t('login_mail'); ?></label>
+                </div>
+                <div class="login-form-field form-group">
+                    <input class="login-input" id="password" name="login[password]" type="password" autocomplete="current-password" tabindex="2" required />
+                    <label for="password" class="login-input-label"><?= Module::t('login_password'); ?></label>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" name="login[autologin]" id="autologin">
+                    <label class="form-check-label" for="autologin"><?= Module::t('login_autologin_label'); ?></label>
+                </div>
+                <div class="login-buttons login-buttons-right">
+                    <button class="btn btn-primary login-btn" type="submit" tabindex="3">
+                        <span class="login-spinner"><?= $spinner; ?></span><span class="login-btn-label"><?= Module::t('login_btn_login'); ?></span>
+                    </button>
+                </div>
             </div>
-            <div class="login-form-field form-group">
-                <input class="login-input" id="password" name="login[password]" type="password" autocomplete="current-password" tabindex="2" required />
-                <label for="password" class="login-input-label"><?= Module::t('login_password'); ?></label>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" name="login[autologin]" id="autologin">
-                <label class="form-check-label" for="autologin"><?= Module::t('login_autologin_label'); ?></label>
-            </div>
-            <div class="login-buttons login-buttons-right">
-                <button class="btn btn-primary login-btn" type="submit" tabindex="3">
-                    <span class="login-spinner"><?= $spinner; ?></span><span class="login-btn-label"><?= Module::t('login_btn_login'); ?></span>
-                </button>
-            </div>
-        </div>
+        <?php endif; ?>
     </form>
 
     <!-- Admin Secure Token -->

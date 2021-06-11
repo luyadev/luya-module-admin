@@ -12,7 +12,6 @@ use luya\testsuite\fixtures\NgRestModelFixture;
 
 class SoftDeleteTraitTest extends AdminModelTestCase
 {
-
     public function testFindWithRelation()
     {
         new NgRestModelFixture([

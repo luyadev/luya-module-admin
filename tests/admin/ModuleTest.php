@@ -13,7 +13,5 @@ class ModuleTest extends AdminModelTestCase
 
         $this->assertArrayHasKey(64, $module->getJsTranslationMessages());
         $this->assertArrayHasKey('crop_quality_low', $module->getJsTranslations());
-
-        $module->setJsTranslations([]); // call for 100% coverage reason
     }
 }

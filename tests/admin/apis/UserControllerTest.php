@@ -8,8 +8,10 @@ use luya\admin\apis\UserController;
 use luya\admin\components\Auth;
 use luya\admin\models\UserDevice;
 use luya\admin\Module;
+use luya\helpers\FileHelper;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
+use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 class UserControllerTest extends AdminModelTestCase
@@ -101,6 +103,49 @@ class UserControllerTest extends AdminModelTestCase
                     'message' => 'Invalid verification code, please enter the new code from the 2fa app.'
                 ]
             ], $data);
+        });
+    }
+
+    public function testExportWithoutFilter()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('api-admin-user');
+            FileHelper::createDirectory(Yii::getAlias('@runtime'));
+
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+            ]);
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
+
+            $response = $scope->runControllerAction($ctrl, 'export');
+
+            $this->assertArrayHasKey('url', $response);
+        });
+    }
+
+    public function testExportFilter()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('api-admin-user');
+            FileHelper::createDirectory(Yii::getAlias('@runtime'));
+
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                'filter' => 'Removed',
+            ]);
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
+
+            $response = $scope->runControllerAction($ctrl, 'export');
+
+            $this->assertArrayHasKey('url', $response);
+
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                'filter' => 'Does not exists',
+            ]);
+
+            $this->expectException(InvalidCallException::class);
+            $response = $scope->runControllerAction($ctrl, 'export');
         });
     }
 }
