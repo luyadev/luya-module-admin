@@ -2,6 +2,7 @@
 
 namespace luya\admin\ngrest\plugins;
 
+use luya\admin\traits\LazyDataLoadTrait;
 use luya\helpers\ArrayHelper;
 
 /**
@@ -15,6 +16,18 @@ use luya\helpers\ArrayHelper;
  *     'genres' => ['selectArray', 'data' => [1 => 'Male', 2 => 'Female']],
  * }
  * ```
+ * Or use a closure for lazy data load:
+ *
+ * ```php
+ * public function ngRestAttributeTypes()
+ * {
+ *     return [
+ *         'genres' => ['selectArray', 'data' => function () {
+ *               return new Query()->all();
+ *          }],
+ *     ];
+ * }
+ * ```
  *
  * @property array $data Setter/Getter for the dropdown values.
  *
@@ -23,6 +36,8 @@ use luya\helpers\ArrayHelper;
  */
 class SelectArray extends Select
 {
+    use LazyDataLoadTrait;
+    
     private $_data;
     
     /**
@@ -44,7 +59,7 @@ class SelectArray extends Select
     {
         $cleandata = [];
          
-        foreach ($this->_data as $key => $value) {
+        foreach ($this->loadData($this->_data) as $key => $value) {
             $cleandata[] = [
                 'value' => $key,
                 'label' => $value,

@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\helpers\I18n;
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\traits\LazyDataLoadTrait;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
 
@@ -21,6 +22,19 @@ use luya\helpers\StringHelper;
  * }
  * ```
  *
+ * Or use a closure for lazy data load:
+ *
+ * ```php
+ * public function ngRestAttributeTypes()
+ * {
+ *     return [
+ *         'genres' => ['checkboxList', 'data' => function () {
+ *               return new Query()->all();
+ *          }],
+ *     ];
+ * }
+ * ```
+ *
  * The plugin stores the value of the selected checkbox items as json into the database.
  *
  * @author Basil Suter <basil@nadar.io>
@@ -28,6 +42,11 @@ use luya\helpers\StringHelper;
  */
 class CheckboxList extends Plugin
 {
+    use LazyDataLoadTrait;
+    
+    /**
+     * @var array|\Closure
+     */
     public $data = [];
     
     public $i18nEmptyValue = [];
@@ -60,10 +79,10 @@ class CheckboxList extends Plugin
     {
         $data = [];
     
-        foreach ($this->data as $value => $label) {
+        foreach ($this->lazyLoadData($this->data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
-    
+
         return ['items' => ArrayHelper::typeCast($data)];
     }
     
