@@ -79,10 +79,10 @@ class CheckboxList extends Plugin
     {
         $data = [];
     
-        foreach ($this->loadData($this->data) as $value => $label) {
+        foreach ($this->lazyLoadData($this->data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
-    
+
         return ['items' => ArrayHelper::typeCast($data)];
     }
     

@@ -77,4 +77,34 @@ class CheckboxListTest extends AdminTestCase
     
         $this->assertSame('[{"value":1},{"value":2}]', $user->id);
     }
+    
+    public function testLazyLoad()
+    {
+        $dataLoaded = false;
+        
+        $plugin = new CheckboxList([
+            'alias' => 'alias',
+            'name' => 'id',
+            'i18n' => false,
+            'data' => function () use (&$dataLoaded) {
+                $dataLoaded = true;
+                return ['some' => 'data'];
+            },
+        ]);
+    
+        $this->assertFalse($dataLoaded, 'Data should load lazy.');
+    
+        $model = new UserFixture();
+        $model->load();
+        $user = $model->getModel('user1');
+        $user->id = '[{"value":1},{"value":2}]';
+    
+        $event = new Event();
+        $event->sender = $user;
+    
+        $plugin->onAfterListFind($event);
+    
+        $this->assertTrue($dataLoaded, 'Lazy laod was not called.');
+    
+    }
 }
