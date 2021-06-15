@@ -2,6 +2,7 @@
 
 namespace luya\admin\jobs;
 
+use luya\admin\models\StorageFile;
 use Yii;
 use yii\base\BaseObject;
 use yii\queue\JobInterface;
@@ -17,9 +18,11 @@ class ImageFilterJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
-        Yii::$app->storage->createImage($this->fileId, 0); 
-        foreach ((array) $this->filterIdentifiers as $identifier) {
-            Yii::$app->storage->createImage($this->fileId, $identifier); 
+        if (StorageFile::find()->where(['id' => $this->fileId])->exists()) {
+            Yii::$app->storage->createImage($this->fileId, 0); 
+            foreach ((array) $this->filterIdentifiers as $identifier) {
+                Yii::$app->storage->createImage($this->fileId, $identifier); 
+            }
         }
     }
 }
