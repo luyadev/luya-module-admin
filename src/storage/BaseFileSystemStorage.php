@@ -288,7 +288,7 @@ abstract class BaseFileSystemStorage extends Component
      * in the admin ui.
      * @since 4.0.0
      */
-    public $queueFilterCreation = true;
+    public $queueFilterCreation = false;
 
     /**
      * @var array If {{$queueFilterCreation}} is enabled, the following image filters will be processed.
