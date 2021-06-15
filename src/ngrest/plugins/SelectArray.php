@@ -59,7 +59,7 @@ class SelectArray extends Select
     {
         $cleandata = [];
          
-        foreach ($this->loadData($this->_data) as $key => $value) {
+        foreach ($this->lazyLoadData($this->_data) as $key => $value) {
             $cleandata[] = [
                 'value' => $key,
                 'label' => $value,

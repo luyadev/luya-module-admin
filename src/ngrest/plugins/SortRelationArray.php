@@ -41,7 +41,7 @@ class SortRelationArray extends SortRelation
     public function getData()
     {
         $data = [];
-        foreach ($this->loadData($this->_data) as $value => $label) {
+        foreach ($this->lazyLoadData($this->_data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
         
