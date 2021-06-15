@@ -450,32 +450,41 @@ class StorageController extends RestController
      * + folderId
      * + isHidden
      *
-     * @return array An array with upload and message key.
+     * @return array An array with an assoc array containing the following keys
+     * + upload: boolean, whether upload was sucessfull or not
+     * + message: string, a message which describes the upload status. Even a success upload contains a message
+     * + file: {{luya\admin\file\Item}}, the file item if successfull
+     * + queueIds: array, a list with queue job ids if things need to be processed by queue (for example filters).
     */
     public function actionFilesUpload()
     {
         foreach ($_FILES as $k => $file) {
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
-                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error']), 'file' => null];
+                return ['upload' => false, 'message' => Storage::getUploadErrorMessage($file['error']), 'file' => null, 'queueIds' => []];
             }
             try {
                 $response = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], Yii::$app->request->post('folderId', 0), Yii::$app->request->post('isHidden', false));
                 if ($response) {
-                    return ['upload' => true, 'message' => Module::t('api_storage_file_upload_succes'), 'file' => $response];
+                    return [
+                        'upload' => true,
+                        'message' => Module::t('api_storage_file_upload_succes'),
+                        'file' => $response,
+                        'queueIds' => Yii::$app->storage->queueJobIds,
+                    ];
                 } else {
                     Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
-                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error'), 'file' => null];
+                    return ['upload' => false, 'message' => Module::t('api_storage_file_upload_folder_error'), 'file' => null, 'queueIds' => []];
                 }
             } catch (Exception $err) {
                 Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
-                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null];
+                return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null, 'queueIds' => []];
             }
         }
     
         // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload definition.
         Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
-        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null];
+        return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null, 'queueIds' => []];
     }
     
     /**

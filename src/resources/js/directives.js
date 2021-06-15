@@ -3114,8 +3114,8 @@ zaa.directive("storageFileManager", function () {
             onlyImages: '@onlyImages'
         },
         controller: [
-            '$scope', '$http', '$filter', '$timeout', '$rootScope', '$q', 'HtmlStorage', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags',
-            function ($scope, $http, $filter, $timeout, $rootScope, $q, HtmlStorage, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags) {
+            '$scope', '$http', '$filter', '$timeout', '$q', 'HtmlStorage', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 'ServiceQueueWaiting',
+            function ($scope, $http, $filter, $timeout, $q, HtmlStorage, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags, ServiceQueueWaiting) {
 
                 // ServiceFoldersData inheritance
 
@@ -3296,9 +3296,11 @@ zaa.directive("storageFileManager", function () {
                                 file: item.getAsFile()
                             }).then(function (response) {
                                 if (response.data.upload) {
-                                    $scope.getFilesForCurrentPage().then(function () {
-                                        AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
-                                        LuyaLoading.stop();
+                                    ServiceQueueWaiting.waitFor(response.data.queueIds).then(waitForResposne => {
+                                        $scope.getFilesForCurrentPage().then(function () {
+                                            AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                                            LuyaLoading.stop();
+                                        });
                                     });
                                 } else {
                                     AdminToastService.error(response.data.message);
@@ -3321,14 +3323,19 @@ zaa.directive("storageFileManager", function () {
 
                     file.upload.then(function (response) {
                         $timeout(function () {
-                            $scope.uploadResults++;
-                            file.processed = true;
-                            file.result = response.data;
-                            if (!file.result.upload) {
-                                AdminToastService.error(file.result.message);
-                                LuyaLoading.stop();
-                                $scope.errorMsg = true
-                            }
+
+                            ServiceQueueWaiting.waitFor(response.data.queueIds).then(waitForResposne => {
+                                $scope.uploadResults++;
+                                file.processed = true;
+                                file.result = response.data;
+                                if (!file.result.upload) {
+                                    AdminToastService.error(file.result.message);
+                                    LuyaLoading.stop();
+                                    $scope.errorMsg = true
+                                }
+                            })
+
+                           
                         });
                     }, function (response) {
                         file = response.data;

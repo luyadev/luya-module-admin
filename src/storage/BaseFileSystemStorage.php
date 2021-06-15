@@ -20,6 +20,8 @@ use luya\admin\filters\MediumThumbnail;
 use luya\admin\Module;
 use yii\helpers\VarDumper;
 use luya\admin\events\FileEvent;
+use luya\admin\file\Item;
+use luya\admin\jobs\ImageFilterJob;
 
 /**
  * Storage Container for reading, saving and holding files.
@@ -281,6 +283,25 @@ abstract class BaseFileSystemStorage extends Component
     public $autoFixMissingImageSources = true;
 
     /**
+     * @var boolean When enabled, the filters in the {{$filterCreationList}} will be applied to the uploaded file if the file is an image. We
+     * recommend you turn this on, only when using the `queue/listen` command, because the user needs to wait until the queue job is processed
+     * in the admin ui.
+     * @since 4.0.0
+     */
+    public $queueFilterCreation = true;
+
+    /**
+     * @var array If {{$queueFilterCreation}} is enabled, the following image filters will be processed.
+     * @since 4.0.0
+     */
+    public $filterCreationList = ['tiny-crop', 'medium-crop'];
+
+    /**
+     * @var array If the storage system pushed any jobs into the queue, this array holds the queue job ids.
+     */
+    public $queueJobIds = [];
+
+    /**
      * Consturctor resolveds Request component from DI container
      *
      * @param \luya\web\Request $request The request component class resolved by the Dependency Injector.
@@ -510,7 +531,7 @@ abstract class BaseFileSystemStorage extends Component
      * @param string $fileName The name of this file (must contain data type suffix).
      * @param integer $folderId The id of the folder where the file should be stored in.
      * @param boolean $isHidden Should the file visible in the filemanager or not.
-     * @return bool|\luya\admin\file\Item|Exception Returns the item object, if an error happens an exception is thrown.
+     * @return bool|Item|Exception Returns the item object, if an error happens an exception is thrown.
      * @throws Exception
      */
     public function addFile($fileSource, $fileName, $folderId = 0, $isHidden = false)
@@ -544,6 +565,9 @@ abstract class BaseFileSystemStorage extends Component
 
         if ($model->validate()) {
             if ($model->save()) {
+                if ($model->isImage && $this->queueFilterCreation) {
+                    $this->queueJobIds[] = Yii::$app->adminqueue->push(new ImageFilterJob(['fileId' => $model->id, 'filterIdentifiers' => $this->filterCreationList]));
+                }
                 $this->trigger(self::FILE_SAVE_EVENT, new FileEvent(['file' => $model]));
                 $this->deleteHasCache(self::CACHE_KEY_FILE);
                 $this->_filesArray[$model->id] = $model->toArray();
