@@ -23,6 +23,7 @@ class ImageFilterJobTest extends AdminConsoleSqLiteTestCase
         $job = new ImageFilterJob();
         $job->fileId = 1;
         $job->filterIdentifiers = [SmallCrop::identifier()];
-        $job->execute($this->app->getModule('admin')->adminqueue);
+        $this->assertEmpty($job->execute($this->app->getModule('admin')->adminqueue));
+
     }
 }
