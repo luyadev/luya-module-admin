@@ -20,6 +20,9 @@ class ScheduleJob extends BaseObject implements JobInterface
      */
     public $schedulerId;
 
+    /**
+     * {@inheritDoc}
+     */
     public function execute($queue)
     {
         $model = Scheduler::findOne($this->schedulerId);

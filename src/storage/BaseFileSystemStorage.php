@@ -283,18 +283,18 @@ abstract class BaseFileSystemStorage extends Component
     public $autoFixMissingImageSources = true;
 
     /**
-     * @var boolean When enabled, the filters in the {{$filterCreationList}} will be applied to the uploaded file if the file is an image. We
-     * recommend you turn this on, only when using the `queue/listen` command, because the user needs to wait until the queue job is processed
+     * @var boolean When enabled, the filters in the {{luya\admin\storage\BaseFileSystemStorage::$queueFilters}} will be applied to the uploaded file if the file is an image. We
+     * recommend you turn this on, only when using the `queue/listen` command see [[app-queue.md]], because the user needs to wait until the queue job is processed
      * in the admin ui.
      * @since 4.0.0
      */
     public $queueFilterCreation = false;
 
     /**
-     * @var array If {{$queueFilterCreation}} is enabled, the following image filters will be processed.
+     * @var array If {{luya\admin\storage\BaseFileSystemStorage::$queueFilterCreation}} is enabled, the following image filters will be processed.
      * @since 4.0.0
      */
-    public $filterCreationList = ['tiny-crop', 'medium-crop'];
+    public $queueFilters = ['tiny-crop', 'medium-crop'];
 
     /**
      * @var array If the storage system pushed any jobs into the queue, this array holds the queue job ids.
@@ -566,7 +566,7 @@ abstract class BaseFileSystemStorage extends Component
         if ($model->validate()) {
             if ($model->save()) {
                 if ($model->isImage && $this->queueFilterCreation) {
-                    $this->queueJobIds[] = Yii::$app->adminqueue->push(new ImageFilterJob(['fileId' => $model->id, 'filterIdentifiers' => $this->filterCreationList]));
+                    $this->queueJobIds[] = Yii::$app->adminqueue->push(new ImageFilterJob(['fileId' => $model->id, 'filterIdentifiers' => $this->queueFilters]));
                 }
                 $this->trigger(self::FILE_SAVE_EVENT, new FileEvent(['file' => $model]));
                 $this->deleteHasCache(self::CACHE_KEY_FILE);
