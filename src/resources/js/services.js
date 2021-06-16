@@ -9,6 +9,54 @@ adminServiceResolver = ['ServiceFoldersData', 'ServiceFiltersData', 'ServiceLang
 }];
 
 /**
+ * A promise which is resolved when all queue job ids are don:
+ * 
+ * ServiceQueueWaiting.waitFor(response.data.queueIds).then({
+ *  ....
+ * })
+ */
+zaa.factory("ServiceQueueWaiting", ['$http', '$q', '$timeout', function($http, $q, $timeout) {
+	var service = {
+		ids: [],
+		interval: false
+	};
+
+	service.waitFor = function(ids) {
+		service.ids = ids
+		return $q(function(resolve, reject) {
+			service.ids.forEach(queueId => {
+				service.waitForJobId(queueId)
+			})
+
+
+			service.interval = setInterval(() => {
+				if (service.ids.length == 0) {
+					clearInterval(service.interval)
+					resolve(ids);
+				}
+			}, 150)
+		});
+	};
+
+	service.waitForJobId = function(jobId) {
+		$http.get('admin/api-admin-common/queue-job?jobId=' + jobId).then(response => {
+			if (response.data.is_done) {
+				const index = service.ids.indexOf(jobId);
+				if (index > -1) {
+					service.ids.splice(index, 1);
+				}
+			} else {
+				setTimeout(() => {
+					service.waitForJobId(jobId)
+				}, 500);
+			}
+		})
+	};
+
+	return service
+}])
+
+/**
  * Global LUYA Angular Services:
  * 
  * controller resolve: https://github.com/johnpapa/angular-styleguide#style-y080

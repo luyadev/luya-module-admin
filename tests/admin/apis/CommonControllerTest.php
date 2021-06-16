@@ -83,6 +83,22 @@ class CommonControllerTest extends AdminModelTestCase
             $this->assertSame([], $response);
         });
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testActionQueueJob()
+    {
+        $this->createAdminLangFixture();
+        $this->createAdminQueueTable();
+        $ctrl = new CommonController('id', $this->app->getModule('admin'));
+        
+        $r = $ctrl->actionQueueJob(0);
+
+        $this->assertArrayHasKey('is_waiting', $r);
+        $this->assertArrayHasKey('is_reserved', $r);
+        $this->assertArrayHasKey('is_done', $r);
+    }
     
     public function testDataProperties()
     {

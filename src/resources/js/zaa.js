@@ -192,9 +192,10 @@ zaa.factory("LuyaLoading", ['$timeout', function($timeout) {
             // rm previous timeouts
             $timeout.cancel(timeoutPromise);
 
+            state = true
             timeoutPromise = $timeout(function () {
                 state = true;
-            }, 2000);
+            }, 1000);
         },
         stop: function () {
             $timeout.cancel(timeoutPromise);

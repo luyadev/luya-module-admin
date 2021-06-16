@@ -30,6 +30,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#641](https://github.com/luyadev/luya-module-admin/pull/641) Added loading indicator for filemanager file detail.
 + [#643](https://github.com/luyadev/luya-module-admin/issues/643) Fixed issue where the root folder where displaying all files from the storage system.
 + [#645](https://github.com/luyadev/luya-module-admin/pull/645) New predifined radio input page property `luya\admin\base\RadioProperty`
++ [#648](https://github.com/luyadev/luya-module-admin/pull/648) The storage contains now an option which can generate filter version of images async in the queue after uploading. To do see take a look at `luya\admin\storage\BaseFileSystemStorage::$queueFilters`.
 
 ## 3.9.0 (24. November 2020)
 
