@@ -283,18 +283,19 @@ abstract class BaseFileSystemStorage extends Component
     public $autoFixMissingImageSources = true;
 
     /**
-     * @var boolean When enabled, the filters in the {{luya\admin\storage\BaseFileSystemStorage::$queueFilters}} will be applied to the uploaded file if the file is an image. We
+     * @var boolean When enabled, the filters in the {{luya\admin\storage\BaseFileSystemStorage::$queueFiltersList}} will be applied to the uploaded file if the file is an image. We
      * recommend you turn this on, only when using the `queue/listen` command see [[app-queue.md]], because the user needs to wait until the queue job is processed
      * in the admin ui.
      * @since 4.0.0
      */
-    public $queueFilterCreation = false;
+    public $queueFilters = false;
 
     /**
-     * @var array If {{luya\admin\storage\BaseFileSystemStorage::$queueFilterCreation}} is enabled, the following image filters will be processed.
+     * @var array If {{luya\admin\storage\BaseFileSystemStorage::$queueFilters}} is enabled, the following image filters will be processed. We recommend
+     * to add the default filters which are used in the admin ui (for file manager thumbnails). Therefore those are default values `['tiny-crop', 'medium-crop']`.
      * @since 4.0.0
      */
-    public $queueFilters = ['tiny-crop', 'medium-crop'];
+    public $queueFiltersList = ['tiny-crop', 'medium-crop'];
 
     /**
      * @var array If the storage system pushed any jobs into the queue, this array holds the queue job ids.
@@ -565,8 +566,8 @@ abstract class BaseFileSystemStorage extends Component
 
         if ($model->validate()) {
             if ($model->save()) {
-                if ($model->isImage && $this->queueFilterCreation) {
-                    $this->queueJobIds[] = Yii::$app->adminqueue->push(new ImageFilterJob(['fileId' => $model->id, 'filterIdentifiers' => $this->queueFilters]));
+                if ($model->isImage && $this->queueFilters) {
+                    $this->queueJobIds[] = Yii::$app->adminqueue->push(new ImageFilterJob(['fileId' => $model->id, 'filterIdentifiers' => $this->queueFiltersList]));
                 }
                 $this->trigger(self::FILE_SAVE_EVENT, new FileEvent(['file' => $model]));
                 $this->deleteHasCache(self::CACHE_KEY_FILE);
