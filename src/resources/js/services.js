@@ -39,7 +39,7 @@ zaa.factory("ServiceQueueWaiting", ['$http', '$q', '$timeout', function($http, $
 	};
 
 	service.waitForJobId = function(jobId) {
-		$http.get('admin/api-admin-common/queue-status?jobId=' + jobId).then(response => {
+		$http.get('admin/api-admin-common/queue-job?jobId=' + jobId).then(response => {
 			if (response.data.is_done) {
 				const index = service.ids.indexOf(jobId);
 				if (index > -1) {

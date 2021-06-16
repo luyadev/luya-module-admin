@@ -68,7 +68,7 @@ class CommonController extends RestController
      * @param integer $jobId The queue job it from the push() method
      * @return array An array with `is_waiting`, `is_reserved` and `is_done` information.
      */
-    public function actionQueueStatus($jobId)
+    public function actionQueueJob($jobId)
     {
         return [
             'is_waiting' => Yii::$app->adminqueue->isWaiting($jobId),
