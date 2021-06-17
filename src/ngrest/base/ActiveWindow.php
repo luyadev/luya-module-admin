@@ -29,7 +29,7 @@ use luya\admin\components\Auth;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class ActiveWindow extends BaseObject implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface, NgRestPermissionLevelInterface
+abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInterface, ActiveWindowInterface, NgRestButtonConditionInterface, NgRestPermissionLevelInterface
 {
     /**
      * @var string $suffix The suffix to use for all classes
@@ -409,29 +409,5 @@ abstract class ActiveWindow extends BaseObject implements ViewContextInterface, 
         }
         
         return explode(",", $this->_itemId);
-    }
-    
-    /**
-     * Send an error message based on an array configuration for ajax responses.
-     *
-     * @param string $message The error Message
-     * @param array $data Optional response data
-     * @return array
-     */
-    public function sendError($message, array $data = [])
-    {
-        return ['error' => true, 'message' => $message, 'responseData' => $data];
-    }
-    
-    /**
-     * Send an success message based on an array configuration for ajax responses.
-     *
-     * @param string $message The success
-     * @param array $data Optional response data
-     * @return array
-     */
-    public function sendSuccess($message, array $data = [])
-    {
-        return ['error' => false, 'message' => $message, 'responseData' => $data];
     }
 }

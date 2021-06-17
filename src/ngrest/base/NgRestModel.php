@@ -937,6 +937,16 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         return [];
     }
+
+    public function ngRestActiveSelections()
+    {
+        return [];
+    }
+
+    public function handleNgRestActiveSelections($index)
+    {
+        return $this->getNgRestConfig()->getActiveSelections()[$index];
+    }
     
     /**
      * Inject data from the model into the config, usage exmple in ngRestConfig method context:
@@ -1151,6 +1161,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->setGroupByExpanded($this->ngRestGroupByExpanded());
             $config->setTableName($this->tableName());
             $config->setAttributeLabels($this->attributeLabels());
+            $config->setActiveSelections($this->ngRestActiveSelections());
 
             $config->onFinish();
             $this->_config = $config;

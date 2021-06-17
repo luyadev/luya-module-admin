@@ -162,6 +162,9 @@ $filters = Angular::optionsArrayInput($filters);
                 <table class="table table-hover table-align-middle table-striped">
                     <thead class="thead-default">
                         <tr>
+                        <?php if ($hasActiveSelections): ?>
+                            <th></th>
+                            <?php endif; ?>
                             <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
@@ -194,6 +197,19 @@ $filters = Angular::optionsArrayInput($filters);
                             <?php endforeach; ?>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
+                            <?php if ($hasActiveSelections): ?>
+                            <td
+                                width="45"
+                            >
+                                <input
+                                    id="{{k}}"
+                                    type="checkbox"
+                                    ng-checked="isInSelection(item)"
+                                    ng-click="toggleSelection(item)"
+                                />
+                                <label for="{{k}}" style="margin:0 auto"></label>
+                            </td>
+                            <?php endif; ?>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
                                 <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
@@ -231,7 +247,20 @@ $filters = Angular::optionsArrayInput($filters);
                 </table>
             </div>
             <div ng-show="data.listArray.length == 0" class="p-3 text-muted"><?= Module::t('ngrest_crud_empty_row'); ?></div>
-
+            <?php if ($hasActiveSelections): ?>
+                <div class="mx-2 mt-3">
+                <?php foreach ($config->getActiveSelections() as $buttonIndex => $selectionButtons): ?>
+                    <button 
+                        type="button" 
+                        class="btn btn-icon btn-outline-secondary"
+                        ng-click="sendActiveSelection(<?= $buttonIndex; ?>)"    
+                    ><?php if (!empty($selectionButtons->icon)): ?><i class="material-icons"><?= $selectionButtons->icon; ?></i><?php endif; ?>
+                        <?= $selectionButtons->label; ?>
+                        <small ng-show="selectedItems.length > 0" class="badge badge-secondary">{{selectedItems.length}}</small>
+                    </button>
+                <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             <div class="crud-pagination-wrapper">
                 <div class="crud-pagination">
                     <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
