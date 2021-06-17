@@ -43,7 +43,9 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
         // wont work as alias is unique
         $this->assertSame([
             'success' => true,
+            'error' => false,
             'message' => 'A copy has been created.',
+            'responseData' => [],
             'events' => [
                 'loadList',
             ],
@@ -69,7 +71,9 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
         // wont work as alias is unique
         $this->assertSame([
             'success' => false,
+            'error' => true,
             'message' => 'Error while creating the copy: Tag Identifier "foobar" has already been taken.',
+            'responseData' => [],
             'events' => [],
         ], $btn->handle($model));
     }
@@ -88,7 +92,9 @@ class DuplicateActiveButtonTestt extends AdminModelTestCase
         // wont work as alias is unique
         $this->assertSame([
             'success' => false,
+            'error' => true,
             'message' => 'Error while creating the copy: Model with id  not found.',
+            'responseData' => [],
             'events' => [],
         ], $btn->handle($model));
     }

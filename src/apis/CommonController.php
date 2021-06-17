@@ -188,7 +188,7 @@ class CommonController extends RestController
     }
     
     /**
-     * Set the lastest ngrest curd list order direction in the User Settings.
+     * Set the lastest ngrest CRUD list order direction in the User Settings.
      *
      * @uses string apiEndpoint
      * @uses string sort

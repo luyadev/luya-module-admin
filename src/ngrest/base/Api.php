@@ -901,4 +901,31 @@ class Api extends RestActiveController
 
         return $model->handleNgRestActiveButton($hash);
     }
+
+    /**
+     * Run the active selection handler for the given item
+     *
+     * @param integer $index
+     * @return array
+     * @since 4.0.0
+     * @throws NotFoundHttpException
+     */
+    public function actionActiveSelection($index)
+    {
+        $class = $this->modelClass;
+        $items = $class::findAll(Yii::$app->request->getBodyParam('ids', [0]));
+
+        /** @var NgRestModel $model */
+        $model = new $class;
+
+        $activeSelections = $model->getNgRestConfig()->getActiveSelections();
+
+        if (!array_key_exists($index, $activeSelections)) {
+            throw new NotFoundHttpException("Unable to find the active selection handler.");
+        }
+
+        $object = $activeSelections[$index];
+
+        return $object->handle($items);
+    }
 }

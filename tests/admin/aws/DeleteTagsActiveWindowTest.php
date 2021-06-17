@@ -88,9 +88,11 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $response = $aws->callbackRemove('foobar');
 
         $this->assertSame([
+            'success' => true,
             'error' => false,
             'message' => 'The tag and its relations have been removed.',
             'responseData' => [],
+            'events' => [],
         ], $response);
 
         $this->cleanupFixtures();
@@ -112,9 +114,11 @@ class DeleteTagsActiveWindowTest extends AdminModelTestCase
         $response = $aws->callbackRemove('unknown');
 
         $this->assertSame([
+            'success' => false,
             'error' => true,
             'message' => 'The tag name is wrong.',
             'responseData' => [],
+            'events' => [],
         ], $response);
 
         $this->cleanupFixtures();

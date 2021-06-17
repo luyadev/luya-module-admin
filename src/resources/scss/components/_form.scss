@@ -157,6 +157,7 @@ input[type="radio"] {
     margin: 3px 10px 3px 0;
 
     & + label {
+        min-height: 1em;
         cursor: pointer;
         float: left;
         margin: 0 0 3px 0;

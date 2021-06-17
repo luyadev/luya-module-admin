@@ -6,11 +6,11 @@ use luya\helpers\ArrayHelper;
 use luya\helpers\Json;
 use yii\helpers\Markdown;
 
-/** @var $config \luya\admin\ngrest\ConfigInterface */
-/** @var $this \luya\admin\ngrest\render\RenderCrudView */
-/** @var $isInline boolean Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
-/** @var $relationCall boolean Whether the current request is a relation call, this means you can switch between tabs. */
-/** @var $modelSelection string|boolean Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
+/** @var \luya\admin\ngrest\ConfigInterface $config */
+/** @var \luya\admin\ngrest\render\RenderCrudView $this */
+/** @var boolean $isInline Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
+/** @var boolean $relationCall Whether the current request is a relation call, this means you can switch between tabs. */
+/** @var string|boolean $modelSelection Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
 $this->beginPage();
 $this->beginBody();
 
@@ -162,6 +162,9 @@ $filters = Angular::optionsArrayInput($filters);
                 <table class="table table-hover table-align-middle table-striped">
                     <thead class="thead-default">
                         <tr>
+                        <?php if ($hasActiveSelections): ?>
+                            <th></th>
+                            <?php endif; ?>
                             <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
                             <th class="tab-padding-left">
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
@@ -194,6 +197,19 @@ $filters = Angular::optionsArrayInput($filters);
                             <?php endforeach; ?>
                         </tr>
                         <tr ng-repeat="(k, item) in items track by k" ng-show="viewToggler[key]" <?php if ($isInline && !$relationCall && $modelSelection): ?>ng-class="{'crud-selected-row': getRowPrimaryValue(item) == <?= $modelSelection?>}"class="crud-selectable-row"<?php endif; ?>>
+                            <?php if ($hasActiveSelections): ?>
+                            <td
+                                width="45"
+                            >
+                                <input
+                                    id="{{k}}"
+                                    type="checkbox"
+                                    ng-checked="isInSelection(item)"
+                                    ng-click="toggleSelection(item)"
+                                />
+                                <label for="{{k}}" style="margin:0 auto"></label>
+                            </td>
+                            <?php endif; ?>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
                                 <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
@@ -231,8 +247,22 @@ $filters = Angular::optionsArrayInput($filters);
                 </table>
             </div>
             <div ng-show="data.listArray.length == 0" class="p-3 text-muted"><?= Module::t('ngrest_crud_empty_row'); ?></div>
-
-            <div class="crud-pagination-wrapper">
+            <?php if ($hasActiveSelections): ?>
+                <div class="mx-2 mt-3">
+                <?php foreach ($config->getActiveSelections() as $buttonIndex => $selectionButtons): ?>
+                    <button 
+                        ng-disabled="selectedItems.length==0"
+                        type="button" 
+                        class="btn btn-icon btn-outline-secondary"
+                        ng-click="sendActiveSelection(<?= $buttonIndex; ?>)"    
+                    ><?php if (!empty($selectionButtons->icon)): ?><i class="material-icons"><?= $selectionButtons->icon; ?></i><?php endif; ?>
+                        <?= $selectionButtons->label; ?>
+                        <small ng-show="selectedItems.length > 0" class="badge badge-secondary">{{selectedItems.length}}</small>
+                    </button>
+                <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            <div class="crud-pagination-wrapper" ng-show="pager.pageCount > 1">
                 <div class="crud-pagination">
                     <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
                 </div>

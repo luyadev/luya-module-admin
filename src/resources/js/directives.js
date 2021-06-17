@@ -737,7 +737,7 @@ zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
 }]);
 
 /**
- * Directive to load curd relations.
+ * Directive to load crud relations.
  */
 zaa.directive("crudRelationLoader", ['$http', '$sce', function ($http, $sce) {
     return {

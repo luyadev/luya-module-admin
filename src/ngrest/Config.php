@@ -5,6 +5,7 @@ namespace luya\admin\ngrest;
 use Yii;
 use luya\helpers\ArrayHelper;
 use luya\admin\Module;
+use luya\admin\ngrest\base\ActiveSelection;
 use luya\admin\ngrest\base\NgRestModel;
 use yii\base\InvalidConfigException;
 use yii\base\BaseObject;
@@ -130,6 +131,36 @@ class Config extends BaseObject implements ConfigInterface
     public function setRelation(NgRestRelation $relation)
     {
         $this->_relations[] = $relation;
+    }
+
+    private $_activeSelections = [];
+
+    /**
+     * Set all active selection definitions
+     *
+     * @param array $buttons
+     * @since 4.0.0
+     */
+    public function setActiveSelections(array $buttons)
+    {
+        $objects = [];
+        foreach ($buttons as $button) {
+            if (!array_key_exists('class', $button)) {
+                $button['class'] = ActiveSelection::class;
+            }
+    
+            $objects[] = Yii::createObject($button);
+        }
+
+        $this->_activeSelections = $objects;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getActiveSelections()
+    {
+        return $this->_activeSelections;
     }
     
     private $_activeButtons;

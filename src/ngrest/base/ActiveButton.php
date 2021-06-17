@@ -62,13 +62,8 @@ use luya\admin\components\Auth;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.3
  */
-abstract class ActiveButton extends BaseObject implements NgRestButtonConditionInterface, NgRestPermissionLevelInterface
+abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonConditionInterface, NgRestPermissionLevelInterface
 {
-    /**
-     * @var string The loadList event name
-     */
-    const EVENT_RELOAD_LIST = 'loadList';
-
     /**
      * Get the default label if not set trough {{$label}}.
      *
@@ -170,8 +165,6 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
     {
         return $this->_permissionLevel;
     }
-    
-    private $_events = [];
 
     /**
      * The handler which implements the function of the button.
@@ -182,48 +175,4 @@ abstract class ActiveButton extends BaseObject implements NgRestButtonConditionI
      * @return array See sendError() or sendSuccess().
      */
     abstract public function handle(NgRestModel $model);
-    
-    /**
-     * Send a crud reload event.
-     *
-     * @return void
-     */
-    protected function sendReloadEvent()
-    {
-        $this->_events[] = self::EVENT_RELOAD_LIST;
-    }
-
-    /**
-     * Send an error message as response.
-     *
-     * Events are only triggered on success messages {{sendSuccess()}}.
-     *
-     * @param string $message The error message.
-     * @return array
-     */
-    public function sendError($message)
-    {
-        Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
-
-        return [
-            'success' => false,
-            'message' => $message,
-            'events' => $this->_events,
-        ];
-    }
-
-    /**
-     * Send a success message.
-     *
-     * @param string $message The sucess message.
-     * @return array
-     */
-    public function sendSuccess($message)
-    {
-        return [
-            'success' => true,
-            'message' => $message,
-            'events' => $this->_events,
-        ];
-    }
 }

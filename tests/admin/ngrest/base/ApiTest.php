@@ -9,6 +9,7 @@ use luya\admin\models\UserAuthNotification;
 use luya\admin\ngrest\base\Api;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
+use yii\web\NotFoundHttpException;
 
 class ApiTest extends AdminModelTestCase
 {
@@ -51,6 +52,55 @@ class ApiTest extends AdminModelTestCase
 
         $this->expectException("yii\base\InvalidCallException");
         $rel->actionFilter('Unknown');
+    }
+
+    public function testActiveButtons()
+    {
+        $this->createAdminLangFixture();
+        $fixture = new NgRestModelFixture([
+            'modelClass' => User::class,
+            'fixtureData' => [
+                1  => [
+                    'id' => 1,
+                    'is_deleted' => 0,
+                    'is_api_user' => 0,
+                    'email' => 'foobar@barfoo.com',
+                ]
+            ]
+        ]);
+
+        new NgRestModelFixture([
+            'modelClass' => UserAuthNotification::class,
+        ]);
+        $rel = new TestActionApi('test-api', $this->app);
+        $rel->modelClass = User::class;
+        $response = $rel->actionActiveButton('hash', 1);
+        $this->assertFalse($response);
+    }
+
+    public function testActionActiveSelection()
+    {
+        $this->createAdminLangFixture();
+        $fixture = new NgRestModelFixture([
+            'modelClass' => User::class,
+            'fixtureData' => [
+                1  => [
+                    'id' => 1,
+                    'is_deleted' => 0,
+                    'is_api_user' => 0,
+                    'email' => 'foobar@barfoo.com',
+                ]
+            ]
+        ]);
+
+        new NgRestModelFixture([
+            'modelClass' => UserAuthNotification::class,
+        ]);
+        $rel = new TestActionApi('test-api', $this->app);
+        $rel->modelClass = User::class;
+
+        $this->expectException(NotFoundHttpException::class);
+        $rel->actionActiveSelection(0);
     }
 }
 

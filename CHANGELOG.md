@@ -31,6 +31,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#643](https://github.com/luyadev/luya-module-admin/issues/643) Fixed issue where the root folder where displaying all files from the storage system.
 + [#645](https://github.com/luyadev/luya-module-admin/pull/645) New predifined radio input page property `luya\admin\base\RadioProperty`
 + [#648](https://github.com/luyadev/luya-module-admin/pull/648) The storage contains now an option which can generate filter version of images async in the queue after uploading. To do see take a look at `luya\admin\storage\BaseFileSystemStorage::$queueFilters`.
++ [#649](https://github.com/luyadev/luya-module-admin/pull/649) New `ngRestActiveSelections` API which allows developers to interact with a certain selection in the CRUD list view. For example to archive or delete multiple items. The API is similar to Active Buttons.
 
 ## 3.9.0 (24. November 2020)
 

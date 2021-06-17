@@ -286,6 +286,39 @@
 			});
 		}
 
+        /******* ACTIVE SELECTIONS *******/
+
+		$scope.selectedItems = []
+
+		$scope.isInSelection = function(item) {
+			const pk = $scope.getRowPrimaryValue(item)
+			return this.selectedItems.indexOf(pk) != -1
+		}
+
+		$scope.toggleSelection = function(item) {
+			const pk = $scope.getRowPrimaryValue(item)
+			const index = this.selectedItems.indexOf(pk)
+			if (index == -1) {
+				this.selectedItems.push(pk)
+			} else {
+				this.selectedItems.splice(index, 1)
+			}
+		}
+
+		$scope.sendActiveSelection = function(buttonIndex) {
+			$http.post($scope.config.apiEndpoint + '/active-selection?index=' + buttonIndex, {ids: this.selectedItems}).then(function(success) {
+				angular.forEach(success.data.events, function(value) {
+					// event names
+					if (value == 'loadList') {
+						$scope.loadList();
+					}
+				});
+
+				AdminToastService.success(success.data.message);
+			}, function(error) {
+				AdminToastService.error(error.data.message);
+			});
+		}
 
 		/******* RELATION CALLLS *********/
 
