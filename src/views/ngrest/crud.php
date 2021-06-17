@@ -251,6 +251,7 @@ $filters = Angular::optionsArrayInput($filters);
                 <div class="mx-2 mt-3">
                 <?php foreach ($config->getActiveSelections() as $buttonIndex => $selectionButtons): ?>
                     <button 
+                        ng-disabled="selectedItems.length==0"
                         type="button" 
                         class="btn btn-icon btn-outline-secondary"
                         ng-click="sendActiveSelection(<?= $buttonIndex; ?>)"    
@@ -261,7 +262,7 @@ $filters = Angular::optionsArrayInput($filters);
                 <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-            <div class="crud-pagination-wrapper">
+            <div class="crud-pagination-wrapper" ng-show="pager.pageCount > 1">
                 <div class="crud-pagination">
                     <pagination current-page="pager.currentPage" page-count="pager.pageCount"></pagination>
                 </div>

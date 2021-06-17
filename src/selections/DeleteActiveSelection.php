@@ -4,11 +4,31 @@ namespace luya\admin\selections;
 
 use luya\admin\ngrest\base\ActiveSelection;
 
+/**
+ * Delete Active Selection
+ * 
+ * This run the `delete()` method on selected items.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 4.0.0
+ */
 class DeleteActiveSelection extends ActiveSelection
 {
+    /**
+     * {@inheritDoc}
+     */
     public $label = 'Delete';
 
+    /**
+     * {@inheritDoc}
+     */
     public $icon = 'delete';
+
+    /**
+     * @var string The success message to display.
+     */
+    public $message = '%s items has been deleted';
+
     /**
      * {@inheritDoc}
      */
@@ -16,10 +36,13 @@ class DeleteActiveSelection extends ActiveSelection
     {
         $count = 0;
         foreach ($items as $item) {
-            $item->delete();
-            $count++;
+            if ($item->delete()) {
+                $count++;
+            }
         }
 
-        return $this->sendSuccess("{$count} items deleted.");
+        $this->sendReloadEvent();
+
+        return $this->sendSuccess(sprintf($this->message, $count));
     }
 }

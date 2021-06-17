@@ -8,13 +8,21 @@ namespace luya\admin\ngrest\base;
  * 
  * An active selection (action) is button which can interact with the selected items from the CRUD list.
  * 
+ * See the 
+ * 
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
  */
 class ActiveSelection extends BaseActiveResponse
 {
+    /**
+     * @var string The button label.
+     */
     public $label;
-    
+ 
+    /**
+     * @var string An optional icon, see [material icons](https://material.io/icons/).
+     */
     public $icon;
 
     /**
@@ -26,15 +34,32 @@ class ActiveSelection extends BaseActiveResponse
      *      $item->doSomethingWithObject();
      *    }
      * 
-     *    return $this->sendSuccess('We did, what you teached.')
+     *    // sends a reload event, so the ngrest list will be reloaded afterwards.   
+     *    $context->sendReloadEvent();
+     * 
+     *    return $context->sendSuccess('We did, what you teached.')
+     * }
+     * ```
+     * 
+     * > Each item is an object of {{luya\admin\ngrest\base\NgRestModel}} representing the model on which the selection is attached to.
+     * 
+     * For even quicker implementations, its possible just to return a boolean value for either a success or error message.
+     * 
+     * ```php
+     * 'action' => function(array $items) {
+     *   foreach ($items as $item) {
+     *       // do something with item
+     *   }
+     *   
+     *   return true;
      * }
      * ```
      */
     public $action;
 
     /**
-     * Undocumented function
-     *
+     * Runs the either the callable or can overriden in a concret implementation.
+     * 
      * @param NgRestModel[] $items
      * @return boolean
      */

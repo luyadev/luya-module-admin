@@ -2,6 +2,8 @@
 
 namespace luya\admin\ngrest;
 
+use luya\admin\ngrest\base\ActiveSelection;
+
 /**
  * NgRest Config Interface
  *
@@ -61,4 +63,12 @@ interface ConfigInterface
      * @since 1.2.3
      */
     public function getActiveButtons();
+
+    /**
+     * Returns an array with object instance of {{luya\admin\ngrest\base\ActiveSelection}}
+     *
+     * @return ActiveSelection[]
+     * @since 4.0.0
+     */
+    public function getActiveSelections();
 }

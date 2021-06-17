@@ -938,14 +938,44 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return [];
     }
 
+    /**
+     * Define Active Selections.
+     * 
+     * Active Selections are buttons which are visible in the CRUD list and can interact with the selected items (through a checkbox).
+     * 
+     * Active Selections can be either defined inline or as instance of {{luya\admin\ngrest\base\ActiveSelection}}. There are also predefined
+     * Selections Available.
+     * 
+     * ```php
+     * public function ngRestActiveSelections()
+     * {
+     *     return [
+     *         [
+     *             'label' => 'Archive Rows',
+     *             'action' => function(array $items, \luya\admin\ngrest\base\ActiveSelection $context) {
+     *                 foreach ($items as $item) {
+     *                     // do something with item. Each item is an ActiveRecord of the method implementation itself.
+     *                 }
+     *   
+     *                 // if the selection interacts with the items, it might be necessary to reload the CRUD.
+     *                 $context->sendReloadEvent();
+     * 
+     *                 return $context->sendSuccess('Done!');
+     *             }
+     *         ],
+     *         [
+     *             'class' => 'luya\admin\selections\DeleteActiveSelection'
+     *         ]
+     *     ];
+     * }
+     * ```
+     *
+     * @return array An array with definitions which eithe requires `action` and `label` or using classed based action defined via `class`.
+     * @since 4.0.0
+     */
     public function ngRestActiveSelections()
     {
         return [];
-    }
-
-    public function handleNgRestActiveSelections($index)
-    {
-        return $this->getNgRestConfig()->getActiveSelections()[$index];
     }
     
     /**
