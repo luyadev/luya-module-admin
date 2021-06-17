@@ -23,7 +23,7 @@ abstract class BaseActiveResponse extends BaseObject
     /**
      * Send a CRUD reload event.
      */
-    protected function sendReloadEvent()
+    public function sendReloadEvent()
     {
         $this->_events[] = self::EVENT_RELOAD_LIST;
     }

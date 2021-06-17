@@ -21,11 +21,12 @@ class DeleteActiveSelectionTest extends AdminModelTestCase
     {
         $obj = new ActiveSelection();
         $obj->action = function(array $items, ActiveSelection $context) {
+            $context->sendReloadEvent();
             return true;
         };
         $r = $obj->handle([]);
 
-        $this->assertTrue($r['success']);
+        $this->assertSame([0 => 'loadList'], $r['events']);
 
         $obj->action = function(array $items, ActiveSelection $context) {
             return false;
