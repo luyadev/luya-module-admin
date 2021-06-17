@@ -5,6 +5,12 @@ namespace luya\admin\ngrest\base;
 use Yii;
 use yii\base\BaseObject;
 
+/**
+ * Base Response for Active Window, Button and Selection.
+ * 
+ * @author Basil Suter <git@nadar.io>
+ * @since 4.0.0
+ */
 abstract class BaseActiveResponse extends BaseObject
 {
     /**
@@ -15,9 +21,7 @@ abstract class BaseActiveResponse extends BaseObject
     private $_events = [];
     
     /**
-     * Send a crud reload event.
-     *
-     * @return void
+     * Send a CRUD reload event.
      */
     protected function sendReloadEvent()
     {
@@ -30,7 +34,8 @@ abstract class BaseActiveResponse extends BaseObject
      * Events are only triggered on success messages {{sendSuccess()}}.
      *
      * @param string $message The error message.
-     * @return array
+     * @param array $additionalResponseData Data which should be added to the xhr response.
+     * @return array An array with `success`, `error`, `message`, `responseData` and `events`.
      */
     public function sendError($message, array $additionalResponseData = [])
     {
@@ -49,7 +54,8 @@ abstract class BaseActiveResponse extends BaseObject
      * Send a success message.
      *
      * @param string $message The sucess message.
-     * @return array
+     * @param array $additionalResponseData Data which should be added to the xhr response.
+     * @return array An array with `success`, `error`, `message`, `responseData` and `events`.
      */
     public function sendSuccess($message, array $additionalResponseData = [])
     {

@@ -6,11 +6,11 @@ use luya\helpers\ArrayHelper;
 use luya\helpers\Json;
 use yii\helpers\Markdown;
 
-/** @var $config \luya\admin\ngrest\ConfigInterface */
-/** @var $this \luya\admin\ngrest\render\RenderCrudView */
-/** @var $isInline boolean Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
-/** @var $relationCall boolean Whether the current request is a relation call, this means you can switch between tabs. */
-/** @var $modelSelection string|boolean Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
+/** @var \luya\admin\ngrest\ConfigInterface $config */
+/** @var \luya\admin\ngrest\render\RenderCrudView $this */
+/** @var boolean $isInline Whether current window mode is inline or not. $isInline means you are opening a ngrest crud inside a modal. */
+/** @var boolean $relationCall Whether the current request is a relation call, this means you can switch between tabs. */
+/** @var string|boolean $modelSelection Whether a model can be selected from isInline call, if yes it contains the value from the previous selected model in order to highlight this id. If false the selection is disabled. */
 $this->beginPage();
 $this->beginBody();
 
