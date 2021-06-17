@@ -969,7 +969,28 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *     ];
      * }
      * ```
-     *
+     * 
+     * > Keep in mind that `$this` does not result in a certain Active Record context as there is no model assigned when `ngRestActiveSelections()` is called.
+     * 
+     * When generating multiple buttons f.e. from another model its recommend to use array notation, otherwise its possible to create an infinite circular reference.
+     * 
+     * ```php
+     *  public function ngRestActiveSelections()
+     * {
+     *     $selections = [];
+     *     foreach (MyModel::find()->asArray()->all() as $myModel) {
+     *         $selections[] = [
+     *             'label' => $myModel['title'],
+     *             'action' => function(array $items, \luya\admin\ngrest\base\ActiveSelection $context) use ($myModel) {
+     *                 // accessing $myModel
+     *             }
+     *         ];
+     *     }
+     * 
+     *     return $selections;
+     * }
+     * ```
+     * 
      * @return array An array with definitions which eithe requires `action` and `label` or using classed based action defined via `class`.
      * @since 4.0.0
      */
