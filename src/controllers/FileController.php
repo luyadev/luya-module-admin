@@ -44,6 +44,7 @@ class FileController extends \luya\web\Controller
             return Yii::$app->response->sendStreamAsFile($model->stream, $model->name_original, [
                 'inline' => (bool) $model->inline_disposition,
                 'mimeType' => $model->mime_type,
+                'fileSize' => $model->file_size,
             ]);
         }
         
