@@ -35,7 +35,7 @@ class FileController extends \luya\web\Controller
             Yii::$app->trigger(Module::EVENT_BEFORE_FILE_DOWNLOAD, $event);
             
             if (!$event->isValid) {
-                throw new BadRequestHttpException('Unable to perform this file download request due to access restrictions.');
+                throw new BadRequestHttpException('Unable to perform file download request due to access restrictions.');
             }
             
             // update the model count stats
