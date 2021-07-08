@@ -2,6 +2,8 @@
 
 namespace luya\admin\events;
 
+use luya\admin\models\StorageFile;
+
 /**
  * File Download Event.
  *
@@ -16,7 +18,7 @@ class FileDownloadEvent extends \yii\base\Event
     public $isValid = true;
     
     /**
-     * @var \luya\admin\file\Item $file The file to handle
+     * @var StorageFile $file The file which is downloaded (requested).
      */
     public $file;
 }
