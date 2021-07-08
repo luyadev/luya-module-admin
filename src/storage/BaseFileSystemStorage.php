@@ -165,6 +165,14 @@ abstract class BaseFileSystemStorage extends Component
      * @return boolean Whether the file has been stored or not.
      */
     abstract public function fileSystemSaveFile($source, $fileName);
+
+    /**
+     * Generate a stream/resource for the file to download
+     * @param string $fileName 
+     * @return resource
+     * @since 4.0.0
+     */
+    abstract public function fileSystemStream($fileName);
     
     /**
      * Replace an existing file source with a new one on the filesystem.
