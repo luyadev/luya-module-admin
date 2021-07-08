@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 > This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
 
++ [#599](https://github.com/luyadev/luya-module-admin/issues/599) Files are now downloaded via stream instead of reading its content, therfore any custom storage systems requires a new method `fileSystemStream()`. 
 + [#601](https://github.com/luyadev/luya-module-admin/issues/601) The `luya\admin\events\FileDownloadEvent::$file` does not recieve a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile`.
 + [#647](https://github.com/luyadev/luya-module-admin/pull/647) Lazy data load for ngrest plugin.
 + [#635](https://github.com/luyadev/luya-module-admin/pull/635) New migration database file, as new attributes are available for properties, images and files

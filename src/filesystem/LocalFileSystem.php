@@ -141,6 +141,14 @@ class LocalFileSystem extends BaseFileSystemStorage
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function fileSystemStream($fileName)
+    {
+        return fopen($this->fileServerPath($fileName), 'r');
+    }
+
+    /**
      * @inheritdoc
      */
     public function fileSystemSaveFile($source, $fileName)

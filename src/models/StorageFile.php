@@ -38,6 +38,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $inline_disposition
  * @property boolean $isImage
  * @property boolean $fileExists
+ * @property resource $stream
+ * @property string $content
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -180,6 +182,17 @@ final class StorageFile extends ActiveRecord
     public function getContent()
     {
         return Yii::$app->storage->fileSystemContent($this->name_new_compound);
+    }
+
+    /**
+     * Get the content of the file
+     *
+     * @return resource
+     * @since 4.0
+     */
+    public function getStream()
+    {
+        return Yii::$app->storage->fileSystemStream($this->name_new_compound);
     }
 
     /**
