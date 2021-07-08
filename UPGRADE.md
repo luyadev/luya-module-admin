@@ -5,6 +5,7 @@ This document will help you upgrading from a LUYA admin module version into anot
 ## from 3.x t 4.0
 
 + Run the migrate command, as new migrations are available.
++ The `luya\admin\events\FileDownloadEvent::$file` does not recieve a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile`.
 + [#634](https://github.com/luyadev/luya-module-admin/pull/634) Removed deprecated properties and methods
   - `luya\admin\Module::$assets` removed
   - `luya\admin\Module::$moduleMenus` removed

@@ -10,7 +10,6 @@ use luya\admin\behaviors\LogBehavior;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
 use luya\admin\traits\TaggableTrait;
-use luya\admin\helpers\I18n;
 use luya\helpers\Json;
 use yii\behaviors\TimestampBehavior;
 
@@ -38,6 +37,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $caption
  * @property string $inline_disposition
  * @property boolean $isImage
+ * @property boolean $fileExists
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -180,6 +180,17 @@ final class StorageFile extends ActiveRecord
     public function getContent()
     {
         return Yii::$app->storage->fileSystemContent($this->name_new_compound);
+    }
+
+    /**
+     * Return boolean value whether the file server source exsits on the server or not.
+     *
+     * @return boolean Whether the file still exists in the storage folder or not.
+     * @since 4.0.0
+     */
+    public function getFileExists()
+    {
+        return Yii::$app->storage->fileSystemExists($this->name_new_compound);
     }
 
     /**
