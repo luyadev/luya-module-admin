@@ -74,6 +74,14 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fileSystemStream($fileName)
+    {
+        return null;
+    }
     
     /**
      * @inheritdoc
