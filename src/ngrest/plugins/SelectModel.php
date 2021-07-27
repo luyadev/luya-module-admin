@@ -35,7 +35,7 @@ use luya\admin\helpers\Angular;
  * }
  * ```
  *
- * You can also use the quick mode which finds the primary key by itself, therfore just keep valueField empty.
+ * You can also use the quick mode which finds the primary key by itself, therefore just keep valueField empty.
  *
  * @property string $valueField The field name which should represent the value of the data array. This value will be stored in the database and is mostly the primary key of the $modelClass Model.
  *

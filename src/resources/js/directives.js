@@ -669,7 +669,7 @@ zaa.directive("collapseContainer", [function() {
  * <crud-loader api="forms/form/index" alias="Name of the CRUD Active Window"></crud-loader>
  * ```
  * 
- * > It actuall does not take the api endpoint, because it needs to render all the html and therfore the api parameter takes the ngrest controller route like `<module>/<apicontroller>/index`.
+ * > It actuall does not take the api endpoint, because it needs to render all the html and therefore the api parameter takes the ngrest controller route like `<module>/<apicontroller>/index`.
  */
 zaa.directive("crudLoader", ['$http', '$sce', function ($http, $sce) {
     return {

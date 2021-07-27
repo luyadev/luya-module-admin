@@ -64,7 +64,7 @@ class StorageFilterChainTest extends AdminModelTestCase
 
         // hasMissingRequiredEffectDefinition
         $this->assertFalse($model1->hasMissingRequiredEffectDefinition('thumbnail'));
-        $this->assertFalse($model1->hasMissingRequiredEffectDefinition('crop')); // even crop infos are the same and therfore true
+        $this->assertFalse($model1->hasMissingRequiredEffectDefinition('crop')); // even crop infos are the same and therefore true
         $this->assertTrue($model2->hasMissingRequiredEffectDefinition('thumbnail'));
         $this->assertTrue($model2->hasMissingRequiredEffectDefinition('crop'));
         

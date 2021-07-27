@@ -5,12 +5,13 @@ This document will help you upgrading from a LUYA admin module version into anot
 ## from 3.x t 4.0
 
 + Run the migrate command, as new migrations are available.
-+ [#599](https://github.com/luyadev/luya-module-admin/issues/599) The base filesystem requires a new method to send a file as stream (resource). Therfore `fileSystemStream()` must be implemented if you have any custom file system.
-+ [#601](https://github.com/luyadev/luya-module-admin/issues/601) The `luya\admin\events\FileDownloadEvent::$file` does not recieve a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile`.
++ Admin 4.0 requires luya core 2.0, which is part of the new minimum requirement.
++ [#601](https://github.com/luyadev/luya-module-admin/issues/601) The `luya\admin\events\FileDownloadEvent::$file` does not recieve a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile` Active Record model instead.
 + [#634](https://github.com/luyadev/luya-module-admin/pull/634) Removed deprecated properties and methods
   - `luya\admin\Module::$assets` removed
   - `luya\admin\Module::$moduleMenus` removed
   - `luya\admin\Module::setJsTranslations()` removed
++ [#599](https://github.com/luyadev/luya-module-admin/issues/599) The base filesystem requires a new method to send a file as stream (resource). Therefore `fileSystemStream()` must be implemented if you have any custom file system.
 
 ## from 3.6 to 3.7
 

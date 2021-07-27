@@ -25,7 +25,7 @@ use yii\validators\Validator;
  * [$this->i18n, I18nRequiredValidator::class],
  * ```
  *
- * The validator will only validate if the attribute is available, therfore set the required validator if the attribute is required.
+ * The validator will only validate if the attribute is available, therefore set the required validator if the attribute is required.
  *
  * @author Basil Suter <git@nadar.io>
  * @since 3.6.0

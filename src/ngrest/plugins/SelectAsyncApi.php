@@ -41,7 +41,7 @@ class SelectAsyncApi extends Plugin
 
     /**
      * @var string The api which should be take to determine the list entry, if not defined {{$api}} will be taken. The main purpose of this
-     * is that the list api usually do not need to query data, it should just display the selected value in the list view. Therfore this could
+     * is that the list api usually do not need to query data, it should just display the selected value in the list view. Therefore this could
      * look like `admin/api-admin-user` without params as the list async request will add the `/{id}?fields={id}` to the api url.
      */
     public $listApi;
