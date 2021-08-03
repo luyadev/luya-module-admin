@@ -554,7 +554,7 @@ return [
 
     'disabled_login_text' => 'Das Anmeldeformular ist derzeit aufgrund von Wartungsarbeiten deaktiviert. Bitte versuchen Sie es später erneut.',
     'button_save_and_close' => 'Speichern und schliessen',
-    'button_create_and_close' => 'Erstellen und schliesen',
+    'button_create_and_close' => 'Erstellen und schliessen',
     'button_create' => 'Erstellen',
     'button_cancel' => 'Abbrechen',
     'button_create_and_new' => 'Erstellen und neu',
