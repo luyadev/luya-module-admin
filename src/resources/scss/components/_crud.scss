@@ -13,6 +13,11 @@
     font-weight:300;
 }
 
+.table-crud td a {
+    color: theme-color(primary);
+    text-decoration: underline;
+}
+
 .crud-counter {
     color: color('gray-dark');
     display: block;

@@ -159,7 +159,7 @@ $filters = Angular::optionsArrayInput($filters);
             <?php endif; ?>
             <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
             <div class="table-responsive">
-                <table class="table table-hover table-align-middle table-striped">
+                <table class="table table-hover table-align-middle table-striped table-crud">
                     <thead class="thead-default">
                         <tr>
                         <?php if ($hasActiveSelections): ?>
