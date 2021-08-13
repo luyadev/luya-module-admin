@@ -93,19 +93,18 @@ return [
     'api_storage_file_upload_success' => 'Файловете са качени успешно.',
     'api_sotrage_file_upload_error' => 'Възникна следната грешка',
 	'api_sotrage_file_upload_empty_error' => 'Няма намерени файлове за качване. Избрахте ли някакви файлове? ',
-     'aws_changepassword_info' => 'Моля, въведете нова парола за този потребител. Паролата трябва да има минимална дължина от 8 знака. ',
-     'aws_changepassword_succes' => 'Паролата е криптирана и съхранена успешно.',
-     'aws_changepassword_new_pass' => 'Нова парола',
-     'aws_changepassword_new_pass_retry' => 'Повторение на нова парола',
-     'view_index_redirect_type' => 'Връзка с',
-     'view_index_redirect_internal' => 'вътрешна страница',
-     'view_index_redirect_external' => 'външен URL',
-     'view_index_redirect_internal_select' => 'Изберете вътрешната страница, към която трябва да се препрати.',
-     'view_index_redirect_external_link' => 'Външна връзка',
-     'view_index_redirect_external_link_help' => 'Външните връзки започват с http:// или https:// (за абсолютни вътрешни връзки вместо това използвайте //)',
+    'aws_changepassword_info' => 'Моля, въведете нова парола за този потребител. Паролата трябва да има минимална дължина от 8 знака. ',
+    'aws_changepassword_succes' => 'Паролата е криптирана и съхранена успешно.',
+    'aws_changepassword_new_pass' => 'Нова парола',
+    'aws_changepassword_new_pass_retry' => 'Повторение на нова парола',
+    'view_index_redirect_type' => 'Връзка с',
+    'view_index_redirect_internal' => 'вътрешна страница',
+    'view_index_redirect_external' => 'външен URL',
+    'view_index_redirect_internal_select' => 'Изберете вътрешната страница, към която трябва да се препрати.',
+    'view_index_redirect_external_link' => 'Външна връзка',
+    'view_index_redirect_external_link_help' => 'Външните връзки започват с http:// или https:// (за абсолютни вътрешни връзки вместо това използвайте //)',
 
-// added translation in 1.0.0-beta3:
-
+// added translations in version 1.0.0-beta3:
 	'model_loginform_email_label' => 'Имейл',
     'model_loginform_password_label' => 'Парола',
     'model_loginform_wrong_user_or_password' => 'Грешен имейл или парола.',
@@ -132,70 +131,65 @@ return [
     'js_dir_manager_rm_file_ok' => 'Файлът беше изтрит успешно.',
     'js_zaa_server_proccess' => 'Моля, изчакайте, докато сървърът обработва вашите данни.',
 
-// added translation in 1.0.0-beta4:
-
+// added translations in version 1.0.0-beta4:
 	'ngrest_crud_empty_row' => 'Към тази таблица все още не са добавени данни.',
 	
-// added translation in 1.0.0-beta5:
-
+// added translations in version 1.0.0-beta5:
 	'aws_gallery_empty' => 'Моля, изберете някои изображения отляво, за да ги добавите към албума на галерията.',
 	'aws_gallery_images' => 'Изображения на албуми',
 	'layout_useronline_name' => 'Име',
 	'layout_useronline_mail' => 'Имейл',
 	'layout_useronline_inactivesince' => 'Неактивен от',
 
-// added translations in 1.0.0-beta6
-
+// added translations in version 1.0.0-beta6:
 	'layout_debug_caching' => 'Кеширане',
 	'debug_state_on' => 'Включено',
 	'debug_state_off' => 'Изключено',
 
-// added translations in 1.0.0-beta7
+// added translations in version 1.0.0-beta7:
 	'login_securetoken_mail_subject' => 'Код за защита',
-     'login_securetoken_mail' => 'Използвайте следния код за сигурност, за да влезете във вашата администрация:',
-     'login_async_token_error' => 'Предоставеният код за защита е невалиден или е изтекъл.',
-     'login_async_token_globalerror' => 'Възникна грешка в сървъра, моля, свържете се с администратора на вашия сайт.',
-     'ngrest_crud_csv_export_btn' => 'Генериране на CSV',
-     'ngrest_crud_csv_export_btn_dl' => 'Изтегляне на CSV',
-     'layout_filemanager_search_text' => 'Въведете дума за търсене ...',
-     'layout_filemanager_file_captions' => 'Надпис на файл',
-     'layout_filemanager_file_captions_save_btn' => 'Запазване',
-     'mode_user_title' => 'Заглавие',
-     'mode_user_firstname' => 'Име',
-     'mode_user_lastname' => 'Фамилия',
-     'mode_user_email' => 'Имейл',
-     'mode_user_password' => 'Парола',
+    'login_securetoken_mail' => 'Използвайте следния код за сигурност, за да влезете във вашата администрация:',
+    'login_async_token_error' => 'Предоставеният код за защита е невалиден или е изтекъл.',
+    'login_async_token_globalerror' => 'Възникна грешка в сървъра, моля, свържете се с администратора на вашия сайт.',
+    'ngrest_crud_csv_export_btn' => 'Генериране на CSV',
+    'ngrest_crud_csv_export_btn_dl' => 'Изтегляне на CSV',
+    'layout_filemanager_search_text' => 'Въведете дума за търсене ...',
+    'layout_filemanager_file_captions' => 'Надпис на файл',
+    'layout_filemanager_file_captions_save_btn' => 'Запазване',
+    'mode_user_title' => 'Заглавие',
+    'mode_user_firstname' => 'Име',
+    'mode_user_lastname' => 'Фамилия',
+    'mode_user_email' => 'Имейл',
+    'mode_user_password' => 'Парола',
 
-// added translations in 1.0.0-beta8
+// added translations in version 1.0.0-beta8:
 	'aws_tag_new' => 'Добавяне на нов запис',
-     'aws_tag_add' => 'добавяне',
-     'aws_tag_search' => 'Търсене на записи',
-     'aws_tag_list' => 'Списък на всички записи',
-     'dashboard_log_message_add' => 'Добавен е нов ред към <strong> {container} </strong>.',
-     'dashboard_log_message_edit' => 'Актуализиран съществуващ ред в <strong> {container} </strong>.',
+    'aws_tag_add' => 'добавяне',
+    'aws_tag_search' => 'Търсене на записи',
+    'aws_tag_list' => 'Списък на всички записи',
+    'dashboard_log_message_add' => 'Добавен е нов ред към <strong> {container} </strong>.',
+    'dashboard_log_message_edit' => 'Актуализиран съществуващ ред в <strong> {container} </strong>.',
 
-// rc1
+// added translations in version 1.0.0-rc1:
 	'layout_btn_help' => 'Помощ',
-     'right_panel_support_title' => 'Информация & Помощ',
-     'right_panel_support_tags_title' => 'Етикети',
-     'right_panel_support_support_title' => 'Поддръжка',
-     'right_panel_support_support_text' => 'Ако имате някакви въпроси, моля, свържете се с вашия уеб администратор или се консултирайте с <a target="_blank" href="https://luya.io"> luya.io </a>.',
+    'right_panel_support_title' => 'Информация & Помощ',
+    'right_panel_support_tags_title' => 'Етикети',
+    'right_panel_support_support_title' => 'Поддръжка',
+    'right_panel_support_support_text' => 'Ако имате някакви въпроси, моля, свържете се с вашия уеб администратор или се консултирайте с <a target="_blank" href="https://luya.io"> luya.io </a>.',
 
-// rc2
+// added translations in version 1.0.0-rc2:
+    'ngrest_crud_group_prompt' => 'Групиране по поле',
+    'ngrest_crud_filter_prompt' => 'Избор на филтър',
+    'ngrest_crud_ajax_search_length' => 'Заявката за търсене трябва да има минимална дължина от 3 знака.',
+    'menu_system_logger' => 'Регистър на приложения',
+    'layout_filemanager_detail_replace_file' => 'Замяна на файл',
+    'layout_rightbar_languagelabel' => 'Език на интерфейса',
+    'layout_rightbar_savebtn' => 'Запазване',
+    'aws_changepassword_notequal' => 'Новата парола и повторението на паролата не са равни.',
+    'aws_changeapssword_minchar' => 'Новата парола трябва да има минимална дължина от {min} знака.',
 
-     'ngrest_crud_group_prompt' => 'Групиране по поле',
-     'ngrest_crud_filter_prompt' => 'Избор на филтър',
-     'ngrest_crud_ajax_search_length' => 'Заявката за търсене трябва да има минимална дължина от 3 знака.',
-     'menu_system_logger' => 'Регистър на приложения',
-     'layout_filemanager_detail_replace_file' => 'Замяна на файл',
-     'layout_rightbar_languagelabel' => 'Език на интерфейса',
-     'layout_rightbar_savebtn' => 'Запазване',
-     'aws_changepassword_notequal' => 'Новата парола и повторението на паролата не са равни.',
-     'aws_changeapssword_minchar' => 'Новата парола трябва да има минимална дължина от {min} знака.',
-
-// rc3
-
-  'model_pk_id' => 'ID',
+// added translations in version 1.0.0-rc3:
+    'model_pk_id' => 'ID',
     'model_lang_name' => 'Име',
     'model_lang_short_code' => 'Кратък код',
     'model_lang_is_default' => 'По подразбиране',
@@ -234,8 +228,7 @@ return [
     'js_link_set_value' => 'Задаване на връзка',
     'callback_button_file_download_widget_success' => 'Файлът е подготвен. Можете да го изтеглите сега. ',
 	
-// rc4
-
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Грешка при запазване на файла в папката за съхранение. Грешка в разрешението може да причини този проблем. Уверете се, че папката за съхранение може да се записва. ',
     'model_user_oldpassword' => 'Предишна (стара) парола',
     'js_account_update_profile_success' => 'Данните на профила са актуализирани успешно.',
@@ -247,8 +240,7 @@ return [
     'menu_dashboard' => 'Табло за управление',
     'js_link_not_set' => 'Няма избрана връзка',
 
-// 1.0.0
-
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'Изтриване',
     'js_dir_manager_rm_file_confirm_title' => 'Премахване на файл',
     'js_dir_manager_rm_folder_confirm_title' => 'Премахване на папка',
@@ -274,8 +266,8 @@ return [
     'model_config_atr_is_system' => 'Е система',
     'menu_system_item_config' => 'Конфигуриране на променливи',
 
-// 1.1.0
-'model_user_is_deleted' => 'Премахнато',
+// added translations in version 1.1.0:
+    'model_user_is_deleted' => 'Премахнато',
     'model_user_name' => 'Име',
     'model_user_groups' => 'Групи',
     'aw_userhistorysummary_userdata' => 'Данни за профила',
@@ -318,12 +310,10 @@ return [
     'aw_apioverview_no_perm_groups' => 'Потребителят на API трябва да е назначил поне една група разрешения.',
     'aw_apioverview_no_access_token' => 'Потребителят на API трябва да има маркер за достъп, за да има достъп до API.',
 
-// 1.1.1
-
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} от {{totalRows}}',
     
-// 1.2.0
-    
+// added translations in version 1.2.0:
 	'login_async_submission_limit_reached' => 'Достигнат е максималният брой изпратени формуляри, опитайте отново {time}.',
     'model_loginform_max_user_attempts' => 'Достигнат е максималният брой опити за влизане, опитайте отново {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Грешен имейл или парола. Опит #{attempt} от {allowedAttempts}. ',
@@ -340,7 +330,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Изтегляне',
     'layout_filemanager_col_file_disposition_browser' => 'Показване в браузъра',
 	
-// 1.2.1
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'Лична информация',
     'settings_general' => 'Общи',
     'settings_developer_mode' => 'Режим за програмисти',
@@ -349,8 +339,7 @@ return [
     'view_index_redirect_telephone_help' => 'Моля, въведете валиден телефонен номер (за знак "+" се изисква водещо "\").',
     'missing_file_upload_permission' => 'Недостатъчни разрешения за качване на файлове.',
     
-// 1.2.2
-    
+// added translations in version 1.2.2:
     'button_no' => 'Не',
     'crud_exportdata_btn' => 'Експортиране на данни',
     'crud_exportdata_col_header' => 'Заглавка',
@@ -364,13 +353,12 @@ return [
     'dashboard_log_message_delete' => 'Изтрит запис в <strong> {container} </strong>.',
     'model_tag_relations_count' => 'Използвано',
 
-// 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Дублиране',
     'active_button_duplicate_success' => 'Създадено е копие.',
     'active_button_duplicate_error' => 'Грешка при създаването на копието: {message}',
 
-// 2.0
+// added translations in version 2.0:
 	'model_tag_translation' => 'Превод',
     'model_tag_translation_hint' => 'Незадължителен превод за маркера на дадения език. Това позволява да се присвоява и извежда един и същ маркер на многоезични уебсайтове. ',
     'active_button_timestamp_label' => 'Клеймо',
@@ -415,26 +403,22 @@ return [
     'layout_btn_reload_admin' => 'Презареди &nbsp; Админ',
     'layout_btn_reload_cache' => 'Изчистване на &nbsp; кеша',
 
-// 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'Файлът е успешно заменен.',
 
-// 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'Да',
     'status_false' => 'Не',
     'js_jsonobject_newkey' => 'Ново име на ключ',
     
-// 2.2.0
-    
+// added translations in version 2.2.0: 
     'active_button_togglestatus_label' => 'Превключване на състоянието',
     'active_button_togglestatus_error' => 'Не може да се активира',
     'active_button_togglestatus_enabled' => '{modelName} активиран',
     'active_button_togglestatus_disabled' => '{modelName} деактивиран',
     'layout_filemanager_detail_details' => 'Подробности за файла',
 
-// 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'Маркерът и неговите отношения са премахнати.',
     'aws_delete_remove_wrong_name' => 'Името на маркера е грешно.',
     'aws_delete_relations_info' => 'Маркерът <b> {name} </b> се използва <b> {count} </b> пъти. Той се присвоява на записи в следните таблици: ',
@@ -442,12 +426,10 @@ return [
     'aws_delete_relations_table_count' => 'Брой записи',
     'aws_delete_relations_form_hint' => 'За да потвърдите изтриването на маркера, въведете името на маркера и натиснете\"Изтриване\".',
 
-// 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Липсват някои задължителни данни.',
 
-// 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Device',
     'last_login' => 'Последно влизане',
     'first_login' => 'Първо влизане',
@@ -493,8 +475,8 @@ return [
     'reset_form_submit_btn' => 'Актуализиране на парола',
     'user_change_password_error' => 'Грешка при запазване на нова парола.',
 	
-// 3.1.0
-'crop_source_image' => 'Изходно изображение',
+// added translations in version 3.1.0:
+    'crop_source_image' => 'Изходно изображение',
     'crop_preview' => 'Преглед',
     'crop_btn_as_copy' => 'Запазване на изображението като копие',
     'crop_btn_as_copy_hint' => 'Когато е активирано, изображението ще се съхранява като <b> нов файл </b>, в противен случай съществуващият файл ще бъде заменен.',
@@ -511,8 +493,7 @@ return [
     'crop_quality_medium' => 'Средно',
     'crop_quality_low' => 'Ниско',
 
-// 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Дневник на събитията на модела',
     'ngrestlog_controller_description' => 'Записите в регистъра на събитията на модела се улавят при създаване, актуализиране или изтриване на записи в CRUD изгледи на администратора.',
     'logger_controller_description' => 'Записите в регистрационния файл на приложението се задействат от [Модел на регистратора] (https://luya.io/api/luya-admin-models-Logger).',
@@ -526,24 +507,20 @@ return [
     'filter_controller_description' => 'Филтрите се използват за генериране на различни (например мащабирани или изрязани) версии на изображение. Прочетете [Ръководство за филтри на изображения] (https://luya.io/guide/app-filters) за инструкции как да създадете свои собствени филтри. ',
     'menu_group_storage' => 'Съхранение',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'Предоставеният имейл адрес вече се използва от изтрит акаунт.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'Даденият атрибут\"{attribute}\" трябва да е тип масив.',
     'i18n_required_validator_missing_key' => 'Езиковият ключ\"{lang}\" липсва и е задължителен.',
     'i18n_required_validator_invalid_empty_value' => 'Стойността за език\"{lang}\" не може да бъде празна.',
     'crud_exportdata_col_filter' => 'Филтър',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Свойства',
     'property_controller_description' => 'Предоставя списък на всички регистрирани свойства. Свойствата се използват главно като [CMS Properties] (https://luya.io/guide/app-cmsproperties), но могат да се използват и за други случаи на употреба, като например свойства, свързани със записа. ',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'Понастоящем формулярът за вход е деактивиран поради поддръжка. Моля, опитайте отново по-късно.',
     'button_save_and_close' => 'Save and close',
     'button_create_and_close' => 'Create and close',

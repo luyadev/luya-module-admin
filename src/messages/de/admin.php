@@ -104,8 +104,7 @@ return [
     'view_index_redirect_external_link' => 'Externer Link',
     'view_index_redirect_external_link_help' => 'Externe Links beginnen mit http:// oder https://',
 
-// added translation in 1.0.0-beta3:
-
+// added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'E-Mail',
     'model_loginform_password_label' => 'Passwort',
     'model_loginform_wrong_user_or_password' => 'Falsche E-Mail-Adresse oder Passwort.',
@@ -132,26 +131,22 @@ return [
     'js_dir_manager_rm_file_ok' => 'Datei wurde erfolgreich gelöscht.',
     'js_zaa_server_proccess' => 'Der Server verarbeitet deine Daten. Bitte warte einen Augenblick.',
 
-// added translation in 1.0.0-beta4:
-
+// added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'Es wurden keine Datensätze gefunden.',
 
-// added translation in 1.0.0-beta5:
-
+// added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Du hast noch keine Bilder für diese Album ausgewählt. Klicke im Dateimanager (links) auf die gewünschten Bilder, welche in das Album hinzufügt werden sollen.',
     'aws_gallery_images' => 'Album Bilder',
     'layout_useronline_name' => 'Name',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Inaktiv seit',
 
-// added translations in 1.0.0-beta6
-
+// added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'An',
     'debug_state_off' => 'Aus',
 
-// added translations in 1.0.0-beta7
-
+// added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'Sicherheitscode',
     'login_securetoken_mail' => 'Verwende den folgenden Sicherheitscode für den Zugriff auf die Administration der Website:',
     'login_async_token_error' => 'Der eingegebene Sicherheitscode ist falsch oder abgelaufen.',
@@ -167,7 +162,7 @@ return [
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Passwort',
 
-// added translations in 1.0.0-beta8
+// added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Neuen Eintrag erfassen',
     'aws_tag_add' => 'Hinzufügen',
     'aws_tag_search' => 'Einträge durchsuchen',
@@ -175,16 +170,14 @@ return [
     'dashboard_log_message_add' => 'Einen Datensatz zu <b>{container}</b> hinzugefügt.',
     'dashboard_log_message_edit' => 'Einen Datensatz in <b>{container}</b> bearbeitet.',
 
-// rc1
-
+// added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Hilfe',
     'right_panel_support_title' => 'Informationen &amp; Hilfe',
     'right_panel_support_tags_title' => 'Schlagwörter',
     'right_panel_support_support_title' => 'Hilfe',
     'right_panel_support_support_text' => 'Bei Fragen wende dich bitte an den Webmaster, oder besuche <a target="_blank" href="https://luya.io">luya.io</a>.',
 
-// rc2
-
+// added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Nach Feld gruppieren',
     'ngrest_crud_filter_prompt' => 'Filter auswählen',
     'ngrest_crud_ajax_search_length' => 'Der Suchbegriff muss mindestens 3 Zeichen lang sein.',
@@ -195,8 +188,7 @@ return [
     'aws_changepassword_notequal' => 'Das neue Passwort muss mit der Wiederholung übereinstimmen.',
     'aws_changeapssword_minchar' => 'Das neue Passwort muss mindestens {min} Zeichen enthalten.',
 
-// rc3
-
+// added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Name',
     'model_lang_short_code' => 'Kurzbezeichnung',
@@ -237,8 +229,7 @@ return [
     'callback_button_file_download_widget_success' => 'Die Datei wurde vorbereitet. Sie können die Datei jetzt herunterladen.',
 
 
-// rc4
-
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Es ist ein Fehler beim Speichern der Datei im Storage Ordner aufgetreten. Eine ungenügende Berechtigungsvergabe könnte der Grund dafür sein. Stelle sicher, dass der Storage-Ordner Schreibrechte besitzt.',
     'model_user_oldpassword' => 'Altes Passwort',
     'js_account_update_profile_success' => 'Das Profil wurde erfolgreich aktualisiert.',
@@ -250,8 +241,7 @@ return [
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Kein Link gesetzt',
 
-// 1.0.0
-
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'Löschen',
     'js_dir_manager_rm_file_confirm_title' => 'Datei löschen',
     'js_dir_manager_rm_folder_confirm_title' => 'Ordner löschen',
@@ -277,8 +267,7 @@ return [
     'model_config_atr_is_system' => 'System-Attribut',
     'menu_system_item_config' => 'Konfigurationsvariablen',
 
-// 1.1.0
-
+// added translations in version 1.1.0:
     'model_user_is_deleted' => 'Gelöscht',
     'model_user_name' => 'Benutzername',
     'model_user_groups' => 'Benutzergruppe',
@@ -322,12 +311,10 @@ return [
     'aw_apioverview_no_perm_groups' => 'Der API Benutzer muss mindestens einer Berechtigungsgruppe zugewiesen sein.',
     'aw_apioverview_no_access_token' => 'Der API Benutzer muss einen Zugangstoken angeben, um die API nutzen zu können.',
 
-// 1.1.1
-
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} von {{totalRows}}',
     
-// 1.2.0
-    
+// added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'E-Mail oder Passwort ist falsch. Versuch #{attempt} von {allowedAttempts}.',
@@ -344,8 +331,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'In Browser anzeigen',
     
-// 1.2.1
-    
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'Personalien',
     'settings_general' => 'Allgemein',
     'settings_developer_mode' => 'Entwickler Modus',
@@ -354,9 +340,7 @@ return [
     'view_index_redirect_telephone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
     'missing_file_upload_permission' => 'Keine berechtigung um Dateien hochzuladen.',
     
-    
-// 1.2.2
-    
+// added translations in version 1.2.2:
     'button_no' => 'Nein',
     'crud_exportdata_btn' => 'Export generieren',
     'crud_exportdata_col_header' => 'Kopfzeile',
@@ -370,14 +354,12 @@ return [
     'dashboard_log_message_delete' => 'Ein Datensatz in <strong>{container}</strong> wurde gelöscht.',
     'model_tag_relations_count' => 'Verwendungen',
 
-// 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Duplizieren',
     'active_button_duplicate_success' => 'Eine Kopie wurde erstellt.',
     'active_button_duplicate_error' => 'Beim Duplizieren trat ein Fehler auf: {message}',
 
-// 2.0
-
+// added translations in version 2.0:
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
@@ -422,26 +404,22 @@ return [
     'layout_btn_reload_admin' => 'Admin&nbsp;neu&nbsp;laden',
     'layout_btn_reload_cache' => 'Cache&nbsp;leeren',
 
-// 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'Die Datei wurde erfolgreich ersetzt.',
 
-// 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'Ja',
     'status_false' => 'Nein',
     'js_jsonobject_newkey' => 'Neuer Schlüssel Name',
     
-// 2.2.0
-    
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Status Wechseln',
     'active_button_togglestatus_error' => 'Konnte nicht aktiviert werden.',
     'active_button_togglestatus_enabled' => '{modelName} aktiviert',
     'active_button_togglestatus_disabled' => '{modelName} deaktiviert',
     'layout_filemanager_detail_details' => 'Datei Informationen',
     
-// 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'Das Tag und seine Zuordnungen wurden entfernt.',
     'aws_delete_remove_wrong_name' => 'Der Tag-Name ist falsch.',
     'aws_delete_relations_info' => 'Das Tag <b>{name}</b> wird <b>{count}</b> mal verwendet. Es ist Einträgen in folgenden Tabellen zugeordnet:',
@@ -449,12 +427,10 @@ return [
     'aws_delete_relations_table_count' => 'Anzahl Zuordnungen',
     'aws_delete_relations_form_hint' => 'Um das Löschen des Tags zu bestätigen, geben Sie den Tag-Namen ein und klicken Sie auf \"Löschen\".',
 
-// 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Erforderliche Angaben fehlen.',
 
-// 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Gerät',
     'last_login' => 'Neustes login',
     'first_login' => 'Erstes login',
@@ -500,8 +476,7 @@ return [
     'reset_form_submit_btn' => 'Passwort aktualisieren',
     'user_change_password_error' =>  'Während dem Speichern des Passworts trat ein Fehler auf.',
 
-// 3.1.0
-
+// added translations in version 3.1.0:
     'crop_source_image' => 'Quellen Datei',
     'crop_preview' => 'Vorschau',
     'crop_btn_as_copy' => 'Bild als Kopie speichern',
@@ -519,8 +494,7 @@ return [
     'crop_quality_medium' => 'Mittel',
     'crop_quality_low' => 'Niedrig',
 
-// 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Model Event Log',
     'ngrestlog_controller_description' => 'Einträge des Model Event Logs werden beim Erstellen, Aktualisieren und Löschen von Datensätzen in CRUD Views der Administration erzeugt.',
     'logger_controller_description' => 'Einträge des Application Logs werden vom [Logger Model](https://luya.io/api/luya-admin-models-Logger) veranlasst.',
@@ -534,24 +508,20 @@ return [
     'filter_controller_description' => 'Filter kommen zum Einsatz, um verschiedene (z.B. skalierte oder beschnittene) Versionen eines Bildes zu erzeugen. Lesen Sie den [Image Filter Guide](https://luya.io/guide/app-filters), um zu erfahren, wie Sie eigene Filter erstellen können.',
     'menu_group_storage' => 'Speicher',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'Die angegebene E-Mail-Adresse wird bereits für ein gelöschtes Konto verwendet.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'Das Attribut \"{attribute}\" muss vom Typ Array sein.',
     'i18n_required_validator_missing_key' => 'Der Sprach-Key \"{lang}\" ist erforderlich.',
     'i18n_required_validator_invalid_empty_value' => 'Der Wert für die Sprache \"{lang}\" kann nicht leer sein.',
     'crud_exportdata_col_filter' => 'Filter',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'Das Anmeldeformular ist derzeit aufgrund von Wartungsarbeiten deaktiviert. Bitte versuchen Sie es später erneut.',
     'button_save_and_close' => 'Speichern und schliessen',
     'button_create_and_close' => 'Erstellen und schliessen',

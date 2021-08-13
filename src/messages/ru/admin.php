@@ -105,8 +105,7 @@ return [
     'view_index_redirect_external_link' => 'Внешняя ссылка',
     'view_index_redirect_external_link_help' => 'Внешние ссылки начинаются с http:// или https://',
 
-    // added translation in 1.0.0-beta3:
-
+// added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'E-mail',
     'model_loginform_password_label' => 'Пароль',
     'model_loginform_wrong_user_or_password' => 'Неверный логин или пароль.',
@@ -133,27 +132,22 @@ return [
     'js_dir_manager_rm_file_ok' => 'Файл был успешно удалён.',
     'js_zaa_server_proccess' => 'Сервер обрабатывает данные. Пожалуйста подождите',
 
-    // added translation in 1.0.0-beta4:
-
+// added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'В этой таблице пока нет данных',
 
-    // added translation in 1.0.0-beta5:
-
-    // aws/gallery
+// added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Выберите несколько изображений слева, чтобы добавить их в галерею.',
     'aws_gallery_images' => 'Галерея',
     'layout_useronline_name' => 'Имя',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Неактивен с',
 
-    // added translations in 1.0.0-beta6
-
+// added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Кеширование',
     'debug_state_on' => 'Вкл.',
     'debug_state_off' => 'Выкл.',
 
-    // added translations in 1.0.0-beta7
-
+// added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'Код безопасности LUYA',
     'login_securetoken_mail' => 'Используйте следующий код для входа в свою админ-панель на:',
     'login_async_token_error' => 'Предоставленный код безопасности неверный.',
@@ -169,7 +163,7 @@ return [
     'mode_user_email' => 'E-mail',
     'mode_user_password' => 'Пароль',
 
-    // added translations in 1.0.0-beta8
+// added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Добавить новую запись',
     'aws_tag_add' => 'Добавить',
     'aws_tag_search' => 'Искать записи',
@@ -177,16 +171,14 @@ return [
     'dashboard_log_message_add' => 'Добавил новую запись в <strong>{container}</strong>.', // TODO: Consider user's gender
     'dashboard_log_message_edit' => 'Обновил запись в <strong>{container}</strong>.',
 
-    // rc1
-
+// added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Помощь',
     'right_panel_support_title' => 'Информация и помощь',
     'right_panel_support_tags_title' => 'Теги',
     'right_panel_support_support_title' => 'Поддержка',
     'right_panel_support_support_text' => 'Если у вас возникли вопросы, то обратитесь к своему вебмастеру или проконсультируйтесь на <a target="_blank" href="https://luya.io">luya.io</a>.',
 
-    // rc2
-
+// added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Группировка по полю',
     'ngrest_crud_filter_prompt' => 'Фильтр',
     'ngrest_crud_ajax_search_length' => 'Поисковый запрос должен быть не менее 3 символов.',
@@ -197,8 +189,7 @@ return [
     'aws_changepassword_notequal' => 'Пароли не совпадают.',
     'aws_changeapssword_minchar' => 'Пароль должен иметь минимум {min} символа.',
 
-    // rc3
-
+// added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Название',
     'model_lang_short_code' => 'Код',
@@ -238,9 +229,7 @@ return [
     'js_link_set_value' => 'Установить ссылку',
     'callback_button_file_download_widget_success' => 'Файл подготовлен. Вы можете скачать его.',
 
-
-    // rc4
-
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Ошибка при сохранении файла в папку хранилища. Ошибка разрешения может вызвать эту проблему. Убедитесь, что папка хранения доступна для записи.',
     'model_user_oldpassword' => 'Текущий пароль',
     'js_account_update_profile_success' => 'Данные профиля успешно обновлены.',
@@ -252,8 +241,7 @@ return [
     'menu_dashboard' => 'Панель',
     'js_link_not_set' => 'Нет ссылки',
 
-    // 1.0.0
-
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'Удалить',
     'js_dir_manager_rm_file_confirm_title' => 'Удалить файл',
     'js_dir_manager_rm_folder_confirm_title' => 'Удалить папку',
@@ -279,8 +267,7 @@ return [
     'model_config_atr_is_system' => 'Системная переменная',
     'menu_system_item_config' => 'Конфигурационные переменные',
 
-    // 1.1.0
-
+// added translations in version 1.1.0:
     'model_user_is_deleted' => 'Удален',
     'model_user_name' => 'Имя',
     'model_user_groups' => 'Группы',
@@ -324,12 +311,10 @@ return [
     'aw_apioverview_no_perm_groups' => 'Пользователь API должен быть привязан хотя бы к одной группе.',
     'aw_apioverview_no_access_token' => 'Для доступа к API пользователь должен иметь код доступа.',
 
-    // 1.1.1
-
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} из {{totalRows}}',
 
-    // 1.2.0
-
+// added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Достигнуто максимально возможное число отправок форм, попробуйте {time}.',
     'model_loginform_max_user_attempts' => 'Достигнуто максимальное количество попыток входа в систему, попробуйте {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Неправильный e-mail или пароль. Попытка #{attempt} из {allowedAttempts}.',
@@ -346,8 +331,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Сохранить на диск',
     'layout_filemanager_col_file_disposition_browser' => 'Открыть в браузере',
 
-    // 1.2.1
-
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'Персональные данные',
     'settings_general' => 'Общие настройки',
     'settings_developer_mode' => 'Режим разработчика',
@@ -356,8 +340,7 @@ return [
     'view_index_redirect_telephone_help' => 'Пожалуйста, введите правильный номер телефона (для ввода знака "+" необходимо перед ним поставить обратный слэш "\").',
     'missing_file_upload_permission' => 'Недостаточно прав для загрузки файлов.',
 
-    // 1.2.2
-
+// added translations in version 1.2.2:
     'button_no' => 'Нет',
     'crud_exportdata_btn' => 'Экспорт данных',
     'crud_exportdata_col_header' => 'Заголовок',
@@ -371,14 +354,12 @@ return [
     'dashboard_log_message_delete' => 'Удалил запись в <strong>{container}</strong>.', // TODO: Consider user's gender
     'model_tag_relations_count' => 'Кол-во использований',
 
-    // 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Дубликат',
     'active_button_duplicate_success' => 'Копия была создана.',
     'active_button_duplicate_error' => 'Ошибка при создании копии: {message}',
 
-    // 2.0
-
+// added translations in version 2.0:
     'model_tag_translation' => 'Перевод',
     'model_tag_translation_hint' => 'Опциональный перевод тега для указанного языка. Позволяет выводить тег в мульти-язычных сайтах.',
     'active_button_timestamp_label' => 'Время',
@@ -423,26 +404,22 @@ return [
     'layout_btn_reload_admin' => 'Обновить&nbsp;страницу',
     'layout_btn_reload_cache' => 'Очистить&nbsp;кэш',
 
-    // 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'Файл успешно заменён.',
 
-    // 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'Да',
     'status_false' => 'Нет',
     'js_jsonobject_newkey' => 'Новый ключ',
 
-    // 2.2.0
-
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Изменить статус',
     'active_button_togglestatus_error' => 'Не удалось изменить статус',
     'active_button_togglestatus_enabled' => 'Модель {modelName} включена',
     'active_button_togglestatus_disabled' => 'Модель {modelName} отключена',
     'layout_filemanager_detail_details' => 'Свойства файла',
 
-    // 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'Тег и его связи были удалены.',
     'aws_delete_remove_wrong_name' => 'Неправильное название тега.',
     'aws_delete_relations_info' => 'Тег <b>{name}</b> использован <b>{count}</b> {count, plural, one{# раз} few{# раза} many{# раз} other{# раз}}. Он привязан к записям в следующих таблицах:',
@@ -450,12 +427,10 @@ return [
     'aws_delete_relations_table_count' => 'Число записей',
     'aws_delete_relations_form_hint' => 'Чтобы подтвердить удаление тега, введите название тега и нажмите «Удалить».',
 
-    // 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Отсутствуют некоторые необходимые данные.',
 
-    // 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Устройство',
     'last_login' => 'Последний вход',
     'first_login' => 'Первый вход',
@@ -501,8 +476,7 @@ return [
     'reset_form_submit_btn' => 'Обновить пароль',
     'user_change_password_error' =>  'Ошибка при сохранении пароля.',
 
-    // 3.1.0
-
+// added translations in version 3.1.0:
     'crop_source_image' => 'Исходное изображение',
     'crop_preview' => 'Предварительный просмотр',
     'crop_btn_as_copy' => 'Сохранить как копию',
@@ -520,8 +494,7 @@ return [
     'crop_quality_medium' => 'среднее',
     'crop_quality_low' => 'низкое',
 
-    // 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Журнал событий модели',
     'ngrestlog_controller_description' => 'Обновляет журнале событий модели при создании, обновлении или удалении записей CRUD в админке.',
     'logger_controller_description' => 'Добавляет записи в журнал приложения через [модель журнала](https://luya.io/api/luya-admin-models-Logger).',
@@ -535,24 +508,20 @@ return [
     'filter_controller_description' => 'Фильтры используются для создания разных (например, масштабированных или кадрированных) версий изображения. Прочтите [руководство по фильтрам изображений](https://luya.io/guide/app-filters), чтобы узнать, как создавать свои собственные фильтры.',
     'menu_group_storage' => 'Хранилище',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'The given attribute \"{attribute}\" must be type of array.',
     'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is missing and is required.',
     'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
     'crud_exportdata_col_filter' => 'Filter',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
     'button_save_and_close' => 'Save and close',
     'button_create_and_close' => 'Create and close',

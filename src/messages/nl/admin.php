@@ -1,4 +1,5 @@
 <?php
+
 return [
     'language_name' => 'Dutch',
     'button_save' => 'Opslaan',
@@ -102,7 +103,8 @@ return [
     'view_index_redirect_internal_select' => 'Kies de interne pagina waarnaar moet worden doorgestuurd.',
     'view_index_redirect_external_link' => 'Externe link',
     'view_index_redirect_external_link_help' => 'Externe links beginnen met http:// of https:// (voor absolute interne links, gebruik // in plaats daarvan)',
-    // toegevoegde vertaling in 1.0.0-beta3:
+
+// toegevoegde vertaling in 1.0.0-beta3:
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Wachtwoord',
     'model_loginform_wrong_user_or_password' => 'Verkeerde e-mail of wachtwoord.',
@@ -128,19 +130,23 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Wilt u dit bestand echt verwijderen?',
     'js_dir_manager_rm_file_ok' => 'Het bestand is succesvol verwijderd.',
     'js_zaa_server_proccess' => 'Even geduld terwijl de server bezig is met het verwerken van uw gegevens.',
-    // toegevoegde vertaling in 1.0.0-beta4:
+
+// toegevoegde vertaling in 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'Er zijn nog geen gegevens aan deze tabel toegevoegd.',
-    // added translation in 1.0.0-beta5:
+
+// added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Selecteer enkele afbeeldingen links om ze toe te voegen aan het galerijalbum .',
     'aws_gallery_images' => 'Albumafbeeldingen',
     'layout_useronline_name' => 'Naam',
     'layout_useronline_mail' => 'Email',
     'layout_useronline_inactivesince' => 'Inactief sinds',
-    // vertalingen toegevoegd in 1.0.0-beta6
+
+// vertalingen toegevoegd in 1.0.0-beta6
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'Aan',
     'debug_state_off' => 'Uit',
-    // vertalingen toegevoegd in 1.0.0-beta7
+
+// vertalingen toegevoegd in 1.0.0-beta7
     'login_securetoken_mail_subject' => 'Beveiligingscode',
     'login_securetoken_mail' => 'Gebruik de volgende beveiligingscode om u aan te melden bij uw administratie:',
     'login_async_token_error' => 'De opgegeven beveiligingscode is ongeldig of verlopen.',
@@ -155,20 +161,23 @@ return [
     'mode_user_lastname' => 'Achternaam',
     'mode_user_email' => 'Email',
     'mode_user_password' => 'Wachtwoord',
-    // toegevoegde vertalingen in 1.0.0-beta8
+
+// toegevoegde vertalingen in 1.0.0-beta8
     'aws_tag_new' => 'Nieuw item toevoegen',
     'aws_tag_add' => 'toevoegen',
     'aws_tag_search' => 'Zoek vermeldingen',
     'aws_tag_list' => 'Lijst met alle vermeldingen',
     'dashboard_log_message_add' => 'Nieuwe rij toegevoegd aan <strong> {container} </strong>.',
     'dashboard_log_message_edit' => 'Een bestaande rij bijgewerkt in <strong> {container} </strong>.',
-    // rc1
+
+// added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Help',
     'right_panel_support_title' => 'Informatie & amp;  Help',
     'right_panel_support_tags_title' => 'Tags',
     'right_panel_support_support_title' => 'Ondersteuning',
     'right_panel_support_support_text' => 'Neem bij vragen contact op met uw webmaster of raadpleeg <a target="_blank" href="https://luya.io"> luya.io </a>.',
-    // rc2
+
+// added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Groeperen op veld',
     'ngrest_crud_filter_prompt' => 'Selecteer filter',
     'ngrest_crud_ajax_search_length' => 'De zoekopdracht moet een minimale lengte van 3 tekens hebben.',
@@ -178,7 +187,8 @@ return [
     'layout_rightbar_savebtn' => 'Opslaan',
     'aws_changepassword_notequal' => 'Het nieuwe wachtwoord en de wachtwoordherhaling zijn niet gelijk.',
     'aws_changeapssword_minchar' => 'Het nieuwe wachtwoord moet een minimale lengte van {min} tekens hebben.',
-    // rc3
+
+// added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Naam',
     'model_lang_short_code' => 'Korte code',
@@ -217,7 +227,8 @@ return [
     'js_link_change_value' => 'Link wijzigen',
     'js_link_set_value' => 'Link instellen',
     'callback_button_file_download_widget_success' => 'Het bestand is voorbereid.  Je kunt het nu downloaden.',
-    // rc4
+    
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Fout tijdens het opslaan van het bestand in de opslagmap.  Een toestemmingsfout kan dit probleem veroorzaken.  Zorg ervoor dat de opslagmap schrijfbaar is.',
     'model_user_oldpassword' => 'Vorige (oude) wachtwoord',
     'js_account_update_profile_success' => 'De profielgegevens zijn succesvol bijgewerkt.',
@@ -228,7 +239,8 @@ return [
     'locked_info' => 'Iemand die al aan het bewerken is',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Geen link geselecteerd',
-    // 1.0.0
+    
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'Verwijderen',
     'js_dir_manager_rm_file_confirm_title' => 'Bestand verwijderen',
     'js_dir_manager_rm_folder_confirm_title' => 'Map verwijderen',
@@ -253,7 +265,8 @@ return [
     'model_config_atr_value' => 'Waarde',
     'model_config_atr_is_system' => 'Is systeem',
     'menu_system_item_config' => 'Configureer variabelen',
-    // 1.1.0
+    
+// added translations in version 1.1.0:
     'model_user_is_deleted' => 'Verwijderd',
     'model_user_name' => 'Naam',
     'model_user_groups' => 'Groepen',
@@ -296,11 +309,11 @@ return [
     'tag_file_readme' => 'Genereer een link naar het opgegeven bestand.  Als voorbeeld, `bestand [1]` genereert een link naar het bestand met id 1, met behulp van de bestandsnaam als bestandslabel.  Gebruik `file [1] (My file label text)` om een ​​andere labeltekst te definiëren.  Het bestand wordt geopend in een nieuw venster.',
     'aw_apioverview_no_perm_groups' => 'De API-gebruiker moet ten minste één toestemmingsgroep hebben toegewezen.',
     'aw_apioverview_no_access_token' => 'De API-gebruiker moet een toegangstoken hebben om toegang te krijgen tot de API.',
-    // 1.1.1
+    
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} van {{totalRows}}',
 
-    // 1.2.0
-
+// added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Het maximale aantal formulierinzendingen is bereikt, probeer het opnieuw {tijd}.',
     'model_loginform_max_user_attempts' => 'Het maximum aantal inlogpogingen is bereikt, probeer het opnieuw {tijd}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Verkeerde e-mail of wachtwoord.  Poging # {poging} van {allowedAttempts}.',
@@ -317,8 +330,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Weergeven in browser',
 
-    // 1.2.1
-
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'Persoonlijke info',
     'settings_general' => 'Algemeen',
     'settings_developer_mode' => 'Ontwikkelaarsmodus',
@@ -327,8 +339,7 @@ return [
     'view_index_redirect_telephone_help' => 'Voer een geldig telefoonnummer in (voor het teken "+" is een leidende "\" vereist).',
     'missing_file_upload_permission' => 'Onvoldoende rechten voor bestandsuploads.',
 
-    // 1.2.2
-
+// added translations in version 1.2.2:
     'button_no' => 'Nee',
     'crud_exportdata_btn' => 'Gegevens exporteren',
     'crud_exportdata_col_header' => 'Header',
@@ -342,14 +353,12 @@ return [
     'dashboard_log_message_delete' => 'Een record verwijderd in <strong> {container} </strong>.',
     'model_tag_relations_count' => 'Used',
 
-// 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Duplicate',
     'active_button_duplicate_success' => 'A copy has been created.',
     'active_button_duplicate_error' => 'Error while creating the copy: {message}',
 
-// 2.0
-
+// added translations in version 2.0:
     'model_tag_translation' => 'Translation',
     'model_tag_translation_hint' => 'An optional translation for the tag in the given language. This allows to assign and output the same tag on multi-language websites.',
     'active_button_timestamp_label' => 'Timestamp',
@@ -394,26 +403,22 @@ return [
     'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
     'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
 
-// 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'The file has been successfully replaced.',
 
-// 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
     
-// 2.2.0
-    
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
     'layout_filemanager_detail_details' => 'File details',
 
-// 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'The tag and its relations have been removed.',
     'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
     'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
@@ -421,12 +426,10 @@ return [
     'aws_delete_relations_table_count' => 'Number of Entries',
     'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 
-// 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
 
-// 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Device',
     'last_login' => 'Last login',
     'first_login' => 'First login',
@@ -472,8 +475,7 @@ return [
     'reset_form_submit_btn' => 'Update password',
     'user_change_password_error' =>  'Error while saving new password.',
 
-// 3.1.0
-
+// added translations in version 3.1.0:
     'crop_source_image' => 'Source Image',
     'crop_preview' => 'Preview',
     'crop_btn_as_copy' => 'Save image as a copy',
@@ -491,8 +493,7 @@ return [
     'crop_quality_medium' => 'Medium',
     'crop_quality_low' => 'Low',
 
-// 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Model Event Log',
     'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
     'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
@@ -506,24 +507,20 @@ return [
     'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
     'menu_group_storage' => 'Storage',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'The given attribute \"{attribute}\" must be type of array.',
     'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is missing and is required.',
     'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
     'crud_exportdata_col_filter' => 'Filter',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
     'button_save_and_close' => 'Save and close',
     'button_create_and_close' => 'Create and close',
