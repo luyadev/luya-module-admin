@@ -104,8 +104,7 @@ return [
     'view_index_redirect_external_link' => 'ลิ้งค์ภายนอก',
     'view_index_redirect_external_link_help' => 'ลิ้งค์ภายนอกขึ้นต้นด้วย http:// หรือ https:// (สำหรับลิ้งค์ภายในให้ใช้ // แทน)',
 
-// added translation in 1.0.0-beta3:
-
+// added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'อีเมล',
     'model_loginform_password_label' => 'รหัสผ่าน',
     'model_loginform_wrong_user_or_password' => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
@@ -132,26 +131,22 @@ return [
     'js_dir_manager_rm_file_ok' => 'ไฟล์ถูกลบเรียบร้อย',
     'js_zaa_server_proccess' => 'โปรดรอในขณะที่เซิฟเวอร์กำลังประมวลผลข้อมูล',
 
-// added translation in 1.0.0-beta4:
-
+// added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'ยังไม่มีข้อมูลถูกเพิ่มในตารางนี้',
 
-// added translation in 1.0.0-beta5:
-
+// added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'กรุณาเลือกรูปภาพที่อยู่ทางซ้ายเพื่อเพิ่มไปยังแกลอรี่',
     'aws_gallery_images' => 'อัลบั้ม',
     'layout_useronline_name' => 'ชื่อ',
     'layout_useronline_mail' => 'อีเมล',
     'layout_useronline_inactivesince' => 'Inactive since',
 
-// added translations in 1.0.0-beta6
-
+// added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'แคชชิ่ง',
     'debug_state_on' => 'เปิด',
     'debug_state_off' => 'ปิด',
 
-// added translations in 1.0.0-beta7
-
+// added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'รหัสความปลอดภัย',
     'login_securetoken_mail' => 'ใช้รหัสความปลอดภัยดังต่อไปนี้เพื่อล็อกอินเข้าสู้หน้าแอดมิน:',
     'login_async_token_error' => 'รหัสความปลอดภัยไม่ถูกต้องหรือหมดอายุ',
@@ -167,7 +162,7 @@ return [
     'mode_user_email' => 'อีเมล',
     'mode_user_password' => 'รหัสผ่าน',
 
-// added translations in 1.0.0-beta8
+// added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'เพิ่มรายการใหม่',
     'aws_tag_add' => 'เพิ่ม',
     'aws_tag_search' => 'ค้นหารายการ',
@@ -175,16 +170,14 @@ return [
     'dashboard_log_message_add' => 'เพิ่มแถวใหม่ไปยัง <strong>{container}</strong>.',
     'dashboard_log_message_edit' => 'อัพเดทแถวที่ <strong>{container}</strong>.',
 
-// rc1
-
+// added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'ช่วยเหลือ',
     'right_panel_support_title' => 'ข้อมูลช่วยเหลือ &amp;',
     'right_panel_support_tags_title' => 'แท็ก',
     'right_panel_support_support_title' => 'สนับสนุน',
     'right_panel_support_support_text' => 'หากมีคำถามกรุณาติดต่อผู้ดูแลระบบหรือคอนซัลท์ <a target="_blank" href="https://luya.io">luya.io</a>.',
 
-// rc2
-
+// added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'จัดกลุ่ม',
     'ngrest_crud_filter_prompt' => 'เลือกฟิลเตอร์',
     'ngrest_crud_ajax_search_length' => 'ค้นหาต้องมีตัวอักษรความยาวอย่างน้อย 3 ตัวอักษร',
@@ -195,8 +188,7 @@ return [
     'aws_changepassword_notequal' => 'รหัสผ่านไม่ตรงกัน',
     'aws_changeapssword_minchar' => 'รหัสผ่านควรมีอย่างน้อย {min} ตัวอักษร',
 
-// rc3
-
+// added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'ชื่อ',
     'model_lang_short_code' => 'โค้ดย่อ',
@@ -236,8 +228,7 @@ return [
     'js_link_set_value' => 'ตั้งค่าลิ้งค์',
     'callback_button_file_download_widget_success' => 'ไฟล์เตรียมเสร็จแล้วคุณสามารถดาวน์โหลดได้',
 
-// rc4
-
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'มีข้อขัดข้องระหว่างบันทึกไฟล์ อาจจะมีปัญหาเกี่ยวกับการอนุญาติเขียนไฟล์ ช่วยเช็คให้แน่ใจว่าสามารถเขียนไฟล์ลงได้',
     'model_user_oldpassword' => 'รหัสผ่านเดิม',
     'js_account_update_profile_success' => 'ข้อมูลโปรไฟล์ถูกอัพเดทเรียบร้อย',
@@ -249,8 +240,7 @@ return [
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'ไม่มีลิ้งค์ที่ถูกเลือก',
 
-// 1.0.0
-
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'ลบ',
     'js_dir_manager_rm_file_confirm_title' => 'ลบไฟล์',
     'js_dir_manager_rm_folder_confirm_title' => 'ลบโฟลเดอร์',
@@ -276,8 +266,7 @@ return [
     'model_config_atr_is_system' => 'เป็นระบล',
     'menu_system_item_config' => 'ตัวแปรตั้งค่า',
 
-// 1.1.0
-
+// added translations in version 1.1.0:
     'model_user_is_deleted' => 'ลบแล้ว',
     'model_user_name' => 'ชื่อ',
     'model_user_groups' => 'กลุ่ม',
@@ -321,12 +310,10 @@ return [
     'aw_apioverview_no_perm_groups' => 'The API user must have assigned at least one permission group.',
     'aw_apioverview_no_access_token' => 'The API user must have an access token in order to access the API.',
 
-// 1.1.1
-
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} จาก {{totalRows}}',
     
-// 1.2.0
-    
+// added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'ถึงขีดจำกัดในการส่งแล้ว กรุณาลองใหม่อีก {time}.',
     'model_loginform_max_user_attempts' => 'ถึงขีดจำกัดในการล็อกอินแล้ว กรุณาลองใหม่อีก {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง พยายาม #{attempt} จาก {allowedAttempts}.',
@@ -343,8 +330,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'ดาวน์โหลด',
     'layout_filemanager_col_file_disposition_browser' => 'แสดงในบราวเซอร์',
     
-// 1.2.1
-    
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'ข้อมูลส่วนบุคคล',
     'settings_general' => 'ทั่วไป',
     'settings_developer_mode' => 'โหมดผู้พัฒนา',
@@ -353,8 +339,7 @@ return [
     'view_index_redirect_telephone_help' => 'กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => 'สิทธิ์ไม่พอในการอัพโหลด',
     
-// 1.2.2
-    
+// added translations in version 1.2.2:
     'button_no' => 'ไม่',
     'crud_exportdata_btn' => 'Export ข้อมูล',
     'crud_exportdata_col_header' => 'เฮดเดอร์',
@@ -368,14 +353,12 @@ return [
     'dashboard_log_message_delete' => 'ลบรายการใน <strong>{container}</strong>.',
     'model_tag_relations_count' => 'ถูกใช้',
 
-// 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'ซ้ำซ้อย',
     'active_button_duplicate_success' => 'สำเนาถูกสร้าง',
     'active_button_duplicate_error' => 'มีข้อผิดพลาดระหว่างสร้างสำเนา: {message}',
 
-// 2.0
-
+// added translations in version 2.0:
     'model_tag_translation' => 'การแปลภาษา',
     'model_tag_translation_hint' => 'ทางเลือกสำหรับการแปลแท็กจะช่วยให้สามารถเข้าถึงข้อมูลได้ในหน้าเว็บไซต์ที่รองรับหลายภาษา',
     'active_button_timestamp_label' => 'เวลา',
@@ -420,26 +403,22 @@ return [
     'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
     'layout_btn_reload_cache' => 'Clear&nbsp;Cache',
 
-// 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'ไฟล์ถูกเขียนทับเรียบร้อย',
 
-// 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'ใช่',
     'status_false' => 'ไม่ใช่',
     'js_jsonobject_newkey' => 'New key name',
     
-// 2.2.0
-    
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
     'active_button_togglestatus_disabled' => '{modelName} disabled',
     'layout_filemanager_detail_details' => 'File details',
 
-// 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'The tag and its relations have been removed.',
     'aws_delete_remove_wrong_name' => 'The tag name is wrong.',
     'aws_delete_relations_info' => 'The tag <b>{name}</b> is used <b>{count}</b> times. It is assigned to entries in the following tables:',
@@ -447,12 +426,10 @@ return [
     'aws_delete_relations_table_count' => 'Number of Entries',
     'aws_delete_relations_form_hint' => 'In order to confirm the tag deletion, enter the name of the tag and press \"Delete\".',
 
-// 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Some required data is missing.',
 
-// 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Device',
     'last_login' => 'Last login',
     'first_login' => 'First login',
@@ -498,8 +475,7 @@ return [
     'reset_form_submit_btn' => 'Update password',
     'user_change_password_error' =>  'Error while saving new password.',
 
-// 3.1.0
-
+// added translations in version 3.1.0:
     'crop_source_image' => 'Source Image',
     'crop_preview' => 'Preview',
     'crop_btn_as_copy' => 'Save image as a copy',
@@ -517,8 +493,7 @@ return [
     'crop_quality_medium' => 'Medium',
     'crop_quality_low' => 'Low',
 
-// 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Model Event Log',
     'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
     'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
@@ -532,24 +507,20 @@ return [
     'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
     'menu_group_storage' => 'Storage',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'The provided email address is already in use by a deleted account.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'The given attribute \"{attribute}\" must be type of array.',
     'i18n_required_validator_missing_key' => 'The language key \"{lang}\" is missing and is required.',
     'i18n_required_validator_invalid_empty_value' => 'The value for language \"{lang}\" can not be empty.',
     'crud_exportdata_col_filter' => 'Filter',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
     'button_save_and_close' => 'Save and close',
     'button_create_and_close' => 'Create and close',

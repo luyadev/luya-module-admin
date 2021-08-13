@@ -104,8 +104,7 @@ return [
     'view_index_redirect_external_link' => 'Tautan External',
     'view_index_redirect_external_link_help' => 'Tautan eksternal dimulai dengan http: // atau https: // (untuk tautan internal absolut, gunakan // sebagai gantinya).',
 
-// added translation in 1.0.0-beta3:
-
+// added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Kata sandi',
     'model_loginform_wrong_user_or_password' => 'Salah email atau kata sandi.',
@@ -132,26 +131,22 @@ return [
     'js_dir_manager_rm_file_ok' => 'File berhasil dihapus.',
     'js_zaa_server_proccess' => 'Harap tunggu sementara server memproses data Anda.',
 
-// added translation in 1.0.0-beta4:
-
+// added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'Belum ada data yang ditambahkan ke tabel ini.',
 
-// added translation in 1.0.0-beta5:
-
+// added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Pilih beberapa gambar di kiri untuk ditambahkan ke galeri album.',
     'aws_gallery_images' => 'Album gambar',
     'layout_useronline_name' => 'Nama',
     'layout_useronline_mail' => 'Email',
     'layout_useronline_inactivesince' => 'Tidak aktif sejak',
 
-// added translations in 1.0.0-beta6
-
+// added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'On',
     'debug_state_off' => 'Off',
 
-// added translations in 1.0.0-beta7
-
+// added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'kode keamanan',
     'login_securetoken_mail' => 'Gunakan kode keamanan berikut untuk masuk ke administrasi Anda:',
     'login_async_token_error' => 'Kode keamanan yang diberikan tidak valid atau kedaluwarsa.',
@@ -167,7 +162,7 @@ return [
     'mode_user_email' => 'Email',
     'mode_user_password' => 'Kata kunci',
 
-// added translations in 1.0.0-beta8
+// added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Tambah entri baru',
     'aws_tag_add' => 'Tambah',
     'aws_tag_search' => 'Mencari entri',
@@ -175,16 +170,14 @@ return [
     'dashboard_log_message_add' => 'Tambah baris baru pada <strong>{container}</strong>.',
     'dashboard_log_message_edit' => 'Ubah baris pada <strong>{container}</strong>.',
 
-// rc1
-
+// added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Bantuan',
     'right_panel_support_title' => 'Informasi &amp; Bantuan',
     'right_panel_support_tags_title' => 'Kata Kunci',
     'right_panel_support_support_title' => 'Dukungan',
     'right_panel_support_support_text' => 'Bila anda memiliki pertanyaan, tolong kontak webmaster mu atau konsultasi ke <a target="_blank" href="https://luya.io">luya.io</a>.',
 
-// rc2
-
+// added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Gabungan berdasarkan field',
     'ngrest_crud_filter_prompt' => 'Select filter',
     'ngrest_crud_ajax_search_length' => 'The search query must have a minimum length of 3 characters.',
@@ -195,8 +188,7 @@ return [
     'aws_changepassword_notequal' => 'Kata sandi baru dan pengulangan kata sandi tidak sama.',
     'aws_changeapssword_minchar' => 'Sandi baru harus memiliki panjang minimal {min} karakter.',
 
-// rc3
-
+// added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Nama',
     'model_lang_short_code' => 'Short Code',
@@ -236,8 +228,7 @@ return [
     'js_link_set_value' => 'set tautan',
     'callback_button_file_download_widget_success' => 'File sudah disiapkan. Anda dapat mendownloadnya sekarang.',
 
-// rc4
-
+// added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Kesalahan saat menyimpan file di folder penyimpanan. Kesalahan izin dapat menyebabkan masalah ini. Pastikan folder penyimpanan dapat ditulis.',
     'model_user_oldpassword' => 'Kata sandi sebelumnya ',
     'js_account_update_profile_success' => 'Data profil telah berhasil diperbarui.',
@@ -249,8 +240,7 @@ return [
     'menu_dashboard' => 'Dasbor',
     'js_link_not_set' => 'Tidak ada tautan yang dipilih',
 
-// 1.0.0
-
+// added translations in version 1.0.0:
     'ngrest_button_delete' => 'Hapus',
     'js_dir_manager_rm_file_confirm_title' => 'Hapus file',
     'js_dir_manager_rm_folder_confirm_title' => 'Hapus folder',
@@ -276,8 +266,7 @@ return [
     'model_config_atr_is_system' => 'Adalah system',
     'menu_system_item_config' => 'variabel konfigurasi',
 
-// 1.1.0
-
+// added translations in version 1.1.0:
     'model_user_is_deleted' => 'Hilangkan',
     'model_user_name' => 'Nama',
     'model_user_groups' => 'Grup',
@@ -321,12 +310,10 @@ return [
     'aw_apioverview_no_perm_groups' => 'Pengguna API harus ditetapkan setidaknya satu grup izin.',
     'aw_apioverview_no_access_token' => 'Pengguna API harus memiliki access token untuk mengakses API.',
 
-// 1.1.1
-
+// added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} dari {{totalRows}}',
     
-// 1.2.0
-    
+// added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Jumlah maksimum pengiriman formulir telah tercapai, coba lagi {time}.',
     'model_loginform_max_user_attempts' => 'Jumlah percobaan login telah mencapai batas maksimum, coba lagi {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Email dan kata sandi salah. percobaan ke #{attempt} dari {allowedAttempts}.',
@@ -343,8 +330,7 @@ return [
     'layout_filemanager_col_file_disposition_download' => 'Unduh',
     'layout_filemanager_col_file_disposition_browser' => 'Tampilkan pada peramban',
     
-// 1.2.1
-    
+// added translations in version 1.2.1:
     'mode_user_personal_info' => 'Informasi pribadi',
     'settings_general' => 'General',
     'settings_developer_mode' => 'Mode Developer',
@@ -353,8 +339,7 @@ return [
     'view_index_redirect_telephone_help' => 'masukan nomor telepon yang valid (tanda "+" merupakan awalan "\" diperlukan).',
     'missing_file_upload_permission' => 'Izin tidak cukup untuk mengunggah file.',
     
-// 1.2.2
-    
+// added translations in version 1.2.2:
     'button_no' => 'Tidak',
     'crud_exportdata_btn' => 'Ekspor Data',
     'crud_exportdata_col_header' => 'Header',
@@ -368,14 +353,12 @@ return [
     'dashboard_log_message_delete' => 'Menghapus catatan pada <strong>{container}</strong>.',
     'model_tag_relations_count' => 'Digunakan',
 
-// 1.2.3
-
+// added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Duplikat',
     'active_button_duplicate_success' => 'Salinan berhasil dibuat.',
     'active_button_duplicate_error' => 'Galat ketika membuat salinan {message}',
 
-// 2.0
-
+// added translations in version 2.0:
     'model_tag_translation' => 'Terjemahaan',
     'model_tag_translation_hint' => 'Terjemahan opsional untuk kata kunci dalam bahasa tertentu. Ini memungkinkan untuk menetapkan dan mengeluarkan kata kunci yang sama di situs web multi-bahasa.',
     'active_button_timestamp_label' => 'Timestamp',
@@ -420,26 +403,22 @@ return [
     'layout_btn_reload_admin' => 'Reload&nbsp;Admin',
     'layout_btn_reload_cache' => 'Hapus&nbsp;Cache',
 
-// 2.0.1
-
+// added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'File berhasil diganti.',
 
-// 2.0.3
-
+// added translations in version 2.0.3:
     'status_true' => 'Iya',
     'status_false' => 'Tidak',
     'js_jsonobject_newkey' => 'Nama kunci baru',
     
-// 2.2.0
-    
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Tidak dapat diaktifkan',
     'active_button_togglestatus_enabled' => '{modelName} diaktifkan',
     'active_button_togglestatus_disabled' => '{modelName} dimatikan',
     'layout_filemanager_detail_details' => 'Detail file',
 
-// 2.3.0
-
+// added translations in version 2.3.0:
     'aws_delete_remove_success' => 'Kata kunci dan relasinya berhasil dihapus.',
     'aws_delete_remove_wrong_name' => 'Nama kata kunci salah.',
     'aws_delete_relations_info' => 'Kata kunci <b>{name}</b> telah digunakan <b>{count}</b> kali. Digunakan sebagai entri dari tabel berikut:',
@@ -447,12 +426,10 @@ return [
     'aws_delete_relations_table_count' => 'Jumlah Entri',
     'aws_delete_relations_form_hint' => 'Untuk mengkonfirmasi penghapusan kata kunci, masukkan nama kata kunci dan tekan \"Delete\".',
 
-// 2.4.0
-
+// added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Beberapa data yang diperlukan tidak ditemukan.',
 
-// 3.0.0
-
+// added translations in version 3.0.0:
     'device' => 'Device',
     'last_login' => 'Masuk Terakhir',
     'first_login' => 'First login',
@@ -498,8 +475,7 @@ return [
     'reset_form_submit_btn' => 'Ubah kata sandi',
     'user_change_password_error' =>  'Galat ketika menyimpan kata sandi baru.',
   
-// 3.1.0
-
+// added translations in version 3.1.0:
     'crop_source_image' => 'Sumber Gambar',
     'crop_preview' => 'Pratinjau',
     'crop_btn_as_copy' => 'Simpan gambar sebagai salinan',
@@ -517,8 +493,7 @@ return [
     'crop_quality_medium' => 'Sedang',
     'crop_quality_low' => 'Rendah',
 
-// 3.2.0
-
+// added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Model Event Log',
     'ngrestlog_controller_description' => 'Entri Model Event Log ditangkap saat membuat, memperbarui atau menghapus catatan di tampilan CRUD dari admin.',
     'logger_controller_description' => 'Entri Log Aplikasi dipicu oleh [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
@@ -532,24 +507,20 @@ return [
     'filter_controller_description' => 'Filter digunakan untuk menghasilkan versi gambar yang berbeda (mis. berskala atau dipotong). Baca [Panduan Filter Gambar] (https://luya.io/guide/app-filters) untuk mengetahui petunjuk tentang cara membuat filter Anda sendiri.',
     'menu_group_storage' => 'Penyimpanan',
 
-// 3.4.0
-
+// added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'Email yang diberikan sudah digunakan oleh akun yang terhapus.',
 
-// 3.6.0
-
+// added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'Attribut  \"{attribute}\" harus berupa array.',
     'i18n_required_validator_missing_key' => 'Kunci bahasa \"{lang}\" hilang dan diwajibkan.',
     'i18n_required_validator_invalid_empty_value' => 'Nilai untuk bahasa \"{lang}\" tidak dapat kosong.',
     'crud_exportdata_col_filter' => 'Filter',
 
-// 3.7.0
-
+// added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
     'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
 
-// 4.0.0
-
+// added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
     'button_save_and_close' => 'Save and close',
     'button_create_and_close' => 'Create and close',
