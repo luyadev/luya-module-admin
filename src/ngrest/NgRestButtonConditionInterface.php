@@ -19,7 +19,6 @@ interface NgRestButtonConditionInterface
     
     /**
      * Get the button condition or empty of not set
-     * @inheritdoc
      * @since 4.0.0
      */
     public function getCondition();
