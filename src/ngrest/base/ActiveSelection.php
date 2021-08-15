@@ -8,7 +8,7 @@ namespace luya\admin\ngrest\base;
  * 
  * An active selection (action) is button which can interact with the selected items from the CRUD list.
  * 
- * See the 
+ * See the [[ngrest-activeselection.md]] guide.
  * 
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
