@@ -30,6 +30,18 @@ class Scheduler extends \yii\db\ActiveRecord
         return '{{%admin_scheduler}}';
     }
 
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_DELETE, function() {
+            $queueId = Config::find()->where(['name' => "queueScheduler.{$this->id}", 'is_system' => true])->select(['value'])->scalar();
+
+            if (!empty($queueId)) {
+                Yii::$app->adminqueue->remove($queueId);
+            }
+        });
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -127,6 +139,14 @@ class Scheduler extends \yii\db\ActiveRecord
             $delay = 0;
         }
 
-        Yii::$app->adminqueue->delay($delay)->push(new ScheduleJob(['schedulerId' => $this->id]));
+        $queueId = Yii::$app->adminqueue->delay($delay)->push(new ScheduleJob(['schedulerId' => $this->id]));
+
+        // until there is a migration, store informations in config:
+        // see: https://github.com/luyadev/luya-module-admin/issues/655
+        $config = new Config();
+        $config->is_system = 1;
+        $config->name = "queueScheduler.{$this->id}";
+        $config->value = $queueId;
+        $config->save();
     }
 }

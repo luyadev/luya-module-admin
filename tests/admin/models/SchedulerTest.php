@@ -4,6 +4,7 @@ namespace luya\admin\tests\admin\models;
 
 use luya\Exception;
 use admintests\AdminModelTestCase;
+use luya\admin\models\Config;
 use luya\admin\models\Scheduler;
 use luya\admin\models\Tag;
 use luya\testsuite\fixtures\ActiveRecordFixture;
@@ -70,6 +71,7 @@ class ScheulderTest extends AdminModelTestCase
         $this->createAdminQueueTable();
         $this->createAdminQueueLogFixture();
         $this->createAdminNgRestLogFixture();
+        new NgRestModelFixture(['modelClass' => Config::class]);
         $model = $this->fixture->newModel;
         $model->model_class = Tag::class;
         $model->target_attribute_name = 'name';

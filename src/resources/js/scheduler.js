@@ -89,7 +89,7 @@ zaa.directive("luyaSchedule", function() {
             };
 
             $scope.getLogTable = function(callback) {
-                $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass+'&pk=' + $scope.primaryKeyValue).then(function(response) {
+                $http.get('admin/api-admin-common/scheduler-log?model='+$scope.modelClass+'&pk=' + $scope.primaryKeyValue + '&target=' + $scope.attributeName).then(function(response) {
                     $scope.logs.archived = [];
                     $scope.logs.upcoming = [];
 

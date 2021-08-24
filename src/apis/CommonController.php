@@ -85,10 +85,10 @@ class CommonController extends RestController
      * @return ActiveDataProvider
      * @since 2.0.0
      */
-    public function actionSchedulerLog($model, $pk)
+    public function actionSchedulerLog($model, $pk, $target)
     {
         return new ActiveDataProvider([
-            'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk]),
+            'query' => Scheduler::find()->where(['model_class' => $model, 'primary_key' => $pk, 'target_attribute_name' => $target]),
             'sort'=> ['defaultOrder' => ['schedule_timestamp' => SORT_ASC]],
             'pagination' => false,
         ]);

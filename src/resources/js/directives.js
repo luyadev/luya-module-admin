@@ -562,26 +562,26 @@ zaa.directive('insertPasteListener', ['$rootScope', function ($rootScope) {
  *
  * ```js
  * <button ng-click="modalState=!modalState">Toggle Modal</button>
-    * <modal is-modal-hidden="modalState" modal-title="I am the Title">
-    *     <h1>Modal Container</h1>
-    *     <p>Hello world!</p>
-    * </modal>
-    * ```
-    *
-    * If you want to hidden use ng-if with modals, you have to use ng-if inside the modal like:
-    *
-    * ```js
-    * <modal is-modal-hidden="modalState">
-    *    <div ng-if="!modalState">
-    *        <p>This is only linked when modalState is visible</p>
-    *    </div>
-    * </modal>
-    * ```
-    *
-    * > Using the ng-if outside of the modal wont work as it does not trigger the modalState due to child scope creation each time
-    * > the ng-if is visible.
-    *
-    */
+ * <modal is-modal-hidden="modalState" modal-title="I am the Title">
+ *     <h1>Modal Container</h1>
+ *     <p>Hello world!</p>
+ * </modal>
+ * ```
+ *
+ * If you want to hidden use ng-if with modals, you have to use ng-if inside the modal like:
+ *
+ * ```js
+ * <modal is-modal-hidden="modalState">
+ *    <div ng-if="!modalState">
+ *        <p>This is only linked when modalState is visible</p>
+ *    </div>
+ * </modal>
+ * ```
+ *
+ * > Using the ng-if outside of the modal wont work as it does not trigger the modalState due to child scope creation each time
+ * > the ng-if is visible.
+ *
+ */
 zaa.directive("modal", ['$timeout', function ($timeout) {
     return {
         restrict: "E",

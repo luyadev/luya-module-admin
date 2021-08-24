@@ -4,6 +4,7 @@ namespace luya\admin\models;
 
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use yii\db\Expression;
 
 /**
  * Queue Log.
@@ -42,9 +43,9 @@ class QueueLog extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Log ID'),
             'queue_id' => Yii::t('app', 'Queue ID'),
-            'title' => Yii::t('app', 'Title'),
+            'title' => Yii::t('app', 'Queue Job Title'),
             'push_timestamp' => Yii::t('app', 'Push Timestamp'),
             'run_timestamp' => Yii::t('app', 'Run Timestamp'),
             'end_timestamp' => Yii::t('app', 'End Timestamp'),
@@ -103,7 +104,18 @@ class QueueLog extends NgRestModel
             ],
         ];
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    public function ngRestFilters()
+    {
+        return [
+            'Upcoming' => self::find()->where(['is', 'run_timestamp', new Expression('null')]),
+            'Processed' => self::find()->where(['is not', 'run_timestamp', new Expression('null')]),
+        ];
+    }
+
     /**
      * Get Queue Log Errors
      *
