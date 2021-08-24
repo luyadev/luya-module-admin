@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.1.0
 
++ [#654](https://github.com/luyadev/luya-module-admin/pull/654) Fix issue with ngrest detail view when json is not an array.
 + [#496](https://github.com/luyadev/luya-module-admin/issues/496) Added default color for link elements in NgRest CRUD table.
 
 ## 4.0.0 (27. July 2021)
