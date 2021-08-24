@@ -499,7 +499,7 @@ return [
     'ngrestlog_controller_description' => 'Einträge des Model Event Logs werden beim Erstellen, Aktualisieren und Löschen von Datensätzen in CRUD Views der Administration erzeugt.',
     'logger_controller_description' => 'Einträge des Application Logs werden vom [Logger Model](https://luya.io/api/luya-admin-models-Logger) veranlasst.',
     'config_controller_description' => 'Erstellen Sie einen Konfigurations-Key und weisen diesem einen Wert zu mittels [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Listet alle unerledigten Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
+    'queuelog_controller_description' => 'Listet alle Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
     'ngrest_delete_all_button_label' => 'Alle Daten löschen',
     'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
     'storageimage_controller_description' => 'Zeigt alle Bilder an, die über das [Storage System](https://luya.io/guide/app-storage) erstellt wurden. Jedes Bild ist verknüpft mit einer Datei.',
