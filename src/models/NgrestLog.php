@@ -162,13 +162,13 @@ class NgrestLog extends NgRestModel
                     [
                         'attribute' => 'attributes_json',
                         'value' => function($model) {
-                            return VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json));
+                            return is_array($model->attributes_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json)) : $model->attributes_json;
                         }
                     ],
                     [
                         'attribute' => 'attributes_diff_json',
                         'value' => function($model) {
-                            return VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json));
+                            return is_array($model->attributes_diff_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json)) : $model->attributes_diff_json;
                         }
                     ],
                     'table_name:raw',
