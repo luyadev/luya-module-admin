@@ -38,6 +38,7 @@ class Scheduler extends \yii\db\ActiveRecord
 
             if (!empty($queueId)) {
                 Yii::$app->adminqueue->remove($queueId);
+                QueueLog::deleteAll(['queue_id' => $queueId]);
             }
         });
     }
