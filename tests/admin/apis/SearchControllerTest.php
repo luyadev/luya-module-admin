@@ -14,9 +14,18 @@ class SearchControllerTest extends AdminModelTestCase
     public function testIndexAction()
     {
         PermissionScope::run($this->app, function (PermissionScope $scope) {
-            $fixture = new NgRestModelFixture([
+            new NgRestModelFixture([
                 'modelClass' => SearchData::class,
             ]);
+
+            $this->createAdminTagFixture([
+                1 => [
+                    'id' => 1,
+                    'name' => 'none',
+                    'translation' => 'none',
+                ]
+            ]);
+
             $ctrl = new SearchController('timestamp', $scope->getApp()->getModule('admin'));
             $scope->loginUser();
             $response = $scope->runControllerAction($ctrl, 'index', ['query' => 'test']);
