@@ -67,7 +67,7 @@ class SearchController extends RestController
                     ];
                 }
                 
-                unset($data);
+                unset($model, $data);
             }
         }
 
@@ -75,18 +75,23 @@ class SearchController extends RestController
             if ($api['permissionIsApi']) {
                 $ctrl = $module->createController($api['permissionApiEndpoint']);
                 $controller = $ctrl[0];
-                $data = $this->transformGenericSearchToData($controller->model->genericSearch($query));
-                if (count($data) > 0) {
-                    $search[] = [
-                        'hideFields' => $controller->model->genericSearchHiddenFields(),
-                        'type' => 'api',
-                        'menuItem' => $api,
-                        'data' => $data,
-                        'stateProvider' => $controller->model->genericSearchStateProvider(),
-                    ];
+
+                if ($controller && $controller->model && $controller->model instanceof GenericSearchInterface) {
+                    $data = $this->transformGenericSearchToData($controller->model->genericSearch($query));
+                    if (count($data) > 0) {
+                        $search[] = [
+                            'hideFields' => $controller->model->genericSearchHiddenFields(),
+                            'type' => 'api',
+                            'menuItem' => $api,
+                            'data' => $data,
+                            'stateProvider' => $controller->model->genericSearchStateProvider(),
+                        ];
+                    }
+                    
+                    unset($data);
                 }
                 
-                unset($data);
+                unset($controller, $ctrl);
             }
         }
 
