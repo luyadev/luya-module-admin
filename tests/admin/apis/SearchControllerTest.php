@@ -4,7 +4,6 @@ namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
 use luya\admin\apis\SearchController;
-use luya\admin\apis\TimestampController;
 use luya\admin\models\SearchData;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
@@ -26,7 +25,7 @@ class SearchControllerTest extends AdminModelTestCase
                 ]
             ]);
 
-            $ctrl = new SearchController('timestamp', $scope->getApp()->getModule('admin'));
+            $ctrl = new SearchController('search', $scope->getApp()->getModule('admin'));
             $scope->loginUser();
             $response = $scope->runControllerAction($ctrl, 'index', ['query' => 'test']);
 
