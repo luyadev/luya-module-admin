@@ -18,7 +18,7 @@ use luya\helpers\ArrayHelper;
  * ```php
  * public function ngRestAttributeTypes()
  * {
- *     'genres' => ['selectArray', 'data' => [1 => 'Male', 2 => 'Female']],
+ *     'genres' => ['selectArrayGently', 'data' => [1 => 'Male', 2 => 'Female']],
  * }
  * ```
  * Or use a closure for lazy data load:
@@ -27,7 +27,7 @@ use luya\helpers\ArrayHelper;
  * public function ngRestAttributeTypes()
  * {
  *     return [
- *         'genres' => ['selectArray', 'data' => function () {
+ *         'genres' => ['selectArrayGently', 'data' => function () {
  *               return new Query()->all();
  *          }],
  *     ];
