@@ -3,15 +3,7 @@
 namespace admintests\admin\ngrest\plugins;
 
 use admintests\AdminTestCase;
-use admintests\data\fixtures\UserFixture;
-use luya\admin\models\User;
-use luya\admin\ngrest\Config;
-use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\ngrest\plugins\SelectArrayGently;
-use luya\admin\ngrest\render\RenderCrud;
-use luya\testsuite\fixtures\NgRestModelFixture;
-use yii\base\Event;
-use yii\base\ModelEvent;
 
 class SelectArrayGentlyTest extends AdminTestCase
 {
