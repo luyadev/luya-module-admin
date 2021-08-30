@@ -15,6 +15,8 @@ class UserHistorySummaryActiveWindowTest extends AdminModelTestCase
     {
         $currentLocale = setlocale(LC_TIME, 0);
 
+        $this->assertSame($currentLocale, '');
+
         setlocale(LC_TIME, 'en-US');
 
         $userFixture = $this->createAdminUserFixture([
