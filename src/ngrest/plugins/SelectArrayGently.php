@@ -42,10 +42,16 @@ use luya\helpers\ArrayHelper;
 class SelectArrayGently extends Select
 {
     use LazyDataLoadTrait;
-    
+
+    /**
+     * @var array Private property to store dropdown values
+     */
     private $_data;
 
-
+    /**
+     * @inheritdoc
+     * MUST be disabled for this plugin, since the data is converted on client side and not on server side
+     */
     public $assignAfterFind = false;
 
     /**
@@ -58,8 +64,8 @@ class SelectArrayGently extends Select
         }
 
         $options = Angular::optionsFilter([
-                                              'options' => $this->getServiceName('selectdata'),
-                                          ]);
+            'options' => $this->getServiceName('selectdata'),
+        ]);
 
         return $this->createTag('select-array-gently', null, ArrayHelper::merge(['model' => $ngModel], $options));
     }
@@ -75,8 +81,7 @@ class SelectArrayGently extends Select
     }
     
     /**
-     *
-     * {@inheritDoc}
+     * @inheritdoc
      * @see \luya\admin\ngrest\plugins\Select::getData()
      */
     public function getData()
