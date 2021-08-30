@@ -12,12 +12,14 @@ class LogControllerTest extends AdminConsoleSqLiteTestCase
      */
     private function createCommand()
     {
+        $this->app->mute = 1;
         return new LogController('log', $this->app);
     }
 
     public function testTables()
     {
         $ctrl = $this->createCommand();
+
 
         $this->assertFalse($this->invokeMethod($ctrl, 'validateTables', ['foo']));
         $this->assertFalse($this->invokeMethod($ctrl, 'validateTables', [null]));

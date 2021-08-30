@@ -10,7 +10,7 @@ use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 use yii\base\InvalidCallException;
 
-class ScheuldeJobTest extends AdminConsoleSqLiteTestCase
+class ScheduleJobTest extends AdminConsoleSqLiteTestCase
 {
     use AdminDatabaseTableTrait;
 

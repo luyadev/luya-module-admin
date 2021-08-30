@@ -2,7 +2,6 @@
 
 namespace luya\admin\models;
 
-use admintests\admin\ngrest\plugins\SelectRelationActiveQueryTestSqlLite;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\filters\TinyCrop;
