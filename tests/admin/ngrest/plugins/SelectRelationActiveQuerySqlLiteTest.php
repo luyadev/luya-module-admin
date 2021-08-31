@@ -12,7 +12,7 @@ use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\admin\ngrest\base\NgRestModel;
 use yii\base\Event;
 
-class SelectRelationActiveQueryTestSqlLite extends AdminModelTestCase
+class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
 {
     public function testRelationLoad()
     {

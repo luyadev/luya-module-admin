@@ -59,7 +59,7 @@ class CrudControllerTest extends AdminConsoleTestCase
         $this->assertNotEquals($ctrl->namespace, $ctrl->modelNamespace);
     }
     
-    public function testAssertsion()
+    public function testAssertion()
     {
         $ctrl = new CrudController('id', Yii::$app);
         
@@ -89,7 +89,7 @@ class TestModel extends \luya\admin\ngrest\base\Api
 }
 EOT;
         
-        $this->assertSame($tpl, $ctrl->generateApiContent('file\\namespace', 'TestModel', '\\path\\to\\model'));
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $tpl), str_replace(["\r\n", "\r"],"\n", $ctrl->generateApiContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
         
         $tpl2 = <<<'EOT'
 <?php
@@ -109,7 +109,7 @@ class TestModel extends \luya\admin\ngrest\base\Controller
     public $modelClass = '\path\to\model';
 }
 EOT;
-        $this->assertSame($tpl2, $ctrl->generateControllerContent('file\\namespace', 'TestModel', '\\path\\to\\model'));
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $tpl2), str_replace(["\r\n", "\r"],"\n", $ctrl->generateControllerContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
         
         
         $model = <<<'EOT'
@@ -241,8 +241,12 @@ EOT;
             Yii::$app->db->getTableSchema('{{%admin_user}}', true),
             true
         );
-        $this->assertSame($model, $c);
-        
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $model), str_replace(["\r\n", "\r"],"\n", $c));
+
+
+
+
+
         $sum = <<<'EOT'
 public $apis = [
     'api-endpoit-name' => '\path\to\api\Model',
@@ -256,7 +260,7 @@ public function getMenu()
                 ->itemApi('AdminUser', 'module/admin-user/index', 'label', 'api-endpoit-name');
 }
 EOT;
-        $this->assertSame($sum, $ctrl->generateBuildSummery('api-endpoit-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index'));
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $sum), str_replace(["\r\n", "\r"],"\n", $ctrl->generateBuildSummery('api-endpoit-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
     }
     
     public function testModelWithoutI18n()
@@ -371,6 +375,6 @@ class TestModel extends NgRestModel
 }
 
 EOT;
-        $this->assertSame($model, $c);
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $model), str_replace(["\r\n", "\r"],"\n", $c));
     }
 }
