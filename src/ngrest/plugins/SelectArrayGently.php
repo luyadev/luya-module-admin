@@ -38,6 +38,7 @@ use luya\helpers\ArrayHelper;
  *
  * @author Anton Ikonnikov <antikon2@yandex.ru>
  * @since 4.1.0
+ * @see https://github.com/luyadev/luya-module-admin/pull/658#issuecomment-910086883
  */
 class SelectArrayGently extends Select
 {
