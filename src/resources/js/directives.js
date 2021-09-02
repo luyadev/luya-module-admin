@@ -1434,7 +1434,9 @@ zaa.directive("zaaTextarea", function () {
 });
 
 /**
- * Generate a password input.
+ * Generates a form group with password input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage <zaa-password model="expression" label="someLabel" fieldid="someId" />
  */
 zaa.directive("zaaPassword", function () {
     return {
@@ -1456,7 +1458,7 @@ zaa.directive("zaaPassword", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-password ng-model="model" id="{{id}}" autocomplete="{{autocomplete}}" inputmode="{{inputmode}}"></luya-password>' +
+                        '<luya-password ng-model="model" fieldid="{{id}}" autocomplete="{{autocomplete}}" inputmode="{{inputmode}}"></luya-password>' +
                     '</div>' +
                 '</div>';
         },
@@ -1465,27 +1467,34 @@ zaa.directive("zaaPassword", function () {
 
 
 /**
- * Generate a password input.
+ * Generates a simple password input which is styled like the rest LUYA admin UI elements.
+ *
+ * Usage <luya-password ng-model="expression" />
  */
 zaa.directive("luyaPassword", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=ngModel",
-            "id": "@id",
+            "id": "@fieldid",
             "autocomplete": "@autocomplete",
             "inputmode": "@inputmode",
         },
 
-        controller: ['$scope', function ($scope) {
-            console.log ($scope.autocomplete);
-            if ($scope.autocomplete === undefined || $scope.autocomplete === '') {
-                $scope.autocomplete = 'on';
-            }
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
+            $scope.init = function () {
+                if ($scope.autocomplete === undefined || $scope.autocomplete === '') {
+                    $scope.autocomplete = 'on';
+                }
 
-            if ($scope.inputmode === undefined || $scope.inputmode === '') {
-                $scope.inputmode = 'verbatim';
-            }
+                if ($scope.inputmode === undefined || $scope.inputmode === '') {
+                    $scope.inputmode = 'verbatim';
+                }
+            };
+
+            $timeout(function () {
+                $scope.init();
+            });
         }],
 
         template: function () {
@@ -1523,18 +1532,19 @@ zaa.directive("zaaRadio", function () {
             });
         }],
         template: function () {
-            return '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                '<div class="form-side form-side-label">' +
-                '<label for="{{id}}">{{label}}</label>' +
-                '</div>' +
-                '<div class="form-side">' +
-                '<div ng-repeat="(key, item) in options" class="form-check">' +
-                '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
-                '<label class="form-check-label" for="{{id}}_{{key}}">' +
-                '{{item.label}}' +
-                '</label>' +
-                '</div>' +
-                '</div>' +
+            return '' +
+                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                    '<div class="form-side form-side-label">' +
+                        '<label for="{{id}}">{{label}}</label>' +
+                    '</div>' +
+                    '<div class="form-side">' +
+                        '<div ng-repeat="(key, item) in options" class="form-check">' +
+                            '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                            '<label class="form-check-label" for="{{id}}_{{key}}">' +
+                                '{{item.label}}' +
+                            '</label>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>';
         }
     };
@@ -1594,7 +1604,7 @@ zaa.directive("zaaSelect", function () {
                     '<label for="{{id}}">{{label}}</label>' +
                 '</div>' +
                 '<div class="form-side">'+
-                    '<luya-select ng-model="model" options="options" id="{{id}}" clearable="clearable" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
+                    '<luya-select ng-model="model" options="options" fieldid="{{id}}" clearable="clearable" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
                 '</div>' +
             '</div>';
         }
@@ -1712,7 +1722,7 @@ zaa.directive("luyaSelect", function() {
         template: function () {
             return '' +
                 '<div class="zaaselect" ng-class="{\'open\':isOpen, \'selected\':hasSelectedValue()}">' +
-                    '<select class="zaaselect-select" ng-model="model">' +
+                    '<select class="zaaselect-select" ng-model="model" id="{{id}}">' +
                         '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
                     '</select>' +
                     '<div class="zaaselect-selected">' +
