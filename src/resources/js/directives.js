@@ -3925,3 +3925,44 @@ zaa.directive('pagination', function () {
         `,
     };
 });
+
+/**
+ * Supporting directive to SelectArrayGently plugin
+ *
+ */
+zaa.directive('selectArrayGently', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            'model': '=',
+            'options': '=',
+            'optionsvalue': '@optionsvalue',
+            'optionslabel': '@optionslabel',
+        },
+        controller: ['$rootScope', '$scope',  function ($rootScope, $scope) {
+            if ($scope.optionsvalue === undefined) {
+                $scope.optionsvalue = 'value';
+            }
+            if ($scope.optionslabel === undefined) {
+                $scope.optionslabel = 'label';
+            }
+
+            $scope.getSelectedLabel = function () {
+                // Keep raw value by default
+                var selectedLabel = $scope.model;
+                angular.forEach($scope.options, function (item) {
+                    if ($scope.model === item[$scope.optionsvalue]) {
+                        selectedLabel = item[$scope.optionslabel];
+                    }
+                });
+
+                return selectedLabel;
+            };
+        }],
+
+
+        template: function () {
+            return '<span>{{getSelectedLabel()}}</span>';
+        }
+    };
+});
