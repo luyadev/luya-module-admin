@@ -289,6 +289,29 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $config->hideInList;
     }
 
+
+    public function getColors(array $item)
+    {
+        $config = Config::createField($item);
+
+        $cellColor = $config->cellColor;
+
+
+        if ($cellColor === '' or $cellColor === null or $cellColor === false) {
+            $cellColor = false;
+        }
+
+        //if (subst$cellColor)
+
+        $colors = [
+            'cellColor' => $cellColor
+        ];
+
+
+        return $colors;
+    }
+
+
     /**
      * @inheritdoc
      */

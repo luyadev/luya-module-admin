@@ -211,7 +211,8 @@ $filters = Angular::optionsArrayInput($filters);
                             </td>
                             <?php endif; ?>
                             <?php $i = 0; foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; $i++; ?>
-                                <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?>class="<?= $i != 1 ?: 'tab-padding-left'; ?>">
+                                <?php $cellColor = ($this->context->getColors($item))['cellColor'];?>
+                                <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?> class="<?= $i != 1 ?: 'tab-padding-left'; ?>" <?php if ($cellColor): ?>ng-style='{"background-color": getParsedCellColor(item, <?= Json::HtmlEncode($cellColor)?>)}' <?php endif; ?> >
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>
                                 </td>
                              <?php endforeach; ?>
