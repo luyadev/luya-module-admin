@@ -294,11 +294,11 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      * Returns an array with color properties of the ngRest field
      *
      * *cellColor* - the color of the CRUD table cell
-     * *highlightColor* - the background color of the text or similar
+     * *highlightColor* - the background color of the text or similar (will be implemented later)
      * *textColor* - the color of the text or similar (will be implemented later)
      *
      * @param array $item
-     * @return array
+     * @return array Returns an array with key `cellColor`.
      * @since 4.2.0
      */
     public function getColors(array $item)
