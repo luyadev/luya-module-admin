@@ -1486,7 +1486,7 @@ zaa.directive("zaaRadio", function () {
                 '</div>' +
                 '<div class="form-side">' +
                 '<div ng-repeat="(key, item) in options" class="form-check">' +
-                '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}" class="form-check-input" id="{{id}}_{{key}}">' +
                 '<label class="form-check-label" for="{{id}}_{{key}}">' +
                 '{{item.label}}' +
                 '</label>' +
