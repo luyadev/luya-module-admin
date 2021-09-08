@@ -18,8 +18,8 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', 
-	function(cfpLoadingBar, $scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData) {
+	zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', '$parse',
+	function(cfpLoadingBar, $scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData, $parse) {
 
 		$scope.toast = AdminToastService;
 
@@ -406,6 +406,47 @@
 
 			return false;
 		};
+
+
+		/**
+		 * Checks is string a valid CSS color
+		 *
+		 * @param possibleColor A string to test
+		 * @returns {boolean}
+		 */
+		let isStringAColor = function (possibleColor) {
+			var div = document.createElement('div');
+			div.style.color = 'rgb(0, 0, 0)';
+			div.style.color = possibleColor;
+			if (div.style.color !== 'rgb(0, 0, 0)') {
+				return true;
+			}
+			div.style.color = 'rgb(255, 255, 255)';
+			div.style.color = possibleColor;
+			return div.style.color !== 'rgb(255, 255, 255)';
+		};
+
+		/**
+		 * Parses string to a color or an AngularJs expression
+		 *
+		 * @param item ngRest data object
+		 * @param expression A string to parse
+		 * @returns {boolean|*} parsed string or false
+		 */
+		$scope.getParsedCellColor = function(item, expression) {
+			if (isStringAColor(expression)) {
+				return expression;
+			}
+
+			try {
+				var parsed = $parse(expression)(item);
+			} catch (err) {
+				return false;
+			}
+
+			return parsed;
+		};
+
 
 		$scope.submitUpdate = function (close) {
 			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {

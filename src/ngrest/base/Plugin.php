@@ -126,7 +126,23 @@ abstract class Plugin extends Component implements TypesInterface
      * @since 2.2.2
      */
     public $beforeListFind;
-    
+
+    /**
+     * @var mixed A background color of a CRUD table cell where plugin data is shown.
+     *
+     * The value can be any string with CSS valid color such as `'red'` or `'#35FD87'` or `'rgba (124, 255, 23, 0.2)'`.
+     * Or the value can be a simple AngularJS expression e.g. `'colorData'` or `'gender ? "purple" : "blue"'` assuming `colorData` or `gender` is declared in {{luya\admin\ngrest\base\NgRestModel::ngRestScopes()}} list scope.
+     * In the second case the cell color will be automatically changed when the corresponding attribute changes.
+     *
+     * ```php
+     * 'cellColor' => 'gender ? "purple" : "blue"'
+     * ```
+     *
+     * @see https://docs.angularjs.org/guide/expression
+     * @since 4.2.0
+     */
+    public $cellColor = false;
+
     /**
      * Renders the element for the CRUD LIST overview for a specific type.
      *
