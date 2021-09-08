@@ -441,7 +441,6 @@
 			try {
 				var parsed = $parse(expression)(item);
 			} catch (err) {
-				//console.log (err.name + ': "' + err.message +  '" occurred when $parse');
 				return false;
 			}
 

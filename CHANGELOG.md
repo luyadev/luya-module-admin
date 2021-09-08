@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.1.0
 
++ [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any ngRest attribute. It allows to set color of CRUD table cells.
 + [#658](https://github.com/luyadev/luya-module-admin/pull/658) Added new SelectArrayGently Plugin, which is the same as SelectArray Plugin, but do not override the values from the database.
 + [#657](https://github.com/luyadev/luya-module-admin/pull/657) Fix problem with global admin UI search when model does not exists, this could be due to old controller structure or custom code.
 + [#656](https://github.com/luyadev/luya-module-admin/pull/656) Ensure queue items are removed when schedule item is deleted, improved filter of upcoming queue events, fix issue with scheduler log for multiple attributes on the same model.
