@@ -47,7 +47,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      *
      * **IMPORTANT NOTE.** You *can* use this property to customize the form, but only if you know what you're doing.
      * This approach **is discouraged** by LUYA maintainers. One of the strongest arguments for the LUYA admin is that you can
-     * run composer update and you get fresh updates, improvments UI fixes, new button s, etc. - if you override the view files a next update
+     * run composer update, and you get fresh updates, improvements UI fixes, new button s, etc. - if you override the view files a next update
      * can break the application, as there's no backward compatibility guarantee in view files and UI-controllers.
      *
      * @since 2.0.0
@@ -289,6 +289,34 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $config->hideInList;
     }
 
+
+    /**
+     * Returns an array with color properties of the ngRest field
+     *
+     * *cellColor* - the color of the CRUD table cell
+     * *highlightColor* - the background color of the text or similar (will be implemented later)
+     * *textColor* - the color of the text or similar (will be implemented later)
+     *
+     * @param array $item
+     * @return array Returns an array with key `cellColor`.
+     * @since 4.2.0
+     */
+    public function getColors(array $item)
+    {
+        $config = Config::createField($item);
+
+        $cellColor = $config->cellColor;
+
+        if ($cellColor === '' or $cellColor === null) {
+            $cellColor = false;
+        }
+
+        return [
+            'cellColor' => $cellColor
+        ];
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -296,7 +324,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         return $this->_settingButtonDefinitions;
     }
-    
+
     // methods used inside the view context: RenderCrudView
     
     /**
