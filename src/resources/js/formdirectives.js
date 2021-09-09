@@ -576,7 +576,6 @@ zaa.directive("zaaDecimal", function () {
  * Generates a form group with simple text input. Mostly used in LUYA admin when create or update CRUD record.
  *
  * Usage:
- *
  * ```
  * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
  * ```
@@ -638,7 +637,6 @@ zaa.directive("luyaText", function () {
  * Generates a form group with read-only text. Mostly used in LUYA admin when create or update CRUD record.
  *
  * Usage:
- *
  * ```
  * <zaa-readonly model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-readonly>
  * ```
@@ -691,10 +689,14 @@ zaa.directive("luyaReadonly", function () {
 
 
 /**
- * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
+ * Generates a form group with result of the api request
  *
- * Generates a request to the corresponding model item view like the example above would request to:
+ * Usage:
+ * ```
+ * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" ></zaa-async-value>
+ * ```
  *
+ * The above example will send the following request:
  * ```
  * /admin/admin-users/{model}?fields=foo,bar
  * ```
@@ -725,7 +727,7 @@ zaa.directive("zaaAsyncValue", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<async-value model="model" api="{{api}}" fields="fields"  ng-show="model"></async-value>' +
+                        '<luya-async-value ng-model="model" api="{{api}}" fields="fields"  ng-show="model"></luya-async-value>' +
                         '<button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button>' +
                     '</div>' +
                 '</div>';
@@ -735,12 +737,58 @@ zaa.directive("zaaAsyncValue", function () {
 
 /**
  * Can be used to just fetch a value from an api async.
+ * ```
+ * <luya-async-value model="theModel" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
+ * ```
+ * @since 4.2.0
+ */
+zaa.directive("luyaAsyncValue", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "api": "@",
+            "fields": "=",
+            "id": "@fieldid"
+        },
+        controller: ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+            $timeout(function () {
+                $scope.$watch('model', function (n, o) {
+                    if (n) {
+                        $scope.value = '';
+                        $http.get($scope.api + "/" + n + "?fields=" + $scope.fields.join())
+                            .then(function (response) {
+                                $scope.value; // ???
+                                angular.forEach(response.data, function (value) {
+                                    if (value) {
+                                        $scope.value = $scope.value + value + " ";
+                                    }
+                            });
+                        });
+                    }
+                });
+            });
+        }],
+        template: function () {
+            return '<span id="{{id}}" ng-bind="value"></span>';
+        }
+    }
+});
+
+
+/**
+ * Can be used to just fetch a value from an api async.
  *
  * ```
  * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]"></async-value>
  * ```
  *
  * @since 1.2.2
+ *
+ * @deprecated
+ * sinceVersion="4.2.0"
+ *
+ * This directive is deprecated. Use `luyaAsyncValue` instead.
  */
 zaa.directive("asyncValue", function () {
     return {
@@ -774,7 +822,12 @@ zaa.directive("asyncValue", function () {
 });
 
 /**
- * Generate a textarea input.
+ * Generates a form group with textarea. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ * ```
+ * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
+ * ```
  */
 zaa.directive("zaaTextarea", function () {
     return {
@@ -785,27 +838,50 @@ zaa.directive("zaaTextarea", function () {
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
-            "placeholder": "@placeholder"
+            "placeholder": "@placeholder",
         },
+
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                     '<div class="form-side form-side-label">' +
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
-                    '<div class="form-side">' +
-                        '<textarea id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" auto-grow placeholder="{{placeholder}}"></textarea>' +
+                    '<div class="form-side">'+
+                        '<luya-textarea ng-model="model" fieldid="{{id}}" placeholder="{{placeholder}}"></luya-textarea>' +
                     '</div>' +
                 '</div>';
+        },
+    }
+});
+
+/**
+ * Generates a textarea input which is styled like the rest LUYA admin UI elements.
+ *
+ * Usage:
+ * ```
+ * <luya-textarea ng-model="someAngularJsModel"></luya-textarea>
+ * ```
+ */
+zaa.directive("luyaTextarea", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "id": "@fieldid",
+            "placeholder": "@placeholder"
+        },
+        template: function () {
+            return '<textarea id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" auto-grow placeholder="{{placeholder}}"></textarea>';
         }
     }
 });
+
 
 /**
  * Generates a form group with password input. Mostly used in LUYA admin when create or update CRUD record.
  *
  * Usage:
- *
  * ```
  * <zaa-password model="expression" label="someLabel" fieldid="someId"></zaa-password>
  * ```
