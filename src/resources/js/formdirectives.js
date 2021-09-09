@@ -83,7 +83,7 @@ zaa.directive("zaaSortRelationArray", function () {
                 if (n !== undefined && n !== null) {
                     $scope.sourceData = n.sourceData;
                 }
-            })
+            });
 
             $scope.getSourceOptions = function () {
                 return $scope.sourceData;
@@ -91,7 +91,7 @@ zaa.directive("zaaSortRelationArray", function () {
 
             $scope.getModelItems = function () {
                 return $scope.model;
-            }
+            };
 
             $scope.addToModel = function (option) {
 
@@ -110,14 +110,14 @@ zaa.directive("zaaSortRelationArray", function () {
 
             $scope.removeFromModel = function (key) {
                 $scope.model.splice(key, 1);
-            }
+            };
 
             $scope.moveUp = function (index) {
                 index = parseInt(index);
                 var oldRow = $scope.model[index];
                 $scope.model[index] = $scope.model[index - 1];
                 $scope.model[index - 1] = oldRow;
-            }
+            };
 
             $scope.moveDown = function (index) {
                 index = parseInt(index);
@@ -573,7 +573,13 @@ zaa.directive("zaaDecimal", function () {
 });
 
 /**
+ * Generates a form group with simple text input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ *
+ * ```
  * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
+ * ```
  */
 zaa.directive("zaaText", function () {
     return {
@@ -587,23 +593,55 @@ zaa.directive("zaaText", function () {
             "placeholder": "@placeholder",
             "autocomplete": "@autocomplete"
         },
+
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                     '<div class="form-side form-side-label">' +
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
-                    '<div class="form-side">' +
-                        '<input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" />' +
+                    '<div class="form-side">'+
+                        '<luya-text ng-model="model" fieldid="{{id}}" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}"></luya-text>' +
                     '</div>' +
                 '</div>';
-        }
+        },
     }
 });
 
 /**
- * Returns a field which just returns the value from model, like a read only attribute.
+ * Generates a simple text input which is styled like the rest LUYA admin UI elements.
  *
+ * Usage:
+ * ```
+ * <luya-text ng-model="someAngularJsModel"></luya-text>
+ * ```
+ */
+zaa.directive("luyaText", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "id": "@fieldid",
+            "autocomplete": "@autocomplete",
+            "placeholder": "@placeholder"
+        },
+        template: function () {
+            return '<input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" />';
+        }
+    }
+});
+
+
+
+
+/**
+ * Generates a form group with read-only text. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ *
+ * ```
+ * <zaa-readonly model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-readonly>
+ * ```
  * @since 1.2.1
  */
 zaa.directive("zaaReadonly", function () {
@@ -612,21 +650,45 @@ zaa.directive("zaaReadonly", function () {
         scope: {
             "model": "=",
             "label": "@label",
-            "i18n": "@i18n"
+            "i18n": "@i18n",
+            "id": "@fieldid",
         },
+
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                     '<div class="form-side form-side-label">' +
-                        '<label>{{label}}</label>' +
+                        '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
-                    '<div class="form-side">' +
-                        '<span class="text-muted">{{model}}</span>' +
+                    '<div class="form-side">'+
+                        '<luya-readonly ng-model="model" fieldid="{{id}}"></luya-readonly>' +
                     '</div>' +
                 '</div>';
+        },
+    }
+});
+
+/**
+ * Renders a value from model like a read-only attribute.
+ *
+ * Usage:
+ * ```
+ * <luya-readonly ng-model="someAngularJsModel"></luya-readonly>
+ * ```
+ */
+zaa.directive("luyaReadonly", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "id": "@fieldid",
+        },
+        template: function () {
+            return '<span id="{{id}}" class="text-muted form-control-plaintext">{{model}}</span>';
         }
     }
 });
+
 
 /**
  * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" />
@@ -745,7 +807,7 @@ zaa.directive("zaaTextarea", function () {
  * Usage:
  *
  * ```
- * <zaa-password model="expression" label="someLabel" fieldid="someId" />
+ * <zaa-password model="expression" label="someLabel" fieldid="someId"></zaa-password>
  * ```
  */
 zaa.directive("zaaPassword", function () {
@@ -781,7 +843,7 @@ zaa.directive("zaaPassword", function () {
  *
  * Usage:
  * ```
- * <luya-password ng-model="expression" />
+ * <luya-password ng-model="expression"></luya-password>
  * ```
  */
 zaa.directive("luyaPassword", function () {
