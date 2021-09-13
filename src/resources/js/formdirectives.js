@@ -965,6 +965,11 @@ zaa.directive("luyaPassword", function () {
  * ```
  * To render radio list inline add `inline` attribute with some non empty value.
  * Example: `<zaa-radio inline="inline" model="model" options="..."></zaa-radio>`
+ *
+ * In order to change the names of *value* and *label* keys use `optionsvalue` and `optionslabel` attributes:
+ * ```
+ * <zaa-radio model="model" label="label" optionslabel="name" optionsvalue="val" options="[{name:'foo', val: 'bar'}, {name:'John', val: 'Doe'} {...}]"></zaa-radio>
+ * ```
  */
 zaa.directive("zaaRadio", function () {
     return {
@@ -972,12 +977,23 @@ zaa.directive("zaaRadio", function () {
         scope: {
             "model": "=",
             "options": "=",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
             "initvalue": "@initvalue",
             "inline": "@inline"
         },
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
+            if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
+                $scope.optionsvalue = 'value';
+            }
+
+            if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
+                $scope.optionslabel = 'label';
+            }
+        }],
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -985,7 +1001,7 @@ zaa.directive("zaaRadio", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="{{initvalue}}" ng-attr-inline="{{inline}}"></luya-radio>' +
+                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="{{initvalue}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" ng-attr-inline="{{inline}}"></luya-radio>' +
                     '</div>' +
                 '</div>';
         },
@@ -1007,6 +1023,8 @@ zaa.directive("luyaRadio", function () {
         scope: {
             "model": "=ngModel",
             "options": "=",
+            "optionsvalue": "@optionsvalue",
+            "optionslabel": "@optionslabel",
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
@@ -1014,6 +1032,14 @@ zaa.directive("luyaRadio", function () {
             "inline": "@inline"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
+            if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
+                $scope.optionsvalue = 'value';
+            }
+
+            if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
+                $scope.optionslabel = 'label';
+            }
+
             $scope.setModelValue = function (value) {
                 $scope.model = value;
             };
@@ -1034,9 +1060,9 @@ zaa.directive("luyaRadio", function () {
         template: function () {
             return '' +
                 '<div ng-repeat="(key, item) in options" class="form-check" ng-class="{\'form-check-inline\': inline}">' +
-                    '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                    '<input value="{{item[optionsvalue]}}" type="radio" ng-click="setModelValue(item[optionsvalue])" ng-checked="item[optionsvalue] === model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
                     '<label class="form-check-label" for="{{id}}_{{key}}">' +
-                        '{{item.label}}' +
+                        '{{item[optionslabel]}}' +
                     '</label>' +
                 '</div>'
         }
@@ -1044,23 +1070,25 @@ zaa.directive("luyaRadio", function () {
 });
 
 /**
+ * Generates a dropdown list input. Mostly used in LUYA admin when create or update CRUD record.
  *
- * Usage Example:
- *
+ * Usages:
  * ```js
- * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules" />
+ * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules"></zaa-select>
  * ```
  *
- * If an initvalue is provided, you can not reset the model to null.
+ * ```js
+ * <zaa-select model="someModel" label="someLabel" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></zaa-select>
+ * ```
+ * If an `initvalue` is provided, you can not reset the model to null.
  *
- * Options value definition:
  *
+ * Options definition:
  * ```js
  * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
  * ```
  *
- * In order to change the value and label keys which should be used to take the value and label keys within the given array use:
- *
+ * In order to change the names of *value* and *label* keys use `optionslabel` and `optionsvalue` attributes:
  * ```js
  * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id"></zaa-select>
  * ```
