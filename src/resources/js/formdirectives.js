@@ -977,13 +977,13 @@ zaa.directive("zaaRadio", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "optionsvalue": "@optionsvalue",
-            "optionslabel": "@optionslabel",
-            "label": "@label",
-            "i18n": "@i18n",
+            "optionsvalue": "<",
+            "optionslabel": "<",
+            "label": "@",
+            "i18n": "<",
             "id": "@fieldid",
-            "initvalue": "@initvalue",
-            "inline": "@inline"
+            "initvalue": "<",
+            "inline": "<"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
@@ -1001,7 +1001,7 @@ zaa.directive("zaaRadio", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="{{initvalue}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" ng-attr-inline="{{inline}}"></luya-radio>' +
+                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="initvalue" optionsvalue="optionsvalue" optionslabel="optionslabel" ng-attr-inline="inline"></luya-radio>' +
                     '</div>' +
                 '</div>';
         },
@@ -1023,13 +1023,11 @@ zaa.directive("luyaRadio", function () {
         scope: {
             "model": "=ngModel",
             "options": "=",
-            "optionsvalue": "@optionsvalue",
-            "optionslabel": "@optionslabel",
-            "label": "@label",
-            "i18n": "@i18n",
+            "optionsvalue": "<",
+            "optionslabel": "<",
             "id": "@fieldid",
-            "initvalue": "@initvalue",
-            "inline": "@inline"
+            "initvalue": "<",
+            "inline": "<"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
