@@ -954,8 +954,17 @@ zaa.directive("luyaPassword", function () {
     }
 });
 
+
+
 /**
- * <zaa-radio model="model" options="[{label:'foo', value: 'bar'}, {...}]"></zaa-radio>
+ * Generates a form group with radio list input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ * ```
+ * <zaa-radio model="model" label="label" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'} {...}]"></zaa-radio>
+ * ```
+ * To render radio list inline add `inline` attribute with some non empty value.
+ * Example: `<zaa-radio inline="inline" model="model" options="..."></zaa-radio>`
  */
 zaa.directive("zaaRadio", function () {
     return {
@@ -966,7 +975,43 @@ zaa.directive("zaaRadio", function () {
             "label": "@label",
             "i18n": "@i18n",
             "id": "@fieldid",
-            "initvalue": "@initvalue"
+            "initvalue": "@initvalue",
+            "inline": "@inline"
+        },
+        template: function () {
+            return '' +
+                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                    '<div class="form-side form-side-label">' +
+                        '<label for="{{id}}">{{label}}</label>' +
+                    '</div>' +
+                    '<div class="form-side">'+
+                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="{{initvalue}}" ng-attr-inline="{{inline}}"></luya-radio>' +
+                    '</div>' +
+                '</div>';
+        },
+    }
+});
+
+
+/**
+ * Generates a radio list which is styled like the rest LUYA admin UI elements.
+ *
+ * Usage:
+ * ```
+ * <luya-radio ng-model="expression" options="[{label:'foo', value: 'bar'}, {...}]" inline="inline"></luya-radio>
+ * ```
+ */
+zaa.directive("luyaRadio", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "options": "=",
+            "label": "@label",
+            "i18n": "@i18n",
+            "id": "@fieldid",
+            "initvalue": "@initvalue",
+            "inline": "@inline"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             $scope.setModelValue = function (value) {
@@ -977,6 +1022,10 @@ zaa.directive("zaaRadio", function () {
                 if ($scope.model === undefined || $scope.model === null) {
                     $scope.model = typeCastValue($scope.initvalue);
                 }
+
+                if ($scope.id === undefined || $scope.id === null ||  $scope.id === '') {
+                    $scope.id = Math.random().toString(36).substring(7);
+                }
             };
             $timeout(function () {
                 $scope.init();
@@ -984,19 +1033,12 @@ zaa.directive("zaaRadio", function () {
         }],
         template: function () {
             return '' +
-                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                    '<div class="form-side form-side-label">' +
-                        '<label for="{{id}}">{{label}}</label>' +
-                    '</div>' +
-                    '<div class="form-side">' +
-                        '<div ng-repeat="(key, item) in options" class="form-check">' +
-                            '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
-                            '<label class="form-check-label" for="{{id}}_{{key}}">' +
-                                '{{item.label}}' +
-                            '</label>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+                '<div ng-repeat="(key, item) in options" class="form-check" ng-class="{\'form-check-inline\': inline}">' +
+                    '<input value="{{item.value}}" type="radio" ng-click="setModelValue(item.value)" ng-checked="item.value == model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                    '<label class="form-check-label" for="{{id}}_{{key}}">' +
+                        '{{item.label}}' +
+                    '</label>' +
+                '</div>'
         }
     };
 });
