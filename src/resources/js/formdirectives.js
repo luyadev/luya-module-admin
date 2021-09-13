@@ -725,7 +725,7 @@ zaa.directive("zaaAsyncValue", function () {
 /**
  * Can be used to just fetch a value from an api async.
  * ```
- * <luya-async-value model="theModel" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
+ * <luya-async-value ng-model="theModel" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
  * ```
  * @since 4.2.0
  */
@@ -1119,6 +1119,15 @@ zaa.directive("zaaSelect", function () {
     }
 });
 
+/**
+ * Generates a dropdown list which is styled like the rest LUYA admin UI elements.
+ *
+ * Usage:
+ * ```
+ * <luya-select ng-model="expression" options="[{label:'foo', value: 'bar'}, {...}]" clearable="false"></luya-select>
+ * ```
+ * @see `zaaSelect` directive
+ */
 zaa.directive("luyaSelect", function() {
     return {
         restrict: "E",
@@ -1244,14 +1253,16 @@ zaa.directive("luyaSelect", function() {
 
 
 /**
- * Select form based on API Request
+ * Generates a dropdown list input. Data for options is taken from API request.
+ *
+ * Used in SelectAsyncApi plugin
  */
 zaa.directive("zaaAsyncApiSelect", function () {
     return {
         restrict: "E",
         scope: {
             "model": "=",
-            "api":"@api",
+            "api":"@",
             "optionsvalue": "@",
             "optionslabel": "@",
             "label": "@",
@@ -1321,7 +1332,7 @@ zaa.directive("zaaSelectCrud", function() {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<async-value model="model" api="{{options.api}}" fields="options.fields"></async-value>' +
+                        '<luya-async-value ng-model="model" api="{{options.api}}" fields="options.fields"></luya-async-value>' +
                         '<crud-loader api="{{options.route}}" model-setter="model" model-selection="1" alias="{{label}}"></crud-loader>' +
                     '</div>' +
                 '</div>';
