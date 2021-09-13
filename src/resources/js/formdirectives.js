@@ -18,12 +18,12 @@ zaa.directive("zaaInjector", ['$compile', function ($compile) {
             "dir": "=",
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "grid": "@grid",
-            "fieldid": "@fieldid",
-            "placeholder": "@placeholder",
-            "initvalue": "@initvalue",
-            "autocomplete": "@autocomplete"
+            "label": "@",
+            "grid": "@",
+            "fieldid": "@",
+            "placeholder": "@",
+            "initvalue": "@",
+            "autocomplete": "@"
         },
         link: function ($scope, $element) {
             var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" autocomplete="{{autocomplete}}" model="model" label="{{label}}" i18n="{{grid}}" />'))($scope);
@@ -61,8 +61,8 @@ zaa.directive("zaaSortRelationArray", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -189,8 +189,8 @@ zaa.directive("zaaTagArray", function() {
         restrict: "E",
         scope: {
             "model": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', '$http', function ($scope, $http) {
@@ -213,11 +213,7 @@ zaa.directive("zaaTagArray", function() {
 
             $scope.isInSelection = function(id) {
                 id = parseInt(id);
-                if ($scope.model.indexOf(id) === -1) {
-                    return false;
-                }
-
-                return true;
+                return $scope.model.indexOf(id) !== -1;
             };
 
             $scope.toggleSelection = function(id) {
@@ -252,8 +248,8 @@ zaa.directive("zaaLink", ['$filter', function ($filter) {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', function ($scope) {
@@ -370,8 +366,8 @@ zaa.directive("zaaSlug", function () {
             "model": "=",
             "options": "=",
             "listener": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -409,8 +405,8 @@ zaa.directive("zaaColor", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', function ($scope) {
@@ -476,8 +472,8 @@ zaa.directive("zaaWysiwyg", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         template: function () {
@@ -500,22 +496,18 @@ zaa.directive("zaaNumber", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "placeholder": "@placeholder",
-            "initvalue": "@initvalue"
+            "placeholder": "@",
+            "initvalue": "@"
         },
         link: function ($scope) {
             $scope.$watch(function () { return $scope.model }, function (n, o) {
                 if (n === undefined) {
                     $scope.model = parseInt($scope.initvalue);
                 }
-                if (angular.isNumber($scope.model)) {
-                    $scope.isValid = true;
-                } else {
-                    $scope.isValid = false;
-                }
+                $scope.isValid = !!angular.isNumber($scope.model);
             })
         }, template: function () {
             return '' +
@@ -537,10 +529,10 @@ zaa.directive("zaaDecimal", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "placeholder": "@placeholder"
+            "placeholder": "@"
         },
         controller: ['$scope', function ($scope) {
             if ($scope.options === null) {
@@ -551,11 +543,7 @@ zaa.directive("zaaDecimal", function () {
         }],
         link: function ($scope) {
             $scope.$watch(function () { return $scope.model }, function (n, o) {
-                if (angular.isNumber($scope.model)) {
-                    $scope.isValid = true;
-                } else {
-                    $scope.isValid = false;
-                }
+                $scope.isValid = !!angular.isNumber($scope.model);
             })
         },
         template: function () {
@@ -586,13 +574,12 @@ zaa.directive("zaaText", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "placeholder": "@placeholder",
-            "autocomplete": "@autocomplete"
+            "placeholder": "@",
+            "autocomplete": "@"
         },
-
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -621,8 +608,8 @@ zaa.directive("luyaText", function () {
         scope: {
             "model": "=ngModel",
             "id": "@fieldid",
-            "autocomplete": "@autocomplete",
-            "placeholder": "@placeholder"
+            "autocomplete": "@",
+            "placeholder": "@"
         },
         template: function () {
             return '<input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" autocomplete="{{autocomplete}}" placeholder="{{placeholder}}" />';
@@ -647,8 +634,8 @@ zaa.directive("zaaReadonly", function () {
         restrict: "E",
         scope: {
             "model": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
 
@@ -709,8 +696,8 @@ zaa.directive("zaaAsyncValue", function () {
             "model": "=",
             "api": "@",
             "fields": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid"
         },
         controller: ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
@@ -795,8 +782,8 @@ zaa.directive("asyncValue", function () {
         restrict: "E",
         scope: {
             "model": "=",
-            "api": "@",
-            "fields": "="
+            "fields": "=",
+            "api": "@"
         },
         controller: ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
             $timeout(function () {
@@ -835,10 +822,10 @@ zaa.directive("zaaTextarea", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "placeholder": "@placeholder",
+            "placeholder": "@",
         },
 
         template: function () {
@@ -869,7 +856,7 @@ zaa.directive("luyaTextarea", function () {
         scope: {
             "model": "=ngModel",
             "id": "@fieldid",
-            "placeholder": "@placeholder"
+            "placeholder": "@"
         },
         template: function () {
             return '<textarea id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" auto-grow placeholder="{{placeholder}}"></textarea>';
@@ -892,11 +879,11 @@ zaa.directive("zaaPassword", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "autocomplete": "@autocomplete",
-            "inputmode": "@inputmode",
+            "autocomplete": "@",
+            "inputmode": "@",
         },
 
         template: function () {
@@ -928,8 +915,8 @@ zaa.directive("luyaPassword", function () {
         scope: {
             "model": "=ngModel",
             "id": "@fieldid",
-            "autocomplete": "@autocomplete",
-            "inputmode": "@inputmode",
+            "autocomplete": "@",
+            "inputmode": "@",
         },
 
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
@@ -977,13 +964,13 @@ zaa.directive("zaaRadio", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "optionsvalue": "<",
-            "optionslabel": "<",
+            "optionsvalue": "@",
+            "optionslabel": "@",
             "label": "@",
-            "i18n": "<",
+            "i18n": "@",
             "id": "@fieldid",
-            "initvalue": "<",
-            "inline": "<"
+            "initvalue": "@",
+            "inline": "@"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
@@ -1001,7 +988,7 @@ zaa.directive("zaaRadio", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="initvalue" optionsvalue="optionsvalue" optionslabel="optionslabel" ng-attr-inline="inline"></luya-radio>' +
+                        '<luya-radio ng-model="model" options="options" fieldid="{{id}}" initvalue="{{initvalue}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" ng-attr-inline="{{inline}}"></luya-radio>' +
                     '</div>' +
                 '</div>';
         },
@@ -1023,11 +1010,13 @@ zaa.directive("luyaRadio", function () {
         scope: {
             "model": "=ngModel",
             "options": "=",
-            "optionsvalue": "<",
-            "optionslabel": "<",
+            "optionsvalue": "@",
+            "optionslabel": "@",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "initvalue": "<",
-            "inline": "<"
+            "initvalue": "@",
+            "inline": "@"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
@@ -1080,12 +1069,13 @@ zaa.directive("luyaRadio", function () {
  * ```
  * If an `initvalue` is provided, you can not reset the model to null.
  *
+ * To disable the reset possibility, add `clearable = "false"` or `clearable = "0"` attribute.
+ *
  *
  * Options definition:
  * ```js
  * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
  * ```
- *
  * In order to change the names of *value* and *label* keys use `optionslabel` and `optionsvalue` attributes:
  * ```js
  * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id"></zaa-select>
@@ -1097,13 +1087,13 @@ zaa.directive("zaaSelect", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "optionsvalue": "@optionsvalue",
-            "optionslabel": "@optionslabel",
-            "label": "@label",
-            "i18n": "@i18n",
+            "optionsvalue": "@",
+            "optionslabel": "@",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "initvalue": "@initvalue",
-            "clearable" : "<",
+            "initvalue": "@",
+            "clearable" : "@",
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
             if ($scope.optionsvalue === undefined) {
@@ -1113,9 +1103,7 @@ zaa.directive("zaaSelect", function () {
                 $scope.optionslabel = 'label';
             }
 
-            if ($scope.clearable === undefined) {
-                $scope.clearable = true;
-            }
+            $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
         }],
         template: function () {
             return  '' +
@@ -1124,7 +1112,7 @@ zaa.directive("zaaSelect", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-select ng-model="model" options="options" fieldid="{{id}}" clearable="clearable" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
+                        '<luya-select ng-model="model" options="options" fieldid="{{id}}" clearable="{{clearable}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
                     '</div>' +
                 '</div>';
         }
@@ -1137,11 +1125,11 @@ zaa.directive("luyaSelect", function() {
         scope: {
             "model": "=ngModel",
             "options": "=",
-            "optionsvalue": "@optionsvalue",
-            "optionslabel": "@optionslabel",
+            "optionsvalue": "@",
+            "optionslabel": "@",
             "id": "@fieldid",
-            "initvalue": "@initvalue",
-            "clearable": "<",
+            "initvalue": "@",
+            "clearable": "@",
             ngChange : "&"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
@@ -1156,14 +1144,11 @@ zaa.directive("luyaSelect", function() {
                 $scope.optionslabel = 'label';
             }
 
-
-
             if (angular.isNumber($scope.model)) {
                 $scope.model = typeCastValue($scope.model);
             }
 
             /* listeners */
-
             $scope.$on('closeAllSelects', function () {
                 if ($scope.isOpen) {
                     $scope.closeSelect();
@@ -1176,21 +1161,18 @@ zaa.directive("luyaSelect", function() {
                         if (angular.isNumber($scope.initvalue)) {
                             $scope.initvalue = typeCastValue($scope.initvalue);
                         }
-                        var exists = $scope.valueExistsInOptions(n);
 
+                        var exists = $scope.valueExistsInOptions(n);
                         if (!exists) {
                             $scope.model = $scope.initvalue;
                         }
                     }
                 });
 
-                if ($scope.clearable === undefined) {
-                    $scope.clearable = true;
-                }
+                $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
             });
 
             /* methods */
-
             $scope.valueExistsInOptions = function (value) {
                 var exists = false;
                 angular.forEach($scope.options, function (item) {
@@ -1231,12 +1213,7 @@ zaa.directive("luyaSelect", function() {
 
             $scope.hasSelectedValue = function () {
                 var modelValue = $scope.model;
-
-                if ($scope.valueExistsInOptions(modelValue) && modelValue !== $scope.initvalue) {
-                    return true;
-                }
-
-                return false;
+                return $scope.valueExistsInOptions(modelValue) && modelValue !== $scope.initvalue;
             };
         }],
         template: function () {
@@ -1247,7 +1224,7 @@ zaa.directive("luyaSelect", function() {
                     '</select>' +
                     '<div class="zaaselect-selected">' +
                         '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
-                        '<i class="material-icons zaaselect-clear-icon" ng-show="clearable" ng-click="setModelValue(initvalue)">clear</i>' +
+                        '<i class="material-icons zaaselect-clear-icon" ng-show="{{clearable}}" ng-click="setModelValue(initvalue)">clear</i>' +
                         '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
                     '</div>' +
                     '<div class="zaaselect-dropdown">' +
@@ -1275,12 +1252,12 @@ zaa.directive("zaaAsyncApiSelect", function () {
         scope: {
             "model": "=",
             "api":"@api",
-            "optionsvalue": "@optionsvalue",
-            "optionslabel": "@optionslabel",
-            "label": "@label",
-            "i18n": "@i18n",
+            "optionsvalue": "@",
+            "optionslabel": "@",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "initvalue": "@initvalue",
+            "initvalue": "@",
         },
         controller: ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
             $scope.options = [];
@@ -1332,10 +1309,10 @@ zaa.directive("zaaSelectCrud", function() {
             "model": "=",
             "options": "=",
             "api":"@api",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
-            "initvalue": "@initvalue"
+            "initvalue": "@"
         },
         template: function () {
             return '' +
@@ -1363,10 +1340,10 @@ zaa.directive("zaaCheckbox", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "i18n": "@i18n",
+            "i18n": "@",
             "id": "@fieldid",
-            "label": "@label",
-            "initvalue": "@initvalue"
+            "label": "@",
+            "initvalue": "@"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
             if ($scope.options === null || $scope.options === undefined) {
@@ -1424,9 +1401,9 @@ zaa.directive("zaaCheckboxArray", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "i18n": "@i18n",
+            "i18n": "@",
             "id": "@fieldid",
-            "label": "@label",
+            "label": "@",
             "preselect": "@preselect"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -1524,9 +1501,9 @@ zaa.directive("zaaDatetime", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
+            "label": "@",
             "id": "@fieldid",
-            "i18n": "@i18n",
+            "i18n": "@",
             "resetable": "@resetable",
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -1666,9 +1643,9 @@ zaa.directive("zaaDate", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
+            "label": "@",
             "id": "@fieldid",
-            "i18n": "@i18n",
+            "i18n": "@",
             "resetable": "@resetable"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -1768,8 +1745,8 @@ zaa.directive("zaaTable", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         controller: ['$scope', function ($scope) {
@@ -1905,8 +1882,8 @@ zaa.directive("zaaFileUpload", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         template: function () {
@@ -1929,8 +1906,8 @@ zaa.directive("zaaImageUpload", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         template: function () {
@@ -1959,8 +1936,8 @@ zaa.directive("zaaImageArrayUpload", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         link: function (scope, element, attributes) {
@@ -2069,8 +2046,8 @@ zaa.directive("zaaFileArrayUpload", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         controller: ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
@@ -2160,8 +2137,8 @@ zaa.directive("zaaMultipleInputs", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
@@ -2256,8 +2233,8 @@ zaa.directive("zaaJsonObject", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         controller: ['$scope', function ($scope) {
@@ -2320,8 +2297,8 @@ zaa.directive("zaaListArray", function () {
         scope: {
             "model": "=",
             "options": "=",
-            "label": "@label",
-            "i18n": "@i18n",
+            "label": "@",
+            "i18n": "@",
             "id": "@fieldid",
         },
         controller: ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
