@@ -920,19 +920,13 @@ zaa.directive("luyaPassword", function () {
         },
 
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-            $scope.init = function () {
-                if ($scope.autocomplete === undefined || $scope.autocomplete === '') {
-                    $scope.autocomplete = 'on';
-                }
+            if ($scope.autocomplete === undefined || $scope.autocomplete === '') {
+                $scope.autocomplete = 'on';
+            }
 
-                if ($scope.inputmode === undefined || $scope.inputmode === '') {
-                    $scope.inputmode = 'verbatim';
-                }
-            };
-
-            $timeout(function () {
-                $scope.init();
-            });
+            if ($scope.inputmode === undefined || $scope.inputmode === '') {
+                $scope.inputmode = 'verbatim';
+            }
         }],
 
         template: function () {
@@ -1032,7 +1026,7 @@ zaa.directive("luyaRadio", function () {
             };
 
             $scope.init = function () {
-                if ($scope.model === undefined || $scope.model === null) {
+               if ($scope.model === undefined || $scope.model === null) {
                     $scope.model = typeCastValue($scope.initvalue);
                 }
 
@@ -1375,7 +1369,7 @@ zaa.directive("zaaCheckbox", function () {
             });
 
             $scope.clicker = function() {
-                if ($scope.model === $scope.valueTrue) {
+                if ($scope.model == $scope.valueTrue) {
                     $scope.model = $scope.valueFalse;
                 } else {
                     $scope.model = $scope.valueTrue;
@@ -1398,6 +1392,72 @@ zaa.directive("zaaCheckbox", function () {
         }
     }
 });
+
+
+
+zaa.directive("luyaCheckbox", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "options": "=",
+            "label": "@",
+            "truevalue": "@",
+            "falsevalue": "@",
+            "id": "@fieldid",
+            "initvalue": "@"
+        },
+        controller: ['$scope', '$timeout', function ($scope, $timeout) {
+
+
+
+            $scope.init = function () {
+                if ($scope.truevalue === undefined || $scope.truevalue === "") {
+                    $scope.truevalue = 1;
+                } else {
+
+                }
+
+                if ($scope.falsevalue === undefined || $scope.falsevalue === "") {
+                    $scope.falsevalue = 0;
+                } else {
+
+                }
+
+                if ($scope.initvalue === undefined || $scope.initvalue === "") {
+                    $scope.initvalue = $scope.falsevalue;
+                }
+
+                if ($scope.model === undefined || $scope.model === null) {
+                    $scope.model = $scope.initvalue;
+                }
+
+                if ($scope.id === undefined || $scope.id === null ||  $scope.id === '') {
+                    $scope.id = Math.random().toString(36).substring(7);
+                }
+            };
+            $timeout(function () {
+                $scope.init();
+            });
+
+            $scope.clicker = function() {
+                if ($scope.model == $scope.truevalue) {
+                    $scope.model = $scope.falsevalue;
+                } else {
+                    $scope.model = $scope.truevalue;
+                }
+            };
+        }],
+        template: function () {
+            return '' +
+                '<div class="form-check">' +
+                    '<input id="{{id}}" type="checkbox" class="form-check-input-standalone" ng-click="clicker()" ng-checked="model == truevalue"/>' +
+                    '<label for="{{id}}">{{label}}</label>' +
+                '</div>';
+        }
+    }
+});
+
 
 /**
  * options arg object:
@@ -1887,6 +1947,15 @@ zaa.directive("zaaTable", function () {
     }
 });
 
+
+/**
+ * Generates a form group with file selection from storage input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ * ```
+ * <zaa-file-upload model="model" label="someLabel" fieldid="someId"></zaa-file-upload>
+ * ```
+ */
 zaa.directive("zaaFileUpload", function () {
     return {
         restrict: "E",
@@ -1911,6 +1980,14 @@ zaa.directive("zaaFileUpload", function () {
     }
 });
 
+/**
+ * Generates a form group with image file selection from storage input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * Usage:
+ * ```
+ * <zaa-image-upload model="model" label="someLabel" fieldid="someId"></zaa-image-upload>
+ * ```
+ */
 zaa.directive("zaaImageUpload", function () {
     return {
         restrict: "E",

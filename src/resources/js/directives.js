@@ -912,7 +912,7 @@ zaa.directive('storageFileUpload', function () {
             };
 
             $scope.$watch(function () { return $scope.ngModel }, function (n) {
-                if (n == null || n == undefined || !angular.isNumber(n)) {
+                if (n === null || n === undefined || !angular.isNumber(n)) {
                     return null;
                 }
 
@@ -928,7 +928,7 @@ zaa.directive('storageFileUpload', function () {
 });
 
 /**
- * Sotrage Image Upload directive.
+ * Storage Image Upload directive.
  *
  * Call cycle when file directive implements the image directive:
  *
@@ -1014,13 +1014,13 @@ zaa.directive('storageImageUpload', function () {
 
             $scope.$watch(function () { return $scope.fileId }, function (n, o) {
 
-                if (n != null && n != undefined) {
+                if (n !== null && n !== undefined) {
                     $scope.filterApply();
                 }
             });
 
             $scope.$watch(function () { return $scope.ngModel }, function (n, o) {
-                if (n != null && n != undefined && n != 0) {
+                if (n !== null && n !== undefined && n !== 0) {
                     ServiceImagesData.getImage(n).then(function (response) {
                         $scope.applyImageDetails(response);
                         $scope.fileId = response.file_id;
