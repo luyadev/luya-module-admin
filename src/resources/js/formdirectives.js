@@ -1,13 +1,31 @@
 /** ZAA ANGULAR FORM INPUT DIRECTIVES */
 
+
+
 /**
+ * @ngdoc directive
+ * @name zaaInjector
+ * @restrict E
+ *
+ * @description
  * Generates form input types based on ZAA Directives.
  *
- * Usage inside another Angular Template:
+ * @param {expression} dir Name of the injected directive
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. May contains data and some settings for injected directive.
+ * @param {string} label Form group label.
+ * @param {string} fieldid The id attribute of the input field.
+ * @param {string} grid Is form group represent an i18n attribute.
+ * @param {string} placeholder A short hint that describes the expected value of an input field. Used in text-like inputs.
+ * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled. Used in text-like inputs.
+ * @param {string} initvalue The value that will be passed to the model when input. Used in select-like inputs.
+ * @param {string} optionslabel The name of the property in data object which corresponds to the data 'name'. Used in select-like inputs.
+ * @param {string} optionsvalue The name of the property in data object which corresponds to the data 'value'. Used in select-like inputs.
  *
- * ```php
+ *
+ * @example
  * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="some.model"></zaa-injector>
- * ```
+ *
  */
 zaa.directive("zaaInjector", ['$compile', function ($compile) {
     return {
@@ -23,10 +41,12 @@ zaa.directive("zaaInjector", ['$compile', function ($compile) {
             "fieldid": "@",
             "placeholder": "@",
             "initvalue": "@",
-            "autocomplete": "@"
+            "autocomplete": "@",
+            "optionsvalue": "@",
+            "optionslabel": "@"
         },
         link: function ($scope, $element) {
-            var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" autocomplete="{{autocomplete}}" model="model" label="{{label}}" i18n="{{grid}}" />'))($scope);
+            var elmn = $compile(angular.element('<' + $scope.dir + ' options="options" initvalue="{{initvalue}}" fieldid="{{fieldid}}" placeholder="{{placeholder}}" autocomplete="{{autocomplete}}" model="model" label="{{label}}" i18n="{{grid}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}"/>'))($scope);
             $element.replaceWith(elmn);
         },
     }
@@ -594,13 +614,24 @@ zaa.directive("zaaText", function () {
     }
 });
 
+
 /**
+ * @ngdoc directive
+ * @name luyaText
+ * @restrict E
+ *
+ * @description
  * Generates a simple text input which is styled like the rest LUYA admin UI elements.
  *
- * Usage:
- * ```
- * <luya-text ng-model="some.model"></luya-text>
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the input field.
+ * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <luya-text ng-model="some.model" placeholder="Some placeholder"></luya-text>
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaText", function () {
     return {
@@ -1403,9 +1434,8 @@ zaa.directive("zaaCheckbox", function () {
  * Generates a checkbox with label (optionally) which is styled like the rest LUYA admin UI elements.
  *
  * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
- * @param {object} options not used.
  * @param {string} fieldid The id attribute of the checkbox.
- * @param {string} label Checkbox label to be drawn to the right of checkbox .
+ * @param {string} label Checkbox label to be drawn to the right of checkbox.
  * @param {string} truevalue The value that will be passed to the model when the checkbox is checked. Default is 1.
  * @param {string} falsevalue The value that will be passed to the model when the checkbox is unchecked. Default is 0.
  * @param {string} initvalue The value that will be passed to the model when the checkbox is initiated. If this value is equal to truevalue the checkbox will be checked.
@@ -1421,7 +1451,6 @@ zaa.directive("luyaCheckbox", function () {
         restrict: "E",
         scope: {
             "model": "=ngModel",
-            "options": "=",
             "label": "@",
             "truevalue": "@",
             "falsevalue": "@",
@@ -1475,14 +1504,6 @@ zaa.directive("luyaCheckbox", function () {
     }
 });
 
-
-/**
- * options arg object:
- *
- * options.items[] = [{"value" : 1, "label" => 'Label for Value 1' }]
- *
- * @param preselect boolean if enable all models will be selected by default.
- */
 
 /**
  * @ngdoc directive
@@ -1639,6 +1660,9 @@ zaa.directive("luyaCheckboxArray", function () {
         }
     }
 });
+
+
+
 
 
 
