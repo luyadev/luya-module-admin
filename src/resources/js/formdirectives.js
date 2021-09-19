@@ -6,7 +6,7 @@
  * Usage inside another Angular Template:
  *
  * ```php
- * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="mymodel"></zaa-injector>
+ * <zaa-injector dir="zaa-text" options="{}" fieldid="myFieldId" initvalue="0" label="My Label" model="some.model"></zaa-injector>
  * ```
  */
 zaa.directive("zaaInjector", ['$compile', function ($compile) {
@@ -240,7 +240,7 @@ zaa.directive("zaaTagArray", function() {
 });
 
 /**
- * <zaa-link model="linkinfo"></zaa-link>
+ * <zaa-link model="some.model"></zaa-link>
  */
 zaa.directive("zaaLink", ['$filter', function ($filter) {
     return {
@@ -599,7 +599,7 @@ zaa.directive("zaaText", function () {
  *
  * Usage:
  * ```
- * <luya-text ng-model="someAngularJsModel"></luya-text>
+ * <luya-text ng-model="some.model"></luya-text>
  * ```
  */
 zaa.directive("luyaText", function () {
@@ -658,7 +658,7 @@ zaa.directive("zaaReadonly", function () {
  *
  * Usage:
  * ```
- * <luya-readonly ng-model="someAngularJsModel"></luya-readonly>
+ * <luya-readonly ng-model="some.model"></luya-readonly>
  * ```
  */
 zaa.directive("luyaReadonly", function () {
@@ -680,7 +680,7 @@ zaa.directive("luyaReadonly", function () {
  *
  * Usage:
  * ```
- * <zaa-async-value model="theModel" label="Hello world" api="admin/admin-users" fields="[foo,bar]" ></zaa-async-value>
+ * <zaa-async-value model="some.model" label="Hello world" api="admin/admin-users" fields="[foo,bar]" ></zaa-async-value>
  * ```
  *
  * The above example will send the following request:
@@ -725,7 +725,7 @@ zaa.directive("zaaAsyncValue", function () {
 /**
  * Can be used to just fetch a value from an api async.
  * ```
- * <luya-async-value ng-model="theModel" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
+ * <luya-async-value ng-model="some.model" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
  * ```
  * @since 4.2.0
  */
@@ -767,7 +767,7 @@ zaa.directive("luyaAsyncValue", function () {
  * Can be used to just fetch a value from an api async.
  *
  * ```
- * <async-value model="theModel" api="admin/admin-users" fields="[foo,bar]"></async-value>
+ * <async-value model="some.model" api="admin/admin-users" fields="[foo,bar]"></async-value>
  * ```
  *
  * @since 1.2.2
@@ -847,7 +847,7 @@ zaa.directive("zaaTextarea", function () {
  *
  * Usage:
  * ```
- * <luya-textarea ng-model="someAngularJsModel"></luya-textarea>
+ * <luya-textarea ng-model="some.model"></luya-textarea>
  * ```
  */
 zaa.directive("luyaTextarea", function () {
@@ -870,7 +870,7 @@ zaa.directive("luyaTextarea", function () {
  *
  * Usage:
  * ```
- * <zaa-password model="expression" label="someLabel" fieldid="someId"></zaa-password>
+ * <zaa-password model="some.model" label="someLabel" fieldid="someId"></zaa-password>
  * ```
  */
 zaa.directive("zaaPassword", function () {
@@ -906,7 +906,7 @@ zaa.directive("zaaPassword", function () {
  *
  * Usage:
  * ```
- * <luya-password ng-model="expression"></luya-password>
+ * <luya-password ng-model="some.model"></luya-password>
  * ```
  */
 zaa.directive("luyaPassword", function () {
@@ -942,14 +942,14 @@ zaa.directive("luyaPassword", function () {
  *
  * Usage:
  * ```
- * <zaa-radio model="model" label="label" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'} {...}]"></zaa-radio>
+ * <zaa-radio model="some.model" label="label" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'} {...}]"></zaa-radio>
  * ```
  * To render radio list inline add `inline` attribute with some non empty value.
- * Example: `<zaa-radio inline="inline" model="model" options="..."></zaa-radio>`
+ * Example: `<zaa-radio inline="inline" model="some.model" options="..."></zaa-radio>`
  *
  * In order to change the names of *value* and *label* keys use `optionsvalue` and `optionslabel` attributes:
  * ```
- * <zaa-radio model="model" label="label" optionslabel="name" optionsvalue="val" options="[{name:'foo', val: 'bar'}, {name:'John', val: 'Doe'} {...}]"></zaa-radio>
+ * <zaa-radio model="some.model" label="label" optionslabel="name" optionsvalue="val" options="[{name:'foo', val: 'bar'}, {name:'John', val: 'Doe'} {...}]"></zaa-radio>
  * ```
  */
 zaa.directive("zaaRadio", function () {
@@ -995,7 +995,7 @@ zaa.directive("zaaRadio", function () {
  *
  * Usage:
  * ```
- * <luya-radio ng-model="expression" options="[{label:'foo', value: 'bar'}, {...}]" inline="inline"></luya-radio>
+ * <luya-radio ng-model="some.model" options="[{label:'foo', value: 'bar'}, {...}]" inline="inline"></luya-radio>
  * ```
  */
 zaa.directive("luyaRadio", function () {
@@ -1059,7 +1059,7 @@ zaa.directive("luyaRadio", function () {
  * ```
  *
  * ```js
- * <zaa-select model="someModel" label="someLabel" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></zaa-select>
+ * <zaa-select model="some.model" label="someLabel" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></zaa-select>
  * ```
  * If an `initvalue` is provided, you can not reset the model to null.
  *
@@ -1118,7 +1118,7 @@ zaa.directive("zaaSelect", function () {
  *
  * Usage:
  * ```
- * <luya-select ng-model="expression" options="[{label:'foo', value: 'bar'}, {...}]" clearable="false"></luya-select>
+ * <luya-select ng-model="some.model" options="[{label:'foo', value: 'bar'}, {...}]" clearable="false"></luya-select>
  * ```
  * @see `zaaSelect` directive
  */
@@ -1337,7 +1337,25 @@ zaa.directive("zaaSelectCrud", function() {
 
 
 /**
- * options = {'true-value' : 1, 'false-value' : 0};
+ * @ngdoc directive
+ * @name zaaCheckbox
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with checkbox input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. `true-value` & `false-value` options available: `options = {'true-value' : 1, 'false-value' : 0};`
+ * @param {string} fieldid The id attribute of the checkbox.
+ * @param {expression} i18n Is checkbox represent an i18n attribute.
+ * @param {string} label Field label to be drawn to the left of checkbox.
+ * @param {string} checkboxlabel Checkbox label to be drawn to the right of checkbox.
+ * @param {string} initvalue The value that will be passed to the model when the checkbox is initiated. If this value is equal to options.true-value the checkbox will be checked.
+ * @param {Function} ngChange The function that will called on checkbox state change.
+ *
+ * @example
+ * <zaa-checkbox model="some.model" initvalue="1" label="Some label" checkboxlabel="Sublabel"></luya-checkbox>
+ *
  */
 zaa.directive("zaaCheckbox", function () {
     return {
@@ -1347,10 +1365,12 @@ zaa.directive("zaaCheckbox", function () {
             "options": "=",
             "i18n": "@",
             "id": "@fieldid",
+            "initvalue": "@",
             "label": "@",
-            "initvalue": "@"
+            "checkboxlabel": "@",
+            ngChange: "&"
         },
-        controller: ['$scope', '$timeout', function ($scope, $timeout) {
+        controller: ['$scope', function ($scope) {
             if ($scope.options === null || $scope.options === undefined) {
                 $scope.valueTrue = 1;
                 $scope.valueFalse = 0;
@@ -1358,23 +1378,6 @@ zaa.directive("zaaCheckbox", function () {
                 $scope.valueTrue = $scope.options['true-value'];
                 $scope.valueFalse = $scope.options['false-value'];
             }
-
-            $scope.init = function () {
-                if ($scope.model === undefined || $scope.model === null) {
-                    $scope.model = typeCastValue($scope.initvalue);
-                }
-            };
-            $timeout(function () {
-                $scope.init();
-            });
-
-            $scope.clicker = function() {
-                if ($scope.model == $scope.valueTrue) {
-                    $scope.model = $scope.valueFalse;
-                } else {
-                    $scope.model = $scope.valueTrue;
-                }
-            };
         }],
         template: function () {
             return '' +
@@ -1383,10 +1386,7 @@ zaa.directive("zaaCheckbox", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<div class="form-check">' +
-                            '<input id="{{id}}" ng-true-value="{{valueTrue}}" ng-change="change()" ng-click="clicker()" ng-false-value="{{valueFalse}}" ng-model="model" type="checkbox" class="form-check-input-standalone" ng-checked="model == valueTrue" />' +
-                            '<label for="{{id}}"></label>' +
-                        '</div>' +
+                        '<luya-checkbox ng-model="model" fieldid="{{id}}" truevalue="{{valueTrue}}" falsevalue="{{valueFalse}}" initvalue="{{initvalue}}" label="{{checkboxlabel}}" ng-change="ng-change"></luya-checkbox>' +
                     '</div>' +
                 '</div>';
         }
@@ -1394,7 +1394,28 @@ zaa.directive("zaaCheckbox", function () {
 });
 
 
-
+/**
+ * @ngdoc directive
+ * @name luyaCheckbox
+ * @restrict E
+ *
+ * @description
+ * Generates a checkbox with label (optionally) which is styled like the rest LUYA admin UI elements.
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options not used.
+ * @param {string} fieldid The id attribute of the checkbox.
+ * @param {string} label Checkbox label to be drawn to the right of checkbox .
+ * @param {string} truevalue The value that will be passed to the model when the checkbox is checked. Default is 1.
+ * @param {string} falsevalue The value that will be passed to the model when the checkbox is unchecked. Default is 0.
+ * @param {string} initvalue The value that will be passed to the model when the checkbox is initiated. If this value is equal to truevalue the checkbox will be checked.
+ * @param {Function} ngChange The function that will called on checkbox state change.
+ *
+ * @example
+ * <luya-checkbox truevalue="on" falsevalue="off" initvalue="on" ng-model="some.model"></luya-checkbox>
+ *
+ * @since 4.2.0
+ */
 zaa.directive("luyaCheckbox", function () {
     return {
         restrict: "E",
@@ -1405,23 +1426,18 @@ zaa.directive("luyaCheckbox", function () {
             "truevalue": "@",
             "falsevalue": "@",
             "id": "@fieldid",
-            "initvalue": "@"
+            "initvalue": "@",
+            ngChange : "&"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-
-
 
             $scope.init = function () {
                 if ($scope.truevalue === undefined || $scope.truevalue === "") {
                     $scope.truevalue = 1;
-                } else {
-
                 }
 
                 if ($scope.falsevalue === undefined || $scope.falsevalue === "") {
                     $scope.falsevalue = 0;
-                } else {
-
                 }
 
                 if ($scope.initvalue === undefined || $scope.initvalue === "") {
@@ -1441,11 +1457,12 @@ zaa.directive("luyaCheckbox", function () {
             });
 
             $scope.clicker = function() {
-                if ($scope.model == $scope.truevalue) {
+                if ($scope.model == $scope.truevalue) { // == is intentionally here
                     $scope.model = $scope.falsevalue;
                 } else {
                     $scope.model = $scope.truevalue;
                 }
+                $timeout($scope.ngChange, 0);
             };
         }],
         template: function () {
@@ -1466,6 +1483,27 @@ zaa.directive("luyaCheckbox", function () {
  *
  * @param preselect boolean if enable all models will be selected by default.
  */
+
+/**
+ * @ngdoc directive
+ * @name zaaCheckboxArray
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with checkboxes list. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. `item` property is holding the data array: `options.items = [{"value" : 1, "label" => 'Label for Value 1' }, {"value" : 2, "label" => 'Label for Value 2' }]`.
+ * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any checkbox.
+ * @param {expression} i18n Is checkbox list represent an i18n attribute.
+ * @param {string} label Form group label.
+ * @param {string} preselect Select-all flag. If enabled, all checkboxes will be checked by default. To set it to false leave the preselect attribute empty or omit it.
+ * @param {string} inline Inline flag. If enabled, checkboxes will be rendered in line. To set it to false leave the inline attribute empty or omit it.
+ *
+ * @example
+ * <zaa-checkbox model="some.model" initvalue="1" label="Some label" checkboxlabel="Sublabel"></luya-checkbox>
+ *
+ */
 zaa.directive("zaaCheckboxArray", function () {
     return {
         restrict: "E",
@@ -1475,7 +1513,58 @@ zaa.directive("zaaCheckboxArray", function () {
             "i18n": "@",
             "id": "@fieldid",
             "label": "@",
-            "preselect": "@preselect"
+            "preselect": "@",
+            "inline": "@"
+        },
+        controller: ['$scope', '$filter', function ($scope, $filter) {
+            if ($scope.model === undefined) {
+                $scope.model = [];
+            }
+        }],
+        template: function () {
+            return '' +
+                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                    '<div class="form-side form-side-label">' +
+                        '<label for="{{id}}">{{label}}</label>' +
+                    '</div>' +
+                    '<div class="form-side">' +
+                        '<luya-checkbox-array ng-model="model" options="options.items" preselectall="{{preselect}}" ng-attr-inline="{{inline}}"></luya-checkbox-array>' +
+                    '</div>' +
+                '</div>';
+        }
+    }
+});
+
+
+
+/**
+ * @ngdoc directive
+ * @name luyaCheckboxArray
+ * @restrict E
+ *
+ * @description
+ * Generates a list of checkboxes with labels which is styled like the rest LUYA admin UI elements.
+ *
+ * The output data will be presented as an array of objects of the form {'value': 'someValue'}. Only objects corresponding to the checked checkboxes will be included in the array.
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {array} options Data array. options = [{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123},...];`
+ * @param {string} preselectall Select-all flag. If enabled, all checkboxes will be checked by default. To set it to false leave the preselectall attribute empty or omit it.
+ * @param {string} inline Inline flag. If enabled, checkboxes will be rendered in line. To set it to false leave the inline attribute empty or omit it.
+ *
+ * @example
+ * <luya-checkbox-array  ng-model="some.model" inline="inline" options="[{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123}]" preselectall="1"></luya-checkbox-array>
+ *
+ * @since 4.2.0
+ */
+zaa.directive("luyaCheckboxArray", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "options": "=",
+            "preselectall": "@",
+            "inline": "@"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
 
@@ -1492,16 +1581,16 @@ zaa.directive("zaaCheckboxArray", function () {
             $scope.searchString = '';
 
             $scope.$watch('options', function (n, o) {
-                if (n !== undefined && n.hasOwnProperty('items')) {
-                    $scope.optionitems = $filter('orderBy')(n.items, 'label');
-                    if ($scope.preselect) {
-                        $scope.preselectOptionValuesToModel(n.items);
+                if (n !== undefined) {
+                    $scope.items = $filter('orderBy')(n, 'label');
+                    if ($scope.preselectall) {
+                        $scope.preselectOptionValuesToModel(n);
                     }
                 }
             });
 
             $scope.filtering = function () {
-                $scope.optionitems = $filter('filter')($scope.options.items, $scope.searchString);
+                $scope.items = $filter('filter')($scope.options, $scope.searchString);
             }
 
             $scope.toggleSelection = function (value) {
@@ -1532,31 +1621,26 @@ zaa.directive("zaaCheckboxArray", function () {
         },
         template: function () {
             return '' +
-                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                    '<div class="form-side form-side-label">' +
-                        '<label for="{{id}}">{{label}}</label>' +
-                    '</div>' +
-                    '<div class="form-side">' +
-                        '<div class="position-relative mb-3">' +
-                            '<div class="input-group">' +
-                                '<div class="input-group-prepend">' +
-                                    '<div class="input-group-text">' +
-                                        '<i class="material-icons">search</i>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
+                '<div class="position-relative mb-3">' +
+                    '<div class="input-group">' +
+                        '<div class="input-group-prepend">' +
+                            '<div class="input-group-text">' +
+                                '<i class="material-icons">search</i>' +
                             '</div>' +
-                            '<span class="zaa-checkbox-array-counter badge badge-secondary">{{optionitems.length}} ' + i18n['js_dir_till'] + ' {{options.items.length}}</span>' +
                         '</div>' +
-                        '<div class="form-check" ng-repeat="(k, item) in optionitems track by k">' +
-                            '<input type="checkbox" class="form-check-input" ng-checked="isChecked(item)" id="{{random}}_{{k}}" ng-click="toggleSelection(item)" />' +
-                            '<label for="{{random}}_{{k}}">{{item.label}}</label>' +
-                        '</div>' +
+                        '<input class="form-control" type="text" ng-change="filtering()" ng-model="searchString" placeholder="' + i18n['ngrest_crud_search_text'] + '">' +
                     '</div>' +
-                '</div>';
+                    '<span class="zaa-checkbox-array-counter badge badge-secondary">{{items.length}} ' + i18n['js_dir_till'] + ' {{options.length}}</span>' +
+                '</div>' +
+                '<div ng-repeat="(k, item) in items track by k"  class="form-check" ng-class="{\'form-check-inline\': inline}">' +
+                    '<input type="checkbox" class="form-check-input" ng-checked="isChecked(item)" id="{{random}}_{{k}}" ng-click="toggleSelection(item)" />' +
+                    '<label for="{{random}}_{{k}}">{{item.label}}</label>' +
+                '</div>'
         }
     }
 });
+
+
 
 /**
  * https://github.com/720kb/angular-datepicker#date-validation - Date Picker
