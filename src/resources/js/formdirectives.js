@@ -52,28 +52,24 @@ zaa.directive("zaaInjector", ['$compile', function ($compile) {
     }
 }]);
 
+
 /**
- * @var object $model Contains existing data for the displaying the existing relations
+ * @ngdoc directive
+ * @name zaaSortRelationArray
+ * @restrict E
  *
- * ```js
- * [
- * 	{'sortpos': 1, 'value': 1},
- *  {'sortpos': 2, 'value': 4},
- * ]
- * ```
+ * @description
+ * Generates a form group with a multiselectable and sortable list based on array data.
  *
- * @var object $options Provides options to build the sort relation array:
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to. Must be an array.
+ * @param {object} options Options object. `sourceData` property is holding the data array: `options.sourceData = [{"value" : 1, "label" => 'Label for Value 1' }, {"value" : 2, "label" => 'Label for Value 2' }]`.
+ * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any field.
+ * @param {expression} i18n Is checkbox list represent an i18n attribute.
+ * @param {string} label Form group label.
  *
- * ```js
- * {
- * 	'sourceData': [
- * 		{'value': 1, 'label': 'Source Entry #1'}
- * 		{'value': 2, 'label': 'Source Entry #2'}
- * 		{'value': 3, 'label': 'Source Entry #3'}
- * 		{'value': 4, 'label': 'Source Entry #4'}
- * 	]
- * }
- * ```
+ * @example
+ * <zaa-sort-relation-array model="some.model" label="SomeLabel" options="{sourceData: [{'label' : 'FirstLabel', 'value' : 'FirstValue'}, {'label' : 'SecondLabel', 'value' : 2}]}"></zaa-sort-relation-array>
+ *
  */
 zaa.directive("zaaSortRelationArray", function () {
     return {
@@ -84,6 +80,56 @@ zaa.directive("zaaSortRelationArray", function () {
             "label": "@",
             "i18n": "@",
             "id": "@fieldid"
+        },
+        controller: ['$scope', '$filter', function ($scope, $filter) {
+            if ($scope.model === undefined) {
+                $scope.model = [];
+            }
+        }],
+        template: function () {
+            return '' +
+                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                    '<div class="form-side form-side-label">' +
+                        '<label for="{{id}}">{{label}}</label>' +
+                    '</div>' +
+                    '<div class="form-side">' +
+                        '<luya-sort-relation-array ng-model="model" options="options.sourceData"></luya-sort-relation-array>' +
+                    '</div>' +
+                '</div>';
+        }
+    }
+});
+
+
+
+/**
+ * @ngdoc directive
+ * @name luyaSortRelationArray
+ * @restrict E
+ *
+ * @description
+ * Generates a multiselectable and sortable list which is styled like the rest LUYA admin UI elements.
+ *
+ * The output data will be presented as an array of objects in the form [0 => {'label': 'First label', 'value': 'firstValue'}, 1 => {'label': 'First label', 'value': 'firstValue'}].
+ * Only selected objects will be included in array. The order of output array is defined by order of list.
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to. Must be an array.
+ * @param {array} options Data array. options = [{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123},...];`
+ *
+ * @example
+ * <luya-sort-relation-array  ng-model="some.model" options="[{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123}]"></luya-sort-relation-array>
+ *
+ * @todo
+ * optionsvalue and optionslabel attributes
+ *
+ * @since 4.2.0
+ */
+zaa.directive("luyaSortRelationArray", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "options": "=",
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
 
@@ -101,7 +147,7 @@ zaa.directive("zaaSortRelationArray", function () {
 
             $scope.$watch(function () { return $scope.options }, function (n, o) {
                 if (n !== undefined && n !== null) {
-                    $scope.sourceData = n.sourceData;
+                    $scope.sourceData = n;
                 }
             });
 
@@ -114,7 +160,6 @@ zaa.directive("zaaSortRelationArray", function () {
             };
 
             $scope.addToModel = function (option) {
-
                 var match = false;
 
                 angular.forEach($scope.model, function (value, key) {
@@ -159,35 +204,29 @@ zaa.directive("zaaSortRelationArray", function () {
             }
         }],
         template: function () {
-            return '' +
-                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                    '<div class="form-side form-side-label">' +
-                        '<label for="{{id}}">{{label}}</label>' +
+             return '' +
+
+                '<div class="list">' +
+                    '<div class="list-item" ng-repeat="(key, item) in getModelItems() track by key">' +
+                        '<div class="list-buttons">' +
+                            '<i ng-show="!$first" ng-click="moveUp(key)" class="material-icons" style="transform: rotate(270deg);">play_arrow</i>' +
+                            '<i ng-show="!$last" ng-click="moveDown(key)" class="material-icons" style="transform: rotate(90deg);">play_arrow</i>' +
+                        '</div>' +
+                        '<span>{{item.label}}</span>' +
+                        '<div class="float-right">' +
+                            '<i ng-click="removeFromModel(key)" class="material-icons">delete</i>' +
+                        '</div>' +
                     '</div>' +
-                    '<div class="form-side">' +
-                        '<div class="list">' +
-                            '<div class="list-item" ng-repeat="(key, item) in getModelItems() track by key">' +
-                                '<div class="list-buttons">' +
-                                    '<i ng-show="!$first" ng-click="moveUp(key)" class="material-icons" style="transform: rotate(270deg);">play_arrow</i>' +
-                                    '<i ng-show="!$last" ng-click="moveDown(key)" class="material-icons" style="transform: rotate(90deg);">play_arrow</i>' +
-                                '</div>' +
-                                '<span>{{item.label}}</span>' +
-                                '<div class="float-right">' +
-                                    '<i ng-click="removeFromModel(key)" class="material-icons">delete</i>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="list-item" ng-show="sourceData.length != model.length">' +
-                                '<input class="form-control" type="search" ng-model="searchString" ng-focus="dropdownOpen = true" />' +
-                                '<ul class="list-group">' +
-                                    '<li class="list-group-item list-group-item-action" ng-repeat="option in getSourceOptions() | filter:searchString" ng-show="dropdownOpen && elementInModel(option)" ng-click="addToModel(option)">' +
-                                        '<i class="material-icons">add_circle</i><span>{{ option.label }}</span>' +
-                                    '</li>' +
-                                '</ul>' +
-                                '<div class="list-chevron">' +
-                                    '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="dropdownOpen">arrow_drop_up</i>' +
-                                    '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="!dropdownOpen">arrow_drop_down</i>' +
-                                '</div>' +
-                            '</div>' +
+                    '<div class="list-item" ng-show="sourceData.length != model.length">' +
+                        '<input class="form-control" type="search" ng-model="searchString" ng-focus="dropdownOpen = true" />' +
+                        '<ul class="list-group">' +
+                            '<li class="list-group-item list-group-item-action" ng-repeat="option in getSourceOptions() | filter:searchString" ng-show="dropdownOpen && elementInModel(option)" ng-click="addToModel(option)">' +
+                                '<i class="material-icons">add_circle</i><span>{{ option.label }}</span>' +
+                            '</li>' +
+                        '</ul>' +
+                        '<div class="list-chevron">' +
+                            '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="dropdownOpen">arrow_drop_up</i>' +
+                            '<i ng-click="dropdownOpen=!dropdownOpen" class="material-icons" ng-show="!dropdownOpen">arrow_drop_down</i>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
@@ -1566,7 +1605,7 @@ zaa.directive("zaaCheckboxArray", function () {
  * @description
  * Generates a list of checkboxes with labels which is styled like the rest LUYA admin UI elements.
  *
- * The output data will be presented as an array of objects of the form {'value': 'someValue'}. Only objects corresponding to the checked checkboxes will be included in the array.
+ * The output data will be presented as an array of objects in the form of {'value': 'someValue'}. Only objects corresponding to the checked checkboxes will be included in the array.
  *
  * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {array} options Data array. options = [{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123},...];`
@@ -1575,6 +1614,9 @@ zaa.directive("zaaCheckboxArray", function () {
  *
  * @example
  * <luya-checkbox-array  ng-model="some.model" inline="inline" options="[{'label' : 'checkboxLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123}]" preselectall="1"></luya-checkbox-array>
+ *
+ * @todo
+ * optionsvalue and optionslabel attributes
  *
  * @since 4.2.0
  */
