@@ -413,10 +413,30 @@ zaa.directive("zaaLinkOptions", function() {
     }
 });
 
+
+
+
 /**
- * Generates slug from a given model input.
+ * @ngdoc directive
+ * @name luyaSlug
+ * @restrict E
  *
- * If a listener attribute is provided i will take the information from there.
+ * @description
+ * Generates a form group with text input. The values of the input are automatically 'slugified'. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * If a `listener` attribute is provided, the value will be taken from it.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {expression} listener assignable to get value from.
+ * @param {string} fieldid The id attribute of the checkbox.
+ * @param {expression} i18n Is checkbox represent an i18n attribute.
+ * @param {string} label Field label to be drawn to the left of checkbox.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <zaa-slug model="some.model" listener="another.model" label="Some label"></zaa-slug>
+ *
+ * @since 4.2.0
  */
 zaa.directive("zaaSlug", function () {
     return {
@@ -427,11 +447,55 @@ zaa.directive("zaaSlug", function () {
             "listener": "=",
             "label": "@",
             "i18n": "@",
-            "id": "@fieldid"
+            "id": "@fieldid",
+            "placeholder": "@"
+        },
+        template: function () {
+            return '' +
+                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
+                    '<div class="form-side form-side-label">' +
+                        '<label for="{{id}}">{{label}}</label>' +
+                    '</div>' +
+                    '<div class="form-side">' +
+                        '<luya-slug fieldid="{{id}}" provider="listener" ng-model="model" placeholder="{{placeholder}}"></luya-slug>' +
+                    '</div>' +
+                '</div>';
+        }
+    }
+});
+
+/**
+ * @ngdoc directive
+ * @name luyaSlug
+ * @restrict E
+ *
+ * @description
+ * Generates an input text field whose value are automatically converted to slug.
+ *
+ * If a `provider` attribute is given, the value will be taken from it.
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {expression} provider assignable to get value from.
+ * @param {string} fieldid The id attribute of the field.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <luya-slug ng-model="some.model" provider="another.model" placeholder="Placeholder"></luya-slug>
+ *
+ * @since 4.2.0
+ */
+zaa.directive("luyaSlug", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "provider": "=",
+            "id": "@fieldid",
+            "placeholder": "@"
         },
         controller: ['$scope', '$filter', function ($scope, $filter) {
 
-            $scope.$watch('listener', function (n, o) {
+            $scope.$watch('provider', function (n, o) {
                 if (n !== undefined) {
                     $scope.model = $filter('slugify')(n);
                 }
@@ -446,17 +510,12 @@ zaa.directive("zaaSlug", function () {
         }],
         template: function () {
             return '' +
-                '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
-                    '<div class="form-side form-side-label">' +
-                        '<label for="{{id}}">{{label}}</label>' +
-                    '</div>' +
-                    '<div class="form-side">' +
-                        '<input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" />' +
-                    '</div>' +
-                '</div>';
+                '<input id="{{id}}" insert-paste-listener ng-model="model" type="text" class="form-control" placeholder="{{placeholder}}" />';
         }
     }
 });
+
+
 
 zaa.directive("zaaColor", function () {
     return {
