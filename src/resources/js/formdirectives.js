@@ -64,7 +64,7 @@ zaa.directive("zaaInjector", ['$compile', function ($compile) {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to. Must be an array.
  * @param {object} options Options object. `sourceData` property is holding the data array: `options.sourceData = [{"value" : 1, "label" => 'Label for Value 1' }, {"value" : 2, "label" => 'Label for Value 2' }]`.
  * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any field.
- * @param {expression} i18n Is checkbox list represent an i18n attribute.
+ * @param {expression} i18n Is form group  represent an i18n attribute.
  * @param {string} label Form group label.
  *
  * @example
@@ -429,8 +429,8 @@ zaa.directive("zaaLinkOptions", function() {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {expression} listener assignable to get value from.
  * @param {string} fieldid The id attribute of the checkbox.
- * @param {expression} i18n Is checkbox represent an i18n attribute.
- * @param {string} label Field label to be drawn to the left of checkbox.
+ * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {string} label Form group label.
  * @param {string} placeholder A short hint that describes the expected value of an input field.
  *
  * @example
@@ -516,7 +516,26 @@ zaa.directive("luyaSlug", function () {
 });
 
 
-
+/**
+ * @ngdoc directive
+ * @name zaaColor
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with color wheel input.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any field.
+ * @param {expression} i18n Is color wheel represent an i18n attribute.
+ * @param {string} label Form group label.
+ *
+ * @example
+ * <zaa-color model="some.model"></zaa-color>
+ *
+ * @see https://github.com/patlux/ng-colorwheel
+ *
+ */
 zaa.directive("zaaColor", function () {
     return {
         restrict: "E",
@@ -528,7 +547,13 @@ zaa.directive("zaaColor", function () {
             "id": "@fieldid"
         },
         controller: ['$scope', function ($scope) {
+
+            if ($scope.model === undefined || !$scope.model) {
+                $scope.model = '#000000';
+            }
+
             function getTextColor() {
+
                 if (typeof $scope.model === 'undefined' || !$scope.model) {
                     return '#000';
                 }
@@ -584,6 +609,29 @@ zaa.directive("zaaColor", function () {
     }
 });
 
+
+
+/**
+ * @ngdoc directive
+ * @name zaaWysiwyg
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with VERY SIMPLE WYSIWYG text input.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any field.
+ * @param {expression} i18n Is input represent an i18n attribute.
+ * @param {string} label Form group label.
+ * @param {string} placeholder A short hint that describes the expected value of an input field. Used in text-like inputs.
+ *
+ * @example
+ * <zaa-wysiwyg model="some.model" label="Some label" placeholder="Some hints"></zaa-wysiwyg>
+ *
+ * @see https://github.com/stevermeister/ngWig
+ *
+ */
 zaa.directive("zaaWysiwyg", function () {
     return {
         restrict: "E",
@@ -592,7 +640,8 @@ zaa.directive("zaaWysiwyg", function () {
             "options": "=",
             "label": "@",
             "i18n": "@",
-            "id": "@fieldid"
+            "id": "@fieldid",
+            "placeholder": "@"
         },
         template: function () {
             return '' +
@@ -601,7 +650,7 @@ zaa.directive("zaaWysiwyg", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed></ng-wig>' +
+                        '<ng-wig ng-disabled="false" ng-model="model" buttons="bold, italic, link, list1, list2" source-mode-allowed placeholder="{{placeholder}}"></ng-wig>' +
                     '</div>' +
                 '</div>';
         }
