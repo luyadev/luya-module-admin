@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.1.0
+## 4.1.0 (21. September 2021)
 
 + [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any ngRest attribute. It allows to set color of CRUD table cells
 + [#662](https://github.com/luyadev/luya-module-admin/pull/662) Fix display issue with radio buttons in multiple radio button fields (zaaRadio directive).
