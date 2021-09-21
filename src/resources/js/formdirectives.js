@@ -436,7 +436,6 @@ zaa.directive("zaaLinkOptions", function() {
  * @example
  * <zaa-slug model="some.model" listener="another.model" label="Some label"></zaa-slug>
  *
- * @since 4.2.0
  */
 zaa.directive("zaaSlug", function () {
     return {
@@ -657,6 +656,70 @@ zaa.directive("zaaWysiwyg", function () {
     }
 });
 
+
+/**
+ * @ngdoc directive
+ * @name stringToInteger
+ *
+ * @description
+ * Converts string to integer number to prevent errors in <input type="number"> field.
+ *
+ * @see https://code.angularjs.org/1.8.2/docs/error/ngModel/numfmt
+ */
+zaa.directive('stringToInteger', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+            ngModel.$formatters.push(function(value) {
+                return parseInt(value);
+            });
+        }
+    };
+});
+
+/**
+ * @ngdoc directive
+ * @name stringToFloat
+ *
+ * @description
+ * Converts string to float number to prevent errors in <input type="number"> field.
+ *
+ * @see https://code.angularjs.org/1.8.2/docs/error/ngModel/numfmt
+ */
+zaa.directive('stringToFloat', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+            ngModel.$formatters.push(function(value) {
+                return parseFloat(value);
+            });
+        }
+    };
+});
+
+
+
+/**
+ * @ngdoc directive
+ * @name zaaNumber
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with non negative integer number input field. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The id attribute of the input.
+ * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {string} label Form group label.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ * @param {string} initvalue The initial value of the input.
+ *
+ * @example
+ * <zaa-number model="some.model" label="Some label"></zaa-number>
+ *
+ */
 zaa.directive("zaaNumber", function () {
     return {
         restrict: "E",
@@ -669,27 +732,95 @@ zaa.directive("zaaNumber", function () {
             "placeholder": "@",
             "initvalue": "@"
         },
-        link: function ($scope) {
-            $scope.$watch(function () { return $scope.model }, function (n, o) {
-                if (n === undefined) {
-                    $scope.model = parseInt($scope.initvalue);
-                }
-                $scope.isValid = !!angular.isNumber($scope.model);
-            })
-        }, template: function () {
+        template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
                     '<div class="form-side form-side-label">' +
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<input id="{{id}}" ng-model="model" type="number" min="0" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" />' +
+                        '<luya-number ng-model="model" fieldid="{{id}}" min="0" placeholder="{{placeholder}}" initvalue="{{initvalue}}"></luya-number>' +
                     '</div>' +
                 '</div>';
         }
     }
 });
 
+
+
+
+
+/**
+ * @ngdoc directive
+ * @name luyaNumber
+ * @restrict E
+ *
+ * @description
+ * Generates an integer number input field which is styled like the rest LUYA admin UI elements.
+ *
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the field.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ * @param {string} initvalue The initial value of the input.
+ * @param {string} min The minimal allowed value of the input.
+ * @param {string} max The maximal allowed value of the input.
+ *
+ * @example
+ * <luya-number ng-model="some.model" min="-3" max="10" placeholder="Placeholder" initvalue="0"></luya-number>
+ *
+ * @since 4.2.0
+ */
+zaa.directive("luyaNumber", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "id": "@fieldid",
+            "placeholder": "@",
+            "initvalue": "@",
+            "min": "@",
+            "max": "@"
+        },
+        link: function ($scope) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
+                if (n === undefined) {
+                    $scope.model = parseInt($scope.initvalue);
+                }
+
+                if ($scope.model == parseInt(n)) {
+                    $scope.model = parseInt(n);
+                }
+
+                $scope.isValid = !!angular.isNumber($scope.model);
+            })
+        }, template: function () {
+            return '' +
+                '<input string-to-integer id="{{id}}" ng-model="model" type="number" min="{{min}}" max="{{max}}" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" />';
+        }
+    }
+});
+
+/**
+ * @ngdoc directive
+ * @name zaaDecimal
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with non negative float number input field. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. `steps` property is standing for step attribute of the input field.
+ * @param {string} fieldid The id attribute of the input.
+ * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {string} label Form group label.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <zaa-decimal model="some.model" label="Some label"></zaa-number>
+ *
+ */
 zaa.directive("zaaDecimal", function () {
     return {
         restrict: "E",
@@ -702,17 +833,12 @@ zaa.directive("zaaDecimal", function () {
             "placeholder": "@"
         },
         controller: ['$scope', function ($scope) {
-            if ($scope.options === null) {
+            if ($scope.options === undefined || $scope.options === null) {
                 $scope.steps = 0.01;
             } else {
                 $scope.steps = $scope.options['steps'];
             }
         }],
-        link: function ($scope) {
-            $scope.$watch(function () { return $scope.model }, function (n, o) {
-                $scope.isValid = !!angular.isNumber($scope.model);
-            })
-        },
         template: function () {
             return '' +
                 '<div class="form-group form-side-by-side" ng-class="{\'input--hide-label\': i18n}">' +
@@ -720,12 +846,67 @@ zaa.directive("zaaDecimal", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<input id="{{id}}" ng-model="model" type="number" min="0" step="{{steps}}" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" />' +
+                        '<luya-decimal ng-model="model" fieldid="{{id}}" min="0" placeholder="{{placeholder}}" step="{{steps}}"></luya-decimal>' +
                     '</div>' +
                 '</div>';
         }
     }
 });
+
+
+/**
+ * @ngdoc directive
+ * @name luyaDecimal
+ * @restrict E
+ *
+ * @description
+ * Generates an float number input field which is styled like the rest LUYA admin UI elements.
+ *
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the field.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ * @param {string} min The minimal allowed value of the input.
+ * @param {string} max The maximal allowed value of the input.
+ * @param {string} step A stepping interval to use when using up and down arrows to adjust the value.
+ *
+ * @example
+ * <luya-number ng-model="some.model" min="-3" max="10" placeholder="Placeholder" initvalue="0"></luya-number>
+ *
+ * @since 4.2.0
+ */
+zaa.directive("luyaDecimal", function () {
+    return {
+        restrict: "E",
+        scope: {
+            "model": "=ngModel",
+            "id": "@fieldid",
+            "placeholder": "@",
+            "step": "@",
+            "min": "@",
+            "max": "@"
+        },
+        controller: ['$scope', function ($scope) {
+            if ($scope.step === undefined || $scope.step === null) {
+                $scope.step = 0.01;
+            }
+        }],
+        link: function ($scope) {
+            $scope.$watch(function () { return $scope.model }, function (n, o) {
+                if ($scope.model == parseFloat(n)) {
+                    $scope.model = parseFloat(n);
+                }
+
+                $scope.isValid = !!angular.isNumber($scope.model);
+            })
+        },
+        template: function () {
+            return '' +
+                '<input string-to-float id="{{id}}" ng-model="model" type="number" min="{{min}}" max="{{max}}" step="{{step}}" class="form-control" ng-class="{\'invalid\' : !isValid }" placeholder="{{placeholder}}" />';
+        }
+    }
+});
+
 
 /**
  * Generates a form group with simple text input. Mostly used in LUYA admin when create or update CRUD record.
@@ -734,6 +915,28 @@ zaa.directive("zaaDecimal", function () {
  * ```
  * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
  * ```
+ */
+
+
+/**
+ * @ngdoc directive
+ * @name zaaCheckbox
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with simple text input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The id attribute of the input.
+ * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {string} label Form group label.
+ * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <zaa-text model="some.model" label="Some label" placeholder="placeholder"></zaa-text>
+ *
  */
 zaa.directive("zaaText", function () {
     return {
