@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.2.0
+
++ [#663](https://github.com/luyadev/luya-module-admin/issues/663) A new `TagRelation::cleanup(ActiveRecord $model)` method to remove all tag relations for a certain model. 
+
 ## 4.1.0 (21. September 2021)
 
 + [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any ngRest attribute. It allows to set color of CRUD table cells
