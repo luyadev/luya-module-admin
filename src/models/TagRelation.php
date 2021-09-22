@@ -135,4 +135,16 @@ final class TagRelation extends ActiveRecord
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);
     }
+
+    /**
+     * Delete (cleanup) all relations for a given model.
+     *
+     * @param ActiveRecord $model
+     * @return integer
+     * @since 4.2.0
+     */
+    public static function cleanup(ActiveRecord $model)
+    {
+        return self::deleteAll(['table_name' => TaggableTrait::cleanBaseTableName($model->tableName()), 'pk_id' => $model->getPrimaryKey()]);
+    }
 }
