@@ -19,7 +19,7 @@
  * @param {string} placeholder A short hint that describes the expected value of an input field. Used in text-like inputs.
  * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled. Used in text-like inputs.
  * @param {string} initvalue The value that will be passed to the model when input. Used in select-like inputs.
- * @param {string} optionslabel The name of the property in data object which corresponds to the data 'name'. Used in select-like inputs.
+ * @param {string} optionslabel The name of the property in data object which corresponds to the data 'label'. Used in select-like inputs.
  * @param {string} optionsvalue The name of the property in data object which corresponds to the data 'value'. Used in select-like inputs.
  *
  *
@@ -429,7 +429,7 @@ zaa.directive("zaaLinkOptions", function() {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {expression} listener assignable to get value from.
  * @param {string} fieldid The id attribute of the checkbox.
- * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition
  * @param {string} label Form group label.
  * @param {string} placeholder A short hint that describes the expected value of an input field.
  *
@@ -711,7 +711,7 @@ zaa.directive('stringToFloat', function() {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {object} options Options object. Not used.
  * @param {string} fieldid The id attribute of the input.
- * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
  * @param {string} label Form group label.
  * @param {string} placeholder A short hint that describes the expected value of an input field.
  * @param {string} initvalue The initial value of the input.
@@ -813,7 +813,7 @@ zaa.directive("luyaNumber", function () {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {object} options Options object. `steps` property is standing for step attribute of the input field.
  * @param {string} fieldid The id attribute of the input.
- * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
  * @param {string} label Form group label.
  * @param {string} placeholder A short hint that describes the expected value of an input field.
  *
@@ -909,18 +909,8 @@ zaa.directive("luyaDecimal", function () {
 
 
 /**
- * Generates a form group with simple text input. Mostly used in LUYA admin when create or update CRUD record.
- *
- * Usage:
- * ```
- * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
- * ```
- */
-
-
-/**
  * @ngdoc directive
- * @name zaaCheckbox
+ * @name zaaText
  * @restrict E
  *
  * @description
@@ -929,7 +919,7 @@ zaa.directive("luyaDecimal", function () {
  * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
  * @param {object} options Options object. Not used.
  * @param {string} fieldid The id attribute of the input.
- * @param {expression} i18n Is field represent an i18n attribute.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
  * @param {string} label Form group label.
  * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled.
  * @param {string} placeholder A short hint that describes the expected value of an input field.
@@ -1002,12 +992,22 @@ zaa.directive("luyaText", function () {
 
 
 /**
+ * @ngdoc directive
+ * @name zaaReadonly
+ * @restrict E
+ *
+ * @description
  * Generates a form group with read-only text. Mostly used in LUYA admin when create or update CRUD record.
  *
- * Usage:
- * ```
- * <zaa-readonly model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-readonly>
- * ```
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The id attribute of the output text.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ *
+ * @example
+ * <zaa-readonly model="some.model" label="Some label"></zaa-readonly>
+ *
  * @since 1.2.1
  */
 zaa.directive("zaaReadonly", function () {
@@ -1035,12 +1035,20 @@ zaa.directive("zaaReadonly", function () {
 });
 
 /**
+ * @ngdoc directive
+ * @name luyaReadonly
+ * @restrict E
+ *
+ * @description
  * Renders a value from model like a read-only attribute.
  *
- * Usage:
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the span element.
+ *
+ * @example
  * <luya-readonly ng-model="some.model"></luya-readonly>
- * ```
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaReadonly", function () {
     return {
@@ -1056,18 +1064,25 @@ zaa.directive("luyaReadonly", function () {
 });
 
 
+
 /**
- * Generates a form group with result of the api request
+ * @ngdoc directive
+ * @name zaaAsyncValue
+ * @restrict E
  *
- * Usage:
- * ```
- * <zaa-async-value model="some.model" label="Hello world" api="admin/admin-users" fields="[foo,bar]" ></zaa-async-value>
- * ```
+ * @description
+ * Generates a form group with result of the special api request.
  *
- * The above example will send the following request:
- * ```
- * /admin/admin-users/{model}?fields=foo,bar
- * ```
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the output text.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} api Part of request api URL.
+ * @param {string} fields JSON string with a list of attributes required to get.
+ *
+ * @example
+ * <zaa-async-value model="some.model" label="Some label" api="admin/admin-users" fields="[foo,bar]" ></zaa-async-value>
+ * The above example will send the following request: `/admin/admin-users/{model}?fields=foo,bar`
  *
  */
 zaa.directive("zaaAsyncValue", function () {
@@ -1095,7 +1110,7 @@ zaa.directive("zaaAsyncValue", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<luya-async-value ng-model="model" api="{{api}}" fields="fields"  ng-show="model"></luya-async-value>' +
+                        '<luya-async-value ng-model="model" api="{{api}}" fields="fields" fieldid="{{id}}" ng-show="model"></luya-async-value>' +
                         '<button type="button" class="btn btn-icon btn-cancel" ng-click="resetValue()" ng-show="model"></button>' +
                     '</div>' +
                 '</div>';
@@ -1104,10 +1119,21 @@ zaa.directive("zaaAsyncValue", function () {
 });
 
 /**
- * Can be used to just fetch a value from an api async.
- * ```
+ * @ngdoc directive
+ * @name luyaAsyncValue
+ * @restrict E
+ *
+ * @description
+ * Renders a value from async api request.
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the span element.
+ * @param {string} api Part of request api URL.
+ * @param {string} fields JSON string with a list of attributes required to get.
+ *
+ * @example
  * <luya-async-value ng-model="some.model" api="admin/admin-users" fields="['foo','bar']"></luya-async-value>
- * ```
+ *
  * @since 4.2.0
  */
 zaa.directive("luyaAsyncValue", function () {
@@ -1126,7 +1152,6 @@ zaa.directive("luyaAsyncValue", function () {
                         $scope.value = '';
                         $http.get($scope.api + "/" + n + "?fields=" + $scope.fields.join())
                             .then(function (response) {
-                                $scope.value; // ???
                                 angular.forEach(response.data, function (value) {
                                     if (value) {
                                         $scope.value = $scope.value + value + " ";
@@ -1190,12 +1215,23 @@ zaa.directive("asyncValue", function () {
 });
 
 /**
- * Generates a form group with textarea. Mostly used in LUYA admin when create or update CRUD record.
+ * @ngdoc directive
+ * @name zaaTextarea
+ * @restrict E
  *
- * Usage:
- * ```
- * <zaa-text model="itemCopy.title" label="<?= Module::t('view_index_page_title'); ?>"></zaa-text>
- * ```
+ * @description
+ * Generates a form group with textarea input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The id attribute of the input.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <zaa-textarea model="some.model" label="Some label" placeholder="placeholder"></zaa-textarea>
+ *
  */
 zaa.directive("zaaTextarea", function () {
     return {
@@ -1223,13 +1259,23 @@ zaa.directive("zaaTextarea", function () {
     }
 });
 
+
 /**
+ * @ngdoc directive
+ * @name luyaTextarea
+ * @restrict E
+ *
+ * @description
  * Generates a textarea input which is styled like the rest LUYA admin UI elements.
  *
- * Usage:
- * ```
- * <luya-textarea ng-model="some.model"></luya-textarea>
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the input field.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <luya-textarea ng-model="some.model" placeholder="Some placeholder"></luya-textarea>
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaTextarea", function () {
     return {
@@ -1253,6 +1299,26 @@ zaa.directive("luyaTextarea", function () {
  * ```
  * <zaa-password model="some.model" label="someLabel" fieldid="someId"></zaa-password>
  * ```
+ */
+
+/**
+ * @ngdoc directive
+ * @name zaaPassword
+ * @restrict E
+ *
+ * @description
+ * Generates a form group with textarea input. Mostly used in LUYA admin when create or update CRUD record.
+ *
+ * @param {expression} model assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {object} options Options object. Not used.
+ * @param {string} fieldid The id attribute of the input.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} placeholder A short hint that describes the expected value of an input field.
+ *
+ * @example
+ * <zaa-password model="some.model" label="someLabel" fieldid="someId"></zaa-password>
+ *
  */
 zaa.directive("zaaPassword", function () {
     return {
@@ -1283,12 +1349,22 @@ zaa.directive("zaaPassword", function () {
 
 
 /**
+ * @ngdoc directive
+ * @name luyaPassword
+ * @restrict E
+ *
+ * @description
  * Generates a simple password input which is styled like the rest LUYA admin UI elements.
  *
- * Usage:
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} fieldid The id attribute of the input field.
+ * @param {string} inputmode A hint to the browser for which keyboard to display. Default is 'verbatim'.
+ * @param {string} autocomplete Specifies whether or not an input field should have autocomplete enabled.
+ *
+ * @example
  * <luya-password ng-model="some.model"></luya-password>
- * ```
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaPassword", function () {
     return {
@@ -1317,21 +1393,29 @@ zaa.directive("luyaPassword", function () {
 });
 
 
-
 /**
+ * @ngdoc directive
+ * @name zaaRadio
+ * @restrict E
+ *
+ * @description
  * Generates a form group with radio list input. Mostly used in LUYA admin when create or update CRUD record.
  *
- * Usage:
- * ```
- * <zaa-radio model="some.model" label="label" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'} {...}]"></zaa-radio>
- * ```
- * To render radio list inline add `inline` attribute with some non empty value.
- * Example: `<zaa-radio inline="inline" model="some.model" options="..."></zaa-radio>`
  *
- * In order to change the names of *value* and *label* keys use `optionsvalue` and `optionslabel` attributes:
- * ```
- * <zaa-radio model="some.model" label="label" optionslabel="name" optionsvalue="val" options="[{name:'foo', val: 'bar'}, {name:'John', val: 'Doe'} {...}]"></zaa-radio>
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {array} options Data array. options = [{'label' : 'FirstLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123},...];`
+ * @param {string} optionslabel The name of the property in options object which corresponds to 'label'.
+ * @param {string} optionsvalue The name of the property in options object which corresponds to 'value'.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} fieldid The dummy id attribute. The label will point to this id, but such an id will not be associated with any field.
+ * @param {string} inline Inline flag. If enabled, buttons will be rendered in line. To set it to false leave the inline attribute empty or omit it.
+ * @param {string} initvalue The value that will be passed to the model when the radios is initiated. If this value is equal to value of some radio button, that button will be checked.
+ *
+ * @example
+ * <zaa-radio model="some.model" label="label" options="[{name:'foo', value: 'bar'}, {name:'John', value: 'Doe'} {...}]" optionslabel="name"></zaa-radio>
+ *
+ * @since 4.2.0
  */
 zaa.directive("zaaRadio", function () {
     return {
@@ -1370,14 +1454,26 @@ zaa.directive("zaaRadio", function () {
     }
 });
 
-
 /**
+ * @ngdoc directive
+ * @name luyaRadio
+ * @restrict E
+ *
+ * @description
  * Generates a radio list which is styled like the rest LUYA admin UI elements.
  *
- * Usage:
- * ```
- * <luya-radio ng-model="some.model" options="[{label:'foo', value: 'bar'}, {...}]" inline="inline"></luya-radio>
- * ```
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {json} options Options object which holding the data array: `options = [{"value" : 1, "label" => 'Label for Value 1' }, {"value" : 2, "label" => 'Label for Value 2' }]`.
+ * @param {string} optionslabel The name of the property in options object which corresponds to 'label'.
+ * @param {string} optionsvalue The name of the property in options object which corresponds to 'value'.
+ * @param {string} initvalue The value that will be passed to the model when the radios is initiated. If this value is equal to value of some radio button, that button will be checked.
+ * @param {string} inline Inline flag. If enabled, radio buttons will be rendered in line. To set it to false leave the inline attribute empty or omit it.
+ * @param {string} fieldid The initial part of the id of single radio button.
+ *
+ * @example
+ * <luya-radio ng-model="some.model" options="[{label:'foo', value: 'bar'}, {...}]" inline="inline" initvalue="bar"></luya-radio>
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaRadio", function () {
     return {
@@ -1387,8 +1483,6 @@ zaa.directive("luyaRadio", function () {
             "options": "=",
             "optionsvalue": "@",
             "optionslabel": "@",
-            "label": "@",
-            "i18n": "@",
             "id": "@fieldid",
             "initvalue": "@",
             "inline": "@"
@@ -1432,29 +1526,27 @@ zaa.directive("luyaRadio", function () {
 });
 
 /**
- * Generates a dropdown list input. Mostly used in LUYA admin when create or update CRUD record.
+ * @ngdoc directive
+ * @name zaaSelect
+ * @restrict E
  *
- * Usages:
- * ```js
- * <zaa-select model="data.module_name" label="<?= Module::t('view_index_module_select'); ?>" options="modules"></zaa-select>
- * ```
+ * @description
+ * Generates a form group with dropdown list input. Mostly used in LUYA admin when create or update CRUD record.
  *
- * ```js
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {array} options Data array. options = [{'label' : 'FirstLabel', 'value' : 'someValue'}, {'label' : 'anotherLabel', 'value' : 123},...];`
+ * @param {string} optionslabel The name of the property in options object which corresponds to 'label'.
+ * @param {string} optionsvalue The name of the property in options object which corresponds to 'value'.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} fieldid The id of 'real' select element which is lied under the hood.
+ * @param {string} clearable Clearable flag. If enabled, the button for resetting the dropdown to initial state will be displayed. To set it to false set clearable = 'false' or clearable = '0'.
+ * @param {string} initvalue The value that will be passed to the model when the dropdown is initiated. If this value is equal to value of some option, that option will be shown.
+ *
+ * @example
  * <zaa-select model="some.model" label="someLabel" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></zaa-select>
- * ```
- * If an `initvalue` is provided, you can not reset the model to null.
  *
- * To disable the reset possibility, add `clearable = "false"` or `clearable = "0"` attribute.
- *
- *
- * Options definition:
- * ```js
- * options=[{"value":123,"label":123-Label}, {"value":abc,"label":ABC-Label}]
- * ```
- * In order to change the names of *value* and *label* keys use `optionslabel` and `optionsvalue` attributes:
- * ```js
- * <zaa-select model="create.fromVersionPageId" label="My Label" options="typeData" optionslabel="version_alias" optionsvalue="id"></zaa-select>
- * ```
  */
 zaa.directive("zaaSelect", function () {
     return {
@@ -1479,6 +1571,7 @@ zaa.directive("zaaSelect", function () {
             }
 
             $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
+
         }],
         template: function () {
             return  '' +
@@ -1494,14 +1587,28 @@ zaa.directive("zaaSelect", function () {
     }
 });
 
+
 /**
+ * @ngdoc directive
+ * @name luyaSelect
+ * @restrict E
+ *
+ * @description
  * Generates a dropdown list which is styled like the rest LUYA admin UI elements.
  *
- * Usage:
- * ```
- * <luya-select ng-model="some.model" options="[{label:'foo', value: 'bar'}, {...}]" clearable="false"></luya-select>
- * ```
- * @see `zaaSelect` directive
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {json} options Options object which holding the data array: `options = [{"value" : 1, "label" => 'Label for Value 1' }, {"value" : 2, "label" => 'Label for Value 2' }]`.
+ * @param {string} optionslabel The name of the property in options object which corresponds to 'label'.
+ * @param {string} optionsvalue The name of the property in options object which corresponds to 'value'.
+ * @param {string} initvalue The value that will be passed to the model when the dropdown is initiated. If this value is equal to value of some option, that option will be shown.
+ * @param {string} fieldid The id of 'real' select element which is lied under the hood.
+ * @param {string} clearable Clearable flag. If enabled, the button for resetting the dropdown to initial state will be displayed. To set it to false set clearable = 'false' or clearable = '0'.
+ * @param {Function} ngChange The function that will be called on select change.
+ *
+ * @example
+ * <luya-select ng-model="some.model" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></luya-select>
+ *
+ * @since 4.2.0
  */
 zaa.directive("luyaSelect", function() {
     return {
@@ -1553,6 +1660,7 @@ zaa.directive("luyaSelect", function() {
                     }
                 });
 
+
                 $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
             });
 
@@ -1587,7 +1695,7 @@ zaa.directive("luyaSelect", function() {
             $scope.getSelectedLabel = function () {
                 var defaultLabel = i18n['ngrest_select_no_selection'];
                 angular.forEach($scope.options, function (item) {
-                    if ($scope.model === item[$scope.optionsvalue]) {
+                    if ($scope.model == item[$scope.optionsvalue]) { // == is intentionally here
                         defaultLabel = item[$scope.optionslabel];
                     }
                 });
@@ -1608,7 +1716,7 @@ zaa.directive("luyaSelect", function() {
                     '</select>' +
                     '<div class="zaaselect-selected">' +
                         '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
-                        '<i class="material-icons zaaselect-clear-icon" ng-show="{{clearable}}" ng-click="setModelValue(initvalue)">clear</i>' +
+                        '<i class="material-icons zaaselect-clear-icon" ng-show="clearable" ng-click="setModelValue(initvalue)">clear</i>' +
                         '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
                     '</div>' +
                     '<div class="zaaselect-dropdown">' +
@@ -1628,9 +1736,27 @@ zaa.directive("luyaSelect", function() {
 
 
 /**
- * Generates a dropdown list input. Data for options is taken from API request.
+ * @ngdoc directive
+ * @name zaaSelect
+ * @restrict E
  *
- * Used in SelectAsyncApi plugin
+ * @description
+ * Generates a dropdown list input. Data for options is taken from API request.
+ * Used in SelectAsyncApi plugin.
+ *
+ *
+ * @param {expression} ngModel assignable {@link https://docs.angularjs.org/guide/expression Expression} to bind to.
+ * @param {string} api Request api URL.
+ * @param {string} optionslabel The name of the property in options object which corresponds to 'label'.
+ * @param {string} optionsvalue The name of the property in options object which corresponds to 'value'.
+ * @param {expression} i18n 'Is field represent an i18n attribute' condition.
+ * @param {string} label Form group label.
+ * @param {string} fieldid The id of 'real' select element which is lied under the hood.
+ * @param {string} initvalue The value that will be passed to the model when the dropdown is initiated. If this value is equal to value of some option, that option will be shown.
+ *
+ * @example
+ * <zaa-select model="some.model" label="someLabel" options="[{label:'foo', value: 'bar'}, {label:'John', value: 'Doe'}]" initvalue="Doe"></zaa-select>
+ *
  */
 zaa.directive("zaaAsyncApiSelect", function () {
     return {
@@ -1732,7 +1858,7 @@ zaa.directive("zaaSelectCrud", function() {
  * @param {string} label Field label to be drawn to the left of checkbox.
  * @param {string} checkboxlabel Checkbox label to be drawn to the right of checkbox.
  * @param {string} initvalue The value that will be passed to the model when the checkbox is initiated. If this value is equal to options.true-value the checkbox will be checked.
- * @param {Function} ngChange The function that will called on checkbox state change.
+ * @param {Function} ngChange The function that will be called on checkbox state change.
  *
  * @example
  * <zaa-checkbox model="some.model" initvalue="1" label="Some label" checkboxlabel="Sublabel"></luya-checkbox>
@@ -1789,7 +1915,7 @@ zaa.directive("zaaCheckbox", function () {
  * @param {string} truevalue The value that will be passed to the model when the checkbox is checked. Default is 1.
  * @param {string} falsevalue The value that will be passed to the model when the checkbox is unchecked. Default is 0.
  * @param {string} initvalue The value that will be passed to the model when the checkbox is initiated. If this value is equal to truevalue the checkbox will be checked.
- * @param {Function} ngChange The function that will called on checkbox state change.
+ * @param {Function} ngChange The function that will be called on checkbox state change.
  *
  * @example
  * <luya-checkbox truevalue="on" falsevalue="off" initvalue="on" ng-model="some.model"></luya-checkbox>
@@ -2504,7 +2630,7 @@ zaa.directive("zaaImageArrayUpload", function () {
             }
 
             $scope.add = function () {
-                if ($scope.model == null || $scope.model === '' || $scope.model === undefined) {
+                if ($scope.model === null || $scope.model === '' || $scope.model === undefined) {
                     $scope.model = [];
                 }
                 $scope.model.push({ imageId: 0, caption: '' });
@@ -2606,7 +2732,7 @@ zaa.directive("zaaFileArrayUpload", function () {
             }
 
             $scope.add = function () {
-                if ($scope.model == null || $scope.model === '' || $scope.model === undefined) {
+                if ($scope.model === null || $scope.model === '' || $scope.model === undefined) {
                     $scope.model = [];
                 }
                 $scope.model.push({ fileId: 0, caption: '' });
@@ -2706,7 +2832,7 @@ zaa.directive("zaaMultipleInputs", function () {
             };
 
             $scope.add = function () {
-                if ($scope.model == null || $scope.model === '' || $scope.model === undefined) {
+                if ($scope.model === null || $scope.model === '' || $scope.model === undefined) {
                     $scope.model = [];
                 }
 
