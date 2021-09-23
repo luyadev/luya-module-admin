@@ -19,6 +19,12 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $resolution_height
  * @property integer $created_at
  * @property integer $updated_at
+ * @property StorageFile $file
+ * @property StorageFilter $filter
+ * @property string $source
+ * @property string $serverSource
+ * @property bool $fileExists
+ * @property StorageFile[] $images
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
