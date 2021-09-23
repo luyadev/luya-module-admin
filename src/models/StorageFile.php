@@ -40,6 +40,8 @@ use yii\behaviors\TimestampBehavior;
  * @property boolean $fileExists
  * @property resource $stream
  * @property string $content
+ * @property string $source
+ * @property StorageImage[] $images
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
