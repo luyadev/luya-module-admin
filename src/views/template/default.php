@@ -29,13 +29,13 @@ use luya\admin\Module;
                 <span class="modulenav-group-title">{{item.name}}</span>
                 <ul class="modulenav-list">
                     <li class="modulenav-item" ng-repeat="sub in item.items" ng-if="!sub.hiddenInMenu">
-                        <span class="modulenav-link" ng-click="click(sub)"  ng-class="{'modulenav-link-active' : sub.route == currentItem.route }">
+                        <a ui-sref="default.route(routeSplitter(sub))" class="modulenav-link" ng-click="click(sub)" ng-class="{'modulenav-link-active': sub.route == currentItem.route }">
                             <i class="modulenav-icon material-icons">{{sub.icon}}</i>
                             <span class="modulenav-label">
                                 {{sub.alias}}
                             </span>
                             <span ng-show="hasSubUnreadNotificaton(sub)" class="modulenav-notification-badge">{{ hasSubUnreadNotificaton(sub) }}</span>
-                        </span>
+                        </a>
                     </li>
                 </ul>
             </div>
