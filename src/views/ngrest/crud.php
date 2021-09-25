@@ -22,6 +22,8 @@ foreach ($config->getPointer('list') as $p) {
 }
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
 $filters = Angular::optionsArrayInput($filters);
+
+$interface = $this->context->getInterfaceSettings();
 ?>
 <?php $this->registerAngularControllerScript(); ?>
 <div ng-controller="<?= $config->hash; ?>" class="crud">
@@ -30,7 +32,9 @@ $filters = Angular::optionsArrayInput($filters);
     <?php if (!$relationCall): ?>
         <?php if (!$isInline): ?>
             <div class="crud-header">
+                <?php if ($interface[RenderCrud::INTERFACE_TITLE]): ?>
                 <h1 class="crud-title"><?= $currentMenu['alias']; ?></h1>
+                <?php endif; ?>
                 <modal is-modal-hidden="isExportModalHidden" modal-title="<?= Module::t('crud_exportdata_btn'); ?>">
                     <div ng-if="!isExportModalHidden">
                         <?php if (!empty($filters)): ?>
@@ -43,32 +47,34 @@ $filters = Angular::optionsArrayInput($filters);
                         <button ng-show="exportResponse" type="button" class="btn btn-icon btn-download" ng-click="downloadExport()"><?= Module::t('crud_exportdata_btn_downloadexport'); ?></button>
                     </div>
                 </modal>
-                <div class="crud-toolbar">
-                    <div class="btn-group" ng-class="{'show': isSettingsVisible}">
-                        <button class="btn btn-toolbar" type="button" ng-click="toggleSettingsMenu()">
-                            <i class="material-icons">more_vert</i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': isSettingsVisible}">
-                            <a class="dropdown-item" ng-click="toggleExportModal()">
-                                <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn'); ?></span>
-                            </a>
-                            <a class="dropdown-item" ng-click="toggleNotificationMute()">
-                                <span ng-show="serviceResponse._notifcation_mute_state">
-                                    <i class="material-icons">visibility</i><span><?= Module::t('crud_notification_enable'); ?></span>
-                                </span>
-                                <span ng-show="!serviceResponse._notifcation_mute_state">
-                                    <i class="material-icons">visibility_off</i><span><?= Module::t('crud_notification_disable'); ?></span>
-                                </span>
-                            </a>
-                            <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
-                                <?= $button; ?>
-                            <?php endforeach; ?>
+                <?php if ($interface[RenderCrud::INTERFACE_GLOBALBUTTONS]): ?>
+                    <div class="crud-toolbar">
+                        <div class="btn-group" ng-class="{'show': isSettingsVisible}">
+                            <button class="btn btn-toolbar" type="button" ng-click="toggleSettingsMenu()">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" ng-class="{'show': isSettingsVisible}">
+                                <a class="dropdown-item" ng-click="toggleExportModal()">
+                                    <i class="material-icons">get_app</i><span><?= Module::t('crud_exportdata_btn'); ?></span>
+                                </a>
+                                <a class="dropdown-item" ng-click="toggleNotificationMute()">
+                                    <span ng-show="serviceResponse._notifcation_mute_state">
+                                        <i class="material-icons">visibility</i><span><?= Module::t('crud_notification_enable'); ?></span>
+                                    </span>
+                                    <span ng-show="!serviceResponse._notifcation_mute_state">
+                                        <i class="material-icons">visibility_off</i><span><?= Module::t('crud_notification_disable'); ?></span>
+                                    </span>
+                                </a>
+                                <?php foreach ($this->context->getSettingButtonDefinitions() as $button): ?>
+                                    <?= $button; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
-            <?php if ($this->context->description): ?>
-                <p class="text-muted"><?= Markdown::processParagraph($this->context->description); ?></p>
+            <?php if ($interface[RenderCrud::INTERFACE_DESCRIPTION] && $this->context->description): ?>
+            <p class="text-muted"><?= Markdown::processParagraph($this->context->description); ?></p>
             <?php endif; ?>
         <?php endif; ?>
         <ul class="nav nav-tabs nav-tabs-mobile-icons">
@@ -120,8 +126,20 @@ $filters = Angular::optionsArrayInput($filters);
         <div class="tab-pane" ng-if="crudSwitchType==0" ng-class="{'active' : crudSwitchType==0}">
             <div class="tab-padded">
                 <div class="row mt-2">
-                    <div class="col-md-4 col-lg-6 col-xl-6 col-xxxl-8">
-                        <div class="input-group input-group--append-clickable mb-2 mr-sm-2 mb-sm-0">
+                    <?php
+                    // Variable width of search field and group & filter selects
+                    $_gfBasicWidth = 3 - (int)$interface[RenderCrud::INTERFACE_GROUP] - (int) ($interface[RenderCrud::INTERFACE_FILTER] && !empty($config->getFilters()));
+                    $_gfw2 = 2*$_gfBasicWidth;
+                    $_gfw3 = 3*$_gfBasicWidth;
+                    $_gfw4 = 4*$_gfBasicWidth;
+                    $_sew4 = ($_gfBasicWidth === 3 ? 12 : 4);
+                    $_sew6 = ($_gfBasicWidth === 3 ? 12 : 6);
+                    $_sew8 = ($_gfBasicWidth === 3 ? 12 : 8);
+                    ?>
+
+                    <div class="col-md-<?=$_sew4?> col-lg-<?=$_sew6?> col-xl-<?=$_sew6?> col-xxxl-<?=$_sew8?>">
+                        <?php if ($interface[RenderCrud::INTERFACE_SEARCH]): ?>
+                        <div class="input-group input-group--append-clickable mb-2 mr-sm-2 mb-md-0">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="material-icons">search</i>
@@ -134,12 +152,16 @@ $filters = Angular::optionsArrayInput($filters);
                                 </div>
                             </span>
                         </div>
+                        <?php endif; ?>
                     </div>
-                    <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
+
+                    <?php if ($interface[RenderCrud::INTERFACE_GROUP]): ?>
+                    <div class="col-md-<?=$_gfw4?> col-lg-<?=$_gfw3?> col-xl-<?=$_gfw3?> col-xxxl-<?=$_gfw2?> mb-2 mb-md-0">
                         <luya-select ng-model="config.groupByField" initvalue="0" ng-change="changeGroupByField()" options='<?= Json::htmlEncode(Angular::optionsArrayInput($groups)); ?>'></luya-select>
                     </div>
-                    <?php if (!empty($config->getFilters())): ?>
-                    <div class="col-md-4 col-lg-3 col-xl-3 col-xxxl-2">
+                    <?php endif; ?>
+                    <?php if ($interface[RenderCrud::INTERFACE_FILTER] && !empty($config->getFilters())): ?>
+                    <div class="col-md-<?=$_gfw4?> col-lg-<?=$_gfw3?> col-xl-<?=$_gfw3?> col-xxxl-<?=$_gfw2?>">
                         <luya-select ng-model="config.filter" initvalue="0" ng-change="changeNgRestFilter()" options='<?= Json::htmlEncode($filters); ?>'></luya-select>
                     </div>
                     <?php endif; ?>
@@ -157,8 +179,10 @@ $filters = Angular::optionsArrayInput($filters);
                 <span><?= Module::t('ngrest_crud_btn_add'); ?></span>
             </button>
             <?php endif; ?>
+            <?php if ($interface[RenderCrud::INTERFACE_COUNTER]): ?>
             <small class="crud-counter"><?= Module::t('ngrest_crud_total_count'); ?></small>
-            <div class="table-responsive">
+            <?php endif; ?>
+            <div class="table-responsive <?=$interface[RenderCrud::INTERFACE_COUNTER] ? '' : 'mt-4'?>">
                 <table class="table table-hover table-align-middle table-striped table-crud">
                     <thead class="thead-default">
                         <tr>

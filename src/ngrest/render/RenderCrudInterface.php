@@ -113,4 +113,20 @@ interface RenderCrudInterface
      * @since 2.0.0
      */
     public function getActivePoolConfig();
+
+
+    /**
+     * Returns the configuration of CRUD interface.
+     *
+     * @return array Determine what parts of CRUD interface will be displayed.
+     */
+    public function getInterfaceSettings();
+
+    /**
+     * Setter method for CRUD interface settings
+     *
+     * @param bool|array  $interfaceSettings
+     */
+    public function setInterfaceSettings($interfaceSettings);
+
 }

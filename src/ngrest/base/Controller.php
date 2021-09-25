@@ -16,7 +16,7 @@ use yii\web\ForbiddenHttpException;
  * Base Controller for all NgRest Controllers.
  *
  * @property NgRestModel $model The model based from the modelClass instance
- * @property string $description A text descirption for the CRUD which is display below the CRUD title
+ * @property string $description A text description for the CRUD which is display below the CRUD title
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
@@ -175,7 +175,7 @@ class Controller extends \luya\admin\base\Controller
 
         return $this->_model;
     }
-    
+
     /**
      * Render the ngrest default index template.
      *
@@ -187,7 +187,7 @@ class Controller extends \luya\admin\base\Controller
      * @throws Exception
      * @return string
      */
-    public function actionIndex($inline = false, $relation = false, $arrayIndex = false, $modelClass = false, $modelSelection = false)
+    public function actionIndex($inline = false, $relation = false, $arrayIndex = false, $modelClass = false, $modelSelection = false, $interfaceSettings = true)
     {
         $apiEndpoint = $this->model->ngRestApiEndpoint();
 
@@ -211,6 +211,7 @@ class Controller extends \luya\admin\base\Controller
         // generate crud renderer
         $crud = Yii::createObject($this->renderCrud);
         $crud->description = $this->description;
+        $crud->setInterfaceSettings($interfaceSettings);
         $crud->setModel($this->model);
         $crud->setSettingButtonDefinitions($this->globalButtons);
         $crud->setIsInline($inline);

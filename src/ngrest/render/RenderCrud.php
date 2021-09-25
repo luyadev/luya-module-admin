@@ -35,6 +35,19 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     const TYPE_UPDATE = 'update';
 
+
+    /**
+     * Interface constants
+     */
+    const INTERFACE_TITLE = 'title';
+    const INTERFACE_DESCRIPTION = 'description';
+    const INTERFACE_GLOBALBUTTONS = 'globalbuttons';
+    const INTERFACE_SEARCH = 'search';
+    const INTERFACE_GROUP = 'group';
+    const INTERFACE_FILTER = 'filter';
+    const INTERFACE_COUNTER = 'counter';
+
+
     /**
      * @var string A description for the CRUD Title which is display below the title.
      * @since 3.2.0
@@ -261,6 +274,83 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         $this->_settingButtonDefinitions= $elements;
     }
 
+
+
+    private $_interfaceSettings = true;
+
+    /**
+     * @inheritdoc
+     */
+    public function getInterfaceSettings()
+    {
+        return $this->_interfaceSettings;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setInterfaceSettings($interfaceSettings)
+    {
+        $noInterface = [
+            self::INTERFACE_TITLE           => false,
+            self::INTERFACE_DESCRIPTION     => false,
+            self::INTERFACE_GLOBALBUTTONS   => false,
+            self::INTERFACE_SEARCH          => false,
+            self::INTERFACE_GROUP           => false,
+            self::INTERFACE_FILTER          => false,
+            self::INTERFACE_COUNTER         => false
+        ];
+
+        $fullInterface = [
+            self::INTERFACE_TITLE           => true,
+            self::INTERFACE_DESCRIPTION     => true,
+            self::INTERFACE_GLOBALBUTTONS   => true,
+            self::INTERFACE_SEARCH          => true,
+            self::INTERFACE_GROUP           => true,
+            self::INTERFACE_FILTER          => true,
+            self::INTERFACE_COUNTER         => true
+        ];
+
+        if (is_array($interfaceSettings)) {
+            // Array input
+            $outputSettings = array_merge($noInterface, array_intersect_key($interfaceSettings, $noInterface));
+        } else {
+            if (is_string($interfaceSettings)) {
+                $outputSettings = $noInterface;
+                switch ($interfaceSettings) {
+                    case 'minimal':
+                        $outputSettings[self::INTERFACE_TITLE]          = true;
+                        $outputSettings[self::INTERFACE_COUNTER]        = true;
+                        break;
+                    case 'modest':
+                        $outputSettings[self::INTERFACE_TITLE]          = true;
+                        $outputSettings[self::INTERFACE_DESCRIPTION]    = true;
+                        $outputSettings[self::INTERFACE_SEARCH]         = true;
+                        $outputSettings[self::INTERFACE_FILTER]         = true;
+                        $outputSettings[self::INTERFACE_COUNTER]        = true;
+                        break;
+
+                    default:
+                        $outputSettings = $fullInterface;
+                        break;
+                }
+            } else {
+                if ($interfaceSettings) {
+                    // All on
+                    $outputSettings = $fullInterface;
+                } else {
+                    // All off
+                    $outputSettings = $noInterface;
+                }
+
+            }
+        }
+
+        $this->_interfaceSettings = $outputSettings;
+    }
+
+
+
     /**
      * Indicates whether the current plugin config is sortable or not.
      *
@@ -299,7 +389,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      *
      * @param array $item
      * @return array Returns an array with key `cellColor`.
-     * @since 4.2.0
+     * @since 4.1.0
      */
     public function getColors(array $item)
     {
