@@ -1560,7 +1560,8 @@ zaa.directive("zaaSelect", function () {
             "i18n": "@",
             "id": "@fieldid",
             "initvalue": "@",
-            "clearable" : "@",
+            "clearable": "@",
+            "placeholder": "@"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
             if ($scope.optionsvalue === undefined) {
@@ -1580,7 +1581,7 @@ zaa.directive("zaaSelect", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-select ng-model="model" options="options" fieldid="{{id}}" clearable="{{clearable}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
+                        '<luya-select ng-model="model" options="options" fieldid="{{id}}" clearable="{{clearable}}" placeholder="{{placeholder}}" optionsvalue="{{optionsvalue}}" optionslabel="{{optionslabel}}" initvalue="{{initvalue}}"></luya-select>' +
                     '</div>' +
                 '</div>';
         }
@@ -1603,6 +1604,7 @@ zaa.directive("zaaSelect", function () {
  * @param {string} initvalue The value that will be passed to the model when the dropdown is initiated. If this value is equal to value of some option, that option will be shown.
  * @param {string} fieldid The id of 'real' select element which is lied under the hood.
  * @param {string} clearable Clearable flag. If enabled, the button for resetting the dropdown to initial state will be displayed. To set it to false set clearable = 'false' or clearable = '0'.
+ * @param {string} placeholder A short hint that describes the expected value of an input field. Shown when no value is selected. If placeholder is absent or empty, a default message 'Nothing selected' will appear.
  * @param {Function} ngChange The function that will be called on select change.
  *
  * @example
@@ -1620,12 +1622,14 @@ zaa.directive("luyaSelect", function() {
             "optionslabel": "@",
             "id": "@fieldid",
             "initvalue": "@",
+            "placeholder": "@",
             "clearable": "@",
             ngChange : "&"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
 
             $scope.isOpen = 0;
+            $scope.isDefault = 1;
 
             if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
                 $scope.optionsvalue = 'value';
@@ -1693,14 +1697,17 @@ zaa.directive("luyaSelect", function() {
             };
 
             $scope.getSelectedLabel = function () {
-                var defaultLabel = i18n['ngrest_select_no_selection'];
+                $scope.isDefault = 1;
+                var value = i18n['ngrest_select_no_selection'];
+                if ($scope.placeholder) value = $scope.placeholder;
                 angular.forEach($scope.options, function (item) {
                     if ($scope.model == item[$scope.optionsvalue]) { // == is intentionally here
-                        defaultLabel = item[$scope.optionslabel];
+                        value = item[$scope.optionslabel];
+                        $scope.isDefault = 0;
                     }
                 });
 
-                return defaultLabel;
+                return value;
             };
 
             $scope.hasSelectedValue = function () {
@@ -1715,7 +1722,7 @@ zaa.directive("luyaSelect", function() {
                         '<option ng-repeat="opt in options" ng-value="opt[optionsvalue]">{{opt[optionslabel]}}</option>' +
                     '</select>' +
                     '<div class="zaaselect-selected">' +
-                        '<span class="zaaselect-selected-text" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
+                        '<span class="zaaselect-selected-text" ng-class="{\'text-muted\':(placeholder && isDefault)}" ng-click="toggleIsOpen()">{{getSelectedLabel()}}</span>' +
                         '<i class="material-icons zaaselect-clear-icon" ng-show="clearable" ng-click="setModelValue(initvalue)">clear</i>' +
                         '<i class="material-icons zaaselect-dropdown-icon" ng-click="toggleIsOpen()">keyboard_arrow_down</i>' +
                     '</div>' +
@@ -1770,6 +1777,7 @@ zaa.directive("zaaAsyncApiSelect", function () {
             "i18n": "@",
             "id": "@fieldid",
             "initvalue": "@",
+            "placeholder": "@"
         },
         controller: ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
             $scope.options = [];
@@ -1800,7 +1808,7 @@ zaa.directive("zaaAsyncApiSelect", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">'+
-                        '<luya-select ng-model="model" options="options" id="{{id}}" initvalue="{{initvalue}}"></luya-select>' +
+                        '<luya-select ng-model="model" options="options" id="{{id}}" placeholder="{{placeholder}}"  initvalue="{{initvalue}}"></luya-select>' +
                     '</div>' +
                 '</div>';
         }
