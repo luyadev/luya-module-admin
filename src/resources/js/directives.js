@@ -1276,7 +1276,7 @@ zaa.directive("zaaDecimal", function () {
             "placeholder": "@placeholder"
         },
         controller: ['$scope', function ($scope) {
-            if ($scope.options === null) {
+            if ($scope.options === null || $scope.options === undefined) {
                 $scope.steps = 0.01;
             } else {
                 $scope.steps = $scope.options['steps'];
