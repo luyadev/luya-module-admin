@@ -1,11 +1,11 @@
 // service resolver
-adminServiceResolver = ['ServiceFoldersData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirecotryId', function(ServiceFoldersData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirecotryId) {
+adminServiceResolver = ['ServiceFoldersData', 'ServiceFiltersData', 'ServiceLanguagesData', 'ServicePropertiesData', 'AdminLangService', 'ServiceFoldersDirectoryId', function(ServiceFoldersData, ServiceFiltersData, ServiceLanguagesData, ServicePropertiesData, AdminLangService, ServiceFoldersDirectoryId) {
 	ServiceFiltersData.load();
 	ServiceFoldersData.load();
 	ServiceLanguagesData.load();
 	ServicePropertiesData.load();
 	AdminLangService.load();
-	ServiceFoldersDirecotryId.load();
+	ServiceFoldersDirectoryId.load();
 }];
 
 /**
@@ -158,18 +158,18 @@ zaa.factory("ServiceFoldersData", ['$http', '$q', '$rootScope', function($http, 
 
 /*
 
-$scope.folderId = ServiceFoldersDirecotryId.folderId;
+$scope.folderId = ServiceFoldersDirectoryId.folderId;
 					
 $scope.$on('service:FoldersDirectoryId', function(event, folderId) {
 	$scope.folderId = folderId;
 });
 
-$scope.foldersDirecotryIdReload = function() {
-	return ServiceFoldersDirecotryId.load(true);
+$scope.foldersDirectoryIdReload = function() {
+	return ServiceFoldersDirectoryId.load(true);
 }
 
 */
-zaa.factory("ServiceFoldersDirecotryId", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+zaa.factory("ServiceFoldersDirectoryId", ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
 	
 	var service = [];
 	
