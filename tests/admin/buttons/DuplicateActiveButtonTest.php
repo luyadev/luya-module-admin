@@ -9,7 +9,7 @@ use luya\admin\models\Tag;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
 
-class DuplicateActiveButtonTestt extends AdminModelTestCase
+class DuplicateActiveButtonTest extends AdminModelTestCase
 {
     use AdminDatabaseTableTrait;
 

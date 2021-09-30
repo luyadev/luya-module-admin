@@ -10,7 +10,7 @@ use luya\admin\models\Tag;
 use luya\testsuite\fixtures\ActiveRecordFixture;
 use luya\testsuite\fixtures\NgRestModelFixture;
 
-class ScheulderTest extends AdminModelTestCase
+class SchedulerTest extends AdminModelTestCase
 {
     /**
      * @var ActiveRecordFixture

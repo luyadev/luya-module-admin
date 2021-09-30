@@ -3,9 +3,18 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.1.0
+## 4.2.0
 
-+ [#657](https://github.com/luyadev/luya-module-admin/pull/657) Fix problem with global admin UI search when model does not exists, this could be due to old controller structure or custom code.
++ [#666](https://github.com/luyadev/luya-module-admin/pull/666) Fixed injection issue with zaaDecimal within zaaMultipleInputs.
++ [#665](https://github.com/luyadev/luya-module-admin/pull/665) Replaced `<span>` tags with `<a>` tags in main admin menu and submenus.
++ [#663](https://github.com/luyadev/luya-module-admin/issues/663) A new `TagRelation::cleanup(ActiveRecord $model)` method to remove all tag relations for a certain model. 
+
+## 4.1.0 (21. September 2021)
+
++ [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any ngRest attribute. It allows setting color of CRUD table cells
++ [#662](https://github.com/luyadev/luya-module-admin/pull/662) Fix display issue with radio buttons in multiple radio button fields (zaaRadio directive).
++ [#658](https://github.com/luyadev/luya-module-admin/pull/658) Added new SelectArrayGently Plugin, which is the same as SelectArray Plugin, but do not override the values from the database.
++ [#657](https://github.com/luyadev/luya-module-admin/pull/657) Fix problem with global admin UI search when model does not exist, this could be due to old controller structure or custom code.
 + [#656](https://github.com/luyadev/luya-module-admin/pull/656) Ensure queue items are removed when schedule item is deleted, improved filter of upcoming queue events, fix issue with scheduler log for multiple attributes on the same model.
 + [#654](https://github.com/luyadev/luya-module-admin/pull/654) Fix issue with ngrest detail view when json is not an array.
 + [#496](https://github.com/luyadev/luya-module-admin/issues/496) Added default color for link elements in NgRest CRUD table.
@@ -15,12 +24,12 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 > **This release contains new migrations and requires to run the migrate command after updating. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.**
 
 + [#599](https://github.com/luyadev/luya-module-admin/issues/599) Files are now downloaded via stream instead of reading its content, Therefore any custom storage systems requires a new method `fileSystemStream()`. 
-+ [#601](https://github.com/luyadev/luya-module-admin/issues/601) The `luya\admin\events\FileDownloadEvent::$file` does not recieve a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile`.
++ [#601](https://github.com/luyadev/luya-module-admin/issues/601) The `luya\admin\events\FileDownloadEvent::$file` does not receive a `luya\admin\file\Item` anymore, instead its a `luya\admin\models\StorageFile`.
 + [#647](https://github.com/luyadev/luya-module-admin/pull/647) Lazy data load for ngrest plugin.
 + [#635](https://github.com/luyadev/luya-module-admin/pull/635) New migration database file, as new attributes are available for properties, images and files
 + [#298](https://github.com/luyadev/luya-module-admin/issues/298) Added new NgRest Plugin `SelectAsyncApi` which can be used to change the select based on certain context variables in real time, its also known as "dependent select".
 + [#642](https://github.com/luyadev/luya-module-admin/pull/642) Example usage for admin/proxy machine in detail window.
-+ [#610](https://github.com/luyadev/luya-module-admin/pull/610) Added API endpoint to display all groups where the current loggedin user belongs to `admin/api-user-group/me`.
++ [#610](https://github.com/luyadev/luya-module-admin/pull/610) Added API endpoint to display all groups where the current logged-in user belongs to `admin/api-user-group/me`.
 + [#602](https://github.com/luyadev/luya-module-admin/issues/602) Fixed bug in ngrest model detail view.
 + [#605](https://github.com/luyadev/luya-module-admin/pull/605) Add new LUYA Test Suite for wider PHP Testing Support. Added Tests for PHP 8.
 + [#608](https://github.com/luyadev/luya-module-admin/pull/608) Use FileHelper::unlink method instead of PHP's `unlink` in order to prevent thrown exceptions.
