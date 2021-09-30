@@ -2,7 +2,6 @@
 
 namespace luya\admin\models;
 
-use admintests\admin\ngrest\plugins\SelectRelationActiveQueryTestSqlLite;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\filters\TinyCrop;
@@ -20,6 +19,12 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $resolution_height
  * @property integer $created_at
  * @property integer $updated_at
+ * @property StorageFile $file
+ * @property StorageFilter $filter
+ * @property string $source
+ * @property string $serverSource
+ * @property bool $fileExists
+ * @property StorageFile[] $images
  *
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0

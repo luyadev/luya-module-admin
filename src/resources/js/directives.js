@@ -769,7 +769,6 @@ zaa.directive("crudRelationLoader", ['$http', '$sce', function ($http, $sce) {
     }
 }]);
 
-
 // storage.js
 zaa.directive('storageFileDisplay', function () {
     return {
@@ -1865,5 +1864,46 @@ zaa.directive('pagination', function () {
                 <button class="pagination-btn pagination-btn-last btn btn-icon btn-last-page" ng-click="last()" ng-disabled="currentPage == pageCount"></button>
             </div>
         `,
+    };
+});
+
+/**
+ * Supporting directive to SelectArrayGently plugin
+ *
+ */
+zaa.directive('selectArrayGently', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            'model': '=',
+            'options': '=',
+            'optionsvalue': '@optionsvalue',
+            'optionslabel': '@optionslabel',
+        },
+        controller: ['$rootScope', '$scope',  function ($rootScope, $scope) {
+            if ($scope.optionsvalue === undefined) {
+                $scope.optionsvalue = 'value';
+            }
+            if ($scope.optionslabel === undefined) {
+                $scope.optionslabel = 'label';
+            }
+
+            $scope.getSelectedLabel = function () {
+                // Keep raw value by default
+                var selectedLabel = $scope.model;
+                angular.forEach($scope.options, function (item) {
+                    if ($scope.model === item[$scope.optionsvalue]) {
+                        selectedLabel = item[$scope.optionslabel];
+                    }
+                });
+
+                return selectedLabel;
+            };
+        }],
+
+
+        template: function () {
+            return '<span>{{getSelectedLabel()}}</span>';
+        }
     };
 });

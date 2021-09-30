@@ -28,5 +28,6 @@ class BootstrapTest extends AdminModelTestCase
 
         $bootstrap = new Bootstrap();
         $bs = $bootstrap->bootstrap($cli);
+        $this->assertNull($bs);
     }
 }

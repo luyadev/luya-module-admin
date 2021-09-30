@@ -18,8 +18,8 @@
 	 *
 	 * + bool $config.inline Determines whether this crud is in inline mode orno
 	 */
-	zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', 
-	function(cfpLoadingBar, $scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData) {
+	zaa.controller("CrudController", ['cfpLoadingBar', '$scope', '$rootScope', '$filter', '$http', '$sce', '$state', '$timeout', '$injector', '$q', 'AdminLangService', 'AdminToastService', 'CrudTabService', 'ServiceImagesData', '$parse',
+	function(cfpLoadingBar, $scope, $rootScope, $filter, $http, $sce, $state, $timeout, $injector, $q, AdminLangService, AdminToastService, CrudTabService, ServiceImagesData, $parse) {
 
 		$scope.toast = AdminToastService;
 
@@ -406,6 +406,47 @@
 
 			return false;
 		};
+
+
+		/**
+		 * Checks is string a valid CSS color
+		 *
+		 * @param possibleColor A string to test
+		 * @returns {boolean}
+		 */
+		let isStringAColor = function (possibleColor) {
+			var div = document.createElement('div');
+			div.style.color = 'rgb(0, 0, 0)';
+			div.style.color = possibleColor;
+			if (div.style.color !== 'rgb(0, 0, 0)') {
+				return true;
+			}
+			div.style.color = 'rgb(255, 255, 255)';
+			div.style.color = possibleColor;
+			return div.style.color !== 'rgb(255, 255, 255)';
+		};
+
+		/**
+		 * Parses string to a color or an AngularJs expression
+		 *
+		 * @param item ngRest data object
+		 * @param expression A string to parse
+		 * @returns {boolean|*} parsed string or false
+		 */
+		$scope.getParsedCellColor = function(item, expression) {
+			if (isStringAColor(expression)) {
+				return expression;
+			}
+
+			try {
+				var parsed = $parse(expression)(item);
+			} catch (err) {
+				return false;
+			}
+
+			return parsed;
+		};
+
 
 		$scope.submitUpdate = function (close) {
 			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
@@ -1025,17 +1066,23 @@
 			}
 		};
 
-		$scope.click = function(item) {
-			$scope.isOpenModulenav = false;
-			$scope.currentItem = item;
+		$scope.routeSplitter = function (item) {
 
 			var id = item.route;
 			var res = id.split("/");
+
+			return {moduleRouteId: res[0], controllerId: res[1], actionId: res[2]};
+		}
+
+
+		$scope.click = function(item) {
+
+			$scope.isOpenModulenav = false;
+			$scope.currentItem = item;
+
 			CrudTabService.clear();
 
 			$scope.$broadcast('secondMenuClick', { item : item });
-
-			$state.go('default.route', { moduleRouteId : res[0], controllerId : res[1], actionId : res[2]});
 		};
 
 		$scope.get = function () {
@@ -1171,7 +1218,7 @@
 		$scope.showOnlineContainer = false;
 
 		$scope.searchDetailClick = function(itemConfig, itemData) {
-			if (itemConfig.type == 'custom') {
+			if (itemConfig.type === 'custom') {
 				$scope.click(itemConfig.menuItem).then(function() {
 					if (itemConfig.stateProvider) {
 						var params = {};
@@ -1304,11 +1351,6 @@
 		$scope.click = function(menuItem) {
 			$scope.isOpen = false;
 			$scope.$broadcast('topMenuClick', { menuItem : menuItem });
-			if (menuItem.template) {
-				return $state.go('custom', { 'templateId' : menuItem.template });
-			} else {
-				return $state.go('default', { 'moduleId' : menuItem.id});
-			}
 		};
 
 		$scope.isActive = function(item) {
