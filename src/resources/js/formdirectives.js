@@ -1516,7 +1516,7 @@ zaa.directive("luyaRadio", function () {
         template: function () {
             return '' +
                 '<div ng-repeat="(key, item) in options" class="form-check" ng-class="{\'form-check-inline\': inline}">' +
-                    '<input value="{{item[optionsvalue]}}" type="radio" ng-click="setModelValue(item[optionsvalue])" ng-checked="item[optionsvalue] === model" name="{{id}}_{{key}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                    '<input value="{{item[optionsvalue]}}" type="radio" ng-click="setModelValue(item[optionsvalue])" ng-checked="item[optionsvalue] === model" name="{{id}}" class="form-check-input" id="{{id}}_{{key}}">' +
                     '<label class="form-check-label" for="{{id}}_{{key}}">' +
                         '{{item[optionslabel]}}' +
                     '</label>' +
