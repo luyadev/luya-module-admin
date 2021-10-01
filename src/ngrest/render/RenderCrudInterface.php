@@ -119,13 +119,15 @@ interface RenderCrudInterface
      * Returns the configuration of CRUD interface.
      *
      * @return array Determine what parts of CRUD interface will be displayed.
+     * @since 5.0.0
      */
     public function getInterfaceSettings();
 
     /**
      * Setter method for CRUD interface settings
      *
-     * @param bool|array  $interfaceSettings
+     * @param bool|array|string  $interfaceSettings
+     * @since 5.0.0
      */
     public function setInterfaceSettings($interfaceSettings);
 

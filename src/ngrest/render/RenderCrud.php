@@ -39,12 +39,40 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Interface constants
      */
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Title.
+     */
     const INTERFACE_TITLE = 'title';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Description.
+     */
     const INTERFACE_DESCRIPTION = 'description';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Global Buttons.
+     */
     const INTERFACE_GLOBALBUTTONS = 'globalbuttons';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Search input field.
+     */
     const INTERFACE_SEARCH = 'search';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Group dropdown field.
+     */
     const INTERFACE_GROUP = 'group';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Filter dropdown field.
+     */
     const INTERFACE_FILTER = 'filter';
+
+    /**
+     * @const string Name of the parameter responsible for displaying CRUD Items counter.
+     */
     const INTERFACE_COUNTER = 'counter';
 
 
@@ -275,7 +303,9 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
 
-
+    /**
+     * @var array
+     */
     private $_interfaceSettings = true;
 
     /**
@@ -287,7 +317,24 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     }
 
     /**
-     * @inheritdoc
+     * Setter method for CRUD interface settings.
+     *
+     * Can accept boolean, string or array.
+     *
+     * Boolean:
+     * `true` - show everything, `false` - hide everything (except CRUD data itself)
+     *
+     * String:
+     * `minimal` - Only table title and items counter are shown.
+     * `modest` - Title, description, search & filter inputs, and items counter are shown.
+     * Any other string (include empty string) - show everything.
+     *
+     * Array:
+     * Shows only those interface elements, the names of which are specified in the array as keys, and the values are true (or similar).
+     * Accordingly, for an empty array, all elements will be hidden.
+     *
+     * @param bool|array|string  $interfaceSettings
+     * @since 5.0.0
      */
     public function setInterfaceSettings($interfaceSettings)
     {
