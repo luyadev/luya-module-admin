@@ -1055,8 +1055,8 @@ zaa.directive("storageFileManager", function () {
             onlyImages: '@onlyImages'
         },
         controller: [
-            '$scope', '$http', '$filter', '$timeout', '$q', 'HtmlStorage', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirecotryId', 'ServiceAdminTags', 'ServiceQueueWaiting',
-            function ($scope, $http, $filter, $timeout, $q, HtmlStorage, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirecotryId, ServiceAdminTags, ServiceQueueWaiting) {
+            '$scope', '$http', '$filter', '$timeout', '$q', 'HtmlStorage', 'cfpLoadingBar', 'Upload', 'ServiceFoldersData', 'ServiceFilesData', 'LuyaLoading', 'AdminToastService', 'ServiceFoldersDirectoryId', 'ServiceAdminTags', 'ServiceQueueWaiting',
+            function ($scope, $http, $filter, $timeout, $q, HtmlStorage, cfpLoadingBar, Upload, ServiceFoldersData, ServiceFilesData, LuyaLoading, AdminToastService, ServiceFoldersDirectoryId, ServiceAdminTags, ServiceQueueWaiting) {
 
                 // ServiceFoldersData inheritance
 
@@ -1163,10 +1163,10 @@ zaa.directive("storageFileManager", function () {
 
                 // ServiceFolderId
 
-                $scope.currentFolderId = ServiceFoldersDirecotryId.folderId;
+                $scope.currentFolderId = ServiceFoldersDirectoryId.folderId;
 
-                $scope.foldersDirecotryIdReload = function () {
-                    return ServiceFoldersDirecotryId.load(true);
+                $scope.foldersDirectoryIdReload = function () {
+                    return ServiceFoldersDirectoryId.load(true);
                 }
 
                 // file replace logic
@@ -1387,7 +1387,7 @@ zaa.directive("storageFileManager", function () {
                     $scope.currentPageId = 1;
                     $scope.selectedFiles = [];
                     if (noState !== true && oldCurrentFolder != folderId) {
-                        ServiceFoldersDirecotryId.folderId = folderId;
+                        ServiceFoldersDirectoryId.folderId = folderId;
                         $http.post('admin/api-admin-common/save-filemanager-folder-state', { folderId: folderId }, { ignoreLoadingBar: true });
                     }
                 };
