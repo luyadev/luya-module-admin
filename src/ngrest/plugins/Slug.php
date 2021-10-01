@@ -29,7 +29,7 @@ use luya\admin\helpers\Angular;
 class Slug extends Plugin
 {
     /**
-     * @var integer Input field placeholder value.
+     * @var string Input field placeholder value.
      */
     public $placeholder;
     

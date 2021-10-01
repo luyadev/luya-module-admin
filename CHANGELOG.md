@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.2.0
 
++ [#660](https://github.com/luyadev/luya-module-admin/pull/660) Introduced `<luyaElements>` analogues for some `<zaaElements>`. This allows getting simple AngularJs form elements styled to match the rest of the interface elements.   
 + [#666](https://github.com/luyadev/luya-module-admin/pull/666) Fixed injection issue with zaaDecimal within zaaMultipleInputs.
 + [#665](https://github.com/luyadev/luya-module-admin/pull/665) Replaced `<span>` tags with `<a>` tags in main admin menu and submenus.
 + [#663](https://github.com/luyadev/luya-module-admin/issues/663) A new `TagRelation::cleanup(ActiveRecord $model)` method to remove all tag relations for a certain model. 
