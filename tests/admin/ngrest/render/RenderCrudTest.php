@@ -81,4 +81,56 @@ class RenderCrudTest extends AdminModelTestCase
                 <div class="form-side"><span ng-bind="data.update.fieldname"></span></div>
             </div>', $content);
     }
+
+    public function testSetInterfaceSettings()
+    {
+        $noInterface = [
+            RenderCrud::INTERFACE_TITLE           => false,
+            RenderCrud::INTERFACE_DESCRIPTION     => false,
+            RenderCrud::INTERFACE_GLOBALBUTTONS   => false,
+            RenderCrud::INTERFACE_SEARCH          => false,
+            RenderCrud::INTERFACE_GROUP           => false,
+            RenderCrud::INTERFACE_FILTER          => false,
+            RenderCrud::INTERFACE_COUNTER         => false
+        ];
+
+        $fullInterface = [
+            RenderCrud::INTERFACE_TITLE           => true,
+            RenderCrud::INTERFACE_DESCRIPTION     => true,
+            RenderCrud::INTERFACE_GLOBALBUTTONS   => true,
+            RenderCrud::INTERFACE_SEARCH          => true,
+            RenderCrud::INTERFACE_GROUP           => true,
+            RenderCrud::INTERFACE_FILTER          => true,
+            RenderCrud::INTERFACE_COUNTER         => true
+        ];
+
+
+        $crud = $this->getCrud();
+
+        // Booleans
+        $crud->setInterfaceSettings(true);
+        $this->assertSame($fullInterface, $crud->getInterfaceSettings());
+
+        $crud->setInterfaceSettings(false);
+        $this->assertSame($noInterface, $crud->getInterfaceSettings());
+
+        // Strings
+        $crud->setInterfaceSettings('');
+        $this->assertSame($fullInterface, $crud->getInterfaceSettings());
+
+        $crud->setInterfaceSettings('minimal');
+        $a = $noInterface;
+        $a[RenderCrud::INTERFACE_TITLE] = true;
+        $a[RenderCrud::INTERFACE_COUNTER] = true;
+        $this->assertSame($a, $crud->getInterfaceSettings());
+
+        // Arrays
+        $crud->setInterfaceSettings([]);
+        $this->assertSame($noInterface, $crud->getInterfaceSettings());
+
+        $crud->setInterfaceSettings([RenderCrud::INTERFACE_TITLE => 'someValue', 'someUnknownKey' => true]);
+        $a = $noInterface;
+        $a[RenderCrud::INTERFACE_TITLE] = 'someValue';
+        $this->assertSame($a, $crud->getInterfaceSettings());
+    }
 }
