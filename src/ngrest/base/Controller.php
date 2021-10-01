@@ -184,6 +184,7 @@ class Controller extends \luya\admin\base\Controller
      * @param string $arrayIndex
      * @param string $modelClass
      * @param string $modelSelection
+     * @param string|bool|array $interfaceSettings
      * @throws Exception
      * @return string
      */
