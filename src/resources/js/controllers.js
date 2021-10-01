@@ -1066,17 +1066,23 @@
 			}
 		};
 
-		$scope.click = function(item) {
-			$scope.isOpenModulenav = false;
-			$scope.currentItem = item;
+		$scope.routeSplitter = function (item) {
 
 			var id = item.route;
 			var res = id.split("/");
+
+			return {moduleRouteId: res[0], controllerId: res[1], actionId: res[2]};
+		}
+
+
+		$scope.click = function(item) {
+
+			$scope.isOpenModulenav = false;
+			$scope.currentItem = item;
+
 			CrudTabService.clear();
 
 			$scope.$broadcast('secondMenuClick', { item : item });
-
-			$state.go('default.route', { moduleRouteId : res[0], controllerId : res[1], actionId : res[2]});
 		};
 
 		$scope.get = function () {
@@ -1212,7 +1218,7 @@
 		$scope.showOnlineContainer = false;
 
 		$scope.searchDetailClick = function(itemConfig, itemData) {
-			if (itemConfig.type == 'custom') {
+			if (itemConfig.type === 'custom') {
 				$scope.click(itemConfig.menuItem).then(function() {
 					if (itemConfig.stateProvider) {
 						var params = {};
@@ -1345,11 +1351,6 @@
 		$scope.click = function(menuItem) {
 			$scope.isOpen = false;
 			$scope.$broadcast('topMenuClick', { menuItem : menuItem });
-			if (menuItem.template) {
-				return $state.go('custom', { 'templateId' : menuItem.template });
-			} else {
-				return $state.go('default', { 'moduleId' : menuItem.id});
-			}
 		};
 
 		$scope.isActive = function(item) {

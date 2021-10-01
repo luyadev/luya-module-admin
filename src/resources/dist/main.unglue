@@ -5,6 +5,7 @@
         "../js/services.js",
         "../js/filters.js",
         "../js/directives.js",
+        "../js/formdirectives.js",
         "../js/controllers.js",
         "../js/scheduler.js"
     ],
