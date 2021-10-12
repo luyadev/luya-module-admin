@@ -61,7 +61,7 @@ use luya\admin\Module;
         </form>
     </collapse-container>
 
-    <collapse-container title="<?= Module::t('settings_devices') ?>" icon="note_add" class="mb-3">
+    <collapse-container title="<?= Module::t('settings_devices') ?>" icon="devices" class="mb-3">
         <p><?= Module::t('settings_devices_info'); ?></p>
         <p ng-show="devices.length == 0" class="alert alert-info mb-0"><?= Module::t('settings_devices_empty'); ?></p>
         <table ng-show="devices.length > 0" class="table table-bordered table-striped mb-0">

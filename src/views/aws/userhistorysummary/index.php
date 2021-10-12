@@ -124,7 +124,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			    <li class="list-group-item d-flex justify-content-between align-items-center p-2">
 			    <span>
 			    	<?php if ($log->is_insert): ?>
-			    		<i class="material-icons" alt="Added">note_add</i> 
+			    		<i class="material-icons" alt="Added">add_box</i> 
 			    	<?php elseif ($log->is_update): ?>
 			    		<i class="material-icons" alt="Updated">create</i>
 		    		<?php elseif ($log->is_delete): ?>

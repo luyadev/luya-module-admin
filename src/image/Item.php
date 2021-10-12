@@ -4,6 +4,7 @@ namespace luya\admin\image;
 
 use Yii;
 use luya\admin\storage\ItemAbstract;
+use luya\Exception;
 
 /**
  * Image Item Detail Object.
@@ -199,6 +200,10 @@ class Item extends ItemAbstract
     {
         if ($this->_file === null) {
             $this->_file = Yii::$app->storage->getFile($this->getFileId());
+
+            if (!$this->_file) {
+                throw new Exception("The file \"$this->getFileId()\" does not exists in the storage system.");
+            }
         }
         
         return $this->_file;
