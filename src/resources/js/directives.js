@@ -184,6 +184,8 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
         link: function (scope, element, attr) {
             var defaultPosition = 'right';
 
+            var lastValue = null
+
             var positions = {
                 top: function () {
                     var bcr = element[0].getBoundingClientRect();
@@ -238,11 +240,14 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
 
             element.on('mouseenter', function () {
 
+                if (scope.tooltipExpression) {
+                    scope.tooltipText = scope.tooltipExpression;
+                }
+
                 // Generate tooltip HTML for the first time
-                if (!scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
-                    if (scope.tooltipExpression) {
-                        scope.tooltipText = scope.tooltipExpression;
-                    }
+                if ((!scope.pop || lastValue != scope.tooltipText) && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
+                    
+                    lastValue = scope.tooltipText
 
                     var html = '<div class="tooltip tooltip-' + (scope.tooltipPosition || defaultPosition) + (scope.tooltipImageUrl ? ' tooltip-image' : '') + '" role="tooltip">' +
                         '<div class="tooltip-arrow"></div>' +
@@ -1240,6 +1245,7 @@ zaa.directive("storageFileManager", function () {
                                     ServiceQueueWaiting.waitFor(response.data.queueIds).then(waitForResposne => {
                                         $scope.getFilesForCurrentPage().then(function () {
                                             AdminToastService.success(i18n['js_dir_manager_upload_image_ok']);
+                                            $scope.foldersDataReload()
                                             LuyaLoading.stop();
                                         });
                                     });
@@ -1264,8 +1270,7 @@ zaa.directive("storageFileManager", function () {
 
                     file.upload.then(function (response) {
                         $timeout(function () {
-
-                            ServiceQueueWaiting.waitFor(response.data.queueIds).then(waitForResposne => {
+                            ServiceQueueWaiting.waitFor(response.data.queueIds).then(waitForResponse => {
                                 $scope.uploadResults++;
                                 file.processed = true;
                                 file.result = response.data;
@@ -1274,9 +1279,8 @@ zaa.directive("storageFileManager", function () {
                                     LuyaLoading.stop();
                                     $scope.errorMsg = true
                                 }
+                                $scope.foldersDataReload()
                             })
-
-                           
                         });
                     }, function (response) {
                         file = response.data;
@@ -1448,6 +1452,7 @@ zaa.directive("storageFileManager", function () {
                                 AdminToastService.success(i18n['js_dir_manager_rm_file_ok']);
                                 $scope.selectedFiles = [];
                                 $scope.closeFileDetail();
+                                $scope.foldersDataReload();
                             });
                         });
                     }]);

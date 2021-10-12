@@ -49,7 +49,7 @@ zaa.bootstrap.register('ApiOverviewController', ['$scope', '$http', 'AdminToastS
             	<thead>
             		<tr>
             			<th><?= Module::t('aw_apioverview_endpoint'); ?></th>
-            			<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aw_apioverview_permadd'); ?>" tooltip-position="bottom">note_add</i></th>
+            			<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aw_apioverview_permadd'); ?>" tooltip-position="bottom">add_box</i></th>
             			<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aw_apioverview_permedit'); ?>" tooltip-position="bottom">create</i></th>
             			<th><i class="material-icons" tooltip tooltip-text="<?= Module::t('aw_apioverview_permdelete'); ?>" tooltip-position="bottom">delete</i></th>
             			<th></th>
