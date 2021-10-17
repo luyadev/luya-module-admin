@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.2.0
 
++ [#678](https://github.com/luyadev/luya-module-admin/pull/678) Added `icon` property to any NgRest attribute. It allows setting additional icons in CRUD table header and CRUD edit form.
 + [#668](https://github.com/luyadev/luya-module-admin/issues/668) Fixed misleading use of the `note_add` icon.
 + [#660](https://github.com/luyadev/luya-module-admin/pull/660) Introduced `<luyaElements>` analogues for some `<zaaElements>`. This allows getting simple AngularJs form elements styled to match the rest of the interface elements.
 + [#666](https://github.com/luyadev/luya-module-admin/pull/666) Fixed injection issue with zaaDecimal within zaaMultipleInputs.
@@ -15,7 +16,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.1.0 (21. September 2021)
 
-+ [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any ngRest attribute. It allows setting color of CRUD table cells
++ [#661](https://github.com/luyadev/luya-module-admin/pull/661) Added a `cellColor` property to any NgRest attribute. It allows setting color of CRUD table cells.
 + [#662](https://github.com/luyadev/luya-module-admin/pull/662) Fix display issue with radio buttons in multiple radio button fields (zaaRadio directive).
 + [#658](https://github.com/luyadev/luya-module-admin/pull/658) Added new SelectArrayGently Plugin, which is the same as SelectArray Plugin, but do not override the values from the database.
 + [#657](https://github.com/luyadev/luya-module-admin/pull/657) Fix problem with global admin UI search when model does not exist, this could be due to old controller structure or custom code.
