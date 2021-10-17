@@ -139,9 +139,22 @@ abstract class Plugin extends Component implements TypesInterface
      * ```
      *
      * @see https://docs.angularjs.org/guide/expression
-     * @since 4.2.0
+     * @since 4.1.0
      */
     public $cellColor = false;
+    
+    /**
+     * @var mixed An additional icon of a CRUD table column and CRUD edit form item.
+     *
+     * The value is the icon name based on http://material.io/icons or false if no icon is specified.
+     *
+     * ```php
+     * 'icon' => 'account_circle'
+     * ```
+     *
+     * @since 4.2.0
+     */
+    public $icon = false;
 
     /**
      * Renders the element for the CRUD LIST overview for a specific type.
