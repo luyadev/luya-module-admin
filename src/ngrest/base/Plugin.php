@@ -146,7 +146,7 @@ abstract class Plugin extends Component implements TypesInterface
     /**
      * @var mixed An additional icon of a CRUD table column and CRUD edit form item.
      *
-     * The value is the icon name based on http://material.io/icons or false if no icon is specified.
+     * The value is the icon name based on https://material.io/icons or false if no icon is specified.
      *
      * ```php
      * 'icon' => 'account_circle'
