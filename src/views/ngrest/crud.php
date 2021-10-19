@@ -18,6 +18,9 @@ $this->beginBody();
 $groups = [];
 
 foreach ($config->getPointer('list') as $p) {
+    if ($this->context->isHiddenInList($p)) {
+        continue;
+    }
     $groups[$p['name']] = $p['alias'];
 }
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
