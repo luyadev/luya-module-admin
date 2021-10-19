@@ -328,13 +328,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $config = Config::createField($item);
         
-        $icon = $config->icon;
-        
-        if ($icon === '' or $icon === null) {
-            $icon = false;
-        }
-        
-        return $icon;
+        return empty($config->icon) ? false : $config->icon;
     }
 
 
