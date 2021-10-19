@@ -4,8 +4,11 @@ use luya\helpers\Inflector;
 ?>
 <div class="form-i18n" ng-class="{'has-field-help': getFieldHelp('<?= $element['name']; ?>')}">
     <?= $helpButtonHtml; ?>
-        <label class="form-i18n-label <?php if ($isRequired): ?>font-weight-bold<?php endif; ?>">
-        <?= $element['alias']; ?>
+    <label class="form-i18n-label <?php if ($isRequired): ?>font-weight-bold<?php endif; ?>">
+        <?php if ($this->context->getIcon($element)): ?>
+        <i class="material-icons"><?= $this->context->getIcon($element); ?></i>
+        <?php endif; ?>
+        <span><?= $element['alias']; ?></span>
     </label>
     <div class="row">
     <?php foreach ($languages as $lang): $ngModel = $this->context->i18nNgModelString($configContext, $element['name'], $lang['short_code']); ?>
