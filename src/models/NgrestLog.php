@@ -2,13 +2,14 @@
 
 namespace luya\admin\models;
 
-use luya\admin\aws\DetailViewActiveWindow;
 use Yii;
+use yii\helpers\VarDumper;
+use luya\admin\Module;
+use luya\admin\aws\DetailViewActiveWindow;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\behaviors\JsonBehavior;
 use luya\helpers\ArrayHelper;
-use yii\helpers\VarDumper;
 
 /**
  * Ngrest Log.
@@ -64,18 +65,17 @@ class NgrestLog extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'timestamp_create' => Yii::t('app', 'Timestamp Create'),
-            'route' => Yii::t('app', 'Route'),
-            'api' => Yii::t('app', 'Api'),
-            'is_update' => Yii::t('app', 'Is Update'),
-            'is_insert' => Yii::t('app', 'Is Insert'),
-            'attributes_json' => Yii::t('app', 'Attributes Json'),
-            'attributes_diff_json' => Yii::t('app', 'Attributes Diff Json'),
-            'pk_value' => Yii::t('app', 'Pk Value'),
-            'table_name' => Yii::t('app', 'Table Name'),
-            'is_delete' => Yii::t('app', 'Is Delete'),
+            'user_id' => Module::t('model_ngrestlog_user_id'),
+            'timestamp_create' => Module::t('model_ngrestlog_timestamp_create'),
+            'route' => Module::t('model_ngrestlog_route'),
+            'api' => Module::t('model_ngrestlog_api'),
+            'is_update' => Module::t('model_ngrestlog_is_update'),
+            'is_insert' => Module::t('model_ngrestlog_is_insert'),
+            'attributes_json' => Module::t('model_ngrestlog_attributes_json'),
+            'attributes_diff_json' => Module::t('model_ngrestlog_attributes_diff_json'),
+            'pk_value' => Module::t('model_ngrestlog_pk_value'),
+            'table_name' => Module::t('model_ngrestlog_table_name'),
+            'is_delete' => Module::t('model_ngrestlog_is_delete'),
         ];
     }
 

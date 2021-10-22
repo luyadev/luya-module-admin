@@ -3,8 +3,9 @@
 namespace luya\admin\models;
 
 use Yii;
-use luya\admin\ngrest\base\NgRestModel;
 use yii\db\Expression;
+use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * Queue Log.
@@ -43,13 +44,12 @@ class QueueLog extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'Log ID'),
-            'queue_id' => Yii::t('app', 'Queue ID'),
-            'title' => Yii::t('app', 'Queue Job Title'),
-            'push_timestamp' => Yii::t('app', 'Push Timestamp'),
-            'run_timestamp' => Yii::t('app', 'Run Timestamp'),
-            'end_timestamp' => Yii::t('app', 'End Timestamp'),
-            'is_error' => Yii::t('app', 'Is Error'),
+            'queue_id' => Module::t('model_queuelog_queue_id'),
+            'title' => Module::t('model_queuelog_title'),
+            'push_timestamp' => Module::t('model_queuelog_push_timestamp'),
+            'run_timestamp' => Module::t('model_queuelog_run_timestamp'),
+            'end_timestamp' => Module::t('model_queuelog_end_timestamp'),
+            'is_error' => Module::t('model_queuelog_is_error'),
         ];
     }
 

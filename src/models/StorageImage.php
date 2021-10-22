@@ -3,11 +3,12 @@
 namespace luya\admin\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
-use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * Storage Image.
@@ -65,11 +66,10 @@ class StorageImage extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'file_id' => Yii::t('app', 'File ID'),
-            'filter_id' => Yii::t('app', 'Filter ID'),
-            'resolution_width' => Yii::t('app', 'Resolution Width'),
-            'resolution_height' => Yii::t('app', 'Resolution Height'),
+            'file_id' => Module::t('model_storageimage_file_id'),
+            'filter_id' => Module::t('model_storageimage_filter_id'),
+            'resolution_width' => Module::t('model_storageimage_resolution_width'),
+            'resolution_height' => Module::t('model_storageimage_resolution_height'),
         ];
     }
 

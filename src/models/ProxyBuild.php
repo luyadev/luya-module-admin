@@ -3,6 +3,7 @@
 namespace luya\admin\models;
 
 use yii\helpers\Json;
+use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\DetailViewActiveWindow;
 
@@ -54,13 +55,12 @@ class ProxyBuild extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'machine_id' => 'Machine ID',
-            'timestamp' => 'Timestamp',
-            'build_token' => 'Build Token',
-            'config' => 'Config',
-            'is_complet' => 'Is Complet',
-            'expiration_time' => 'Expiration Time',
+            'machine_id' => Module::t('model_proxy_build_machine_id'),
+            'timestamp' => Module::t('model_proxy_build_timestamp'),
+            'build_token' => Module::t('model_proxy_build_build_token'),
+            'config' => Module::t('model_proxy_build_config'),
+            'is_complet' => Module::t('model_proxy_build_is_complete'),
+            'expiration_time' => Module::t('model_proxy_build_expiration_time'),
         ];
     }
     
