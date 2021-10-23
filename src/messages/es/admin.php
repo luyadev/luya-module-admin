@@ -516,14 +516,14 @@ return [
     'crud_exportdata_col_filter' => 'Filter',
 
 // added translations in version 3.7.0:
-    'menu_system_item_property' => 'Properties',
-    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+    'menu_system_item_property' => 'Propiedades',
+    'property_controller_description' => 'Proporciona una lista de todas las propiedades registradas. Las propiedades se utilizan principalmente como [CMS Properties](https://luya.io/guide/app-cmsproperties) pero también se puede usar para otros casos de uso, como propiedades relacionadas con registros.',
 
 // added translations in version 4.0.0:
-    'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',
-    'button_save_and_close' => 'Save and close',
-    'button_create_and_close' => 'Create and close',
-    'button_create' => 'Create',
-    'button_cancel' => 'Cancel',
-    'button_create_and_new' => 'Create and new',
+    'disabled_login_text' => 'El formulario de inicio de sesión está actualmente deshabilitado debido a trabajos de mantenimiento. Por favor, inténtelo de nuevo más tarde.',
+    'button_save_and_close' => 'Salir y cerrar',
+    'button_create_and_close' => 'Crear y cerrar',
+    'button_create' => 'Crear',
+    'button_cancel' => 'Cancelar',
+    'button_create_and_new' => 'Crear y nuevo',
 ];
