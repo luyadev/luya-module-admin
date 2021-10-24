@@ -18,6 +18,9 @@ $this->beginBody();
 $groups = [];
 
 foreach ($config->getPointer('list') as $p) {
+    if ($this->context->isHiddenInList($p)) {
+        continue;
+    }
     $groups[$p['name']] = $p['alias'];
 }
 $filters = ArrayHelper::combine(array_keys($config->getFilters()));
@@ -194,14 +197,23 @@ $interface = $this->context->getInterfaceSettings();
                                 <div class="table-sorter-wrapper" ng-class="{'is-active' : isOrderBy('+<?= $item['name']; ?>') || isOrderBy('-<?= $item['name']; ?>') }">
                                     <?php if ($config->getDefaultOrderField() && $this->context->isSortable($item)): ?>
                                         <div class="table-sorter table-sorter-up" ng-click="changeOrder('<?= $item['name']; ?>', '-')" ng-class="{'is-sorting': !isOrderBy('-<?= $item['name']; ?>')}">
+                                            <?php if ($this->context->getIcon($item)): ?>
+                                            <i class="material-icons"><?= $this->context->getIcon($item); ?></i>
+                                            <?php endif; ?>
                                             <span><?= $item['alias']; ?></span>
-                                            <i class="material-icons">keyboard_arrow_up</i>
+                                            <i class="material-icons table-sorter-icon">keyboard_arrow_up</i>
                                         </div>
                                         <div class="table-sorter table-sorter-down" ng-click="changeOrder('<?= $item['name']; ?>', '+')" ng-class="{'is-sorting': !isOrderBy('+<?= $item['name']; ?>')}">
+                                            <?php if ($this->context->getIcon($item)): ?>
+                                            <i class="material-icons"><?= $this->context->getIcon($item); ?></i>
+                                            <?php endif; ?>
                                             <span><?= $item['alias']; ?></span>
-                                            <i class="material-icons">keyboard_arrow_down</i>
+                                            <i class="material-icons table-sorter-icon">keyboard_arrow_down</i>
                                         </div>
                                     <?php else: ?>
+                                        <?php if ($this->context->getIcon($item)): ?>
+                                        <i class="material-icons"><?= $this->context->getIcon($item); ?></i>
+                                        <?php endif; ?>
                                         <span><?= $item['alias']; ?></span>
                                     <?php endif; ?>
                                 </div>

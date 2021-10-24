@@ -452,6 +452,21 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             'cellColor' => $cellColor
         ];
     }
+    
+    
+    /**
+     * Returns the icon name of the ngRest field
+     *
+     * @param array $item
+     * @return mixed Returns the icon name based on https://material.io/icons or false if no icon is specified  for this field.
+     * @since 4.2.0
+     */
+    public function getIcon(array $item)
+    {
+        $config = Config::createField($item);
+        
+        return empty($config->icon) ? false : $config->icon;
+    }
 
 
     /**
