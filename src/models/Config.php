@@ -75,6 +75,7 @@ final class Config extends NgRestModel
             [['name', 'value'], 'required'],
             [['name'], 'unique'],
             [['is_system'], 'integer'],
+            ['is_system', 'default', 'value' => false]
         ];
     }
     
