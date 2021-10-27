@@ -3,9 +3,10 @@
 namespace luya\admin\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * Admin Property
@@ -90,9 +91,10 @@ class Property extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'module_name' => 'Module Name',
-            'var_name' => 'Var Name',
-            'class_name' => 'Class Name',
+            'module_name' => Module::t('model_property_module_name'),
+            'var_name' => Module::t('model_property_var_name'),
+            'class_name' => Module::t('model_property_class_name'),
+            'sort_index' => Module::t('model_property_sort_index'),
         ];
     }
 
