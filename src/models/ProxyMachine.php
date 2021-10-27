@@ -2,8 +2,9 @@
 
 namespace luya\admin\models;
 
-use luya\admin\aws\DetailViewActiveWindow;
 use Yii;
+use luya\admin\Module;
+use luya\admin\aws\DetailViewActiveWindow;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
 use luya\helpers\Url;
@@ -64,12 +65,11 @@ class ProxyMachine extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'access_token' => Yii::t('app', 'Access Token'),
-            'is_deleted' => Yii::t('app', 'Is Deleted'),
-            'is_disabled' => Yii::t('app', 'Is Disabled'),
-            'identifier' => Yii::t('app', 'Identifier'),
+            'name' => Module::t('model_proxy_machine_name'),
+            'access_token' => Module::t('model_proxy_machine_access_token'),
+            'is_deleted' => Module::t('model_proxy_machine_is_deleted'),
+            'is_disabled' => Module::t('model_proxy_machine_is_disabled'),
+            'identifier' => Module::t('model_proxy_machine_identifier'),
         ];
     }
     
