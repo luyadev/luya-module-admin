@@ -44,12 +44,12 @@ class QueueLog extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'queue_id' => Module::t('model_queuelog_queue_id'),
-            'title' => Module::t('model_queuelog_title'),
-            'push_timestamp' => Module::t('model_queuelog_push_timestamp'),
-            'run_timestamp' => Module::t('model_queuelog_run_timestamp'),
-            'end_timestamp' => Module::t('model_queuelog_end_timestamp'),
-            'is_error' => Module::t('model_queuelog_is_error'),
+            'queue_id' => Module::t('model_queuelog_queue_id_label'),
+            'title' => Module::t('model_queuelog_title_label'),
+            'push_timestamp' => Module::t('model_queuelog_push_timestamp_label'),
+            'run_timestamp' => Module::t('model_queuelog_run_timestamp_label'),
+            'end_timestamp' => Module::t('model_queuelog_end_timestamp_label'),
+            'is_error' => Module::t('model_queuelog_is_error_label'),
         ];
     }
 
