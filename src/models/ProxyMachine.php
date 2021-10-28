@@ -65,11 +65,11 @@ class ProxyMachine extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'name' => Module::t('model_proxy_machine_name'),
-            'access_token' => Module::t('model_proxy_machine_access_token'),
-            'is_deleted' => Module::t('model_proxy_machine_is_deleted'),
-            'is_disabled' => Module::t('model_proxy_machine_is_disabled'),
-            'identifier' => Module::t('model_proxy_machine_identifier'),
+            'name' => Module::t('model_proxy_machine_name_label'),
+            'access_token' => Module::t('model_proxy_machine_access_token_label'),
+            'is_deleted' => Module::t('model_proxy_machine_is_deleted_label'),
+            'is_disabled' => Module::t('model_proxy_machine_is_disabled_label'),
+            'identifier' => Module::t('model_proxy_machine_identifier_label'),
         ];
     }
     
