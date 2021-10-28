@@ -65,17 +65,17 @@ class NgrestLog extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'user_id' => Module::t('model_ngrestlog_user_id'),
-            'timestamp_create' => Module::t('model_ngrestlog_timestamp_create'),
-            'route' => Module::t('model_ngrestlog_route'),
-            'api' => Module::t('model_ngrestlog_api'),
-            'is_update' => Module::t('model_ngrestlog_is_update'),
-            'is_insert' => Module::t('model_ngrestlog_is_insert'),
-            'attributes_json' => Module::t('model_ngrestlog_attributes_json'),
-            'attributes_diff_json' => Module::t('model_ngrestlog_attributes_diff_json'),
-            'pk_value' => Module::t('model_ngrestlog_pk_value'),
-            'table_name' => Module::t('model_ngrestlog_table_name'),
-            'is_delete' => Module::t('model_ngrestlog_is_delete'),
+            'user_id' => Module::t('model_ngrestlog_user_id_label'),
+            'timestamp_create' => Module::t('model_ngrestlog_timestamp_create_label'),
+            'route' => Module::t('model_ngrestlog_route_label'),
+            'api' => Module::t('model_ngrestlog_api_label'),
+            'is_update' => Module::t('model_ngrestlog_is_update_label'),
+            'is_insert' => Module::t('model_ngrestlog_is_insert_label'),
+            'attributes_json' => Module::t('model_ngrestlog_attributes_json_label'),
+            'attributes_diff_json' => Module::t('model_ngrestlog_attributes_diff_json_label'),
+            'pk_value' => Module::t('model_ngrestlog_pk_value_label'),
+            'table_name' => Module::t('model_ngrestlog_table_name_label'),
+            'is_delete' => Module::t('model_ngrestlog_is_delete_label'),
         ];
     }
 
