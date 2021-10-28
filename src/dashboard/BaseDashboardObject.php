@@ -4,6 +4,7 @@ namespace luya\admin\dashboard;
 
 use Yii;
 use luya\admin\base\DashboardObjectInterface;
+use luya\helpers\StringHelper;
 use yii\base\BaseObject;
 
 /**
@@ -11,6 +12,10 @@ use yii\base\BaseObject;
  *
  * This provides the setters and getters from the {{luya\admin\base\DashboardObjectInterface}}.
  *
+ * @property string $template
+ * @property string $outerTemplateContent
+ * @property string $dataApiUrl
+ * @property string $title
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
@@ -25,6 +30,28 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
      * @return string Returns the outer template string which can contain the {{template}} variable, but don't have to.
      */
     abstract public function getOuterTemplateContent();
+
+    /**
+     * Option content parser varaibles
+     *
+     * Pass additional variables into the template.
+     * 
+     * ```
+     * 'variables' => [
+     *     'foo' => 'bar',
+     *     'time' => function() {
+     *         return time();
+     *     },
+     *     'title' => ['Key', 'Value'] // equals to: Yii::t('Key', 'Value')
+     * ]
+     * ```
+     * 
+     * The variables can be used as {{foo}} and {{time}} in the template.
+     * 
+     * @var array An array with key and value, where the key is what is available in the template.
+     * @since 4.2.0
+     */
+    public $variables = [];
     
     private $_template;
     
@@ -47,14 +74,29 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     }
 
     /**
-     * Parse the content will replace {{dataApiUrl}}, {{title}}, {{template}} with the content from the object.
+     * Parse the content will replace {{dataApiUrl}}, {{title}}, {{template}} variables with the content from the object.
      *
      * @param string $content The content to parse.
      * @return string
      */
     public function contentParser($content)
     {
-        return str_replace(['{{dataApiUrl}}', '{{title}}', '{{template}}'], [$this->getDataApiUrl(), $this->getTitle(), $this->_template], $content);
+        foreach ($this->variables as $key => $value) {
+            if (is_array($value)) {
+                list($category, $message) = $value;
+                $vars[$key] = Yii::t($category, $message);
+            } else {
+                $vars[$key] = is_callable($value) ? call_user_func($value, $content, $this) : $value;
+            }
+        }
+
+        $vars = [
+            'dataApiUrl' => $this->getDataApiUrl(),
+            'title' => $this->getTitle(),
+            'template' => StringHelper::template($this->_template, $vars, false),
+        ];
+
+        return StringHelper::template($content, $vars, true);
     }
     
     private $_dataApiUrl;
