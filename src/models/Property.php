@@ -91,10 +91,10 @@ class Property extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'module_name' => Module::t('model_property_module_name_label'),
-            'var_name' => Module::t('model_property_var_name_label'),
-            'class_name' => Module::t('model_property_class_name_label'),
-            'sort_index' => Module::t('model_property_sort_index_label'),
+            'module_name' => Module::t('model_property_module_name'),
+            'var_name' => Module::t('model_property_var_name'),
+            'class_name' => Module::t('model_property_class_name'),
+            'sort_index' => Module::t('model_property_sort_index'),
         ];
     }
 
