@@ -81,22 +81,23 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
      */
     public function contentParser($content)
     {
+        $customVars = [];
         foreach ($this->variables as $key => $value) {
             if (is_array($value)) {
                 list($category, $message) = $value;
-                $vars[$key] = Yii::t($category, $message);
+                $customVars[$key] = Yii::t($category, $message);
             } else {
-                $vars[$key] = is_callable($value) ? call_user_func($value, $content, $this) : $value;
+                $customVars[$key] = is_callable($value) ? call_user_func($value, $content, $this) : $value;
             }
         }
 
         $vars = [
             'dataApiUrl' => $this->getDataApiUrl(),
             'title' => $this->getTitle(),
-            'template' => StringHelper::template($this->_template, $vars, false),
+            'template' => StringHelper::template($this->_template, $customVars, false),
         ];
 
-        return StringHelper::template($content, $vars, true);
+        return StringHelper::template($content, array_merge($vars, $customVars), true);
     }
     
     private $_dataApiUrl;
