@@ -66,10 +66,10 @@ class StorageImage extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'file_id' => Module::t('model_storageimage_file_id_label'),
-            'filter_id' => Module::t('model_storageimage_filter_id_label'),
-            'resolution_width' => Module::t('model_storageimage_resolution_width_label'),
-            'resolution_height' => Module::t('model_storageimage_resolution_height_label'),
+            'file_id' => Module::t('model_storageimage_file_id'),
+            'filter_id' => Module::t('model_storageimage_filter_id'),
+            'resolution_width' => Module::t('model_storageimage_resolution_width'),
+            'resolution_height' => Module::t('model_storageimage_resolution_height'),
         ];
     }
 

@@ -55,12 +55,12 @@ class ProxyBuild extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'machine_id' => Module::t('model_proxy_build_machine_id_label'),
-            'timestamp' => Module::t('model_proxy_build_timestamp_label'),
-            'build_token' => Module::t('model_proxy_build_build_token_label'),
-            'config' => Module::t('model_proxy_build_config_label'),
-            'is_complet' => Module::t('model_proxy_build_is_complete_label'),
-            'expiration_time' => Module::t('model_proxy_build_expiration_time_label'),
+            'machine_id' => Module::t('model_proxy_build_machine_id'),
+            'timestamp' => Module::t('model_proxy_build_timestamp'),
+            'build_token' => Module::t('model_proxy_build_build_token'),
+            'config' => Module::t('model_proxy_build_config'),
+            'is_complet' => Module::t('model_proxy_build_is_complete'),
+            'expiration_time' => Module::t('model_proxy_build_expiration_time'),
         ];
     }
     
