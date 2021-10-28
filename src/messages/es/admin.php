@@ -551,7 +551,7 @@ return [
     'model_proxy_build_expiration_time_label' => 'Expiration Time',
     'model_proxy_machine_name_label' => 'Name',
     'model_proxy_machine_access_token_label' => 'Access Token',
-    'model_proxy_machine_is_delete_labeld' => 'Is Deleted',
+    'model_proxy_machine_is_deleted_label' => 'Is Deleted',
     'model_proxy_machine_is_disabled_label' => 'Is Disabled',
     'model_proxy_machine_identifier_label' => 'Identifier',
     'model_queuelog_queue_id_label' => 'Queue ID',

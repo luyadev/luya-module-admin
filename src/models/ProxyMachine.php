@@ -67,7 +67,7 @@ class ProxyMachine extends NgRestModel
         return [
             'name' => Module::t('model_proxy_machine_name_label'),
             'access_token' => Module::t('model_proxy_machine_access_token_label'),
-            'is_deleted' => Module::t('model_proxy_machine_is_delete_labeld'),
+            'is_deleted' => Module::t('model_proxy_machine_is_deleted_label'),
             'is_disabled' => Module::t('model_proxy_machine_is_disabled_label'),
             'identifier' => Module::t('model_proxy_machine_identifier_label'),
         ];
