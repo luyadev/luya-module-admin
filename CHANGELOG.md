@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.2.0
 
++ [#694](https://github.com/luyadev/luya-module-admin/pull/694) Fixed CRUD title involving NgRestPools.
 + [#690](https://github.com/luyadev/luya-module-admin/pull/690) Option to pass additional variables to the dashboard objects.
 + [#676](https://github.com/luyadev/luya-module-admin/issues/676) Fixed hidden NgRest attributes issue in the group-by-field select.
 + [#678](https://github.com/luyadev/luya-module-admin/pull/678) Added `icon` property to any NgRest attribute. It allows setting additional icons in CRUD table header and CRUD edit form.
