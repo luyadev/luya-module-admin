@@ -117,7 +117,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             'modelSelection' => $this->getModelSelection(),
             'hasActiveSelections' => count($this->config->getActiveSelections()),
             'relationCall' => $this->getRelationCall(), // this is currently only used for the crud relation view file, there for split the RenderCrud into two sepeare renderes.
-            'currentMenu' => Yii::$app->adminmenu->getApiDetail($this->getConfig()->getApiEndpoint()),
+            'currentMenu' => Yii::$app->adminmenu->getApiDetail($this->getConfig()->getApiEndpoint(), Yii::$app->request->get('pool')),
             'downloadAttributes' => $this->generateDownloadAttributes(),
         ], $this);
     }
