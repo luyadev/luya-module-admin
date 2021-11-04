@@ -163,7 +163,7 @@ zaa.directive("luyaSortRelationArray", function () {
                 var match = false;
 
                 angular.forEach($scope.model, function (value, key) {
-                    if (value.value === option.value) {
+                    if (value.value == option.value) {
                         match = true;
                     }
                 });
@@ -195,7 +195,7 @@ zaa.directive("luyaSortRelationArray", function () {
                 var match = false;
 
                 angular.forEach($scope.model, function (value, key) {
-                    if (value.value === item.value) {
+                    if (value.value == item.value) {
                         match = true;
                     }
                 });
@@ -1516,7 +1516,7 @@ zaa.directive("luyaRadio", function () {
         template: function () {
             return '' +
                 '<div ng-repeat="(key, item) in options" class="form-check" ng-class="{\'form-check-inline\': inline}">' +
-                    '<input value="{{item[optionsvalue]}}" type="radio" ng-click="setModelValue(item[optionsvalue])" ng-checked="item[optionsvalue] === model" name="{{id}}" class="form-check-input" id="{{id}}_{{key}}">' +
+                    '<input value="{{item[optionsvalue]}}" type="radio" ng-click="setModelValue(item[optionsvalue])" ng-checked="item[optionsvalue] == model" name="{{id}}" class="form-check-input" id="{{id}}_{{key}}">' +
                     '<label class="form-check-label" for="{{id}}_{{key}}">' +
                         '{{item[optionslabel]}}' +
                     '</label>' +
@@ -1672,7 +1672,7 @@ zaa.directive("luyaSelect", function() {
             $scope.valueExistsInOptions = function (value) {
                 var exists = false;
                 angular.forEach($scope.options, function (item) {
-                    if (value === item[$scope.optionsvalue]) {
+                    if (value == item[$scope.optionsvalue]) {
                         exists = true;
                     }
                 });
@@ -2107,7 +2107,7 @@ zaa.directive("luyaCheckboxArray", function () {
                 }
 
                 for (var i in $scope.model) {
-                    if ($scope.model[i]["value"] === value.value) {
+                    if ($scope.model[i]["value"] == value.value) {
                         $scope.model.splice(i, 1);
                         return;
                     }
@@ -2117,7 +2117,7 @@ zaa.directive("luyaCheckboxArray", function () {
 
             $scope.isChecked = function (item) {
                 for (var i in $scope.model) {
-                    if ($scope.model[i]["value"] === item.value) {
+                    if ($scope.model[i]["value"] == item.value) {
                         return true;
                     }
                 }
