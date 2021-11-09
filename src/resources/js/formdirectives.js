@@ -2884,7 +2884,7 @@ zaa.directive("zaaMultipleInputs", function () {
                             '<p class="alert alert-info" ng-hide="model.length > 0">' + i18n['js_dir_no_selection'] + '</p>' +
                             '<div ng-repeat="(msortKey,row) in model track by msortKey" class="list-item" ng-init="ensureRow(row)">' +
                                 '<div ng-repeat="(mutliOptKey,opt) in options track by mutliOptKey">' +
-                                    '<zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector>' +
+                                    '<zaa-injector dir="opt.type" options="opt.options" fieldid="id-{{msortKey}}-{{mutliOptKey}}" placeholder="{{opt.placeholder}}" initvalue="{{opt.initvalue}}" label="{{opt.label}}" model="row[opt.var]"></zaa-injector>' +
                                 '</div>' +
                                 '<div class="list-buttons">' +
                                     '<div class="btn-group" role="group">' +
