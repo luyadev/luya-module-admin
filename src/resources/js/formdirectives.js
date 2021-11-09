@@ -1432,13 +1432,15 @@ zaa.directive("zaaRadio", function () {
             "inline": "@"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-            if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
-                $scope.optionsvalue = 'value';
-            }
+            $timeout(function () {
+                if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
+                    $scope.optionsvalue = 'value';
+                }
 
-            if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
-                $scope.optionslabel = 'label';
-            }
+                if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
+                    $scope.optionslabel = 'label';
+                }
+            });
         }],
         template: function () {
             return '' +
@@ -1488,14 +1490,6 @@ zaa.directive("luyaRadio", function () {
             "inline": "@"
         },
         controller: ['$scope', '$timeout', function ($scope, $timeout) {
-            if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
-                $scope.optionsvalue = 'value';
-            }
-
-            if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
-                $scope.optionslabel = 'label';
-            }
-
             $scope.setModelValue = function (value) {
                 $scope.model = value;
             };
@@ -1510,6 +1504,14 @@ zaa.directive("luyaRadio", function () {
                 }
             };
             $timeout(function () {
+                if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
+                    $scope.optionsvalue = 'value';
+                }
+
+                if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
+                    $scope.optionslabel = 'label';
+                }
+
                 $scope.init();
             });
         }],
@@ -1564,15 +1566,16 @@ zaa.directive("zaaSelect", function () {
             "placeholder": "@"
         },
         controller: ['$scope', '$timeout', '$rootScope', function ($scope, $timeout, $rootScope) {
-            if ($scope.optionsvalue === undefined) {
-                $scope.optionsvalue = 'value';
-            }
-            if ($scope.optionslabel === undefined) {
-                $scope.optionslabel = 'label';
-            }
+            $timeout(function () {
+                if ($scope.optionsvalue === undefined) {
+                    $scope.optionsvalue = 'value';
+                }
+                if ($scope.optionslabel === undefined) {
+                    $scope.optionslabel = 'label';
+                }
 
-            $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
-
+                $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
+            });
         }],
         template: function () {
             return  '' +
@@ -1631,13 +1634,6 @@ zaa.directive("luyaSelect", function() {
             $scope.isOpen = 0;
             $scope.isDefault = 1;
 
-            if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
-                $scope.optionsvalue = 'value';
-            }
-
-            if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
-                $scope.optionslabel = 'label';
-            }
 
             if (angular.isNumber($scope.model)) {
                 $scope.model = typeCastValue($scope.model);
@@ -1664,6 +1660,13 @@ zaa.directive("luyaSelect", function() {
                     }
                 });
 
+                if ($scope.optionsvalue === undefined || $scope.optionsvalue === "") {
+                    $scope.optionsvalue = 'value';
+                }
+
+                if ($scope.optionslabel === undefined || $scope.optionslabel === "") {
+                    $scope.optionslabel = 'label';
+                }
 
                 $scope.clearable = !($scope.clearable === 'false' || $scope.clearable === '0');
             });
@@ -1781,12 +1784,15 @@ zaa.directive("zaaAsyncApiSelect", function () {
         },
         controller: ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
             $scope.options = [];
-            if ($scope.optionsvalue === undefined) {
-                $scope.optionsvalue = 'id';
-            }
-            if ($scope.optionslabel === undefined) {
-                $scope.optionslabel = 'title';
-            }
+
+            $timeout(function () {
+                if ($scope.optionsvalue === undefined) {
+                    $scope.optionsvalue = 'id';
+                }
+                if ($scope.optionslabel === undefined) {
+                    $scope.optionslabel = 'title';
+                }
+            });
 
             $scope.$watch('api', function(apiUrl) {
                 $http.get(apiUrl).then(function(value) {
