@@ -1,3 +1,5 @@
+To add the module to admin menu, update your 'Module.php' like this:
+
 public $apis = [
     '<?= $apiEndpoint; ?>' => '<?= $apiClassPath; ?>',
 ];
