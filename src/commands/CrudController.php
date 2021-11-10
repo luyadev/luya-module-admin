@@ -246,7 +246,7 @@ class CrudController extends BaseCrudController
     public function ensureBasePathAndNamespace()
     {
         $nsItems = explode('\\', $this->getNamespace());
-        // if there are more namespace paths then one, it means there is space for a subfolder models
+        // if there are more namespace paths than one, it means there is space for a subfolder models
         if (count($nsItems) > 1) {
             $items = explode(DIRECTORY_SEPARATOR, $this->getBasePath());
             $last = array_pop($items);
@@ -438,7 +438,7 @@ class CrudController extends BaseCrudController
 
         // 5. ask for i18n
         if ($this->enableI18n === null) {
-            $this->enableI18n = $this->confirm("Would you like to enable i18n field input for text fields? It it only required for multilingual pages.");
+            $this->enableI18n = $this->confirm("Would you like to enable i18n field input for text fields? It is only required for multilingual pages.");
         }
 
         $this->ensureBasePathAndNamespace();
