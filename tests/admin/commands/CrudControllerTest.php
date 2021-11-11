@@ -248,8 +248,10 @@ EOT;
 
 
         $sum = <<<'EOT'
+To add the module to admin menu, update your 'Module.php' like this:
+
 public $apis = [
-    'api-endpoit-name' => '\path\to\api\Model',
+    'api-endpoint-name' => '\path\to\api\Model',
 ];
 
 public function getMenu()
@@ -257,10 +259,11 @@ public function getMenu()
     return (new \luya\admin\components\AdminMenuBuilder($this))
         ->node('AdminUser', 'extension')
             ->group('Group')
-                ->itemApi('AdminUser', 'module/admin-user/index', 'label', 'api-endpoit-name');
+                ->itemApi('AdminUser', 'module/admin-user/index', 'label', 'api-endpoint-name');
 }
+
 EOT;
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $sum), str_replace(["\r\n", "\r"],"\n", $ctrl->generateBuildSummery('api-endpoit-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
+        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $sum), str_replace(["\r\n", "\r"],"\n", $ctrl->generateBuildSummary('api-endpoint-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
     }
     
     public function testModelWithoutI18n()
