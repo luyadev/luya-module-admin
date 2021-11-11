@@ -261,6 +261,7 @@ public function getMenu()
             ->group('Group')
                 ->itemApi('AdminUser', 'module/admin-user/index', 'label', 'api-endpoint-name');
 }
+
 EOT;
         $this->assertSame(str_replace(["\r\n", "\r"],"\n", $sum), str_replace(["\r\n", "\r"],"\n", $ctrl->generateBuildSummary('api-endpoint-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
     }
