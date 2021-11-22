@@ -4,7 +4,7 @@ This document will help you upgrading from a LUYA admin module version into anot
 
 ## from 4.1 to 4.2
 
-+ Invers the `modules` order in your config file (e.g. `config.php`) to preserve the old admin menu order.
++ Invert the `modules` order in your config file (e.g. `config.php`) to preserve the old admin menu order.
 
 from:
 ```php
