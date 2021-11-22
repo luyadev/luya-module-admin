@@ -109,7 +109,7 @@ class AdminMenu extends \yii\base\Component
             }
             // call the interface menu method returns the array for the given Module.
             $data = $menuBuilder->menu();
-            $menu = ArrayHelper::merge($data, $menu);
+            $menu = ArrayHelper::merge($menu, $data);
         }
         
         $this->_menu = $menu;

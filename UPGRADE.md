@@ -2,7 +2,28 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
-## from 3.x t 4.0
+## from 4.1 to 4.2
+
++ Invert the `modules` order in your config file (e.g. `config.php`) to preserve the old admin menu order.
+
+from:
+```php
+'modules' => [
+   /*...*/, // bottommost module in admin menu
+   'admin' => [ /*...*/ ],
+   'cmsadmin' => [ /*...*/ ], // topmost module in admin menu
+],
+```
+to:
+```php
+'modules' => [
+   'cmsadmin' => [ /*...*/ ], // topmost module in admin menu
+   'admin' => [ /*...*/ ],
+   /*...*/, // bottommost module in admin menu
+],
+```
+
+## from 3.x to 4.0
 
 + Run the migrate command, as new migrations are available.
 + Admin 4.0 requires luya core 2.0, which is part of the new minimum requirement.
