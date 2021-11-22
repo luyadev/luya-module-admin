@@ -5,6 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.2.0
 
+> This release changes the admin menu order. Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.
+
++ [#698](https://github.com/luyadev/luya-module-admin/pull/698) Fixed reversed order of modules in admin menu.
 + [#695](https://github.com/luyadev/luya-module-admin/pull/695) Fixed placeholders within `zaaMultipleInputs`.
 + [#694](https://github.com/luyadev/luya-module-admin/pull/694) Fixed CRUD title involving NgRestPools.
 + [#690](https://github.com/luyadev/luya-module-admin/pull/690) Option to pass additional variables to the dashboard objects.
