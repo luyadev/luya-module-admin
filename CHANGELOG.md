@@ -20,6 +20,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#663](https://github.com/luyadev/luya-module-admin/issues/663) A new `TagRelation::cleanup(ActiveRecord $model)` method to remove all tag relations for a certain model. 
 + [#481](https://github.com/luyadev/luya-module-admin/issues/481) Fixed issue where file manager files count is not updated accordingly after uploading new files.
 + [#674](https://github.com/luyadev/luya-module-admin/pull/674) Throw an exception when the image can not find the requested file.
++ [#697](https://github.com/luyadev/luya-module-admin/issues/697) Fix issue with sorting of admin UI language.
 
 ## 4.1.0 (21. September 2021)
 

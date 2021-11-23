@@ -217,7 +217,7 @@ class CommonController extends RestController
      */
     public function actionDataLanguages()
     {
-        return Lang::find()->all();
+        return Lang::find()->orderBy(['is_default' => SORT_DESC])->all();
     }
     
     /**
