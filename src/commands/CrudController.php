@@ -419,7 +419,7 @@ class CrudController extends BaseCrudController
             while ($modelSelection) {
                 $modelName = $this->prompt('Model Name (e.g. Album):', ['required' => true, 'default' => $this->getModelNameSuggestion()]);
                 $camelizeModelName = Inflector::camelize($modelName);
-                if ($modelName !== $camlizeModelName) {
+                if ($modelName !== $camelizeModelName) {
                     if ($this->confirm("We have camelized the model name to '$camelizeModelName'. Do you want to continue with this name?")) {
                         $modelName = $camelizeModelName;
                         $modelSelection = false;
