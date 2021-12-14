@@ -773,7 +773,9 @@ class Api extends RestActiveController
     }
 
     /**
-     * Export Data
+     * Export Data.
+     *
+     * See {{luya\admin\ngrest\base\NgRestModel::ngRestExport()}} in order to configure custom export behavior for attributes.
      *
      * @uses integer header Whether header should be exported or not
      * @uses string type The type csv oder xlsx
