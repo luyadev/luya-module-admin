@@ -130,8 +130,10 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     public function generateDownloadAttributes()
     {
+        $exportAttributes = $this->model->ngRestExport();
+        $fields = empty($exportAttributes) ? $this->model->attributes() : array_keys($exportAttributes);
         $attributes = [];
-        foreach ($this->model->attributes() as $key) {
+        foreach ($fields as $key) {
             $attributes[$key] = $this->model->getAttributeLabel($key);
         }
         

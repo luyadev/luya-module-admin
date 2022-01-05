@@ -825,7 +825,7 @@ class Api extends RestActiveController
             $query = $this->formatExportValues($query, $exportFormatter);
         }
 
-        $tempData = ExportHelper::$type($query, $fields, (bool) $header);
+        $tempData = ExportHelper::$type($query, $fields, (bool) $header, ['sort' => empty($exportFormatter)]);
         
         $key = uniqid('ngrestexport', true);
         
@@ -867,20 +867,15 @@ class Api extends RestActiveController
      */
     private function formatExportValues(ActiveQuery $query, array $formatter)
     {
+        Yii::$app->formatter->nullDisplay = '';
         $data = [];
         foreach ($query->batch() as $batch) {
             foreach ($batch as $key => $model) {
-                foreach ($model as $attribute => $value) {
-                    // if formatter is defined for the given attribute
-                    if (array_key_exists($attribute, $formatter)) {
-                        $formatAs = $formatter[$attribute];
-                        if (is_callable($formatAs)) {
-                            $data[$key][$attribute] = call_user_func($formatAs, $model);
-                        } else {
-                            $data[$key][$attribute] = Yii::$app->formatter->format($value, $formatAs);
-                        }
+                foreach ($formatter as $formatterAttribute => $formatAs) {
+                    if (is_callable($formatAs)) {
+                        $data[$key][$formatterAttribute] = call_user_func($formatAs, $model);
                     } else {
-                        $data[$key][$attribute] = $value;
+                        $data[$key][$formatterAttribute] = Yii::$app->formatter->format($model[$formatterAttribute], $formatAs);
                     }
                 }
             }

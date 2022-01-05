@@ -900,6 +900,9 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      * Format the values for export generator.
      *
+     * **since 4.3 the ngRestExport() takes precendence regarding what attributes can be exported and how they are sorted! This means that when ngRestExport()
+     * is used, only the given fields will be available to export and the will be exported in order they are defined in the array.**
+     *
      * When exporting data, it might be convient to format certain values, by default the {{luya\components\Formatter}} will be used. Its
      * also possible to provide a closure function to interact with the model. When handling large amount of data to export, this might
      * make problems because it will generate a model for each row. Therefore an empty array response will improve performance because {{ngRestExport()}}
@@ -930,7 +933,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * }
      * ```
      *
-     * @return array An array where the key is the attribute and value is either the formatter to use or a closure where the first param is the model itself.
+     * @return array An array where the key is the attribute and value is either the formatter to use or a closure where the first param is the model itself. Only the given attributes will be available in the export and are ordered in the list they are defined in the array.
      * @since 3.9.0
      */
     public function ngRestExport()
