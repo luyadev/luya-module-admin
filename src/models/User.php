@@ -160,6 +160,20 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'is_request_logger_enabled' => 'toggleStatus',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function ngRestExport()
+    {
+        return [
+            'id' => 'text',
+            'lastname' => 'text',
+            'firstname' => 'text',
+            'email' => 'text',
+            'login_attempt_lock_expiration' => 'datetime',
+        ];
+    }
     
     /**
      * @inheritdoc
