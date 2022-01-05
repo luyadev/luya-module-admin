@@ -2,6 +2,10 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 4.2 to 4.3
+
++ [#702](https://github.com/luyadev/luya-module-admin/pull/702) The `ngRestExport()` method will be used to sort and restrict all sortable attributes. This means, if `ngRestExport()` is defined, only the attributes in the array will be available in the export, but therfore and order of the export is equals to the defintion list in `ngRestExport()`. 
+
 ## from 4.1 to 4.2
 
 + Invert the `modules` order in your config file (e.g. `config.php`) to preserve the old admin menu order.
