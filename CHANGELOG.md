@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 4.3.0
 
 + [#700](https://github.com/luyadev/luya-module-admin/pull/700) Fixed syntax error in crud generate command.
++ [#702](https://github.com/luyadev/luya-module-admin/pull/702) The `ngRestExport()` method will be used to sort and restrict all sortable attributes.
 
 ## 4.2.0 (9. December 2021)
 
