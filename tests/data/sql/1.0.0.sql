@@ -198,6 +198,7 @@ CREATE TABLE `admin_ngrest_log` (
   `api` varchar(80) NOT NULL,
   `is_update` tinyint(1) DEFAULT '0',
   `is_insert` tinyint(1) DEFAULT '0',
+  `is_delete` tinyint(1) DEFAULT '0',
   `attributes_json` text NOT NULL,
   `attributes_diff_json` text,
   `pk_value` varchar(255) DEFAULT NULL,
