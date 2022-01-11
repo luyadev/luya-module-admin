@@ -85,9 +85,10 @@ class NgrestLog extends NgRestModel
     public function rules()
     {
         return [
-            [['user_id', 'timestamp_create', 'route', 'api', 'attributes_json'], 'required'],
-            [['user_id', 'timestamp_create', 'is_update', 'is_insert', 'is_delete'], 'integer'],
-            [['attributes_json', 'attributes_diff_json'], 'string'],
+            [['user_id', 'timestamp_create', 'attributes_json'], 'required'],
+            [['user_id', 'timestamp_create'], 'integer'],
+            [['is_update', 'is_insert', 'is_delete'], 'boolean'],
+            [['attributes_json', 'attributes_diff_json'], 'string', 'max' => 65535],
             [['route', 'api'], 'string', 'max' => 80],
             [['pk_value', 'table_name'], 'string', 'max' => 255],
         ];

@@ -2,6 +2,7 @@
 
 namespace luya\admin\behaviors;
 
+use luya\admin\models\NgrestLog;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\Application;
@@ -84,7 +85,8 @@ class LogBehavior extends Behavior
     public function eventAfterDelete($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
+            $model = new NgrestLog();
+            $model->attributes = [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
@@ -95,7 +97,8 @@ class LogBehavior extends Behavior
                 'attributes_json' => $this->toJson($event->sender->getAttributes()),
                 'table_name' => $event->sender->tableName(),
                 'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
-            ])->execute();
+            ];
+            $model->save();
         }
     }
 
@@ -107,7 +110,8 @@ class LogBehavior extends Behavior
     public function eventAfterInsert($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
+            $model = new NgrestLog();
+            $model->attributes = [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
@@ -118,7 +122,8 @@ class LogBehavior extends Behavior
                 'attributes_diff_json' => null,
                 'table_name' => $event->sender->tableName(),
                 'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
-            ])->execute();
+            ];
+            $model->save();
         }
     }
 
@@ -130,7 +135,8 @@ class LogBehavior extends Behavior
     public function eventAfterUpdate($event)
     {
         if ($this->isLoggable()) {
-            Yii::$app->db->createCommand()->insert('{{%admin_ngrest_log}}', [
+            $model = new NgrestLog();
+            $model->attributes = [
                 'user_id' => $this->getUserId(),
                 'timestamp_create' => time(),
                 'route' => $this->route,
@@ -141,7 +147,8 @@ class LogBehavior extends Behavior
                 'attributes_diff_json' => $this->toJson($event->changedAttributes),
                 'table_name' => $event->sender->tableName(),
                 'pk_value' => implode("-", $event->sender->getPrimaryKey(true)),
-            ])->execute();
+            ];
+            $model->save();
         }
     }
 }
