@@ -74,9 +74,9 @@ class SelectArrayGently extends Select
     /**
      * Setter method for Data.
      *
-     * @param array $data
+     * @param array|closure $data
      */
-    public function setData(array $data)
+    public function setData($data)
     {
         $this->_data = $data;
     }
