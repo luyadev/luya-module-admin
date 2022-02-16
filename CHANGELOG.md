@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 4.3.1
 
 + [#705](https://github.com/luyadev/luya-module-admin/pull/705) Fix issue with SelectArrayGently when using a closure
++ Changed default queueFiltersList to medium-thumbnail instead of meidum-cop
 
 ## 4.3.0 (15. February 2022)
 
