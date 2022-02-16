@@ -300,10 +300,10 @@ abstract class BaseFileSystemStorage extends Component
 
     /**
      * @var array If {{luya\admin\storage\BaseFileSystemStorage::$queueFilters}} is enabled, the following image filters will be processed. We recommend
-     * to add the default filters which are used in the admin ui (for file manager thumbnails). Therefore those are default values `['tiny-crop', 'medium-crop']`.
+     * to add the default filters which are used in the admin ui (for file manager thumbnails). Therefore those are default values `['tiny-crop', 'medium-thumbnail']`.
      * @since 4.0.0
      */
-    public $queueFiltersList = ['tiny-crop', 'medium-crop'];
+    public $queueFiltersList = ['tiny-crop', 'medium-thumbnail'];
 
     /**
      * @var array If the storage system pushed any jobs into the queue, this array holds the queue job ids.
