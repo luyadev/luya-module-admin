@@ -7,6 +7,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#705](https://github.com/luyadev/luya-module-admin/pull/705) Fix issue with SelectArrayGently when using a closure
 + Changed default queueFiltersList to medium-thumbnail instead of meidum-cop
++ [#706](https://github.com/luyadev/luya-module-admin/pull/706) Use `ImageInterface::THUMBNAIL_FLAG_NOCLONE` when creating thumbnails and fix issue with ngrest logger when uploading files.
 
 ## 4.3.0 (15. February 2022)
 

@@ -34,16 +34,6 @@ final class StorageFolder extends ActiveRecord
     {
         return parent::find()->orderBy(['name' => 'ASC']);
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            LogBehavior::class,
-        ];
-    }
     
     /**
      * @inheritdoc

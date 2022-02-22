@@ -73,7 +73,9 @@ final class StorageFile extends ActiveRecord
     public function behaviors()
     {
         return [
-            LogBehavior::class,
+            'LogBehavior' => [
+                'class' => LogBehavior::class,
+            ],
             [
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'upload_timestamp',

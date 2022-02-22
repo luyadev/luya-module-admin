@@ -9,6 +9,7 @@ use yii\imagine\Image;
 use yii\db\ActiveRecord;
 use luya\admin\base\FilterInterface;
 use Imagine\Image\ManipulatorInterface;
+use Yii;
 
 /**
  * Contains all information about filter effects for a single Chain element (like: thumbnail, 200x200).
@@ -134,7 +135,7 @@ final class StorageFilterChain extends ActiveRecord
             return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
         } elseif ($imagineEffectName == FilterInterface::EFFECT_THUMBNAIL) {
             // thumbnail
-            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
+            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode') | ImageInterface::THUMBNAIL_FLAG_NOCLONE);
             return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
         } elseif ($imagineEffectName == FilterInterface::EFFECT_WATERMARK) {
             // watermark
