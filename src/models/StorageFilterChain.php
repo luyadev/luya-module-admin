@@ -134,7 +134,7 @@ final class StorageFilterChain extends ActiveRecord
             return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
         } elseif ($imagineEffectName == FilterInterface::EFFECT_THUMBNAIL) {
             // thumbnail
-            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode'));
+            $image = Image::thumbnail($image, $this->effectChainValue($imagineEffectName, 'width'), $this->effectChainValue($imagineEffectName, 'height'), $this->effectChainValue($imagineEffectName, 'mode') | ImageInterface::THUMBNAIL_FLAG_NOCLONE);
             return [$image, $this->effectChainValue($imagineEffectName, 'saveOptions')];
         } elseif ($imagineEffectName == FilterInterface::EFFECT_WATERMARK) {
             // watermark
