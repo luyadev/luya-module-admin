@@ -9,6 +9,7 @@ use yii\imagine\Image;
 use yii\db\ActiveRecord;
 use luya\admin\base\FilterInterface;
 use Imagine\Image\ManipulatorInterface;
+use Yii;
 
 /**
  * Contains all information about filter effects for a single Chain element (like: thumbnail, 200x200).

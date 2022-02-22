@@ -40,6 +40,13 @@ class NgrestLog extends NgRestModel
         return '{{%admin_ngrest_log}}';
     }
 
+    public function init()
+    {
+        parent::init();
+
+        $this->detachBehavior('LogBehavior');
+    }
+
     public function behaviors()
     {
         return [
