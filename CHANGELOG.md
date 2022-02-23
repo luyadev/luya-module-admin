@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.3.2
+
++ [#707](https://github.com/luyadev/luya-module-admin/pull/707) Fix issue when creating a new record inside an ngrest relation call form, losing they context data (from the relation).
+
 ## 4.3.1 (22. February 2022)
 
 + [#705](https://github.com/luyadev/luya-module-admin/pull/705) Fix issue with SelectArrayGently when using a closure
