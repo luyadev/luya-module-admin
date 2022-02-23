@@ -476,6 +476,11 @@
 					if (close) {
 						$scope.switchTo(0, true);
 					}
+
+					// store data in order to restore when creating a new item
+					const oldCreateData = $scope.data.create
+
+					// when reset data but "create new" and its an relation call, we lose the relation context.
 					$scope.resetData();
 					$scope.highlightPkValue = $scope.getRowPrimaryValue(response.data);
 					$timeout(function() {
@@ -484,6 +489,14 @@
 
 					if (redirect) {
 						$scope.toggleUpdate(response.data.id)
+					} else {
+						const restoreData = {}
+						angular.forEach(oldCreateData, function(value, key) {
+							if ($scope.checkIfFieldExistsInPopulateCondition(key)) {
+								restoreData[key] = value
+							}
+						})
+						$scope.data.create = restoreData
 					}
 				});
 			}, function(data) {

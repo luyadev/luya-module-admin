@@ -2631,7 +2631,7 @@ zaa.directive("zaaImageArrayUpload", function () {
         },
         link: function (scope, element, attributes) {
             scope.$watch('model', function (newValue, oldValue) {
-                if (newValue.length >= 1) {
+                if (newValue && newValue.length >= 1) {
                     $(element).removeClass('is-empty').addClass('is-not-empty');
                 } else {
                     $(element).removeClass('is-not-empty').addClass('is-empty');
