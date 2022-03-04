@@ -19,7 +19,7 @@ use yii\validators\Validator;
  * [['title', 'location'], I18nRequiredValidator::class],
  * ```
  *
- * In {{luya\admin\ngrest\base\NgRestModel}} scenarios it might be common to use
+ * In {{luya\admin\ngrest\base\NgRestModel}} rules() method it might be common to use:
  *
  * ```php
  * [$this->i18n, I18nRequiredValidator::class],
