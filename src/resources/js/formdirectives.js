@@ -543,17 +543,24 @@ zaa.directive("zaaColor", function () {
             "options": "=",
             "label": "@",
             "i18n": "@",
-            "id": "@fieldid"
+            "id": "@fieldid",
+            "initvalue": "@"
         },
         controller: ['$scope', function ($scope) {
 
             if ($scope.model === undefined || !$scope.model) {
-                $scope.model = '#000000';
+                if ($scope.initvalue) {
+                    $scope.model = $scope.initvalue 
+                } else {
+                    $scope.model = '#000000';
+                }
             }
 
             function getTextColor() {
-
                 if (typeof $scope.model === 'undefined' || !$scope.model) {
+                    if ($scope.initvalue) {
+                        return $scope.initvalue 
+                    }
                     return '#000';
                 }
 
