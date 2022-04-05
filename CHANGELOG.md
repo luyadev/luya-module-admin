@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.3.2
 
++ [#]() Added `initvalue` for `zaaColor` element.
 + [#707](https://github.com/luyadev/luya-module-admin/pull/707) Fix issue when creating a new record inside an ngrest relation call form, losing they context data (from the relation).
 
 ## 4.3.1 (22. February 2022)
