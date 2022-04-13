@@ -869,13 +869,15 @@ class Api extends RestActiveController
     {
         Yii::$app->formatter->nullDisplay = '';
         $data = [];
+        $rowId = 0;
         foreach ($query->batch() as $batch) {
-            foreach ($batch as $key => $model) {
+            foreach ($batch as $model) {
+                $rowId++;
                 foreach ($formatter as $formatterAttribute => $formatAs) {
                     if (is_callable($formatAs)) {
-                        $data[$key][$formatterAttribute] = call_user_func($formatAs, $model);
+                        $data[$rowId][$formatterAttribute] = call_user_func($formatAs, $model);
                     } else {
-                        $data[$key][$formatterAttribute] = Yii::$app->formatter->format($model[$formatterAttribute], $formatAs);
+                        $data[$rowId][$formatterAttribute] = Yii::$app->formatter->format($model[$formatterAttribute], $formatAs);
                     }
                 }
             }
