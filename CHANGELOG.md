@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.4
+
++ [#711](https://github.com/luyadev/luya-module-admin/pull/711) Add option to disable the auto logout when the user ip changes.
+
 ## 4.3.2 (13. April 2022)
 
 + [#710](https://github.com/luyadev/luya-module-admin/pull/710) Fixed a bug where it was not possible to export more then 100 rows when using `ngRestExport()` configuration.
