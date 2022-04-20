@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.4
 
-+ []() Add option to disable the auto logout when the user ip changes.
++ [#711](https://github.com/luyadev/luya-module-admin/pull/711) Add option to disable the auto logout when the user ip changes.
 
 ## 4.3.2 (13. April 2022)
 
