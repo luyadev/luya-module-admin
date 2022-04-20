@@ -545,7 +545,11 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function findIdentity($id)
     {
-        return static::find()->joinWith(['userLogins ul'])->andWhere(['{{%admin_user}}.id' => $id, 'is_destroyed' => false, 'is_api_user' => false, 'ip' => Yii::$app->request->userIP])->one();
+        $where = ['{{%admin_user}}.id' => $id, 'is_destroyed' => false, 'is_api_user' => false];
+        if (Module::getInstance()->logoutOnUserIpChange) {
+            $where['ip'] = Yii::$app->request->userIP;
+        }
+        return static::find()->joinWith(['userLogins ul'])->andWhere($where)->one();
     }
 
     /**

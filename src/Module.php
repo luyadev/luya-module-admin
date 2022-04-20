@@ -262,6 +262,14 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $disableLoginMessage;
 
     /**
+     * @var boolean If enabled (which is default) the user will be logged out when the ip changes, this makes it harder to overtake tokens as they will be destroyed
+     * when the user is logged out. There can be situations with loadbalancers or vpns where the ip changes a lot. But in generall its recommend
+     * to keep this setting enabled.
+     * @since 4.4
+     */
+    public $logoutOnUserIpChange = true;
+
+    /**
      * @var array A configuration array with all tags shipped by default with the admin module.
      */
     public $tags = [
