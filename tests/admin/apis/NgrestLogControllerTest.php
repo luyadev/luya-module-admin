@@ -57,8 +57,8 @@ class NgrestLogControllerTest extends AdminModelTestCase
                 }
             ]]);
 
-            $this->assertSame('acbd18db4cc2f85cedef654fccc4a4d8', $export[0]['table_name']);
-            $this->assertSame('Yes', $export[0]['is_update']);
+            $this->assertSame('acbd18db4cc2f85cedef654fccc4a4d8', $export[0][$log->getAttributeLabel('table_name')]);
+            $this->assertSame('Yes', $export[0][$log->getAttributeLabel('is_update')]);
         });
     }
 }
