@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 4.4
 
 + [#711](https://github.com/luyadev/luya-module-admin/pull/711) Add option to disable the auto logout when the user ip changes.
++ [#712](https://github.com/luyadev/luya-module-admin/pull/712) Fix issue where field labels where not used from models `getAttributeLabel()` when using `ngRestExport()`.
 
 ## 4.3.2 (13. April 2022)
 

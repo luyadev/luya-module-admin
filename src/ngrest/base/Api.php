@@ -823,6 +823,9 @@ class Api extends RestActiveController
 
         if (!empty($exportFormatter)) {
             $query = $this->formatExportValues($query, $exportFormatter);
+            foreach ($fields as $fieldIndex => $fieldValue) {
+                $fields[$fieldIndex] = $this->model->getAttributeLabel($fieldValue);
+            }
         }
 
         $tempData = ExportHelper::$type($query, $fields, (bool) $header, ['sort' => empty($exportFormatter)]);
@@ -874,9 +877,9 @@ class Api extends RestActiveController
             foreach ($batch as $model) {
                 foreach ($formatter as $formatterAttribute => $formatAs) {
                     if (is_callable($formatAs)) {
-                        $data[$rowId][$formatterAttribute] = call_user_func($formatAs, $model);
+                        $data[$rowId][$model->getAttributeLabel($formatterAttribute)] = call_user_func($formatAs, $model);
                     } else {
-                        $data[$rowId][$formatterAttribute] = Yii::$app->formatter->format($model[$formatterAttribute], $formatAs);
+                        $data[$rowId][$model->getAttributeLabel($formatterAttribute)] = Yii::$app->formatter->format($model[$formatterAttribute], $formatAs);
                     }
                 }
                 $rowId++;
