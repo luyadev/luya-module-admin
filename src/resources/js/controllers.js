@@ -569,29 +569,36 @@
 		/**** SORTABLE PLUGIN ****/
 
 		$scope.sortableUp = function(index, row, fieldName) {
-			var switchWith = $scope.data.listArray[index-1];
-			$scope.data.listArray[index-1] = row;
-			$scope.data.listArray[index] = switchWith;
-			$scope.updateSortableIndexPositions(fieldName);
+			var newPost = parseInt(row[fieldName]) - 1
+			$scope.updateSortableIndexPosition(row, fieldName, newPost);
 		};
 
 		$scope.sortableDown = function(index, row, fieldName) {
-			var switchWith = $scope.data.listArray[index+1];
-			$scope.data.listArray[index+1] = row;
-			$scope.data.listArray[index] = switchWith;
-			$scope.updateSortableIndexPositions(fieldName);
+			var newPost = parseInt(row[fieldName]) + 1
+			$scope.updateSortableIndexPosition(row, fieldName, newPost);
 		};
 
+		$scope.updateSortableIndexPosition = function(row, fieldName, newPosition) {
+			var json = {};
+			json[fieldName] = newPosition;
+			var pk = $scope.getRowPrimaryValue(row);
+			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true)).then(() => {
+				$scope.loadList();
+			})
+		};
+
+		/*
 		$scope.updateSortableIndexPositions = function(fieldName) {
 			angular.forEach($scope.data.listArray, function(value, key) {
 				var json = {};
 				json[fieldName] = key;
 				var pk = $scope.getRowPrimaryValue(value);
 				$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true), {
-					  ignoreLoadingBar: true
+					ignoreLoadingBar: true
 				});
 			});
 		};
+		*/
 
 		/***** LIST LOADERS ********/
 

@@ -2,6 +2,10 @@
 
 namespace luya\admin\traits;
 
+use luya\admin\ngrest\base\NgRestModel;
+use Yii;
+use yii\db\AfterSaveEvent;
+
 /**
  * Sortable Trait provides orderBy clause.
  *
@@ -23,6 +27,86 @@ namespace luya\admin\traits;
  */
 trait SortableTrait
 {
+    public function init()
+    {
+        parent::init();
+        $this->on(NgRestModel::EVENT_AFTER_INSERT, [$this, 'swapIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_UPDATE, [$this, 'swapIndex']);
+    }
+
+    public function swapIndex(AfterSaveEvent $event)
+    {
+        $attributeName = self::sortableField();
+        $oldPosition = array_key_exists($attributeName, $event->changedAttributes) ? $event->changedAttributes[$attributeName] : false;
+        $newPosition = $event->sender[$attributeName];
+
+        // nothing has changed, skip further updates
+        if ($oldPosition == $newPosition) {
+            return;
+        }
+        
+        $pkName = current($event->sender->primaryKey());
+
+        if (!$oldPosition && empty($newPosition)) {
+            Yii::debug('set max value for new record', __METHOD__);
+            // no index has been set, set max value (last position)
+            $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
+        } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
+            if ($newPosition > $oldPosition) {
+                // wenn neue position grösser als alte position: = (alte position – 1)+ *1
+                // find alle einträge 
+                $q = $event->sender->find()->andWhere([
+                    'and',
+                    ['!=', $pkName, $event->sender->primaryKey],
+                    ['>', $attributeName, $oldPosition],
+                    ['<=', $attributeName, $newPosition]
+                ])->all();
+
+                $i = 1;
+                foreach ($q as $item) {
+                    $item->updateAttributes([$attributeName => ($oldPosition - 1) + $i]);
+                    $i++;
+                }
+            } else {
+                // wenn neue position kleiner als alte position = (neue position + *1)
+                $q = $event->sender->find()->andWhere([
+                    'and',
+                    ['!=', $pkName, $event->sender->primaryKey],
+                    ['>=', $attributeName, $newPosition],
+                    ['<', $attributeName, $oldPosition]
+                ])->all();
+
+                $i = 1;
+                foreach ($q as $item) {
+                    $item->updateAttributes([$attributeName => $newPosition + $i]);
+                    $i++;
+                }
+            }
+        } else if (!empty($newPosition) && empty($oldPosition)) {
+            Yii::debug('new record with user input, move all other indexes', __METHOD__);
+            // its a new record where the user entered a position, lets move all the other higher indexes
+            $q = $event->sender->find()->andWhere([
+                'and',
+                ['!=', $pkName, $event->sender->primaryKey],
+                ['>=', $attributeName, $newPosition],
+            ])->all();
+
+            $i = 1;
+            foreach ($q as $item) {
+                $item->updateAttributes([$attributeName => $newPosition + $i]);
+                $i++;
+            }
+        }
+
+        $q = $event->sender->find()->asArray()->all();
+
+        $i = 1;
+        foreach ($q as $item) {
+            $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
+            $i++;
+        }
+    }
+    
     /**
      * The field which should by used to sort.
      *
