@@ -44,36 +44,54 @@ trait SortableTrait
         if ($oldPosition == $newPosition) {
             return;
         }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
         
-        $pkName = current($event->sender->primaryKey());
+            $pkName = current($event->sender->primaryKey());
 
-        if (!$oldPosition && empty($newPosition)) {
-            Yii::debug('set max value for new record', __METHOD__);
-            // no index has been set, set max value (last position)
-            $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
-        } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
-            if ($newPosition > $oldPosition) {
-                // wenn neue position grösser als alte position: = (alte position – 1)+ *1
-                // find alle einträge 
-                $q = $event->sender->find()->andWhere([
-                    'and',
-                    ['!=', $pkName, $event->sender->primaryKey],
-                    ['>', $attributeName, $oldPosition],
-                    ['<=', $attributeName, $newPosition]
-                ])->all();
+            if (!$oldPosition && empty($newPosition)) {
+                Yii::debug('set max value for new record', __METHOD__);
+                // no index has been set, set max value (last position)
+                $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
+            } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
+                if ($newPosition > $oldPosition) {
+                    // wenn neue position grösser als alte position: = (alte position – 1)+ *1
+                    // find alle einträge 
+                    $q = $event->sender->find()->andWhere([
+                        'and',
+                        ['!=', $pkName, $event->sender->primaryKey],
+                        ['>', $attributeName, $oldPosition],
+                        ['<=', $attributeName, $newPosition]
+                    ])->all();
 
-                $i = 1;
-                foreach ($q as $item) {
-                    $item->updateAttributes([$attributeName => ($oldPosition - 1) + $i]);
-                    $i++;
+                    $i = 1;
+                    foreach ($q as $item) {
+                        $item->updateAttributes([$attributeName => ($oldPosition - 1) + $i]);
+                        $i++;
+                    }
+                } else {
+                    // wenn neue position kleiner als alte position = (neue position + *1)
+                    $q = $event->sender->find()->andWhere([
+                        'and',
+                        ['!=', $pkName, $event->sender->primaryKey],
+                        ['>=', $attributeName, $newPosition],
+                        ['<', $attributeName, $oldPosition]
+                    ])->all();
+
+                    $i = 1;
+                    foreach ($q as $item) {
+                        $item->updateAttributes([$attributeName => $newPosition + $i]);
+                        $i++;
+                    }
                 }
-            } else {
-                // wenn neue position kleiner als alte position = (neue position + *1)
+            } else if (!empty($newPosition) && empty($oldPosition)) {
+                Yii::debug('new record with user input, move all other indexes', __METHOD__);
+                // its a new record where the user entered a position, lets move all the other higher indexes
                 $q = $event->sender->find()->andWhere([
                     'and',
                     ['!=', $pkName, $event->sender->primaryKey],
                     ['>=', $attributeName, $newPosition],
-                    ['<', $attributeName, $oldPosition]
                 ])->all();
 
                 $i = 1;
@@ -82,28 +100,23 @@ trait SortableTrait
                     $i++;
                 }
             }
-        } else if (!empty($newPosition) && empty($oldPosition)) {
-            Yii::debug('new record with user input, move all other indexes', __METHOD__);
-            // its a new record where the user entered a position, lets move all the other higher indexes
-            $q = $event->sender->find()->andWhere([
-                'and',
-                ['!=', $pkName, $event->sender->primaryKey],
-                ['>=', $attributeName, $newPosition],
-            ])->all();
+
+            $q = $event->sender->find()->asArray()->all();
 
             $i = 1;
             foreach ($q as $item) {
-                $item->updateAttributes([$attributeName => $newPosition + $i]);
+                $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
                 $i++;
             }
-        }
 
-        $q = $event->sender->find()->asArray()->all();
+            $transaction->commit();
 
-        $i = 1;
-        foreach ($q as $item) {
-            $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
-            $i++;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
         }
     }
     

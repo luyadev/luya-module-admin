@@ -569,13 +569,13 @@
 		/**** SORTABLE PLUGIN ****/
 
 		$scope.sortableUp = function(index, row, fieldName) {
-			var newPost = parseInt(row[fieldName]) - 1
-			$scope.updateSortableIndexPosition(row, fieldName, newPost);
+			var newPosition = index - 1
+			$scope.updateSortableIndexPosition(row, fieldName, newPosition);
 		};
 
 		$scope.sortableDown = function(index, row, fieldName) {
-			var newPost = parseInt(row[fieldName]) + 1
-			$scope.updateSortableIndexPosition(row, fieldName, newPost);
+			var newPosition = index + 1
+			$scope.updateSortableIndexPosition(row, fieldName, newPosition);
 		};
 
 		$scope.updateSortableIndexPosition = function(row, fieldName, newPosition) {
