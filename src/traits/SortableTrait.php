@@ -4,6 +4,7 @@ namespace luya\admin\traits;
 
 use luya\admin\ngrest\base\NgRestModel;
 use Yii;
+use yii\base\Event;
 use yii\db\AfterSaveEvent;
 
 /**
@@ -30,18 +31,43 @@ trait SortableTrait
     public function init()
     {
         parent::init();
-        $this->on(NgRestModel::EVENT_AFTER_INSERT, [$this, 'swapIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_INSERT, [$this, 'swapNewIndex']);
         $this->on(NgRestModel::EVENT_AFTER_UPDATE, [$this, 'swapIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_DELETE, [$this, 'deleteIndex']);
     }
 
-    public function swapIndex(AfterSaveEvent $event)
+    protected function deleteIndex(Event $event)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            $pkName = current($event->sender->primaryKey());
+            $this->reIndex($event, self::sortableField(), $pkName);
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    protected function swapNewIndex(AfterSaveEvent $event)
+    {
+        $this->swapIndex($event, true);
+    }
+
+    protected function swapIndex(AfterSaveEvent $event, $isNewRecord = false)
     {
         $attributeName = self::sortableField();
         $oldPosition = array_key_exists($attributeName, $event->changedAttributes) ? $event->changedAttributes[$attributeName] : false;
         $newPosition = $event->sender[$attributeName];
 
+        Yii::debug($oldPosition, __METHOD__);
+        Yii::debug($newPosition, __METHOD__);
         // nothing has changed, skip further updates
-        if ($oldPosition == $newPosition) {
+        if ($oldPosition == $newPosition && !$isNewRecord) {
             return;
         }
 
@@ -50,7 +76,7 @@ trait SortableTrait
         
             $pkName = current($event->sender->primaryKey());
 
-            if (!$oldPosition && empty($newPosition)) {
+            if (!$isNewRecord && empty($newPosition)) {
                 Yii::debug('set max value for new record', __METHOD__);
                 // no index has been set, set max value (last position)
                 $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
@@ -101,13 +127,7 @@ trait SortableTrait
                 }
             }
 
-            $q = $event->sender->find()->asArray()->all();
-
-            $i = 1;
-            foreach ($q as $item) {
-                $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
-                $i++;
-            }
+            $this->reIndex($event, $attributeName, $pkName);
 
             $transaction->commit();
 
@@ -117,6 +137,17 @@ trait SortableTrait
         } catch (\Throwable $e) {
             $transaction->rollBack();
             throw $e;
+        }
+    }
+
+    private function reIndex(Event $event, $attributeName, $pkName)
+    {
+        $q = $event->sender->find()->asArray()->all();
+
+        $i = 1;
+        foreach ($q as $item) {
+            $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
+            $i++;
         }
     }
     
