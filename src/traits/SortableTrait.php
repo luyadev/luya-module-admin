@@ -76,7 +76,7 @@ trait SortableTrait
         
             $pkName = current($event->sender->primaryKey());
 
-            if (!$isNewRecord && empty($newPosition)) {
+            if ($isNewRecord && empty($newPosition)) {
                 Yii::debug('set max value for new record', __METHOD__);
                 // no index has been set, set max value (last position)
                 $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
