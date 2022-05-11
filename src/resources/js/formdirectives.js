@@ -737,7 +737,8 @@ zaa.directive("zaaNumber", function () {
             "i18n": "@",
             "id": "@fieldid",
             "placeholder": "@",
-            "initvalue": "@"
+            "initvalue": "@",
+            "min": "@"
         },
         template: function () {
             return '' +
@@ -746,7 +747,7 @@ zaa.directive("zaaNumber", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<luya-number ng-model="model" fieldid="{{id}}" min="0" placeholder="{{placeholder}}" initvalue="{{initvalue}}"></luya-number>' +
+                        '<luya-number ng-model="model" fieldid="{{id}}" min="{{min}}" placeholder="{{placeholder}}" initvalue="{{initvalue}}"></luya-number>' +
                     '</div>' +
                 '</div>';
         }

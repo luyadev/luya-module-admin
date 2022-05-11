@@ -3,8 +3,9 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.4
+## 4.4.0
 
++ [#714](https://github.com/luyadev/luya-module-admin/pull/714) Improve the sorting ability by adding create, update and delete events which are attached from the SortableTrait. Sorting over pagination or swap index from form input is now possible too.
 + [#711](https://github.com/luyadev/luya-module-admin/pull/711) Add option to disable the auto logout when the user ip changes.
 + [#712](https://github.com/luyadev/luya-module-admin/pull/712) Fix issue where field labels where not used from models `getAttributeLabel()` when using `ngRestExport()`.
 
