@@ -587,19 +587,6 @@
 			})
 		};
 
-		/*
-		$scope.updateSortableIndexPositions = function(fieldName) {
-			angular.forEach($scope.data.listArray, function(value, key) {
-				var json = {};
-				json[fieldName] = key;
-				var pk = $scope.getRowPrimaryValue(value);
-				$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true), {
-					ignoreLoadingBar: true
-				});
-			});
-		};
-		*/
-
 		/***** LIST LOADERS ********/
 
 		/**

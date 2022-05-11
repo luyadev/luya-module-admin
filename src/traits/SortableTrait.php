@@ -8,7 +8,7 @@ use yii\base\Event;
 use yii\db\AfterSaveEvent;
 
 /**
- * Sortable Trait provides orderBy clause.
+ * Sortable Trait provides orderBy clause and re-index when update, delete or create rows.
  *
  * By default the field `sortindex` is taken, change this by override the `sortableField` method.
  *
@@ -28,15 +28,25 @@ use yii\db\AfterSaveEvent;
  */
 trait SortableTrait
 {
+    /**
+     * {@inheritDoc}
+     * @since 4.4.0
+     */
     public function init()
     {
         parent::init();
-        $this->on(NgRestModel::EVENT_AFTER_INSERT, [$this, 'swapNewIndex']);
-        $this->on(NgRestModel::EVENT_AFTER_UPDATE, [$this, 'swapIndex']);
-        $this->on(NgRestModel::EVENT_AFTER_DELETE, [$this, 'deleteIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_INSERT, [$this, 'newItemIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_UPDATE, [$this, 'updateItemIndex']);
+        $this->on(NgRestModel::EVENT_AFTER_DELETE, [$this, 'deleteItemIndex']);
     }
 
-    protected function deleteIndex(Event $event)
+    /**
+     * Update the index when deleting an item
+     *
+     * @param Event $event
+     * @since 4.4.0
+     */
+    protected function deleteItemIndex(Event $event)
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
@@ -53,19 +63,35 @@ trait SortableTrait
         }
     }
 
-    protected function swapNewIndex(AfterSaveEvent $event)
+    /**
+     * Update the index for a new item
+     *
+     * @param AfterSaveEvent $event
+     * @since 4.4.0
+     */
+    protected function newItemIndex(AfterSaveEvent $event)
     {
-        $this->swapIndex($event, true);
+        $this->updateItemIndex($event, true);
     }
 
-    protected function swapIndex(AfterSaveEvent $event, $isNewRecord = false)
+    /**
+     * Update the index for a given event.
+     * 
+     * Either
+     * - set the highest index available (if a row is created but no value has been given)
+     * - swap index for high to low position
+     * - swap index for low to hight position
+     *
+     * @param AfterSaveEvent $event
+     * @param boolean $isNewRecord
+     * @since 4.4.0
+     */
+    protected function updateItemIndex(AfterSaveEvent $event, $isNewRecord = false)
     {
         $attributeName = self::sortableField();
         $oldPosition = array_key_exists($attributeName, $event->changedAttributes) ? $event->changedAttributes[$attributeName] : false;
         $newPosition = $event->sender[$attributeName];
 
-        Yii::debug($oldPosition, __METHOD__);
-        Yii::debug($newPosition, __METHOD__);
         // nothing has changed, skip further updates
         if ($oldPosition == $newPosition && !$isNewRecord) {
             return;
@@ -73,64 +99,36 @@ trait SortableTrait
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-        
             $pkName = current($event->sender->primaryKey());
-
+            // no index has been set, set max value (last position)
             if ($isNewRecord && empty($newPosition)) {
-                Yii::debug('set max value for new record', __METHOD__);
-                // no index has been set, set max value (last position)
                 $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
             } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
+                $i = 1;
                 if ($newPosition > $oldPosition) {
-                    // wenn neue position grösser als alte position: = (alte position – 1)+ *1
-                    // find alle einträge 
-                    $q = $event->sender->find()->andWhere([
-                        'and',
-                        ['!=', $pkName, $event->sender->primaryKey],
-                        ['>', $attributeName, $oldPosition],
-                        ['<=', $attributeName, $newPosition]
-                    ])->all();
-
-                    $i = 1;
-                    foreach ($q as $item) {
+                    // when the new position is highter then the old one: (old position - 1) + *1
+                    foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>', $attributeName, $oldPosition], ['<=', $attributeName, $newPosition]])->all() as $item) {
                         $item->updateAttributes([$attributeName => ($oldPosition - 1) + $i]);
                         $i++;
                     }
                 } else {
-                    // wenn neue position kleiner als alte position = (neue position + *1)
-                    $q = $event->sender->find()->andWhere([
-                        'and',
-                        ['!=', $pkName, $event->sender->primaryKey],
-                        ['>=', $attributeName, $newPosition],
-                        ['<', $attributeName, $oldPosition]
-                    ])->all();
-
-                    $i = 1;
-                    foreach ($q as $item) {
+                    // when the new position is higher then the old one: (new position + *1)
+                    foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition], ['<', $attributeName, $oldPosition]])->all() as $item) {
                         $item->updateAttributes([$attributeName => $newPosition + $i]);
                         $i++;
                     }
                 }
             } else if (!empty($newPosition) && empty($oldPosition)) {
-                Yii::debug('new record with user input, move all other indexes', __METHOD__);
                 // its a new record where the user entered a position, lets move all the other higher indexes
-                $q = $event->sender->find()->andWhere([
-                    'and',
-                    ['!=', $pkName, $event->sender->primaryKey],
-                    ['>=', $attributeName, $newPosition],
-                ])->all();
-
                 $i = 1;
-                foreach ($q as $item) {
+                foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition]])->all() as $item) {
                     $item->updateAttributes([$attributeName => $newPosition + $i]);
                     $i++;
                 }
             }
 
             $this->reIndex($event, $attributeName, $pkName);
-
             $transaction->commit();
-
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
@@ -140,10 +138,17 @@ trait SortableTrait
         }
     }
 
+    /**
+     * ReIndex the all items to ensure consistent numbers
+     *
+     * @param Event $event
+     * @param string $attributeName
+     * @param string $pkName
+     * @since 4.4.0
+     */
     private function reIndex(Event $event, $attributeName, $pkName)
     {
         $q = $event->sender->find()->asArray()->all();
-
         $i = 1;
         foreach ($q as $item) {
             $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);
