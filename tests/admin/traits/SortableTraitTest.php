@@ -66,6 +66,25 @@ class SortableTraitTest extends AdminModelTestCase
         // ensures the sort index title = 3 is the last item, which is now since jane has swap to first position James
         $q = UserStub::find()->asArray()->all();
         $this->assertSame('James', $q[2]['firstname']);
+
+        // delete the model
+        $modelLast->delete();
+
+        // add new item
+        $newModel = new UserStub();
+        $newModel->title = 20;
+        $newModel->firstname = 'Han';
+        $newModel->lastname = 'Solo';
+        $newModel->email = 'hansolo@luya.io';
+        $newModel->password = 'doesnotexis434!@Aasdfts';
+        $newModel->is_deleted = false;
+        $this->assertTrue($newModel->save());
+
+        $newModel->refresh();
+
+        // the index has changed by the sortable plugin, even we have entered 20 as value
+        // since we have deleted an item, the index has now 3 entries and not 4
+        $this->assertSame('3', $newModel->title);
     }
 }
 
