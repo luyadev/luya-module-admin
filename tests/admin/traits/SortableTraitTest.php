@@ -41,8 +41,8 @@ class SortableTraitTest extends AdminModelTestCase
                 'user3' => [
                     'id' => 3,
                     'title' => 2,
-                    'firstname' => 'Is',
-                    'lastname' => 'Deleted',
+                    'firstname' => 'James',
+                    'lastname' => 'Doe',
                     'email' => 'deleted@luya.io',
                     'password' => 'nohash',
                     'is_deleted' => 0,
@@ -51,10 +51,21 @@ class SortableTraitTest extends AdminModelTestCase
             ]
         ]);
 
-        $q = UserStub::find()->asArray()->all();
+        $this->createAdminNgRestLogFixture();
+
 
         // ensures the sort index title = 3 is the last item, which is array index 2
+        $q = UserStub::find()->asArray()->all();
         $this->assertSame('Jane', $q[2]['firstname']);
+
+        // get last model (jane) and move to new position
+        $modelLast = UserStub::findOne(['id' => 2]);
+        $modelLast->title = 1;
+        $modelLast->save(true, ['title']);
+
+        // ensures the sort index title = 3 is the last item, which is now since jane has swap to first position James
+        $q = UserStub::find()->asArray()->all();
+        $this->assertSame('James', $q[2]['firstname']);
     }
 }
 
