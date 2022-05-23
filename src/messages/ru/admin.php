@@ -220,7 +220,7 @@ return [
     'model_user_title_mr' => 'Господин', // TODO: Consider options for addressing people of different genders in Russian
     'model_user_title_mrs' => 'Госпожа',
     'js_ngrest_toggler_success' => '%field% успешно обновлено.',
-    'layout_image_filter_selection' => 'Выбирите фильтр для изображения:',
+    'layout_image_filter_selection' => 'Выберите фильтр для изображения:',
     'lock_admin_edit_crud_item' => 'Редактирование {module} "{table}" (ID: {id}).',
     'lock_cms_edit_page' => 'Редактирование страницы "{title}".',
     'layout_filemanager_col_size' => 'Размер файла',
