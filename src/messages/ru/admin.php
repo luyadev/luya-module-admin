@@ -222,7 +222,7 @@ return [
     'js_ngrest_toggler_success' => '%field% успешно обновлено.',
     'layout_image_filter_selection' => 'Выбирите фильтр для изображения:',
     'lock_admin_edit_crud_item' => 'Редактирование {module} "{table}" (ID: {id}).',
-    'lock_cms_edit_page' => 'Радктирование страницы "{title}".',
+    'lock_cms_edit_page' => 'Редактирование страницы "{title}".',
     'layout_filemanager_col_size' => 'Размер файла',
     'js_filemanager_count_files_overlay' => '%count% файлов',
     'js_link_change_value' => 'Изменить ссылку',
