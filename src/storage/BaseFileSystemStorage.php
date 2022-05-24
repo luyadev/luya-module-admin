@@ -238,6 +238,7 @@ abstract class BaseFileSystemStorage extends Component
         'text/x-php',
         'text/plain',
         'application/x-spss',
+        'image/svg+xml',
     ];
 
     /**
