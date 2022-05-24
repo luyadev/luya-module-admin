@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.4.1 ()
+
++ [#713](https://github.com/luyadev/luya-module-admin/issues/713) Blacklist SVG mime type by default. In order to enable SVG Upload use `'whitelistMimeTypes' => ['image/svg+xml']`.
+
 ## 4.4.0 (19. May 2022)
 
 + [#714](https://github.com/luyadev/luya-module-admin/pull/714) Improve the sorting ability by adding create, update and delete events which are attached from the SortableTrait. Sorting over pagination or swap index from form input is now possible too.
