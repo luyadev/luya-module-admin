@@ -15,6 +15,7 @@ class Iterator extends \luya\admin\storage\IteratorAbstract
      *
      * @return \luya\admin\folder\Item
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return Item::create(current($this->data));
