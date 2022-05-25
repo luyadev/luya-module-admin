@@ -57,7 +57,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_api_last_activity'); ?></td>
-							<td><?= strftime("%x %X", $model->api_last_activity); ?></td>
+							<td><?= Yii::$app->formatter->asDatetime($model->api_last_activity, 'short'); ?></td>
 						</tr>
 					</table>
 				</div>
