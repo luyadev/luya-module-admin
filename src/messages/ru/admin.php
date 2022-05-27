@@ -488,7 +488,7 @@ return [
     'crop_size_desktop' => 'для настольных ПК',
     'crop_size_mobile' => 'для мобильных устройств',
     'crop_modal_title' => 'Кадрирование изображения',
-    'crop_success' => 'Изобраджение было кадрировано и сохранено.',
+    'crop_success' => 'Изображение было кадрировано и сохранено.',
     'file_caption_success' => 'Подписи были обновлены.',
     'crop_quality_high' => 'высокое',
     'crop_quality_medium' => 'среднее',
