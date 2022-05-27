@@ -40,7 +40,7 @@ return [
     'layout_filemanager_col_type' => 'Тип',
     'layout_filemanager_col_date' => 'Дата создания',
     'layout_filemanager_col_name' => 'Название файла',
-    'layout_filemanager_detail_name' => 'имя файла',
+    'layout_filemanager_detail_name' => 'Имя файла',
     'layout_filemanager_detail_date' => 'Дата создания',
     'layout_filemanager_detail_filetype' => 'Тип файла',
     'layout_filemanager_detail_size' => 'Размер',
