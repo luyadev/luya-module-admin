@@ -370,7 +370,7 @@ return [
     'js_scheduler_time' => 'Время выполнения',
     'js_scheduler_save' => 'Добавить',
     'js_scheduler_title_upcoming' => 'Предстоящее',
-    'js_scheduler_title_completed' => 'Заверешённое',
+    'js_scheduler_title_completed' => 'Завершённое',
     'js_scheduler_table_newvalue' => 'Новое значение',
     'js_scheduler_table_timestamp' => 'Время выполнения',
     'js_dir_manager_rename_success' => 'Директория успешно переименована.',
