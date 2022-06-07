@@ -2039,6 +2039,16 @@ zaa.directive("zaaCheckboxArray", function () {
             if ($scope.model === undefined) {
                 $scope.model = [];
             }
+
+            $scope.toggleAll = function () {
+                if ($scope.model.length) {
+                    $scope.model = [];
+                } else {
+                    for (let item of $scope.options.items) {
+                        $scope.model.push({ value: item.value });
+                    }
+                }
+            }
         }],
         template: function () {
             return '' +
@@ -2047,6 +2057,7 @@ zaa.directive("zaaCheckboxArray", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
+                        '<button ng-click="toggleAll()" type="button" class="ckeckbox-list-toggle-button btn btn-info btn-icon"><i class="material-icons">done_all</i></button>' +
                         '<luya-checkbox-array ng-model="model" options="options.items" preselectall="{{preselect}}" ng-attr-inline="{{inline}}"></luya-checkbox-array>' +
                     '</div>' +
                 '</div>';
