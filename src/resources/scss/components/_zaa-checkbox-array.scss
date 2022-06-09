@@ -9,3 +9,15 @@ zaa-checkbox-array .form-check {
     transform: translateY(-50%);
     z-index: z-index(above-content);
 }
+
+.zaa-checkbox-array-toggle-all {
+    float: right;
+    margin-top: 2px;
+    position: relative;
+    right: 0;
+}
+
+.zaa-checkbox-array-toggle-all + luya-checkbox-array {
+    width: calc(100% - 45px);
+    float: left;
+}

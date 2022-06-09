@@ -2057,7 +2057,7 @@ zaa.directive("zaaCheckboxArray", function () {
                         '<label for="{{id}}">{{label}}</label>' +
                     '</div>' +
                     '<div class="form-side">' +
-                        '<button ng-click="toggleAll()" type="button" class="ckeckbox-list-toggle-button btn btn-info btn-icon"><i class="material-icons">done_all</i></button>' +
+                        '<button ng-click="toggleAll()" type="button" class="zaa-checkbox-array-toggle-all btn btn-info btn-icon"><i class="material-icons">done_all</i></button>' +
                         '<luya-checkbox-array ng-model="model" options="options.items" preselectall="{{preselect}}" ng-attr-inline="{{inline}}"></luya-checkbox-array>' +
                     '</div>' +
                 '</div>';
