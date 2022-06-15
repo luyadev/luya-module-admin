@@ -157,6 +157,11 @@ trait SortableTrait
      */
     private function reIndex(Event $event, $attributeName, $pkName)
     {
+        $findQuery = $event->sender->find();
+
+        if ($findQuery instanceof NgRestActiveQuery && Yii::$app instanceof Application) {
+            $findQuery->inPool(Yii::$app->request->get('pool'));
+        }
         $q = $findQuery->asArray()->all();
         $i = 1;
         foreach ($q as $item) {
