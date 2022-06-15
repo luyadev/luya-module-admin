@@ -148,4 +148,14 @@ class UserControllerTest extends AdminModelTestCase
             $response = $scope->runControllerAction($ctrl, 'export');
         });
     }
+
+    public function testSearchSyntaxError()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('api-admin-user');
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
+            $response = $scope->runControllerAction($ctrl, 'search', ['query' => 'test']);
+            $this->assertEmpty($response);
+        });
+    }
 }
