@@ -449,7 +449,8 @@
 
 
 		$scope.submitUpdate = function (close) {
-			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
+			let activePool = $scope.config['activePool']
+			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId + '?pool=' + activePool, angular.toJson($scope.data.update, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_update']);
 				$scope.loadList($scope.pager.currentPage).then(function() {
 					$scope.applySaveCallback();
