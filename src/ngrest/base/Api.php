@@ -311,12 +311,14 @@ class Api extends RestActiveController
      *
      * If the pool identifier is not found, an exception will be thrown.
      *
-     * @param ActiveQueryInterface $query
+     * @param NgRestActiveQuery|ActiveQuery $query
      * @since 2.0.0
      */
-    private function appendPoolWhereCondition(ActiveQueryInterface $query)
+    private function appendPoolWhereCondition($query)
     {
-        $query->inPool(Yii::$app->request->get('pool'));
+        if ($query instanceof NgRestActiveQuery) {
+            $query->inPool(Yii::$app->request->get('pool'));
+        }
     }
     
     /**
@@ -608,7 +610,8 @@ class Api extends RestActiveController
         }
         
         $find = $this->model->ngRestFullQuerySearch($query);
-        
+        $this->appendPoolWhereCondition($find);
+
         return new ActiveDataProvider([
             'query' => $find->with($this->getWithRelation('search')),
             'pagination' => $this->pagination,
@@ -818,6 +821,8 @@ class Api extends RestActiveController
         } else {
             $query = $this->prepareListQuery()->with($this->getWithRelation('export'))->select($fields);
         }
+
+        $this->appendPoolWhereCondition($query);
 
         $exportFormatter = $this->model->ngRestExport();
 
