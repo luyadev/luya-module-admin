@@ -6,6 +6,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 4.4.1 ()
 
 + [#713](https://github.com/luyadev/luya-module-admin/issues/713) Blacklist SVG mime type by default. In order to enable SVG Upload use `'whitelistMimeTypes' => ['image/svg+xml']`.
++ [#723](https://github.com/luyadev/luya-module-admin/pull/723) Added "Toggle all" button to zaaCheckboxArray plugin.
 
 ## 4.4.0 (19. May 2022)
 
