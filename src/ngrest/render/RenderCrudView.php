@@ -7,6 +7,7 @@ use yii\helpers\Json;
 use yii\web\JsExpression;
 use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
+use Yii;
 
 /**
  * The View renderer for RenderCrud class.
@@ -65,6 +66,7 @@ class RenderCrudView extends View
             'relationCall' => $this->context->getRelationCall(),
             'relations' => $this->context->getConfig()->getRelations(),
             'pools' => $this->context->getActivePoolConfig(),
+            'activePool' => Yii::$app->request->get('pool'),
             'tagFilter' => ObjectHelper::isTraitInstanceOf($this->context->getModel(), TaggableTrait::class),
         ];
     }

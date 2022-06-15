@@ -579,10 +579,11 @@
 		};
 
 		$scope.updateSortableIndexPosition = function(row, fieldName, newPosition) {
+			let activePool = $scope.config['activePool']
 			var json = {};
 			json[fieldName] = newPosition;
 			var pk = $scope.getRowPrimaryValue(row);
-			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true)).then(() => {
+			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&pool='+activePool+'&fields='+fieldName, angular.toJson(json, true)).then(() => {
 				$scope.loadList();
 			})
 		};
