@@ -2,10 +2,12 @@
 
 namespace luya\admin\traits;
 
+use luya\admin\ngrest\base\NgRestActiveQuery;
 use luya\admin\ngrest\base\NgRestModel;
 use Yii;
 use yii\base\Event;
 use yii\db\AfterSaveEvent;
+use yii\web\Application;
 
 /**
  * Sortable Trait provides orderBy clause and re-index when update, delete or create rows.
@@ -99,21 +101,28 @@ trait SortableTrait
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
+
+            $findQuery = $event->sender->find();
+
+            if ($findQuery instanceof NgRestActiveQuery && Yii::$app instanceof Application) {
+                $findQuery->inPool(Yii::$app->request->get('pool'));
+            }
+
             $pkName = current($event->sender->primaryKey());
             // no index has been set, set max value (last position)
             if ($isNewRecord && empty($newPosition)) {
-                $event->sender->updateAttributes([$attributeName => $event->sender::find()->max($attributeName) + 1]);
+                $event->sender->updateAttributes([$attributeName => $findQuery->max($attributeName) + 1]);
             } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
                 $i = 1;
                 if ($newPosition > $oldPosition) {
                     // when the new position is highter then the old one: (old position - 1) + *1
-                    foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>', $attributeName, $oldPosition], ['<=', $attributeName, $newPosition]])->all() as $item) {
+                    foreach ($findQuery->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>', $attributeName, $oldPosition], ['<=', $attributeName, $newPosition]])->all() as $item) {
                         $item->updateAttributes([$attributeName => ($oldPosition - 1) + $i]);
                         $i++;
                     }
                 } else {
                     // when the new position is higher then the old one: (new position + *1)
-                    foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition], ['<', $attributeName, $oldPosition]])->all() as $item) {
+                    foreach ($findQuery->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition], ['<', $attributeName, $oldPosition]])->all() as $item) {
                         $item->updateAttributes([$attributeName => $newPosition + $i]);
                         $i++;
                     }
@@ -121,7 +130,7 @@ trait SortableTrait
             } else if (!empty($newPosition) && empty($oldPosition)) {
                 // its a new record where the user entered a position, lets move all the other higher indexes
                 $i = 1;
-                foreach ($event->sender->find()->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition]])->all() as $item) {
+                foreach ($findQuery->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition]])->all() as $item) {
                     $item->updateAttributes([$attributeName => $newPosition + $i]);
                     $i++;
                 }
@@ -148,7 +157,12 @@ trait SortableTrait
      */
     private function reIndex(Event $event, $attributeName, $pkName)
     {
-        $q = $event->sender->find()->asArray()->all();
+        $findQuery = $event->sender->find();
+
+        if ($findQuery instanceof NgRestActiveQuery && Yii::$app instanceof Application) {
+            $findQuery->inPool(Yii::$app->request->get('pool'));
+        }
+        $q = $findQuery->asArray()->all();
         $i = 1;
         foreach ($q as $item) {
             $event->sender->updateAll([$attributeName => $i], [$pkName => $item[$pkName]]);

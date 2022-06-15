@@ -449,7 +449,8 @@
 
 
 		$scope.submitUpdate = function (close) {
-			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId, angular.toJson($scope.data.update, true)).then(function(response) {
+			let activePool = $scope.config['activePool']
+			$http.put($scope.config.apiEndpoint + '/' + $scope.data.updateId + '?pool=' + activePool, angular.toJson($scope.data.update, true)).then(function(response) {
 				AdminToastService.success(i18n['js_ngrest_rm_update']);
 				$scope.loadList($scope.pager.currentPage).then(function() {
 					$scope.applySaveCallback();
@@ -579,10 +580,11 @@
 		};
 
 		$scope.updateSortableIndexPosition = function(row, fieldName, newPosition) {
+			let activePool = $scope.config['activePool']
 			var json = {};
 			json[fieldName] = newPosition;
 			var pk = $scope.getRowPrimaryValue(row);
-			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true)).then(() => {
+			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&pool='+activePool+'&fields='+fieldName, angular.toJson(json, true)).then(() => {
 				$scope.loadList();
 			})
 		};
