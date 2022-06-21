@@ -58,6 +58,10 @@ class SortableTraitTest extends AdminModelTestCase
         $q = UserStub::find()->asArray()->all();
         $this->assertSame('Jane', $q[2]['firstname']);
 
+        // ensures the sort index title = 3 is the last item, which is array index 2
+        $q = UserStub::ngRestFind()->asArray()->all();
+        $this->assertSame('Jane', $q[2]['firstname']);
+
         // get last model (jane) and move to new position
         $modelLast = UserStub::findOne(['id' => 2]);
         $modelLast->title = 1;
