@@ -186,7 +186,7 @@ trait SortableTrait
      */
     public static function ngRestFind()
     {
-        return parent::ngRestFind()->orderBy([parent::tableName().'.'.self::sortableField() => SORT_ASC]);
+        return parent::ngRestFind()->orderBy([self::tableName().'.'.self::sortableField() => SORT_ASC]);
     }
     
     /**
@@ -195,7 +195,7 @@ trait SortableTrait
      */
     public static function find()
     {
-        return parent::find()->orderBy([parent::tableName().'.'.self::sortableField() => SORT_ASC]);
+        return parent::find()->orderBy([self::tableName().'.'.self::sortableField() => SORT_ASC]);
     }
     
     /**
