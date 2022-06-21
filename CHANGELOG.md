@@ -8,6 +8,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#713](https://github.com/luyadev/luya-module-admin/issues/713) Blacklist SVG mime type by default. In order to enable SVG Upload use `'whitelistMimeTypes' => ['image/svg+xml']`.
 + [#723](https://github.com/luyadev/luya-module-admin/pull/723) Added "Toggle all" button to zaaCheckboxArray plugin.
 + [#724](https://github.com/luyadev/luya-module-admin/pull/724) Fixed issues with search and sortable when using Pools.
++ [#725](https://github.com/luyadev/luya-module-admin/pull/725) `SortableTrait` prefixes the table name now in the find querys in order to prevent issue when have two sortindex fields with the same name.
 
 ## 4.4.0 (19. May 2022)
 
