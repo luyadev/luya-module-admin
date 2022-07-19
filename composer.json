@@ -75,12 +75,13 @@
        }
    },
    "config": {
-        "platform": {
-            "php" : "7.4"
-        },
-        "fxp-asset": {
-            "enabled": false
-        }
+       "fxp-asset": {
+           "enabled": false
+       },
+      "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "luyadev/luya-composer": true
+      }
    },
    "repositories": [
        {
