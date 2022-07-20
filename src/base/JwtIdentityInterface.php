@@ -24,7 +24,7 @@ interface JwtIdentityInterface extends Configurable
      * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
-     *     $userId = $token->getClaim('uid');
+     *     $userId = $token->claims()->get('uid');
      *
      *     return User::find()->where(['id' => $userId, 'is_active' => true]);
      * }
@@ -37,7 +37,7 @@ interface JwtIdentityInterface extends Configurable
      * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
-     *     $userId = $token->getClaim('uid');
+     *     $userId = $token->claims()->get('uid');
      *     // get the jwt token
      *     $jwtToken = $token->toString();
      *
