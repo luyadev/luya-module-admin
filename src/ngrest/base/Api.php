@@ -172,7 +172,7 @@ class Api extends RestActiveController
      */
     public function getWithRelation($actionName)
     {
-        $expand = Yii::$app->request->get('expand', null);
+        $expand = Yii::$app->request->get('expand', '');
         $relationPrefixes = [];
         foreach (StringHelper::explode($expand, ',', true, true) as $relation) {
             // check for subrelation dot notation.

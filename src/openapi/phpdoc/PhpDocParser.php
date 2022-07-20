@@ -218,7 +218,7 @@ class PhpDocParser
      */
     public function normalizeTypes($type)
     {
-        $type = strtolower($type);
+        $type = strtolower((string) $type);
 
         // fix not supported short form types
         if ($type == 'bool') {

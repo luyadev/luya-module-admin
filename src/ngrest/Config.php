@@ -414,7 +414,7 @@ class Config extends BaseObject implements ConfigInterface
     public function getHash()
     {
         if ($this->_hash === null) {
-            $this->_hash = md5($this->getApiEndpoint());
+            $this->_hash = md5((string) $this->getApiEndpoint());
         }
 
         return $this->_hash;

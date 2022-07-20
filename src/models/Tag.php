@@ -146,7 +146,7 @@ final class Tag extends NgRestModel
     {
         return self::find()
             ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
-            ->where(['pk_id' => $pkId, 'table_name' => TaggableTrait::cleanBaseTableName($tableName)])
+            ->where(['pk_id' => $pkId, 'table_name' => StorageFile::cleanBaseTableName($tableName)])
             ->indexBy('name')
             ->orderBy(['name' => SORT_ASC])
             ->all();
@@ -162,7 +162,7 @@ final class Tag extends NgRestModel
     {
         return self::find()
             ->innerJoin(TagRelation::tableName(), '{{%admin_tag_relation}}.tag_id={{%admin_tag}}.id')
-            ->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])
+            ->where(['table_name' => StorageFile::cleanBaseTableName($tableName)])
             ->indexBy('name')
             ->orderBy(['name' => SORT_ASC])
             ->distinct()
@@ -186,7 +186,7 @@ final class Tag extends NgRestModel
     public function toggleRelationByModel(ActiveRecordInterface $model)
     {
         $pkId = $model->getPrimaryKey(false);
-        $tableName = TaggableTrait::cleanBaseTableName($model->tableName());
+        $tableName = StorageFile::cleanBaseTableName($model->tableName());
         
         return $this->toggleRelation($pkId, $tableName);
     }

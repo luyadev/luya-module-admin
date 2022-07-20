@@ -37,7 +37,7 @@ final class TagRelation extends ActiveRecord
     {
         parent::init();
         $this->on(self::EVENT_AFTER_VALIDATE, function () {
-            $this->table_name = TaggableTrait::cleanBaseTableName($this->table_name);
+            $this->table_name = StorageFile::cleanBaseTableName($this->table_name);
         });
     }
 
@@ -64,7 +64,7 @@ final class TagRelation extends ActiveRecord
      */
     public static function getDataForRelation($tableName, $pkId, $asArray = true)
     {
-        return self::find()->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName), 'pk_id' => $pkId])->asArray($asArray)->all();
+        return self::find()->where(['table_name' => StorageFile::cleanBaseTableName($tableName), 'pk_id' => $pkId])->asArray($asArray)->all();
     }
 
     /**
@@ -78,7 +78,7 @@ final class TagRelation extends ActiveRecord
      */
     public static function getDistinctDataForTable($tableName, $asArray = true)
     {
-        return self::find()->select('tag_id')->where(['table_name' => TaggableTrait::cleanBaseTableName($tableName)])->distinct()->asArray($asArray)->all();
+        return self::find()->select('tag_id')->where(['table_name' => StorageFile::cleanBaseTableName($tableName)])->distinct()->asArray($asArray)->all();
     }
     
     /**
@@ -145,6 +145,6 @@ final class TagRelation extends ActiveRecord
      */
     public static function cleanup(ActiveRecord $model)
     {
-        return self::deleteAll(['table_name' => TaggableTrait::cleanBaseTableName($model->tableName()), 'pk_id' => $model->getPrimaryKey()]);
+        return self::deleteAll(['table_name' => StorageFile::cleanBaseTableName($model->tableName()), 'pk_id' => $model->getPrimaryKey()]);
     }
 }
