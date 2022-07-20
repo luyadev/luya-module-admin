@@ -3,6 +3,7 @@
 namespace luya\admin\base;
 
 use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\Plain;
 use yii\base\Configurable;
 
 /**
@@ -20,7 +21,7 @@ interface JwtIdentityInterface extends Configurable
      * in order to get the user id use getClaim:
      *
      * ```php
-     * public staitc function loginByJwtToken(Token $token)
+     * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
      *     $userId = $token->getClaim('uid');
@@ -33,7 +34,7 @@ interface JwtIdentityInterface extends Configurable
      * retrieve the jwt token by calling `toString()` method.
      *
      * ```php
-     * public staitc function loginByJwtToken(Token $token)
+     * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
      *     $userId = $token->getClaim('uid');
@@ -50,7 +51,7 @@ interface JwtIdentityInterface extends Configurable
      * @param Token $token
      * @return self|boolean Return the user object which implements JwtIdentityInterface or false if not found and login is invalid.
      */
-    public static function loginByJwtToken(Token $token);
+    public static function loginByJwtToken(Plain $token);
 
     /**
      * Returns an ID that can uniquely identify a user identity.
