@@ -175,10 +175,9 @@ class Jwt extends JwtJwt
      * Authenticate a user from a given user
      *
      * @param string $token
-     * @param string $authMethod
      * @return null|true
      */
-    public function authenticateUser($token, $authMethod)
+    public function authenticateUser($token)
     {
         $modelClass = Yii::createObject($this->identityClass);
 
