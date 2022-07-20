@@ -6,6 +6,8 @@ use bizley\jwt\Jwt as JwtJwt;
 use Yii;
 use yii\base\InvalidConfigException;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Validation\Constraint\IssuedBy;
+use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use luya\admin\base\JwtIdentityInterface;
 use luya\admin\models\ApiUser;
 use luya\helpers\ObjectHelper;
@@ -110,6 +112,20 @@ class Jwt extends JwtJwt
 
         $this->signingKey = $this->key;
         $this->signer = self::HS256;
+        $this->validationConstraints = [
+            new PermittedFor($this->getAudience()),
+            new IssuedBy($this->getIssuer()),
+        ];
+    }
+
+    private function getAudience()
+    {
+        return $this->audience ? $this->audience : Yii::$app->request->hostInfo;
+    }
+
+    private function getIssuer()
+    {
+        return $this->issuer ? $this->issuer : Yii::$app->request->hostInfo;
     }
 
     /**
@@ -141,8 +157,8 @@ class Jwt extends JwtJwt
     {
         $now = new \DateTimeImmutable();
         $token = $this->getBuilder()
-            ->issuedBy($this->issuer ? $this->issuer : Yii::$app->request->hostInfo)
-            ->permittedFor($this->audience ? $this->audience : Yii::$app->request->hostInfo)
+            ->issuedBy($this->getIssuer())
+            ->permittedFor($this->getAudience())
             ->identifiedBy($user->getId())
             ->withClaim('uid', $user->getId())
             ->issuedAt($now)

@@ -18,6 +18,8 @@ class JwtHttpBearerAuthTest extends AdminTestCase
                     'class' => 'luya\admin\components\Jwt',
                     'key' => '3jlsdkfjlsdkjfsldjf',
                     'apiUserEmail' => 'foo@bar.com',
+                    'issuer' => 'foobarhost',
+                    'audience' => 'luya.io',
                     'identityClass' => [
                         'class' => 'luya\admin\tests\data\models\JwtModel',
                     ],
@@ -32,7 +34,10 @@ class JwtHttpBearerAuthTest extends AdminTestCase
     {
         $filter = new JwtHttpBearerAuth();
 
-        $this->assertNull($filter->loadToken('abc'));
+        $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
+        . 'eyJzdWIiOiIxMjM0NTY3ODkwIn0.'
+        . '2gSBz9EOsQRN9I-3iSxJoFt7NtgV6Rm0IL6a8CAwl3Q';
+        $this->assertNull($filter->processToken($token));
     }
 
     public function testChallange()
@@ -61,7 +66,7 @@ class JwtHttpBearerAuthTest extends AdminTestCase
 
     public function testInvalidToken()
     {
-        $_SERVER['HTTP_Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IjEifQ';
+        $_SERVER['HTTP_Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
         $filter = new JwtHttpBearerAuth();
         $this->assertNull($filter->authenticate($this->app->adminuser, $this->app->request, $this->app->response));
     }
