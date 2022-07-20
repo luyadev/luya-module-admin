@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.4.1 ()
+## 4.4.1 (20. July 2022)
 
 + [#713](https://github.com/luyadev/luya-module-admin/issues/713) Blacklist SVG mime type by default. In order to enable SVG Upload use `'whitelistMimeTypes' => ['image/svg+xml']`.
 + [#723](https://github.com/luyadev/luya-module-admin/pull/723) Added "Toggle all" button to zaaCheckboxArray plugin.
