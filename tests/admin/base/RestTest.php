@@ -9,6 +9,9 @@ use luya\admin\tests\NgRestTestCase;
 use luya\admin\models\ApiUser;
 use luya\admin\controllers\ApiUserController;
 use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\DataSet;
+use Lcobucci\JWT\Token\Plain;
+use Lcobucci\JWT\Token\Signature;
 use luya\admin\components\Auth;
 use luya\admin\tests\data\apis\StubApiUserApiController;
 use luya\admin\tests\data\controllers\StubApiUserControllerController;
@@ -33,6 +36,8 @@ class RestTest extends NgRestTestCase
                     'class' => 'luya\admin\components\Jwt',
                     'key' => 'xyz',
                     'apiUserEmail' => 'foo@bar.com',
+                    'issuer' => 'foobarhost',
+                    'audience' => 'luya.io',
                     'identityClass' => [
                         'class' => 'luya\admin\tests\data\models\JwtModel',
                     ],
@@ -89,11 +94,13 @@ class RestTest extends NgRestTestCase
         $r = $this->runControllerAction($this->api, 'list');
         $this->assertTrue(is_array($r));
 
-        $token = (new Token(['alg' => 'none'], [], null, [false, false]));
-        $this->assertNull($this->app->jwt->authenticateUser($token, 'athMethod'));
-        $token = (new Token(['alg' => 'none'], [], null, [true, true]));
+        $invalidToken = new Plain(new DataSet(['token' => 'invalid'], 'token=invalid'), new DataSet([], ''), new Signature('', ''));
+        $validToken = new Plain(new DataSet(['token' => 'valid'], 'token=valid'), new DataSet([], ''), new Signature('', ''));
+        //$token = (new Token(['alg' => 'none'], [], null, [false, false]));
+        $this->assertNull($this->app->jwt->authenticateUser($invalidToken, 'athMethod'));
 
-        $user = $this->app->jwt->authenticateUser($token, 'athMethod');
+        //$token = (new Token(['alg' => 'none'], [], null, [true, true]));
+        $user = $this->app->jwt->authenticateUser($validToken, 'athMethod');
         $this->assertSame('John', $user->firstname);
 
         $newUser = new JwtModel();
@@ -102,23 +109,23 @@ class RestTest extends NgRestTestCase
 
     public function testExceptionModel()
     {
-        $token = (new Token(['alg' => 'none'], [], null, [false, false]));
+        $invalidToken = new Plain(new DataSet(['token' => 'invalid'], 'token=invalid'), new DataSet([], ''), new Signature('', ''));
         $this->app->jwt->key = 'xyz';
         $this->app->jwt->apiUserEmail = $this->userFixture->getModel('user1')->email;
         $this->app->jwt->identityClass = 'luya\admin\models\User';
 
         $this->expectException('yii\base\InvalidConfigException');
-        $this->app->jwt->authenticateUser($token, 'athMethod');
+        $this->app->jwt->authenticateUser($invalidToken, 'athMethod');
     }
 
     public function testMisconfiguredJwtUser()
     {
-        $token = (new Token(['alg' => 'none'], [], null, [1, 1]));
+        $validToken = new Plain(new DataSet(['token' => 'valid'], 'token=valid'), new DataSet([], ''), new Signature('', ''));
         
         $this->app->jwt->key = 'xyz';
         $this->app->jwt->apiUserEmail = 'notfound@luya.io';
 
         $this->expectException('yii\base\InvalidConfigException');
-        $this->app->jwt->authenticateUser($token, 'athMethod');
+        $this->app->jwt->authenticateUser($validToken, 'athMethod');
     }
 }
