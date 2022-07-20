@@ -182,43 +182,36 @@ final class UserSetting extends BaseObject implements \ArrayAccess
     // ArrayAccess
 
     /**
-     * Exists method for ArrayAccess.
-     *
-     * @param string $offset The offset key
-     * @return boolean Whether the offset key exists in the array or not.
+     * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->has($offset);
     }
 
     /**
-     * Setter method for ArrayAccess.
-     *
-     * @param string $offset The offset key
-     * @param mixed $value The offset value
+     * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->set($offset, $value);
     }
 
     /**
-     * Unset method for ArrayAccess.
-     *
-     * @param string $offset The offset key
+     * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->remove($offset);
     }
 
     /**
-     * Getter method for ArrayAccess.
-     *
-     * @param string $offset The offset key
-     * @return mixed The value when accessing the array.
+     * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);

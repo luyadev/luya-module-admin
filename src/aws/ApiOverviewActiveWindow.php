@@ -113,7 +113,7 @@ class ApiOverviewActiveWindow extends ActiveWindow
      */
     public function callbackReplaceToken()
     {
-        $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->model->password_salt);
+        $randomToken = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), (string) $this->model->password_salt);
 
         return $this->model->updateAttributes([
             'auth_token' => $randomToken,

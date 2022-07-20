@@ -24,6 +24,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      *
      * @return int The number of elements in the object.
     */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->data);
@@ -34,6 +35,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      *
      * @return string The current key
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->data);
@@ -44,6 +46,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         return next($this->data);
@@ -54,6 +57,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         return reset($this->data);
@@ -64,10 +68,12 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return key($this->data) !== null;
     }
     
+    #[\ReturnTypeWillChange]
     abstract public function current();
 }

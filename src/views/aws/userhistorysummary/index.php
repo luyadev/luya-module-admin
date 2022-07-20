@@ -1,5 +1,6 @@
 <?php
 
+use luya\admin\models\StorageFile;
 use luya\helpers\Html;
 use yii\helpers\VarDumper;
 use luya\admin\Module;
@@ -57,7 +58,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 						</tr>
 						<tr>
 							<td><?= Module::t('model_user_api_last_activity'); ?></td>
-							<td><?= strftime("%x %X", $model->api_last_activity); ?></td>
+							<td><?= Yii::$app->formatter->asDatetime($model->api_last_activity, 'short'); ?></td>
 						</tr>
 					</table>
 				</div>
@@ -130,7 +131,7 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 		    		<?php elseif ($log->is_delete): ?>
 			    		<i class="material-icons" alt="Deleted">delete</i>
 			    	<?php endif; ?>
-			    	<span class="badge badge-secondary"><?= TaggableTrait::cleanBaseTableName($log->table_name); ?></span>
+			    	<span class="badge badge-secondary"><?= StorageFile::cleanBaseTableName($log->table_name); ?></span>
 			    	<span class="badge badge-info">ID #<?= $log->pk_value; ?></span>
 			    	<?= Yii::$app->formatter->asRelativeTime($log->timestamp_create); ?>
 			    </span>

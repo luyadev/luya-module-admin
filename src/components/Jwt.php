@@ -2,10 +2,12 @@
 
 namespace luya\admin\components;
 
+use bizley\jwt\Jwt as JwtJwt;
 use Yii;
 use yii\base\InvalidConfigException;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
-use sizeg\jwt\Jwt as BaseJwt;
+use Lcobucci\JWT\Validation\Constraint\IssuedBy;
+use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use luya\admin\base\JwtIdentityInterface;
 use luya\admin\models\ApiUser;
 use luya\helpers\ObjectHelper;
@@ -60,7 +62,7 @@ use luya\helpers\ObjectHelper;
  * @author Basil Suter <basil@nadar.io>
  * @since 2.0.2
  */
-class Jwt extends BaseJwt
+class Jwt extends JwtJwt
 {
     /**
      * @var JwtIdentityInterface If an authentification trough jwt token happnes, this variable holds the jwt user identity.
@@ -95,16 +97,35 @@ class Jwt extends BaseJwt
      */
     public $audience;
 
+    public $key;
+
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
         if (!$this->apiUserEmail || !$this->identityClass || !$this->key) {
             throw new InvalidConfigException("The attributes apiUserEmail, identityClass and key can not be empty.");
         }
+
+        $this->signingKey = $this->key;
+        $this->signer = self::HS256;
+        $this->validationConstraints = [
+            new PermittedFor($this->getAudience()),
+            new IssuedBy($this->getIssuer()),
+        ];
+    }
+
+    private function getAudience()
+    {
+        return $this->audience ? $this->audience : Yii::$app->request->hostInfo;
+    }
+
+    private function getIssuer()
+    {
+        return $this->issuer ? $this->issuer : Yii::$app->request->hostInfo;
     }
 
     /**
@@ -134,17 +155,20 @@ class Jwt extends BaseJwt
      */
     public function generateToken(JwtIdentityInterface $user)
     {
+        $now = new \DateTimeImmutable();
         $token = $this->getBuilder()
-            ->setIssuer($this->issuer ? $this->issuer : Yii::$app->request->hostInfo) // Configures the issuer (iss claim)
-            ->setAudience($this->audience ? $this->audience : Yii::$app->request->hostInfo) // Configures the audience (aud claim)
-            ->setId($user->getId(), true) // Configures the id (jti claim), replicating as a header item
-            ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
-            ->setExpiration(time() + $this->expireTime) // Configures the expiration time of the token (exp claim)
-            ->set('uid', $user->getId()) // Configures a new claim, called "uid", this information can be retrieved later to identify the user
-            ->sign(new Sha256(), $this->key) // creates a signature using [[Jwt::$key]]
-            ->getToken();
+            ->issuedBy($this->getIssuer())
+            ->permittedFor($this->getAudience())
+            ->identifiedBy($user->getId())
+            ->withClaim('uid', $user->getId())
+            ->issuedAt($now)
+            ->expiresAt($now->modify('+'.$this->expireTime . ' minutes'))
+            ->getToken(
+                $this->getConfiguration()->signer(),
+                $this->getConfiguration()->signingKey()
+            );
 
-        return $token->__toString();
+        return $token->toString();
     }
 
     /**
@@ -176,7 +200,7 @@ class Jwt extends BaseJwt
 
             $this->identity = $auth;
 
-            return Yii::$app->adminuser->loginByAccessToken($user->auth_token, 'sizeg\jwt\JwtHttpBearerAuth');
+            return Yii::$app->adminuser->loginByAccessToken($user->auth_token, 'bizley\jwt\JwtHttpBearerAuth');
         }
 
         return null;

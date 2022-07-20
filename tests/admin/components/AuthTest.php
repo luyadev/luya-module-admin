@@ -22,8 +22,8 @@ class AuthTest extends AdminTestCase
         
         $this->assertTrue(is_array($perm));
         $this->assertSame(1, count($perm));
-        $this->assertSame("1", $perm[0]['user_id']);
-        $this->assertSame("1", $perm[0]['group_id']);
+        $this->assertSame(1, (int) $perm[0]['user_id']);
+        $this->assertSame(1, (int) $perm[0]['group_id']);
     }
     
     /*

@@ -16,7 +16,7 @@ class JwtModel extends Model implements JwtIdentityInterface
 
     public static function loginByJwtToken(Token $token)
     {
-        if ($token->getPayload() == '1.1') {
+        if ($token->headers()->toString() == 'token=valid') {
             $model = new NgRestModelFixture([
                 'modelClass' => ApiUser::class,
                 'fixtureData' => [

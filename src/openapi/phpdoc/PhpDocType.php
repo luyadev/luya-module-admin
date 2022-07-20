@@ -30,7 +30,7 @@ class PhpDocType
 
     public function __construct(PhpDocParser $phpDocParser, $type)
     {
-        $this->rawName = $type;
+        $this->rawName = (string) $type;
         $this->name = $phpDocParser->normalizeTypes($type);
         $this->phpDocParser = $phpDocParser;
     }

@@ -2,6 +2,7 @@
 
 namespace luya\admin\commands;
 
+use luya\admin\models\StorageFile;
 use Yii;
 use luya\console\Command;
 use luya\admin\models\TagRelation;
@@ -31,7 +32,7 @@ class TagController extends Command
         foreach ($batch as $rows) {
             foreach ($rows as $relation) {
                 $i++;
-                $tableName = TaggableTrait::cleanBaseTableName($relation->table_name);
+                $tableName = StorageFile::cleanBaseTableName($relation->table_name);
                 if ($relation->table_name !== $tableName) {
 
                     // if the new name exists already as combination, we can just delete the old one.

@@ -30,7 +30,7 @@ interface JwtIdentityInterface extends Configurable
      * ```
      *
      * Depending on your setup you also might to store the jwt token while authentication. Then you can
-     * retrieve the jwt token by calling `__toString()` method.
+     * retrieve the jwt token by calling `toString()` method.
      *
      * ```php
      * public staitc function loginByJwtToken(Token $token)
@@ -38,7 +38,7 @@ interface JwtIdentityInterface extends Configurable
      *     // get the user id
      *     $userId = $token->getClaim('uid');
      *     // get the jwt token
-     *     $jwtToken = $token->__toString();
+     *     $jwtToken = $token->toString();
      *
      *     return User::findOne(['id' => $userId, 'jwt_access_token' => $jwtToken]);
      * }

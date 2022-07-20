@@ -28,11 +28,11 @@
        "issues": "https://github.com/luyadev/luya-module-admin/issues"
    },
    "require": {
-       "luyadev/luya-core": "^2.0",
+       "luyadev/luya-core": "^2.2",
        "yiisoft/yii2-imagine": "^2.1",
        "yiisoft/yii2-queue": "^2.0",
        "flowjs/flow-php-server": "^1.0",
-       "sizeg/yii2-jwt": "^1.2",
+       "bizley/jwt": "^3.2",
        "whichbrowser/parser": "^2.0",
        "robthree/twofactorauth": "^1.7"
    },
@@ -75,13 +75,16 @@
        }
    },
    "config": {
-       "fxp-asset": {
-           "enabled": false
-       },
-      "allow-plugins": {
+        "fxp-asset": {
+            "enabled": false
+        },
+        "platform": {
+            "php" : "7.4"
+        },
+        "allow-plugins": {
             "yiisoft/yii2-composer": true,
             "luyadev/luya-composer": true
-      }
+        }
    },
    "repositories": [
        {

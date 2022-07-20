@@ -132,7 +132,7 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given file to toggle the tag.");
         }
     
-        $relation = TagRelation::find()->where(['table_name' => TaggableTrait::cleanBaseTableName(StorageFile::tableName()), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
+        $relation = TagRelation::find()->where(['table_name' => StorageFile::cleanBaseTableName(StorageFile::tableName()), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
 
         if ($relation) {
             $relation->delete();
@@ -141,7 +141,7 @@ class StorageController extends RestController
         }
 
         $model = new TagRelation();
-        $model->table_name = TaggableTrait::cleanBaseTableName(StorageFile::tableName());
+        $model->table_name = StorageFile::cleanBaseTableName(StorageFile::tableName());
         $model->pk_id = $fileId;
         $model->tag_id = $tagId;
 
