@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php: [7.4', '8.0', '8.1']
       
     services:
       mysql:
@@ -51,20 +51,15 @@ jobs:
           sudo /etc/init.d/mysql start
           mysql -h 127.0.0.1 --port 33306 -u root -proot myapp_test < tests/data/sql/1.0.0.sql 
 
-      ## run unit tests
-      - name: PHP Unit tests for 7.2, 7.3
-        run: vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '7.3' || matrix.php == '7.2'
-
       - name: PHP Unit tests for 7.4, 8.0, 8.1
         run: | 
           ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
         if: matrix.php == '7.4' || matrix.php == '8.0' || matrix.php == '8.1'
 
       ## unit test with coverage
-      - name: PHP Unit tests for PHP 7.1
+      - name: PHP Unit tests for PHP 7.4
         run: vendor/bin/phpunit --verbose --coverage-clover=clover.xml --configuration actions.phpunit.xml
-        if: matrix.php == '7.1'
+        if: matrix.php == '7.4'
 
       ## coverage
       - name: Code coverage
@@ -72,5 +67,5 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter after-build -t clover
-        if: matrix.php == '7.1'
+        if: matrix.php == '7.4'
         continue-on-error: true # if is fork

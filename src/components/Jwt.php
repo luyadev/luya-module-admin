@@ -98,7 +98,7 @@ class Jwt extends BaseJwt
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
