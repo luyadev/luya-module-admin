@@ -158,7 +158,7 @@ class NgRestActiveQuery extends ActiveQuery
     {
         $modelClass = $this->modelClass;
         $keys = $modelClass::primaryKey();
-        $values = is_array($condition) ? array_values($condition) : explode(',', $condition);
+        $values = is_array($condition) ? array_values($condition) : explode(',', (string) $condition);
 
         if (count($keys) !== count($values)) {
             throw new Exception("The number of primary key condition values must be equals the number of primary keys ".count($keys)." available for this model.");

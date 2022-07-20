@@ -193,7 +193,7 @@ class LogController extends Command
      */
     private function validateTables($logTableName)
     {
-        if (strtoupper($logTableName) !== self::ALL_TABLES) {
+        if ($logTableName && strtoupper($logTableName) !== self::ALL_TABLES) {
             // extarct the table names and check them towards the known list of log tables
             $logTableList = explode(',', $logTableName);
             $wrongTableNames = array_diff($logTableList, array_keys($this->_dbLogTables));

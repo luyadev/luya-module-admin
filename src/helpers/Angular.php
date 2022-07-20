@@ -576,7 +576,11 @@ class Angular
      */
     public static function variablizeContext($ngModel, $string, $angularJsVariable)
     {
-        preg_match_all('/{(.*?)}/', (string) $string, $matches, PREG_SET_ORDER);
+        if (!$string) {
+            return $string;
+        }
+
+        preg_match_all('/{(.*?)}/', $string, $matches, PREG_SET_ORDER);
         $search = [];
         $replace = [];
         foreach ($matches as $match) {

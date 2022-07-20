@@ -97,7 +97,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
             'template' => StringHelper::template($this->_template, $customVars, false),
         ];
 
-        return StringHelper::template($content, array_merge($vars, $customVars), true);
+        return StringHelper::template((string) $content, array_merge($vars, $customVars), true);
     }
     
     private $_dataApiUrl;
