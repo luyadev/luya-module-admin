@@ -71,7 +71,7 @@ trait AdminRestBehaviorTrait
         // if the jwt component is registered, authentication will be enabled.
         if (Yii::$app->get('jwt', false)) {
             array_unshift($methods, [
-                'class' => 'sizeg\jwt\JwtHttpBearerAuth',
+                'class' => 'bizley\jwt\JwtHttpBearerAuth',
                 'auth' => [Yii::$app->jwt, 'authenticateUser'],
             ]);
         }

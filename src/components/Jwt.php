@@ -5,7 +5,7 @@ namespace luya\admin\components;
 use Yii;
 use yii\base\InvalidConfigException;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
-use sizeg\jwt\Jwt as BaseJwt;
+use bizley\jwt\Jwt as BaseJwt;
 use luya\admin\base\JwtIdentityInterface;
 use luya\admin\models\ApiUser;
 use luya\helpers\ObjectHelper;
@@ -176,7 +176,7 @@ class Jwt extends BaseJwt
 
             $this->identity = $auth;
 
-            return Yii::$app->adminuser->loginByAccessToken($user->auth_token, 'sizeg\jwt\JwtHttpBearerAuth');
+            return Yii::$app->adminuser->loginByAccessToken($user->auth_token, 'bizley\jwt\JwtHttpBearerAuth');
         }
 
         return null;

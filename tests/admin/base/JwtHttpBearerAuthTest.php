@@ -4,7 +4,7 @@ namespace luya\admin\tests\admin\base;
 
 use admintests\AdminTestCase;
 use luya\helpers\ArrayHelper;
-use sizeg\jwt\JwtHttpBearerAuth;
+use bizley\jwt\JwtHttpBearerAuth;
 
 class JwtHttpBearerAuthTest extends AdminTestCase
 {
