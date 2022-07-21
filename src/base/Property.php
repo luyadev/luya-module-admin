@@ -107,6 +107,14 @@ abstract class Property extends Component implements TypesInterface
     abstract public function type();
 
     /**
+     * {@inheritDoc}
+     */
+    final public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
+
+    /**
      * When the object is force to return as string the `getValue()` method is returned.
      *
      * @return mixed

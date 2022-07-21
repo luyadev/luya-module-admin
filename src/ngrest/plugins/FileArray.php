@@ -118,6 +118,8 @@ class FileArray extends Plugin
         if ($this->fileIterator) {
             $this->writeAttribute($event, $this->parseFileIteration($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 
     /**

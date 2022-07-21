@@ -253,6 +253,8 @@ class SelectModel extends Select
         if ($this->modelClass !== $event->sender->className()) {
             return parent::onAfterListFind($event);
         }
+
+        return true;
     }
 
     /**

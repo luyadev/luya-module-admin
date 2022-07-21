@@ -81,6 +81,8 @@ class Image extends Plugin
         if ($this->imageItem) {
             $this->writeAttribute($event, Yii::$app->storage->getImage($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 
     public function serviceData($event)

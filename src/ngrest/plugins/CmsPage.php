@@ -50,5 +50,7 @@ class CmsPage extends Plugin
 
         // assign value
         $this->writeAttribute($event, $menuItem);
+
+        return true;
     }
 }

@@ -68,6 +68,8 @@ class Number extends Plugin
         } else {
             $this->writeAttribute($event, (int) $fieldValue);
         }
+        
+        return true;
     }
 
     /**
@@ -76,5 +78,7 @@ class Number extends Plugin
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, (int) $event->sender->getAttribute($this->name));
+
+        return true;
     }
 }

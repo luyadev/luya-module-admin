@@ -2,8 +2,6 @@
 
 namespace luya\admin\components;
 
-use yii;
-
 /**
  * Url rule for NgRest Apis.
  *

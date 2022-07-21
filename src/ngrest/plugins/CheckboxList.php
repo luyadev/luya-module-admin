@@ -174,5 +174,7 @@ class CheckboxList extends Plugin
             }
             $this->writeAttribute($event, implode(", ", $results));
         }
+
+        return true;
     }
 }

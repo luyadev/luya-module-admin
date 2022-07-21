@@ -122,7 +122,6 @@ trait AdminRestBehaviorTrait
      * checks if the current user is an api user and therefore restricsts the access to such calls, unless the property
      * {{luya\admin\Module::$apiUserAllowActionsWithoutPermissions}} is enabled.
      *
-     * @return boolean
      * @since 2.2.0
      */
     public function canApiUserAccess()

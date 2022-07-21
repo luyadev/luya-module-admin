@@ -25,7 +25,7 @@ class PhpDocParam
     /**
      * Get name ($name) of the variable.
      *
-     * @return void
+     * @return string
      */
     public function getName()
     {

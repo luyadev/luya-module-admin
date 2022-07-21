@@ -18,7 +18,6 @@ interface NgRestModelInterface extends ActiveRecordInterface
      * Defines the base inline configuration for the current Model.
      *
      * @param \luya\admin\ngrest\ConfigBuilder $config ConfigBuilder Object
-     * @return \luya\admin\ngrest\ConfigBuilder
      */
     public function ngRestConfig($config);
 

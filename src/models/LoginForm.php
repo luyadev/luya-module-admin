@@ -120,6 +120,8 @@ final class LoginForm extends Model
         }
 
         $user->updateAttributes(['login_attempt' => $this->attempts]);
+
+        return false;
     }
 
     /**

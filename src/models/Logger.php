@@ -156,6 +156,8 @@ final class Logger extends NgRestModel
             case self::TYPE_SUCCESS:
                 return '<span class="badge badge-success">success</span>';
         }
+
+        return '';
     }
 
     public function ngRestGroupByField()
@@ -177,7 +179,7 @@ final class Logger extends NgRestModel
     public function ngRestConfig($config)
     {
         $config->aw->load([
-            'class' => DetailViewActiveWindow::className(),
+            'class' => DetailViewActiveWindow::class,
             'attributes' => [
                 'id',
                 'time:datetime',

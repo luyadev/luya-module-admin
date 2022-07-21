@@ -67,8 +67,6 @@ class UserChangePassword extends Model
 
     /**
      * Checks if the password is valid and stores the new password.
-     *
-     * @return boolean
      */
     public function checkAndStore()
     {

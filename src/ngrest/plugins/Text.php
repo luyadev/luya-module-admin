@@ -60,6 +60,8 @@ class Text extends Plugin
         if ($this->encoding) {
             $this->writeAttribute($event, HtmlHelper::encode($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 
     /**

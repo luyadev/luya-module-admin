@@ -252,6 +252,8 @@ class CheckboxRelation extends Plugin
             $data[] = ['value' => $item[$this->getModelPrimaryKey()]];
         }
         $event->sender->{$this->name} = $data;
+
+        return true;
     }
 
     /**
@@ -262,6 +264,8 @@ class CheckboxRelation extends Plugin
         if (!$this->onlyRestScenarios) {
             $event->sender->{$this->name} = $this->getRelationData($event);
         }
+
+        return true;
     }
 
     private function getRelationData($event)

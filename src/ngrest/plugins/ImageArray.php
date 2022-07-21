@@ -133,6 +133,8 @@ class ImageArray extends Plugin
         if ($this->imageIterator) {
             $this->writeAttribute($event, $this->parseImageIteration($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 
     /**

@@ -89,6 +89,8 @@ class Textarea extends Plugin
         if ($this->markdown) {
             $this->writeAttribute($event, TagParser::convertWithMarkdown($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 
     /**

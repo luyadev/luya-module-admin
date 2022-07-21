@@ -53,5 +53,7 @@ class Html extends Plugin
         if ($this->nl2br) {
             $this->writeAttribute($event, nl2br($event->sender->getAttribute($this->name)));
         }
+
+        return true;
     }
 }
