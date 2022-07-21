@@ -2,16 +2,16 @@
 
 namespace luya\admin\controllers;
 
-use Yii;
-use luya\admin\Module;
-use luya\helpers\Url;
-use yii\helpers\Json;
 use luya\admin\base\Controller;
 use luya\admin\models\UserDevice;
+use luya\admin\models\UserLogin;
+use luya\admin\Module;
+use luya\helpers\Url;
 use luya\TagParser;
 use luya\web\View;
+use Yii;
+use yii\helpers\Json;
 use yii\helpers\Markdown;
-use luya\admin\models\UserLogin;
 
 /**
  * Administration Controller provides, dashboard, logout and index.
@@ -25,12 +25,12 @@ class DefaultController extends Controller
      * @var boolean Whether the permission system should apply or not, if disabled it will stil check if admin user is logged in or not.
      */
     public $disablePermissionCheck = true;
-    
+
     /**
      * @var string Path to the admin layout
      */
     public $layout = '@admin/views/layouts/main';
-    
+
     /**
      * Find assets to register, and add them into the view.
      */
@@ -38,7 +38,7 @@ class DefaultController extends Controller
     {
         // call parent
         parent::init();
-    
+
         // get controller based assets
         foreach (Yii::$app->getAdminModulesAssets() as $class) {
             $this->registerAsset($class);
@@ -71,23 +71,23 @@ class DefaultController extends Controller
                 'readme' => Markdown::process($object->readme()),
             ];
         }
-        
+
         // register i18n
         $this->view->registerJs('var i18n=' . Json::encode($this->module->jsTranslations), View::POS_HEAD);
-        
+
         $where = ['user_id' => Yii::$app->adminuser->id, 'is_destroyed' => false];
         if ($this->module->logoutOnUserIpChange) {
             $where['ip'] = Yii::$app->request->userIP;
         }
         $authToken = UserLogin::find()->select(['auth_token'])->andWHere($where)->scalar();
-        
+
         $this->view->registerJs('zaa.run([\'$rootScope\', function($rootScope) { $rootScope.luyacfg = ' . Json::encode([
             'authToken' => $authToken,
             'homeUrl' => Url::home(true),
             'i18n' => $this->module->jsTranslations,
             'helptags' => $tags,
         ]). '; }]);', View::POS_END);
-        
+
         return $this->render('index');
     }
 
@@ -104,7 +104,7 @@ class DefaultController extends Controller
                 $items[] = Yii::createObject($config);
             }
         }
-        
+
         return $this->renderPartial('dashboard', [
             'items' => $items,
         ]);
@@ -124,10 +124,10 @@ class DefaultController extends Controller
         if (!Yii::$app->adminuser->logout(false)) {
             Yii::$app->session->destroy();
         }
-        
+
         return $this->redirect(['/admin/login/index', 'autologout' => $autologout]);
     }
-    
+
     /**
      * Context helper for layout main.php in order to colorize debug informations.
      *

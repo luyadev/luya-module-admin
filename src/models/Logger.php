@@ -2,11 +2,11 @@
 
 namespace luya\admin\models;
 
-use yii\helpers\Json;
-use yii\base\Arrayable;
-use luya\admin\ngrest\base\NgRestModel;
-use luya\admin\Module;
 use luya\admin\aws\DetailViewActiveWindow;
+use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
+use yii\base\Arrayable;
+use yii\helpers\Json;
 
 /**
  * Application Logger.
@@ -83,23 +83,23 @@ final class Logger extends NgRestModel
     /**
      * @var integer Type level info.
      */
-    const TYPE_INFO = 1;
-    
+    public const TYPE_INFO = 1;
+
     /**
      * @var integer Type level warning.
      */
-    const TYPE_WARNING = 2;
-    
+    public const TYPE_WARNING = 2;
+
     /**
      * @var integer Type level error.
      */
-    const TYPE_ERROR = 3;
-    
+    public const TYPE_ERROR = 3;
+
     /**
      * @var integer Type level success.
      */
-    const TYPE_SUCCESS = 4;
-    
+    public const TYPE_SUCCESS = 4;
+
     /**
      * @inheritdoc
      */
@@ -115,7 +115,7 @@ final class Logger extends NgRestModel
     {
         return 'api-admin-logger';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -128,7 +128,7 @@ final class Logger extends NgRestModel
             'group_identifier_index' => 'number',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -138,7 +138,7 @@ final class Logger extends NgRestModel
             'typeBadge' => ['html', 'sortField' => 'type'],
         ];
     }
-    
+
     /**
      * Get the html badge for a status type in order to display inside the admin module.
      *
@@ -157,12 +157,12 @@ final class Logger extends NgRestModel
                 return '<span class="badge badge-success">success</span>';
         }
     }
-    
+
     public function ngRestGroupByField()
     {
         return 'group_identifier';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -170,7 +170,7 @@ final class Logger extends NgRestModel
     {
         return ['typeBadge'];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -196,7 +196,7 @@ final class Logger extends NgRestModel
         $this->ngRestConfigDefine($config, ['list'], ['message', 'typeBadge', 'time', 'group_identifier', 'group_identifier_index']);
         $config->delete = true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -224,10 +224,10 @@ final class Logger extends NgRestModel
         if (self::$requestIdentifier === null) {
             self::$requestIdentifier = uniqid('logger', true);
         }
-        
+
         return self::$requestIdentifier;
     }
-    
+
     /**
      * Get array index based on identifiers.
      *
@@ -243,15 +243,15 @@ final class Logger extends NgRestModel
         } else {
             self::$identiferIndex[$hash] = 1;
         }
-    
+
         $hashIndex =  self::$identiferIndex[$hash];
-    
+
         return [
             'hash' => $hash,
             'index' => $hashIndex,
         ];
     }
-    
+
     /**
      * Internal generate log message.
      *
@@ -264,28 +264,28 @@ final class Logger extends NgRestModel
     private static function log($type, $message, $trace, $groupIdentifier)
     {
         $hashArray = static::getHashArray($message, $groupIdentifier);
-        
+
         $file = 'unknown';
         $line = 'unknown';
         $fn = 'unknown';
         $fnArgs = [];
-        
+
         if (isset($trace[0])) {
-            $file = !isset($trace[0]['file']) ? : $trace[0]['file'];
-            $line = !isset($trace[0]['line']) ? : $trace[0]['line'];
-            $fn = !isset($trace[0]['function']) ? : $trace[0]['function'];
-            $fnArgs = !isset($trace[0]['args']) ? : $trace[0]['args'];
+            $file = !isset($trace[0]['file']) ?: $trace[0]['file'];
+            $line = !isset($trace[0]['line']) ?: $trace[0]['line'];
+            $fn = !isset($trace[0]['function']) ?: $trace[0]['function'];
+            $fnArgs = !isset($trace[0]['args']) ?: $trace[0]['args'];
         }
-        
+
         if (isset($trace[1])) {
-            $fn = !isset($trace[1]['function']) ? : $trace[1]['function'];
-            $fnArgs = !isset($trace[1]['args']) ? : $trace[1]['args'];
+            $fn = !isset($trace[1]['function']) ?: $trace[1]['function'];
+            $fnArgs = !isset($trace[1]['args']) ?: $trace[1]['args'];
         }
-        
+
         if ($message instanceof Arrayable) {
             $message = $message->toArray();
         }
-        
+
         $model = new self();
         $model->attributes = [
             'time' => time(),
@@ -302,7 +302,7 @@ final class Logger extends NgRestModel
             'group_identifier' => $hashArray['hash'],
             'group_identifier_index' => $hashArray['index'],
         ];
-        
+
         return $model->save(false);
     }
 
@@ -329,7 +329,7 @@ final class Logger extends NgRestModel
             'typeBadge' => Module::t('model_logger_badgetype'),
         ];
     }
-    
+
     /**
      * Log a success message.
      *
@@ -353,7 +353,7 @@ final class Logger extends NgRestModel
     {
         return static::log(self::TYPE_ERROR, $message, debug_backtrace(false, 2), $groupIdentifier);
     }
-    
+
     /**
      * Log an info message.
      *
@@ -365,7 +365,7 @@ final class Logger extends NgRestModel
     {
         return static::log(self::TYPE_INFO, $message, debug_backtrace(false, 2), $groupIdentifier);
     }
-    
+
     /**
      * Log a warning message.
      *

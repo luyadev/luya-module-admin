@@ -2,10 +2,10 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\admin\ngrest\base\Plugin;
-use luya\helpers\ArrayHelper;
 use luya\admin\file\Query;
 use luya\admin\helpers\I18n;
+use luya\admin\ngrest\base\Plugin;
+use luya\helpers\ArrayHelper;
 
 /**
  * Type Multiple Files Upload.
@@ -37,12 +37,12 @@ class FileArray extends Plugin
      * @inheritdoc
      */
     public $i18nEmptyValue = [];
-    
+
     /**
      * @var boolean Whether to return a {{luya\admin\file\Iterator}} instead of an array with file ids value from the database.
      */
     public $fileIterator = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -66,7 +66,7 @@ class FileArray extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -77,10 +77,10 @@ class FileArray extends Plugin
             $this->writeAttribute($event, I18n::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -90,10 +90,10 @@ class FileArray extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-         
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -106,10 +106,10 @@ class FileArray extends Plugin
             }
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -119,7 +119,7 @@ class FileArray extends Plugin
             $this->writeAttribute($event, $this->parseFileIteration($event->sender->getAttribute($this->name)));
         }
     }
-    
+
     /**
      * Parse an array with fileId and caption into an {{\luya\admin\file\Iterator}} object.
      *
@@ -131,9 +131,9 @@ class FileArray extends Plugin
         if (empty($values)) {
             return [];
         }
-        
+
         $binds = [];
-        
+
         foreach ($values as $item) {
             if (!empty($item['caption'])) {
                 $binds[$item['fileId']] = ['caption' => $item['caption']];
@@ -141,7 +141,7 @@ class FileArray extends Plugin
         }
 
         $fileIds = ArrayHelper::getColumn($values, 'fileId');
-        
+
         return (new Query())->where(['in', 'id', $fileIds])->bind($binds)->orderBy(['id' => $fileIds])->all();
     }
 }

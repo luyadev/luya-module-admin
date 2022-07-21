@@ -66,7 +66,7 @@ class Badge extends Plugin
         $content.= '</span>';
         return $this->createTag('div', $content);
     }
-    
+
     /**
      * {@inheritDoc}
      *

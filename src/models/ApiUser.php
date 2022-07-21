@@ -2,10 +2,10 @@
 
 namespace luya\admin\models;
 
-use Yii;
 use luya\admin\aws\ApiOverviewActiveWindow;
-use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\aws\ApiRequestInsightActiveWindow;
+use luya\admin\aws\UserHistorySummaryActiveWindow;
+use Yii;
 
 /**
  * User Model represents all Administration Users.
@@ -42,14 +42,14 @@ final class ApiUser extends User
     {
         return '{{%admin_user}}';
     }
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         // allow only is_api_user flagged edit and adds
         $this->on(self::EVENT_BEFORE_VALIDATE, function () {
             $this->is_api_user = true;
@@ -59,7 +59,7 @@ final class ApiUser extends User
             }
         });
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -75,7 +75,7 @@ final class ApiUser extends User
     {
         return self::find()->where(['is_api_user' => true]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -85,7 +85,7 @@ final class ApiUser extends User
             'Removed' => self::find()->where(['is_deleted' => true, 'is_api_user' => true]),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -99,7 +99,7 @@ final class ApiUser extends User
             [['is_request_logger_enabled'], 'boolean'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -112,7 +112,7 @@ final class ApiUser extends User
             'is_request_logger_enabled' => 'toggleStatus',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -123,7 +123,7 @@ final class ApiUser extends User
             [['delete'], true],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

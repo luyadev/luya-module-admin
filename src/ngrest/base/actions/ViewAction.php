@@ -2,10 +2,10 @@
 
 namespace luya\admin\ngrest\base\actions;
 
-use Yii;
 use luya\admin\models\UserOnline;
-use yii\web\NotFoundHttpException;
+use Yii;
 use yii\db\ActiveRecordInterface;
+use yii\web\NotFoundHttpException;
 
 /**
  * View
@@ -36,7 +36,7 @@ class ViewAction extends \yii\rest\ViewAction
             return call_user_func($this->findModel, $id, $this);
         }
 
-        
+
         $model = $this->controller->findModelClassObject($this->modelClass, $id, 'view');
 
         if ($model) {
@@ -65,7 +65,7 @@ class ViewAction extends \yii\rest\ViewAction
             $alias = Yii::$app->adminmenu->getApiDetail($modelClass::ngRestApiEndpoint());
             UserOnline::lock(Yii::$app->adminuser->id, $table, $id, 'lock_admin_edit_crud_item', ['table' => $alias['alias'], 'id' => $id, 'module' => $alias['module']['alias']]);
         }
-        
+
         return $model;
     }
 }

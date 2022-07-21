@@ -2,11 +2,11 @@
 
 namespace luya\admin\ngrest\base;
 
+use luya\helpers\ArrayHelper;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
-use yii\base\InvalidConfigException;
-use luya\helpers\ArrayHelper;
 
 /**
  * NgRest Active Query.

@@ -2,11 +2,11 @@
 
 namespace luya\admin\models;
 
-use Yii;
 use luya\admin\jobs\ScheduleJob;
-use luya\helpers\StringHelper;
 use luya\admin\ngrest\base\NgRestModelInterface;
 use luya\Exception;
+use luya\helpers\StringHelper;
+use Yii;
 
 /**
  * This is the model class for table "admin_scheduler".
@@ -33,7 +33,7 @@ class Scheduler extends \yii\db\ActiveRecord
     public function init()
     {
         parent::init();
-        $this->on(self::EVENT_AFTER_DELETE, function() {
+        $this->on(self::EVENT_AFTER_DELETE, function () {
             $queueId = Config::find()->where(['name' => "queueScheduler.{$this->id}", 'is_system' => true])->select(['value'])->scalar();
 
             if (!empty($queueId)) {
@@ -98,7 +98,7 @@ class Scheduler extends \yii\db\ActiveRecord
         if ($model) {
             $oldValue = $model->{$this->target_attribute_name};
             $model->{$this->target_attribute_name} = StringHelper::typeCast($this->new_attribute_value);
-            
+
             if ($model->save(true, [$this->target_attribute_name])) {
                 return $this->updateAttributes(['old_attribute_value' => $oldValue, 'is_done' => true]);
             }

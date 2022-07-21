@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\admin\ngrest\base\Plugin;
 use luya\admin\helpers\Angular;
+use luya\admin\ngrest\base\Plugin;
 
 /**
  * Create a slugable input field.
@@ -32,7 +32,7 @@ class Slug extends Plugin
      * @var string Input field placeholder value.
      */
     public $placeholder;
-    
+
     /**
      * @var string Define another input attribute as listener, which will then pass trough the input value from
      * the listener field into the slug field while typing.

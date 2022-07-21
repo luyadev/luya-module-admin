@@ -2,8 +2,8 @@
 
 namespace luya\admin\commands;
 
-use Yii;
 use luya\console\Command;
+use Yii;
 
 /**
  * LUYA Admin Logdata cleanup command.
@@ -54,8 +54,8 @@ use luya\console\Command;
  */
 class LogController extends Command
 {
-    const ALL_TABLES = 'ALL';
-    
+    public const ALL_TABLES = 'ALL';
+
     /**
      * @var boolean Whether to perform a dry run or not.
      */
@@ -83,7 +83,7 @@ class LogController extends Command
      * @var integer Holds the minium timestamp to keep entries
      */
     private $_referenceTimestamp;
-    
+
     /**
      *
      * @var integer Holds the old entries number found during age check
@@ -130,7 +130,7 @@ class LogController extends Command
                 ':timestampLimit' => $this->_referenceTimestamp,
             ])->execute();
             if ($removed > 0) {
-                $this->outputSuccess(sprintf("%s entries %sremoved", $removed, $this->dryRun ? 'will be ':''));
+                $this->outputSuccess(sprintf("%s entries %sremoved", $removed, $this->dryRun ? 'will be ' : ''));
             } else {
                 $this->outputInfo("No log entries removed.");
             }
@@ -152,7 +152,7 @@ class LogController extends Command
 
         return true;
     }
-    
+
     /**
      * validate the minimum rows option
      *

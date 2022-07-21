@@ -15,7 +15,7 @@ class m161220_183300_lcp_base_tables extends Migration
             'is_deleted' => $this->boolean()->defaultValue(false),
             'is_disabled' => $this->boolean()->defaultValue(false),
         ]);
-        
+
         $this->createTable('{{%admin_proxy_build}}', [
             'id' => $this->primaryKey(),
             'machine_id' => $this->integer(11)->notNull(),

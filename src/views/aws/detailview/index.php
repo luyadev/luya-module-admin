@@ -1,5 +1,6 @@
 <?php
 use yii\widgets\DetailView;
+
 ?>
 <?php if (!empty($intro)): ?>
 <div class="mb-3"><?= $intro; ?></div>

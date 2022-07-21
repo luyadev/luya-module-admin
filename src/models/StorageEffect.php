@@ -3,8 +3,8 @@
 namespace luya\admin\models;
 
 use luya\admin\aws\DetailViewActiveWindow;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * This is the model class for table "admin_storage_effect".
@@ -41,7 +41,7 @@ final class StorageEffect extends NgRestModel
             [['identifier'], 'unique'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -95,7 +95,7 @@ final class StorageEffect extends NgRestModel
             ['class' => DetailViewActiveWindow::class],
         ];
     }
-    
+
     /**
      * Returns the effect name ensured with lowercase.
      *

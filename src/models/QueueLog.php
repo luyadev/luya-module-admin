@@ -2,10 +2,9 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use yii\db\Expression;
 use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
+use yii\db\Expression;
 
 /**
  * Queue Log.

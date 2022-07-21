@@ -2,8 +2,8 @@
 
 namespace luya\admin\models;
 
-use yii\base\Model;
 use luya\admin\Module;
+use yii\base\Model;
 
 /**
  * User change Password model.
@@ -18,9 +18,9 @@ class UserChangePassword extends Model
     public $oldpass;
     public $newpass;
     public $newpassrepeat;
-    
+
     private $_user;
-    
+
     /**
      * Setter method for user.
      *
@@ -30,7 +30,7 @@ class UserChangePassword extends Model
     {
         $this->_user = $user;
     }
-    
+
     /**
      * Getter method for user.
      *
@@ -40,7 +40,7 @@ class UserChangePassword extends Model
     {
         return $this->_user;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -52,7 +52,7 @@ class UserChangePassword extends Model
             [['newpass'], 'compare', 'compareAttribute' => 'newpassrepeat'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -64,7 +64,7 @@ class UserChangePassword extends Model
             'newpass' => Module::t('aws_changepassword_new_pass'),
         ];
     }
-    
+
     /**
      * Checks if the password is valid and stores the new password.
      *
@@ -75,7 +75,7 @@ class UserChangePassword extends Model
         if (!$this->user->validatePassword($this->oldpass)) {
             return $this->addError('oldpass', 'The previous old password is invalid.');
         }
-        
+
         if (!$this->user->changePassword($this->newpass)) {
             return $this->addErrors($this->user->getErrors());
         }

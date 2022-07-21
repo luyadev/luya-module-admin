@@ -411,7 +411,7 @@ return [
     'status_true' => 'Sim',
     'status_false' => 'Não',
     'js_jsonobject_newkey' => 'Novo nome da chave',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Não foi possível ativar',
@@ -528,7 +528,7 @@ return [
     'button_create' => 'Criar',
     'button_cancel' => 'Cancelar',
     'button_create_and_new' => 'Criar e novo',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

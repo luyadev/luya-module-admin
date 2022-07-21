@@ -2,10 +2,10 @@
 
 namespace luya\admin\jobs;
 
-use yii\queue\JobInterface;
 use luya\admin\models\Scheduler;
 use yii\base\BaseObject;
 use yii\base\InvalidCallException;
+use yii\queue\JobInterface;
 
 /**
  * The Scheduler Job
@@ -26,7 +26,7 @@ class ScheduleJob extends BaseObject implements JobInterface
     public function execute($queue)
     {
         $model = Scheduler::findOne($this->schedulerId);
-        
+
         // ensure delete schedule jobs wont trigger an error.
         if ($model) {
             return $model->triggerJob();

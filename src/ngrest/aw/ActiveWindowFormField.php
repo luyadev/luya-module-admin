@@ -18,27 +18,27 @@ class ActiveWindowFormField extends BaseObject
      * @var \luya\admin\ngrest\aw\ActiveWindowFormWidget The form widget object
      */
     public $form;
-    
+
     /**
      * @var string The attribute name of the field is isued as identifier to send the post data.
      */
     public $attribute;
-    
+
     /**
      * @var string Pre defined value of the option
      */
     public $value;
-    
+
     /**
      * @var string|boolean A label which is used when no label is provided from class creation config
      */
     public $label = false;
-    
+
     /**
      * @var array An array with key and value.
      */
     protected $parts = [];
-    
+
     /**
      * @var AngularObject The angular object element which is taken to generate the input.
      */
@@ -50,7 +50,7 @@ class ActiveWindowFormField extends BaseObject
         // set text input as default element
         $this->textInput();
     }
-    
+
     /**
      * Define a label for this field. If false, no label will be used, if a label is provided from the configration
      * object (form) this will be overritten by this method.
@@ -65,10 +65,10 @@ class ActiveWindowFormField extends BaseObject
         } else {
             $this->parts['{label}'] = $label;
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Add a default value when initializing.
      *
@@ -83,10 +83,10 @@ class ActiveWindowFormField extends BaseObject
         } else {
             $this->parts['{initValue}'] = "{model}='{$value}'";
         }
-        
+
         return $this;
     }
-    
+
     /**
      *
      * @return string
@@ -95,7 +95,7 @@ class ActiveWindowFormField extends BaseObject
     {
         return 'params.'.$this->attribute;
     }
-    
+
     /**
      * Text input field
      *
@@ -108,10 +108,10 @@ class ActiveWindowFormField extends BaseObject
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
         ]));
-        
+
         return $this;
     }
-    
+
     /**
      * Passwword input field
      *
@@ -124,10 +124,10 @@ class ActiveWindowFormField extends BaseObject
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
         ]));
-        
+
         return $this;
     }
-    
+
     /**
      * Create textarea
      *
@@ -140,10 +140,10 @@ class ActiveWindowFormField extends BaseObject
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
         ]));
-        
+
         return $this;
     }
-    
+
     /**
      * Generate a select dropdown with data as array.
      *
@@ -158,10 +158,10 @@ class ActiveWindowFormField extends BaseObject
             'fieldid' => $this->form->getFieldId($this->attribute),
             'ng-init' => '{initValue}',
         ]));
-        
+
         return $this;
     }
-    
+
     /**
      * Checkbox input
      *
@@ -287,11 +287,11 @@ class ActiveWindowFormField extends BaseObject
         if (!isset($this->parts['{label}'])) {
             $this->label($this->label);
         }
-        
+
         if (!isset($this->parts['{initValue}'])) {
             $this->initValue(null);
         }
-    
+
         return str_replace([
             '{label}', '{initValue}', '{model}',
         ], [
@@ -300,7 +300,7 @@ class ActiveWindowFormField extends BaseObject
             $this->getNgModel(),
         ], $this->element) . PHP_EOL;
     }
-    
+
     /**
      * The method to set a hint value for the current render AngularObject element.
      *

@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'language_name' => 'Български',
+    'language_name' => 'Български',
     'button_save' => 'Запазване',
     'button_yes' => 'Да',
     'button_abort' => 'Отказ',
@@ -92,7 +92,7 @@ return [
     'api_storage_image_upload_error' => 'Възникна следната грешка при качване на изображение \'{error}\'.',
     'api_storage_file_upload_success' => 'Файловете са качени успешно.',
     'api_sotrage_file_upload_error' => 'Възникна следната грешка',
-	'api_sotrage_file_upload_empty_error' => 'Няма намерени файлове за качване. Избрахте ли някакви файлове? ',
+    'api_sotrage_file_upload_empty_error' => 'Няма намерени файлове за качване. Избрахте ли някакви файлове? ',
     'aws_changepassword_info' => 'Моля, въведете нова парола за този потребител. Паролата трябва да има минимална дължина от 8 знака. ',
     'aws_changepassword_succes' => 'Паролата е криптирана и съхранена успешно.',
     'aws_changepassword_new_pass' => 'Нова парола',
@@ -105,7 +105,7 @@ return [
     'view_index_redirect_external_link_help' => 'Външните връзки започват с http:// или https:// (за абсолютни вътрешни връзки вместо това използвайте //)',
 
 // added translations in version 1.0.0-beta3:
-	'model_loginform_email_label' => 'Имейл',
+    'model_loginform_email_label' => 'Имейл',
     'model_loginform_password_label' => 'Парола',
     'model_loginform_wrong_user_or_password' => 'Грешен имейл или парола.',
     'ngrest_select_no_selection' => 'Нищо не е избрано',
@@ -132,22 +132,22 @@ return [
     'js_zaa_server_proccess' => 'Моля, изчакайте, докато сървърът обработва вашите данни.',
 
 // added translations in version 1.0.0-beta4:
-	'ngrest_crud_empty_row' => 'Към тази таблица все още не са добавени данни.',
-	
+    'ngrest_crud_empty_row' => 'Към тази таблица все още не са добавени данни.',
+
 // added translations in version 1.0.0-beta5:
-	'aws_gallery_empty' => 'Моля, изберете някои изображения отляво, за да ги добавите към албума на галерията.',
-	'aws_gallery_images' => 'Изображения на албуми',
-	'layout_useronline_name' => 'Име',
-	'layout_useronline_mail' => 'Имейл',
-	'layout_useronline_inactivesince' => 'Неактивен от',
+    'aws_gallery_empty' => 'Моля, изберете някои изображения отляво, за да ги добавите към албума на галерията.',
+    'aws_gallery_images' => 'Изображения на албуми',
+    'layout_useronline_name' => 'Име',
+    'layout_useronline_mail' => 'Имейл',
+    'layout_useronline_inactivesince' => 'Неактивен от',
 
 // added translations in version 1.0.0-beta6:
-	'layout_debug_caching' => 'Кеширане',
-	'debug_state_on' => 'Включено',
-	'debug_state_off' => 'Изключено',
+    'layout_debug_caching' => 'Кеширане',
+    'debug_state_on' => 'Включено',
+    'debug_state_off' => 'Изключено',
 
 // added translations in version 1.0.0-beta7:
-	'login_securetoken_mail_subject' => 'Код за защита',
+    'login_securetoken_mail_subject' => 'Код за защита',
     'login_securetoken_mail' => 'Използвайте следния код за сигурност, за да влезете във вашата администрация:',
     'login_async_token_error' => 'Предоставеният код за защита е невалиден или е изтекъл.',
     'login_async_token_globalerror' => 'Възникна грешка в сървъра, моля, свържете се с администратора на вашия сайт.',
@@ -163,7 +163,7 @@ return [
     'mode_user_password' => 'Парола',
 
 // added translations in version 1.0.0-beta8:
-	'aws_tag_new' => 'Добавяне на нов запис',
+    'aws_tag_new' => 'Добавяне на нов запис',
     'aws_tag_add' => 'добавяне',
     'aws_tag_search' => 'Търсене на записи',
     'aws_tag_list' => 'Списък на всички записи',
@@ -171,7 +171,7 @@ return [
     'dashboard_log_message_edit' => 'Актуализиран съществуващ ред в <strong> {container} </strong>.',
 
 // added translations in version 1.0.0-rc1:
-	'layout_btn_help' => 'Помощ',
+    'layout_btn_help' => 'Помощ',
     'right_panel_support_title' => 'Информация & Помощ',
     'right_panel_support_tags_title' => 'Етикети',
     'right_panel_support_support_title' => 'Поддръжка',
@@ -227,7 +227,7 @@ return [
     'js_link_change_value' => 'Промяна на връзката',
     'js_link_set_value' => 'Задаване на връзка',
     'callback_button_file_download_widget_success' => 'Файлът е подготвен. Можете да го изтеглите сега. ',
-	
+
 // added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Грешка при запазване на файла в папката за съхранение. Грешка в разрешението може да причини този проблем. Уверете се, че папката за съхранение може да се записва. ',
     'model_user_oldpassword' => 'Предишна (стара) парола',
@@ -312,9 +312,9 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} от {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
-	'login_async_submission_limit_reached' => 'Достигнат е максималният брой изпратени формуляри, опитайте отново {time}.',
+    'login_async_submission_limit_reached' => 'Достигнат е максималният брой изпратени формуляри, опитайте отново {time}.',
     'model_loginform_max_user_attempts' => 'Достигнат е максималният брой опити за влизане, опитайте отново {time}.',
     'model_loginform_wrong_user_or_password_attempts' => 'Грешен имейл или парола. Опит #{attempt} от {allowedAttempts}. ',
     'model_user_login_attempt_lock_expiration' => 'Време за блокиране на влизането',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Доставка на файл',
     'layout_filemanager_col_file_disposition_download' => 'Изтегляне',
     'layout_filemanager_col_file_disposition_browser' => 'Показване в браузъра',
-	
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Лична информация',
     'settings_general' => 'Общи',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'телефонен номер',
     'view_index_redirect_telephone_help' => 'Моля, въведете валиден телефонен номер (за знак "+" се изисква водещо "\").',
     'missing_file_upload_permission' => 'Недостатъчни разрешения за качване на файлове.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Не',
     'crud_exportdata_btn' => 'Експортиране на данни',
@@ -359,7 +359,7 @@ return [
     'active_button_duplicate_error' => 'Грешка при създаването на копието: {message}',
 
 // added translations in version 2.0:
-	'model_tag_translation' => 'Превод',
+    'model_tag_translation' => 'Превод',
     'model_tag_translation_hint' => 'Незадължителен превод за маркера на дадения език. Това позволява да се присвоява и извежда един и същ маркер на многоезични уебсайтове. ',
     'active_button_timestamp_label' => 'Клеймо',
     'active_button_timestamp_success' => 'Клеймото за време е зададено успешно.',
@@ -410,8 +410,8 @@ return [
     'status_true' => 'Да',
     'status_false' => 'Не',
     'js_jsonobject_newkey' => 'Ново име на ключ',
-    
-// added translations in version 2.2.0: 
+
+// added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Превключване на състоянието',
     'active_button_togglestatus_error' => 'Не може да се активира',
     'active_button_togglestatus_enabled' => '{modelName} активиран',
@@ -474,7 +474,7 @@ return [
     'reset_form_text' => 'Въведете нова парола за вашия акаунт.',
     'reset_form_submit_btn' => 'Актуализиране на парола',
     'user_change_password_error' => 'Грешка при запазване на нова парола.',
-	
+
 // added translations in version 3.1.0:
     'crop_source_image' => 'Изходно изображение',
     'crop_preview' => 'Преглед',

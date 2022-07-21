@@ -2,11 +2,11 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use yii\behaviors\TimestampBehavior;
 use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
+use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Admin Property
@@ -45,15 +45,15 @@ class Property extends NgRestModel
         return 'api-admin-property';
     }
 
-     /**
-     * Overrides the ngRestFind() method of the ActiveRecord
-     * @return \yii\db\ActiveQuery
-     */
+    /**
+    * Overrides the ngRestFind() method of the ActiveRecord
+    * @return \yii\db\ActiveQuery
+    */
     public static function ngRestFind()
     {
         return parent::ngRestFind()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
     }
-    
+
     /**
      * Overrides the find() method of the ActiveRecord
      * @return \yii\db\ActiveQuery
@@ -62,7 +62,7 @@ class Property extends NgRestModel
     {
         return parent::find()->orderBy(['sort_index' => SORT_ASC])->andWhere(['is_deleted' => false]);
     }
-    
+
     /**
      * Disable the list ordering.
      *
@@ -137,7 +137,7 @@ class Property extends NgRestModel
             ['delete', true],
         ];
     }
-    
+
     /**
      * Create the property object with a given value.
      *
@@ -148,7 +148,7 @@ class Property extends NgRestModel
     {
         return static::getObject($this->class_name, $value);
     }
-    
+
     /**
      * Generate the Property Object.
      *

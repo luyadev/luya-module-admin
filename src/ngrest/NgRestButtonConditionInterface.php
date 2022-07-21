@@ -16,7 +16,7 @@ interface NgRestButtonConditionInterface
      * @since 4.0.0
      */
     public function setCondition($condition);
-    
+
     /**
      * Get the button condition or empty of not set
      * @since 4.0.0

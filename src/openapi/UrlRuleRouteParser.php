@@ -9,7 +9,6 @@ use cebe\openapi\spec\PathItem;
 use cebe\openapi\spec\RequestBody;
 use cebe\openapi\spec\Responses;
 use cebe\openapi\spec\Schema;
-use cebe\openapi\spec\SecurityRequirement;
 use luya\admin\openapi\phpdoc\PhpDocUses;
 use luya\admin\openapi\specs\ControllerActionSpecs;
 use luya\admin\openapi\specs\ControllerSpecs;
@@ -72,13 +71,13 @@ class UrlRuleRouteParser extends BasePathParser
         $this->patternRoute = $patternRoute;
         $this->controllerMapRoute = $controllerMapRoute;
         $this->rules = $rules;
-        
+
         $createController = Yii::$app->createController($controllerMapRoute);
 
         if ($createController) {
             $this->controller = $createController[0];
         }
-        
+
         if ($this->controller) {
             $this->controllerSpecs = new ControllerSpecs($this->controller);
         }
@@ -88,7 +87,7 @@ class UrlRuleRouteParser extends BasePathParser
     /**
      * {@inheritDoc}
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         $route = $this->patternRoute;
         preg_match_all('/\<(\w+)(.*?)\>/', $route, $matches);
@@ -192,7 +191,7 @@ class UrlRuleRouteParser extends BasePathParser
         $actionSpecs = new ControllerActionSpecs($this->controller, $this->getActionNameFromRoute($urlRule->route), $verbName);
 
         $actionObject = $actionSpecs->getActionObject();
-        
+
         if (!$actionObject || ObjectHelper::isInstanceOf($actionObject, OptionsAction::class, false)) {
             return false;
         }
@@ -236,7 +235,7 @@ class UrlRuleRouteParser extends BasePathParser
                 ]
             ]);
         } elseif (strtoupper($verbName) == 'POST') {
-            
+
             // if its a post request endpoint and @uses is defined use this
             // information as request body.
             $useProperties = [];

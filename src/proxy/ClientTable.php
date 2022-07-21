@@ -12,7 +12,7 @@ use yii\helpers\Json;
 
 /**
  * Prepare Client Tables
- * 
+ *
  * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @property \yii\db\TableSchema $schema Schema object
@@ -25,15 +25,15 @@ use yii\helpers\Json;
  */
 class ClientTable extends BaseObject
 {
-    const LARGE_TABLE_PROMPT = 10000;
+    public const LARGE_TABLE_PROMPT = 10000;
 
     private $_data;
-    
+
     /**
      * @var \luya\admin\proxy\ClientBuild
      */
     public $build;
-    
+
     /**
      * @param ClientBuild $build
      * @param array $data
@@ -45,13 +45,13 @@ class ClientTable extends BaseObject
         $this->_data = $data;
         parent::__construct($config);
     }
-    
+
     /**
      * @var Connection
      * @since 2.0.0
      */
     private $_db;
-    
+
     /**
      * @return Connection
      * @since 2.0.0
@@ -61,10 +61,10 @@ class ClientTable extends BaseObject
         if (!$this->_db) {
             $this->setDb(Yii::$app->db);
         }
-        
+
         return $this->_db;
     }
-    
+
     /**
      * @param Connection $db
      *
@@ -74,7 +74,7 @@ class ClientTable extends BaseObject
     {
         $this->_db = $db;
     }
-    
+
     private $_schema;
 
     public function getSchema()

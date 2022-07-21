@@ -2,14 +2,13 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use yii\helpers\VarDumper;
-use luya\admin\Module;
 use luya\admin\aws\DetailViewActiveWindow;
+use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\behaviors\JsonBehavior;
 use luya\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 /**
  * Ngrest Log.
@@ -134,7 +133,7 @@ class NgrestLog extends NgRestModel
         if ($oldValue == $newValue) {
             return false;
         }
-        
+
         return $oldValue;
     }
 
@@ -160,7 +159,7 @@ class NgrestLog extends NgRestModel
                 'attributes' => [
                     [
                         'attribute' => 'user_id',
-                        'value' => function($model) {
+                        'value' => function ($model) {
                             return $model->user->email;
                         }
                     ],
@@ -169,13 +168,13 @@ class NgrestLog extends NgRestModel
                     'api',
                     [
                         'attribute' => 'attributes_json',
-                        'value' => function($model) {
+                        'value' => function ($model) {
                             return is_array($model->attributes_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json)) : $model->attributes_json;
                         }
                     ],
                     [
                         'attribute' => 'attributes_diff_json',
-                        'value' => function($model) {
+                        'value' => function ($model) {
                             return is_array($model->attributes_diff_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json)) : $model->attributes_diff_json;
                         }
                     ],

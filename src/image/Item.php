@@ -2,9 +2,9 @@
 
 namespace luya\admin\image;
 
-use Yii;
 use luya\admin\storage\ItemAbstract;
 use luya\Exception;
+use Yii;
 
 /**
  * Image Item Detail Object.
@@ -31,9 +31,9 @@ use luya\Exception;
 class Item extends ItemAbstract
 {
     private $_file;
-    
+
     private $_caption;
-    
+
     /**
      * Set caption for image item, override existings values
      *
@@ -44,7 +44,7 @@ class Item extends ItemAbstract
     {
         $this->_caption = trim($text);
     }
-    
+
     /**
      * Return the caption text for this image, if not defined or none give its null.
      *
@@ -62,10 +62,10 @@ class Item extends ItemAbstract
                 $this->_caption = $this->file->caption;
             }
         }
-        
+
         return $this->_caption;
     }
-    
+
     /**
      * The unique image identifier number.
      *
@@ -75,7 +75,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('id');
     }
-    
+
     /**
      * The file id where this image depends on.
      *
@@ -95,7 +95,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('filter_id');
     }
-    
+
     /**
      * Get the source path to the image location on the webserver.
      *
@@ -108,17 +108,17 @@ class Item extends ItemAbstract
             if (Yii::$app->storage->autoFixMissingImageSources === false) {
                 return false;
             }
-            
+
             // The image source does not exist, probably it has been deleted due to filter changes.
             // storage component is going go try to re-create this image now.
             $apply = Yii::$app->storage->createImage($this->getFileId(), $this->getFilterId());
         }
-        
+
         $fileName = $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
-        
+
         return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($fileName) : Yii::$app->storage->fileHttpPath($fileName);
     }
-    
+
     /**
      * Absolute url to the image source.
      *
@@ -128,7 +128,7 @@ class Item extends ItemAbstract
     {
         return $this->getSource(true);
     }
-    
+
     /**
      * The source to the image internal used on the Server.
      *
@@ -138,7 +138,7 @@ class Item extends ItemAbstract
     {
         return $this->getFile() ? Yii::$app->storage->fileServerPath($this->systemFileName) : false;
     }
-    
+
     /**
      * Return boolean value whether the file server source exsits on the server or not.
      *
@@ -148,7 +148,7 @@ class Item extends ItemAbstract
     {
         return Yii::$app->storage->fileSystemExists($this->systemFileName);
     }
-    
+
     /**
      * Get the filename on the filesystem.
      *
@@ -159,7 +159,7 @@ class Item extends ItemAbstract
     {
         return $this->getFilterId() . '_' . $this->getFile()->getSystemFileName();
     }
-    
+
     /**
      * Get the content of the image
      *
@@ -180,7 +180,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('resolution_width');
     }
-    
+
     /**
      * Get the image resolution height in Pixel.
      *
@@ -190,7 +190,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('resolution_height');
     }
-    
+
     /**
      * Get image depending file object where the image was create from, its like the original Source
      *
@@ -205,10 +205,10 @@ class Item extends ItemAbstract
                 throw new Exception("The file \"$this->getFileId()\" does not exists in the storage system.");
             }
         }
-        
+
         return $this->_file;
     }
-    
+
     /**
      * Apply a new filter for the original ussed file and return the new created image object.
      *
@@ -219,7 +219,7 @@ class Item extends ItemAbstract
     {
         return ($filterItem = Yii::$app->storage->getFiltersArrayItem($filterName)) ? Yii::$app->storage->addImage($this->getFileId(), $filterItem['id'], !YII_ENV_PROD) : false;
     }
-    
+
     /**
      * @inheritdoc
      */

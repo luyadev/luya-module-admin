@@ -27,7 +27,7 @@ final class UserLogin extends ActiveRecord
     public function init()
     {
         parent::init();
-        
+
         $this->on(self::EVENT_BEFORE_VALIDATE, function ($event) {
             if ($event->sender->isNewRecord) {
                 $this->timestamp_create = time();
@@ -43,7 +43,7 @@ final class UserLogin extends ActiveRecord
     {
         return '{{%admin_user_login}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -51,7 +51,7 @@ final class UserLogin extends ActiveRecord
     {
         return parent::find()->orderBy(['timestamp_create' => SORT_DESC]);
     }
-    
+
     /**
      * Get user relation.
      *

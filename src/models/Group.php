@@ -2,10 +2,10 @@
 
 namespace luya\admin\models;
 
-use luya\admin\Module;
-use luya\admin\traits\SoftDeleteTrait;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\aws\GroupAuthActiveWindow;
+use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\traits\SoftDeleteTrait;
 
 /**
  * User Groups
@@ -23,7 +23,7 @@ final class Group extends NgRestModel
     use SoftDeleteTrait;
 
     public $users = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -31,7 +31,7 @@ final class Group extends NgRestModel
     {
         return '{{%admin_group}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -61,7 +61,7 @@ final class Group extends NgRestModel
     {
         return ['users'];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -73,7 +73,7 @@ final class Group extends NgRestModel
             'users' => Module::t('model_group_user_buttons'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -102,7 +102,7 @@ final class Group extends NgRestModel
             ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -112,7 +112,7 @@ final class Group extends NgRestModel
             ['class' => GroupAuthActiveWindow::class],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

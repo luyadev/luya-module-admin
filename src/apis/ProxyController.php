@@ -2,18 +2,18 @@
 
 namespace luya\admin\apis;
 
-use luya\admin\Module;
-use Yii;
-use luya\rest\Controller;
-use luya\admin\models\ProxyMachine;
-use yii\db\Connection;
-use yii\di\Instance;
-use yii\web\ForbiddenHttpException;
-use yii\db\Query;
 use luya\admin\models\ProxyBuild;
-use yii\helpers\Json;
-use luya\helpers\Url;
+use luya\admin\models\ProxyMachine;
 use luya\admin\models\StorageFile;
+use luya\admin\Module;
+use luya\helpers\Url;
+use luya\rest\Controller;
+use Yii;
+use yii\db\Connection;
+use yii\db\Query;
+use yii\di\Instance;
+use yii\helpers\Json;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -46,7 +46,7 @@ class ProxyController extends Controller
     protected $ignoreTables = [
         'migration', 'admin_proxy_build', 'admin_proxy_machine',
     ];
-    
+
     /**
      * {@inheritDoc}
      */
@@ -75,20 +75,20 @@ class ProxyController extends Controller
         if (sha1($machine->access_token) !== $token) {
             throw new ForbiddenHttpException("Unable to acccess the proxy api due to invalid token.");
         }
-        
+
         $rowsPerRequest = $this->module->proxyRowsPerRequest;
-        
+
         $config = [
             'rowsPerRequest' => $rowsPerRequest,
             'tables' => [],
             'storageFilesCount' => StorageFile::find()->count(),
         ];
-        
+
         foreach ($this->db->schema->tableNames as $table) {
             if (in_array($table, $this->ignoreTables)) {
                 continue;
             }
-            
+
             $schema = $this->db->getTableSchema($table);
             $rows = (new Query())->from($table)->count('*', $this->db);
             $config['tables'][$table] = [
@@ -99,9 +99,9 @@ class ProxyController extends Controller
                 'offset_total' => ceil($rows/$rowsPerRequest),
             ];
         }
-        
+
         $buildToken = Yii::$app->security->generateRandomString(16);
-        
+
         $build = new ProxyBuild();
         $build->detachBehavior('LogBehavior');
         $build->attributes = [
@@ -112,7 +112,7 @@ class ProxyController extends Controller
             'is_complet' => 0,
             'expiration_time' => time() + $this->module->proxyExpirationTime
         ];
-        
+
         if ($build->save()) {
             return [
                 'providerUrl' => Url::base(true) . '/admin/api-admin-proxy/data-provider',
@@ -123,10 +123,10 @@ class ProxyController extends Controller
                 'config' => $config,
             ];
         }
-        
+
         return $build->getErrors();
     }
-    
+
     /**
      * Make sure the machine and token are valid.
      *
@@ -138,22 +138,22 @@ class ProxyController extends Controller
     private function ensureBuild($machine, $buildToken)
     {
         $build = ProxyBuild::findOne(['build_token' => $buildToken, 'is_complet' => 0]);
-        
+
         if (!$build) {
             throw new ForbiddenHttpException("Unable to find a ProxyBuild for the provided token.");
         }
-        
+
         if (time() > $build->expiration_time) {
             throw new ForbiddenHttpException("The expiration time ".date("d.m.Y H:i:s", $build->expiration_time)." has exceeded.");
         }
-        
+
         if (!$build->proxyMachine || $build->proxyMachine->identifier !== $machine) {
             throw new ForbiddenHttpException("Invalid machine identifier for current build.");
         }
-        
+
         return $build;
     }
-    
+
     /**
      * Return sql table data.
      *
@@ -166,9 +166,9 @@ class ProxyController extends Controller
     public function actionDataProvider($machine, $buildToken, $table, $offset)
     {
         $build = $this->ensureBuild($machine, $buildToken);
-        
+
         $config = $build->getTableConfig($table);
-        
+
         $offsetNummeric = $offset * $build->rowsPerRequest;
 
         $query =  (new Query())
@@ -176,7 +176,7 @@ class ProxyController extends Controller
             ->from($config['name'])
             ->offset($offsetNummeric)
             ->limit($build->rowsPerRequest);
-        
+
         if (!empty($config['pks']) && is_array($config['pks'])) {
             $orders = [];
             foreach ($config['pks'] as $pk) {
@@ -184,10 +184,10 @@ class ProxyController extends Controller
             }
             $query->orderBy($orders);
         }
-        
+
         return $query->all($this->db);
     }
-    
+
     /**
      * Return file storage data.
      *
@@ -200,22 +200,22 @@ class ProxyController extends Controller
     public function actionFileProvider($machine, $buildToken, $fileId)
     {
         $build = $this->ensureBuild($machine, $buildToken);
-        
+
         if ($build) {
             if (!is_numeric($fileId)) {
                 throw new ForbiddenHttpException("Invalid file id input.");
             }
-            
+
             $file = Yii::$app->storage->getFile($fileId);
             /* @var $file \luya\admin\file\Item */
             if ($file && $file->fileExists) {
                 return Yii::$app->response->sendContentAsFile($file->getContent(), $file->systemFileName, null, ['mimeType' => $file->mimeType])->send();
             }
-            
+
             throw new NotFoundHttpException("The requested file '".$fileId."' does not exist in the storage folder.");
         }
     }
-    
+
     /**
      * Return image storage data.
      *
@@ -228,22 +228,22 @@ class ProxyController extends Controller
     public function actionImageProvider($machine, $buildToken, $imageId)
     {
         $build = $this->ensureBuild($machine, $buildToken);
-    
+
         if ($build) {
             if (!is_numeric($imageId)) {
                 throw new ForbiddenHttpException("Invalid image id input.");
             }
-    
+
             $image = Yii::$app->storage->getImage($imageId);
             /* @var $image \luya\admin\image\Item */
             if ($image && $image->fileExists) {
                 return Yii::$app->response->sendContentAsFile($image->getContent(), $image->systemFileName)->send();
             }
-            
+
             throw new NotFoundHttpException("The requested image '".$imageId."' does not exist in the storage folder.");
         }
     }
-    
+
     /**
      * Close the current build.
      *
@@ -253,11 +253,11 @@ class ProxyController extends Controller
     public function actionClose($buildToken)
     {
         $build = ProxyBuild::findOne(['build_token' => $buildToken, 'is_complet' => 0]);
-        
+
         if (!$build) {
             throw new ForbiddenHttpException("Unable to find build from token.");
         }
-        
+
         $build->updateAttributes(['is_complet' => 1]);
     }
 }

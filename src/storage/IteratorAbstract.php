@@ -2,8 +2,8 @@
 
 namespace luya\admin\storage;
 
-use Iterator;
 use Countable;
+use Iterator;
 use yii\base\BaseObject;
 
 /**
@@ -18,7 +18,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
      * @var array An array containing the data to iterate.
      */
     public $data = [];
-    
+
     /**
      * Callculate to number of items when using count() function against the QueryIterator object.
      *
@@ -29,7 +29,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
     {
         return count($this->data);
     }
-    
+
     /**
      * Iterator get current key.
      *
@@ -40,7 +40,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
     {
         return key($this->data);
     }
-    
+
     /**
      * Iterator go to next element.
      *
@@ -51,7 +51,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
     {
         return next($this->data);
     }
-    
+
     /**
      * Iterator rewind.
      *
@@ -62,7 +62,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
     {
         return reset($this->data);
     }
-    
+
     /**
      * Iterator valid.
      *
@@ -73,7 +73,7 @@ abstract class IteratorAbstract extends BaseObject implements Iterator, Countabl
     {
         return key($this->data) !== null;
     }
-    
+
     #[\ReturnTypeWillChange]
     abstract public function current();
 }

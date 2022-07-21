@@ -16,7 +16,7 @@ class Hidden extends Plugin
      * @var string|integer This value will be stored on create and update actions as a hidden field.
      */
     public $value;
-    
+
     /**
      * @inheritdoc
      */

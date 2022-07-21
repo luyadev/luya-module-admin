@@ -2,10 +2,10 @@
 
 namespace luya\admin\commands;
 
-use Yii;
-use luya\console\Command;
-use yii\console\ExitCode;
 use luya\admin\models\Config;
+use luya\console\Command;
+use Yii;
+use yii\console\ExitCode;
 
 /**
  * Run jobs inside the Queue.

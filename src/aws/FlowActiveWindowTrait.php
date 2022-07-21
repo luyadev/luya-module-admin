@@ -2,11 +2,11 @@
 
 namespace luya\admin\aws;
 
-use Yii;
-use yii\db\Query;
-use yii\base\InvalidConfigException;
 use luya\admin\image\Item;
 use luya\helpers\ArrayHelper;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\db\Query;
 
 /**
  * Helper Trait to enable FlowActiveWindowInterface functions by define the relation table informations.
@@ -42,7 +42,7 @@ trait FlowActiveWindowTrait
      * ];
      */
     abstract public function flowConfig();
-    
+
     /**
      * Get a specific value from the `fowConfig()` method.
      *
@@ -55,10 +55,10 @@ trait FlowActiveWindowTrait
         if (!isset($this->flowConfig()[$key])) {
             throw new InvalidConfigException("The flowConfig() method must return an array with a field named '$key'.");
         }
-        
+
         return $this->flowConfig()[$key];
     }
-    
+
     /**
      * This method will be called when the storage item is created, so you can perform the database save action
      * by implementing this method.
@@ -72,7 +72,7 @@ trait FlowActiveWindowTrait
             $this->getConfigValue('imageField') => $image->id,
         ])->execute();
     }
-    
+
     /**
      * This method will be called when the delete button will be triggered for an uploaded image. Now you should removed
      * the corresponding reference item in your database table. The image objec deletion will be trigger by the active window.
@@ -83,7 +83,7 @@ trait FlowActiveWindowTrait
     {
         Yii::$app->db->createCommand()->delete($this->getConfigValue('table'), [$this->getConfigValue('imageField') => $image->id])->execute();
     }
-    
+
     /**
      * Get an array with all ids for the storage component. Only the image ids for the current
      * model/item id should be returned:
@@ -98,7 +98,7 @@ trait FlowActiveWindowTrait
     {
         return ArrayHelper::getColumn((new Query())->select([$this->getConfigValue('imageField')])->from($this->getConfigValue('table'))->where([$this->getConfigValue('itemField') => $this->id])->indexBy($this->getConfigValue('imageField'))->all(), $this->getConfigValue('imageField'));
     }
-    
+
     /**
      * Get all images for the current item/model directly from the Storage Components `findImages` method. This helper method
      * allows you to easy foreach all images in your frontend implemenation and create the gallery collection.

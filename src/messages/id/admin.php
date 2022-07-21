@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} dari {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Jumlah maksimum pengiriman formulir telah tercapai, coba lagi {time}.',
     'model_loginform_max_user_attempts' => 'Jumlah percobaan login telah mencapai batas maksimum, coba lagi {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Pengiriman file',
     'layout_filemanager_col_file_disposition_download' => 'Unduh',
     'layout_filemanager_col_file_disposition_browser' => 'Tampilkan pada peramban',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Informasi pribadi',
     'settings_general' => 'General',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'nomor telepon',
     'view_index_redirect_telephone_help' => 'masukan nomor telepon yang valid (tanda "+" merupakan awalan "\" diperlukan).',
     'missing_file_upload_permission' => 'Izin tidak cukup untuk mengunggah file.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Tidak',
     'crud_exportdata_btn' => 'Ekspor Data',
@@ -410,7 +410,7 @@ return [
     'status_true' => 'Iya',
     'status_false' => 'Tidak',
     'js_jsonobject_newkey' => 'Nama kunci baru',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Tidak dapat diaktifkan',
@@ -474,7 +474,7 @@ return [
     'reset_form_text' => 'Masukkan kata sandi baru untuk akun Anda.',
     'reset_form_submit_btn' => 'Ubah kata sandi',
     'user_change_password_error' =>  'Galat ketika menyimpan kata sandi baru.',
-  
+
 // added translations in version 3.1.0:
     'crop_source_image' => 'Sumber Gambar',
     'crop_preview' => 'Pratinjau',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\Plugin;
+use luya\helpers\ArrayHelper;
 
 /**
  * Decimal Input-Form field.
@@ -42,21 +42,21 @@ class Decimal extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
     public function onAfterExpandFind($event)
     {
         $fieldValue = $event->sender->getAttribute($this->name);
-        
+
         if (is_array($fieldValue)) {
             $this->writeAttribute($event, ArrayHelper::typeCast($fieldValue));
         } else {
             $this->writeAttribute($event, (float) $fieldValue);
         }
     }
-    
+
     /**
      * @inheritdoc
      */

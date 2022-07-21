@@ -3,8 +3,8 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
-use luya\TagParser;
 use luya\helpers\Html as HtmlHelper;
+use luya\TagParser;
 
 /**
  * Create a textarea input for a given field.
@@ -32,7 +32,7 @@ class Textarea extends Plugin
      * @var string Html5 placholder attribute value to set and example for the user
      */
     public $placeholder;
-    
+
     /**
      * @var boolean Whether the value should be encoded after find by {{luya\helpers\Html::encode()}} or not.
      */
@@ -42,7 +42,7 @@ class Textarea extends Plugin
      * @var boolean Defines whether the textarea output value should be nl2br or not. This only will be triggerd after find (in frontend output).
      */
     public $nl2br = false;
-    
+
     /**
      * @var boolean Define whether the textarea output value should be automaticcally parsed as
      * markdown or not. This will only trigger after find (in frontend output).
@@ -72,7 +72,7 @@ class Textarea extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -81,16 +81,16 @@ class Textarea extends Plugin
         if ($this->encoding) {
             $this->writeAttribute($event, HtmlHelper::encode($event->sender->getAttribute($this->name)));
         }
-        
+
         if ($this->nl2br) {
             $this->writeAttribute($event, nl2br($event->sender->getAttribute($this->name)));
         }
-        
+
         if ($this->markdown) {
             $this->writeAttribute($event, TagParser::convertWithMarkdown($event->sender->getAttribute($this->name)));
         }
     }
-    
+
     /**
      * @inheritdoc
      */

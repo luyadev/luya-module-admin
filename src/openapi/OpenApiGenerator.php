@@ -2,14 +2,14 @@
 
 namespace luya\admin\openapi;
 
-use Yii;
-use yii\base\InvalidConfigException;
+use cebe\openapi\spec\Components;
 use cebe\openapi\spec\Info;
 use cebe\openapi\spec\OpenApi;
 use cebe\openapi\spec\SecurityScheme;
 use cebe\openapi\spec\Server;
-use cebe\openapi\spec\Components;
 use luya\helpers\Url;
+use Yii;
+use yii\base\InvalidConfigException;
 
 /**
  * Generate the OpenApi Instance.
@@ -49,7 +49,7 @@ class OpenApiGenerator
         if (!class_exists(OpenApi::class)) {
             throw new InvalidConfigException("The composer package `cebe/php-openapi` must be installed to generate the OpenAPI file.");
         }
-        
+
         $this->generator = $generator;
     }
 

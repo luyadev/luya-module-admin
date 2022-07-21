@@ -2,11 +2,11 @@
 
 namespace luya\admin;
 
-use Yii;
-use yii\base\BootstrapInterface;
-use luya\traits\CacheableTrait;
 use luya\admin\models\Config;
+use luya\traits\CacheableTrait;
+use Yii;
 use yii\base\Application;
+use yii\base\BootstrapInterface;
 
 /**
  * Admin Bootstrap

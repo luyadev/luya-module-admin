@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} / {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Maksimum form gönderim sayısına ulaşıldı, {time} süre sonra tekrar deneyin.',
     'model_loginform_max_user_attempts' => 'Maksimum giriş denemesi sayısına ulaşıldı, {time} süre sonra tekrar deneyin.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'İndir  / Görüntüle',
     'layout_filemanager_col_file_disposition_download' => 'İndir',
     'layout_filemanager_col_file_disposition_browser' => 'Tarayıcıda göster',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Kişisel bilgi',
     'settings_general' => 'Genel',
@@ -410,9 +410,9 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
-    
+
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
@@ -528,7 +528,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

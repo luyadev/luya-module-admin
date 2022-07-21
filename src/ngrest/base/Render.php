@@ -3,8 +3,8 @@
 namespace luya\admin\ngrest\base;
 
 use luya\admin\ngrest\ConfigInterface;
-use yii\base\BaseObject;
 use luya\admin\ngrest\render\RenderInterface;
+use yii\base\BaseObject;
 
 /**
  * NgRest base rendere which is used in all ngrest render classes.
@@ -17,7 +17,7 @@ use luya\admin\ngrest\render\RenderInterface;
 abstract class Render extends BaseObject implements RenderInterface
 {
     private $_config;
-    
+
     /**
      * Get current config Context.
      *
@@ -27,7 +27,7 @@ abstract class Render extends BaseObject implements RenderInterface
     {
         return $this->_config;
     }
-    
+
     /**
      * Set current config Context.
      *

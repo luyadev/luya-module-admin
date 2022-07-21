@@ -2,11 +2,11 @@
 
 namespace luya\admin\helpers;
 
-use yii\helpers\Html;
-use yii\helpers\Inflector;
-use yii\base\InvalidConfigException;
 use luya\admin\base\TypesInterface;
 use luya\helpers\StringHelper;
+use yii\base\InvalidConfigException;
+use yii\helpers\Html;
+use yii\helpers\Inflector;
 
 /**
  * Helper Method to create angular tags.
@@ -41,7 +41,7 @@ class Angular
 
         return $value;
     }
-    
+
     /**
      * Internal method to use to create the angular injector helper method like in angular context of directives.js
      *
@@ -90,7 +90,7 @@ class Angular
             'options' => $opt,
         ]);
     }
-    
+
     /**
      * Ensures the input structure for optional data for selects, radios etc.
      *
@@ -109,21 +109,21 @@ class Angular
         if (is_scalar($data)) {
             return $data;
         }
-        
+
         $output = [];
-        
+
         foreach ($data as $value => $label) {
             if (is_array($label)) {
                 if (!isset($label['label']) || !isset($label['value'])) {
                     throw new InvalidConfigException("The options array data for the given element must contain a label and value key.");
                 }
-                
+
                 $output[] = $label;
             } else {
                 $output[] = ['label' => $label, 'value' => $value];
             }
         }
-        
+
         return $output;
     }
 
@@ -197,7 +197,7 @@ class Angular
             ], $options)
         ]);
     }
-    
+
     /**
      * Sort Relation Array.
      *
@@ -213,7 +213,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_SORT_RELATION_ARRAY, $ngModel, $label, ['sourceData' => static::optionsArrayInput($sourceData)], $options);
     }
-        
+
     /**
      * Generate a directive which assignes an array of selected tag ids to the model.
      *
@@ -241,7 +241,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_TEXT, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * Passwort
      * @param string $ngModel The ng-model attribute which should be used as reference to be bound into the element.
@@ -253,7 +253,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_PASSWORD, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaTextarea directive
      *
@@ -266,7 +266,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_TEXTAREA, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaNumber directive
      *
@@ -279,7 +279,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_NUMBER, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaDecimal directive
      *
@@ -292,7 +292,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_DECIMAL, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * Select directive
      *
@@ -310,7 +310,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_SELECT, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
-    
+
     /**
      * Radio Input.
      *
@@ -332,7 +332,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_RADIO, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
-    
+
     /**
      * zaaCheckbox directive
      *
@@ -345,7 +345,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_CHECKBOX, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaCheckboxArray directive
      *
@@ -372,7 +372,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => is_scalar($data) ? $data : self::optionsArrayInput($data)], $options);
     }
-    
+
     /**
      * zaaDate directive
      *
@@ -386,7 +386,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_DATE, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaDatetime directive
      *
@@ -400,7 +400,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_DATETIME, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaTable directive
      *
@@ -413,7 +413,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_TABLE, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaListArray directive
      *
@@ -426,7 +426,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_LIST_ARRAY, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaFileArrayUpload directive
      *
@@ -439,7 +439,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_FILEUPLOAD_ARRAY, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaImageArrayUpload directive
      *
@@ -452,7 +452,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_IMAGEUPLOAD_ARRAY, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * zaaImageUpload directive
      *
@@ -466,7 +466,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_IMAGEUPLOAD, $ngModel, $label, ['no_filter' => (int) $noFilter], $options);
     }
-    
+
     /**
      * zaaFileUpload directive
      *
@@ -479,7 +479,7 @@ class Angular
     {
         return self::injector(TypesInterface::TYPE_FILEUPLOAD, $ngModel, $label, [], $options);
     }
-    
+
     /**
      * Generates a directive which requies a value from an api where the model is the primary key field of the api.
      * Angular code example
@@ -500,7 +500,7 @@ class Angular
     {
         return self::injector(TYpesInterface::TYPE_ASYNC_VALUE, $ngModel, $label, [], ['api' => $api, 'fields' => $fields]);
     }
-    
+
     /**
      * Generate a read only attribute tag.
      *
@@ -547,13 +547,13 @@ class Angular
 
         // replace the last key with the new fieldname
         $parts[$key] = $field;
-        
+
         $variable = implode(".", $parts);
 
         return $angularJsVariable ? '{{'.$variable.'}}' : $variable;
     }
 
-    
+
     /**
      * The given string will be variablized and prefixed with current condition.
      *
@@ -587,7 +587,7 @@ class Angular
             $search[] = $match[0];
             $replace[] = self::replaceFieldFromNgModelContext($ngModel, $match[1], $angularJsVariable);
         }
-        
+
         return str_replace($search, $replace, $string);
     }
 }

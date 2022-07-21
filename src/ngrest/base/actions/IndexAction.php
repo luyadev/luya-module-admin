@@ -2,9 +2,9 @@
 
 namespace luya\admin\ngrest\base\actions;
 
+use luya\traits\CacheableTrait;
 use Yii;
 use yii\data\ActiveDataProvider;
-use luya\traits\CacheableTrait;
 
 /**
  * List
@@ -23,7 +23,7 @@ class IndexAction extends \yii\rest\IndexAction
      * @since 1.2.1
      */
     public $prepareActiveDataQuery;
-    
+
     /**
      * Prepare the data models based on the ngrest find query.
      *
@@ -37,7 +37,7 @@ class IndexAction extends \yii\rest\IndexAction
         if (empty($requestParams)) {
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
-        
+
         $filter = null;
         if ($this->dataFilter !== null) {
             $this->dataFilter = Yii::createObject($this->dataFilter);
@@ -48,7 +48,7 @@ class IndexAction extends \yii\rest\IndexAction
                 }
             }
         }
-        
+
         $query = call_user_func($this->prepareActiveDataQuery);
         if (!empty($filter)) {
             $query->andWhere($filter);

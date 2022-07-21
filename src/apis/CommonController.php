@@ -2,19 +2,19 @@
 
 namespace luya\admin\apis;
 
-use Yii;
-use luya\traits\CacheableTrait;
-use luya\admin\Module;
-use luya\admin\models\Property;
-use luya\admin\models\Lang;
-use luya\admin\models\Tag;
 use luya\admin\base\RestController;
-use luya\admin\models\UserLogin;
+use luya\admin\models\Config;
+use luya\admin\models\Lang;
+use luya\admin\models\Property;
 use luya\admin\models\Scheduler;
+use luya\admin\models\Tag;
+use luya\admin\models\UserLogin;
+use luya\admin\Module;
+use luya\traits\CacheableTrait;
+use Yii;
+use yii\base\InvalidCallException;
 use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
-use luya\admin\models\Config;
-use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -28,13 +28,12 @@ use yii\web\NotFoundHttpException;
  */
 class CommonController extends RestController
 {
+    use CacheableTrait;
     /**
      * @event Event A global event which is triggered after the admin flush cache (reload) button is clicked.
      * @since 2.0.0
      */
-    const EVENT_FLUSH_CACHE = 'flushCache';
-
-    use CacheableTrait;
+    public const EVENT_FLUSH_CACHE = 'flushCache';
 
     /**
      * Call Reload Button
@@ -61,7 +60,7 @@ class CommonController extends RestController
             'message' => $button->response ? $button->response : Module::t('admin_button_execute', ['label' => $button->originalLabel]),
         ];
     }
-    
+
     /**
      * Check the status of a queue job
      *
@@ -183,10 +182,10 @@ class CommonController extends RestController
     {
         $apiEndpoint = Yii::$app->request->getBodyParam('apiEndpoint');
         $filterName = Yii::$app->request->getBodyParam('filterName');
-        
+
         return Yii::$app->adminuser->identity->setting->set('ngrestfilter.'.$apiEndpoint, $filterName);
     }
-    
+
     /**
      * Set the lastest ngrest CRUD list order direction in the User Settings.
      *
@@ -200,16 +199,16 @@ class CommonController extends RestController
         $apiEndpoint = Yii::$app->request->getBodyParam('apiEndpoint');
         $sort = Yii::$app->request->getBodyParam('sort');
         $field = Yii::$app->request->getBodyParam('field');
-        
+
         if ($sort == '-') {
             $sort = SORT_DESC;
         } else {
             $sort = SORT_ASC;
         }
-        
+
         return Yii::$app->adminuser->identity->setting->set('ngrestorder.'.$apiEndpoint, ['sort' => $sort, 'field' => $field]);
     }
-    
+
     /**
      * Get all available languages from the database as array.
      *
@@ -219,7 +218,7 @@ class CommonController extends RestController
     {
         return Lang::find()->orderBy(['is_default' => SORT_DESC])->all();
     }
-    
+
     /**
      * Get all available administration regisetered properties.
      *
@@ -241,10 +240,10 @@ class CommonController extends RestController
                 'i18n' => $object->i18n,
             ];
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Triggerable action to flush the application cache and force user reload.
      *
@@ -257,15 +256,15 @@ class CommonController extends RestController
         }
 
         $this->flushHasCache();
-    
+
         $user = Yii::$app->adminuser->identity;
         $user->updateAttributes(['force_reload' => false]);
-    
+
         Yii::$app->trigger(self::EVENT_FLUSH_CACHE);
 
         return true;
     }
-    
+
     /**
      * Get a list with all frontend modules, which is used in several dropdowns in the admin ui.
      *
@@ -289,14 +288,14 @@ class CommonController extends RestController
     public function actionSaveFilemanagerFolderState()
     {
         $folderId = Yii::$app->request->getBodyParam('folderId');
-        
+
         if ($folderId) {
             return Yii::$app->adminuser->identity->setting->set('filemanagerFolderId', $folderId);
         } else {
             return Yii::$app->adminuser->identity->setting->remove('filemanagerFolderId');
         }
     }
-    
+
     /**
      * Return the latest selected filemanager from the user settings.
      *

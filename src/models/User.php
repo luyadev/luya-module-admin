@@ -2,23 +2,23 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use yii\web\IdentityInterface;
-use yii\helpers\Json;
-use luya\admin\aws\ChangePasswordInterface;
-use luya\admin\Module;
-use luya\admin\traits\SoftDeleteTrait;
-use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\aws\ApiRequestInsightActiveWindow;
 use luya\admin\aws\ChangePasswordActiveWindow;
+use luya\admin\aws\ChangePasswordInterface;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
 use luya\admin\base\RestActiveController;
-use yii\base\InvalidArgumentException;
-use luya\validators\StrengthValidator;
-use luya\admin\aws\ApiRequestInsightActiveWindow;
 use luya\admin\events\UserAccessTokenLoginEvent;
+use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\traits\SoftDeleteTrait;
 use luya\helpers\Html;
 use luya\helpers\Url;
+use luya\validators\StrengthValidator;
 use WhichBrowser\Parser;
+use Yii;
+use yii\base\InvalidArgumentException;
+use yii\helpers\Json;
+use yii\web\IdentityInterface;
 
 /**
  * User Model represents all Administration Users.
@@ -58,25 +58,24 @@ use WhichBrowser\Parser;
  */
 class User extends NgRestModel implements IdentityInterface, ChangePasswordInterface
 {
-    const USER_SETTING_ISDEVELOPER = 'isDeveloper';
-    
-    const USER_SETTING_UILANGUAGE = 'luyadminlanguage';
-    
-    const USER_SETTING_NEWUSEREMAIL = 'newUserEmail';
-    
     use SoftDeleteTrait;
-    
+    public const USER_SETTING_ISDEVELOPER = 'isDeveloper';
+
+    public const USER_SETTING_UILANGUAGE = 'luyadminlanguage';
+
+    public const USER_SETTING_NEWUSEREMAIL = 'newUserEmail';
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         $this->on(self::EVENT_BEFORE_INSERT, function () {
             if ($this->scenario == RestActiveController::SCENARIO_RESTCREATE) {
                 $this->encodePassword();
-                
+
                 if ($this->isNewRecord) {
                     $this->is_deleted = false;
                     $this->auth_token = Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->password_salt);
@@ -84,9 +83,9 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             }
         });
     }
-    
+
     private $_setting;
-    
+
     /**
      * Get user settings objects.
      *
@@ -98,10 +97,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             $settingsArray = (empty($this->settings)) ? [] : Json::decode($this->settings);
             $this->_setting = Yii::createObject(['class' => UserSetting::class, 'sender' => $this, 'data' => $settingsArray]);
         }
-        
+
         return $this->_setting;
     }
-    
+
     /**
      * Setter method for user settings which encodes the json.
      *
@@ -111,7 +110,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return $this->updateAttributes(['settings' => Json::encode($data)]);
     }
-    
+
     /**
      * Get the last login Timestamp
      */
@@ -119,8 +118,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return $this->getUserLogins()->select(['timestamp_create'])->scalar();
     }
-    
-    
+
+
     /**
      * @inheritdoc
      */
@@ -128,7 +127,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return 'api-admin-user';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -136,7 +135,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return self::find()->andWhere(['is_api_user' => false]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -144,7 +143,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return ['firstname' => SORT_ASC];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -174,7 +173,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'login_attempt_lock_expiration' => 'datetime',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -184,7 +183,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'Removed' => self::find()->where(['is_api_user' => false, 'is_deleted' => true]),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -194,7 +193,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             'lastloginTimestamp' => ['datetime', 'sortField' => false],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -207,7 +206,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             ['delete', true],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -313,7 +312,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $replace = array_rand(range(2, 9));
         return str_replace(['-', '_', 'l', 1], $replace, strtolower($token));
     }
-    
+
     /**
      * Generate, store and return the secure Login token.
      *
@@ -322,7 +321,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function getAndStoreToken()
     {
         $token = $this->generateToken(6);
-        
+
         $this->setAttribute('secure_token', sha1($token));
         $this->setAttribute('secure_token_timestamp', time());
         $this->update(false);
@@ -346,7 +345,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $this->addError('newpass', Module::t('user_change_password_error'));
         return false;
     }
-    
+
     /**
      * Encodes the current active record password field.
      * @return boolean
@@ -356,7 +355,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         if (!$this->validate(['password'])) {
             return false;
         }
-        
+
         // create random string for password salting
         $this->password_salt = Yii::$app->getSecurity()->generateRandomString();
         // store the password
@@ -364,7 +363,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
         return true;
     }
-    
+
     /**
      * Get the title Mr, Mrs. as string for the current user.
      *
@@ -484,7 +483,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return Yii::$app->security->validatePassword($password.$this->password_salt, $this->password);
     }
-    
+
     /**
      * Get the user logins for the given user.
      *
@@ -494,7 +493,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return $this->hasMany(UserLogin::class, ['user_id' => 'id']);
     }
-    
+
     /**
      * Get all ngrest log entries for this user.
      *
@@ -504,9 +503,9 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return $this->hasMany(NgrestLog::class, ['user_id' => 'id']);
     }
-    
+
     // Change e-mail
-    
+
     /**
      * Generate and save a email verification token and return the token.
      *
@@ -516,15 +515,15 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     public function getAndStoreEmailVerificationToken()
     {
         $token = $this->generateToken(6);
-        
+
         $this->updateAttributes([
             'email_verification_token' => sha1($token),
             'email_verification_token_timestamp' => time(),
         ]);
-        
+
         return $token;
     }
-    
+
     /**
      * Reset the user model email verification token and timestamp
      *
@@ -571,12 +570,12 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         } else {
             $user = static::findOne(['auth_token' => $token]);
         }
-        
+
         // if the given user can be found, udpate the api last activity timestamp.
         if ($user) {
             $user->updateAttributes(['api_last_activity' => time()]);
         }
-        
+
         // this ensures the user cookie won't be destroyed.
         Yii::$app->adminuser->enableAutoLogin = false;
         return $user;

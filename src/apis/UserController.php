@@ -2,15 +2,15 @@
 
 namespace luya\admin\apis;
 
-use Yii;
-use luya\admin\ngrest\base\Api;
-use luya\admin\models\UserChangePassword;
 use luya\admin\models\User;
+use luya\admin\models\UserChangePassword;
 use luya\admin\models\UserDevice;
-use luya\validators\StrengthValidator;
 use luya\admin\Module;
+use luya\admin\ngrest\base\Api;
 use luya\base\PackageInstaller;
+use luya\validators\StrengthValidator;
 use RobThree\Auth\TwoFactorAuth;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -25,7 +25,7 @@ class UserController extends Api
      * @var string Path to the user model class.
      */
     public $modelClass = 'luya\admin\models\User';
-    
+
     /**
      * Profile
      *
@@ -62,12 +62,12 @@ class UserController extends Api
                 'secret' => $secret,
             ],
         ];
-        
+
         // if developer option is enabled provide package infos
         if ($session['settings'][User::USER_SETTING_ISDEVELOPER]) {
             $session['packages'] = $this->packagesToArray(Yii::$app->getPackageInstaller());
         }
-        
+
         return $session;
     }
 
@@ -90,7 +90,7 @@ class UserController extends Api
         }
         return $packages;
     }
-    
+
     /**
      * Disable 2FA
      * Action to disable the two fa auth for this user.
@@ -181,18 +181,18 @@ class UserController extends Api
         $model = new UserChangePassword();
         $model->setUser(Yii::$app->adminuser->identity);
         $model->attributes = Yii::$app->request->bodyParams;
-        
+
         if ($this->module->strongPasswordPolicy) {
             $model->validators->append(StrengthValidator::createValidator(StrengthValidator::class, $model, ['newpass']));
         }
-        
+
         if ($model->validate()) {
             $model->checkAndStore();
         }
-        
+
         return $model;
     }
-    
+
     /**
      * Change E-Mail
      *
@@ -205,10 +205,10 @@ class UserController extends Api
     {
         $token = Yii::$app->request->getBodyParam('token');
         $user = Yii::$app->adminuser->identity;
-        
+
         if (!empty($token) && sha1($token) == $user->email_verification_token && $this->hasOpenEmailValidation($user)) {
             $newEmail = $user->setting->get(User::USER_SETTING_NEWUSEREMAIL);
-            
+
             $user->email = $newEmail;
             if ($user->update(true, ['email'])) {
                 $user->resetEmailVerification();
@@ -218,10 +218,10 @@ class UserController extends Api
                 return $this->sendModelError($user);
             }
         }
-        
+
         return $this->sendArrayError(['email' => Module::t('account_changeemail_wrongtokenorempty')]);
     }
-    
+
     /**
      * Update Profile
      *
@@ -233,7 +233,7 @@ class UserController extends Api
         $user = clone Yii::$app->adminuser->identity;
         $user->attributes = Yii::$app->request->bodyParams;
         $verify = ['title', 'firstname', 'lastname', 'id'];
-        
+
         // check if email has changed, if yes send secure token and temp store new value in user settings table.
         if ($user->validate(['email']) && $user->email !== $identity->email && $this->module->emailVerification) {
             $token = $user->getAndStoreEmailVerificationToken();
@@ -242,7 +242,7 @@ class UserController extends Api
             $mail = $mailer->compose(Module::t('account_changeemail_subject'), User::generateTokenEmail($token, Module::t('account_changeemail_subject'), Module::t('account_changeemail_body')))
                 ->address($identity->email, $identity->firstname . ' '. $identity->lastname)
                 ->send();
-            
+
             if ($mail) {
                 $identity->setting->set(User::USER_SETTING_NEWUSEREMAIL, $user->email);
             } else {
@@ -250,18 +250,18 @@ class UserController extends Api
                 $identity->resetEmailVerification();
             }
         }
-        
+
         if (!$this->module->emailVerification) {
             $verify[] = 'email';
         }
-        
+
         if (!$user->hasErrors() && $user->update(true, $verify) !== false) {
             return $user;
         }
-        
+
         return $this->sendModelError($user);
     }
-    
+
     /**
      * Change Settings
      *
@@ -270,11 +270,11 @@ class UserController extends Api
     public function actionChangeSettings()
     {
         $params = Yii::$app->request->bodyParams;
-        
+
         foreach ($params as $param => $value) {
             Yii::$app->adminuser->identity->setting->set($param, $value);
         }
-        
+
         return true;
     }
 
@@ -290,7 +290,7 @@ class UserController extends Api
         if (!empty($ts) && (time() - $this->module->emailVerificationTokenExpirationTime) <= $ts) {
             return true;
         }
-        
+
         return false;
     }
 }

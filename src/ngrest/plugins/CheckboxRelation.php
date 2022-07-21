@@ -2,12 +2,12 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use Yii;
+use luya\admin\helpers\I18n;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\base\Plugin;
-use luya\rest\ActiveController;
 use luya\helpers\ArrayHelper;
-use luya\admin\helpers\I18n;
+use luya\rest\ActiveController;
+use Yii;
 
 /**
  * Checkbox Selector via relation table.
@@ -120,32 +120,32 @@ class CheckboxRelation extends Plugin
      * you only have an array within the labelField closure.
      */
     public $asArray = true;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         $this->addEvent(NgRestModel::EVENT_AFTER_INSERT, [$this, 'afterSaveEvent']);
         $this->addEvent(NgRestModel::EVENT_AFTER_UPDATE, [$this, 'afterSaveEvent']);
     }
-    
+
     private $_modelPrimaryKey;
-    
+
     public function getModelPrimaryKey()
     {
         if ($this->_modelPrimaryKey === null) {
             $pkname = $this->model->primaryKey();
             $this->_modelPrimaryKey = reset($pkname);
         }
-    
+
         return $this->_modelPrimaryKey;
     }
-    
+
     private $_model;
-    
+
     /**
      * Setter method for the model.
      *
@@ -166,10 +166,10 @@ class CheckboxRelation extends Plugin
         if (!is_object($this->_model)) {
             $this->_model = Yii::createObject(['class' => $this->_model]);
         }
-        
+
         return $this->_model;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -205,7 +205,7 @@ class CheckboxRelation extends Plugin
     private function getOptionsData($event)
     {
         $items = [];
-        $targetModel = new $this->model;
+        $targetModel = new $this->model();
         foreach ($this->model->find()->asArray($this->asArray)->all() as $item) {
             if (is_callable($this->labelField, false)) {
                 $label = call_user_func($this->labelField, $item);
@@ -214,22 +214,22 @@ class CheckboxRelation extends Plugin
                     $this->labelField = array_keys($item);
                 }
                 $array = ArrayHelper::filter($item, $this->labelField);
-                
+
                 foreach ($array as $key => $value) {
                     if ($targetModel->isI18n($key)) {
                         $array[$key] = I18n::decodeFindActive($value);
                     }
                 }
-                
+
                 $label = $this->labelTemplate ? vsprintf($this->labelTemplate, $array) : implode(', ', $array);
             }
-        
+
             $items[] = ['value' => (int) $item[$this->modelPrimaryKey], 'label' => $label];
         }
-        
+
         return ['items' => $items];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -253,7 +253,7 @@ class CheckboxRelation extends Plugin
         }
         $event->sender->{$this->name} = $data;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -263,14 +263,14 @@ class CheckboxRelation extends Plugin
             $event->sender->{$this->name} = $this->getRelationData($event);
         }
     }
-    
+
     private function getRelationData($event)
     {
         $relation = $event->sender->getRelation($this->name, false);
         if ($relation) {
             return $relation;
         }
-        
+
         return $this->model->find()->leftJoin($this->refJoinTable, $this->model->tableName().'.id='.$this->refJoinTable.'.'.$this->refJoinPkId)->where([$this->refJoinTable.'.'.$this->refModelPkId => $event->sender->id])->all();
     }
 
@@ -294,7 +294,7 @@ class CheckboxRelation extends Plugin
             $this->setRelation($event->sender->{$this->name}, $this->refJoinTable, $this->refModelPkId, $this->refJoinPkId, $event->sender->id);
         }
     }
-    
+
     /**
      * Set the relation data based on the configuration.
      *

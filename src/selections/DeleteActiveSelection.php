@@ -6,9 +6,9 @@ use luya\admin\ngrest\base\ActiveSelection;
 
 /**
  * Delete Active Selection
- * 
+ *
  * This run the `delete()` method on selected items.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
  */

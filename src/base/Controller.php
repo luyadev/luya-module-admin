@@ -2,9 +2,9 @@
 
 namespace luya\admin\base;
 
+use luya\admin\models\UserOnline;
 use Yii;
 use yii\filters\AccessControl;
-use luya\admin\models\UserOnline;
 use yii\filters\ContentNegotiator;
 use yii\web\Response;
 
@@ -57,7 +57,7 @@ class Controller extends \luya\web\Controller
      * ```
      */
     public $apiResponseActions = [];
-    
+
     /**
      * Returns the rules for the AccessControl filter behavior.
      *
@@ -84,9 +84,9 @@ class Controller extends \luya\web\Controller
                     }
                     // get the route based on the current $action object
                     $route = implode('/', [$action->controller->module->id, $action->controller->id, $action->id]);
-                    
+
                     UserOnline::refreshUser($this->user->identity, $route);
-                    
+
                     // check the access inside auth->matchRoute and return true/false.
                     return Yii::$app->auth->matchRoute($this->user->id, $route);
                 },
@@ -108,7 +108,7 @@ class Controller extends \luya\web\Controller
                 'rules' => $this->getRules(),
             ],
         ];
-        
+
         if (!empty($this->apiResponseActions)) {
             $behaviors['negotiator'] = [
                 'class' => ContentNegotiator::class,
@@ -118,10 +118,10 @@ class Controller extends \luya\web\Controller
                 ],
             ];
         }
-        
+
         return $behaviors;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -131,7 +131,7 @@ class Controller extends \luya\web\Controller
             Yii::$app->language = Yii::$app->adminuser->interfaceLanguage;
             return true;
         }
-        
+
         return false;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace luya\admin\aws;
 
-use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
+use luya\admin\ngrest\base\ActiveWindow;
 
 /**
  * User History Summary Active Window.
@@ -32,7 +32,7 @@ class UserHistorySummaryActiveWindow extends ActiveWindow
     {
         return Module::t('aw_userhistorysummary_defaultlabel');
     }
-    
+
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      *

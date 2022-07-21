@@ -2,10 +2,10 @@
 
 namespace luya\admin\importers;
 
-use Yii;
 use luya\admin\base\Property as BaseProperty;
 use luya\admin\models\Property;
 use luya\console\Importer;
+use Yii;
 
 /**
  * Import Properties.
@@ -53,7 +53,7 @@ class PropertyImporter extends Importer
                 'class_name' => $object::className(),
             ]);
             $model->update(false);
-    
+
             return $model->id;
         } else {
             $model = new Property();

@@ -227,7 +227,7 @@ return [
     'js_link_change_value' => 'Link wijzigen',
     'js_link_set_value' => 'Link instellen',
     'callback_button_file_download_widget_success' => 'Het bestand is voorbereid.  Je kunt het nu downloaden.',
-    
+
 // added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Fout tijdens het opslaan van het bestand in de opslagmap.  Een toestemmingsfout kan dit probleem veroorzaken.  Zorg ervoor dat de opslagmap schrijfbaar is.',
     'model_user_oldpassword' => 'Vorige (oude) wachtwoord',
@@ -239,7 +239,7 @@ return [
     'locked_info' => 'Iemand die al aan het bewerken is',
     'menu_dashboard' => 'Dashboard',
     'js_link_not_set' => 'Geen link geselecteerd',
-    
+
 // added translations in version 1.0.0:
     'ngrest_button_delete' => 'Verwijderen',
     'js_dir_manager_rm_file_confirm_title' => 'Bestand verwijderen',
@@ -265,7 +265,7 @@ return [
     'model_config_atr_value' => 'Waarde',
     'model_config_atr_is_system' => 'Is systeem',
     'menu_system_item_config' => 'Configureer variabelen',
-    
+
 // added translations in version 1.1.0:
     'model_user_is_deleted' => 'Verwijderd',
     'model_user_name' => 'Naam',
@@ -309,7 +309,7 @@ return [
     'tag_file_readme' => 'Genereer een link naar het opgegeven bestand.  Als voorbeeld, `bestand [1]` genereert een link naar het bestand met id 1, met behulp van de bestandsnaam als bestandslabel.  Gebruik `file [1] (My file label text)` om een ​​andere labeltekst te definiëren.  Het bestand wordt geopend in een nieuw venster.',
     'aw_apioverview_no_perm_groups' => 'De API-gebruiker moet ten minste één toestemmingsgroep hebben toegewezen.',
     'aw_apioverview_no_access_token' => 'De API-gebruiker moet een toegangstoken hebben om toegang te krijgen tot de API.',
-    
+
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} van {{totalRows}}',
 
@@ -410,7 +410,7 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

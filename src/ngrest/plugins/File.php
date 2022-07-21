@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use Yii;
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Type File Upload.
@@ -35,7 +35,7 @@ class File extends Plugin
      * @var boolean Whether to return a {{luya\admin\file\Item}} instead of the numeric file id value from the database.
      */
     public $fileItem = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -59,7 +59,7 @@ class File extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritDoc
      */

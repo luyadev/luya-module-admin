@@ -70,7 +70,7 @@ class SelectArrayGently extends Select
 
         return $this->createTag('select-array-gently', null, ArrayHelper::merge(['model' => $ngModel], $options));
     }
-    
+
     /**
      * Setter method for Data.
      *
@@ -80,7 +80,7 @@ class SelectArrayGently extends Select
     {
         $this->_data = $data;
     }
-    
+
     /**
      * @inheritdoc
      * @see \luya\admin\ngrest\plugins\Select::getData()
@@ -88,7 +88,7 @@ class SelectArrayGently extends Select
     public function getData()
     {
         $cleandata = [];
-         
+
         foreach ($this->lazyLoadData($this->_data) as $key => $value) {
             $cleandata[] = [
                 'value' => $key,

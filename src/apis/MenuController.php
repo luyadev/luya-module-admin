@@ -2,11 +2,11 @@
 
 namespace luya\admin\apis;
 
-use Yii;
-use yii\db\Query;
-use luya\admin\Module;
 use luya\admin\base\RestController;
 use luya\admin\models\UserOnline;
+use luya\admin\Module;
+use Yii;
+use yii\db\Query;
 
 /**
  * Admin Menu API, provides all menu items and dashabord informations for a node or the entire system.
@@ -53,7 +53,7 @@ class MenuController extends RestController
         if (!isset($data['groups'])) {
             return [];
         }
-        
+
         foreach ($data['groups'] as $groupvalue) {
             foreach ($groupvalue['items'] as $row) {
                 if ($row['permissionIsApi']) {

@@ -29,7 +29,7 @@ class UserAccessTokenLoginEvent extends Event
      * @var string  The token which is looking for an user.
      */
     public $token;
-    
+
     private $_user;
 
     /**
@@ -42,7 +42,7 @@ class UserAccessTokenLoginEvent extends Event
         if ($user->is_deleted) {
             throw new InvalidConfigException("Unable to login the deleted user.");
         }
-        
+
         $this->_user = $user;
     }
 

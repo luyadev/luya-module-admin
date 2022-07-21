@@ -2,11 +2,11 @@
 
 namespace luya\admin\aws;
 
-use Yii;
+use luya\admin\filters\MediumCrop;
 use luya\admin\ngrest\base\ActiveWindow;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\Query;
-use luya\admin\filters\MediumCrop;
 
 /**
  * Create an Active Window where you can select Images and store them into a Ref Table.
@@ -60,7 +60,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
      * @var string The fieldname inside the {{luya\admin\aws\ImageSelectCollectionActiveWindow::$refTableName}} to store the reference id where this active is attached.
      */
     public $refFieldName;
-    
+
     /**
      * @var string The name of the field which contains the sort index for the current reference entry, if no value is given the sort ability is disabled.
      */
@@ -77,12 +77,12 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     public function init()
     {
         parent::init();
-        
+
         if ($this->imageIdFieldName === null || $this->refFieldName === null) {
             throw new InvalidConfigException("The properties imageIdFieldName and refFieldName can not be empty.");
         }
     }
-    
+
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      *
@@ -94,7 +94,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
             'sortIndexFieldName' => $this->sortIndexFieldName,
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -107,7 +107,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     {
         return 'Images';
     }
-    
+
     /**
      * Load all images.
      *
@@ -119,11 +119,11 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
             ->select(['image_id' => $this->imageIdFieldName])
             ->where([$this->refFieldName => $this->getItemId()])
             ->from($this->refTableName);
-        
+
         if ($this->isSortEnabled()) {
             $query->orderBy([$this->sortIndexFieldName => SORT_ASC]);
         }
-            
+
         $data = $query->all();
         $images = [];
         foreach ($data as $image) {
@@ -132,7 +132,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
 
         return $images;
     }
-    
+
     /**
      * Get the image array for a given image id.
      *
@@ -142,9 +142,9 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     private function getImageArray($imageId)
     {
         $array = Yii::$app->storage->getImage($imageId)->applyFilter(MediumCrop::identifier())->toArray();
-        
+
         $array['originalImageId'] = $imageId;
-        
+
         return $array;
     }
 
@@ -156,7 +156,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     {
         return !empty($this->sortIndexFieldName);
     }
-    
+
     /**
      * Returns the max (highest) value from sort.
      * @return mixed|boolean|string
@@ -165,7 +165,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     {
         return (new Query())->from($this->refTableName)->where([$this->refFieldName => $this->itemId])->max($this->sortIndexFieldName);
     }
-    
+
     /**
      * Remove a given image id from the index.
      *
@@ -189,7 +189,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     public function callbackAddImageToIndex($fileId)
     {
         $image = Yii::$app->storage->addImage($fileId);
-        
+
         if (!$image) {
             return $this->sendError("Unable to create image from given file Id.");
         }
@@ -201,7 +201,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
 
         return $this->getImageArray($image->id);
     }
-    
+
     /**
      * Switch position between two images.
      *
@@ -212,23 +212,23 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
     public function callbackChangeSortIndex($new, $old)
     {
         // get old position
-        $newPos = (new Query)->select([$this->sortIndexFieldName])->from($this->refTableName)->where([$this->imageIdFieldName => $new['originalImageId']])->scalar();
-        $oldPos = (new Query)->select([$this->sortIndexFieldName])->from($this->refTableName)->where([$this->imageIdFieldName => $old['originalImageId']])->scalar();
-        
+        $newPos = (new Query())->select([$this->sortIndexFieldName])->from($this->refTableName)->where([$this->imageIdFieldName => $new['originalImageId']])->scalar();
+        $oldPos = (new Query())->select([$this->sortIndexFieldName])->from($this->refTableName)->where([$this->imageIdFieldName => $old['originalImageId']])->scalar();
+
         // switch positions
         $changeNewPos = Yii::$app->db->createCommand()->update($this->refTableName, [$this->sortIndexFieldName => $oldPos], [
             $this->imageIdFieldName => $new['originalImageId'],
             $this->refFieldName => $this->itemId,
         ])->execute();
-        
+
         $changeOldPos = Yii::$app->db->createCommand()->update($this->refTableName, [$this->sortIndexFieldName => $newPos], [
             $this->imageIdFieldName => $old['originalImageId'],
             $this->refFieldName => $this->itemId,
         ])->execute();
-        
+
         return true;
     }
-    
+
     /**
      * Prepare and parse the insert fields for a given array.
      *
@@ -242,7 +242,7 @@ class ImageSelectCollectionActiveWindow extends ActiveWindow
         if ($this->isSortEnabled()) {
             $fields[$this->sortIndexFieldName] = $this->getMaxSortIndex() + 1;
         }
-        
+
         return $fields;
     }
 }

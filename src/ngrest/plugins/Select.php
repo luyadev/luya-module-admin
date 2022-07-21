@@ -2,9 +2,9 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\helpers\StringHelper;
-use luya\admin\ngrest\base\Plugin;
 use luya\admin\helpers\Angular;
+use luya\admin\ngrest\base\Plugin;
+use luya\helpers\StringHelper;
 
 /**
  * Base class for select dropdowns via Array or Model.
@@ -28,7 +28,7 @@ abstract class Select extends Plugin
      * will remove the field from the payload, therefore using `''` instead.
      */
     public $initValue = '';
-    
+
     /**
      * @var string This value will be displayed in the ngrest list overview if the given value is empty(). In order to turn off this behavior set `emptyListValue` to false.
      */
@@ -57,7 +57,7 @@ abstract class Select extends Plugin
         if ($this->scheduling && $this->renderContext->canUpdate()) {
             return $this->createSchedulerListTag($ngModel, $this->getData(), 'item');
         }
-        
+
         return $this->createListTag($ngModel);
     }
 
@@ -94,7 +94,7 @@ abstract class Select extends Plugin
     {
         return ['selectdata' => $this->getData()];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -105,7 +105,7 @@ abstract class Select extends Plugin
         }
 
         $value = StringHelper::typeCast($event->sender->getAttribute($this->name));
-        
+
         if ($this->scheduling) {
             $this->writeAttribute($event, $value);
         } else {

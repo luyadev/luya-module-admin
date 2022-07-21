@@ -103,7 +103,7 @@ return [
     'view_index_redirect_internal_select' => 'Choose the internal page that should be forwarded to.',
     'view_index_redirect_external_link' => 'Εξωτερικός Σύνδεσμος',
     'view_index_redirect_external_link_help' => 'Οι εξωτερικοί σύνδεσμοι ξεκινούν με http:// ή https://',
-    
+
 // added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Κωδικός',
@@ -130,22 +130,22 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Θέλετε πραγματικά να διαγράψετε αυτό το αρχείο;',
     'js_dir_manager_rm_file_ok' => 'The file was deleted successfully.',
     'js_zaa_server_proccess' => 'Ο διακομιστής επεξεργάζεται τα δεδομένα σας, παρακαλώ περιμένετε.',
-    
+
 // added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'No data has been added to this table yet.',
-    
+
 // added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Παρακαλώ επιλέξτε μερικές εικόνες απο αριστερά για να τις προσθέσετε στο άλμπουμ της γκαλερί.',
     'aws_gallery_images' => 'Εικόνες Αλμπουμ',
     'layout_useronline_name' => 'Ονομα',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Ανενερός από',
-    
+
 // added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'Ενεργό',
     'debug_state_off' => 'Ανενεργό',
-    
+
 // added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'Κωδικός (token) Ασφαλείας LUYA',
     'login_securetoken_mail' => 'Χρησιμοποιήστε τον ακόλουθο κωδικό ασφαλείας για να εισέλθετε στο interface διαχειρηστή στο:',
@@ -161,7 +161,7 @@ return [
     'mode_user_lastname' => 'Επώνυμο',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Κωδικός',
-    
+
 // added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Εισαγωγή νέας ετικέτας',
     'aws_tag_add' => 'Προσθήκη',
@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'File delivery',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Personal info',
     'settings_general' => 'General',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'telephone number',
     'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => 'Insufficient permissions for file uploads.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'No',
     'crud_exportdata_btn' => 'Export Data',
@@ -410,9 +410,9 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
-    
+
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',
@@ -528,7 +528,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

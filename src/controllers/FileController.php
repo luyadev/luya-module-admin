@@ -2,10 +2,10 @@
 
 namespace luya\admin\controllers;
 
-use Yii;
-use luya\admin\Module;
-use luya\admin\models\StorageFile;
 use luya\admin\events\FileDownloadEvent;
+use luya\admin\models\StorageFile;
+use luya\admin\Module;
+use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -31,13 +31,13 @@ class FileController extends \luya\web\Controller
         // proceed when file exists
         if ($model && $model->fileExists) {
             $event = new FileDownloadEvent(['file' => $model]);
-            
+
             Yii::$app->trigger(Module::EVENT_BEFORE_FILE_DOWNLOAD, $event);
-            
+
             if (!$event->isValid) {
                 throw new BadRequestHttpException('Unable to perform file download request due to access restrictions.');
             }
-            
+
             // update the model count stats
             $model->updateCounters(['passthrough_file_stats' => 1]);
 
@@ -47,7 +47,7 @@ class FileController extends \luya\web\Controller
                 'fileSize' => $model->file_size,
             ]);
         }
-        
+
         // throw not found http exception, will not trigger error api transfer.
         throw new NotFoundHttpException("Unable to find requested file '{$fileName}'.");
     }

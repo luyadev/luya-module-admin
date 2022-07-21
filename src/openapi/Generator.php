@@ -2,12 +2,12 @@
 
 namespace luya\admin\openapi;
 
-use Yii;
-use ReflectionClass;
 use luya\admin\ngrest\base\Api;
 use luya\helpers\ArrayHelper;
 use luya\helpers\ObjectHelper;
 use luya\helpers\StringHelper;
+use ReflectionClass;
+use Yii;
 use yii\base\Component;
 use yii\rest\UrlRule;
 use yii\web\UrlManager;
@@ -26,8 +26,8 @@ class Generator extends Component
      * is to add, remove or override existing params.
      * @since 3.5.0
      */
-    const EVENT_PATH_PARAMETERS = 'pathParameters';
-    
+    public const EVENT_PATH_PARAMETERS = 'pathParameters';
+
     /**
      * @var UrlManager
      */
@@ -183,7 +183,7 @@ class Generator extends Component
             } else {
                 $controller = Yii::createObject($map, [$key, Yii::$app]);
             }
-            
+
             $controllerMapRoute = $this->controllerMapEndpointPrefix.$key;
             foreach (ObjectHelper::getActions($controller) as $actionName) {
                 if ($controller instanceof Api && in_array($actionName, $this->ignoredApiActions)) {
@@ -239,7 +239,7 @@ class Generator extends Component
         $this->getPathsFromControllerMap();
 
         $paths = $this->_paths;
-        
+
         ksort($paths);
 
         return $paths;

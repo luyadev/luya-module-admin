@@ -2,11 +2,11 @@
 
 namespace luya\admin\importers;
 
-use Yii;
 use luya\admin\base\Filter;
 use luya\admin\models\StorageEffect;
 use luya\admin\models\StorageFilter;
 use luya\console\Importer;
+use Yii;
 
 /**
  * Import Storage Filters.
@@ -43,7 +43,7 @@ class FilterImporter extends Importer
                 ['var' => 'saveOptions', 'label' => 'save options'],
             ]]),
         ]);
-        
+
         $this->refresh('crop', [
             'name' => 'Crop',
             'imagine_name' => 'crop',
@@ -55,7 +55,7 @@ class FilterImporter extends Importer
         ]);
 
         $list = [];
-        
+
         foreach ($this->getImporter()->getDirectoryFiles('filters') as $file) {
             $filterClassName = $file['ns'];
             if (class_exists($filterClassName)) {
@@ -71,7 +71,7 @@ class FilterImporter extends Importer
                 }
             }
         }
-        
+
         foreach (StorageFilter::find()->where(['not in', 'identifier', $list])->all() as $filter) {
             $this->addLog('Remove image filter identifier: ' . $filter->identifier);
             $filter->delete();

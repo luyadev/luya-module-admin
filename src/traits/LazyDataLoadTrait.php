@@ -43,7 +43,7 @@ trait LazyDataLoadTrait
         if (is_callable($data)) {
             return call_user_func($data);
         }
-        
+
         return $data;
     }
 }

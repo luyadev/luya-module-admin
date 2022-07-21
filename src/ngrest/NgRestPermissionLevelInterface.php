@@ -16,7 +16,7 @@ interface NgRestPermissionLevelInterface
      * @since 4.0.0
      */
     public function setPermissionLevel($permissionLevel);
-    
+
     /**
      * Get the button displaying permission level or empty of not set
      * @since 4.0.0

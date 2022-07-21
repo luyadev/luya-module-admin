@@ -64,14 +64,14 @@ use luya\helpers\ArrayHelper;
 trait QueryTrait
 {
     private $_whereOperators = ['<', '<=', '>', '>=', '=', '==', 'in'];
-    
+
     /**
      * Return an array with all item values provided for this query method.
      *
      * @return array The array with all values for this query index by its key.
      */
     abstract public function getDataProvider();
-    
+
     /**
      * Return the a single item by its key. If not found, false must be returned.
      *
@@ -79,7 +79,7 @@ trait QueryTrait
      * @return array|boolean Returns the item array or false if not found.
      */
     abstract public function getItemDataProvider($id);
-    
+
     /**
      * Create an item object which implements {{\luya\admin\storage\ItemTrait}}.
      *
@@ -87,14 +87,14 @@ trait QueryTrait
      * @return \luya\admin\storage\ItemAbstract The item object implementing the ItemTrait.
      */
     abstract public function createItem(array $itemArray);
-    
+
     /**
      * Create the iterator object which extends from {{\luya\admin\storage\IteratorAbstract}}.
      * @param array $data The data to pass to the Iterator.
      * @return \luya\admin\storage\IteratorAbstract An iterator object extends from IteratorAbstract class.
      */
     abstract public function createIteratorObject(array $data);
-    
+
     /**
      * Process items against where filters
      *
@@ -124,10 +124,10 @@ trait QueryTrait
                 }
             }
         }
-    
+
         return true;
     }
-    
+
     /**
      * Filter container data provider against where conditions
      *
@@ -137,7 +137,7 @@ trait QueryTrait
     {
         $containerData = $this->getDataProvider();
         $whereExpression = $this->_where;
-        
+
         if (empty($whereExpression)) {
             $data = $containerData;
         } else {
@@ -147,11 +147,11 @@ trait QueryTrait
                         return false;
                     }
                 }
-        
+
                 return true;
             });
         }
-        
+
         if ($this->_offset !== null) {
             $data = array_slice($data, $this->_offset, null, true);
         }
@@ -159,7 +159,7 @@ trait QueryTrait
         if ($this->_limit !== null) {
             $data = array_slice($data, 0, $this->_limit, true);
         }
-        
+
         if ($this->_binds) {
             foreach ($this->_binds as $id => $values) {
                 if (isset($data[$id])) {
@@ -170,7 +170,7 @@ trait QueryTrait
 
         if ($this->_order !== null) {
             if (!empty($this->_order['ids'])) {
-                // id order 
+                // id order
                 $indexedData = [];
                 foreach ($this->_order['ids'] as $indexId) {
                     $column = ArrayHelper::searchColumn($data, current($this->_order['keys']), $indexId);
@@ -187,9 +187,9 @@ trait QueryTrait
 
         return $data;
     }
-    
+
     private $_limit;
-    
+
     /**
      * Set a limition for the amount of results.
      *
@@ -201,12 +201,12 @@ trait QueryTrait
         if (is_numeric($count)) {
             $this->_limit = $count;
         }
-    
+
         return $this;
     }
-    
+
     private $_offset;
-    
+
     /**
      * Define offset start for the rows, if you defined offset to be 5 and you have 11 rows, the
      * first 5 rows will be skiped. This is commonly used to make pagination function in combination
@@ -220,12 +220,12 @@ trait QueryTrait
         if (is_numeric($offset)) {
             $this->_offset = $offset;
         }
-    
+
         return $this;
     }
 
     private $_where = [];
-    
+
     /**
      * Query where similar behavior of filtering items.
      *
@@ -282,17 +282,17 @@ trait QueryTrait
                 if (count($args) !== 3) {
                     throw new Exception("Wrong where condition. Condition needs an operator and two operands.");
                 }
-                
+
                 $this->_where[] = ['op' => $args[0], 'field' => $args[1], 'value' => $args[2]];
                 break;
             } else {
                 $this->_where[] = ['op' => '=', 'field' => $key, 'value' => $value];
             }
         }
-    
+
         return $this;
     }
-    
+
     /**
      * Add another where statement to the existing, this is the case when using compare operators, as then only
      * one where definition can bet set.
@@ -306,7 +306,7 @@ trait QueryTrait
     {
         return $this->where($args);
     }
-    
+
     private $_order;
 
     /**
@@ -327,23 +327,23 @@ trait QueryTrait
      * from an user input, then you can provide an array of that value. The limitation for this order behavior is that
      * only elements in the list will be taken, other elements will be removed from the result array. This means if an
      * id is not present in that array of orderding by id, this will be removed.
-     * 
+     *
      * Example usage:
-     * 
+     *
      * ```
      * (new Query())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [3,2,1]])->all();
      * ```
-     * 
+     *
      * The above example will return those elements in the order of `3,2,1`.
-     * 
+     *
      * Example usage which will remove elements:
-     * 
+     *
      * ```
      * (new Query())->where(['in', 'id', [1,2,3]])->orderBy(['id' => [2,1]])->all();
      * ```
-     * 
+     *
      * The above example will return only the order elements `2,1` and element with id 3 is gone
-     * 
+     *
      * @param array $order An array with fields to sort where key is the field and value the direction.
      * @return \luya\admin\storage\QueryTrait
      * @since 4.0.0
@@ -351,7 +351,7 @@ trait QueryTrait
     public function orderBy(array $order)
     {
         $orderBy = ['keys' => [], 'directions' => [], 'ids' => []];
-        
+
         foreach ($order as $key => $direction) {
             $orderBy['keys'][] = $key;
             $orderBy['directions'][] = $direction;
@@ -359,14 +359,14 @@ trait QueryTrait
                 $orderBy['ids'] = $direction;
             }
         }
-        
+
         $this->_order = $orderBy;
-        
+
         return $this;
     }
 
     private $_binds;
-    
+
     /**
      * Bind given values into the objects for a given id.
      *
@@ -383,10 +383,10 @@ trait QueryTrait
         if (!empty($values)) {
             $this->_binds = $values;
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Find all elementes based on the where filter.
      *
@@ -396,7 +396,7 @@ trait QueryTrait
     {
         return $this->createIteratorObject($this->filter());
     }
-    
+
     /**
      * Get the count of items
      *
@@ -406,7 +406,7 @@ trait QueryTrait
     {
         return count($this->filter());
     }
-    
+
     /**
      * Find One based on the where condition.
      *
@@ -417,10 +417,10 @@ trait QueryTrait
     public function one()
     {
         $data = $this->filter();
-        
-        return (count($data) !== 0) ? $this->createItem(array_values($data)[0]): false;
+
+        return (count($data) !== 0) ? $this->createItem(array_values($data)[0]) : false;
     }
-    
+
     /**
      * FindOne with the specific ID.
      *

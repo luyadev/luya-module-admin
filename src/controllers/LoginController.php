@@ -2,22 +2,22 @@
 
 namespace luya\admin\controllers;
 
-use Yii;
-use yii\web\Response;
-use yii\filters\HttpCache;
-use luya\helpers\Url;
-use luya\admin\models\LoginForm;
-use luya\admin\Module;
-use luya\admin\base\Controller;
-use luya\admin\models\UserOnline;
 use luya\admin\assets\Login;
+use luya\admin\base\Controller;
+use luya\admin\models\LoginForm;
 use luya\admin\models\ResetPasswordChangeForm;
 use luya\admin\models\ResetPasswordForm;
 use luya\admin\models\User;
 use luya\admin\models\UserLoginLockout;
+use luya\admin\models\UserOnline;
+use luya\admin\Module;
+use luya\helpers\Url;
 use RobThree\Auth\TwoFactorAuth;
+use Yii;
 use yii\base\InvalidConfigException;
+use yii\filters\HttpCache;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * Login Controller contains async actions, async token send action and login mechanism.
@@ -62,7 +62,7 @@ class LoginController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        
+
         $behaviors['httpCache'] = [
             'class' => HttpCache::class,
             'cacheControlHeader' => 'no-store, no-cache',
@@ -90,13 +90,13 @@ class LoginController extends Controller
         if (!Yii::$app->adminuser->isGuest) {
             return $this->redirect(['/admin/default/index']);
         }
-       
+
         $this->registerAsset(Login::class);
-        
+
         $this->view->registerJs("observeLogin('#loginForm', '".Url::toAjax('admin/login/async')."', '".Url::toAjax('admin/login/async-token')."', '".Url::toAjax('admin/login/twofa-token')."');");
-    
+
         UserOnline::clearList($this->module->userIdleTimeout);
-        
+
         return $this->render('index', [
             'autologout' => $autologout,
             'resetPassword' => $this->module->resetPassword,
@@ -187,7 +187,7 @@ class LoginController extends Controller
         $this->registerAsset(Login::class);
 
         $model = new ResetPasswordChangeForm();
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($user->changePassword($model->password)) {
                 Yii::$app->session->setFlash('reset_password_success');
@@ -204,7 +204,7 @@ class LoginController extends Controller
             'model' => $model,
         ]);
     }
-    
+
     /**
      * Async single sign in action.
      *
@@ -223,7 +223,7 @@ class LoginController extends Controller
         $model = new LoginForm();
         $model->allowedAttempts = $this->module->loginUserAttemptCount;
         $model->lockoutTime = $this->module->loginUserAttemptLockoutTime;
-        
+
         $loginData = Yii::$app->request->post('login');
         Yii::$app->session->remove('secureId');
         // see if values are sent via post
@@ -244,10 +244,10 @@ class LoginController extends Controller
                         Yii::$app->session->set('secureId', $model->getUser()->id);
                         return $this->sendArray(false, [], true);
                     }
-                    
+
                     return $this->sendArray(false, [Module::t('login_async_secure_token_error')]);
                 }
-                
+
                 if (!$model->autologin) {
                     // auto login is disabled, disable the function
                     Yii::$app->adminuser->enableAutoLogin = false;
@@ -260,7 +260,7 @@ class LoginController extends Controller
 
         return $this->sendArray(false, $model->getErrors(), false);
     }
-    
+
     /**
      * Async Secure Token Login.
      *
@@ -272,10 +272,10 @@ class LoginController extends Controller
             return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
         $secureToken = Yii::$app->request->post('secure_token', false);
-        
+
         $model = new LoginForm();
         $model->secureTokenExpirationTime = $this->module->secureTokenExpirationTime;
-        
+
         if ($secureToken) {
             $user = $model->validateSecureToken($secureToken, Yii::$app->session->get('secureId'));
 
@@ -290,19 +290,19 @@ class LoginController extends Controller
                 Yii::$app->session->remove('secureId');
                 return $this->sendArray(true);
             }
-            
+
             return $this->sendArray(false, [Module::t('login_async_token_error')]);
         }
 
         return $this->sendArray(false, [Module::t('login_async_token_globalerror')]);
     }
-    
+
     public function actionTwofaToken()
     {
         if (($lockout = $this->sessionBruteForceLock(Yii::$app->session->get('secureId')))) {
             return $this->sendArray(false, [Module::t('login_async_submission_limit_reached', ['time' =>  Yii::$app->formatter->asRelativeTime($lockout)])]);
         }
-        
+
         $user = User::findOne(Yii::$app->session->get('secureId'));
         $verify = Yii::$app->request->post('verfiy_code', false);
 
@@ -360,7 +360,7 @@ class LoginController extends Controller
     private function sendArray($refresh, array $errors = [], $enterSecureToken = false, $message = null, $enterTwoFaToken = false)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
+
         return [
             'refresh' => $refresh,
             'message' => $message,
@@ -420,10 +420,10 @@ class LoginController extends Controller
         if ($model->attempt_count >= $this->module->loginSessionAttemptCount) {
             return $model->updated_at + $this->module->loginSessionAttemptLockoutTime;
         }
-        
+
         $model->touch('updated_at');
 
-        
+
         return false;
     }
 }

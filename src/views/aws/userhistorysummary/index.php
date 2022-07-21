@@ -1,11 +1,10 @@
 <?php
 
 use luya\admin\models\StorageFile;
-use luya\helpers\Html;
-use yii\helpers\VarDumper;
 use luya\admin\Module;
-use luya\admin\traits\TaggableTrait;
+use luya\helpers\Html;
 use WhichBrowser\Parser;
+use yii\helpers\VarDumper;
 
 /**
  * UserHistorySummaryActiveWindow Index View.

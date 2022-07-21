@@ -1,7 +1,7 @@
 <?php
-use luya\admin\ngrest\render\RenderCrud;
-use luya\admin\Module;
 use luya\admin\helpers\Angular;
+use luya\admin\Module;
+use luya\admin\ngrest\render\RenderCrud;
 use luya\helpers\ArrayHelper;
 use luya\helpers\Json;
 use yii\helpers\Markdown;

@@ -40,7 +40,7 @@ class m181023_135132_scheduler extends Migration
         ]);
 
         $this->createIndex('queue_id', '{{%admin_queue_log}}', 'queue_id');
-        
+
         $this->createTable('{{%admin_scheduler}}', [
             'id' => $this->primaryKey(),
             'model_class' => $this->string()->notNull(),
@@ -52,7 +52,7 @@ class m181023_135132_scheduler extends Migration
             'is_done' => $this->boolean()->defaultValue(false),
         ]);
     }
-    
+
 
     /**
      * {@inheritdoc}

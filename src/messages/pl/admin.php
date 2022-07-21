@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Dostawa pliku',
     'layout_filemanager_col_file_disposition_download' => 'Pobierz',
     'layout_filemanager_col_file_disposition_browser' => 'Wyświetl w przeglądarce',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Dane osobowe',
     'settings_general' => 'Ogólne',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'Numer telefonu',
     'view_index_redirect_telephone_help' => 'Proszę podać poprawny numer telefonu (dla znaku "+" wymagany jest wiodący "\")',
     'missing_file_upload_permission' => 'Niewystarczające uprawnienia do przesyłania plików.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Yes',
     'crud_exportdata_btn' => 'Eksportuj dane',
@@ -410,7 +410,7 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

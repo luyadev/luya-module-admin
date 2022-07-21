@@ -2,9 +2,9 @@
 
 namespace luya\admin\ngrest;
 
-use Yii;
 use luya\Exception;
 use luya\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Config Builder class to make the NgRest Configs
@@ -27,17 +27,17 @@ class ConfigBuilder implements ConfigBuilderInterface
     protected $config = [];
 
     private $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
-    
+
     public function __construct($ngRestModelClass)
     {
         $this->ngRestModelClass = $ngRestModelClass;
     }
-    
+
     /**
      * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
      */
     public $ngRestModelClass;
-    
+
     /**
      * Maig setter function, defines whether a pointer exists or not, if not existing it will be created.
      *
@@ -93,14 +93,14 @@ class ConfigBuilder implements ConfigBuilderInterface
     public function __call($name, $args)
     {
         $args = (isset($args[0])) ? $args[0] : [];
-        
+
         if (!is_array($args)) {
             throw new Exception("Ngrest plugin constructors must be provided as array config. Error in $name: $args");
         }
-        
+
         return $this->addPlugin($this->prepandAdminPlugin($name), $args);
     }
-    
+
     /**
      * Use the admin ngrest plugin base namespace as default
      *
@@ -112,7 +112,7 @@ class ConfigBuilder implements ConfigBuilderInterface
     {
         return '\\luya\\admin\\ngrest\\plugins\\'.ucfirst($name);
     }
-    
+
     /**
      * Add a Plugin to the current field pointer plugins array.
      *
@@ -125,7 +125,7 @@ class ConfigBuilder implements ConfigBuilderInterface
     {
         $plugin = ['class' => $name, 'args' => $args];
         $this->config[$this->pointer][$this->field]['type'] = $plugin;
-        
+
         return $this;
     }
 
@@ -166,7 +166,7 @@ class ConfigBuilder implements ConfigBuilderInterface
             'name' => $name, 'i18n' => $i18n, 'alias' => (is_null($alias)) ? $name : $alias, 'type' => null, 'extraField' => true,
         ];
         $this->field = $name;
-    
+
         return $this;
     }
 
@@ -200,23 +200,23 @@ class ConfigBuilder implements ConfigBuilderInterface
         if ($this->pointer !== 'aw') {
             throw new Exception('Register method can only be used in a pointer context.');
         }
-        
+
         $object = Yii::createObject($objectType);
-        
+
         if (is_string($objectType)) {
             $config['class'] = $objectType;
         } else {
             $config = $objectType;
         }
-        
+
         $config['ngRestModelClass'] = $this->ngRestModelClass;
-        
+
         $this->config[$this->pointer][$object->getHashName()] = [
             'objectConfig' => $config,
             'label' => $object->getLabel(),
             'icon' => $object->getIcon(),
         ];
-        
+
         return $this;
     }
 

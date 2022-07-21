@@ -2,12 +2,10 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use luya\admin\file\Item;
-use yii\imagine\Image;
-use luya\admin\ngrest\base\NgRestModel;
-use luya\admin\Module;
 use luya\admin\aws\StorageFilterImagesActiveWindow;
+use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
+use yii\imagine\Image;
 
 /**
  * This is the model class for table "admin_storage_filter".
@@ -41,7 +39,7 @@ final class StorageFilter extends NgRestModel
             [['identifier'], 'unique'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -62,13 +60,13 @@ final class StorageFilter extends NgRestModel
         foreach (StorageImage::find()->where(['filter_id' => $this->id])->all() as $img) {
             $source = $img->serverSource;
             $image = $img->delete();
-            
+
             $log[$source] = $image;
         }
-        
+
         return $log;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -80,7 +78,7 @@ final class StorageFilter extends NgRestModel
             }
             return true;
         }
-        
+
         return false;
     }
 
@@ -98,7 +96,7 @@ final class StorageFilter extends NgRestModel
         // load resource object before processing chain
         $image = Image::getImagine()->open($source);
         $saveOptions = [];
-        
+
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter
             list($image, $saveOptions) = $chain->applyFilter($image, $saveOptions);

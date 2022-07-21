@@ -9,7 +9,7 @@ use yii\queue\JobInterface;
 
 /**
  * Process certain filters for an image/file.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
  */
@@ -31,9 +31,9 @@ class ImageFilterJob extends BaseObject implements JobInterface
     public function execute($queue)
     {
         if (StorageFile::find()->where(['id' => $this->fileId])->exists()) {
-            Yii::$app->storage->createImage($this->fileId, 0); 
+            Yii::$app->storage->createImage($this->fileId, 0);
             foreach ((array) $this->filterIdentifiers as $identifier) {
-                Yii::$app->storage->createImage($this->fileId, $identifier); 
+                Yii::$app->storage->createImage($this->fileId, $identifier);
             }
         }
     }

@@ -3,14 +3,13 @@
 namespace luya\admin\components;
 
 use bizley\jwt\Jwt as JwtJwt;
-use Yii;
-use yii\base\InvalidConfigException;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Validation\Constraint\IssuedBy;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use luya\admin\base\JwtIdentityInterface;
 use luya\admin\models\ApiUser;
 use luya\helpers\ObjectHelper;
+use Yii;
+use yii\base\InvalidConfigException;
 
 /**
  * The Jwt component.

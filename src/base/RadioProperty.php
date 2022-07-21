@@ -20,7 +20,7 @@ abstract class RadioProperty extends Property
      * @return array An array with a key and and a value, the key will be stored when selecting data.
      */
     abstract public function items();
-    
+
     /**
      * @inheritdoc
      */

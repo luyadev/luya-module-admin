@@ -2,11 +2,11 @@
 
 namespace luya\admin\base;
 
+use luya\console\Command;
 use Yii;
+use yii\base\NotSupportedException;
 use yii\db\Schema;
 use yii\helpers\Inflector;
-use yii\base\NotSupportedException;
-use luya\console\Command;
 
 /**
  * Base Crud Controller
@@ -23,27 +23,27 @@ abstract class BaseCrudController extends Command
      * @var boolean Whether to use schem name or not
      */
     public $useSchemaName = true;
-    
+
     /**
      * @var array A list of class names.
      */
     protected $classNames;
-    
+
     /**
      * @var array A list of table names.
      */
     protected $tableNames;
-    
+
     /**
      * @var string The name of the table.
      */
     public $tableName;
-    
+
     /**
      * @var boolean Whether to generate labels from comments or not.
      */
     public $generateLabelsFromComments = false;
-    
+
     /**
      * Get the sql tables from the current database connection
      *
@@ -52,10 +52,10 @@ abstract class BaseCrudController extends Command
     public function getSqlTablesArray()
     {
         $names = Yii::$app->db->schema->tableNames;
-    
+
         return array_combine($names, $names);
     }
-    
+
     /**
      * Generates validation rules for the specified table.
      * @param \yii\db\TableSchema $table the table schema
@@ -154,7 +154,7 @@ abstract class BaseCrudController extends Command
         }
         return $rules;
     }
-    
+
     /**
      * Generates a class name from the specified table name.
      * @param string $tableName the table name (which may contain schema prefix)
@@ -194,7 +194,7 @@ abstract class BaseCrudController extends Command
         }
         return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
     }
-    
+
     /**
      * Checks if any of the specified columns is auto incremental.
      * @param \yii\db\TableSchema $table the table schema
@@ -210,7 +210,7 @@ abstract class BaseCrudController extends Command
         }
         return false;
     }
-    
+
     /**
      * Generates the attribute labels for the specified table.
      * @param \yii\db\TableSchema $table the table schema
@@ -234,7 +234,7 @@ abstract class BaseCrudController extends Command
         }
         return $labels;
     }
-    
+
     /**
      * @return string|null driver name of db connection.
      * In case db is not instance of \yii\db\Connection null will be returned.
@@ -246,7 +246,7 @@ abstract class BaseCrudController extends Command
         $db = $this->getDbConnection();
         return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
-    
+
     /**
      * @return \yii\db\Connection the DB connection as specified by [[db]].
      */

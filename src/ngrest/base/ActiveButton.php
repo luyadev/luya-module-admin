@@ -2,11 +2,9 @@
 
 namespace luya\admin\ngrest\base;
 
-use Yii;
-use yii\base\BaseObject;
+use luya\admin\components\Auth;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
-use luya\admin\components\Auth;
 
 /**
  * Active Button Base Class.
@@ -129,9 +127,9 @@ abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonCo
     {
         return $this->_icon ?: $this->getDefaultIcon();
     }
-    
+
     private $_condition;
-    
+
     /**
      * @inheritdoc
      */
@@ -139,7 +137,7 @@ abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonCo
     {
         $this->_condition = $condition;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -147,9 +145,9 @@ abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonCo
     {
         return empty($this->_condition) ? '' : $this->_condition;
     }
-    
+
     private $_permissionLevel = Auth::CAN_UPDATE;
-    
+
     /**
      * @inheritdoc
      */
@@ -157,7 +155,7 @@ abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonCo
     {
         $this->_permissionLevel = $permissionLevel;
     }
-    
+
     /**
      * @inheritdoc
      */

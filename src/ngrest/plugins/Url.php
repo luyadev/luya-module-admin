@@ -20,7 +20,7 @@ class Url extends Text
      * ```
      */
     public $linkAttribute;
-    
+
     /**
      * @inheritDoc
      */

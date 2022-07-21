@@ -3,11 +3,10 @@
 namespace luya\admin\commands;
 
 use luya\admin\models\StorageFile;
-use Yii;
-use luya\console\Command;
-use luya\admin\models\TagRelation;
-use luya\admin\traits\TaggableTrait;
 use luya\admin\models\Tag;
+use luya\admin\models\TagRelation;
+use luya\console\Command;
+use Yii;
 use yii\db\Query;
 
 /**

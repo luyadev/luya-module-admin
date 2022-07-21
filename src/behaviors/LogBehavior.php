@@ -4,10 +4,10 @@ namespace luya\admin\behaviors;
 
 use luya\admin\models\NgrestLog;
 use Yii;
-use yii\db\ActiveRecord;
-use yii\web\Application;
 use yii\base\Behavior;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
+use yii\web\Application;
 
 /**
  * LogBehavior stores informations when active records are updated, inserted or deleted.
@@ -32,7 +32,7 @@ class LogBehavior extends Behavior
             ActiveRecord::EVENT_AFTER_DELETE => 'eventAfterDelete',
         ];
     }
-    
+
     /**
      * The value to transform to json.
      *
@@ -42,7 +42,7 @@ class LogBehavior extends Behavior
     private function toJson($array)
     {
         $array = (array) $array;
-        
+
         return Json::encode($array);
     }
 
@@ -76,7 +76,7 @@ class LogBehavior extends Behavior
 
         return false;
     }
-    
+
     /**
      * After delete event.
      *

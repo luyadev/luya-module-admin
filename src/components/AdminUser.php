@@ -2,12 +2,12 @@
 
 namespace luya\admin\components;
 
+use luya\admin\models\UserLogin;
+use luya\admin\models\UserLoginLockout;
+use luya\admin\models\UserOnline;
 use Yii;
 use yii\web\User;
 use yii\web\UserEvent;
-use luya\admin\models\UserOnline;
-use luya\admin\models\UserLogin;
-use luya\admin\models\UserLoginLockout;
 
 /**
  * AdminUser Component.
@@ -47,26 +47,26 @@ class AdminUser extends User
      * @since 3.0.0
      */
     public $cookieLoginDuration = 2592000; // 30 days (60 * 60 * 24 * 30)
-    
+
     /**
      * @var string Variable to assign the default language from the admin module in order to set default language if not set.
      */
     public $defaultLanguage;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         //$this->idParam = '__luyaAdminId_' . md5(Yii::$app->id);
         $this->idParam = $this->uniqueHostVariable('id');
-        
+
         $this->on(self::EVENT_BEFORE_LOGOUT, [$this, 'onBeforeLogout']);
         $this->on(self::EVENT_AFTER_LOGIN, [$this, 'onAfterLogin']);
     }
-    
+
     public function uniqueHostVariable($key)
     {
         return '__luyaAdmin_' . md5(Yii::$app->id) . '_' . $key;
@@ -102,15 +102,15 @@ class AdminUser extends User
     public function onBeforeLogout()
     {
         UserOnline::removeUser($this->id);
-        
+
         $this->identity->updateAttributes([
             'auth_token' => Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $this->identity->password_salt),
         ]);
-        
+
         // kill all user logins for the given user
         UserLogin::updateAll(['is_destroyed' => true], ['user_id' => $this->id]);
     }
-    
+
     /**
      * Perform a can api match request for the logged in user if user is logged in, returns false otherwhise.
      *

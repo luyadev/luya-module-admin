@@ -2,8 +2,8 @@
 
 namespace luya\admin\models;
 
-use yii\db\ActiveRecordInterface;
 use yii\base\BaseObject;
+use yii\db\ActiveRecordInterface;
 
 /**
  * Store and read user settings.
@@ -43,7 +43,7 @@ use yii\base\BaseObject;
  */
 final class UserSetting extends BaseObject implements \ArrayAccess
 {
-    const SEPERATOR = '.';
+    public const SEPERATOR = '.';
 
     public $data = [];
 
@@ -76,7 +76,7 @@ final class UserSetting extends BaseObject implements \ArrayAccess
 
         return $array;
     }
-    
+
     /**
      * Returns multiple array keys from the user settings table.
      *
@@ -103,7 +103,7 @@ final class UserSetting extends BaseObject implements \ArrayAccess
         foreach ($keys as $key) {
             $data[$key] = $this->get($key, array_key_exists($key, $defaultMapping) ? $defaultMapping[$key] : null);
         }
-        
+
         return $data;
     }
 
@@ -143,7 +143,7 @@ final class UserSetting extends BaseObject implements \ArrayAccess
                     $array = &$array[$item];
                 }
             }
-            
+
             unset($lastArray[$item]);
             if (empty($lastArray)) {
                 unset($lastArray);
@@ -151,7 +151,7 @@ final class UserSetting extends BaseObject implements \ArrayAccess
             $this->save();
             return true;
         }
-        
+
         return false;
     }
 

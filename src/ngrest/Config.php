@@ -2,14 +2,14 @@
 
 namespace luya\admin\ngrest;
 
-use Yii;
-use luya\helpers\ArrayHelper;
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveSelection;
 use luya\admin\ngrest\base\NgRestModel;
-use yii\base\InvalidConfigException;
-use yii\base\BaseObject;
 use luya\admin\ngrest\base\NgRestRelation;
+use luya\helpers\ArrayHelper;
+use Yii;
+use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 
 /**
  * Defines and holds an NgRest Config.
@@ -70,7 +70,7 @@ class Config extends BaseObject implements ConfigInterface
     }
 
     private $_config = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -79,10 +79,10 @@ class Config extends BaseObject implements ConfigInterface
         if (!empty($this->_config)) {
             throw new InvalidConfigException("Unable to override an already provided Config.");
         }
-        
+
         $this->_config = $config;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -90,9 +90,9 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_config;
     }
-    
+
     private $_relations = null;
-    
+
     /**
      * @inheritdoc
      */
@@ -148,7 +148,7 @@ class Config extends BaseObject implements ConfigInterface
             if (!array_key_exists('class', $button)) {
                 $button['class'] = ActiveSelection::class;
             }
-    
+
             $objects[] = Yii::createObject($button);
         }
 
@@ -162,7 +162,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_activeSelections;
     }
-    
+
     private $_activeButtons;
 
     /**
@@ -202,10 +202,10 @@ class Config extends BaseObject implements ConfigInterface
 
         return $this->_activeButtons;
     }
-    
+
 
     private $_apiEndpoint;
-    
+
     /**
      * @inheritdoc
      */
@@ -213,7 +213,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_apiEndpoint;
     }
-    
+
     /**
      *
      * @param string $apiEndpoint
@@ -222,9 +222,9 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_apiEndpoint = $apiEndpoint;
     }
-    
+
     private $_attributeGroups = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -232,7 +232,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_attributeGroups;
     }
-    
+
     /**
      *
      * @param array $groups
@@ -241,9 +241,9 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_attributeGroups = $groups;
     }
-    
+
     private $_attributeLabels = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -251,9 +251,9 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_attributeLabels = $labels;
     }
-    
+
     private $_filters;
-    
+
     /**
      * @inheritdoc
      */
@@ -265,7 +265,7 @@ class Config extends BaseObject implements ConfigInterface
 
         return $this->_filters;
     }
-    
+
     /**
      * Setter method for filters.
      *
@@ -275,9 +275,9 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_filters = $filters;
     }
-    
+
     private $_defaultOrder;
-    
+
     /**
      * Returns an array with default order options.
      *
@@ -287,7 +287,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_defaultOrder;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -297,7 +297,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         $this->_defaultOrder = $defaultOrder;
     }
-    
+
     private $_groupByField;
 
     /**
@@ -307,7 +307,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         return $this->_groupByField;
     }
-    
+
     /**
      *
      * @param string $groupByField
@@ -338,17 +338,17 @@ class Config extends BaseObject implements ConfigInterface
     }
 
     private $_tableName;
-    
+
     public function getTableName()
     {
         return $this->_tableName;
     }
-    
+
     public function setTableName($tableName)
     {
         $this->_tableName = $tableName;
     }
-    
+
     private $_primaryKey;
 
     /**
@@ -359,10 +359,10 @@ class Config extends BaseObject implements ConfigInterface
         if ($this->_primaryKey === null) {
             $this->_primaryKey = $this->model->getNgRestPrimaryKey();
         }
-        
+
         return $this->_primaryKey;
     }
-    
+
     /**
      *
      * @param string $key
@@ -380,10 +380,10 @@ class Config extends BaseObject implements ConfigInterface
         if (!$this->getDefaultOrder()) {
             return false;
         }
-        
+
         return key($this->getDefaultOrder());
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -392,22 +392,22 @@ class Config extends BaseObject implements ConfigInterface
         if (!$this->getDefaultOrder()) {
             return false;
         }
-        
+
         $direction = is_array($this->getDefaultOrder()) ? current($this->getDefaultOrder()) : null; // us preg split to find in string?
 
         if ($direction == SORT_ASC || strtolower($direction) == 'asc') {
             return '+';
         }
-            
+
         if ($direction == SORT_DESC || strtolower($direction) == 'desc') {
             return '-';
         }
-        
+
         return '+';
     }
 
     private $_hash;
-    
+
     /**
      * @inheritdoc
      */
@@ -593,7 +593,7 @@ class Config extends BaseObject implements ConfigInterface
     }
 
     private $_plugins;
-    
+
     /**
      * Get all plugins.
      *
@@ -622,7 +622,7 @@ class Config extends BaseObject implements ConfigInterface
     }
 
     private $_extraFields;
-    
+
     /**
      * Get all extra fields.
      *
@@ -671,13 +671,13 @@ class Config extends BaseObject implements ConfigInterface
         foreach ($this->getPrimaryKey() as $pk) {
             if (!$this->hasField('list', $pk)) {
                 $alias = $pk;
-                
+
                 if (array_key_exists($alias, $this->_attributeLabels)) {
                     $alias = $this->_attributeLabels[$alias];
                 } elseif (strtolower($alias) == 'id') {
                     $alias = Module::t('model_pk_id'); // use default translation for IDs if not label is given
                 }
-                
+
                 $this->addField('list', $pk, [
                     'name' => $pk,
                     'alias' => $alias,

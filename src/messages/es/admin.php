@@ -103,7 +103,7 @@ return [
     'view_index_redirect_internal_select' => 'Seleccione la página interna a la que se debe enviar al usuario.',
     'view_index_redirect_external_link' => 'Enlace externo',
     'view_index_redirect_external_link_help' => 'Enlaces externos comienzan con http:// o https://',
-    
+
 // added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Contraseña',
@@ -130,22 +130,22 @@ return [
     'js_dir_manager_rm_file_confirm' => '¿Realmente desea eliminar este archivo?',
     'js_dir_manager_rm_file_ok' => 'El archivo se eliminó correctamente.',
     'js_zaa_server_proccess' => 'El servidor esta procesando los datos. Por favor espere',
-    
+
 // added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'No se añadió datos en esta tabla todavía.',
-    
+
 // added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Por favor seleccione algunas imágenes de la izquierda para añadir en el álbum de la galería.',
     'aws_gallery_images' => 'Galería de imágenes',
     'layout_useronline_name' => 'Nombre',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Inactivo desde',
-    
+
 // added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Almacenamiento caché',
     'debug_state_on' => 'Encedido',
     'debug_state_off' => 'Apagado',
-    
+
 // added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'Código de Seguridad LUYA',
     'login_securetoken_mail' => 'Use el siguiente código de seguridad para acceder a su interfaz de administración:',
@@ -161,7 +161,7 @@ return [
     'mode_user_lastname' => 'Apellido',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Contraseña',
-    
+
 // added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Añadir nueva entrada',
     'aws_tag_add' => 'Añadir',
@@ -169,14 +169,14 @@ return [
     'aws_tag_list' => 'Lista de todas las entradas',
     'dashboard_log_message_add' => 'Se añadió una nueva fila a <b>{container}</b>.',
     'dashboard_log_message_edit' => 'Actualizar una fila existente en <b>{container}</b>.',
-    
+
 // added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Ayuda',
     'right_panel_support_title' => 'Informaciones &amp; Ayuda',
     'right_panel_support_tags_title' => 'Etiquetas',
     'right_panel_support_support_title' => 'Soporte',
     'right_panel_support_support_text' => 'Si tiene alguna duda, por favor, póngase en contacto con su webmaster o consulte <a target="_blank" href="https://luya.io">luya.io</a>.',
-    
+
 // added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Agrupar por campo',
     'ngrest_crud_filter_prompt' => 'Seleccione filtro',
@@ -187,7 +187,7 @@ return [
     'layout_rightbar_savebtn' => 'Guardar',
     'aws_changepassword_notequal' => 'La nueva contraseña y la repetición de contraseña no son iguales.',
     'aws_changeapssword_minchar' => 'La nueva contraseña debe tener al menos {min} caracteres.',
-    
+
 // added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Nombre',
@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} de {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Se ha alcanzado el número máximo de envíos de formularios, vuelva a intentarlo {time}.',
     'model_loginform_max_user_attempts' => 'Se ha alcanzado el número máximo de intentos de inicio de sesión, vuelva a intentarlo {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Entregado de archivo',
     'layout_filemanager_col_file_disposition_download' => 'Descargar',
     'layout_filemanager_col_file_disposition_browser' => 'Mostrar en navegador',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Información Personal',
     'settings_general' => 'General',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'número de teléfono',
     'view_index_redirect_telephone_help' => 'Por favor introduce un número de teléfono válido (para el signo "+" es necesario un "\" previo).',
     'missing_file_upload_permission' => 'Permisos insuficientes para subir archivos.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'No',
     'crud_exportdata_btn' => 'Exportar Datos',
@@ -409,7 +409,7 @@ return [
     'status_true' => 'Si',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'Nuevo nombre a la clave',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Alternar estado',
     'active_button_togglestatus_error' => 'No se pudo activar',
@@ -526,7 +526,7 @@ return [
     'button_create' => 'Crear',
     'button_cancel' => 'Cancelar',
     'button_create_and_new' => 'Crear y nuevo',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

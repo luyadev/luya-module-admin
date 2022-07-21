@@ -2,13 +2,13 @@
 
 namespace luya\admin\apis;
 
-use Yii;
-use luya\Exception;
-use luya\admin\models\SearchData;
-use luya\admin\base\RestController;
 use luya\admin\base\GenericSearchInterface;
-use yii\db\QueryInterface;
+use luya\admin\base\RestController;
+use luya\admin\models\SearchData;
+use luya\Exception;
+use Yii;
 use yii\db\ActiveQueryInterface;
+use yii\db\QueryInterface;
 
 /**
  * Search API, allows you to perform search querys for the entire administration including all items provided in the auth section.
@@ -32,7 +32,7 @@ class SearchController extends RestController
         } elseif ($response instanceof QueryInterface) {
             return $response->all();
         }
-        
+
         return $response;
     }
     /**
@@ -66,7 +66,7 @@ class SearchController extends RestController
                         'stateProvider' => $stateProvider,
                     ];
                 }
-                
+
                 unset($model, $data);
             }
         }
@@ -87,10 +87,10 @@ class SearchController extends RestController
                             'stateProvider' => $controller->model->genericSearchStateProvider(),
                         ];
                     }
-                    
+
                     unset($data);
                 }
-                
+
                 unset($controller, $ctrl);
             }
         }

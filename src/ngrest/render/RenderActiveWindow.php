@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\render;
 
-use Yii;
 use luya\admin\ngrest\base\Render;
+use Yii;
 
 /**
  * Render the index view of an Active Window.
@@ -26,7 +26,7 @@ class RenderActiveWindow extends Render
     }
 
     private $_activeWindowObject;
-    
+
     /**
      * Get current Active Window Object.
      *
@@ -43,12 +43,12 @@ class RenderActiveWindow extends Render
             Yii::$app->session->set($this->activeWindowHash, $this->itemId);
             $this->_activeWindowObject = $object;
         }
-        
+
         return $this->_activeWindowObject;
     }
-    
+
     private $_activeWindowHash;
-    
+
     /**
      * Active Window Hash Getter Method.
      *
@@ -58,7 +58,7 @@ class RenderActiveWindow extends Render
     {
         return $this->_activeWindowHash;
     }
-    
+
     /**
      * Active Window Hash Setter Method.
      *
@@ -68,7 +68,7 @@ class RenderActiveWindow extends Render
     {
         $this->_activeWindowHash = $activeWindowHash;
     }
-    
+
     private $_itemId;
 
     /**
@@ -80,7 +80,7 @@ class RenderActiveWindow extends Render
     {
         $this->_itemId = implode(",", $id);
     }
-    
+
     /**
      * Getter method for current Item Id.
      *
@@ -100,7 +100,7 @@ class RenderActiveWindow extends Render
     public function findActiveWindow($activeWindowHash)
     {
         $activeWindows = $this->getConfig()->getPointer('aw');
-        
+
         return isset($activeWindows[$activeWindowHash]) ? $activeWindows[$activeWindowHash] : false;
     }
 }

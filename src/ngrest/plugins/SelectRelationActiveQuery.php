@@ -3,11 +3,11 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\helpers\I18n;
-use Yii;
 use luya\admin\ngrest\base\Plugin;
+use Yii;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\helpers\Json;
-use yii\base\InvalidConfigException;
 
 /**
  * Performance optimised select relation plugin.
@@ -48,7 +48,7 @@ class SelectRelationActiveQuery extends Plugin
      * @var string This value will be displayed in the ngrest list overview if the given value is empty().
      */
     public $emptyListValue = "-";
-    
+
     /**
      * @var boolean If enabled, the frontend value will be loaded from async request in order to keep original list
      * values, this is mainly used when working with composite keys.
@@ -69,9 +69,9 @@ class SelectRelationActiveQuery extends Plugin
      * @since 2.1.0
      */
     public $relation;
-    
+
     private $_labelField;
-    
+
     /**
      * Setter method for Label Field.
      *
@@ -82,10 +82,10 @@ class SelectRelationActiveQuery extends Plugin
         if (is_string($labelField)) {
             $labelField = explode(",", $labelField);
         }
-        
+
         $this->_labelField = $labelField;
     }
-    
+
     /**
      * Getter method for Label Field.
      *
@@ -100,7 +100,7 @@ class SelectRelationActiveQuery extends Plugin
      * @var \yii\db\ActiveQuery
      */
     private $_query;
-    
+
     /**
      *
      * @param yii\db\ActiveQuery $query
@@ -109,7 +109,7 @@ class SelectRelationActiveQuery extends Plugin
     {
         $this->_query = $query;
     }
-    
+
     /**
      *
      * @return \yii\db\ActiveQuery
@@ -118,7 +118,7 @@ class SelectRelationActiveQuery extends Plugin
     {
         return $this->_query;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -139,10 +139,10 @@ class SelectRelationActiveQuery extends Plugin
         if ($this->asyncList) {
             return $this->createTag('async-value', null, ['api' => $this->getRelationApiEndpoint(), 'model' => $ngModel, 'fields' => Json::encode($this->labelField)]);
         }
-        
+
         return $this->createListTag($ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -153,7 +153,7 @@ class SelectRelationActiveQuery extends Plugin
             $this->createFormTag('zaa-async-value', $id, $ngModel, ['api' => $this->getRelationApiEndpoint(), 'fields' => Json::encode($this->labelField)])
         ];
     }
-    
+
     /**
      * Get the admin api endpoint name.
      *
@@ -166,15 +166,15 @@ class SelectRelationActiveQuery extends Plugin
         $class = $this->_query->modelClass;
         // fetch menu api detail from endpoint name
         $menu = Yii::$app->adminmenu->getApiDetail($class::ngRestApiEndpoint());
-        
+
         if (!$menu) {
             throw new InvalidConfigException("Unable to find the API endpoint, maybe insufficent permission or missing admin module context (admin module prefix).");
         }
-        
+
         // @todo what about: admin/
         return 'admin/'.$menu['permissionApiEndpoint'];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -182,7 +182,7 @@ class SelectRelationActiveQuery extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -192,10 +192,10 @@ class SelectRelationActiveQuery extends Plugin
         if ($this->asyncList) {
             return;
         }
-        
+
         // ensure a value exists for the given field.
         $value = $event->sender->getAttribute($this->name);
-        
+
         // render empty list value
         if ($this->emptyListValue && empty($value)) {
             return $this->writeAttribute($event, $this->emptyListValue);
@@ -226,14 +226,14 @@ class SelectRelationActiveQuery extends Plugin
         if (!$row) {
             return;
         }
-        
+
         $row = array_map(function ($fieldValue, $fieldName) use ($model) {
-            if ((new $model)->isI18n($fieldName)) {
+            if ((new $model())->isI18n($fieldName)) {
                 return I18n::decodeFindActive($fieldValue);
             }
             return $fieldValue;
         }, $row, array_keys($row));
-    
+
         return $this->writeAttribute($event, implode(" ", $row));
     }
 }

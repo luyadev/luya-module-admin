@@ -2,7 +2,6 @@
 
 namespace luya\admin\base;
 
-use luya\admin\Module;
 use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 
@@ -27,7 +26,7 @@ class ReloadButton extends BaseObject
      * @var string The original label value which is used to display the generic success message.
      */
     public $originalLabel;
-    
+
     /**
      * @var string The custom API response message.
      */
@@ -39,7 +38,7 @@ class ReloadButton extends BaseObject
     public function init()
     {
         parent::init();
-        
+
         if (!$this->icon || !$this->label || !$this->callback) {
             throw new InvalidConfigException("The reload button attributes icon, label and callback can not be empty.");
         }

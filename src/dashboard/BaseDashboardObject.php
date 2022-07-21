@@ -2,9 +2,9 @@
 
 namespace luya\admin\dashboard;
 
-use Yii;
 use luya\admin\base\DashboardObjectInterface;
 use luya\helpers\StringHelper;
+use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -35,7 +35,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
      * Option content parser varaibles
      *
      * Pass additional variables into the template.
-     * 
+     *
      * ```
      * 'variables' => [
      *     'foo' => 'bar',
@@ -45,16 +45,16 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
      *     'title' => ['Key', 'Value'] // equals to: Yii::t('Key', 'Value')
      * ]
      * ```
-     * 
+     *
      * The variables can be used as {{foo}} and {{time}} in the template.
-     * 
+     *
      * @var array An array with key and value, where the key is what is available in the template.
      * @since 4.2.0
      */
     public $variables = [];
-    
+
     private $_template;
-    
+
     /**
      * Setter method for template.
      *
@@ -64,7 +64,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     {
         $this->_template = $template;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -99,9 +99,9 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
 
         return StringHelper::template($content, array_merge($vars, $customVars), true);
     }
-    
+
     private $_dataApiUrl;
-    
+
     /**
      * Setter methdo for dataApiUrl.
      *
@@ -111,7 +111,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     {
         $this->_dataApiUrl = $dataApiUrl;
     }
-     
+
     /**
      * @inheritdoc
      */
@@ -119,9 +119,9 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     {
         return $this->_dataApiUrl;
     }
-    
+
     private $_title;
-    
+
     /**
      * Setter method for title.
      *
@@ -139,7 +139,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
             $this->_title = $title;
         }
     }
-    
+
     /**
      * @inheritdoc
      */

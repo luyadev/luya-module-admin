@@ -2,15 +2,15 @@
 
 namespace luya\admin\ngrest\base;
 
-use Yii;
-use yii\base\Component;
-use yii\helpers\Json;
-use yii\helpers\Html;
-use luya\Exception;
-use luya\admin\helpers\I18n;
-use luya\helpers\ArrayHelper;
 use luya\admin\base\TypesInterface;
 use luya\admin\helpers\Angular;
+use luya\admin\helpers\I18n;
+use luya\Exception;
+use luya\helpers\ArrayHelper;
+use Yii;
+use yii\base\Component;
+use yii\helpers\Html;
+use yii\helpers\Json;
 
 /**
  * Base class for NgRest Plugins.
@@ -37,22 +37,22 @@ use luya\admin\helpers\Angular;
  */
 abstract class Plugin extends Component implements TypesInterface
 {
-    const CREATE_CONTEXT_PREFIX = 'create.';
+    public const CREATE_CONTEXT_PREFIX = 'create.';
 
-    const UPDATE_CONTEXT_RPEFXI = 'update.';
+    public const UPDATE_CONTEXT_RPEFXI = 'update.';
 
-    const LIST_CONTEXT_PREFIX = 'item.';
+    public const LIST_CONTEXT_PREFIX = 'item.';
 
     /**
      * @var string The name of the field corresponding to the ActiveRecord (also known as fieldname)
      */
     public $name;
-    
+
     /**
      * @var string The alias name of the plugin choosen by the user (also known as label)
      */
     public $alias;
-    
+
     /**
      * @var boolean Whether the plugin is in i18n context or not.
      */
@@ -77,7 +77,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @var mixed This value will be used when the i18n decodes the given value but is not set yet, default value.
      */
     public $i18nEmptyValue = '';
-    
+
     /**
      * @var string Provide a condition in order to show or hide a given field. The condition relies on other fields from the forms. In order
      * to make sure the right context is used (create, update) put the fieldname into curly brackets `{field1}`.
@@ -97,7 +97,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @since 1.2.0
      */
     public $condition;
-    
+
     /**
      * @var \luya\admin\ngrest\render\RenderCrudInterface The render context object when rendering
      * + {{Plugin::renderList()}}
@@ -142,7 +142,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @since 4.1.0
      */
     public $cellColor = false;
-    
+
     /**
      * @var mixed An additional icon of a CRUD table column and CRUD edit form item.
      *
@@ -164,7 +164,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string|array Returns the html element as a string or an array which will be concated
      */
     abstract public function renderList($id, $ngModel);
-    
+
     /**
      * Renders the element for the CRUD CREATE FORM for a specific type.
      *
@@ -173,7 +173,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string|array Returns the html element as a string or an array which will be concated
      */
     abstract public function renderCreate($id, $ngModel);
-    
+
     /**
      * Renders the element for the CRUD UPDATE FORM for a specific type.
      *
@@ -182,7 +182,7 @@ abstract class Plugin extends Component implements TypesInterface
      * @return string|array Returns the html element as a string or an array which will be concated
      */
     abstract public function renderUpdate($id, $ngModel);
-    
+
     /**
      * @inheritdoc
      */
@@ -190,11 +190,11 @@ abstract class Plugin extends Component implements TypesInterface
     {
         // call parent initializer
         parent::init();
-        
+
         if ($this->name === null || $this->alias === null || $this->i18n === null) {
             throw new Exception("Plugin attributes name, alias and i18n must be configured.");
         }
-        
+
         $this->addEvent(NgRestModel::EVENT_BEFORE_VALIDATE, 'onSave');
         $this->addEvent(NgRestModel::EVENT_AFTER_INSERT, 'onAssign');
         $this->addEvent(NgRestModel::EVENT_AFTER_UPDATE, 'onAssign');
@@ -295,7 +295,7 @@ abstract class Plugin extends Component implements TypesInterface
                 'desc' => [$this->_sortField => SORT_DESC]
             ]];
         }
-        
+
         return [$this->name];
     }
 
@@ -309,7 +309,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return 'service.'.$this->name.'.'.$name;
     }
-    
+
     /**
      * Define the service data which will be called when creating the ngrest crud view. You may override
      * this method in your plugin.
@@ -331,7 +331,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return false;
     }
-    
+
     /**
      * Decodes the given JSON string into a PHP data structure and verifys if its empty, cause this can thrown an json decode exception.
      *
@@ -342,7 +342,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return empty($value) ? [] : Json::decode($value);
     }
-    
+
     // I18N HELPERS
 
     /**
@@ -359,7 +359,7 @@ abstract class Plugin extends Component implements TypesInterface
         trigger_error('deprecated, use I18n::encode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::encode($value);
     }
-    
+
     /**
      * Decode from Json to PHP.
      *
@@ -375,7 +375,7 @@ abstract class Plugin extends Component implements TypesInterface
         trigger_error('deprecated, use I18n::decode instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::decode($value, $onEmptyValue);
     }
-    
+
     /**
      * Encode the current value from a language array.
      *
@@ -390,7 +390,7 @@ abstract class Plugin extends Component implements TypesInterface
         trigger_error('deprecated, use I18n::findActive instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         return I18n::findActive($fieldValues);
     }
-    
+
     // HTML TAG HELPERS
 
     /**
@@ -423,7 +423,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return $context . ltrim($field, '.');
     }
-    
+
     /**
       * Get the ng-show condition from a given ngModel context.
       *
@@ -438,7 +438,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return Angular::variablizeContext($ngModel, $this->condition, false);
     }
-    
+
     /**
      * Helper method to create a form tag based on current object.
      *
@@ -457,15 +457,15 @@ abstract class Plugin extends Component implements TypesInterface
             'fieldname' => $this->name,
             'i18n' => $this->i18n ? 1 : '',
         ];
-        
+
         // if a condition is available, evalute from given context
         if ($this->condition) {
             $defaultOptions['ng-show'] = $this->getNgShowCondition($ngModel);
         }
-        
+
         return $this->createTag($name, null, array_merge($options, $defaultOptions));
     }
-    
+
     /**
      * Helper method to create a span tag with the ng-model in angular context for the crud overview
      * @param string $ngModel
@@ -476,7 +476,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return $this->createTag('span', null, ArrayHelper::merge(['ng-bind' => $ngModel], $options));
     }
-    
+
     /**
      * Create a tag for relation window toggler with directive crudLoader based on a ngrest model class.
      *
@@ -488,9 +488,9 @@ abstract class Plugin extends Component implements TypesInterface
         if (!method_exists($ngrestModelClass, 'ngRestApiEndpoint')) {
             return null;
         }
-        
+
         $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint(), Yii::$app->request->get('pool'));
-        
+
         if ($menu) {
             if ($ngRestModelSelectMode) {
                 $options['model-setter'] = $ngRestModelSelectMode;
@@ -498,10 +498,10 @@ abstract class Plugin extends Component implements TypesInterface
             } else {
                 $options['model-selection'] = 0;
             }
-            
+
             return $this->createTag('crud-loader', null, array_merge(['api' => $menu['route'], 'alias' => $menu['alias']], $options));
         }
-        
+
         return null;
     }
 
@@ -521,11 +521,11 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return Angular::schedule($ngModel, $this->alias, 'getRowPrimaryValue('.$dataRow.')', $values, get_class($this->renderContext->getModel()), $this->name, $options)->render();
     }
-    
+
     // EVENTS
 
     private $_events = [];
-    
+
     /**
      * Add an event to the list of events
      *
@@ -536,7 +536,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         $this->_events[$trigger] = $handler;
     }
-    
+
     /**
      * Remove an event from the events stack by its trigger name.
      *
@@ -559,7 +559,7 @@ abstract class Plugin extends Component implements TypesInterface
             unset($this->_events[$trigger]);
         }
     }
-    
+
     /**
      * An override without calling the parent::events will stop all other events used by default.
      *
@@ -569,7 +569,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return $this->_events;
     }
-    
+
     // ON SAVE
 
     /**
@@ -582,7 +582,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     /**
     * This event will be triggered `onSave` event. If the model property is not writeable the event will not trigger.
     *
@@ -599,9 +599,9 @@ abstract class Plugin extends Component implements TypesInterface
             }
         }
     }
-    
+
     // ON ASSIGN
-    
+
     /**
      * After attribute value assignment.
      *
@@ -619,7 +619,7 @@ abstract class Plugin extends Component implements TypesInterface
     public function onAssign($event)
     {
     }
-    
+
     // ON LIST FIND
 
     /**
@@ -637,7 +637,7 @@ abstract class Plugin extends Component implements TypesInterface
 
         return true;
     }
-    
+
     /**
      * This event is only trigger when returning the ngrest crud list data.
      *
@@ -658,7 +658,7 @@ abstract class Plugin extends Component implements TypesInterface
             $this->onAfterListFind($event);
         }
     }
-    
+
     /**
      * This event will be triggered after `onListFind`.
      *
@@ -669,7 +669,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     // ON FIND
 
     /**
@@ -682,7 +682,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     /**
      * ActiveRecord afterFind event. If the property of this plugin inside the model, the event will not be triggered.
      *
@@ -702,11 +702,11 @@ abstract class Plugin extends Component implements TypesInterface
                 // see: https://github.com/luyadev/luya-module-admin/pull/567
                 $event->sender->setOldAttribute($this->name, $value);
             }
-            
+
             $this->onAfterFind($event);
         }
     }
-    
+
     /**
      * This event will be trigger after `onFind`.
      *
@@ -717,7 +717,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     // ON EXPAND FIND
 
     /**
@@ -730,7 +730,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     /**
      * NgRest Model crud list/overview event after find. If the property of this plugin inside the model, the event will not be triggered.
      * @param \luya\admin\ngrest\base\NgRestModel::EVENT_AFTER_NGREST_UPDATE_FIND $event NgRestModel event EVENT_AFTER_NGREST_UPDATE_FIND.
@@ -744,11 +744,11 @@ abstract class Plugin extends Component implements TypesInterface
                     I18n::decode($event->sender->getAttribute($this->name), $this->i18nEmptyValue)
                 );
             }
-            
+
             $this->onAfterExpandFind($event);
         }
     }
-    
+
     /**
      * This event will be triggered after `onExpandFind`.
      *
@@ -759,7 +759,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     // ON COLLECT SERVICE DATA
 
     /**
@@ -772,7 +772,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return true;
     }
-    
+
     /**
      * The ngrest services collector.
      *
@@ -801,7 +801,7 @@ abstract class Plugin extends Component implements TypesInterface
     {
         return ($event->sender->hasAttribute($this->name) || $event->sender->canSetProperty($this->name));
     }
-    
+
     /**
      * Write a value to a plugin attribute or property.
      *
@@ -818,7 +818,7 @@ abstract class Plugin extends Component implements TypesInterface
         $property = $this->name;
         $event->sender->{$property} = $value;
     }
-    
+
     /**
      * Get the value from the plugin attribute or property.
      *
@@ -829,7 +829,7 @@ abstract class Plugin extends Component implements TypesInterface
     protected function getAttributeValue($event)
     {
         $property = $this->name;
-        
+
         return $event->sender->{$property};
     }
 }

@@ -2,8 +2,8 @@
 
 namespace luya\admin\file;
 
-use Yii;
 use luya\admin\storage\QueryTrait;
+use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -19,9 +19,9 @@ use yii\base\BaseObject;
 class Query extends BaseObject
 {
     use QueryTrait;
-    
+
     private $_storage;
-    
+
     /**
      * Singleton behavior for storage component getter.
      *
@@ -32,25 +32,25 @@ class Query extends BaseObject
         if ($this->_storage === null) {
             $this->_storage = Yii::$app->storage;
         }
-    
+
         return $this->_storage;
     }
-    
+
     public function getDataProvider()
     {
         return $this->storage->filesArray;
     }
-    
+
     public function getItemDataProvider($id)
     {
         return $this->storage->getFilesArrayItem($id);
     }
-    
+
     public function createItem(array $itemArray)
     {
         return Item::create($itemArray);
     }
-    
+
     public function createIteratorObject(array $data)
     {
         return Yii::createObject(['class' => Iterator::class, 'data' => $data]);

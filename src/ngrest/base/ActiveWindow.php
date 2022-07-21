@@ -2,18 +2,17 @@
 
 namespace luya\admin\ngrest\base;
 
-use Yii;
-use yii\helpers\Inflector;
-use luya\helpers\StringHelper;
-use yii\base\ViewContextInterface;
-use luya\Exception;
-use luya\helpers\Url;
-use luya\helpers\FileHelper;
-use yii\base\BaseObject;
-use yii\base\InvalidCallException;
+use luya\admin\components\Auth;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
-use luya\admin\components\Auth;
+use luya\Exception;
+use luya\helpers\FileHelper;
+use luya\helpers\StringHelper;
+use luya\helpers\Url;
+use Yii;
+use yii\base\InvalidCallException;
+use yii\base\ViewContextInterface;
+use yii\helpers\Inflector;
 
 /**
  * Base class for all ActiveWindow classes.
@@ -35,12 +34,12 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
      * @var string $suffix The suffix to use for all classes
      */
     protected $suffix = 'ActiveWindow';
-    
+
     /**
      * @var string The class name of the called class where the actice window is bound to.
      */
     public $ngRestModelClass;
-    
+
     /**
      * @var string the module name in where the active window context is loaded, in order to find view files.
      */
@@ -51,14 +50,14 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     public function init()
     {
         parent::init();
-        
+
         if ($this->module === null) {
             throw new Exception('The ActiveWindow property \'module\' of '.get_called_class().' can not be null. You have to defined the module in where the ActiveWindow is defined. For example `public $module = \'@admin\';`');
         }
     }
-    
+
     private $_model;
-    
+
     /**
      * Get the model object from where the Active Window is attached to.
      *
@@ -69,12 +68,12 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         if ($this->_model === null && $this->ngRestModelClass !== null) {
             $this->_model = call_user_func_array([$this->ngRestModelClass, 'ngRestByPrimaryKeyOne'], $this->itemIds);
         }
-        
+
         return $this->_model;
     }
-    
+
     private $_configHash;
-    
+
     /**
      * @inheritdoc
      */
@@ -82,7 +81,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_configHash = $hash;
     }
-    
+
     /**
      * Return the config hash name from the setter method.
      *
@@ -92,9 +91,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return $this->_configHash;
     }
-    
+
     private $_activeWindowHash;
-    
+
     /**
      * @inheritdoc
      */
@@ -102,7 +101,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_activeWindowHash = $hash;
     }
-    
+
     /**
      * Get the active window hash from the setter method.
      * @return string
@@ -111,7 +110,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return $this->_activeWindowHash;
     }
-    
+
     /**
      * Create an absolute link to a callback.
      *
@@ -130,7 +129,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
             'activeWindowHash' => $this->getActiveWindowHash(),
         ], true);
     }
-    
+
     /**
      *
      * MIME: https://wiki.selfhtml.org/wiki/Referenz:MIME-Typen
@@ -142,14 +141,14 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     public function createDownloadableFileUrl($fileName, $mimeType, $content)
     {
         $key = uniqid(microtime().Inflector::slug($fileName), true);
-        
+
         $store = FileHelper::writeFile('@runtime/'.$key.'.tmp', $content);
-        
+
         $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
-        
+
         $route = $menu['route'];
         $route = str_replace("/index", "/export-download", $route);
-        
+
         if ($store) {
             Yii::$app->session->set('tempNgRestFileName', $fileName);
             Yii::$app->session->set('tempNgRestFileKey', $key);
@@ -163,10 +162,10 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
                 return $url . "?" . $param;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * If no label value is provided via getter/setter, this value is used.
      *
@@ -178,9 +177,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return false;
     }
-    
+
     private $_label;
-    
+
     /**
      * Setter method for the Label.
      *
@@ -190,7 +189,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_label = $label;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -198,7 +197,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return empty($this->_label) ? $this->defaultLabel() : $this->_label;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -206,7 +205,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return $this->getLabel();
     }
-    
+
     /**
      * If no extenion is set, this value is used.
      *
@@ -218,9 +217,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return 'extension';
     }
-    
+
     private $_icon;
-    
+
     /**
      * Setter method for the icon
      * @param string $icon
@@ -229,7 +228,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_icon = $icon;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -237,9 +236,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return empty($this->_icon) ? $this->defaultIcon() : $this->_icon;
     }
-    
+
     private $_name;
-    
+
     /**
      * Get the ActiveWindow name based on its class short name.
      *
@@ -250,12 +249,12 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         if ($this->_name === null) {
             $this->_name = ((new \ReflectionClass($this))->getShortName());
         }
-        
+
         return $this->_name;
     }
-    
+
     private $_viewFolderName;
-    
+
     /**
      * Get the folder name where the views for this ActiveWindow should be stored.
      *
@@ -265,19 +264,19 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         if ($this->_viewFolderName === null) {
             $name = $this->getName();
-            
+
             if (StringHelper::endsWith($name, $this->suffix, false)) {
                 $name = substr($name, 0, -(strlen($this->suffix)));
             }
-            
+
             $this->_viewFolderName = strtolower($name);
         }
 
         return $this->_viewFolderName;
     }
-    
+
     private $_hashName;
-    
+
     /**
      * Get a unique identifier hash based on the name and config values like icon and label.
      *
@@ -288,10 +287,10 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         if ($this->_hashName === null) {
             $this->_hashName = sha1(get_called_class());
         }
-        
+
         return $this->_hashName;
     }
-    
+
     /**
      * Return the view path for view context.
      *
@@ -301,16 +300,16 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     public function getViewPath()
     {
         $module = $this->module;
-        
+
         if (substr($module, 0, 1) !== '@') {
             $module = '@'.$module;
         }
-        
+
         return implode(DIRECTORY_SEPARATOR, [Yii::getAlias($module), 'views', 'aws', $this->getViewFolderName()]);
     }
-    
+
     private $_view;
-    
+
     /**
      * Get the view object to render templates.
      *
@@ -338,7 +337,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     }
 
     private $_itemId;
-    
+
     /**
      * @inheritdoc
      */
@@ -354,9 +353,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return $this->getIsCompositeItem() ? $this->getItemIds() : $this->getItemIds()[0];
     }
-    
+
     private $_condition;
-    
+
     /**
      * @inheritdoc
      */
@@ -364,7 +363,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_condition = $condition;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -372,9 +371,9 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return empty($this->_condition) ? '' : $this->_condition;
     }
-    
+
     private $_permissionLevel = Auth::CAN_UPDATE;
-    
+
     /**
      * @inheritdoc
      */
@@ -382,7 +381,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $this->_permissionLevel = $permissionLevel;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -390,7 +389,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return $this->_permissionLevel;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -398,7 +397,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         return count($this->getItemIds()) > 1 ? true : false;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -407,7 +406,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         if (empty($this->_itemId)) {
             throw new InvalidCallException("Unable to determine the active window item id.");
         }
-        
+
         return explode(",", $this->_itemId);
     }
 }

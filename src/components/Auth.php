@@ -2,8 +2,8 @@
 
 namespace luya\admin\components;
 
-use Yii;
 use luya\admin\models\Auth as AuthModel;
+use Yii;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
@@ -22,25 +22,25 @@ class Auth extends \yii\base\Component
      * @var integer Can View/list records
      * @since 2.0.0
      */
-    const CAN_VIEW = 0;
+    public const CAN_VIEW = 0;
 
     /**
      * @var integer Can create new records
      */
-    const CAN_CREATE = 1;
+    public const CAN_CREATE = 1;
 
     /**
      * @var integer Can update records
      */
-    const CAN_UPDATE = 2;
+    public const CAN_UPDATE = 2;
 
     /**
      * @var integer Can delete records.
      */
-    const CAN_DELETE = 3;
-    
+    public const CAN_DELETE = 3;
+
     private $_permissionTable = [];
-    
+
     /**
      * Get all permissions entries for the given User.
      *
@@ -58,7 +58,7 @@ class Auth extends \yii\base\Component
                 ->where(['{{%admin_user_group}}.user_id' => $userId])
                 ->all();
         }
-        
+
         return $this->_permissionTable[$userId];
     }
 
@@ -136,7 +136,7 @@ class Auth extends \yii\base\Component
     {
         return ArrayHelper::index($this->getPermissionTable($userId), 'id');
     }
-    
+
     /**
      * Get the data for a given api and user.
      *
@@ -154,7 +154,7 @@ class Auth extends \yii\base\Component
         }
         return $data;
     }
-    
+
     /**
      * Get the data for a given route and user.
      *
@@ -172,7 +172,7 @@ class Auth extends \yii\base\Component
         }
         return $data;
     }
-    
+
     /**
      * Calculate the weight from whether the user can create, udpate and/or delete.
      *
@@ -202,7 +202,7 @@ class Auth extends \yii\base\Component
     public function permissionVerify($type, $permissionWeight)
     {
         $numbers = [];
-        
+
         switch ($type) {
             case self::CAN_CREATE:
                 $numbers = [1, 4, 6, 9];
@@ -262,7 +262,7 @@ class Auth extends \yii\base\Component
 
         return false;
     }
-    
+
     /**
      * See if the user has permitted the provided route.
      *
@@ -273,7 +273,7 @@ class Auth extends \yii\base\Component
     public function matchRoute($userId, $route)
     {
         $groups = $this->getRouteTable($this->normalizeIdentityOrId($userId), $route);
-        
+
         if (is_array($groups) && count($groups) > 0) {
             return current($groups)['id'];
         }

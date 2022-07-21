@@ -2,15 +2,15 @@
 
 namespace luya\admin\behaviors;
 
-use Yii;
-use yii\base\Behavior;
-use yii\queue\Queue;
-use yii\queue\PushEvent;
-use yii\queue\ExecEvent;
-use yii\queue\JobEvent;
 use luya\admin\models\QueueLog;
 use luya\admin\models\QueueLogError;
+use Yii;
+use yii\base\Behavior;
+use yii\queue\ExecEvent;
+use yii\queue\JobEvent;
 use yii\queue\JobInterface;
+use yii\queue\PushEvent;
+use yii\queue\Queue;
 
 /**
  * Log Behavior.

@@ -27,7 +27,7 @@ final class SearchData extends ActiveRecord
         parent::init();
         $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'onBeforeValidate']);
     }
-    
+
     /**
      * @inheritdoc
      */

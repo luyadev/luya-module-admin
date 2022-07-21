@@ -2,11 +2,11 @@
 
 namespace luya\admin\components;
 
+use luya\admin\models\Lang;
+use luya\helpers\ArrayHelper;
+use luya\traits\CacheableTrait;
 use Yii;
 use yii\base\Component;
-use luya\admin\models\Lang;
-use luya\traits\CacheableTrait;
-use luya\helpers\ArrayHelper;
 
 /**
  * Admin Language Component.
@@ -46,10 +46,10 @@ class AdminLanguage extends Component
      * @var string The cache key name
      * @since 2.1.0
      */
-    const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
+    public const CACHE_KEY_QUERY_ALL = 'adminLanguageCacheKey';
 
     private $_activeLanguage;
-    
+
     /**
      * Get the array of the current active language (its not an AR object!)
      *
@@ -68,7 +68,7 @@ class AdminLanguage extends Component
             } else {
                 $langShortCode = Yii::$app->language;
             }
-            
+
             // find the current language for the composition lang short code
             if ($langShortCode) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'short_code', $langShortCode);
@@ -79,7 +79,7 @@ class AdminLanguage extends Component
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
             }
         }
-        
+
         return $this->_activeLanguage;
     }
 
@@ -106,7 +106,7 @@ class AdminLanguage extends Component
     {
         return $this->getDefaultLanguage()['short_code'];
     }
-    
+
     /**
      * Get the current active langauge Short-Code
      *
@@ -116,7 +116,7 @@ class AdminLanguage extends Component
     {
         return $this->getActiveLanguage()['short_code'];
     }
-    
+
     /**
      * Get the current active language ID
      *
@@ -128,7 +128,7 @@ class AdminLanguage extends Component
     }
 
     private $_languages;
-    
+
     /**
      * Get an array of all languages (its not an AR object!)
      *
@@ -153,10 +153,10 @@ class AdminLanguage extends Component
                     ->all();
             });
         }
-    
+
         return $this->_languages;
     }
-    
+
     /**
      * Get the language from a shortCode.
      *

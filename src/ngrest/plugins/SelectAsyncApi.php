@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\admin\ngrest\base\Plugin;
 use luya\admin\helpers\Angular;
+use luya\admin\ngrest\base\Plugin;
 use luya\helpers\Json;
 
 /**

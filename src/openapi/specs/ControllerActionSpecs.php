@@ -16,7 +16,7 @@ use yii\base\InlineAction;
 class ControllerActionSpecs extends BaseSpecs
 {
     protected $controller;
- 
+
     protected $actioName;
 
     protected $verbName;

@@ -53,7 +53,7 @@ class ActiveRecordToSchema
     {
         $properties = [];
         $attributeFields = [];
-        
+
         $fields = $this->activeRecord->fields();
         if (!empty($fields)) {
             foreach ($fields as $key => $value) {
@@ -66,7 +66,7 @@ class ActiveRecordToSchema
         } else {
             $attributeFields = $this->activeRecord->attributes();
         }
-        
+
         foreach ($attributeFields as $attributeName) {
             $properties[$attributeName] = $this->createSchema($attributeName);
         }
@@ -78,19 +78,19 @@ class ActiveRecordToSchema
                 }
             }
         }
-        
+
         return $properties;
     }
-    
+
     public function createSchema($attributeName)
     {
         $property = $this->phpDocParser->getProperty($attributeName);
-        
+
         $type = $property->getType();
         // handle php object type
         if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {
             $object = $this->baseSpecs->createActiveRecordSchemaObjectFromClassName($type->getClassName(), array_merge([get_class($this->activeRecord)], $this->senderActiveRecordClassName));
-            
+
             if ($object) {
                 $config = $this->baseSpecs->createSchemaFromActiveRecordToSchemaObject($object, $type->getIsArray());
                 $config['title'] = $property->getDescription() ? $property->getDescription() : $type->getClassPhpDocParser()->getShortSummary();

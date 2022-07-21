@@ -3,10 +3,9 @@
 namespace luya\admin\ngrest\base;
 
 use yii\base\BaseObject;
-use yii\db\QueryInterface;
-use yii\data\ActiveDataProvider;
-use yii\db\ActiveQuery;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
+use yii\db\QueryInterface;
 
 /**
  * NgRest Relation definition.
@@ -41,7 +40,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     }
 
     private $_modelClass;
-    
+
     /**
      * @inheritdoc
      */
@@ -49,7 +48,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_modelClass = base64_encode($modelClass);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -57,9 +56,9 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         return $this->_modelClass;
     }
-    
+
     private $_apiEndpoint;
-    
+
     /**
      *
      * @param string $apiEndpoint
@@ -68,7 +67,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_apiEndpoint = $apiEndpoint;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -79,12 +78,12 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
         }
 
         $targetModel = $this->getTargetModel();
-        
+
         return $targetModel::ngRestApiEndpoint();
     }
 
     private $_relationLink;
-    
+
     /**
      *
      * @param string $relationLink
@@ -93,7 +92,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_relationLink = $relationLink;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -106,12 +105,12 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
                 $this->_relationLink = $this->getDataProvider()->link;
             }
         }
-        
+
         return $this->_relationLink;
     }
 
     private $_tabLabelAttribute;
-    
+
     /**
      * Tab label attribute Setter.
      *
@@ -123,7 +122,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_tabLabelAttribute = $attribute;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -131,9 +130,9 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         return $this->_tabLabelAttribute;
     }
-    
+
     private $_dataProvider;
-    
+
     /**
      *
      * @param QueryInterface $query
@@ -142,7 +141,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_dataProvider = $query;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -150,7 +149,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         return $this->_dataProvider;
     }
-    
+
     private $_label;
 
     /**
@@ -161,7 +160,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_label = $label;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -169,9 +168,9 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         return $this->_label;
     }
-    
+
     private $_arrayIndex;
-    
+
     /**
      * @inheritdoc
      */
@@ -179,7 +178,7 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
     {
         $this->_arrayIndex = $index;
     }
-    
+
     /**
      * @inheritdoc
      */

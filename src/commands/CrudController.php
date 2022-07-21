@@ -2,15 +2,15 @@
 
 namespace luya\admin\commands;
 
+use luya\admin\base\BaseCrudController;
+use luya\admin\ngrest\base\NgRestModelInterface;
+use luya\helpers\FileHelper;
+use luya\helpers\StringHelper;
 use Yii;
+use yii\console\Exception;
+use yii\db\TableSchema;
 use yii\helpers\Console;
 use yii\helpers\Inflector;
-use yii\db\TableSchema;
-use yii\console\Exception;
-use luya\admin\base\BaseCrudController;
-use luya\helpers\FileHelper;
-use luya\admin\ngrest\base\NgRestModelInterface;
-use luya\helpers\StringHelper;
 
 /**
  * Console command to create a NgRest CRUD with Controller, API and Model based on a SQL table.
@@ -26,42 +26,42 @@ class CrudController extends BaseCrudController
      * @var boolean Whether the core modules should be hidden from selection list or not.
      */
     public $hideCoreModules = true;
-    
+
     /**
      * @var boolean Whether the frontend modules should be hidden from selection list or not.
      */
     public $hideFrontendModules = true;
-    
+
     /**
      * @inheritdoc
      */
     public $defaultAction = 'create';
-    
+
     /**
      * @var string The name of the module which should be used in order to generate the CRUD structure e.g `cmsadmin`.
      */
     public $moduleName;
-    
+
     /**
      * @var string The name of the model in camelcase notation e.g `NavItem`.
      */
     public $modelName;
-    
+
     /**
      * @var string The name of the API endpoint based on the modelName und moduleName selections e.g `api-cms-navitem`.
      */
     public $apiEndpoint;
-    
+
     /**
      * @var string The name of the corresponding model database table e.g. `cms_navitem`.
      */
     public $dbTableName;
-    
+
     /**
      * @var boolean Whether the i18n text fields will be casted or not.
      */
     public $enableI18n;
-    
+
     /**
      * @inheritdoc
      */
@@ -69,7 +69,7 @@ class CrudController extends BaseCrudController
     {
         return ['hideCoreModules', 'hideFrontendModules', 'moduleName', 'modelName', 'apiEndpoint', 'dbTableName', 'enableI18n'];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -77,7 +77,7 @@ class CrudController extends BaseCrudController
     {
         return ['hidecore' => 'hideCoreModules', 'hidefrontend' => 'hideFrontendModules'];
     }
-    
+
     /**
      * Get the $moduleName without admin suffix (if any).
      *
@@ -87,7 +87,7 @@ class CrudController extends BaseCrudController
     {
         return preg_replace('/admin$/', '', $this->moduleName);
     }
-    
+
     /**
      * Get the model name in lower case.
      *
@@ -97,7 +97,7 @@ class CrudController extends BaseCrudController
     {
         return strtolower($this->modelName);
     }
-    
+
     /**
      * Get the camelized model name.
      *
@@ -107,7 +107,7 @@ class CrudController extends BaseCrudController
     {
         return Inflector::camelize($this->modelName);
     }
-    
+
     /**
      * Get the namepsace to the model.
      *
@@ -117,7 +117,7 @@ class CrudController extends BaseCrudController
     {
         return $this->getModelNamespace() . '\\models\\' . $this->getModelNameCamelized();
     }
-    
+
     /**
      * Generate a suggestion for the API endpoint.
      *
@@ -127,7 +127,7 @@ class CrudController extends BaseCrudController
     {
         return 'api-'.$this->getModuleNameWithoutAdminSuffix().'-'.$this->getModelNameLower();
     }
-    
+
     /**
      * Generate a suggestion for the model table name.
      *
@@ -137,9 +137,9 @@ class CrudController extends BaseCrudController
     {
         return Inflector::camelize(StringHelper::replaceFirst($this->getModuleNameWithoutAdminSuffix(), '', $this->dbTableName));
     }
-    
+
     private $_dbTableShema;
-    
+
     /**
      * Get the database table schema.
      *
@@ -150,10 +150,10 @@ class CrudController extends BaseCrudController
         if ($this->_dbTableShema === null) {
             $this->_dbTableShema = Yii::$app->db->getTableSchema($this->dbTableName, true);
         }
-        
+
         return $this->_dbTableShema;
     }
-    
+
     /**
      * The module object.
      *
@@ -163,7 +163,7 @@ class CrudController extends BaseCrudController
     {
         return Yii::$app->getModule($this->moduleName);
     }
-    
+
     /**
      * Get the base path of the module.
      *
@@ -173,9 +173,9 @@ class CrudController extends BaseCrudController
     {
         return $this->getModule()->basePath;
     }
-    
+
     private $_modelBasePath;
-    
+
     /**
      * Get the base path of the module.
      *
@@ -186,16 +186,16 @@ class CrudController extends BaseCrudController
         if ($this->_modelBasePath === null) {
             return $this->getModule()->basePath;
         }
-    
+
         return $this->_modelBasePath;
     }
-    
+
     public function setModelBasePath($path)
     {
         $this->_modelBasePath = $path;
     }
-    
-    
+
+
     /**
      * Get the namepsace of the module.
      *
@@ -207,9 +207,9 @@ class CrudController extends BaseCrudController
     {
         return $this->getModule()->getNamespace();
     }
-    
+
     private $_modelNamespace;
-    
+
     /**
      * Getter method for modelNamespace.
      *
@@ -220,10 +220,10 @@ class CrudController extends BaseCrudController
         if ($this->_modelNamespace === null) {
             return $this->getModule()->getNamespace();
         }
-         
+
         return $this->_modelNamespace;
     }
-    
+
     /**
      * Setter method for modelNamepsace.
      * @param string $ns
@@ -232,7 +232,7 @@ class CrudController extends BaseCrudController
     {
         $this->_modelNamespace = $ns;
     }
-    
+
     /**
      * Get the controller route for the summary.
      *
@@ -242,7 +242,7 @@ class CrudController extends BaseCrudController
     {
         return strtolower($this->moduleName).'/'.Inflector::camel2id($this->getModelNameCamelized()).'/index';
     }
-    
+
     public function ensureBasePathAndNamespace()
     {
         $nsItems = explode('\\', $this->getNamespace());
@@ -258,7 +258,7 @@ class CrudController extends BaseCrudController
             }
         }
     }
-    
+
     /**
      * Generate the API file content based on its view file.
      *
@@ -278,7 +278,7 @@ class CrudController extends BaseCrudController
             'alias' => $alias,
         ]);
     }
-    
+
     /**
      * Generate the controller view file based on its view file.
      * @param string $fileNamespace
@@ -297,7 +297,7 @@ class CrudController extends BaseCrudController
             'alias' => $alias,
         ]);
     }
-    
+
     /**
      * Generate the model content based on its view file.
      *
@@ -312,7 +312,7 @@ class CrudController extends BaseCrudController
     {
         $alias = Inflector::humanize(Inflector::camel2words($className));
         $dbTableName = $schema->fullName;
-        
+
         $fields = [];
         $textfields = [];
         $properties = [];
@@ -323,11 +323,11 @@ class CrudController extends BaseCrudController
                 continue;
             }
             $fields[] = $v->name;
-            
+
             if ($v->phpType == 'string') {
                 $textfields[] = $v->name;
             }
-            
+
             if ($v->type == 'text') {
                 $ngrestFieldConfig[$v->name] = 'textarea';
             }
@@ -344,7 +344,7 @@ class CrudController extends BaseCrudController
                 $ngrestFieldConfig[$v->name] = 'toggleStatus';
             }
         };
-        
+
         return $this->view->render('@admin/commands/views/crud/create_model.php', [
             'namespace' => $fileNamepsace,
             'className' => $className,
@@ -380,7 +380,7 @@ class CrudController extends BaseCrudController
             'controllerRoute' => $controllerRoute,
         ]);
     }
-    
+
     /**
      * Create Ng-Rest-Model, Controller and API for an existing database table.
      *
@@ -393,7 +393,7 @@ class CrudController extends BaseCrudController
             Console::clearScreenBeforeCursor();
             $this->moduleName = $this->selectModule(['onlyAdmin' => $this->hideFrontendModules, 'hideCore' => $this->hideCoreModules, 'text' => 'Select the module where the CRUD files should be saved:']);
         }
-        
+
         // 2. ask for sql table
         if ($this->dbTableName === null) {
             $this->dbTableName = $this->prompt('Enter the name of the database table to generate the model for (? to see all tables):', ['required' => true, 'validator' => function ($input, &$error) {
@@ -403,16 +403,16 @@ class CrudController extends BaseCrudController
                     }
                     return false;
                 }
-                
+
                 if (!isset($this->getSqlTablesArray()[$input])) {
                     $error = "Table '$input' does not exists. Type '?' to see all tables.";
                     return false;
                 }
-                
+
                 return true;
             }]);
         }
-        
+
         // 3. ask for model name
         if ($this->modelName === null) {
             $modelSelection = true;
@@ -430,7 +430,7 @@ class CrudController extends BaseCrudController
                 $this->modelName = $modelName;
             }
         }
-        
+
         // 4. ask for API endpoint name
         if ($this->apiEndpoint === null) {
             $this->apiEndpoint = $this->prompt('Api Endpoint:', ['required' => true, 'default' => $this->getApiEndpointSuggestion()]);
@@ -442,9 +442,9 @@ class CrudController extends BaseCrudController
         }
 
         $this->ensureBasePathAndNamespace();
-        
+
         $files = [];
-        
+
         // API content
 
         $files['api'] = [
@@ -452,7 +452,7 @@ class CrudController extends BaseCrudController
             'fileName' => $this->getModelNameCamelized() . 'Controller.php',
             'content' => $this->generateApiContent($this->getNamespace() . '\\apis', $this->getModelNameCamelized() . 'Controller', $this->getAbsoluteModelNamespace()),
         ];
-        
+
         // controller
 
         $files['controller'] = [
@@ -460,7 +460,7 @@ class CrudController extends BaseCrudController
             'fileName' => $this->getModelNameCamelized() . 'Controller.php',
             'content' => $this->generateControllerContent($this->getNamespace() . '\\controllers', $this->getModelNameCamelized() . 'Controller', $this->getAbsoluteModelNamespace()),
         ];
-        
+
         // model
 
         $files['model'] = [
@@ -474,14 +474,14 @@ class CrudController extends BaseCrudController
                 $this->enableI18n
             ),
         ];
-        
+
         foreach ($files as $file) {
             $this->generateFile($file);
         }
-        
+
         return $this->outputSuccess($this->generateBuildSummary($this->apiEndpoint, $this->getNamespace() . '\\apis\\' . $this->getModelNameCamelized() . 'Controller', $this->getModelNameCamelized(), $this->getSummaryControllerRoute()));
     }
-    
+
     protected function generateFile(array $file)
     {
         FileHelper::createDirectory($file['path']);
@@ -490,7 +490,7 @@ class CrudController extends BaseCrudController
                 return false;
             }
         }
-        
+
         if (FileHelper::writeFile($file['path'] . DIRECTORY_SEPARATOR . $file['fileName'], $file['content'])) {
             $this->outputSuccess("Wrote file '{$file['fileName']}'.");
         } else {
@@ -510,11 +510,11 @@ class CrudController extends BaseCrudController
             $model = $this->prompt('Namespaced path to the NgRest model (e.g. "app\models\Users"):');
         }
         $object = Yii::createObject(['class' => $model]);
-        
+
         if (!$object instanceof NgRestModelInterface) {
             throw new Exception("Model must be instance of NgRestModelInterface.");
         }
-        
+
         $reflector = new \ReflectionClass($model);
         $fileName = $reflector->getFileName();
         $path = dirname($fileName);
@@ -531,7 +531,7 @@ class CrudController extends BaseCrudController
                 $i18n
             ),
         ];
-        
+
         $this->generateFile($data);
     }
 }

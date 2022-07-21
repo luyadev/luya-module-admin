@@ -2,26 +2,26 @@
 
 namespace luya\admin\storage;
 
-use Yii;
-use yii\db\Query;
-use yii\helpers\Inflector;
-use yii\base\Component;
-use luya\Exception;
-use luya\helpers\FileHelper;
-use luya\admin\helpers\Storage;
-use luya\admin\models\StorageFile;
-use luya\admin\models\StorageImage;
-use luya\admin\models\StorageFilter;
-use luya\admin\models\StorageFolder;
-use luya\traits\CacheableTrait;
-use luya\web\Request;
-use luya\admin\filters\TinyCrop;
-use luya\admin\filters\MediumThumbnail;
-use luya\admin\Module;
-use yii\helpers\VarDumper;
 use luya\admin\events\FileEvent;
 use luya\admin\file\Item;
+use luya\admin\filters\MediumThumbnail;
+use luya\admin\filters\TinyCrop;
+use luya\admin\helpers\Storage;
 use luya\admin\jobs\ImageFilterJob;
+use luya\admin\models\StorageFile;
+use luya\admin\models\StorageFilter;
+use luya\admin\models\StorageFolder;
+use luya\admin\models\StorageImage;
+use luya\admin\Module;
+use luya\Exception;
+use luya\helpers\FileHelper;
+use luya\traits\CacheableTrait;
+use luya\web\Request;
+use Yii;
+use yii\base\Component;
+use yii\db\Query;
+use yii\helpers\Inflector;
+use yii\helpers\VarDumper;
 
 /**
  * Storage Container for reading, saving and holding files.
@@ -106,18 +106,18 @@ use luya\admin\jobs\ImageFilterJob;
 abstract class BaseFileSystemStorage extends Component
 {
     use CacheableTrait;
-    
+
     /**
      * @var string This event is triggered when the storage file model is updating, for example when change the disposition.
      * @since 2.0.0
      */
-    const FILE_UPDATE_EVENT = 'onFileUpdate';
+    public const FILE_UPDATE_EVENT = 'onFileUpdate';
 
     /**
      * @var string This event is triggered when a new file is uploaded to the file system.
      * @since 2.0.0
      */
-    const FILE_SAVE_EVENT = 'onFileSave';
+    public const FILE_SAVE_EVENT = 'onFileSave';
 
     /**
      * Return the http path for a given file on the file system.
@@ -126,7 +126,7 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.2.0
      */
     abstract public function fileHttpPath($fileName);
-    
+
     /**
      * Return the absolute http path for a given file on the file system.
      *
@@ -140,7 +140,7 @@ abstract class BaseFileSystemStorage extends Component
      * @param string $fileName The name of the file on the filesystem (like: my_example_1234.jpg without path infos), the $fileName is used as identifier on the filesystem.
      */
     abstract public function fileServerPath($fileName);
-    
+
     /**
      * Check if the file exists on the given file system.
      *
@@ -148,7 +148,7 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.2.0
      */
     abstract public function fileSystemExists($fileName);
-    
+
     /**
      * Get the content of the file on the given file system.
      *
@@ -156,7 +156,7 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.2.0
      */
     abstract public function fileSystemContent($fileName);
-    
+
     /**
      * Save the given file source as a new file with the given fileName on the filesystem.
      *
@@ -168,12 +168,12 @@ abstract class BaseFileSystemStorage extends Component
 
     /**
      * Generate a stream/resource for the file to download
-     * @param string $fileName 
+     * @param string $fileName
      * @return resource
      * @since 4.0.0
      */
     abstract public function fileSystemStream($fileName);
-    
+
     /**
      * Replace an existing file source with a new one on the filesystem.
      *
@@ -182,7 +182,7 @@ abstract class BaseFileSystemStorage extends Component
      * @return boolean Whether the file has replaced stored or not.
      */
     abstract public function fileSystemReplaceFile($fileName, $newSource);
-    
+
     /**
      * Delete a given file source on the filesystem.
      *
@@ -190,27 +190,27 @@ abstract class BaseFileSystemStorage extends Component
      * @return boolean Whether the file has been deleted or not.
      */
     abstract public function fileSystemDeleteFile($fileName);
-    
+
     /**
      * @var string File cache key.
      */
-    const CACHE_KEY_FILE = 'storage_fileCacheKey';
-    
+    public const CACHE_KEY_FILE = 'storage_fileCacheKey';
+
     /**
      * @var string Image cache key.
      */
-    const CACHE_KEY_IMAGE = 'storage_imageCacheKey';
-    
+    public const CACHE_KEY_IMAGE = 'storage_imageCacheKey';
+
     /**
      * @var string Folder cache key.
      */
-    const CACHE_KEY_FOLDER = 'storage_folderCacheKey';
-    
+    public const CACHE_KEY_FOLDER = 'storage_folderCacheKey';
+
     /**
      * @var string Filter cache key.
      */
-    const CACHE_KEY_FILTER = 'storage_filterCacheKey';
-    
+    public const CACHE_KEY_FILTER = 'storage_filterCacheKey';
+
     /**
      * @var array The mime types which will be rejected.
      */
@@ -261,7 +261,7 @@ abstract class BaseFileSystemStorage extends Component
      * be rejected and the file mime type needs to be verified by phps `fileinfo` extension.
      */
     public $secureFileUpload = true;
-    
+
     /**
      * @var array The mime types inside this array are whitelistet and will be stored whether validation failes or not. For example if mime
      * type 'text/plain' is given for a 'csv' extension, the valid extensions would be 'txt' or 'log', this would throw an exception, therefore
@@ -269,7 +269,7 @@ abstract class BaseFileSystemStorage extends Component
      * @since 1.1.0
      */
     public $whitelistMimeTypes = [];
-    
+
     /**
      * @var array An array with extensions which are whitelisted. This can be very dangerous as it will skip the check whether the mime type is
      * matching the extension types. If an extensions in {{$dangerousExtensions}} and {{$whitelistExtensions}} it will still throw an exception as
@@ -340,7 +340,7 @@ abstract class BaseFileSystemStorage extends Component
 
         return $this->_filesArray;
     }
-    
+
     /**
      * Setter method for fiels array.
      *
@@ -393,7 +393,7 @@ abstract class BaseFileSystemStorage extends Component
     {
         $this->_imagesArray = $images;
     }
-    
+
     /**
      * Get a single image by image id from the files array.
      *
@@ -486,11 +486,11 @@ abstract class BaseFileSystemStorage extends Component
         }
 
         $extensionsFromMimeType = FileHelper::getExtensionsByMimeType($mimeType);
-        
+
         if (empty($extensionsFromMimeType) && empty($this->whitelistExtensions)) {
             throw new Exception("Unable to find extension for given mimeType \"{$mimeType}\" or it contains insecure data.");
         }
-        
+
         if (!empty($this->whitelistExtensions)) {
             $extensionsFromMimeType = array_merge($extensionsFromMimeType, $this->whitelistExtensions);
         }
@@ -499,7 +499,7 @@ abstract class BaseFileSystemStorage extends Component
         if (!in_array($fileInfo->extension, $extensionsFromMimeType) && !in_array($mimeType, $this->whitelistMimeTypes)) {
             throw new Exception("The given file extension \"{$fileInfo->extension}\" for file with mimeType \"{$mimeType}\" is not matching any valid extension: ".VarDumper::dumpAsString($extensionsFromMimeType).".");
         }
-         
+
         foreach ($extensionsFromMimeType as $extension) {
             if (in_array($extension, $this->dangerousExtensions)) {
                 throw new Exception("The file extension '{$extension}' seems to be dangerous and can not be stored.");
@@ -707,7 +707,7 @@ abstract class BaseFileSystemStorage extends Component
     public function createImage($fileId, $filterId)
     {
         gc_collect_cycles();
-        
+
         $image = StorageImage::find()->where(['file_id' => $fileId, 'filter_id' => $filterId])->one();
 
         // the image exists already in the database and the file system
@@ -902,7 +902,7 @@ abstract class BaseFileSystemStorage extends Component
 
         return $this->_filtersArray;
     }
-    
+
     /**
      * Setter method for filters array.
      *

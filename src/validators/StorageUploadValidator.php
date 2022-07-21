@@ -2,12 +2,12 @@
 
 namespace luya\admin\validators;
 
-use Yii;
-use yii\validators\Validator;
-use yii\web\UploadedFile;
 use luya\base\DynamicModel;
 use luya\helpers\Json;
+use Yii;
 use yii\base\Model;
+use yii\validators\Validator;
+use yii\web\UploadedFile;
 
 /**
  * Storage Upload Validator.
@@ -56,23 +56,23 @@ class StorageUploadValidator extends Validator
      * @inheritdoc
      */
     public $skipOnEmpty = false;
-    
+
     /**
      * @var boolean Whether its possible to upload multiple files or just a single file
      */
     public $multiple = false;
-    
+
     /**
      * @var integer The folder id where all files will be uploaded to, this is the virtual directory number from {{luya\admin\componenets\StorageContainer}}. Defaults
      * is 0 which is the root directory of the file manager. If {{isHidden}} is enabled, the folder id does not matter as its not shown in the file manager anyhow.
      */
     public $folderId = 0;
-    
+
     /**
      * @var boolean Whether the files should be visible inside the file manager or not.
      */
     public $isHidden = true;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -118,7 +118,7 @@ class StorageUploadValidator extends Validator
         if (!is_array($files)) {
             $files = is_null($files) ? [] : [$files];
         }
-         
+
         $data = [];
         foreach ($files as $file) {
             $name = $file->baseName . '.' . $file->extension;

@@ -2,14 +2,14 @@
 
 namespace luya\admin\base;
 
-use Yii;
 use luya\admin\components\Auth;
 use luya\admin\models\UserOnline;
-use luya\rest\UserBehaviorInterface;
-use yii\web\ForbiddenHttpException;
-use luya\rest\ActiveController;
-use yii\base\InvalidConfigException;
 use luya\admin\traits\AdminRestBehaviorTrait;
+use luya\rest\ActiveController;
+use luya\rest\UserBehaviorInterface;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Base class for Rest Active Controllers.
@@ -122,9 +122,9 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
             if (!in_array($type, [false, Auth::CAN_CREATE, Auth::CAN_DELETE, Auth::CAN_UPDATE, Auth::CAN_VIEW], true)) {
                 throw new InvalidConfigException("Invalid type \"$type\" of action permission.");
             }
-            
+
             $this->authId = Yii::$app->auth->matchApi($this->userAuthClass()->identity, $this->id, $type);
-            
+
             if (!$this->authId) {
                 throw new ForbiddenHttpException("User is unable to access the API \"{$this->id}\" due to insufficient permissions.");
             }

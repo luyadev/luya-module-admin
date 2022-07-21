@@ -2,12 +2,12 @@
 
 namespace luya\admin\ngrest\aw;
 
-use Yii;
-use luya\Exception;
-use yii\helpers\Json;
-use yii\helpers\Inflector;
-use yii\helpers\ArrayHelper;
 use luya\base\Widget;
+use luya\Exception;
+use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
+use yii\helpers\Json;
 
 /**
  * ActiveWindow Callback Form Widget.
@@ -52,12 +52,12 @@ class ActiveWindowFormWidget extends Widget
      * - clearOnError: boolean, if enabled all form values will be reseted when an error happens. This is used for forms with passwords.
      */
     public $options = [];
-    
+
     /**
      * @var string Required value of the Submit Button
      */
     public $buttonValue;
-    
+
     /**
      * @var string Required value of the callback in the Active Window which should be triggered by this Form.
      */
@@ -72,7 +72,7 @@ class ActiveWindowFormWidget extends Widget
      * @var string The ActiveField class with field type methods.
      */
     public $fieldClass = '\luya\admin\ngrest\aw\ActiveWindowFormField';
-    
+
     /**
      * @var array This config options are automatically used when creating a field based on the `fieldClass`.
      */
@@ -83,21 +83,21 @@ class ActiveWindowFormWidget extends Widget
      * @since 2.0.0
      */
     public $controllerName;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         if ($this->callback === null || $this->buttonValue === null) {
             throw new Exception("callback and/or buttonValue can not be empty");
         }
-        
+
         ob_start();
     }
-    
+
     /**
      * Generate a field based on attribute name and optional label.
      *
@@ -109,18 +109,18 @@ class ActiveWindowFormWidget extends Widget
     public function field($attribute, $label = null, $options = [])
     {
         $config = $this->fieldConfig;
-        
+
         if (!isset($config['class'])) {
             $config['class'] = $this->fieldClass;
         }
-        
+
         return Yii::createObject(ArrayHelper::merge($config, $options, [
             'attribute' => $attribute,
             'form' => $this,
             'label' => $label,
         ]));
     }
-    
+
     /**
      * Convert the callback to a camlized name.
      *
@@ -131,7 +131,7 @@ class ActiveWindowFormWidget extends Widget
     {
         return Inflector::camel2id($callbackName);
     }
-    
+
     /**
      * Get the id for a field based on the attribute name
      *
@@ -142,7 +142,7 @@ class ActiveWindowFormWidget extends Widget
     {
         return Inflector::camel2id($this->id . $name);
     }
-    
+
     /**
      * @inheritdoc
      */

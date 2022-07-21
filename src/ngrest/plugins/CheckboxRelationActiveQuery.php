@@ -3,8 +3,8 @@
 namespace luya\admin\ngrest\plugins;
 
 use Yii;
-use yii\db\ActiveQuery;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
 
 /**
  * Checkbox relation based on an Active Query.
@@ -49,7 +49,7 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
      * @inheritdoc
      */
     public $onlyRestScenarios = true;
-    
+
     /**
      *
      * {@inheritDoc}
@@ -58,11 +58,11 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
     public function init()
     {
         parent::init();
-        
+
         if ($this->query === null) {
             throw new InvalidConfigException("The query propertie can not be null and must be set.");
         }
-        
+
         $this->model = $this->query->modelClass;
         $this->refJoinTable = $this->query->via->from[0];
         // find link between reference field and joining table model $model
@@ -74,9 +74,9 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
             $this->refJoinPkId = $on;
         }
     }
-    
+
     private $_query = null;
-    
+
     /**
      * Setter method for ActiveQuery.
      *
@@ -86,7 +86,7 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
     {
         $this->_query = $query;
     }
-    
+
     /**
      * Getter method for ActiveQuery.
      *

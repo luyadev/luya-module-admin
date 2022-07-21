@@ -60,7 +60,7 @@ class JsonObject extends Plugin
             $this->writeAttribute($event, Json::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
 
@@ -73,7 +73,7 @@ class JsonObject extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
 

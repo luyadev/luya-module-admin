@@ -2,12 +2,12 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use luya\admin\Module;
 use luya\admin\aws\DetailViewActiveWindow;
+use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
 use luya\helpers\Url;
+use Yii;
 
 /**
  * Proxy Machine.
@@ -27,17 +27,17 @@ use luya\helpers\Url;
 class ProxyMachine extends NgRestModel
 {
     use SoftDeleteTrait;
-    
+
     /**
      * @inheritDoc
      */
     public function init()
     {
         parent::init();
-        
+
         $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'generateIdentifierAndToken']);
     }
-    
+
     /**
      * Generate the identifier and access token.
      *
@@ -50,7 +50,7 @@ class ProxyMachine extends NgRestModel
             $this->access_token = str_replace(['-', '_'], rand(1, 9), Yii::$app->security->generateRandomString(32));
         }
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -58,7 +58,7 @@ class ProxyMachine extends NgRestModel
     {
         return '{{%admin_proxy_machine}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -72,7 +72,7 @@ class ProxyMachine extends NgRestModel
             'identifier' => Module::t('model_proxy_machine_identifier_label'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -84,7 +84,7 @@ class ProxyMachine extends NgRestModel
             [['name', 'access_token', 'identifier'], 'string', 'max' => 255],
         ];
     }
-    
+
     /**
      * @return string Defines the api endpoint for the angular calls
      */
@@ -92,7 +92,7 @@ class ProxyMachine extends NgRestModel
     {
         return 'api-admin-proxymachine';
     }
-    
+
     /**
      * @return array An array define the field types of each field
      */
@@ -134,7 +134,7 @@ class ProxyMachine extends NgRestModel
                     [
                         'label' => 'cli',
                         'format' => 'html',
-                        'value' => function($model) {
+                        'value' => function ($model) {
                             return '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '</code>';
                         }
                     ]

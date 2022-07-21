@@ -31,7 +31,7 @@ class Link extends Plugin
     {
         return $this->createListTag($ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -39,7 +39,7 @@ class Link extends Plugin
     {
         return $this->createFormTag('zaa-link', $id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -47,7 +47,7 @@ class Link extends Plugin
     {
         return $this->createFormTag('zaa-link', $id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -58,10 +58,10 @@ class Link extends Plugin
             $this->writeAttribute($event, I18n::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -71,10 +71,10 @@ class Link extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-         
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -85,10 +85,10 @@ class Link extends Plugin
             $this->writeAttribute($event, $this->generateLinkObject($value));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */

@@ -28,7 +28,7 @@ class Sortable extends Plugin
             $this->createTag('span', '{{'.$ngModel.'}}', ['class' => 'badge badge-light'])
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -36,7 +36,7 @@ class Sortable extends Plugin
     {
         return $this->createFormTag('zaa-number', $id, $ngModel, ['min' => 1]);
     }
-    
+
     /**
      * @inheritdoc
      */

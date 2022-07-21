@@ -20,7 +20,7 @@ class Html extends Plugin
      * @var boolean Whether the text should parse newlines to br or not, its enabled by default.
      */
     public $nl2br = true;
-    
+
     /**
      * @inheritdoc
      */
@@ -44,7 +44,7 @@ class Html extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */

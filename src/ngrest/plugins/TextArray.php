@@ -17,7 +17,7 @@ class TextArray extends Plugin
      * {@inheritDoc}
      */
     public $i18nEmptyValue = [];
-    
+
     /**
      * {@inheritDoc}
      */
@@ -41,7 +41,7 @@ class TextArray extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * Transform the array into the internal array notation with a key named `value`.
      *
@@ -53,7 +53,7 @@ class TextArray extends Plugin
         if (empty($listArrayValue)) {
             return [];
         }
-        
+
         $data = [];
         foreach ($listArrayValue as $item) {
             if (isset($item['value'])) {
@@ -62,7 +62,7 @@ class TextArray extends Plugin
         }
         return $data;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -73,10 +73,10 @@ class TextArray extends Plugin
             $this->writeAttribute($event, I18n::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -86,10 +86,10 @@ class TextArray extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -99,10 +99,10 @@ class TextArray extends Plugin
             $this->writeAttribute($event, $this->transformList($this->jsonDecode($event->sender->getAttribute($this->name))));
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
      */

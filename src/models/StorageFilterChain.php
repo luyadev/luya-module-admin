@@ -3,13 +3,12 @@
 namespace luya\admin\models;
 
 use Imagine\Image\ImageInterface;
-use yii\helpers\Json;
-use yii\base\InvalidConfigException;
-use yii\imagine\Image;
-use yii\db\ActiveRecord;
-use luya\admin\base\FilterInterface;
 use Imagine\Image\ManipulatorInterface;
-use Yii;
+use luya\admin\base\FilterInterface;
+use yii\base\InvalidConfigException;
+use yii\db\ActiveRecord;
+use yii\helpers\Json;
+use yii\imagine\Image;
 
 /**
  * Contains all information about filter effects for a single Chain element (like: thumbnail, 200x200).
@@ -47,7 +46,7 @@ final class StorageFilterChain extends ActiveRecord
             'options' => ['start' => [0, 0]],
         ],
     ];
-    
+
     /**
      * @inheritdoc
      */
@@ -105,7 +104,7 @@ final class StorageFilterChain extends ActiveRecord
     {
         return $this->hasOne(StorageEffect::class, ['id' => 'effect_id']);
     }
-    
+
     /**
      * Apply the current filter chain to the given Image Instance.
      *
@@ -118,13 +117,13 @@ final class StorageFilterChain extends ActiveRecord
     public function applyFilter(ImageInterface $image, array $saveOptions)
     {
         gc_collect_cycles();
-        
+
         $imagineEffectName = $this->effect->getImagineEffectName();
-        
+
         if (!$this->effectDefinition($imagineEffectName)) {
             throw new InvalidConfigException('The requested effect mode ' . $imagineEffectName . ' is not supported');
         }
-        
+
         if ($this->hasMissingRequiredEffectDefinition($imagineEffectName)) {
             throw new InvalidConfigException("The requested effect \"$imagineEffectName\" require some parameters which are not provided.");
         }
@@ -159,18 +158,18 @@ final class StorageFilterChain extends ActiveRecord
     public function effectDefinition($effect, $key = null)
     {
         $definition = isset($this->effectDefinitions[$effect]) ? $this->effectDefinitions[$effect] : false;
-        
+
         if (!$definition) {
             return false;
         }
-        
+
         if ($key) {
             return $definition[$key];
         }
-        
+
         return $definition;
     }
-    
+
     /**
      * Check if a missing required param is not provided in the chain.
      *
@@ -188,7 +187,7 @@ final class StorageFilterChain extends ActiveRecord
 
         return false;
     }
-    
+
     /**
      * Get the value from the effect chain for a given param/option.
      *
@@ -200,16 +199,16 @@ final class StorageFilterChain extends ActiveRecord
     public function effectChainValue($effect, $param)
     {
         $value = $this->getJsonValue($param);
-        
+
         // if there is no value defined, we used the default definition from options
         if ($value === false) {
             $options = $this->effectDefinition($effect, 'options');
             $value = array_key_exists($param, $options) ? $options[$param] : false;
         }
-        
+
         return $value;
     }
-    
+
     /**
      * Get the value for a effect json key.
      *

@@ -2,12 +2,12 @@
 
 namespace luya\admin\base;
 
-use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageEffect;
+use luya\admin\models\StorageFilter;
 use luya\admin\models\StorageFilterChain;
 use luya\Exception;
-use yii\helpers\Json;
 use yii\base\BaseObject;
+use yii\helpers\Json;
 
 /**
  * Base class for all storage component filters.
@@ -195,7 +195,7 @@ abstract class Filter extends BaseObject implements FilterInterface
         $processed = [];
 
         $removeImages = false;
-        
+
         foreach ($this->getChain() as $chain) {
             // get filter chain for filter and effect
             $model = StorageFilterChain::find()->where(['filter_id' => $filterModel->id, 'effect_id' => $chain['effect_id']])->one();
@@ -223,7 +223,7 @@ abstract class Filter extends BaseObject implements FilterInterface
             $deletion->delete();
             $removeImages = true;
         }
-        
+
         if ($removeImages) {
             $this->addLog("[!] {$filterModel->name}: Remove images.");
             $removeLog = $filterModel->removeImageSources();

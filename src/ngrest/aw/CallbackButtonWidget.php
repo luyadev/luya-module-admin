@@ -3,10 +3,10 @@
 namespace luya\admin\ngrest\aw;
 
 use luya\base\Widget;
-use yii\base\InvalidConfigException;
-use yii\helpers\Json;
 use luya\helpers\ArrayHelper;
+use yii\base\InvalidConfigException;
 use yii\helpers\Inflector;
+use yii\helpers\Json;
 
 /**
  * Generate a button connected to a callback action.
@@ -28,12 +28,12 @@ class CallbackButtonWidget extends Widget
      * @var string The id of the callback if the callback method s name is `callbackSayHello` the callback id would be `say-hello`.
      */
     public $callback;
-    
+
     /**
      * @var string The label of the button to display for the user.
      */
     public $label;
-    
+
     /**
      * @var array $options Define behavior of the button, options are name-value pairs. The following options are available:
      * - closeOnSuccess: boolean, if enabled, the active window will close after successfully sendSuccess() response from callback.
@@ -43,29 +43,29 @@ class CallbackButtonWidget extends Widget
      * - linkLabel: This label is for the second triggerable download link.
      */
     public $options = [];
-    
+
     /**
      * @var string Optional string with javascript callback function which is going to be triggered after angular response.
      */
     public $angularCallbackFunction = 'function() {};';
-    
+
     /**
      * @var array Add additional parameters which will be sent to the callback. ['foo' => 'bar']
      */
     public $params = [];
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         if ($this->callback === null || $this->label === null) {
             throw new InvalidConfigException("The callbackButton widget callback and label properties can not be empty.");
         }
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -87,7 +87,7 @@ class CallbackButtonWidget extends Widget
             'angularCallbackFunction' => $this->angularCallbackFunction,
         ]);
     }
-    
+
     private function callbackConvert($callbackName)
     {
         return Inflector::camel2id($callbackName);

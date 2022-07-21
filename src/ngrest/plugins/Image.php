@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use Yii;
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Type Image Upload.
@@ -48,7 +48,7 @@ class Image extends Plugin
      * @var boolean Whether to return a {{luya\admin\image\Item}} instead of the numeric image id value from the database.
      */
     public $imageItem = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -72,7 +72,7 @@ class Image extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritDoc
      */

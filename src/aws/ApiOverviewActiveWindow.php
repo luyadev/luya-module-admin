@@ -2,11 +2,10 @@
 
 namespace luya\admin\aws;
 
-use Yii;
-use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
-use luya\helpers\Inflector;
+use luya\admin\ngrest\base\ActiveWindow;
 use luya\helpers\ObjectHelper;
+use Yii;
 
 /**
  * Api Overview Active Window.

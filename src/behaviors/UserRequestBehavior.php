@@ -2,9 +2,9 @@
 
 namespace luya\admin\behaviors;
 
+use luya\admin\models\UserRequest;
 use Yii;
 use yii\base\ActionFilter;
-use luya\admin\models\UserRequest;
 
 /**
  * Measure the API request time for a given user if enabled.
@@ -49,7 +49,7 @@ class UserRequestBehavior extends ActionFilter
             $request->request_method = Yii::$app->request->method;
             $request->save();
         }
-        
+
         return parent::afterAction($action, $result);
     }
 }

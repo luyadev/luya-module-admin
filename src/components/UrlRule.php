@@ -22,7 +22,7 @@ class UrlRule extends \yii\rest\UrlRule
      * @see https://github.com/luyadev/luya-module-admin/issues/68
      */
     public $cacheFlag;
-    
+
     /**
      * @inheritdoc
      */

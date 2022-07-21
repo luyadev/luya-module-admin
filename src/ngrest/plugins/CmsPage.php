@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use Yii;
 use luya\admin\ngrest\base\Plugin;
+use Yii;
 
 /**
  * Create ability to select a CMS page.
@@ -44,10 +44,10 @@ class CmsPage extends Plugin
     {
         // get value
         $fieldValue = $event->sender->getAttribute($this->name);
-        
+
         // get menu item
         $menuItem = !empty($fieldValue) ? Yii::$app->menu->find()->where(['nav_id' => $fieldValue])->with(['hidden'])->one() : false;
-        
+
         // assign value
         $this->writeAttribute($event, $menuItem);
     }

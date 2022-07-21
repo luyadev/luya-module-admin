@@ -65,7 +65,7 @@ interface FlowActiveWindowInterface
      * @return void
      */
     public function flowSaveImage(Item $image);
-    
+
     /**
      * This method will be called when the delete button will be triggered for an uploaded image. Now you should removed
      * the corresponding reference item in your database table. The image objec deletion will be trigger by the active window.
@@ -74,7 +74,7 @@ interface FlowActiveWindowInterface
      * @return void
      */
     public function flowDeleteImage(Item $image);
-    
+
     /**
      * Get an array with all ids for the storage component. Only the image ids for the current
      * model/item id should be returned:

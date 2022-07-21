@@ -3,29 +3,26 @@
 namespace luya\admin\apis;
 
 use InvalidArgumentException;
-use Yii;
-use luya\Exception;
+use luya\admin\base\RestController;
+use luya\admin\events\FileEvent;
+use luya\admin\filters\MediumThumbnail;
+use luya\admin\filters\TinyCrop;
+use luya\admin\helpers\I18n;
 use luya\admin\helpers\Storage;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageFolder;
+use luya\admin\models\StorageImage;
+use luya\admin\models\TagRelation;
 use luya\admin\Module;
+use luya\admin\storage\BaseFileSystemStorage;
+use luya\Exception;
 use luya\traits\CacheableTrait;
-use luya\admin\helpers\I18n;
-use luya\admin\base\RestController;
+use Yii;
+use yii\base\Action;
 use yii\caching\DbDependency;
-use luya\admin\filters\TinyCrop;
-use luya\admin\filters\MediumThumbnail;
-use luya\helpers\FileHelper;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
-use luya\admin\models\StorageImage;
-use yii\data\ActiveDataProvider;
-use luya\admin\models\TagRelation;
-use luya\admin\traits\TaggableTrait;
-use luya\admin\storage\BaseFileSystemStorage;
-use luya\admin\events\FileEvent;
-use yii\base\Action;
-use yii\base\InvalidParamException;
 
 /**
  * Filemanager and Storage API.
@@ -44,14 +41,14 @@ class StorageController extends RestController
     /**
      * @var string The route which is used in the permission system
      */
-    const PERMISSION_ROUTE = 'admin/storage/index';
+    public const PERMISSION_ROUTE = 'admin/storage/index';
 
     /**
      * @var array A list of action ids which are whiteliste and does not require the file manager permission.
      * @since 2.3.0
      */
     protected $whitelistedActions = ['data-folders', 'data-files', 'data-filters'];
-    
+
     /**
      * {@inheritDoc}
      */
@@ -65,7 +62,7 @@ class StorageController extends RestController
 
         return self::PERMISSION_ROUTE;
     }
-    
+
     // DATA READERS
 
     /**
@@ -85,7 +82,7 @@ class StorageController extends RestController
             return $folders;
         }, 0, new DbDependency(['sql' => 'SELECT MAX(id) FROM {{%admin_storage_folder}} WHERE is_deleted=false']));
     }
-    
+
     /**
      * Get all files from the storage container.
      *
@@ -112,7 +109,7 @@ class StorageController extends RestController
             'query' => $query,
         ]);
     }
-    
+
     /**
      * Toggle Tags for a given file.
      *
@@ -131,7 +128,7 @@ class StorageController extends RestController
         if (!$file) {
             throw new NotFoundHttpException("Unable to find the given file to toggle the tag.");
         }
-    
+
         $relation = TagRelation::find()->where(['table_name' => StorageFile::cleanBaseTableName(StorageFile::tableName()), 'pk_id' => $fileId, 'tag_id' => $tagId])->one();
 
         if ($relation) {
@@ -160,11 +157,11 @@ class StorageController extends RestController
     public function actionFileInfo($id)
     {
         $model = StorageFile::find()->where(['id' => $id])->with(['user', 'images', 'tags'])->one();
-        
+
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
-        
+
         return $model->toArray([], ['user', 'file', 'images', 'source', 'tags']);
     }
 
@@ -251,7 +248,7 @@ class StorageController extends RestController
     public function actionImageInfo($id)
     {
         $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
-        
+
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
@@ -263,10 +260,10 @@ class StorageController extends RestController
             // refresh model internal (as $model->refresh() wont load the relations data we have to call the same model with relations again)
             $model = StorageImage::find()->where(['id' => $id])->with(['file', 'tinyCropImage.file'])->one();
         }
-        
+
         return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source', 'tinyCropImage.file']);
     }
-    
+
     /**
      * A post request with an array of images to load!
      *
@@ -293,21 +290,21 @@ class StorageController extends RestController
     public function actionFileUpdate($id, $pageId = 0)
     {
         $model = StorageFile::find()->where(['id' => $id])->with(['user'])->one();
-        
+
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the given storage file.");
         }
-        
+
         $post = Yii::$app->request->bodyParams;
         $model->attributes = $post;
-        
+
         if ($model->update(true, ['name_original', 'inline_disposition']) !== false) {
             Yii::$app->storage->trigger(BaseFileSystemStorage::FILE_UPDATE_EVENT, new FileEvent(['file' => $model]));
-            
+
             $this->flushApiCache($model->folder_id, $pageId);
             return $model;
         }
-        
+
         return $this->sendModelError($model);
     }
 
@@ -321,23 +318,23 @@ class StorageController extends RestController
         $fileId = Yii::$app->request->post('id', false);
         $captionsText = Yii::$app->request->post('captionsText', false);
         $pageId = Yii::$app->request->post('pageId', 0);
-    
+
         if ($fileId && is_scalar($fileId) && $captionsText) {
             $model = StorageFile::findOne($fileId);
             if ($model) {
                 $model->updateAttributes([
                     'caption' => I18n::encode($captionsText),
                 ]);
-    
+
                 $this->flushApiCache($model->folder_id, $pageId);
-    
+
                 return true;
             }
         }
-    
+
         return false;
     }
-    
+
     /**
      * Upload an image to the filemanager.
      *
@@ -362,7 +359,7 @@ class StorageController extends RestController
             'message' => Module::t('api_storage_image_upload_error', ['error' => 'Unable to create the filter for the given image. Maybe the file source is not readable.']),
         ]);
     }
-    
+
     /**
      * Get all available registered filters.
      *
@@ -372,7 +369,7 @@ class StorageController extends RestController
     {
         return Yii::$app->storage->filtersArray;
     }
-    
+
     /**
      * Action to replace a current file with a new.
      *
@@ -388,23 +385,23 @@ class StorageController extends RestController
         if ($file = Yii::$app->storage->getFile($fileId)) {
             $newFileSource = $raw['tmp_name'];
             if (is_uploaded_file($newFileSource)) {
-                
+
                 // check for same extension / mimeType
                 $fileData = Yii::$app->storage->ensureFileUpload($raw['tmp_name'], $raw['name']);
-                
+
                 if ($fileData['mimeType'] != $file->mimeType) {
                     throw new BadRequestHttpException("The type must be the same as the original file in order to replace.");
                 }
-                
+
                 if (Storage::replaceFile($file->systemFileName, $newFileSource, $raw['name'])) {
                     return Storage::refreshFile($file->id, $newFileSource);
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * Image Upload with $_FILES array:
      *
@@ -440,7 +437,7 @@ class StorageController extends RestController
 
         return $this->sendArrayError(['image' => 'Unable to create the given with and the corresponding filters.']);
     }
-    
+
     /**
      * Upload a new file from $_FILES array.
      *
@@ -481,12 +478,12 @@ class StorageController extends RestController
                 return ['upload' => false, 'message' => Module::t('api_sotrage_file_upload_error', ['error' => $err->getMessage()]), 'file' => null, 'queueIds' => []];
             }
         }
-    
+
         // If the files array is empty, this is an indicator for exceeding the upload_max_filesize from php ini or a wrong upload definition.
         Yii::$app->response->setStatusCode(422, 'Data Validation Failed.');
         return ['upload' => false, 'message' => Storage::getUploadErrorMessage(UPLOAD_ERR_NO_FILE), 'file' => null, 'queueIds' => []];
     }
-    
+
     /**
      * Move files into another folder.
      *
@@ -496,17 +493,17 @@ class StorageController extends RestController
     {
         $toFolderId = Yii::$app->request->post('toFolderId', 0);
         $fileIds = Yii::$app->request->post('fileIds', []);
-        
+
         $currentPageId = Yii::$app->request->post('currentPageId', 0);
         $currentFolderId = Yii::$app->request->post('currentFolderId', 0);
-        
+
         $response = Storage::moveFilesToFolder($fileIds, $toFolderId);
         $this->flushApiCache($currentFolderId, $currentPageId);
         $this->flushApiCache($toFolderId, $currentPageId);
         $this->flushHasCache($toFolderId, 0);
         return $response;
     }
-    
+
     /**
      * Remove files from the storage component.
      *
@@ -524,7 +521,7 @@ class StorageController extends RestController
         $this->flushApiCache($folderId, $pageId);
         return true;
     }
-    
+
     /**
      * Check whether a folder is empty or not in order to delete this folder.
      *
@@ -534,13 +531,13 @@ class StorageController extends RestController
     public function actionIsFolderEmpty($folderId)
     {
         $count = StorageFile::find()->where(['folder_id' => $folderId, 'is_deleted' => false])->count();
-        
+
         return [
             'count' => $count,
-            'empty' => $count > 0  ? false : true,
+            'empty' => $count > 0 ? false : true,
         ];
     }
-    
+
     /**
      * delete folder, all subfolders and all included files.
      *
@@ -558,25 +555,25 @@ class StorageController extends RestController
         foreach ($matchingChildFolders as $matchingChildFolder) {
             $this->actionFolderDelete($matchingChildFolder['id']);
         }
-        
+
         // find all attached files and delete them
         $folderFiles = StorageFile::find()->where(['folder_id' => $folderId])->all();
         foreach ($folderFiles as $folderFile) {
             $folderFile->delete();
         }
-        
+
         // delete folder
         $model = StorageFolder::findOne($folderId);
         if (!$model) {
             return false;
         }
         $model->is_deleted = true;
-        
+
         $this->flushApiCache();
-        
+
         return $model->update();
     }
-    
+
     /**
      * Update the folder model data.
      *
@@ -590,12 +587,12 @@ class StorageController extends RestController
             return false;
         }
         $model->attributes = Yii::$app->request->post();
-    
+
         $this->flushApiCache();
-        
+
         return $model->update();
     }
-    
+
     /**
      * Create a new folder pased on post data.
      *
@@ -607,10 +604,10 @@ class StorageController extends RestController
         $parentFolderId = Yii::$app->request->post('parentFolderId', 0);
         $response = Yii::$app->storage->addFolder($folderName, $parentFolderId);
         $this->flushApiCache();
-        
+
         return $response;
     }
-    
+
     /**
      * Flush the storage caching data.
      */

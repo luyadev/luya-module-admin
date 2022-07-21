@@ -29,12 +29,13 @@ use luya\admin\traits\LazyDataLoadTrait;/**
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
+
 class SortRelationArray extends SortRelation
 {
     use LazyDataLoadTrait;
-    
+
     private $_data;
-    
+
     /**
      * @inheritdoc
      */
@@ -44,10 +45,10 @@ class SortRelationArray extends SortRelation
         foreach ($this->lazyLoadData($this->_data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
-        
+
         return ['sourceData' => $data];
     }
-    
+
     /**
      * Setter method for the data.
      *

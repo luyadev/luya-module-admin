@@ -37,9 +37,9 @@ use luya\helpers\ArrayHelper;
 class SelectArray extends Select
 {
     use LazyDataLoadTrait;
-    
+
     private $_data;
-    
+
     /**
      * Setter method for Data.
      *
@@ -49,7 +49,7 @@ class SelectArray extends Select
     {
         $this->_data = $data;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -58,7 +58,7 @@ class SelectArray extends Select
     public function getData()
     {
         $cleandata = [];
-         
+
         foreach ($this->lazyLoadData($this->_data) as $key => $value) {
             $cleandata[] = [
                 'value' => $key,

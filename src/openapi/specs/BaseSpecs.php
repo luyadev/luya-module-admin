@@ -74,7 +74,7 @@ abstract class BaseSpecs implements SpecInterface
         if ($this->_phpDocParser === null) {
             $this->_phpDocParser = new PhpDocParser($this->getReflection());
         }
-        
+
         return $this->_phpDocParser;
     }
 
@@ -156,7 +156,7 @@ abstract class BaseSpecs implements SpecInterface
                 'example' => '1',
                 'schema' => new Schema(['type' => 'integer']),
             ]);
-            
+
             // per-page
             $params['per-page'] = new Parameter([
                 'name' => 'per-page',
@@ -337,7 +337,7 @@ abstract class BaseSpecs implements SpecInterface
                                 ]
                             ]
                         ]
-                        
+
                     ],
                 ])
             ]
@@ -399,7 +399,7 @@ abstract class BaseSpecs implements SpecInterface
                 ])
             ];
         }
-        
+
         if (!$schema) {
             return [];
         }

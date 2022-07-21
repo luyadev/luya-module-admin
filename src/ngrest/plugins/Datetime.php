@@ -27,26 +27,26 @@ class Datetime extends Plugin
      * or date is null/empty.
      */
     public $emptyMessage = '-';
-    
+
     /**
      * @var string Use custom datetime format by [date filter](https://docs.angularjs.org/api/ng/filter/date). Default is 'short'. Use false to take \yii\i18n\Formatter::$datetimeFormat as fallback.
      * @since 2.0.0
      */
     public $format = 'short';
-    
+
     /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
         $format = $this->format ? $this->format : Yii::$app->formatter->datetimeFormat;
-        
+
         return [
             $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel."*1000 | date : '$format'"]),
             $this->createTag('span', $this->emptyMessage, ['ng-show' => '!'.$ngModel]),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -54,7 +54,7 @@ class Datetime extends Plugin
     {
         return $this->createFormTag('zaa-datetime', $id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */

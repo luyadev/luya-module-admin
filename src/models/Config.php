@@ -2,9 +2,9 @@
 
 namespace luya\admin\models;
 
-use luya\traits\RegistryTrait;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
+use luya\traits\RegistryTrait;
 
 /**
  * Admin Config Model.
@@ -38,18 +38,18 @@ use luya\admin\Module;
 final class Config extends NgRestModel
 {
     use RegistryTrait;
-    
-    const CONFIG_LAST_IMPORT_TIMESTAMP = 'last_import_timestamp';
-    
-    const CONFIG_SETUP_COMMAND_TIMESTAMP = 'setup_command_timestamp';
-    
-    const CONFIG_INSTALLER_VENDOR_TIMESTAMP = 'installer_vendor_timestamp';
+
+    public const CONFIG_LAST_IMPORT_TIMESTAMP = 'last_import_timestamp';
+
+    public const CONFIG_SETUP_COMMAND_TIMESTAMP = 'setup_command_timestamp';
+
+    public const CONFIG_INSTALLER_VENDOR_TIMESTAMP = 'installer_vendor_timestamp';
 
     /**
      * @since 2.0.0
      */
-    const CONFIG_QUEUE_TIMESTAMP = 'queue_timestamp';
-    
+    public const CONFIG_QUEUE_TIMESTAMP = 'queue_timestamp';
+
     /**
      * @inheritdoc
      */
@@ -65,7 +65,7 @@ final class Config extends NgRestModel
     {
         return 'api-admin-config';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -78,7 +78,7 @@ final class Config extends NgRestModel
             ['is_system', 'default', 'value' => false]
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -97,7 +97,7 @@ final class Config extends NgRestModel
             'name' => Module::t('model_config_atr_name_hint'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -109,7 +109,7 @@ final class Config extends NgRestModel
             'is_system' => ['hidden', 'value' => 0],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -121,7 +121,7 @@ final class Config extends NgRestModel
             [['delete'], true],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

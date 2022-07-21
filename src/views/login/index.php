@@ -1,7 +1,7 @@
 <?php
-use luya\web\Svg;
 use luya\admin\Module;
 use luya\helpers\Html;
+use luya\web\Svg;
 
 $this->title = Yii::$app->siteTitle . " &rsaquo; " . Module::t('login_btn_login');
 

@@ -2,8 +2,8 @@
 
 namespace luya\admin\apis;
 
-use luya\admin\ngrest\base\Api;
 use luya\admin\models\Tag;
+use luya\admin\ngrest\base\Api;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -19,7 +19,7 @@ class TagController extends Api
      * @var string The path to the tag model.
      */
     public $modelClass = 'luya\admin\models\Tag';
-    
+
     /**
      * @inheritdoc
      */

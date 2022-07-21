@@ -52,7 +52,6 @@ trait SortableTrait
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
-
             $pkName = current($event->sender->primaryKey());
             $this->reIndex($event, self::sortableField(), $pkName);
             $transaction->commit();
@@ -78,7 +77,7 @@ trait SortableTrait
 
     /**
      * Update the index for a given event.
-     * 
+     *
      * Either
      * - set the highest index available (if a row is created but no value has been given)
      * - swap index for high to low position
@@ -101,7 +100,6 @@ trait SortableTrait
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-
             $findQuery = $event->sender->find();
 
             if ($findQuery instanceof NgRestActiveQuery && Yii::$app instanceof Application) {
@@ -112,7 +110,7 @@ trait SortableTrait
             // no index has been set, set max value (last position)
             if ($isNewRecord && empty($newPosition)) {
                 $event->sender->updateAttributes([$attributeName => $findQuery->max($attributeName) + 1]);
-            } else if ($oldPosition && $newPosition && $oldPosition != $newPosition) {
+            } elseif ($oldPosition && $newPosition && $oldPosition != $newPosition) {
                 $i = 1;
                 if ($newPosition > $oldPosition) {
                     // when the new position is highter then the old one: (old position - 1) + *1
@@ -127,7 +125,7 @@ trait SortableTrait
                         $i++;
                     }
                 }
-            } else if (!empty($newPosition) && empty($oldPosition)) {
+            } elseif (!empty($newPosition) && empty($oldPosition)) {
                 // its a new record where the user entered a position, lets move all the other higher indexes
                 $i = 1;
                 foreach ($findQuery->andWhere(['and', ['!=', $pkName, $event->sender->primaryKey], ['>=', $attributeName, $newPosition]])->all() as $item) {
@@ -169,7 +167,7 @@ trait SortableTrait
             $i++;
         }
     }
-    
+
     /**
      * The field which should by used to sort.
      *
@@ -179,7 +177,7 @@ trait SortableTrait
     {
         return 'sortindex';
     }
-    
+
     /**
      * Overrides the ngRestFind() method of the ActiveRecord
      * @return \yii\db\ActiveQuery
@@ -188,7 +186,7 @@ trait SortableTrait
     {
         return parent::ngRestFind()->orderBy([self::tableName().'.'.self::sortableField() => SORT_ASC]);
     }
-    
+
     /**
      * Overrides the find() method of the ActiveRecord
      * @return \yii\db\ActiveQuery
@@ -197,7 +195,7 @@ trait SortableTrait
     {
         return parent::find()->orderBy([self::tableName().'.'.self::sortableField() => SORT_ASC]);
     }
-    
+
     /**
      * Disable the list ordering.
      *

@@ -2,10 +2,10 @@
 
 namespace luya\admin\ngrest\validators;
 
-use yii\helpers\Json;
 use luya\admin\ngrest\base\NgRestModelInterface;
 use luya\admin\validators\StorageUploadValidator as ValidatorsStorageUploadValidator;
 use yii\base\InvalidConfigException;
+use yii\helpers\Json;
 
 /**
  * NgRest Model Storage Upload Validator.
@@ -37,11 +37,11 @@ class StorageUploadValidator extends ValidatorsStorageUploadValidator
         if (!$model instanceof NgRestModelInterface) {
             throw new InvalidConfigException("The model must be an instance of NgRestModelInterface.");
         }
-        
+
         if ($model->getIsNgRestContext()) {
             return;
         }
-        
+
         $files = $this->uploadToFiles($model, $attribute);
 
         if (!$this->multiple) {

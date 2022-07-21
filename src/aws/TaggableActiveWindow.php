@@ -5,9 +5,8 @@ namespace luya\admin\aws;
 use luya\admin\models\StorageFile;
 use luya\admin\models\Tag;
 use luya\admin\models\TagRelation;
-use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
-use luya\admin\traits\TaggableTrait;
+use luya\admin\ngrest\base\ActiveWindow;
 
 /**
  * Create an Active Window where you can assign tags to a row of the underlying table via a ref table.
@@ -50,7 +49,7 @@ class TaggableActiveWindow extends ActiveWindow
      * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
-    
+
     /**
      * When removing Tag Active Window in 2.0 this can be removed.
      */
@@ -58,9 +57,9 @@ class TaggableActiveWindow extends ActiveWindow
     {
         return 'taggable';
     }
-    
+
     private $_tableName;
-    
+
     /**
      * Getter tableName.
      *
@@ -71,10 +70,10 @@ class TaggableActiveWindow extends ActiveWindow
         if ($this->_tableName === null) {
             $this->_tableName = $this->model->tableName();
         }
-        
+
         return $this->_tableName;
     }
-    
+
     /**
      * Setter tableName.
      *
@@ -84,7 +83,7 @@ class TaggableActiveWindow extends ActiveWindow
     {
         $this->_tableName = $tableName;
     }
-    
+
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      *
@@ -94,7 +93,7 @@ class TaggableActiveWindow extends ActiveWindow
     {
         return $this->render('index');
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -102,7 +101,7 @@ class TaggableActiveWindow extends ActiveWindow
     {
         return Module::t('menu_system_item_tags');
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -173,7 +172,7 @@ class TaggableActiveWindow extends ActiveWindow
         $model = new Tag();
         $model->name = $tagName;
         $model->save();
-        
+
         return $model->id;
     }
 }

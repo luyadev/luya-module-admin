@@ -3,14 +3,14 @@
 namespace luya\admin\proxy;
 
 use luya\console\Command;
-use yii\base\InvalidConfigException;
 use luya\helpers\StringHelper;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 use yii\db\Connection;
 
 /**
  * Admin Proxy Build.
- * 
+ *
  * For `admin/proxy` usage see {{luya\admin\commands\ProxyController}}
  *
  * @author Basil Suter <basil@nadar.io>
@@ -28,66 +28,66 @@ class ClientBuild extends BaseObject
      * @var \luya\console\Command $command object
      */
     public $command;
-    
+
     public $buildToken;
-    
+
     public $requestUrl;
-    
+
     public $requestCloseUrl;
-    
+
     /**
      * @var string The Url to the remote storage system which provides the file returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
      */
     public $fileProviderUrl;
-    
+
     /**
      * @var string The Url to the remote storage system which provides the image returnning the file content. The url will recieved an fileId param as well as buildToken and machine params.
      */
     public $imageProviderUrl;
-    
+
     public $machineIdentifier;
 
     public $machineToken;
-    
+
     public $storageFilesCount;
-    
+
     /**
      * @deprecated Deprecated since version 4, will be removed in 5. No replacement.
      */
     public $optionStrict;
 
     public $syncRequestsCount;
-    
+
     public function setOptionTable($table)
     {
         if (!empty($table)) {
             $this->_optionTable = explode(",", $table);
         }
     }
-    
+
     private $_optionTable;
-    
+
     public function getOptionTable()
     {
         return $this->_optionTable;
     }
-    
+
     public function __construct(Command $command, Connection $db, array $config = [])
     {
         $this->command = $command;
         $this->db = $db;
         parent::__construct($config);
     }
-    
+
     public function init()
     {
         parent::init();
-        
+
         if ($this->_buildConfig === null) {
             throw new InvalidConfigException("build config can not be empty!");
         }
     }
-    
+
     private $_buildConfig;
 
     /**
@@ -159,7 +159,7 @@ class ClientBuild extends BaseObject
 
                 $filter = substr($filter, 1);
             }
-            
+
             if ($filter == $tableName || StringHelper::startsWithWildcard($tableName, $filter)) {
                 return $exclude;
             }
@@ -174,7 +174,7 @@ class ClientBuild extends BaseObject
     }
 
     private $_tables = [];
-    
+
     /**
      * @return ClientTable[]
      */

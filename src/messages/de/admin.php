@@ -313,7 +313,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} von {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Die maximale Anzahl Formularübermittlungen wurde erreicht, versuchen Sie es noch einmal {time}.',
     'model_loginform_max_user_attempts' => 'Die maximale Anzahl Loginversuche wurde erreicht, versuchen Sie es noch einmal {time}.',
@@ -330,7 +330,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Dateiauslieferung',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'In Browser anzeigen',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Personalien',
     'settings_general' => 'Allgemein',
@@ -339,7 +339,7 @@ return [
     'view_index_redirect_telephone' => 'Telefonnummer',
     'view_index_redirect_telephone_help' => 'Bitte geben Sie eine gültige Telefonnummer ein (für "+"-Vorzeich muss ein "\" vorweg gestellt werden) .',
     'missing_file_upload_permission' => 'Keine berechtigung um Dateien hochzuladen.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Nein',
     'crud_exportdata_btn' => 'Export generieren',
@@ -411,14 +411,14 @@ return [
     'status_true' => 'Ja',
     'status_false' => 'Nein',
     'js_jsonobject_newkey' => 'Neuer Schlüssel Name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Status Wechseln',
     'active_button_togglestatus_error' => 'Konnte nicht aktiviert werden.',
     'active_button_togglestatus_enabled' => '{modelName} aktiviert',
     'active_button_togglestatus_disabled' => '{modelName} deaktiviert',
     'layout_filemanager_detail_details' => 'Datei Informationen',
-    
+
 // added translations in version 2.3.0:
     'aws_delete_remove_success' => 'Das Tag und seine Zuordnungen wurden entfernt.',
     'aws_delete_remove_wrong_name' => 'Der Tag-Name ist falsch.',
@@ -528,7 +528,7 @@ return [
     'button_create' => 'Erstellen',
     'button_cancel' => 'Abbrechen',
     'button_create_and_new' => 'Erstellen und neu',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

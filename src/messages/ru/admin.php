@@ -528,7 +528,7 @@ return [
     'button_create' => 'Создать',
     'button_cancel' => 'Отмена',
     'button_create_and_new' => 'Создать, а затем снова добавить новую запись',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'Пользователь',
     'model_ngrestlog_timestamp_create_label' => 'Время',

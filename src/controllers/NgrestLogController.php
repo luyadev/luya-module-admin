@@ -21,7 +21,7 @@ class NgrestLogController extends \luya\admin\ngrest\base\Controller
      * {@inheritDoc}
      */
     public $clearButton = true;
-    
+
     /**
      * {@inheritDoc}
      */

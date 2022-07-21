@@ -3,13 +3,13 @@
 namespace luya\admin\helpers;
 
 use InvalidArgumentException;
-use Yii;
 use luya\admin\file\Item;
-use luya\Exception;
 use luya\admin\models\StorageFile;
 use luya\admin\models\StorageImage;
 use luya\admin\Module;
+use luya\Exception;
 use luya\helpers\FileHelper;
+use Yii;
 
 /**
  * Helper class to handle remove, upload and moving of storage files.
@@ -41,7 +41,7 @@ class Storage
             UPLOAD_ERR_EXTENSION =>  Module::t('upload_err_message_8'),
         ];
     }
-    
+
     /**
      * Get the upload error message from a given $_FILES error code id.
      *
@@ -53,7 +53,7 @@ class Storage
         $messagesArray = self::getUploadErrorMessages();
         return isset($messagesArray[$errorId]) ? $messagesArray[$errorId] : 'Unknown upload error.';
     }
-    
+
     /**
      * Remove a file from the storage system.
      *
@@ -75,10 +75,10 @@ class Storage
             Yii::$app->storage->flushArrays();
             return $response;
         }
-    
+
         return true;
     }
-    
+
     /**
      * Remove an image from the storage system and database.
      *
@@ -100,12 +100,12 @@ class Storage
                 }
             }
         }
-        
+
         $file = StorageImage::findOne($imageId);
         if ($file) {
             return $file->delete();
         }
-        
+
         return false;
     }
 
@@ -120,23 +120,23 @@ class Storage
     public static function getImageResolution($filePath, $throwException = false)
     {
         $dimensions = @getimagesize(Yii::getAlias($filePath));
-        
+
         $width = 0;
         $height = 0;
-        
+
         if (isset($dimensions[0]) && isset($dimensions[1])) {
             $width = (int)$dimensions[0];
             $height = (int)$dimensions[1];
         } elseif ($throwException) {
             throw new Exception("Unable to determine the resoltuions of the file $filePath.");
         }
-        
+
         return [
             'width' => $width,
             'height' => $height,
         ];
     }
-    
+
     /**
      * Move an array of storage fileIds to another folder.
      *
@@ -149,7 +149,7 @@ class Storage
             static::moveFileToFolder($fileId, $folderId);
         }
     }
-    
+
     /**
      * Move a storage file to another folder.
      *
@@ -160,16 +160,16 @@ class Storage
     public static function moveFileToFolder($fileId, $folderId)
     {
         $file = StorageFile::findOne($fileId);
-        
+
         if ($file) {
             $file->updateAttributes(['folder_id' => $folderId]);
             Yii::$app->storage->flushArrays();
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Replace the source of a file on the webeserver based on new and old source path informations.
      *
@@ -207,7 +207,7 @@ class Storage
                 $img->imageFilter($img->filter_id, false);
             }
         }
-        
+
         $file = StorageFile::findOne($fileId);
 
         if (!$file) {
@@ -236,7 +236,7 @@ class Storage
     {
         $newFileSource = @tempnam(sys_get_temp_dir(), 'replaceFromFromContent');
         FileHelper::writeFile($newFileSource, $newFileContent);
-        
+
         try {
             Yii::$app->storage->ensureFileUpload($newFileSource, $fileName);
         } catch (\Exception $e) {
@@ -261,7 +261,7 @@ class Storage
 
         return Yii::$app->storage->addFile($fromTempFile, $fileName, $folderId, $isHidden);
     }
-    
+
     /**
      * Add File to the storage container by providing the $_FILES array name.
      *
@@ -286,14 +286,14 @@ class Storage
     public static function uploadFromFileArray(array $fileArray, $toFolder = 0, $isHidden = false)
     {
         $files = self::extractFilesDataFromFilesArray($fileArray);
-        
+
         if (count($files) !== 1) {
             return ['upload' => false, 'message' => 'no image found', 'file_id' => 0];
         }
-        
+
         return self::verifyAndSaveFile($files[0], $toFolder, $isHidden);
     }
-    
+
     /**
      * Add Files to storage component by just providing $_FILES array, used for multi file storage.
      *
@@ -321,14 +321,14 @@ class Storage
         foreach ($filesArray as $fileArrayKey => $file) {
             $files = array_merge($files, self::extractFilesDataFromFilesArray($file));
         }
-    
+
         foreach ($files as $file) {
             return self::verifyAndSaveFile($file, $toFolder, $isHidden);
         }
-    
+
         return ['upload' => false, 'message' => 'no files selected or empty files list.', 'file_id' => 0];
     }
-    
+
     /**
      * Example Input unform:
      *
@@ -422,10 +422,10 @@ class Storage
                 }
             }
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Extract $_FILES array.
      *
@@ -437,7 +437,7 @@ class Storage
         if (!isset($file['tmp_name'])) {
             return [];
         }
-        
+
         $files = [];
         if (is_array($file['tmp_name'])) {
             foreach ($file['tmp_name'] as $index => $value) {
@@ -463,10 +463,10 @@ class Storage
                 'size' => $file['size'],
             ];
         }
-        
+
         return $files;
     }
-    
+
     /**
      *
      * @param array $file An array with the following keys available:
@@ -485,7 +485,7 @@ class Storage
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 return ['upload' => false, 'message' => static::getUploadErrorMessage($file['error']), 'file_id' => 0];
             }
-    
+
             $file = Yii::$app->storage->addFile($file['tmp_name'], $file['name'], $toFolder, $isHidden);
             if ($file) {
                 return ['upload' => true, 'message' => 'file uploaded succesfully', 'file_id' => $file->id];
@@ -493,7 +493,7 @@ class Storage
         } catch (Exception $err) {
             return ['upload' => false, 'message' => $err->getMessage(), 'file_id' => 0];
         }
-        
+
         return ['upload' => false, 'message' => 'no files selected or empty files list.', 'file_id' => 0];
     }
 }

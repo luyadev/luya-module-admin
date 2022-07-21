@@ -2,8 +2,8 @@
 
 namespace luya\admin\models;
 
-use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use Yii;
 
 /**
  * User Request.

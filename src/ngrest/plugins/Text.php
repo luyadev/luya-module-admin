@@ -17,12 +17,12 @@ class Text extends Plugin
      * @var string Define a HTML placeholder attribute.
      */
     public $placeholder;
-    
+
     /**
      * @var boolean Whether the value should be encoded after find by {{luya\helpers\Html::encode()}} or not.
      */
     public $encoding = true;
-    
+
     /**
      * @var array An array with options can be passed to the createListTag.
      */
@@ -51,7 +51,7 @@ class Text extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -61,7 +61,7 @@ class Text extends Plugin
             $this->writeAttribute($event, HtmlHelper::encode($event->sender->getAttribute($this->name)));
         }
     }
-    
+
     /**
      * @inheritdoc
      */

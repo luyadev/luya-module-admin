@@ -2,10 +2,10 @@
 
 namespace luya\admin\ngrest\base\actions;
 
-use Yii;
 use luya\admin\models\UserOnline;
-use yii\web\ServerErrorHttpException;
+use Yii;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Update
@@ -25,11 +25,11 @@ class UpdateAction extends \yii\rest\UpdateAction
         if (!$model) {
             throw new NotFoundHttpException("Object not found: $id");
         }
-        
+
         if ($this->checkAccess) {
             call_user_func($this->checkAccess, $this->id, $model);
         }
-        
+
         $model->scenario = $this->scenario;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->save() === false && !$model->hasErrors()) {

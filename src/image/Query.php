@@ -2,8 +2,8 @@
 
 namespace luya\admin\image;
 
-use Yii;
 use luya\admin\storage\QueryTrait;
+use Yii;
 use yii\base\BaseObject;
 
 /**
@@ -19,9 +19,9 @@ use yii\base\BaseObject;
 class Query extends BaseObject
 {
     use QueryTrait;
-    
+
     private $_storage;
-    
+
     /**
      * Singleton behavior for storage component getter.
      *
@@ -32,10 +32,10 @@ class Query extends BaseObject
         if ($this->_storage === null) {
             $this->_storage = Yii::$app->storage;
         }
-    
+
         return $this->_storage;
     }
-    
+
     /**
      * Return all images from the storage system.
      *
@@ -45,7 +45,7 @@ class Query extends BaseObject
     {
         return $this->storage->imagesArray;
     }
-    
+
     /**
      * Get a specific images from the storage system.
      *
@@ -56,7 +56,7 @@ class Query extends BaseObject
     {
         return $this->storage->getImagesArrayItem($id);
     }
-    
+
     /**
      * Create the image object based on the array.
      *
@@ -67,7 +67,7 @@ class Query extends BaseObject
     {
         return Item::create($itemArray);
     }
-    
+
     /**
      * Create iterator object from a given data array.
      *

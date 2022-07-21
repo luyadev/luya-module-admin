@@ -78,7 +78,7 @@ abstract class BasePathParser
     public function generateOperationId($verb)
     {
         $path = ltrim(str_replace(["admin/api-", "admin/api", "admin/"], '', $this->getPath()), '/');
-        
+
         $operation = $verb . '-'. str_replace("/", " ", $path); // replace slashes with newlines
         $camelCase = Inflector::slug($operation, '-', true, false);
         return Generator::generateUniqueOperationId(Inflector::id2camel($camelCase));

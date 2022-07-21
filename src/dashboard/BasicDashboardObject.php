@@ -2,8 +2,8 @@
 
 namespace luya\admin\dashboard;
 
-use yii\helpers\Html;
 use luya\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * Fast generated Dashboard Objects.
@@ -30,7 +30,7 @@ class BasicDashboardObject extends BaseDashboardObject
         'class' => 'card',
         'tag' => 'div',
     ];
-    
+
     /**
      * @var string The wrapper template which is by default:
      *
@@ -56,7 +56,7 @@ class BasicDashboardObject extends BaseDashboardObject
         $options = ArrayHelper::merge([
             'ng-controller' => 'DefaultDashboardObjectController',
             'ng-init' => 'loadData(\'{{dataApiUrl}}\')'], $this->wrapperOptions);
-        
+
         return Html::tag(ArrayHelper::remove($this->wrapperOptions, 'tag', 'div'), $this->outerTemplate, $options);
     }
 }

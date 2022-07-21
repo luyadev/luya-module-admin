@@ -2,18 +2,17 @@
 
 namespace luya\admin\commands;
 
-use Yii;
 use Curl\Curl;
+use luya\admin\models\Config;
 use luya\admin\Module;
+use luya\admin\proxy\ClientBuild;
+use luya\admin\proxy\ClientTransfer;
+use luya\console\Command;
+use luya\helpers\Url;
+use luya\traits\CacheableTrait;
 use yii\db\Connection;
 use yii\di\Instance;
 use yii\helpers\Json;
-use luya\admin\models\Config;
-use luya\admin\proxy\ClientBuild;
-use luya\admin\proxy\ClientTransfer;
-use luya\traits\CacheableTrait;
-use luya\helpers\Url;
-use luya\console\Command;
 
 /**
  * Synchronise a PROD env to your locale env with files and images.
@@ -59,24 +58,24 @@ use luya\console\Command;
  * ```
  *
  * The above exmaple would exclude all tables starting *crawler*.
- * 
+ *
  * ## Storage or DB
- * 
+ *
  * In order to switch where either only the files/images or the table data should be synced use the
  * `only` argument:
- * 
+ *
  * ```sh
  * ./vendor/bin/luya admin/proxy --only=storage
  * ./vendor/bin/luya admin/proxy --only=db
  * ```
- * 
+ *
  * or as short code
- * 
+ *
  * ```sh
  * ./vendor/bin/luya admin/proxy -o=storage
  * ./vendor/bin/luya admin/proxy -o=db
  * ```
- * 
+ *
  * + storage: files and images
  * + db: database table rows
  *
@@ -89,11 +88,11 @@ class ProxyController extends Command
 {
     use CacheableTrait;
 
-    const CONFIG_VAR_URL = 'lcpProxyUrl';
+    public const CONFIG_VAR_URL = 'lcpProxyUrl';
 
-    const CONFIG_VAR_TOKEN = 'lcpProxyToken';
+    public const CONFIG_VAR_TOKEN = 'lcpProxyToken';
 
-    const CONFIG_VAR_IDENTIFIER = 'lcpProxyIdentifier';
+    public const CONFIG_VAR_IDENTIFIER = 'lcpProxyIdentifier';
 
     /**
      * @inheritdoc
@@ -138,7 +137,7 @@ class ProxyController extends Command
      * @var integer Number of requests collected until they are written to the database.
      */
     public $syncRequestsCount = 10;
-    
+
     /**
      * @var string Database connection (component name) where the data will be stored.
      */
@@ -174,7 +173,7 @@ class ProxyController extends Command
     public function actionSync()
     {
         $this->db = Instance::ensure($this->db, Connection::class);
-    
+
         if ($this->url === null) {
             $url = Config::get(self::CONFIG_VAR_URL);
 

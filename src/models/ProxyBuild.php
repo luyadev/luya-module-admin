@@ -2,10 +2,10 @@
 
 namespace luya\admin\models;
 
-use yii\helpers\Json;
+use luya\admin\aws\DetailViewActiveWindow;
 use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
-use luya\admin\aws\DetailViewActiveWindow;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "admin_proxy_build".
@@ -48,7 +48,7 @@ class ProxyBuild extends NgRestModel
             [['build_token'], 'unique'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -63,7 +63,7 @@ class ProxyBuild extends NgRestModel
             'expiration_time' => Module::t('model_proxy_build_expiration_time_label'),
         ];
     }
-    
+
     /**
      * ProxyMachine relation
      *
@@ -73,7 +73,7 @@ class ProxyBuild extends NgRestModel
     {
         return $this->hasOne(ProxyMachine::class, ['id' => 'machine_id']);
     }
-    
+
     /**
      * @return string Defines the api endpoint for the angular calls
      */
@@ -81,9 +81,9 @@ class ProxyBuild extends NgRestModel
     {
         return 'api-admin-proxybuild';
     }
-    
+
     private $_arrayConfig;
-    
+
     /**
      * Get an array from the config json
      *
@@ -94,10 +94,10 @@ class ProxyBuild extends NgRestModel
         if ($this->_arrayConfig === null) {
             $this->_arrayConfig = Json::decode($this->config);
         }
-        
+
         return $this->_arrayConfig;
     }
-    
+
     /**
      * Get rowsPerRequest from json config
      *
@@ -107,7 +107,7 @@ class ProxyBuild extends NgRestModel
     {
         return $this->arrayConfig['rowsPerRequest'];
     }
-    
+
     /**
      * Get the full configuration for a given table
      *
@@ -118,7 +118,7 @@ class ProxyBuild extends NgRestModel
     {
         return isset($this->arrayConfig['tables'][$table]) ? $this->arrayConfig['tables'][$table] : false;
     }
-    
+
     /**
      * {@inheritDoc}
      */

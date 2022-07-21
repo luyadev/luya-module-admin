@@ -7,7 +7,7 @@ use yii\base\BaseObject;
 
 /**
  * Base Response for Active Window, Button and Selection.
- * 
+ *
  * @author Basil Suter <git@nadar.io>
  * @since 4.0.0
  */
@@ -16,10 +16,10 @@ abstract class BaseActiveResponse extends BaseObject
     /**
      * @var string The loadList event name
      */
-    const EVENT_RELOAD_LIST = 'loadList';
+    public const EVENT_RELOAD_LIST = 'loadList';
 
     private $_events = [];
-    
+
     /**
      * Send a CRUD reload event.
      */

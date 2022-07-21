@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest;
 
-use Yii;
 use luya\admin\ngrest\render\RenderInterface;
+use Yii;
 
 /**
  * NgRest Base Object
@@ -57,7 +57,7 @@ class NgRest
         $this->render->setConfig($this->config);
         return $this->render->render();
     }
-    
+
     /**
      * Generates an NgRest Plugin Object.
      *

@@ -43,14 +43,14 @@ use luya\helpers\StringHelper;
 class CheckboxList extends Plugin
 {
     use LazyDataLoadTrait;
-    
+
     /**
      * @var array|\Closure
      */
     public $data = [];
-    
+
     public $i18nEmptyValue = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -58,7 +58,7 @@ class CheckboxList extends Plugin
     {
         return $this->createListTag($ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -66,7 +66,7 @@ class CheckboxList extends Plugin
     {
         return $this->createFormTag('zaa-checkbox-array', $id, $ngModel, ['options' => $this->getServiceName('checkboxitems')]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -74,18 +74,18 @@ class CheckboxList extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     protected function getItems()
     {
         $data = [];
-    
+
         foreach ($this->lazyLoadData($this->data) as $value => $label) {
             $data[] = ['value' => $value, 'label' => $label];
         }
 
         return ['items' => ArrayHelper::typeCast($data)];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -93,7 +93,7 @@ class CheckboxList extends Plugin
     {
         return ['checkboxitems' => $this->getItems()];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -103,7 +103,7 @@ class CheckboxList extends Plugin
         if (!$this->i18n) {
             // as it could be an assigned array from the frontend model assigne via a form, we verify if the array contains a value key.
             $value = $event->sender->getAttribute($this->name);
-            
+
             $data = [];
             if (is_array($value)) {
                 foreach ($value as $key => $row) {
@@ -116,14 +116,14 @@ class CheckboxList extends Plugin
             } else {
                 $data = $value;
             }
-            
+
             $this->writeAttribute($event, I18n::encode($data));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -133,10 +133,10 @@ class CheckboxList extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -147,10 +147,10 @@ class CheckboxList extends Plugin
             $this->writeAttribute($event, ArrayHelper::getColumn($array, 'value'));
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -160,9 +160,9 @@ class CheckboxList extends Plugin
         if (!$this->i18n) {
             $value = $this->jsonDecode($value);
         }
-        
+
         $value = StringHelper::typeCast($value);
-        
+
         if (!empty($value)) {
             $results = [];
             foreach ($this->getItems()['items'] as $item) {

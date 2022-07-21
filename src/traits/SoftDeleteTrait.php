@@ -52,11 +52,11 @@ trait SoftDeleteTrait
     public static function internalAndWhere()
     {
         $query = [];
-        
+
         foreach (static::fieldStateDescriber() as $field => $value) {
             $query[static::tableName().'.'.$field] = is_array($value) ? $value[1] : !$value;
         }
-        
+
         return $query;
     }
 
@@ -69,7 +69,7 @@ trait SoftDeleteTrait
         $where = static::internalAndWhere();
         return empty($where) ? parent::ngRestFind() : parent::ngRestFind()->andWhere($where);
     }
-    
+
     /**
      * Overrides the find() method of the ActiveRecord
      * @return \yii\db\ActiveQuery
@@ -88,16 +88,16 @@ trait SoftDeleteTrait
     public function delete()
     {
         $result = false;
-        
+
         if ($this->beforeDelete()) {
             $this->updateAttributes(static::internalUpdateValues());
             $result = true;
             $this->afterDelete();
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Evalate the values to update.
      *

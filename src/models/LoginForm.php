@@ -2,8 +2,8 @@
 
 namespace luya\admin\models;
 
-use Yii;
 use luya\admin\Module;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -20,7 +20,7 @@ final class LoginForm extends Model
      * @var string the Email of the user try to login
      */
     public $email;
-    
+
     /**
      * @var string The passwort of the user try to login
      */
@@ -30,17 +30,17 @@ final class LoginForm extends Model
      * @var boolean Whether auto login is enabled or not.
      */
     public $autologin = false;
-    
+
     /**
      * @var integer The number of allowed login attempts for the given user. If the amount is exceed the login form will validate an error
      */
     public $allowedAttempts = 7;
-    
+
     /**
      * @var integer The number of seconds the user is locked out. Defaults to 30 minutes. The lockout timestamp will be stored in the user model
      */
     public $lockoutTime = 1800;
-    
+
     /**
      * @var integer The number of seconds until the sent secure token gets invalid.
      */
@@ -50,7 +50,7 @@ final class LoginForm extends Model
      * @var integer The number of attempts this user has already made.
      */
     protected $attempts = 0;
-    
+
     /**
      * @inheritdoc
      */
@@ -84,11 +84,11 @@ final class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            
+
             if ($user && $this->userAttemptBruteForceLock($user)) {
                 return $this->addError($attribute, Module::t('model_loginform_max_user_attempts', ['time' => Yii::$app->formatter->asRelativeTime($user->login_attempt_lock_expiration)]));
             }
-            
+
             if (!$user || !$user->validatePassword($this->password)) {
                 if ($this->attempts) {
                     // use `model_loginform_wrong_user_or_password` instead of `model_loginform_wrong_user_or_password_attempts` due to informations about correct email input.
@@ -99,7 +99,7 @@ final class LoginForm extends Model
             }
         }
     }
-    
+
     /**
      * Check if the given user has a lockout, otherwise upcount the attempts.
      *
@@ -112,16 +112,16 @@ final class LoginForm extends Model
         if ($this->userAttemptBruteForceLockHasExceeded($user)) {
             return true;
         }
-        
+
         $this->attempts = $user->login_attempt + 1;
-        
+
         if ($this->attempts >= $this->allowedAttempts) {
             $user->updateAttributes(['login_attempt_lock_expiration' => time() + $this->lockoutTime]);
         }
-        
+
         $user->updateAttributes(['login_attempt' => $this->attempts]);
     }
-    
+
     /**
      * Check if lockout has expired or not.
      *
@@ -133,10 +133,10 @@ final class LoginForm extends Model
     {
         if ($user->login_attempt_lock_expiration > time()) {
             $user->updateAttributes(['login_attempt' => 0]);
-            
+
             return true;
         }
-        
+
         return false;
     }
 
@@ -166,15 +166,15 @@ final class LoginForm extends Model
     public function validateSecureToken($token, $userId)
     {
         $user = User::findOne($userId);
-        
+
         if (!$user) {
             return false;
         }
-        
+
         if ($this->userAttemptBruteForceLockHasExceeded($user)) {
             return false;
         }
-        
+
         if ($user->secure_token == sha1($token) && $user->secure_token_timestamp >= (time() - $this->secureTokenExpirationTime)) {
             return $user;
         }
@@ -192,7 +192,7 @@ final class LoginForm extends Model
         if ($this->validate()) {
             $user = $this->getUser();
             $user->detachBehavior('LogBehavior');
-            
+
             // update user model
             $user->updateAttributes([
                 'force_reload' => false,
@@ -200,10 +200,10 @@ final class LoginForm extends Model
                 'login_attempt_lock_expiration' => null,
                 'auth_token' => Yii::$app->security->hashData(Yii::$app->security->generateRandomString(), $user->password_salt),
             ]);
-            
+
             // kill prev user logins
             UserLogin::updateAll(['is_destroyed' => true], ['user_id' => $user->id]);
-            
+
             // create new user login
             $login = new UserLogin([
                 'auth_token' => $user->auth_token,
@@ -212,12 +212,12 @@ final class LoginForm extends Model
                 'user_agent' => Yii::$app->request->userAgent,
             ]);
             $login->save();
-            
+
             // refresh user online list
             UserOnline::refreshUser($user, 'login');
             return $user;
         }
-        
+
         return false;
     }
 

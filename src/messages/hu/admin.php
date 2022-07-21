@@ -103,7 +103,7 @@ return [
     'view_index_redirect_internal_select' => 'Válassza ki azt a belső oldalt, amelybe továbbítani kell.',
     'view_index_redirect_external_link' => 'Külső link',
     'view_index_redirect_external_link_help' => 'A külső hivatkozások http://vagy https://karakterrel kezdődnek (abszolút belső linkekhez használja a//értéket)',
-    
+
 // added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'E-mail',
     'model_loginform_password_label' => 'Jelszó',
@@ -130,22 +130,22 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Biztosan törölni szeretné ezt a fájlt?',
     'js_dir_manager_rm_file_ok' => 'A fájl sikeresen törölve lett.',
     'js_zaa_server_proccess' => 'Kérjük, várjon, amíg a szerver feldolgozza az Ön adatait.',
-    
+
 // added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'Ehhez a táblázathoz még nem adtak hozzá adatokat.',
-    
+
 // added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Kérjük, válasszon ki néhány képet a bal oldalon, hogy felvegye őket a galéria albumba.',
     'aws_gallery_images' => 'Album képek',
     'layout_useronline_name' => 'Név',
     'layout_useronline_mail' => 'E-mail',
     'layout_useronline_inactivesince' => 'Inaktív azóta',
-    
+
 // added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Gyorsítótárazás',
     'debug_state_on' => 'On',
     'debug_state_off' => 'Ki',
-    
+
 // added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'Biztonsági kód',
     'login_securetoken_mail' => 'A következő biztonsági kód segítségével jelentkezzen be az adminisztrációba:',
@@ -161,7 +161,7 @@ return [
     'mode_user_lastname' => 'Vezetéknév',
     'mode_user_email' => 'E-mail',
     'mode_user_password' => 'Jelszó',
-    
+
 // added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Új bejegyzés hozzáadása',
     'aws_tag_add' => 'hozzáad',
@@ -169,14 +169,14 @@ return [
     'aws_tag_list' => 'Az összes bejegyzés listája',
     'dashboard_log_message_add' => 'Hozzáadott egy új sort a <strong>{container}</strong>.',
     'dashboard_log_message_edit' => 'Frissítette a <strong>{container}</strong>meglévő sorát.',
-    
+
 // added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'Segítség',
     'right_panel_support_title' => 'Információ és Súgó',
     'right_panel_support_tags_title' => 'Címkék',
     'right_panel_support_support_title' => 'Támogatás',
     'right_panel_support_support_text' => 'Ha bármilyen kérdése van, forduljon webmesteréhez, vagy forduljon a <a target="_blank" href="https://luya.io">luya.io-hoz</a>.',
-    
+
 // added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Csoportosítás mező',
     'ngrest_crud_filter_prompt' => 'Szűrő kiválasztása',
@@ -187,7 +187,7 @@ return [
     'layout_rightbar_savebtn' => 'Mentés',
     'aws_changepassword_notequal' => 'Az új jelszó és a jelszó ismétlése nem egyenlő.',
     'aws_changeapssword_minchar' => 'Az új jelszónak legalább {min} karakternek kell lennie.',
-    
+
 // added translations in version 1.0.0-rc3:
     'model_pk_id' => 'ID',
     'model_lang_name' => 'Név',
@@ -227,7 +227,7 @@ return [
     'js_link_change_value' => 'Csatolás módosítása',
     'js_link_set_value' => 'Csatolás beállítása',
     'callback_button_file_download_widget_success' => 'Az akta már elkészült. Most már letöltheti.',
-    
+
 // added translations in version 1.0.0-rc4:
     'api_storage_file_upload_folder_error' => 'Hiba történt a fájl tárolási mappába történő mentésekor. Engedélyhiba okozhatja ezt a problémát. Győződjön meg arról, hogy a tárolómappa írható.',
     'model_user_oldpassword' => 'Előző (régi) jelszó',
@@ -239,7 +239,7 @@ return [
     'locked_info' => 'Valaki már szerkesztett',
     'menu_dashboard' => 'Műszerfal',
     'js_link_not_set' => 'Nincs kijelölve hivatkozás',
-    
+
 // added translations in version 1.0.0:
     'ngrest_button_delete' => 'Törlés',
     'js_dir_manager_rm_file_confirm_title' => 'Fájl eltávolítása',
@@ -265,7 +265,7 @@ return [
     'model_config_atr_value' => 'Érték',
     'model_config_atr_is_system' => 'Rendszer',
     'menu_system_item_config' => 'Konfigurációs változók',
-    
+
 // added translations in version 1.1.0:
     'model_user_is_deleted' => 'eltávolítva',
     'model_user_name' => 'Név',
@@ -309,10 +309,10 @@ return [
     'tag_file_readme' => 'Hozzon létre egy csatolást a megadott fájlhoz. Példaként a `file [1] `egy hivatkozást hoz létre a fájlhoz az id 1 azonosítóval, a fájlnevet használva fájlként. Másik címkeszöveg megadásához használja a `file [1] (Saját fájlcímke szöveg) `parancsot. A fájl egy új ablakban nyílik meg.',
     'aw_apioverview_no_perm_groups' => 'Az API-felhasználónak legalább egy engedélycsoportot kell hozzárendelnie.',
     'aw_apioverview_no_access_token' => 'Az API-felhasználónak hozzáférési jogkivonattal kell rendelkeznie az API eléréséhez.',
-    
+
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.Listarray.length}} {{totalrows}}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Az űrlapküldések maximális száma elérte, próbálkozzon újra {time}.',
     'model_loginform_max_user_attempts' => 'A bejelentkezési kísérletek maximális számát elérte, próbálkozzon újra {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Fájl kézbesítés',
     'layout_filemanager_col_file_disposition_download' => 'Letöltés',
     'layout_filemanager_col_file_disposition_browser' => 'Megjelenítés a böngészőben',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Személyes adatok',
     'settings_general' => 'Általános',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'telefonszám',
     'view_index_redirect_telephone_help' => 'Kérjük, adjon meg egy érvényes telefonszámot (a „+” feliratnál a vezető „\\” szükséges).',
     'missing_file_upload_permission' => 'Nem elegendő jogosultság a fájlok feltöltéséhez.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Nem',
     'crud_exportdata_btn' => 'Adatok exportálása',
@@ -352,12 +352,12 @@ return [
     'js_pagination_page' => 'Oldal',
     'dashboard_log_message_delete' => 'Törölt egy rekordot a <strong>{container}</strong>mappában.',
     'model_tag_relations_count' => 'Használt',
-    
+
 // added translations in version 1.2.3:
     'active_button_duplicate_label' => 'Duplikált',
     'active_button_duplicate_success' => 'Létrejött egy másolat.',
     'active_button_duplicate_error' => 'Hiba történt a másolat létrehozásakor: {message}',
-    
+
 // added translations in version 2.0:
     'model_tag_translation' => 'Fordítás',
     'model_tag_translation_hint' => 'Választható fordítás a címkére az adott nyelven. Ez lehetővé teszi, hogy ugyanazt a címkét hozzárendelje és kimenje a többnyelvű weboldalakon.',
@@ -402,15 +402,15 @@ return [
     'admin_button_execute' => '„{label}” végrehajtva',
     'layout_btn_reload_admin' => 'Rendszergazda újratöltése',
     'layout_btn_reload_cache' => 'Gyorsítótár törlése',
-    
+
 // added translations in version 2.0.1:
     'js_dir_manager_file_replace_ok' => 'A fájl lecserélése sikeresen megtörtént.',
-    
+
 // added translations in version 2.0.3:
     'status_true' => 'Igen',
     'status_false' => 'Nem',
     'js_jsonobject_newkey' => 'Új kulcsnév',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Állapot be-',
     'active_button_togglestatus_error' => 'Nem sikerült aktiválni',
@@ -425,10 +425,10 @@ return [
     'aws_delete_relations_table_name' => 'Kapcsolási táblázat neve',
     'aws_delete_relations_table_count' => 'Bejegyzések száma',
     'aws_delete_relations_form_hint' => 'A címke törlésének megerősítéséhez írja be a címke nevét, és nyomja meg a „Törlés” gombot.',
-    
+
 // added translations in version 2.4.0:
     'aws_missing_callback_param_generic_errror' => 'Néhány szükséges adat hiányzik.',
-    
+
 // added translations in version 3.0.0:
     'device' => 'Eszköz',
     'last_login' => 'Utolsó bejelentkezés',
@@ -474,7 +474,7 @@ return [
     'reset_form_text' => 'Adjon meg egy új jelszót a fiókjához.',
     'reset_form_submit_btn' => 'Jelszó frissítése',
     'user_change_password_error' => 'Hiba történt az új jelszó mentése közben.',
-    
+
 // added translations in version 3.1.0:
     'crop_source_image' => 'Forrás kép',
     'crop_preview' => 'Előnézet',
@@ -492,7 +492,7 @@ return [
     'crop_quality_high' => 'Magas',
     'crop_quality_medium' => 'Közeg',
     'crop_quality_low' => 'Alacsony',
-    
+
 // added translations in version 3.2.0:
     'menu_system_model_event_log' => 'Modell eseménynapló',
     'ngrestlog_controller_description' => 'A Modell Eseménynapló bejegyzéseket a rendszergazda CRUD nézeteiben rekordok létrehozásakor, frissítésekor vagy törlésekor rögzíti.',
@@ -506,10 +506,10 @@ return [
     'menu_images_item_images' => 'Képek',
     'filter_controller_description' => 'A szűrők a kép különböző (pl. méretezett vagy vágott) verzióinak generálására szolgálnak. Olvassa el a [Image Filter Guide] (https://luya.io/guide/app-filters) útmutatót a saját szűrők létrehozásával kapcsolatban.',
     'menu_group_storage' => 'Tárhely',
-    
+
 // added translations in version 3.4.0:
     'user_model_email_deleted_account_exists' => 'A megadott e-mail címet egy törölt fiók már használja.',
-    
+
 // added translations in version 3.6.0:
     'i18n_required_validator_invalid_format' => 'A megadott (z)\\ "{attribútum}\\” attribútumnak tömbtípusnak kell lennie.',
     'i18n_required_validator_missing_key' => 'A (z)\\ "{lang}\\” nyelvi kulcs hiányzik, és szükséges.',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

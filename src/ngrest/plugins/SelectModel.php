@@ -2,12 +2,12 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use Yii;
-use yii\db\ActiveRecordInterface;
+use luya\admin\helpers\Angular;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
+use Yii;
 use yii\db\ActiveQuery;
-use luya\admin\helpers\Angular;
+use yii\db\ActiveRecordInterface;
 
 /**
  * DropDown Select
@@ -49,7 +49,7 @@ class SelectModel extends Select
      * where the value from the field where you register the plugin with the field {{luya\admin\ngrest\plugins::$valueField}} value.
      */
     public $modelClass;
-    
+
     /**
      * @var string|array|callable An array or string to select the data from, this data will be returned in the select overview.
      *
@@ -68,7 +68,7 @@ class SelectModel extends Select
      * ```
      */
     public $labelField;
-    
+
     /**
      * @var boolean|string If enabled you can defined how the placed variables should be strucutred. For example in combination with array labels:
      *
@@ -82,7 +82,7 @@ class SelectModel extends Select
      * The above example woudl print `John Doe (john@example.com)`.
      */
     public $labelTemplate;
- 
+
     /**
      * @var boolean|array An array with where conditions to provide for the active query. The value will be used like this in the conditions:
      *
@@ -97,7 +97,7 @@ class SelectModel extends Select
      * ```
      */
     public $where;
-    
+
     private static $_dataInstance = [];
 
     /**
@@ -110,7 +110,7 @@ class SelectModel extends Select
     private static function getDataInstance(ActiveQuery $query)
     {
         $class = $query->modelClass;
-        
+
         $keys = [$class];
         if ($query->where) {
             foreach ($query->where as $v) {
@@ -121,15 +121,15 @@ class SelectModel extends Select
         }
 
         $instanceName = implode(",", $keys);
-        
+
         if (!isset(static::$_dataInstance[$instanceName])) {
             $queryData = $query->all();
             static::$_dataInstance[$instanceName] = $queryData;
         }
-        
+
         return static::$_dataInstance[$instanceName];
     }
-    
+
     /**
      * Flush Instances
      */
@@ -137,7 +137,7 @@ class SelectModel extends Select
     {
         static::$_dataInstance = [];
     }
-    
+
     /**
      *
      * @param ActiveRecordInterface $model
@@ -152,29 +152,29 @@ class SelectModel extends Select
         if ($this->labelField === null) {
             $this->labelField = $model->attributes();
         }
-        
+
         $definition = (array) $this->labelField;
-        
+
         $values = [];
         foreach ($definition as $field) {
             $data = $model->i18nAttributeValue($field);
-            
+
             if (is_array($data)) {
                 $data = reset($data);
             }
-            
+
             $values[] = $data;
         }
-         
+
         if ($this->labelTemplate) {
             return vsprintf($this->labelTemplate, $values);
         }
-        
+
         return implode(" ", $values);
     }
-    
+
     private $_valueField;
-    
+
     /**
      * Getter Method for valueField.
      *
@@ -188,10 +188,10 @@ class SelectModel extends Select
             $class = $this->modelClass;
             $this->_valueField = implode("", $class::primaryKey());
         }
-        
+
         return $this->_valueField;
     }
-    
+
     /**
      * Setter method for valueField.
      *
@@ -202,16 +202,16 @@ class SelectModel extends Select
     {
         $this->_valueField = $value;
     }
-    
+
     /**
      * @inheritdoc
      */
     public function getData()
     {
         $data = [];
-        
+
         $class = $this->modelClass;
-        
+
         $query = $class::ngRestFind()->inPool(Yii::$app->request->get('pool'));
         if ($this->where) {
             $query->where($this->where);
@@ -219,19 +219,19 @@ class SelectModel extends Select
         if (is_array($this->labelField)) {
             $query->select(array_merge($this->labelField, [$this->valueField]));
         }
-        
+
         foreach (static::getDataInstance($query) as $item) {
             $data[] = [
                 'value' => StringHelper::typeCast($item->{$this->valueField}),
                 'label' => $this->generateLabelField($item),
             ];
         }
-        
+
         ArrayHelper::multisort($data, 'label');
-        
+
         return $data;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -242,7 +242,7 @@ class SelectModel extends Select
             $this->createFormTag('zaa-select', $id, $ngModel, Angular::optionsFilter(['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')])),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -254,7 +254,7 @@ class SelectModel extends Select
             return parent::onAfterListFind($event);
         }
     }
-    
+
     /**
      * @inheritdoc
      */

@@ -2,8 +2,8 @@
 
 namespace luya\admin\importers;
 
-use Yii;
 use luya\console\Importer;
+use Yii;
 
 /**
  * Import Auth Apis and Routes.

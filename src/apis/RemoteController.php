@@ -2,13 +2,13 @@
 
 namespace luya\admin\apis;
 
-use Yii;
-use luya\Boot;
-use luya\Exception;
 use luya\admin\models\UserOnline;
-use luya\rest\Controller;
 use luya\admin\openapi\Generator;
 use luya\admin\openapi\OpenApiGenerator;
+use luya\Boot;
+use luya\Exception;
+use luya\rest\Controller;
+use Yii;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -81,7 +81,7 @@ class RemoteController extends Controller
     public function actionIndex($token)
     {
         $this->verifyToken($token);
-        
+
         UserOnline::clearList($this->module->userIdleTimeout);
 
         $packages = [];

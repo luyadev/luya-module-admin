@@ -2,8 +2,8 @@
 
 namespace luya\admin\aws;
 
-use Yii;
 use luya\admin\ngrest\base\ActiveWindow;
+use Yii;
 
 /**
  * Storage Effect Active Window.
@@ -17,7 +17,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
      * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
-    
+
     /**
      * The default action which is going to be requested when clicking the ActiveWindow.
      *
@@ -30,7 +30,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
             'images' => Yii::$app->storage->findImages(['filter_id' => $this->model->id]),
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -38,7 +38,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
     {
         return 'Image Filters';
     }
-    
+
     public function getTitle()
     {
         return $this->model->name;
@@ -51,7 +51,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
     {
         return 'filter_vintage';
     }
-    
+
     /**
      *
      * @return array
@@ -61,7 +61,7 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
         $log = $this->model->removeImageSources();
 
         Yii::$app->storage->flushArrays();
-        
+
         return $this->sendSuccess("Removed ".count($log)." images for filter {$this->model->name}");
     }
 }

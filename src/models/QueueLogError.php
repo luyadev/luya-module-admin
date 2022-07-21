@@ -3,8 +3,8 @@
 namespace luya\admin\models;
 
 use luya\admin\aws\DetailViewActiveWindow;
-use Yii;
 use luya\admin\ngrest\base\NgRestModel;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**

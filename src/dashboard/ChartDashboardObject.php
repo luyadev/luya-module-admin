@@ -2,8 +2,8 @@
 
 namespace luya\admin\dashboard;
 
-use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
 * ECharts library dashboard object.
@@ -129,7 +129,7 @@ class ChartDashboardObject extends BaseDashboardObject
 
         return Html::tag(ArrayHelper::remove($this->wrapperOptions, 'tag', 'div'), $this->getOuterTemplate(), $options);
     }
-    
+
     /**
      * @return string An unique string.
      */

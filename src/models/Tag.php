@@ -3,9 +3,8 @@
 namespace luya\admin\models;
 
 use luya\admin\aws\DeleteTagsActiveWindow;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
-use luya\admin\traits\TaggableTrait;
+use luya\admin\ngrest\base\NgRestModel;
 use yii\db\ActiveRecordInterface;
 
 /**
@@ -42,7 +41,7 @@ final class Tag extends NgRestModel
             [['name'], 'unique'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -80,7 +79,7 @@ final class Tag extends NgRestModel
             'translation' => 'text',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -90,7 +89,7 @@ final class Tag extends NgRestModel
             'relationsCount' => 'text',
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -124,7 +123,7 @@ final class Tag extends NgRestModel
     {
         return empty($this->translation) ? $this->name : $this->translation;
     }
-    
+
     /**
      * Returns the amount of rows for the curren tag.
      *
@@ -151,7 +150,7 @@ final class Tag extends NgRestModel
             ->orderBy(['name' => SORT_ASC])
             ->all();
     }
-    
+
     /**
      * Get all assigned tags for table name.
      *
@@ -168,7 +167,7 @@ final class Tag extends NgRestModel
             ->distinct()
             ->all();
     }
-    
+
     /**
      * Toggle (Enable or Disable) a given tag for a Model.
      *
@@ -187,7 +186,7 @@ final class Tag extends NgRestModel
     {
         $pkId = $model->getPrimaryKey(false);
         $tableName = StorageFile::cleanBaseTableName($model->tableName());
-        
+
         return $this->toggleRelation($pkId, $tableName);
     }
 
@@ -219,7 +218,7 @@ final class Tag extends NgRestModel
 
         return $relation->save();
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */

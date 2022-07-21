@@ -20,7 +20,7 @@ interface NgRestRelationInterface
      * @since 2.0.0
      */
     public function setTargetModel($targetModel);
-    
+
     /**
      * Set the model class of the current ngRestModel.
      *
@@ -34,7 +34,7 @@ interface NgRestRelationInterface
      * @param integer $arrayIndex
      */
     public function setArrayIndex($arrayIndex);
-    
+
     // getters
 
     /**
@@ -44,22 +44,22 @@ interface NgRestRelationInterface
      * @since 2.0.0
      */
     public function getTargetModel();
-    
+
     /**
      * Get the encoded model class name.
      */
     public function getModelClass();
-    
+
     /**
      * Get the array index of the relation in the relations array.
      */
     public function getArrayIndex();
-    
+
     /**
      * Get the label of the relation.
      */
     public function getLabel();
-    
+
     /**
      * Returns the tab label attribute name.
      *
@@ -67,12 +67,12 @@ interface NgRestRelationInterface
      * {{luya\admin\ngrest\base\NgRestModel::ngRestScopes()}} list scope. The tab can only display labels which are returned by the API.
      */
     public function getTabLabelAttribute();
-    
+
     /**
      * Get relation link informations.
      */
     public function getRelationLink();
-    
+
     /**
      * Get the api endpoint for the relation in order to make the relation data call.
      */

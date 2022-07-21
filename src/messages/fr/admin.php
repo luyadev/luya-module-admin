@@ -315,7 +315,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} sur {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Le nombre maximum de soumissions de formulaire a été atteint, réessayez {time}.',
     'model_loginform_max_user_attempts' => 'Le nombre maximum de tentatives de connexion a été atteint, réessayez {time}.',
@@ -332,7 +332,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'Livraison de fichier',
     'layout_filemanager_col_file_disposition_download' => 'Téléchargement',
     'layout_filemanager_col_file_disposition_browser' => 'Affichage dans le navigateur',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Informations personnelles',
     'settings_general' => 'Général',
@@ -341,7 +341,7 @@ return [
     'view_index_redirect_telephone' => 'Numéro de téléphone',
     'view_index_redirect_telephone_help' => 'Veuillez saisir un numéro de téléphone valide (pour le signe "+", un "\" initial est requis).',
     'missing_file_upload_permission' => 'Permissions insuffisantes pour les téléversements de fichiers.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'Non',
     'crud_exportdata_btn' => 'Exporter les données',
@@ -413,7 +413,7 @@ return [
     'status_true' => 'Oui',
     'status_false' => 'Non',
     'js_jsonobject_newkey' => 'Nouveau mot clé',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Changer de statut',
     'active_button_togglestatus_error' => 'Impossible d\'activer',
@@ -530,7 +530,7 @@ return [
     'button_create' => 'Créer',
     'button_cancel' => 'Annuler',
     'button_create_and_new' => 'Créer et nouveau',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

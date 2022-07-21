@@ -2,9 +2,9 @@
 
 namespace luya\admin\components;
 
-use Yii;
 use luya\Exception;
 use luya\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Admin Menu Data.
@@ -29,7 +29,7 @@ class AdminMenu extends \yii\base\Component
     {
         return Yii::$app->adminuser->getId();
     }
-    
+
     /**
      * Get the module menus.
      *
@@ -39,7 +39,7 @@ class AdminMenu extends \yii\base\Component
     {
         return Yii::$app->getAdminModulesMenus();
     }
-    
+
     private $_menu;
 
     /**
@@ -100,7 +100,7 @@ class AdminMenu extends \yii\base\Component
         if ($this->_menu !== null) {
             return $this->_menu;
         }
-        
+
         $menu = [];
         foreach ($this->getAdminModuleMenus() as $menuBuilder) {
             // removed legacy support, menu must be instance of AdminmenuBuilderInterface
@@ -111,7 +111,7 @@ class AdminMenu extends \yii\base\Component
             $data = $menuBuilder->menu();
             $menu = ArrayHelper::merge($menu, $data);
         }
-        
+
         $this->_menu = $menu;
 
         return $menu;
@@ -128,12 +128,12 @@ class AdminMenu extends \yii\base\Component
         if (!isset($this->getMenu()[$id])) {
             return false;
         }
-        
+
         return $this->getMenu()[$id];
     }
 
     private $_modules;
-    
+
     /**
      * Returns an Array with modules and checks the permission for those.
      *
@@ -159,7 +159,7 @@ class AdminMenu extends \yii\base\Component
         if ($this->_modules !== null) {
             return $this->_modules;
         }
-        
+
         $responseData = [];
         foreach ($this->getMenu() as $item) {
             // check if this is an entrie with a permission
@@ -205,14 +205,14 @@ class AdminMenu extends \yii\base\Component
                     continue;
                 }
             }
-            
+
             try {
                 // check if a translation exists, otherwise use alias instead.
                 $alias = Yii::t($item['moduleId'], $item['alias'], [], Yii::$app->language);
             } catch (\Exception $err) {
                 $alias = $item['alias'];
             }
-            
+
             // ok we have passed all the tests, lets make an entry
             $responseData[] = [
                 'moduleId' => $item['moduleId'],
@@ -230,8 +230,8 @@ class AdminMenu extends \yii\base\Component
 
         return $responseData;
     }
-    
-    
+
+
     private $_nodeItems = [];
 
     /**
@@ -246,9 +246,9 @@ class AdminMenu extends \yii\base\Component
         if (isset($this->_nodeItems[$nodeId])) {
             return $this->_nodeItems[$nodeId];
         }
-        
+
         $data = $this->getNodeData($nodeId);
-        
+
         if (isset($data['groups'])) {
             foreach ($data['groups'] as $groupName => $groupItem) {
                 // translate the group names
@@ -278,7 +278,7 @@ class AdminMenu extends \yii\base\Component
                     } catch (\Exception $err) {
                         $alias = $data['groups'][$groupName]['items'][$groupItemKey]['alias'];
                     }
-                    
+
                     // if a pool is available, the route will be modified by appending the pool param
                     $pool = AdminMenuBuilder::getOptionValue($groupItemEntry, 'pool', null);
                     if ($pool) {
@@ -290,13 +290,13 @@ class AdminMenu extends \yii\base\Component
                     $data['groups'][$groupName]['items'][$groupItemKey]['alias'] = $alias;
                     $data['groups'][$groupName]['items'][$groupItemKey]['authId'] = $id;
                 }
-                
+
                 // if there are no items for this group, unset the group from the data array
                 if (count($data['groups'][$groupName]['items']) == 0) {
                     unset($data['groups'][$groupName]);
                 }
             }
-            
+
             // if there are no groups reset the array to an empty array
             if (empty($data['groups'])) {
                 $data = [];
@@ -312,7 +312,7 @@ class AdminMenu extends \yii\base\Component
     }
 
     private $_items;
-    
+
     /**
      * Get all items for all nodes.
      *
@@ -323,7 +323,7 @@ class AdminMenu extends \yii\base\Component
         if ($this->_items !== null) {
             return $this->_items;
         }
-        
+
         $data = [];
         foreach ($this->getModules() as $node) {
             foreach (ArrayHelper::getValue($this->getModuleItems($node['id']), 'groups', []) as $groupValue) {
@@ -335,7 +335,7 @@ class AdminMenu extends \yii\base\Component
         }
 
         $this->_items = $data;
-        
+
         return $data;
     }
 
@@ -348,7 +348,7 @@ class AdminMenu extends \yii\base\Component
     public function getApiDetail($api, $pool = null)
     {
         $items = $this->getItems();
-        
+
         if ($pool) {
             $items = ArrayHelper::searchColumns($items, 'pool', $pool);
         }

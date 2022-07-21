@@ -2,10 +2,10 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use yii\helpers\Json;
-use luya\admin\ngrest\base\Plugin;
 use luya\admin\image\Query;
+use luya\admin\ngrest\base\Plugin;
 use luya\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * Type Multiple Image Upload.
@@ -37,7 +37,7 @@ class ImageArray extends Plugin
      * @inheritdoc
      */
     public $i18nEmptyValue = [];
-    
+
     /**
      * @var boolean Whether to return a {{luya\admin\image\Iterator}} instead of an array with image ids value from the database.
      */
@@ -55,7 +55,7 @@ class ImageArray extends Plugin
      * @since 4.0.0
      */
     public $filter = true;
-    
+
     /**
      * @inheritdoc
      */
@@ -92,10 +92,10 @@ class ImageArray extends Plugin
             $this->writeAttribute($event, Json::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -105,10 +105,10 @@ class ImageArray extends Plugin
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -121,10 +121,10 @@ class ImageArray extends Plugin
             }
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -134,7 +134,7 @@ class ImageArray extends Plugin
             $this->writeAttribute($event, $this->parseImageIteration($event->sender->getAttribute($this->name)));
         }
     }
-    
+
     /**
      * Parse an array with imageId and caption into an \luya\admin\image\Iterator object.
      *
@@ -146,15 +146,15 @@ class ImageArray extends Plugin
         if (empty($values)) {
             return [];
         }
-        
+
         $binds = [];
-        
+
         foreach ($values as $item) {
             if (!empty($item['caption'])) {
                 $binds[$item['imageId']] = ['caption' => $item['caption']];
             }
         }
-        
+
         $imageIds = ArrayHelper::getColumn($values, 'imageId');
 
         return (new Query())->where(['in', 'id', $imageIds])->orderBy(['id' => $imageIds])->bind($binds)->all();

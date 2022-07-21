@@ -3,8 +3,8 @@
 namespace luya\admin\base;
 
 use luya\admin\helpers\I18n;
-use yii\base\Component;
 use luya\helpers\Json;
+use yii\base\Component;
 
 /**
  * Abstract Page Property Class.
@@ -21,7 +21,7 @@ abstract class Property extends Component implements TypesInterface
     /**
      * @var string The name of the event will be triggered before rendering. Triggers an {{luya\cms\frontend\events\BeforeRenderEvent}} event.
      */
-    const EVENT_BEFORE_RENDER = 'EVENT_BEFORE_RENDER';
+    public const EVENT_BEFORE_RENDER = 'EVENT_BEFORE_RENDER';
 
     /**
      * @var string The module where the property is located.
@@ -32,14 +32,14 @@ abstract class Property extends Component implements TypesInterface
      * @var mixed The value from the database assigned into the property object.
      */
     public $value;
-    
+
     /**
      * @var boolean Whether the property is used for an i18n use case or not, this will
      * serialize the input as json into the database and the getValue/getAdminValue methods will
      * automatically unserialize the correctly value.
      */
     public $i18n = false;
-    
+
     /**
      * @var boolean Whether a json object value should be auto decoded when retrieving data via {{Property::getValue()}} and
      * {{Property::getAdminValue()}}. This is used when storing json data like link type.
@@ -115,7 +115,7 @@ abstract class Property extends Component implements TypesInterface
     {
         return empty($this->getValue()) ? '' : $this->getValue();
     }
-    
+
     /**
      * Options you may have to pass to the selected type.
      *
@@ -170,7 +170,7 @@ abstract class Property extends Component implements TypesInterface
     {
         return false;
     }
-    
+
     /**
      * This value is used to determine the administration interface value to render the
      * angular directive "model" values.
@@ -184,10 +184,10 @@ abstract class Property extends Component implements TypesInterface
         } elseif ($this->autoDecodeJson && Json::isJson($this->value)) {
             $this->value = Json::decode($this->value);
         }
-        
+
         return $this->value;
     }
-    
+
     /**
      * This is what will be returned when the property is requested in the frontend.
      *
@@ -214,7 +214,7 @@ abstract class Property extends Component implements TypesInterface
         } elseif ($this->autoDecodeJson && Json::isJson($this->value)) {
             $this->value = Json::decode($this->value);
         }
-        
+
         return $this->value;
     }
 
@@ -233,6 +233,6 @@ abstract class Property extends Component implements TypesInterface
      */
     public static function identifier()
     {
-        return (new static)->varName();
+        return (new static())->varName();
     }
 }

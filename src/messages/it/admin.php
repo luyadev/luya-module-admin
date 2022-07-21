@@ -103,7 +103,7 @@ return [
     'view_index_redirect_internal_select' => 'Scegli la pagina interna alla quale verrà rediretto.',
     'view_index_redirect_external_link' => 'Link esterno',
     'view_index_redirect_external_link_help' => 'I link esterno cominciano con http:// o https://',
-    
+
 // added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'Email',
     'model_loginform_password_label' => 'Password',
@@ -130,22 +130,22 @@ return [
     'js_dir_manager_rm_file_confirm' => 'Sei sicuro di cancellare questo file?',
     'js_dir_manager_rm_file_ok' => 'Il file è stato cancellato con successo.',
     'js_zaa_server_proccess' => 'Il server sta elaborando i tuoi dati, attendi.',
-    
+
 // added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'Nessun dato è stato inserito in questa tabella.',
-    
+
 // added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'Seleziona una immagine sulla sinistra per aggiungerla all\'album.',
     'aws_gallery_images' => 'Album immagini',
     'layout_useronline_name' => 'Nome',
     'layout_useronline_mail' => 'E-Mail',
     'layout_useronline_inactivesince' => 'Non attivo dal',
-    
+
 // added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'Caching',
     'debug_state_on' => 'On',
     'debug_state_off' => 'Off',
-    
+
 // added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'LUYA Codice di sicurezza',
     'login_securetoken_mail' => 'Utilizza il seguente codice di sicurezza per accedere all\'\area di amministrazione:',
@@ -161,7 +161,7 @@ return [
     'mode_user_lastname' => 'Cognome',
     'mode_user_email' => 'E-Mail',
     'mode_user_password' => 'Password',
-    
+
 // added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'Aggiungi nuovo elemento',
     'aws_tag_add' => 'aggiungi',
@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'File delivery',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Informazioni personali',
     'settings_general' => 'Generale',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'telephone number',
     'view_index_redirect_telephone_help' => 'Please enter a valid telephone number (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => 'Insufficient permissions for file uploads.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'No',
     'crud_exportdata_btn' => 'Export Data',
@@ -410,7 +410,7 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

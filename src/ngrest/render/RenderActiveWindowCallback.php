@@ -4,11 +4,11 @@ namespace luya\admin\ngrest\render;
 
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveWindow;
-use Yii;
-use yii\helpers\Inflector;
+use luya\admin\ngrest\base\Render;
 use luya\Exception;
 use luya\helpers\ObjectHelper;
-use luya\admin\ngrest\base\Render;
+use Yii;
+use yii\helpers\Inflector;
 
 /**
  * Render an Active Window Callback call.
@@ -24,11 +24,11 @@ class RenderActiveWindowCallback extends Render
         $activeWindowCallback = Yii::$app->request->get('activeWindowCallback');
 
         $activeWindows = $this->config->getPointer('aw');
-        
+
         if (!isset($activeWindows[$activeWindowHash])) {
             throw new Exception("Unable to find ActiveWindow " . $activeWindowHash);
         }
-        
+
         /** @var ActiveWindow $obj */
         $obj = Yii::createObject($activeWindows[$activeWindowHash]['objectConfig']);
         $obj->setItemId(Yii::$app->session->get($activeWindowHash));

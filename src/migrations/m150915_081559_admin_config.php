@@ -10,7 +10,7 @@ class m150915_081559_admin_config extends Migration
             'name' => $this->string(80),
             'value' => $this->string(255)->notNull(),
         ]);
-        
+
         $this->addPrimaryKey('name', '{{%admin_config}}', 'name');
     }
 

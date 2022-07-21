@@ -2,7 +2,6 @@
 
 namespace luya\admin\models;
 
-use luya\admin\traits\TaggableTrait;
 use yii\db\ActiveRecord;
 
 /**
@@ -80,7 +79,7 @@ final class TagRelation extends ActiveRecord
     {
         return self::find()->select('tag_id')->where(['table_name' => StorageFile::cleanBaseTableName($tableName)])->distinct()->asArray($asArray)->all();
     }
-    
+
     /**
      * Save multiple tags for a given pk and table name.
      *

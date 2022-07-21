@@ -2,8 +2,8 @@
 
 namespace luya\admin\folder;
 
-use Yii;
 use luya\admin\storage\ItemAbstract;
+use Yii;
 
 /**
  * Storage Folder Item.
@@ -27,7 +27,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('id');
     }
-    
+
     /**
      * The name of the Folder.
      *
@@ -37,7 +37,7 @@ class Item extends ItemAbstract
     {
         return $this->getKey('name');
     }
-    
+
     /**
      * The parent folder Id.
      *
@@ -49,7 +49,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('parent_id');
     }
-    
+
     /**
      * Whether the current folder has a parent or not.
      *
@@ -67,9 +67,9 @@ class Item extends ItemAbstract
      */
     public function hasChild()
     {
-        return ((new \luya\admin\folder\Query())->where(['is_deleted' => 0, 'parent_id' => $this->getId()])->count() > 0 ? true: false);
+        return ((new \luya\admin\folder\Query())->where(['is_deleted' => 0, 'parent_id' => $this->getId()])->count() > 0 ? true : false);
     }
-    
+
     /**
      * Get the parent folder object.
      *
@@ -79,7 +79,7 @@ class Item extends ItemAbstract
     {
         return (!empty($this->getParentId())) ? Yii::$app->storage->getFolder($this->getParentId()) : false;
     }
-    
+
     /**
      * The number of files inside the Current Folder.
      * @return integer
@@ -88,7 +88,7 @@ class Item extends ItemAbstract
     {
         return (int) $this->getKey('filesCount');
     }
-    
+
     /**
      * @inheritdoc
      */

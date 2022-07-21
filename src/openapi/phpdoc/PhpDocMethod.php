@@ -48,7 +48,7 @@ class PhpDocMethod
     {
         return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
     }
-    
+
     /**
      * Method Name
      *

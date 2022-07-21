@@ -2,12 +2,12 @@
 
 namespace luya\admin\ngrest\render;
 
+use luya\admin\traits\TaggableTrait;
+use luya\helpers\ObjectHelper;
 use luya\web\View;
+use Yii;
 use yii\helpers\Json;
 use yii\web\JsExpression;
-use luya\helpers\ObjectHelper;
-use luya\admin\traits\TaggableTrait;
-use Yii;
 
 /**
  * The View renderer for RenderCrud class.

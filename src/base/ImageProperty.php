@@ -44,7 +44,7 @@ abstract class ImageProperty extends Property
     {
         return self::TYPE_IMAGEUPLOAD;
     }
-    
+
     /**
      * In order to auto apply a filter to each image override this mehotd returning the identifier of your Filter.
      *
@@ -61,7 +61,7 @@ abstract class ImageProperty extends Property
     {
         return false;
     }
-    
+
     /**
      * Get the absolute image source of the image, if not available the method returns false.
      *
@@ -71,7 +71,7 @@ abstract class ImageProperty extends Property
     public function getValue()
     {
         $value = parent::getValue();
-        
+
         if ($value) {
             $image = Yii::$app->storage->getImage($value);
             /* @var $image \luya\admin\image\Item */
@@ -82,7 +82,7 @@ abstract class ImageProperty extends Property
                 return $image->source;
             }
         }
-        
+
         return false;
     }
 
@@ -95,11 +95,11 @@ abstract class ImageProperty extends Property
     public function getImage()
     {
         $value = parent::getValue();
-        
+
         if ($value) {
             return Yii::$app->storage->getImage($value);
         }
-        
+
         return false;
     }
 }

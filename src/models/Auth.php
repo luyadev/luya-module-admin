@@ -2,8 +2,6 @@
 
 namespace luya\admin\models;
 
-use Yii;
-
 /**
  * This is the model class for table "admin_auth".
  *

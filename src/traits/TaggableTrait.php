@@ -67,7 +67,7 @@ trait TaggableTrait
     {
         return str_replace(['{{%', '}}'], '', $tableName);
     }
-    
+
     /**
      * Get all tags associated with this table.
      *

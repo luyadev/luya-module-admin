@@ -2,16 +2,16 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use luya\web\Application;
-use yii\db\ActiveRecord;
-use luya\helpers\FileHelper;
 use luya\admin\behaviors\LogBehavior;
-use luya\admin\filters\TinyCrop;
 use luya\admin\filters\MediumThumbnail;
+use luya\admin\filters\TinyCrop;
 use luya\admin\traits\TaggableTrait;
+use luya\helpers\FileHelper;
 use luya\helpers\Json;
+use luya\web\Application;
+use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "admin_storage_file".
@@ -48,7 +48,7 @@ use yii\behaviors\TimestampBehavior;
 final class StorageFile extends ActiveRecord
 {
     use TaggableTrait;
-    
+
     /**
      * @inheritdoc
      */
@@ -56,7 +56,7 @@ final class StorageFile extends ActiveRecord
     {
         // call parent
         parent::init();
-        
+
         // ensure upload timestamp and upload_user_id if empty.
         $this->on(self::EVENT_BEFORE_INSERT, function () {
             if (empty($this->upload_user_id)) {
@@ -91,7 +91,7 @@ final class StorageFile extends ActiveRecord
     {
         return '{{%admin_storage_file}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -113,7 +113,7 @@ final class StorageFile extends ActiveRecord
             [['caption'], 'string'],
         ];
     }
-    
+
     /**
      * Delete a given file.
      *
@@ -129,14 +129,14 @@ final class StorageFile extends ActiveRecord
             if (!Yii::$app->storage->fileSystemDeleteFile($this->name_new_compound)) {
                 Logger::error("Unable to remove file from filesystem: " . $this->name_new_compound);
             }
-            
+
             $this->updateAttributes(['is_deleted' => true]);
-            
+
             $this->afterDelete();
             return true;
         }
     }
-    
+
     /**
      * Get upload user.
      *
@@ -146,7 +146,7 @@ final class StorageFile extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'upload_user_id']);
     }
-    
+
     /**
      * Get all images fro the given file.
      *
@@ -156,7 +156,7 @@ final class StorageFile extends ActiveRecord
     {
         return $this->hasMany(StorageImage::class, ['file_id' => 'id']);
     }
-    
+
     /**
      * Get the file for the corresponding model.
      *
@@ -167,7 +167,7 @@ final class StorageFile extends ActiveRecord
     {
         return Yii::$app->storage->getFile($this->id);
     }
-    
+
     /**
      * Returns the current file source path for the current filter image.
      * @return string

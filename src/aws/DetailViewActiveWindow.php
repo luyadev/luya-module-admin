@@ -16,7 +16,7 @@ use luya\admin\ngrest\base\ActiveWindow;
  * {
  *     return [
  *         [
- *              'class' => 'luya\admin\aws\DetailViewActiveWindow', 
+ *              'class' => 'luya\admin\aws\DetailViewActiveWindow',
  *              'attributes' => [
  *                  'title', // nothing define will use `text`
  *                  'description:html', // renders html tags
@@ -62,7 +62,7 @@ class DetailViewActiveWindow extends ActiveWindow
      * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
-    
+
     /**
      * @var array a list of attributes to be displayed in the detail view. Each array element
      * represents the specification for displaying one particular attribute.
@@ -109,7 +109,7 @@ class DetailViewActiveWindow extends ActiveWindow
      * @since 4.0.0
      */
     public $outro;
-    
+
     /**
      * @inheritdoc
      */
@@ -117,7 +117,7 @@ class DetailViewActiveWindow extends ActiveWindow
     {
         return 'Detail';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -125,7 +125,7 @@ class DetailViewActiveWindow extends ActiveWindow
     {
         return 'zoom_in';
     }
-    
+
     /**
      * Renders the index file of the ActiveWindow.
      *

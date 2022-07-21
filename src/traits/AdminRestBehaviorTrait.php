@@ -2,9 +2,9 @@
 
 namespace luya\admin\traits;
 
-use Yii;
 use luya\admin\behaviors\UserRequestBehavior;
 use luya\admin\Module as AdminModule;
+use Yii;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -31,7 +31,7 @@ trait AdminRestBehaviorTrait
     public function init()
     {
         parent::init();
-    
+
         $this->_module = AdminModule::getInstance();
 
         $this->enableCors = $this->_module->cors;
@@ -47,7 +47,7 @@ trait AdminRestBehaviorTrait
         // disable session for rest usage
         Yii::$app->adminuser->enableSession = false;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -109,7 +109,7 @@ trait AdminRestBehaviorTrait
 
         return in_array($actionId, $this->authOptional);
     }
-    
+
     /**
      * If the current user is an API user this action might be not permitted. As Api Users
      * also acts as proxy for JWT authenticated users sensitive informations could be exposed.

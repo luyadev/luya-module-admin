@@ -2,9 +2,9 @@
 
 namespace luya\admin\buttons;
 
+use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveButton;
 use luya\admin\ngrest\base\NgRestModel;
-use luya\admin\Module;
 
 /**
  * Adds a duplicate row button to the CRUD.
@@ -47,7 +47,7 @@ class DuplicateActiveButton extends ActiveButton
             return $this->sendError(Module::t('active_button_duplicate_error', ['message' => 'Model with id ' . $model->getPrimaryKey() . ' not found.']));
         }
 
-        $copy = new $model;
+        $copy = new $model();
         $copy->attributes = $data;
 
         if ($copy->save($this->modelValidation)) {

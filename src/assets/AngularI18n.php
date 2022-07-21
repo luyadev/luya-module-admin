@@ -25,9 +25,9 @@ class AngularI18n extends \luya\web\Asset
     public function init()
     {
         parent::init();
-        
+
         $lang = Yii::$app->adminuser->getInterfaceLanguage();
-        
+
         $this->js = [
             'angular-locale_'.$lang.'.js',
         ];

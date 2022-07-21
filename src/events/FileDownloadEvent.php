@@ -16,7 +16,7 @@ class FileDownloadEvent extends \yii\base\Event
      * {@inheritDoc}
      */
     public $isValid = true;
-    
+
     /**
      * @var StorageFile $file The file which is downloaded (requested).
      */

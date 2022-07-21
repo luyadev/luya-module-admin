@@ -28,7 +28,7 @@ class Color extends Plugin
         if ($this->valueInList) {
             $html[] = $this->createListTag($ngModel);
         }
-        
+
         return $html;
     }
 

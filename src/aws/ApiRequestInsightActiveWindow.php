@@ -2,10 +2,10 @@
 
 namespace luya\admin\aws;
 
-use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\models\UserRequest;
-use yii\data\ActiveDataProvider;
 use luya\admin\Module;
+use luya\admin\ngrest\base\ActiveWindow;
+use yii\data\ActiveDataProvider;
 
 class ApiRequestInsightActiveWindow extends ActiveWindow
 {

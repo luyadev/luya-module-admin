@@ -2,10 +2,10 @@
 
 namespace luya\admin\tags;
 
-use Yii;
-use luya\tag\BaseTag;
-use yii\helpers\Html;
 use luya\admin\Module;
+use luya\tag\BaseTag;
+use Yii;
+use yii\helpers\Html;
 
 /**
  * File Tag.
@@ -24,7 +24,7 @@ class FileTag extends BaseTag
     {
         return 'file[123](File XYZ.pdf)';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -32,18 +32,18 @@ class FileTag extends BaseTag
     {
         return Module::t('tag_file_readme');
     }
-    
+
     /**
      * @inheritdoc
      */
     public function parse($value, $sub)
     {
         $file = Yii::$app->storage->getFile($value);
-        
+
         if (!$file) {
             return false;
         }
-        
+
         return Html::a(!empty($sub) ? $sub : $file->name, $file->href, ['target' => '_blank']);
     }
 }

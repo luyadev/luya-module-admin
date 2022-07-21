@@ -2,33 +2,33 @@
 
 namespace luya\admin\ngrest\base;
 
-use Yii;
-use yii\helpers\Inflector;
-use yii\helpers\Html;
-use yii\base\InvalidCallException;
-use yii\base\ErrorException;
-use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
-use yii\web\NotFoundHttpException;
-use luya\helpers\FileHelper;
-use luya\helpers\Url;
-use luya\helpers\Json;
-use luya\helpers\ExportHelper;
 use luya\admin\base\RestActiveController;
 use luya\admin\components\Auth;
 use luya\admin\models\Tag;
+use luya\admin\models\UserAuthNotification;
 use luya\admin\models\UserOnline;
+use luya\admin\ngrest\Config;
+use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderActiveWindow;
 use luya\admin\ngrest\render\RenderActiveWindowCallback;
-use luya\admin\ngrest\NgRest;
-use luya\admin\ngrest\Config;
-use luya\helpers\ArrayHelper;
-use luya\helpers\StringHelper;
-use luya\helpers\ObjectHelper;
 use luya\admin\traits\TaggableTrait;
-use yii\db\ActiveQueryInterface;
-use luya\admin\models\UserAuthNotification;
+use luya\helpers\ArrayHelper;
+use luya\helpers\ExportHelper;
+use luya\helpers\FileHelper;
+use luya\helpers\Json;
+use luya\helpers\ObjectHelper;
+use luya\helpers\StringHelper;
+use luya\helpers\Url;
+use Yii;
+use yii\base\ErrorException;
+use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\ActiveQueryInterface;
+use yii\helpers\Html;
+use yii\helpers\Inflector;
+use yii\web\NotFoundHttpException;
 
 /**
  * The RestActiveController for all NgRest implementations.
@@ -53,13 +53,13 @@ class Api extends RestActiveController
      * ```
      */
     public $modelClass;
-    
+
     /**
      * @var array An array with default pagination configuration
      * @since 1.2.2
      */
     public $pagination = ['defaultPageSize' => 25];
-    
+
     /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index and list.
      * @see https://luya.io/guide/ngrest-api#filtering
@@ -93,14 +93,14 @@ class Api extends RestActiveController
      * @since 3.2.0
      */
     public $truncateAction = false;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-    
+
         if ($this->modelClass === null) {
             throw new InvalidConfigException("The property `modelClass` must be defined by the Controller.");
         }
@@ -121,7 +121,7 @@ class Api extends RestActiveController
             'delete', 'truncate',
         ]);
     }
-    
+
     /**
      * Auto add those relations to queries.
      *
@@ -159,7 +159,7 @@ class Api extends RestActiveController
     {
         return [];
     }
-    
+
     /**
      * Get the relations for the corresponding action name.
      *
@@ -216,7 +216,7 @@ class Api extends RestActiveController
         }
         return $valid;
     }
-    
+
     /**
      * Prepare Index Query.
      *
@@ -242,7 +242,7 @@ class Api extends RestActiveController
         $modelClass = $this->modelClass;
         return $modelClass::find()->with($this->getWithRelation('index'));
     }
-    
+
     /**
      * Prepare the NgRest List Query.
      *
@@ -260,7 +260,7 @@ class Api extends RestActiveController
         $modelClass = $this->modelClass;
 
         $find = $modelClass::ngRestFind();
-        
+
         $this->handleNotifications($modelClass, $this->authId);
 
         // check if a pool id is requested:
@@ -289,7 +289,7 @@ class Api extends RestActiveController
     {
         // find the latest primary key value and store into row notifications user auth table
         $pkValue = Json::encode($modelClass::findLatestPrimaryKeyValue());
-        
+
         $model = UserAuthNotification::find()->where(['user_id' => Yii::$app->adminuser->id, 'auth_id' => $authId])->one();
 
         if ($model) {
@@ -320,7 +320,7 @@ class Api extends RestActiveController
             $query->inPool(Yii::$app->request->get('pool'));
         }
     }
-    
+
     /**
      * Returns whether the `$dataFilter` property of IndexAction should be set with the according value.
      *
@@ -335,10 +335,10 @@ class Api extends RestActiveController
                 'searchModel' => $this->filterSearchModelClass,
             ];
         }
-        
+
         return null;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -393,14 +393,14 @@ class Api extends RestActiveController
                 'checkAccess' => [$this, 'checkAccess'],
             ];
         }
-        
+
         if ($this->enableCors) {
             $actions['options']['class'] = 'luya\admin\ngrest\base\actions\OptionsAction';
         }
-        
+
         return $actions;
     }
-    
+
     private $_model;
 
     /**
@@ -418,10 +418,10 @@ class Api extends RestActiveController
                 throw new InvalidConfigException("The modelClass '$this->modelClass' must be an instance of NgRestModelInterface.");
             }
         }
-    
+
         return $this->_model;
     }
-    
+
     /**
      * Get the Model for the API based on a given Id.
      *
@@ -434,15 +434,15 @@ class Api extends RestActiveController
     public function findModel($id)
     {
         $model = $this->findModelClassObject($this->modelClass, $id, 'view');
-        
+
         if (!$model) {
             throw new NotFoundHttpException("Unable to find the Model for the given ID");
         }
-        
+
         return $model;
     }
 
-    
+
     /**
      * Find the model for a given class and id.
      *
@@ -491,7 +491,7 @@ class Api extends RestActiveController
 
         return $findModelInstance->andWhere($condition)->with($this->getWithRelation($relationContext))->one();
     }
-    
+
     /**
      * User Unlock
      *
@@ -503,7 +503,7 @@ class Api extends RestActiveController
     {
         UserOnline::unlock(Yii::$app->adminuser->id);
     }
-    
+
     /**
      * Service Data
      *
@@ -514,22 +514,22 @@ class Api extends RestActiveController
         $settings = [];
         $apiEndpoint = $this->model->ngRestApiEndpoint();
         $userSortSettings = Yii::$app->adminuser->identity->setting->get('ngrestorder.admin/'.$apiEndpoint, false);
-        
+
         if ($userSortSettings && is_array($userSortSettings)) {
             if ($userSortSettings['sort'] == SORT_DESC) {
                 $order = '-'.$userSortSettings['field'];
             } else {
                 $order = '+'.$userSortSettings['field'];
             }
-            
+
             $settings['order'] = $order;
         }
-        
+
         $userFilter = Yii::$app->adminuser->identity->setting->get('ngrestfilter.admin/'.$apiEndpoint, false);
         if ($userFilter) {
             $settings['filterName'] = $userFilter;
         }
-        
+
         $modelClass = $this->modelClass;
 
         // check if taggable exists, if yes return all used tags for the
@@ -593,7 +593,7 @@ class Api extends RestActiveController
 
         return $model;
     }
-    
+
     /**
      * Search
      *
@@ -608,7 +608,7 @@ class Api extends RestActiveController
         if (empty($query)) {
             $query = Yii::$app->request->post('query');
         }
-        
+
         $find = $this->model->ngRestFullQuerySearch($query);
         $this->appendPoolWhereCondition($find);
 
@@ -639,7 +639,7 @@ class Api extends RestActiveController
 
         return $sortAttributes;
     }
-    
+
     /**
      * Get Relation Data
      *
@@ -660,11 +660,11 @@ class Api extends RestActiveController
 
         // `findOne((int) $id)`: (int) $id is not required as the value is safed by action param $id
         $model = $modelClass::findOne($id);
-        
+
         if (!$model) {
             throw new InvalidCallException("Unable to resolve relation call model.");
         }
-        
+
         /** @var $relation \luya\admin\ngrest\base\NgRestRelationInterface */
         $relation = $model->getNgRestRelationByIndex($arrayIndex);
 
@@ -673,7 +673,7 @@ class Api extends RestActiveController
         }
 
         $find = $relation->getDataProvider();
-        
+
         if ($find instanceof ActiveQueryInterface) {
             $find->with($this->getWithRelation('relation-call'));
             $this->appendPoolWhereCondition($find);
@@ -696,7 +696,7 @@ class Api extends RestActiveController
             ]
         ]);
     }
-    
+
     /**
      * Filter
      *
@@ -727,7 +727,7 @@ class Api extends RestActiveController
         }
 
         $this->appendPoolWhereCondition($find);
-        
+
         return new ActiveDataProvider([
             'query' => $find,
             'pagination' => $this->pagination,
@@ -736,7 +736,7 @@ class Api extends RestActiveController
             ]
         ]);
     }
-    
+
     /**
      * Renders ActiveWindow Callback
      *
@@ -747,10 +747,10 @@ class Api extends RestActiveController
         $config = $this->model->getNgRestConfig();
         $render = new RenderActiveWindowCallback();
         $ngrest = new NgRest($config);
-    
+
         return $ngrest->render($render);
     }
-    
+
     /**
      * Render ActiveWindow
      *
@@ -762,10 +762,10 @@ class Api extends RestActiveController
         $render = new RenderActiveWindow();
         $render->setItemId(Yii::$app->request->getBodyParam('itemId', false));
         $render->setActiveWindowHash(Yii::$app->request->getBodyParam('activeWindowHash', false));
-        
+
         // process ngrest render view with config context
         $ngrest = new NgRest($this->model->getNgRestConfig());
-        
+
         return [
             'content' => $ngrest->render($render),
             'icon' => $render->getActiveWindowObject()->getIcon(),
@@ -793,7 +793,7 @@ class Api extends RestActiveController
         $attributes = Yii::$app->request->getBodyParam('attributes', []);
         $filter = Yii::$app->request->getBodyParam('filter', null);
         $fields = ArrayHelper::getColumn($attributes, 'value');
-        
+
         if (!in_array($type, ['xlsx', 'csv'])) {
             throw new InvalidConfigException("Invalid export type");
         }
@@ -834,16 +834,16 @@ class Api extends RestActiveController
         }
 
         $tempData = ExportHelper::$type($query, $fields, (bool) $header, ['sort' => empty($exportFormatter)]);
-        
+
         $key = uniqid('ngrestexport', true);
-        
+
         $store = FileHelper::writeFile('@runtime/'.$key.'.tmp', $tempData);
-        
+
         $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
-        
+
         $route = $menu['route'];
         $route = str_replace("/index", "/export-download", $route);
-        
+
         if ($store) {
             Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.' . $extension);
             Yii::$app->session->set('tempNgRestFileMime', $mime);
@@ -861,7 +861,7 @@ class Api extends RestActiveController
                 'url' => $route,
             ];
         }
-        
+
         throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
     }
 
@@ -923,7 +923,7 @@ class Api extends RestActiveController
         $items = $class::findAll(Yii::$app->request->getBodyParam('ids', [0]));
 
         /** @var NgRestModel $model */
-        $model = new $class;
+        $model = new $class();
 
         $activeSelections = $model->getNgRestConfig()->getActiveSelections();
 

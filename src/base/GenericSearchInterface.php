@@ -26,7 +26,7 @@ interface GenericSearchInterface
      * @return \yii\db\QueryInterface|\yii\db\ActiveQueryInterface|array
      */
     public function genericSearch($searchQuery);
-    
+
     /**
      * The state provider is used to click on the items. Retuns an array with a configuration for the
      * angular state provider. Example
@@ -54,7 +54,7 @@ interface GenericSearchInterface
      * @return array|boolean Returns the state config or when not clickable returns false
      */
     public function genericSearchStateProvider();
-    
+
     /**
      * An array with fields which will be hidden in the search output, but are available for the State Provider functions.
      *

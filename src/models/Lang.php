@@ -3,10 +3,10 @@
 namespace luya\admin\models;
 
 use luya\admin\helpers\Angular;
-use Yii;
-use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\Module;
+use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\traits\SoftDeleteTrait;
+use Yii;
 
 /**
  * Language Model for Frontend/Admin.
@@ -26,14 +26,14 @@ use luya\admin\traits\SoftDeleteTrait;
 final class Lang extends NgRestModel
 {
     use SoftDeleteTrait;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         /**
          * After validation event find out if default has to be set or not. Check if if current value
          * has default to 1, disabled the other default attributes.
@@ -44,7 +44,7 @@ final class Lang extends NgRestModel
             }
             Yii::$app->adminLanguage->clearCache();
         });
-        
+
         $this->on(self::EVENT_BEFORE_UPDATE, function ($event) {
             if ($this->is_default) {
                 $this->markAttributeDirty('is_default');
@@ -52,7 +52,7 @@ final class Lang extends NgRestModel
             }
             Yii::$app->adminLanguage->clearCache();
         });
-        
+
         $this->on(self::EVENT_BEFORE_DELETE, function ($event) {
             if ($this->is_default == 1) {
                 $this->addError('is_default', Module::t('model_lang_delete_error_is_default'));
@@ -61,7 +61,7 @@ final class Lang extends NgRestModel
             Yii::$app->adminLanguage->clearCache();
         });
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -69,7 +69,7 @@ final class Lang extends NgRestModel
     {
         return '{{%admin_lang}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -83,7 +83,7 @@ final class Lang extends NgRestModel
             [['short_code'], 'unique'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -95,7 +95,7 @@ final class Lang extends NgRestModel
             'is_default' => Module::t('model_lang_is_default'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -115,7 +115,7 @@ final class Lang extends NgRestModel
             'is_default' => ['toggleStatus', 'initValue' => 0, 'interactive' => false],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -141,7 +141,7 @@ final class Lang extends NgRestModel
         };
         return $fields;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -163,7 +163,7 @@ final class Lang extends NgRestModel
     }
 
     private static $_langInstance;
-    
+
     /**
      * @return array
      * @deprecated Deprecated since version 3.1, will trigger an deprecated warning in 4.0, will be removed in version 5.0
@@ -179,7 +179,7 @@ final class Lang extends NgRestModel
     }
 
     private static $_langInstanceFindActive;
-    
+
     /**
      * Get the active langauge array
      *
@@ -191,14 +191,14 @@ final class Lang extends NgRestModel
         trigger_error('deprecated, use Yii::$app->adminLanguage instead. Will be removed in version 5.0', E_USER_DEPRECATED);
         if (self::$_langInstanceFindActive === null) {
             $langShortCode = Yii::$app->composition->getKey('langShortCode');
-    
+
             if (!$langShortCode) {
                 self::$_langInstanceFindActive = self::getDefault();
             } else {
                 self::$_langInstanceFindActive = self::find()->where(['short_code' => $langShortCode, 'is_deleted' => false])->asArray()->one();
             }
         }
-        
+
         return self::$_langInstanceFindActive;
     }
 }

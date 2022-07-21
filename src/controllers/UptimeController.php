@@ -2,8 +2,8 @@
 
 namespace luya\admin\controllers;
 
-use Yii;
 use luya\rest\Controller;
+use Yii;
 
 /**
  * Uptime Tests

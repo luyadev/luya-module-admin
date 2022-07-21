@@ -30,48 +30,48 @@ class SortRelationModel extends SortRelation
      * @var string The name of the field which should be used as value, like the id or any other identifier.
      */
     public $valueField;
-    
+
     /**
      *
      * @var string The name of the field which should display the record label.
      */
     public $labelField;
-    
+
     /**
      * @inheritdoc
      */
     public function getData()
     {
         $class = $this->modelClass;
-        
+
         if (is_object($class)) {
             $class = $class::className();
         }
         $data = [];
-        
+
         foreach ($class::ngRestFind()->orderBy([$this->labelField => SORT_ASC])->all() as $item) {
             $label = $item->{$this->labelField};
-        
+
             if (is_array($label)) {
                 $label = reset($label);
             }
-        
+
             $data[] = [
                 'value' => (int) $item->{$this->valueField},
                 'label' => $label,
             ];
         }
-        
+
         return ['sourceData' => $data];
     }
-    
+
     /**
      * @inheritdoc
      */
     public function onAfterFind($event)
     {
         $data = $event->sender->getAttribute($this->name);
-        
+
         if (!empty($data)) {
             $ids = [];
             foreach ($data as $key) {

@@ -2,14 +2,14 @@
 
 namespace luya\admin\commands;
 
+use luya\admin\models\Config;
+use luya\admin\models\Group;
+use luya\admin\models\User;
 use Yii;
 use yii\console\Exception;
-use luya\admin\models\Config;
-use luya\admin\models\User;
-use luya\admin\models\Group;
 use yii\db\Query;
-use yii\imagine\Image;
 use yii\helpers\VarDumper;
+use yii\imagine\Image;
 
 /**
  * Setup the Administration Interface.
@@ -31,37 +31,37 @@ class SetupController extends \luya\console\Command
      * @var string The email of the user to create or change.
      */
     public $email;
-    
+
     /**
      * @var string The blank password of the user to create or change.
      */
     public $password;
-    
+
     /**
      * @var string The firstname of the user to create.
      */
     public $firstname;
-    
+
     /**
      * @var string The lastname of the user to create.
      */
     public $lastname;
-    
+
     /**
      * @var string Whether the setup is interactive or not.
      */
     public $interactive = true;
-    
+
     /**
      * @var string The name of the default language e.g. English
      */
     public $langName;
-    
+
     /**
      * @var string The short code of the language e.g. en
      */
     public $langShortCode;
-    
+
     /**
      * @inheritdoc
      */
@@ -84,35 +84,35 @@ class SetupController extends \luya\console\Command
         } catch (\Exception $e) {
             return $this->outputError('Unable to setup, unable to find image library: ' . $e->getMessage());
         }
-        
+
         if (!Config::has(Config::CONFIG_LAST_IMPORT_TIMESTAMP)) {
             return $this->outputError("You have to run the 'import' process first. run in terminal: ./vendor/bin/luya import");
         }
-    
+
         if (Config::has(Config::CONFIG_SETUP_COMMAND_TIMESTAMP)) {
             return $this->outputError('The setup process already have been executed at '.date('d.m.Y H:i', Config::get(Config::CONFIG_SETUP_COMMAND_TIMESTAMP)).'. If you like to reinstall your application. Drop all tables from your Database, run the migrate and import command and then re-run the setup command.');
         }
-    
+
         if (empty($this->email)) {
             $this->email = $this->prompt('User E-Mail:', ['required' => true]);
         }
-    
+
         if (empty($this->password)) {
             $this->password = $this->prompt('User Password:', ['required' => true]);
         }
-    
+
         if (empty($this->firstname)) {
             $this->firstname = $this->prompt('Firstname:', ['required' => true]);
         }
-    
+
         if (empty($this->lastname)) {
             $this->lastname = $this->prompt('Lastname:', ['required' => true]);
         }
-    
+
         if (empty($this->langName)) {
             $this->langName = $this->prompt('Standard language:', ['required' => true, 'default' => 'English']);
         }
-        
+
         if (empty($this->langShortCode)) {
             $this->langShortCode = $this->prompt('Short-Code of the Standard language:', ['required' => true, 'default' => 'en', 'validator' => function ($input, &$error) {
                 if (strlen($input) !== 2) {
@@ -122,21 +122,21 @@ class SetupController extends \luya\console\Command
                 return true;
             }]);
         }
-        
+
         if ($this->interactive) {
             $this->outputInfo('E-Mail: '. $this->email);
             $this->outputInfo('Firstname: '. $this->firstname);
             $this->outputInfo('Lastname: '. $this->lastname);
             $this->outputInfo('Language: '. $this->langName);
-            
+
             if ($this->confirm("Confirm your login details in order to proceed with the Setup. Are those informations correct?") !== true) {
                 return $this->outputError('Abort by user.');
             }
         }
-    
+
         $salt = Yii::$app->security->generateRandomString();
         $pw = Yii::$app->security->generatePasswordHash($this->password.$salt);
-    
+
         $this->insert('{{%admin_user}}', [
             'title' => 1,
             'firstname' => $this->firstname,
@@ -146,20 +146,20 @@ class SetupController extends \luya\console\Command
             'password_salt' => $salt,
             'is_deleted' => false,
         ]);
-    
+
         $this->insert('{{%admin_group}}', [
             'name' => 'Administrator',
             'text' => 'Administrator Accounts have full access to all Areas and can create, update and delete all data records.',
         ]);
-    
+
         $this->insert('{{%admin_user_group}}', [
             'user_id' => 1,
             'group_id' => 1,
         ]);
-    
+
         // get the api-admin-user and api-admin-group auth rights
         $data = (new Query())->select(['id'])->from('{{%admin_auth}}')->all();
-        
+
         foreach ($data as $item) {
             $this->insert('{{%admin_group_auth}}', [
                 'group_id' => 1,
@@ -169,13 +169,13 @@ class SetupController extends \luya\console\Command
                 'crud_delete' => 1,
             ]);
         }
-    
+
         $this->insert('{{%admin_lang}}', [
             'name' => $this->langName,
             'short_code' => $this->langShortCode,
             'is_default' => true,
         ]);
-    
+
         if (Yii::$app->hasModule('cms')) {
             // insert default page
             $this->insert("cms_nav_container", ['id' => 1, 'name' => 'Default Container', 'alias' => 'default', 'is_deleted' => false]);
@@ -183,9 +183,9 @@ class SetupController extends \luya\console\Command
             $this->insert("cms_nav_item", ['nav_id' => 1, 'lang_id' => 1, 'nav_item_type' => 1, 'nav_item_type_id' => 1, 'create_user_id' => 1, 'update_user_id' => 1, 'timestamp_create' => time(), 'title' => 'Homepage', 'alias' => 'homepage']);
             $this->insert('cms_nav_item_page', ['layout_id' => 1, 'create_user_id' => 1, 'timestamp_create' => time(), 'version_alias' => 'Initial', 'nav_item_id' => 1]);
         }
-    
+
         Config::set(Config::CONFIG_SETUP_COMMAND_TIMESTAMP, time());
-    
+
         return $this->outputSuccess("Setup is finished. You can now login into the Administration-Area with the E-Mail '{$this->email}'.");
     }
 
@@ -242,7 +242,7 @@ class SetupController extends \luya\console\Command
 
         return $this->outputSuccess("The user ($email) has been created.");
     }
-    
+
     /**
      * Change the password of a admin user.
      *
@@ -253,7 +253,7 @@ class SetupController extends \luya\console\Command
     {
         /** @var User $user */
         $user = null;
-        
+
         while (empty($user)) {
             $email = $this->email ?: $this->prompt('User E-Mail:');
             $user = User::findByEmail($email);
@@ -261,19 +261,19 @@ class SetupController extends \luya\console\Command
                 $this->outputError('The provided E-Mail not found in the System.');
             }
         }
-    
+
         $password = $this->password ?: $this->prompt('User Password:');
-    
+
         if ($this->confirm("Are you sure to change the password of User '$email'?") !== true) {
             return $this->outputError('Abort password change process.');
         }
-        
+
         $user->password_salt = Yii::$app->getSecurity()->generateRandomString();
         $user->password = Yii::$app->getSecurity()->generatePasswordHash($password.$user->password_salt);
         if ($user->save(true, ['password', 'password_salt'])) {
             return $this->outputSuccess("The password for user ($email) has been changed.");
         }
-    
+
         return $this->outputError("The password could not changed.\n" . implode("\n", $user->firstErrors));
     }
 

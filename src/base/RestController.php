@@ -2,13 +2,13 @@
 
 namespace luya\admin\base;
 
-use Yii;
-use luya\rest\UserBehaviorInterface;
-use luya\rest\Controller;
-use yii\web\ForbiddenHttpException;
 use luya\admin\models\UserOnline;
 use luya\admin\traits\AdminRestBehaviorTrait;
+use luya\rest\Controller;
+use luya\rest\UserBehaviorInterface;
+use Yii;
 use yii\base\Action;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Base class for RestControllers.
@@ -63,7 +63,7 @@ use yii\base\Action;
 class RestController extends Controller implements UserBehaviorInterface
 {
     use AdminRestBehaviorTrait;
-    
+
     /**
      * Returns the default permission route to check. By default this will return
      * the current route of the performed action.
@@ -102,7 +102,7 @@ class RestController extends Controller implements UserBehaviorInterface
     {
         return implode('/', [$action->controller->module->id, $action->controller->id, $action->id]);
     }
-    
+
     /**
      * Shorthand method to check whether the current user exists for the given route, otherwise throw forbidden exception.
      *

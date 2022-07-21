@@ -2,19 +2,19 @@
 
 namespace luya\admin;
 
-use Yii;
-use luya\console\interfaces\ImportControllerInterface;
-use luya\base\CoreModuleInterface;
+use luya\admin\base\ReloadButton;
 use luya\admin\components\AdminLanguage;
-use luya\admin\components\AdminUser;
 use luya\admin\components\AdminMenu;
-use luya\admin\components\Auth;
 use luya\admin\components\AdminMenuBuilder;
+use luya\admin\components\AdminUser;
+use luya\admin\components\Auth;
+use luya\admin\filesystem\LocalFileSystem;
 use luya\admin\importers\AuthImporter;
 use luya\admin\importers\FilterImporter;
 use luya\admin\importers\PropertyImporter;
-use luya\admin\filesystem\LocalFileSystem;
-use luya\admin\base\ReloadButton;
+use luya\base\CoreModuleInterface;
+use luya\console\interfaces\ImportControllerInterface;
+use Yii;
 use yii\console\Application;
 use yii\queue\db\Command;
 
@@ -47,27 +47,27 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @var string User login by Access-Token event.
      * @since 3.3.0
      */
-    const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
+    public const EVENT_USER_ACCESS_TOKEN_LOGIN = 'eventUserAccessTokenLogin';
 
     /**
      * This event is triggered before a file is downloaded through the {{luya\admin\controllers\FileController}}.
      *
      * @var string Before File Download Event
      */
-    const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
-    
+    public const EVENT_BEFORE_FILE_DOWNLOAD = 'EVENT_BEFORE_FILE_DOWNLOAD';
+
     /**
      * @var boolean Whether CORS filter is enabled or not. By default its disabled but you can enable this option
      * when using LUYA admin APIs for usage trough direct xhr requests from another Domain.
      */
     public $cors = false;
-    
+
     /**
      * @var string The default language for the admin interrace (former known as luyaLanguage).
      * Currently supported: en, de, ru, es, fr, ua, it, el, vi, pl, pt, tr, fa, cn, nl, th, hu, id, bg
      */
     public $interfaceLanguage = 'en';
-    
+
     /**
      * @var array Available translation messages.
      */
@@ -92,7 +92,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         'id' => 'Bahasa',
         'bg' => 'Български',
     ];
-    
+
     /**
      * @var array Provide dashboard objects from last user logins.
      */
@@ -104,7 +104,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'title' => ['admin', 'dashboard_lastlogin_title'],
         ],
     ];
-    
+
     /**
      * @var boolean Enables a 2FA system before logging into the admin panel sending a token to the given email adress of the user. If the system is not able to send
      * mails (No configuration or missconfiguration) then you are not able to login. You should test the mail system before enabling secureLogin. To test your smtp
@@ -124,25 +124,25 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 3.0.0
      */
     public $resetPasswordExpirationTime = 900; // 15min
-    
+
     /**
      * @var boolean Whether each json rest response contains an unparsable cruft in order to prevent JSON Vulnerabilities.
      * @since 1.2.0
      */
     public $jsonCruft = true;
-    
+
     /**
      * @var boolean If enabled an user can only change the email adresse by entering the secure code which is sent to the users given (current) email adresse.
      * @since 1.2.0
      */
     public $emailVerification = false;
-    
+
     /**
      * @var integer If {{luya\admin\Module::$emailVerification}} is enabled this property defines the number seconds until the validation token expires.
      * @since 1.2.0
      */
     public $emailVerificationTokenExpirationTime = 600;
-    
+
     /**
      * @var boolean If enabled, the admin user passwords require strength input with special chars, lower, upper, digits and numbers. If disabled just a min length of 8 chars is required.
      * @since 1.1.1
@@ -155,32 +155,32 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 1.2.0
      */
     public $loginSessionAttemptCount = 15;
-    
+
     /**
      * @var integer If the session based {{luya\admin\Module::$loginSessionAttemptCount}} expire the user is locked out for this given time in seconds, defaults to 30min.
      * @since 1.2.0
      */
     public $loginSessionAttemptLockoutTime = 1800;
-    
+
     /**
      * @var integer When the username is identified correctly this property limit number of attempts for the given user and lock out the user for a given time defined in {{luya\admin\Module::$loginUserAttemptLockoutTime}}.
      * The {{luya\admin\Module::$loginUserAttemptCount}} stores the login attempts in the database. Keep in mind that the {{luya\admin\Module::$loginSessionAttemptCount}} can lock out the user before or while entering a wrong password.
      * @since 1.2.0
      */
     public $loginUserAttemptCount = 7;
-    
+
     /**
      * @var integer When the {{luya\admin\Module::$loginUserAttemptCount}} exceeded the number of seconds where the user is locked out, defaults to 30 min.
      * @since 1.2.0
      */
     public $loginUserAttemptLockoutTime = 1800;
-    
+
     /**
      * @var integer When {{luya\admin\Module::$secureLogin}} is enabled a secure token is sent to the users email, the expiration time is defined in seconds and defaults to 10 min.
      * @since 1.2.0
      */
     public $secureTokenExpirationTime = 600;
-    
+
     /**
      * @var integer The number of seconds inactivity until the user is logged out.
      * @since 1.2.0
@@ -212,7 +212,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @see {{luya\admin\commands\QueueController}}
      */
     public $autoBootstrapQueue = false;
-    
+
     /**
      * @var boolean Whether the `queue` command should be bootstraped automatically. Defaults to true. If already a queue is configured, this might conflict and override
      * those settings. Therefore you can disable the bootstrap of `queue` command.
@@ -226,7 +226,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
      * @since 3.7.0
      */
     public $queueMutexClass = 'yii\mutex\MysqlMutex';
-    
+
     /**
      * @var boolean The default value for {{luya\admin\models\StorageFile::$inline_disposition}} when uploading a new file. By default this is display which will force a download
      * when opening the file url, in order to enable inline disposition (will try to display the file in the browser) set true.
@@ -275,7 +275,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $tags = [
         'file' => ['class' => 'luya\admin\tags\FileTag'],
     ];
-    
+
     /**
      * @var array The available api endpoints within the admin module.
      */
@@ -357,16 +357,16 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ['pattern' => 'admin', 'route' => 'admin/default/index'],
             ['pattern' => 'admin/login', 'route' => 'admin/login/index'],
         ];
-        
+
         foreach ($this->apiDefintions as $definition) {
             $definition['class'] = 'luya\admin\components\UrlRule';
             $definition['cacheFlag'] = Yii::$app->request->isAdmin;
             $rules[] = $definition;
         }
-        
+
         return $rules;
     }
-    
+
     /**
      * Returns all Asset files to registered in the administration interfaces.
      *
@@ -425,7 +425,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             'crop_source_image', 'crop_preview', 'crop_btn_as_copy', 'crop_btn_as_copy_hint', 'crop_btn_save_copy', 'crop_btn_save_replace','crop_size_free','crop_size_1to1','crop_size_desktop','crop_size_mobile', 'crop_success', 'crop_quality_high', 'crop_quality_medium', 'crop_quality_low'
         ];
     }
-    
+
     /**
      * Getter method for the js translations array.
      *
@@ -441,7 +441,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         }
         return $translations;
     }
-    
+
     private $_reloadButtons = [];
 
     /**
@@ -483,7 +483,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             $this->_reloadButtons[] = new ReloadButton($buttonConfig);
         }
     }
-    
+
     /**
      * Return array with {{luya\admin\base\ReloadButton}} objects
      *
@@ -591,7 +591,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
             ];
         }
     }
-    
+
     /**
      * Admin Module translation helper.
      *

@@ -2,14 +2,14 @@
 
 namespace luya\admin\file;
 
-use Yii;
-use luya\helpers\Url;
-use luya\helpers\FileHelper;
 use luya\admin\helpers\I18n;
 use luya\admin\storage\ItemAbstract;
+use luya\helpers\FileHelper;
+use luya\helpers\Json;
+use luya\helpers\Url;
 use luya\web\LinkInterface;
 use luya\web\LinkTrait;
-use luya\helpers\Json;
+use Yii;
 
 /**
  * Storage File Item.
@@ -46,7 +46,7 @@ use luya\helpers\Json;
 class Item extends ItemAbstract implements LinkInterface
 {
     use LinkTrait;
-    
+
     /**
      * @inheritdoc
      */
@@ -54,9 +54,9 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->linkAbsolute;
     }
-    
+
     private $_target;
-    
+
     /**
      * Setter method for Link target.
      *
@@ -66,7 +66,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         $this->_target = $target;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -74,9 +74,9 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return empty($this->_target) ? '_blank' : $this->_target;
     }
-    
+
     private $_caption;
-    
+
     /**
      * Set caption for file item, override existings values
      *
@@ -86,7 +86,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         $this->_caption = trim($text);
     }
-    
+
     /**
      * Return the caption text for this file, if not defined the item array will be collected
      *
@@ -102,10 +102,10 @@ class Item extends ItemAbstract implements LinkInterface
                 $this->_caption = I18n::findActive($this->getCaptionArray());
             }
         }
-    
+
         return $this->_caption;
     }
-    
+
     /**
      * Get the array with all captions from the filemanager global "captions" definition for all provided languages
      *
@@ -115,7 +115,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return I18n::decode($this->getKey('caption'));
     }
-    
+
     /**
      * Get the ID of the file (File-Id) and has nothing incommon with the image id.
      *
@@ -125,7 +125,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (int) $this->getKey('id');
     }
-    
+
     /**
      * Get the Id of the folder fhe file is stored in.
      *
@@ -135,7 +135,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (int) $this->getKey('folder_id');
     }
-    
+
     /**
      * Get the Folder Object where the file is stored in.
      *
@@ -145,7 +145,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return Yii::$app->storage->getFolder($this->getFolderId());
     }
-    
+
     /**
      * Get the original file name of the file.
      *
@@ -157,7 +157,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('name_original');
     }
-    
+
     /**
      * Get the new defined storage file Name.
      *
@@ -170,7 +170,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('name_new_compound');
     }
-    
+
     /**
      * Get the MIME Type of the file.
      *
@@ -188,7 +188,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('mime_type');
     }
-    
+
     /**
      * Get the file extension.
      *
@@ -208,7 +208,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('extension');
     }
-    
+
     /**
      * Get the size of the file in Bytes.
      *
@@ -218,7 +218,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (int) $this->getKey('file_size');
     }
-    
+
     /**
      * Get the size of a file in human readable size.
      *
@@ -235,7 +235,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return FileHelper::humanReadableFilesize($this->getSize());
     }
-    
+
     /**
      * The Unix Timestamp when the file has been uploaded to the Server.
      *
@@ -245,7 +245,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (int) $this->getKey('upload_timestamp');
     }
-    
+
     /**
      * Whether the file is of type image or not.
      *
@@ -266,7 +266,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return in_array($this->getMimeType(), Yii::$app->storage->imageMimeTypes);
     }
-    
+
     /**
      * The unique file hash name for the file itself.
      *
@@ -278,7 +278,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('hash_name');
     }
-    
+
     /**
      * Get the md5 sum of the file calculated when creating.
      *
@@ -290,7 +290,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getKey('hash_file');
     }
-    
+
     /**
      * Get the absolute source path to the file location on the webserver.
      *
@@ -303,7 +303,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $scheme ? Yii::$app->storage->fileAbsoluteHttpPath($this->getKey('name_new_compound')) : Yii::$app->storage->fileHttpPath($this->getKey('name_new_compound'));
     }
-    
+
     /**
      * Path to the source with sheme includes, means including server location.
      *
@@ -313,7 +313,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getSource(true);
     }
-    
+
     /**
      * Get the link to a file.
      *
@@ -342,7 +342,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return Url::toRoute(['/admin/file/download', 'id' => $this->getId(), 'hash' => $this->getHashName(), 'fileName' => $this->getName()], $scheme);
     }
-    
+
     /**
      * Get the absolute link url but with the sheme includes, means including server location.
      *
@@ -359,7 +359,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return $this->getLink(true);
     }
-    
+
     /**
      * Get the path to the source files internal, on the servers path.
      *
@@ -372,7 +372,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return Yii::$app->storage->fileServerPath($this->systemFileName);
     }
-    
+
     /**
      * Return whether the file is hidden or not.
      *
@@ -386,7 +386,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (bool) $this->getKey('is_hidden');
     }
-    
+
     /**
      * Return boolean value whether the file server source exsits on the server or not.
      *
@@ -396,7 +396,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return Yii::$app->storage->fileSystemExists($this->systemFileName);
     }
-    
+
     /**
      * Get the file content.
      *
@@ -407,7 +407,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return Yii::$app->storage->fileSystemContent($this->systemFileName);
     }
-    
+
     /**
      * Indicates wether a file is delete from the file system.
      *
@@ -421,7 +421,7 @@ class Item extends ItemAbstract implements LinkInterface
     {
         return (bool) $this->getKey('is_deleted');
     }
-    
+
     /**
      * @inheritdoc
      */

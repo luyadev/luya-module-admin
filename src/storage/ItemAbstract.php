@@ -2,10 +2,10 @@
 
 namespace luya\admin\storage;
 
-use Yii;
-use yii\base\ArrayableTrait;
-use yii\base\Arrayable;
 use luya\Exception;
+use Yii;
+use yii\base\Arrayable;
+use yii\base\ArrayableTrait;
 use yii\base\BaseObject;
 
 /**
@@ -19,9 +19,9 @@ use yii\base\BaseObject;
 abstract class ItemAbstract extends BaseObject implements Arrayable
 {
     use ArrayableTrait;
-    
+
     private $_itemArray = [];
-    
+
     /**
      * Setter method for itemArray property.
      * @param array $item
@@ -30,7 +30,7 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
     {
         $this->_itemArray = $item;
     }
-    
+
     /**
      * Returns the whole item array.
      *
@@ -40,7 +40,7 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
     {
         return $this->_itemArray;
     }
-    
+
     /**
      * Returns a value for a given key inside the itemArray.
      *
@@ -57,7 +57,7 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
                 return false;
             }
         }
-        
+
         return $this->_itemArray[$key];
     }
 

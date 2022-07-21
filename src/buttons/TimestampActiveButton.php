@@ -2,10 +2,10 @@
 
 namespace luya\admin\buttons;
 
-use yii\base\InvalidConfigException;
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveButton;
 use luya\admin\ngrest\base\NgRestModel;
+use yii\base\InvalidConfigException;
 
 /**
  * Set a timestamp for a given attribute.

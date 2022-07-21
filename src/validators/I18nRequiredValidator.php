@@ -63,7 +63,7 @@ class I18nRequiredValidator extends Validator
                 return;
             }
         }
-        
+
         $array = $model->{$attribute};
 
         // As due to the ngrest plugin concept the value is already parsed from array to json.

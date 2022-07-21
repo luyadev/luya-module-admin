@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => '电话号码',
     'view_index_redirect_telephone_help' => '请输入有效的电话号码 (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => '文件上传权限不足.',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'No',
     'crud_exportdata_btn' => 'Export Data',
@@ -410,9 +410,9 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
-    
+
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
     'active_button_togglestatus_enabled' => '{modelName} enabled',

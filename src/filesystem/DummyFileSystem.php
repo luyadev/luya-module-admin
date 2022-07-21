@@ -2,8 +2,8 @@
 
 namespace luya\admin\filesystem;
 
-use Yii;
 use luya\admin\storage\BaseFileSystemStorage;
+use Yii;
 
 /**
  * Dummy File System for Testing.
@@ -28,7 +28,7 @@ class DummyFileSystem extends BaseFileSystemStorage
      * @since 3.6.0
      */
     public $fileExists = true;
-    
+
     /**
      * @var boolean
      * @since 3.6.0
@@ -42,7 +42,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return Yii::getAlias('@app/storage/http-path') . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -50,7 +50,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return Yii::getAlias('@app/storage/absolute-http-path') . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -58,7 +58,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return Yii::getAlias('@app/storage/server-path') . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -66,7 +66,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return $this->fileExists;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -82,7 +82,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return null;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -90,7 +90,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return $this->fileSaved;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -98,7 +98,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -108,7 +108,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     }
 
     private $_files = [];
-    
+
     /**
      * Add a dummy file.
      *
@@ -124,7 +124,7 @@ class DummyFileSystem extends BaseFileSystemStorage
         $data = array_merge($item, $config);
         $this->_files[$data['id']] = $data;
     }
-    
+
     /**
      * Insert the dummy files from `addDummyFile()`.
      *
@@ -134,7 +134,7 @@ class DummyFileSystem extends BaseFileSystemStorage
     {
         $this->setFilesArray($this->_files);
     }
-    
+
     private $_images = [];
 
     /**
@@ -152,7 +152,7 @@ class DummyFileSystem extends BaseFileSystemStorage
         $data = array_merge($item, $config);
         $this->_images[$data['id']] = $data;
     }
-    
+
     /**
      * Insert the dummy images from `addDummyImage()`.
      *

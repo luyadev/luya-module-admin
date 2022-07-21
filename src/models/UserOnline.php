@@ -2,8 +2,8 @@
 
 namespace luya\admin\models;
 
-use yii\db\ActiveRecord;
 use luya\admin\Module;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
 
 /**
@@ -30,7 +30,7 @@ final class UserOnline extends ActiveRecord
     {
         return '{{%admin_user_online}}';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -44,7 +44,7 @@ final class UserOnline extends ActiveRecord
             [['lock_pk'], 'safe'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -61,7 +61,7 @@ final class UserOnline extends ActiveRecord
             'lock_translation_args' => 'Lock Translation Message Arguments',
         ];
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -69,7 +69,7 @@ final class UserOnline extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-    
+
     // static methods
 
     /**
@@ -84,7 +84,7 @@ final class UserOnline extends ActiveRecord
     public static function lock($userId, $table, $pk, $translation, array $translationArgs = [])
     {
         $model = self::findOne(['user_id' => $userId]);
-        
+
         if ($model) {
             $model->updateAttributes([
                 'last_timestamp' => time(),
@@ -95,7 +95,7 @@ final class UserOnline extends ActiveRecord
             ]);
         }
     }
-    
+
     /**
      * Unlock the user from an action.
      *
@@ -104,7 +104,7 @@ final class UserOnline extends ActiveRecord
     public static function unlock($userId)
     {
         $model = self::findOne(['user_id' => $userId]);
-    
+
         if ($model) {
             $model->updateAttributes([
                 'last_timestamp' => time(),
@@ -129,13 +129,13 @@ final class UserOnline extends ActiveRecord
         if ($user->is_api_user) {
             return;
         }
-        
+
         $model = self::findOne(['user_id' => $user->id]);
-        
+
         if ($model) {
             return (bool) $model->updateAttributes(['last_timestamp' => time(), 'invoken_route' => $route]);
         }
-        
+
         $model = new self(['last_timestamp' => time(), 'user_id' => $user->id, 'invoken_route' => $route]);
         return $model->save();
     }
@@ -159,7 +159,7 @@ final class UserOnline extends ActiveRecord
     {
         self::deleteAll(['<=', 'last_timestamp', time() - $seconds]);
     }
-    
+
     /**
      * Get the user online list.
      *
@@ -169,7 +169,7 @@ final class UserOnline extends ActiveRecord
     {
         $time = time();
         $return = [];
-        
+
         foreach (self::find()->with('user')->all() as $item) {
             /* @var $item \luya\admin\models\UserOnline */
             $inactiveSince = ($time - $item->last_timestamp);

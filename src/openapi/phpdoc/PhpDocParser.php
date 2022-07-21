@@ -64,7 +64,7 @@ class PhpDocParser
                     preg_match("/^(@[a-z]+)\s+([^\s]+)\s*(.*)$/", $row, $matches, 0, 0);
                     unset($matches[0]);
                 }
-                
+
                 if (isset($matches[1])) {
                     $rows[substr($matches[1], 1)][] = array_values($matches);
                 }
@@ -298,7 +298,7 @@ class PhpDocParser
                 if ($token[0] == T_DOC_COMMENT) {
                     break;
                 }
-                
+
                 if ($token[0] == T_USE) {
                     // use starts
                     $startCapture = $startCapture + 1;

@@ -2,11 +2,11 @@
 
 namespace luya\admin\filesystem;
 
-use Yii;
 use luya\admin\storage\BaseFileSystemStorage;
+use luya\Exception;
 use luya\helpers\FileHelper;
 use luya\helpers\Url;
-use luya\Exception;
+use Yii;
 
 /**
  * Local File System uses the storage folder inside @webroot.
@@ -25,7 +25,7 @@ class LocalFileSystem extends BaseFileSystemStorage
      * @var string The name of the folder which is used to storage the data inside the @webroot directory.
      */
     public $folderName = 'storage';
-    
+
     /**
      * Setter for the http path in order to read online storage files.
      *
@@ -49,7 +49,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     {
         $this->_httpPath = $path;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -58,12 +58,12 @@ class LocalFileSystem extends BaseFileSystemStorage
         if ($this->_httpPath === null) {
             $this->_httpPath = $this->request->baseUrl . DIRECTORY_SEPARATOR . $this->folderName;
         }
-    
+
         return $this->_httpPath . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     private $_absoluteHttpPath;
-    
+
     /**
      * Setter fro the absolute http path in order to read from another storage source.
      *
@@ -87,7 +87,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     {
         $this->_absoluteHttpPath = $path;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -96,12 +96,12 @@ class LocalFileSystem extends BaseFileSystemStorage
         if ($this->_absoluteHttpPath === null) {
             $this->_absoluteHttpPath = Url::base(true) . DIRECTORY_SEPARATOR . $this->folderName;
         }
-    
+
         return $this->_absoluteHttpPath . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     private $_serverPath;
-    
+
     /**
      * Setter method for serverPath.
      *
@@ -111,7 +111,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     {
         $this->_serverPath = $path;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -120,10 +120,10 @@ class LocalFileSystem extends BaseFileSystemStorage
         if ($this->_serverPath === null) {
             $this->_serverPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . $this->folderName;
         }
-    
+
         return $this->_serverPath . DIRECTORY_SEPARATOR . $fileName;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -131,7 +131,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     {
         return file_exists($this->fileServerPath($fileName));
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -154,7 +154,7 @@ class LocalFileSystem extends BaseFileSystemStorage
     public function fileSystemSaveFile($source, $fileName)
     {
         $savePath = $this->fileServerPath($fileName);
-        
+
         if (is_uploaded_file($source)) {
             if (!@move_uploaded_file($source, $savePath)) {
                 throw new Exception("Error while moving an uploaded file from \"$source\" to \"$savePath\".");
@@ -167,7 +167,7 @@ class LocalFileSystem extends BaseFileSystemStorage
 
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -183,7 +183,7 @@ class LocalFileSystem extends BaseFileSystemStorage
         }
         return false;
     }
-    
+
     /**
      * @inheritdoc
      */

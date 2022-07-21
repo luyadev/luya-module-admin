@@ -1,6 +1,6 @@
 <?php
-use luya\admin\ngrest\aw\CallbackButtonWidget;
 use luya\admin\Module;
+use luya\admin\ngrest\aw\CallbackButtonWidget;
 
 ?>
 <script>

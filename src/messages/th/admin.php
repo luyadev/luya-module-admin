@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} จาก {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'ถึงขีดจำกัดในการส่งแล้ว กรุณาลองใหม่อีก {time}.',
     'model_loginform_max_user_attempts' => 'ถึงขีดจำกัดในการล็อกอินแล้ว กรุณาลองใหม่อีก {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'ไฟล์ถูกส่งแล้ว',
     'layout_filemanager_col_file_disposition_download' => 'ดาวน์โหลด',
     'layout_filemanager_col_file_disposition_browser' => 'แสดงในบราวเซอร์',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'ข้อมูลส่วนบุคคล',
     'settings_general' => 'ทั่วไป',
@@ -338,7 +338,7 @@ return [
     'view_index_redirect_telephone' => 'หมายเลขโทรศัพท์',
     'view_index_redirect_telephone_help' => 'กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง (for "+" sign a leading "\" is require).',
     'missing_file_upload_permission' => 'สิทธิ์ไม่พอในการอัพโหลด',
-    
+
 // added translations in version 1.2.2:
     'button_no' => 'ไม่',
     'crud_exportdata_btn' => 'Export ข้อมูล',
@@ -410,7 +410,7 @@ return [
     'status_true' => 'ใช่',
     'status_false' => 'ไม่ใช่',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

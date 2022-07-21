@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\helpers\ArrayHelper;
 use luya\admin\ngrest\base\Plugin;
+use luya\helpers\ArrayHelper;
 
 /**
  * Create a HTML5 number-tag.
@@ -26,7 +26,7 @@ class Number extends Plugin
      * @var integer The default init value for this field
      */
     public $initValue = 0;
-    
+
     /**
      * @var integer Html field placeholder
      */
@@ -55,21 +55,21 @@ class Number extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
     public function onAfterExpandFind($event)
     {
         $fieldValue = $event->sender->getAttribute($this->name);
-        
+
         if (is_array($fieldValue)) {
             $this->writeAttribute($event, ArrayHelper::typeCast($fieldValue));
         } else {
             $this->writeAttribute($event, (int) $fieldValue);
         }
     }
-    
+
     /**
      * @inheritdoc
      */

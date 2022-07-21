@@ -38,11 +38,11 @@ use yii\base\BaseObject;
 class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
 {
     private static $index = 0;
-    
+
     private $_menu = [];
-    
+
     private $_pointers = [];
-    
+
     /**
      * @var array The available options for itemApi and itemRoute.
      */
@@ -50,12 +50,12 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
         'hiddenInMenu', // whether the current menu should be hidden in the menu or not
         'pool', // a context field name which is used to generate the pool
     ];
-    
+
     /**
      * @var \luya\base\AdminModuleInterface The context on what the menu is running.
      */
     protected $moduleContext;
-    
+
     /**
      * @param \luya\base\AdminModuleInterface $module
      * @param array $config
@@ -65,27 +65,27 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
         $this->moduleContext = $module;
         parent::__construct($config);
     }
-    
+
     /**
      * @var array List of all permission APIs.
      */
     private $_permissionApis = [];
-    
+
     public function getPermissionApis()
     {
         return $this->_permissionApis;
     }
-    
+
     /**
      * @var array List of all permission Routes.
      */
     private $_permissionRoutes = [];
-    
+
     public function getPermissionRoutes()
     {
         return $this->_permissionRoutes;
     }
-    
+
     /**
      * The node is the menu entry in the TOP navigation of the luya administration interface.
      *
@@ -108,11 +108,11 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'permissionIsRoute' => false,
             'searchModelClass' => false,
         ];
-    
+
         self::$index++;
         return $this;
     }
-    
+
     /**
      * A node which is a custom route to open, nodes are the top menu of the luya administration interfaces.
      *
@@ -136,13 +136,13 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'permissionIsRoute' => true,
             'searchModelClass' => $searchModelClass,
         ];
-    
+
         $this->_permissionRoutes[] = ['route' => $route, 'alias' => $name];
-    
+
         self::$index++;
         return $this;
     }
-    
+
     /**
      * Add a group, all items (api or route) must be child items of a group. The group is the title in the left menu of the admin interface.
      *
@@ -153,10 +153,10 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     {
         $this->_pointers['group'] = $name;
         $this->_menu[$this->_pointers['node']]['groups'][$name] = ['name' => $name, 'items' => []];
-    
+
         return $this;
     }
-    
+
     /**
      * Add an item to a group. API items are based on the ngrest crud concept.
      *
@@ -181,9 +181,9 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
         ];
 
         $this->_menu[$this->_pointers['node']]['groups'][$this->_pointers['group']]['items'][] = $item;
-    
+
         $this->_permissionApis[] = ['api' => $apiEndpoint, 'alias' => $name, 'pool' => $this->getOptionValue($item, 'pool', null)];
-    
+
         return $this;
     }
 
@@ -205,7 +205,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'pool' => $pool,
         ]));
     }
-    
+
     /**
      * Add an item to a group. Route items opens a angular view.
      *
@@ -228,12 +228,12 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             'searchModelClass' => $searchModelClass,
             'options' => $this->verifyOptions($options),
         ];
-    
+
         $this->_permissionRoutes[] = ['route' => $route, 'alias' => $name];
-    
+
         return $this;
     }
-    
+
     /**
      * Verify the additional options of an itemRoute or itemApi item.
      *
@@ -251,10 +251,10 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
                 unset($options[$key]);
             }
         }
-        
+
         return $options;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -262,7 +262,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     {
         return $this->_menu;
     }
-    
+
     /**
      * Helper method to get then value of an options inside an item.
      *
@@ -276,7 +276,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
         if (!isset($item['options'])) {
             return $defaultValue;
         }
-        
+
         return isset($item['options'][$optionName]) ? $item['options'][$optionName] : $defaultValue;
     }
 }

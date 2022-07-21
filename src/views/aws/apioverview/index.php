@@ -1,7 +1,7 @@
 <?php
 
-use luya\helpers\Url;
 use luya\admin\Module;
+use luya\helpers\Url;
 
 /**
  * ApiOverviewActiveWindow Index View.

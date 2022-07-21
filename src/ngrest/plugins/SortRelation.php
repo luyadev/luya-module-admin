@@ -2,9 +2,9 @@
 
 namespace luya\admin\ngrest\plugins;
 
-use luya\admin\ngrest\base\Plugin;
 use luya\admin\base\TypesInterface;
 use luya\admin\helpers\I18n;
+use luya\admin\ngrest\base\Plugin;
 
 /**
  * Sort Relation Plugin.
@@ -23,12 +23,12 @@ abstract class SortRelation extends Plugin
      * @return array
      */
     abstract public function getData();
-    
+
     /**
      * @inheritdoc
      */
     public $i18nEmptyValue = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -36,7 +36,7 @@ abstract class SortRelation extends Plugin
     {
         return $this->createListTag($ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -44,7 +44,7 @@ abstract class SortRelation extends Plugin
     {
         return $this->createFormTag(TypesInterface::TYPE_SORT_RELATION_ARRAY, $id, $ngModel, ['options' => $this->getServiceName('sortrelationdata')]);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -52,7 +52,7 @@ abstract class SortRelation extends Plugin
     {
         return $this->renderCreate($id, $ngModel);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -62,7 +62,7 @@ abstract class SortRelation extends Plugin
             'sortrelationdata' => $this->getData(),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -72,10 +72,10 @@ abstract class SortRelation extends Plugin
             $this->writeAttribute($event, I18n::encode($event->sender->getAttribute($this->name)));
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -84,10 +84,10 @@ abstract class SortRelation extends Plugin
         if (!$this->i18n) {
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
         }
-        
+
         return true;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -96,7 +96,7 @@ abstract class SortRelation extends Plugin
         if (!$this->i18n) {
             $this->writeAttribute($event, $this->jsonDecode($event->sender->getAttribute($this->name)));
         }
-        
+
         return true;
     }
 }

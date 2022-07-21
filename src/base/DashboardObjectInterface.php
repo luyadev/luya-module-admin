@@ -18,14 +18,14 @@ interface DashboardObjectInterface
      * @return string The angular template.
      */
     public function getTemplate();
-    
+
     /**
      * Get the API Url.
      *
      * @return string Returns the api url where the dashboard object collect its data from, which then will be injected into the template in order to render.
      */
     public function getDataApiUrl();
-    
+
     /**
      * Get the Title.
      *

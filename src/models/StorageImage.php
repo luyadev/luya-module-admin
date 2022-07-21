@@ -2,13 +2,13 @@
 
 namespace luya\admin\models;
 
-use Yii;
-use yii\behaviors\TimestampBehavior;
+use luya\admin\filters\MediumThumbnail;
+use luya\admin\filters\TinyCrop;
 use luya\admin\Module;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
-use luya\admin\filters\TinyCrop;
-use luya\admin\filters\MediumThumbnail;
+use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Storage Image.
@@ -182,7 +182,7 @@ class StorageImage extends NgRestModel
     {
         return $this->hasOne(StorageFilter::class, ['id' => 'filter_id']);
     }
-    
+
     /**
      * Returns the current file source path for the current filter image.
      *
@@ -192,7 +192,7 @@ class StorageImage extends NgRestModel
     {
         return Yii::$app->storage->fileAbsoluteHttpPath($this->filter_id . '_' . $this->file->name_new_compound);
     }
-    
+
     /**
      * Get the path to the source files internal, on the servers path.
      *
@@ -286,7 +286,7 @@ class StorageImage extends NgRestModel
                 }
             }
         }
-        
+
         return Yii::$app->storage->createImage($this->file_id, $filterId);
     }
 

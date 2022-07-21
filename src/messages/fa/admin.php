@@ -103,7 +103,7 @@ return [
     'view_index_redirect_internal_select' => 'صفحه داخلی که می خواهید به آن ریدارکت شوید وارد نمایید',
     'view_index_redirect_external_link' => 'لینک های خارجی',
     'view_index_redirect_external_link_help' => 'External links start with http:// or https:// (for absolute internal links, use // instead)',
-    
+
 // added translations in version 1.0.0-beta3:
     'model_loginform_email_label' => 'ایمیل',
     'model_loginform_password_label' => 'رمزعبور',
@@ -130,22 +130,22 @@ return [
     'js_dir_manager_rm_file_confirm' => 'آیا شما واقعا از حذف این آیتم مطمئن هستید؟',
     'js_dir_manager_rm_file_ok' => 'فایل با موفقیت حذف شد.',
     'js_zaa_server_proccess' => 'لطفا صبر کنید تا سرور پاسخ شما را دهد',
-    
+
 // added translations in version 1.0.0-beta4:
     'ngrest_crud_empty_row' => 'هنوز داده ای به این جدول اضافه نشده است.',
-    
+
 // added translations in version 1.0.0-beta5:
     'aws_gallery_empty' => 'لطفا تعدادی عکس برای اضافه کردن به آلبوم اضافه کنید',
     'aws_gallery_images' => 'آلبوم تصاویر',
     'layout_useronline_name' => 'نام',
     'layout_useronline_mail' => 'ایمیل',
     'layout_useronline_inactivesince' => 'غیرفعال شده از',
-    
+
 // added translations in version 1.0.0-beta6:
     'layout_debug_caching' => 'کش',
     'debug_state_on' => 'روشن',
     'debug_state_off' => 'خاموش',
-    
+
 // added translations in version 1.0.0-beta7:
     'login_securetoken_mail_subject' => 'کد امنیتی لووا',
     'login_securetoken_mail' => 'Use the following security code to log into your administration:',
@@ -161,7 +161,7 @@ return [
     'mode_user_lastname' => 'نام خانوادگی',
     'mode_user_email' => 'ایمیل',
     'mode_user_password' => 'رمزعبور',
-    
+
 // added translations in version 1.0.0-beta8:
     'aws_tag_new' => 'اضافه کردن داده جدید',
     'aws_tag_add' => 'اضافه',
@@ -169,14 +169,14 @@ return [
     'aws_tag_list' => 'لیست همه ورودی ها',
     'dashboard_log_message_add' => 'Added a new row to <strong>{container}</strong>.',
     'dashboard_log_message_edit' => 'Updated an existing row in <strong>{container}</strong>.',
-    
+
 // added translations in version 1.0.0-rc1:
     'layout_btn_help' => 'راهنما',
     'right_panel_support_title' => 'اطلاعات &amp; راهنما',
     'right_panel_support_tags_title' => 'تگ ها',
     'right_panel_support_support_title' => 'پشتیبانی',
     'right_panel_support_support_text' => 'هر سوالی دارید لطفا از مدیر فنی خود بپرسید یا از طریق <a target="_blank" href="https://luya.io">luya.io</a> اقدام کنید.',
-    
+
 // added translations in version 1.0.0-rc2:
     'ngrest_crud_group_prompt' => 'Group by field',
     'ngrest_crud_filter_prompt' => 'یک فیلتر انخاب کنید',
@@ -312,7 +312,7 @@ return [
 
 // added translations in version 1.1.1:
     'ngrest_crud_total_count' => '{{data.listArray.length}} of {{totalRows}}',
-    
+
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'The maximum number of form submissions has been reached, try again {time}.',
     'model_loginform_max_user_attempts' => 'The maximum number of login attempts has been reached, try again {time}.',
@@ -329,7 +329,7 @@ return [
     'layout_filemanager_col_file_disposition' => 'File delivery',
     'layout_filemanager_col_file_disposition_download' => 'Download',
     'layout_filemanager_col_file_disposition_browser' => 'Display in browser',
-    
+
 // added translations in version 1.2.1:
     'mode_user_personal_info' => 'Personal info',
     'settings_general' => 'General',
@@ -410,7 +410,7 @@ return [
     'status_true' => 'Yes',
     'status_false' => 'No',
     'js_jsonobject_newkey' => 'New key name',
-    
+
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Toggle status',
     'active_button_togglestatus_error' => 'Could not activated',
@@ -527,7 +527,7 @@ return [
     'button_create' => 'Create',
     'button_cancel' => 'Cancel',
     'button_create_and_new' => 'Create and new',
-    
+
 // added translations in version 4.2.0:
     'model_ngrestlog_user_id_label' => 'User ID',
     'model_ngrestlog_timestamp_create_label' => 'Timestamp Create',

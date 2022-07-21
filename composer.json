@@ -51,7 +51,9 @@
        "bower-asset/echarts": "^5.0",
        "bower-asset/ui-cropper": "^1.0",
        "unglue/client": "^1.5",
-       "cebe/php-openapi": "^1.4"
+       "cebe/php-openapi": "^1.4",
+       "friendsofphp/php-cs-fixer": "^3.2",
+        "phpstan/phpstan": "^1.7"
    },
    "suggest": {
        "cebe/php-openapi": "Is required in order to generate the OpenAPI File."
@@ -91,5 +93,9 @@
            "type": "composer",
            "url": "https://asset-packagist.org"
        }
-   ]
+   ],
+   "scripts": {
+    "phpstan" : "vendor/bin/phpstan -v",
+    "phpcsfixer" : "vendor/bin/php-cs-fixer fix"
+   }
 }

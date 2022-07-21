@@ -2,9 +2,9 @@
 
 namespace luya\admin\models;
 
-use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
 use luya\helpers\Json;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * User Notifications by Auth Item
@@ -99,7 +99,7 @@ class UserAuthNotification extends ActiveRecord
         if (!class_exists($className)) {
             return 0;
         }
-        
+
         $nowValue = array_sum($className::findLatestPrimaryKeyValue());
         $oldValue = array_sum(Json::decode($this->model_latest_pk_value));
 

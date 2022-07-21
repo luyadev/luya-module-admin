@@ -2,11 +2,11 @@
 
 namespace luya\admin\buttons;
 
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveButton;
 use luya\admin\ngrest\base\NgRestModel;
+use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 
 /**
  * Set a boolean for a given attribute.
@@ -32,31 +32,31 @@ class ToggleStatusActiveButton extends ActiveButton
      * @var string The attribute which should set.
      */
     public $attribute;
-    
+
     /**
      * Value which will saved to the model as active status.
      * @var mixed
      */
     public $enableValue = true;
-    
+
     /**
      * Value which will saved to the model as inactive status.
      * @var mixed
      */
     public $disableValue = false;
-    
+
     /**
      * Keep only one model with active status and disable all other entries.
      * @var bool
      */
     public $uniqueStatus = false;
-    
+
     /**
      * Attribute name for the success notification.
      * @var string
      */
     public $modelNameAttribute = 'id';
-    
+
     /**
      * {@inheritDoc}
      */
@@ -79,7 +79,7 @@ class ToggleStatusActiveButton extends ActiveButton
     public function init()
     {
         parent::init();
-        
+
         if (!$this->attribute) {
             throw new InvalidConfigException("The attribute property must be set.");
         }
@@ -91,17 +91,17 @@ class ToggleStatusActiveButton extends ActiveButton
     public function handle(NgRestModel $model)
     {
         $transaction = $model::getDb()->beginTransaction();
-        
+
         try {
             $newValue = $this->toggleValue($model->getAttribute($this->attribute));
-    
+
             if ($this->uniqueStatus) {
                 $model::updateAll([$this->attribute => $this->disableValue]);
                 $model->updateAttributes([$this->attribute => $newValue]);
             } else {
                 $model->updateAttributes([$this->attribute => $newValue]);
             }
-            
+
             $transaction->commit();
 
             $this->sendReloadEvent();
@@ -114,10 +114,10 @@ class ToggleStatusActiveButton extends ActiveButton
             $transaction->rollBack();
             throw $ex;
         }
-    
+
         return $this->sendError(Module::t('active_button_togglestatus_error'));
     }
-    
+
     /**
      * Return the opposite attribute value for $enableValue or $disableValue.
      *

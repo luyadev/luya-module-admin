@@ -2,9 +2,8 @@
 
 namespace luya\admin\commands;
 
-use Yii;
-use luya\admin\importers\StorageImporter;
 use luya\console\Command;
+use Yii;
 
 /**
  * LUYA Admin Storage command.
@@ -23,11 +22,11 @@ class StorageController extends Command
     public function actionProcessThumbnails()
     {
         $response = Yii::$app->storage->processThumbnails();
-        
+
         if ($response) {
             return $this->outputSuccess('Successful generated storage thumbnails.');
         }
-        
+
         return $this->outputError('Error while creating the storage thumbnails.');
     }
 
@@ -39,11 +38,11 @@ class StorageController extends Command
     public function actionCleanupImageTable()
     {
         $rows = Yii::$app->db->createCommand('SELECT file_id, filter_id, COUNT(*) as count FROM {{%admin_storage_image}} GROUP BY file_id, filter_id HAVING COUNT(*) > 1')->queryAll();
-        
+
         if (empty($rows)) {
             return $this->outputInfo("no dublications has been detected.");
         }
-        
+
         $this->outputInfo("dublicated image files detected:");
         foreach ($rows as $row) {
             $this->output("> file {$row['file_id']} with filter {$row['filter_id']} found {$row['count']} duplicates.");
@@ -56,24 +55,24 @@ class StorageController extends Command
                     ':fileId' => $row['file_id'],
                     ':filterId' => $row['filter_id'],
                 ])->queryOne();
-            
+
                 if (!$keep) {
                     $this->outputError('Unable to find the first row for this delete request. Skip this one');
                     continue;
                 }
-                
+
                 $remove = Yii::$app->db->createCommand()->delete('{{%admin_storage_image}}', 'file_id=:fileId AND filter_id=:filterId AND id!=:id', [
                     ':fileId' => $row['file_id'],
                     ':filterId' => $row['filter_id'],
                     ':id' => $keep['id'],
                 ])->execute();
-                
+
                 if ($remove) {
                     $this->outputSuccess("< Remove {$row['count']} duplications for file {$row['file_id']} with filter {$row['filter_id']}.");
                 }
             }
         }
-        
+
         return $this->outputSuccess("all duplications has been removed.");
     }
 }

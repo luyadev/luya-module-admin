@@ -2,9 +2,9 @@
 
 namespace luya\admin\aws;
 
-use luya\Exception;
 use luya\admin\Module;
 use luya\admin\ngrest\base\ActiveWindow;
+use luya\Exception;
 
 /**
  * Change Passwort Active Window.
@@ -22,12 +22,12 @@ class ChangePasswordActiveWindow extends ActiveWindow
      * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
-    
+
     /**
      * @var integer The minimum length of the password.
      */
     public $minCharLength = 8;
-    
+
     /**
      * The default action which is going to be requested when clicking the active window.
      *
@@ -45,12 +45,12 @@ class ChangePasswordActiveWindow extends ActiveWindow
     {
         return 'vpn_key';
     }
-    
+
     public function defaultLabel()
     {
         return Module::t('aw_changepassword_defaultlabel');
     }
-    
+
     /**
      * The method which is going to change the password on the current model.
      *
@@ -66,21 +66,21 @@ class ChangePasswordActiveWindow extends ActiveWindow
         if (!$this->model || !$this->model instanceof  ChangePasswordInterface) {
             throw new Exception("Unable to find related model object or the model does not implemented the \luya\admin\aws\ChangePasswordInterface.");
         }
-        
+
         if (strlen($newpass) < $this->minCharLength) {
             return $this->sendError(Module::t('aws_changeapssword_minchar', ['min' => $this->minCharLength]));
         }
-        
+
         if ($newpass !== $newpasswd) {
             return $this->sendError(Module::t('aws_changepassword_notequal'));
         }
-        
+
         if ($this->model->changePassword($newpass)) {
             return $this->sendSuccess(Module::t('aws_changepassword_succes'));
         }
-        
+
         $error = current($this->model->getFirstErrors());
-        
+
         return $this->sendError($error);
     }
 }

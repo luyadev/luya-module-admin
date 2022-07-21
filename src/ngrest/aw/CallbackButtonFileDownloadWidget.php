@@ -2,8 +2,8 @@
 
 namespace luya\admin\ngrest\aw;
 
-use luya\admin\ngrest\base\ActiveWindow;
 use luya\admin\Module;
+use luya\admin\ngrest\base\ActiveWindow;
 use luya\helpers\FileHelper;
 
 /**
@@ -56,12 +56,12 @@ class CallbackButtonFileDownloadWidget extends CallbackButtonWidget
      * @inheritdoc
      */
     public $angularCallbackFunction = '[\'$response\', \'$scope\', function($response, $scope) { $scope.linkHref = $response.url; $scope.linkHrefHidden = false; $scope.buttonHidden = true; }];';
-    
+
     /**
      * @inheritdoc
      */
     public $options = ['class' => 'btn btn-download btn-icon'];
-    
+
     /**
      * Generates and returns the content output.
      *
@@ -73,9 +73,9 @@ class CallbackButtonFileDownloadWidget extends CallbackButtonWidget
     public static function sendOutput(ActiveWindow $context, $fileName, $content)
     {
         $mimeType = FileHelper::getMimeTypeByExtension($fileName);
-        
+
         $url = $context->createDownloadableFileUrl($fileName, $mimeType, $content);
-        
+
         return $context->sendSuccess(Module::t('callback_button_file_download_widget_success'), ['url' => $url]);
     }
 }

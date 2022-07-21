@@ -2,10 +2,10 @@
 
 namespace luya\admin\aws;
 
-use luya\Exception;
 use Curl\Curl;
-use yii\helpers\Json;
 use luya\admin\ngrest\base\ActiveWindow;
+use luya\Exception;
+use yii\helpers\Json;
 
 /**
  * Coordinates Collector.
@@ -19,13 +19,13 @@ class CoordinatesActiveWindow extends ActiveWindow
      * @var string The name of the module where the ActiveWindow is located in order to find the view path.
      */
     public $module = '@admin';
-   
+
     /**
      * @var string Register your maps application and enter your api key here
      * while configure the active window (https://console.developers.google.com).
      */
     public $mapsApiKey;
-    
+
     /**
      * @inheritdoc
      */
@@ -35,7 +35,7 @@ class CoordinatesActiveWindow extends ActiveWindow
             throw new Exception('A google maps API key can not be null.');
         }
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -43,7 +43,7 @@ class CoordinatesActiveWindow extends ActiveWindow
     {
         return 'Coordinates';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -51,7 +51,7 @@ class CoordinatesActiveWindow extends ActiveWindow
     {
         return 'pin_drop';
     }
-    
+
     /**
      * Renders the index file of the ActiveWindow.
      *
@@ -63,24 +63,24 @@ class CoordinatesActiveWindow extends ActiveWindow
             'mapsApiKey' => $this->mapsApiKey,
         ]);
     }
-    
+
     public function callbackGetCoordinates($address)
     {
         $curl = new Curl();
         $curl->get('https://maps.googleapis.com/maps/api/geocode/json?', ['key' => $this->mapsApiKey, 'address' => $address]);
-        
+
         if ($curl->error) {
             return $this->sendError('Error while getting data from google maps API: ' . $curl->error_message);
         }
-        
+
         $response = Json::decode($curl->response);
-        
+
         if (!isset($response['results']) || !isset($response['results'][0])) {
             return $this->sendError('Error while collecting data for your address. Check if you address was correct and try again.');
         }
-        
+
         $cords = $response['results'][0]['geometry']['location'];
-        
+
         return $this->sendSuccess('We have found your location and pinned the marker on the submit.', ['cords' => $cords]);
     }
 }
