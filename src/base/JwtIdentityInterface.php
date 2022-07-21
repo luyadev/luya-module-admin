@@ -2,7 +2,7 @@
 
 namespace luya\admin\base;
 
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\Plain;
 use yii\base\Configurable;
 
 /**
@@ -20,10 +20,10 @@ interface JwtIdentityInterface extends Configurable
      * in order to get the user id use getClaim:
      *
      * ```php
-     * public staitc function loginByJwtToken(Token $token)
+     * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
-     *     $userId = $token->getClaim('uid');
+     *     $userId = $token->claims()->get('uid');
      *
      *     return User::find()->where(['id' => $userId, 'is_active' => true]);
      * }
@@ -33,10 +33,10 @@ interface JwtIdentityInterface extends Configurable
      * retrieve the jwt token by calling `toString()` method.
      *
      * ```php
-     * public staitc function loginByJwtToken(Token $token)
+     * public staitc function loginByJwtToken(Plain $token)
      * {
      *     // get the user id
-     *     $userId = $token->getClaim('uid');
+     *     $userId = $token->claims()->get('uid');
      *     // get the jwt token
      *     $jwtToken = $token->toString();
      *
@@ -47,10 +47,10 @@ interface JwtIdentityInterface extends Configurable
      * Return false if no user is found or login is incorrect.
      *
      * @see Discussion regarding storing the jwt token: https://stackoverflow.com/a/42765870/4611030
-     * @param Token $token
+     * @param Plain $token
      * @return self|boolean Return the user object which implements JwtIdentityInterface or false if not found and login is invalid.
      */
-    public static function loginByJwtToken(Token $token);
+    public static function loginByJwtToken(Plain $token);
 
     /**
      * Returns an ID that can uniquely identify a user identity.

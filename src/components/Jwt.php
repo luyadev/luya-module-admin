@@ -104,18 +104,16 @@ class Jwt extends JwtJwt
      */
     public function init(): void
     {
-        parent::init();
-
+        $this->signingKey = $this->key;
+        $this->signer = self::HS256;
         if (!$this->apiUserEmail || !$this->identityClass || !$this->key) {
             throw new InvalidConfigException("The attributes apiUserEmail, identityClass and key can not be empty.");
         }
-
-        $this->signingKey = $this->key;
-        $this->signer = self::HS256;
         $this->validationConstraints = [
             new PermittedFor($this->getAudience()),
             new IssuedBy($this->getIssuer()),
         ];
+        parent::init();
     }
 
     private function getAudience()

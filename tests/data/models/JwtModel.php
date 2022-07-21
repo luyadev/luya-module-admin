@@ -4,7 +4,7 @@ namespace luya\admin\tests\data\models;
 
 use yii\base\Model;
 use luya\admin\base\JwtIdentityInterface;
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\Plain;
 use luya\admin\models\ApiUser;
 use luya\testsuite\fixtures\NgRestModelFixture;
 
@@ -14,7 +14,7 @@ class JwtModel extends Model implements JwtIdentityInterface
     public $firstname;
     public $lastname;
 
-    public static function loginByJwtToken(Token $token)
+    public static function loginByJwtToken(Plain $token)
     {
         if ($token->headers()->toString() == 'token=valid') {
             $model = new NgRestModelFixture([

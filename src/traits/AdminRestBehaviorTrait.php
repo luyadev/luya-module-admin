@@ -73,6 +73,7 @@ trait AdminRestBehaviorTrait
             array_unshift($methods, [
                 'class' => 'bizley\jwt\JwtHttpBearerAuth',
                 'auth' => [Yii::$app->jwt, 'authenticateUser'],
+                'throwException' => false,
             ]);
         }
 
