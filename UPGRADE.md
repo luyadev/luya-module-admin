@@ -2,6 +2,10 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 4.4 to 4.5
+
++ [#726](https://github.com/luyadev/luya-module-admin/pull/726) With the new [replaced jwt auth](https://github.com/bizley/yii2-jwt) library (which is required in order to support php 8.1) we use [lcobucci/jwt v4](https://github.com/lcobucci/jwt/releases/tag/4.0.0) which massivly changed the API. Therfore the main change for LUYA users is that `Lcobucci\JWT\Token` has been replaced with `Lcobucci\JWT\Token\Plain`. The signature of `luya\admin\base\JwtIdentityInterface` has changed from: `loginByJwtToken(Lcobucci\JWT\Token $token)` to `loginByJwtToken(Lcobucci\JWT\Token\Plain $token)` and in order to to claim the user id in the login process you have to use `$userId = $token->claims()->get('uid');` instead of `$userId = $token->getClaim('uid');`. Take a look at the [JWT Guide Diff](https://github.com/luyadev/luya/commit/74118e94ac4130226b925f6d2312a028287418c0)
+
 ## from 4.2 to 4.3
 
 + [#702](https://github.com/luyadev/luya-module-admin/pull/702) The `ngRestExport()` method will be used to sort and restrict all sortable attributes. This means, if `ngRestExport()` is defined, only the attributes in the array will be available in the export, but therfore and order of the export is equals to the defintion list in `ngRestExport()`. 

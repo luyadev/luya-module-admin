@@ -7,8 +7,6 @@ error_reporting(E_ALL);
 
 use luya\admin\tests\NgRestTestCase;
 use luya\admin\models\ApiUser;
-use luya\admin\controllers\ApiUserController;
-use Lcobucci\JWT\Token;
 use Lcobucci\JWT\Token\DataSet;
 use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Token\Signature;

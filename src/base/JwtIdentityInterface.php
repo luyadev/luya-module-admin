@@ -2,7 +2,6 @@
 
 namespace luya\admin\base;
 
-use Lcobucci\JWT\Token;
 use Lcobucci\JWT\Token\Plain;
 use yii\base\Configurable;
 
@@ -48,7 +47,7 @@ interface JwtIdentityInterface extends Configurable
      * Return false if no user is found or login is incorrect.
      *
      * @see Discussion regarding storing the jwt token: https://stackoverflow.com/a/42765870/4611030
-     * @param Token $token
+     * @param Plain $token
      * @return self|boolean Return the user object which implements JwtIdentityInterface or false if not found and login is invalid.
      */
     public static function loginByJwtToken(Plain $token);

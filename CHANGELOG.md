@@ -5,7 +5,9 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.5.0 (in progress)
 
-+ [#719](https://github.com/luyadev/luya-module-admin/pull/719) Prepare for PHP 8.1. Increased minium PHP Version to 7.4. Replaced `sizeg/jwt` with `bizley/jwt`.
+> This release contains a huge BC Break when using LUYA JWT user auth. Check the [UPGRADE document](UPGRADE.md) to read more
+
++ [#719](https://github.com/luyadev/luya-module-admin/pull/719) Prepare for PHP 8.1. Increased minium PHP Version to 7.4. Replaced `sizeg/jwt` with `bizley/jwt`. The signature of `luya\admin\base\JwtIdentityInterface` has changed from: `loginByJwtToken(Lcobucci\JWT\Token $token)` to `loginByJwtToken(Lcobucci\JWT\Token\Plain $token)` 
 
 ## 4.4.1 (20. July 2022)
 
