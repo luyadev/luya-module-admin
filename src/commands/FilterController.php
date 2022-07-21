@@ -24,8 +24,6 @@ class FilterController extends Command
 
     /**
      * Create a new image filter to apply on an Image Object.
-     *
-     * @return number
      */
     public function actionIndex()
     {

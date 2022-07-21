@@ -310,7 +310,6 @@ class CommonController extends RestController
      * Store the open and closed folders from the filemanager tree in the user settings.
      *
      * @uses array data
-     * @return boolean
      */
     public function actionFilemanagerFoldertreeHistory()
     {
@@ -318,6 +317,8 @@ class CommonController extends RestController
 
         $data = Yii::$app->request->getBodyParam('data');
         Yii::$app->adminuser->identity->setting->set('foldertree.'.$data['id'], (int) $data['toggle_open']);
+
+        return Yii::$app->response->statusCode = 204;
     }
 
     /**

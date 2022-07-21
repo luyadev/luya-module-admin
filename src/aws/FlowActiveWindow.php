@@ -121,8 +121,6 @@ class FlowActiveWindow extends ActiveWindow
 
     /**
      * Flow Uploader Upload.
-     *
-     * @return string
      */
     public function callbackUpload()
     {

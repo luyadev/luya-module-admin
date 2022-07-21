@@ -119,5 +119,7 @@ abstract class Select extends Plugin
                 }
             }
         }
+
+        return true;
     }
 }

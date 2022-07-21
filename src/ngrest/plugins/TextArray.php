@@ -109,6 +109,8 @@ class TextArray extends Plugin
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, $this->transformList($event->sender->getAttribute($this->name)));
+
+        return true;
     }
 
     /**

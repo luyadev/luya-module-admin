@@ -70,9 +70,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     protected $ngRestServiceArray = [];
 
     /**
-     * Attach behaviors at constructor to prevent override them with call of behaviors() at subclass model.
-     *
-     * @param array $config
+     * {@inheritDoc}
      */
     public function __construct($config = [])
     {
@@ -86,7 +84,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 'api' => static::ngRestApiEndpoint(),
             ],
         ]);
-        return parent::__construct($config);
+        parent::__construct($config);
     }
 
     /**

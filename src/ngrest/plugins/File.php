@@ -68,5 +68,7 @@ class File extends Plugin
         if ($this->fileItem) {
             $this->writeAttribute($event, Yii::$app->storage->getFile($this->getAttributeValue($event)));
         }
+
+        return true;
     }
 }

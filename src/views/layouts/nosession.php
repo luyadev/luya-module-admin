@@ -72,4 +72,3 @@ $('.login-form').addClass('login-form-loaded');
         </body>
     </html>
 <?php $this->endPage() ?>
-

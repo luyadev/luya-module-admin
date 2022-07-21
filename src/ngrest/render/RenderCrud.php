@@ -802,6 +802,8 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         if ($configContext !== self::TYPE_LIST) {
             return '<span ng-if="getFieldHelp(\''.$element['name'].'\')" class="help-button btn btn-icon btn-help" tooltip tooltip-expression="getFieldHelp(\''.$element['name'].'\')" tooltip-position="left"></span>';
         }
+
+        return '';
     }
 
     /**

@@ -120,8 +120,8 @@ final class StorageFile extends ActiveRecord
      * Override default implementation. Mark as deleted and remove files from file system.
      *
      * Keep file in order to provide all file references.
-     *
-     * @return boolean
+     * 
+     * @return int|boolean
      */
     public function delete()
     {
@@ -135,6 +135,8 @@ final class StorageFile extends ActiveRecord
             $this->afterDelete();
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -269,7 +271,7 @@ final class StorageFile extends ActiveRecord
      *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
-     * @return array Returns an array with the key source which contains the source to the thumbnail.
+     * @return array|boolean Returns an array with the key source which contains the source to the thumbnail.
      * @since 1.2.2.1
      */
     public function getCreateThumbnail()
@@ -290,6 +292,8 @@ final class StorageFile extends ActiveRecord
         if ($image) {
             return ['source' => $image->source];
         }
+
+        return false;
     }
 
     /**
@@ -297,7 +301,7 @@ final class StorageFile extends ActiveRecord
      *
      * > This method is used internal when uploading a file which is an image, the file manager preview images are created here.
      *
-     * @return array Returns an array with the key source which contains the source to the thumbnail medium.
+     * @return array|boolean Returns an array with the key source which contains the source to the thumbnail medium.
      * @since 1.2.2.1
      */
     public function getCreateThumbnailMedium()
@@ -318,6 +322,8 @@ final class StorageFile extends ActiveRecord
         if ($image) {
             return ['source' => $image->source];
         }
+
+        return false;
     }
 
     /**

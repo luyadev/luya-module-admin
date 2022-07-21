@@ -83,5 +83,7 @@ class JsonObject extends Plugin
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, Json::decode($event->sender->getAttribute($this->name)));
+
+        return true;
     }
 }

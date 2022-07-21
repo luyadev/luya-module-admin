@@ -145,6 +145,8 @@ final class StorageFilterChain extends ActiveRecord
             $image = Image::text($image, $this->effectChainValue($imagineEffectName, 'text'), $this->effectChainValue($imagineEffectName, 'fontFile'), $this->effectChainValue($imagineEffectName, 'start'));
             return [$image, $saveOptions];
         }
+
+        throw new InvalidConfigException("Missing effect.");
     }
 
     /**

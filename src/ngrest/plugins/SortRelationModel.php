@@ -80,5 +80,7 @@ class SortRelationModel extends SortRelation
             $class = $this->modelClass;
             $this->writeAttribute($event, $class::ngRestFind()->where(['in', 'id', $ids])->all());
         }
+
+        return true;
     }
 }

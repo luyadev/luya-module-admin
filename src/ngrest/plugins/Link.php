@@ -95,6 +95,8 @@ class Link extends Plugin
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, $this->generateLinkObject($event->sender->getAttribute($this->name)));
+
+        return true;
     }
 
     /**

@@ -55,6 +55,8 @@ class Decimal extends Plugin
         } else {
             $this->writeAttribute($event, (float) $fieldValue);
         }
+        
+        return true;
     }
 
     /**
@@ -63,5 +65,7 @@ class Decimal extends Plugin
     public function onAfterFind($event)
     {
         $this->writeAttribute($event, (float) $event->sender->getAttribute($this->name));
+
+        return true;
     }
 }
