@@ -9,6 +9,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#719](https://github.com/luyadev/luya-module-admin/pull/719) Prepare for PHP 8.1. Increased minium PHP Version to 7.4. Replaced `sizeg/jwt` with `bizley/jwt`. 
 + [#726](https://github.com/luyadev/luya-module-admin/pull/726) The signature of `luya\admin\base\JwtIdentityInterface` has changed from: `loginByJwtToken(Lcobucci\JWT\Token $token)` to `loginByJwtToken(Lcobucci\JWT\Token\Plain $token)` 
++ [#728](https://github.com/luyadev/luya-module-admin/pull/728) Added new `NgRestActiveQuery` method `jsonOrderBy()` to sort by a field which contains a json object.
 
 ## 4.4.1 (20. July 2022)
 
