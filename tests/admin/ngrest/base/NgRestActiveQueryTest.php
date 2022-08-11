@@ -54,6 +54,18 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         ], $query->i18nWhere('key', 'value')->where);
     }
 
+    public function testJsonOrderBy()
+    {
+        new NgRestModelFixture([
+            'modelClass' => Lang::class,
+        ]);
+
+        $query = new NgRestActiveQuery(Lang::class);
+        $exp = $query->jsonOrderBy('attribute', 'key', 'asc')->orderBy;
+
+        $this->assertSame('attribute->"$.key" asc', $exp[0]->expression);   
+    }
+
     public function testInPool()
     {
         new NgRestModelFixture([
