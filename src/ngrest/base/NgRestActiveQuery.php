@@ -7,6 +7,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
+use yii\db\Expression;
 
 /**
  * NgRest Active Query.
@@ -73,6 +74,32 @@ class NgRestActiveQuery extends ActiveQuery
     public function jsonWhere($operator, $field, $key, $value)
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
+    }
+    
+
+    /**
+     * Order by a given json key inside a field.
+     * 
+     * ```
+     * ->orderBy('title_json', 'de', 'asc')
+     * ```
+     * 
+     * Assuming the database content of `title_json` looks like this:
+     * 
+     * ```
+     * {'de': 'foobar', 'en' : 'foobar'}
+     * ```
+     *
+     * @param string $field The field name (attribute) which contains the json
+     * @param string $key The json key inside the json object to sort after
+     * @param string $direction Either `desc` or `asc`
+     * @see https://stackoverflow.com/a/70909842/4611030
+     * @return NgRestActiveQuery
+     * @since 4.5.0
+     */
+    public function jsonOrderBy($field, $key, $direction)
+    {
+        return $this->orderBy(new Expression($field . '->"$.'.$key.'" ' . $direction));
     }
 
     /**
