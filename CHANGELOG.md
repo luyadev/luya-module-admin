@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.5.0 (in progress)
+## 4.5.0 (24. August 2022)
 
 > This release contains a huge BC Break when using LUYA JWT user auth. Check the [UPGRADE document](UPGRADE.md) to read more
 
