@@ -62,6 +62,16 @@ class MultipleInputs extends Plugin
 {
     /**
      * @var array This option is required, it defines the different fields inside this array. Use {{luya\admin\base\TypesInterface}} for a list of all types.
+     * 
+     * ```php
+     * types' => [
+     *     [
+     *         'type' => \luya\admin\base\TypesInterface::TYPE_TEXT,
+     *         'var' => 'title',
+     *         'label' => 'Title',
+     *     ],
+     * ]
+     * ```
      */
     public $types = [];
 
