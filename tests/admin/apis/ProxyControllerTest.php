@@ -7,7 +7,6 @@ use luya\admin\apis\ProxyController;
 use luya\admin\models\ProxyBuild;
 use luya\admin\models\ProxyMachine;
 use luya\testsuite\fixtures\NgRestModelFixture;
-use yii\base\ErrorException;
 use yii\web\ForbiddenHttpException;
 use yii\web\HeadersAlreadySentException;
 use yii\web\NotFoundHttpException;
@@ -18,7 +17,7 @@ class ProxyControllerTest extends AdminModelTestCase
      * @var NgRestModelFixture
      */
     protected $build;
-    
+
     /**
      * @var NgRestModelFixture
      */
@@ -27,7 +26,7 @@ class ProxyControllerTest extends AdminModelTestCase
     public function afterSetup()
     {
         parent::afterSetup();
-        
+
         $this->build = new NgRestModelFixture([
             'modelClass' => ProxyBuild::class,
             'fixtureData' => [

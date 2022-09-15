@@ -1,4 +1,5 @@
 <?php
+
 error_reporting(E_ALL);
 
 $_SERVER['HTTP_HOST'] = 'localhost';

@@ -2,13 +2,13 @@
 
 namespace admintests\admin\ngrest\base;
 
-use luya\admin\ngrest\base\NgRestActiveQuery;
-use luya\admin\models\User;
-use luya\admin\models\TagRelation;
-use luya\testsuite\fixtures\NgRestModelFixture;
 use admintests\AdminModelTestCase;
 use admintests\data\models\PoolModel;
 use luya\admin\models\Lang;
+use luya\admin\models\TagRelation;
+use luya\admin\models\User;
+use luya\admin\ngrest\base\NgRestActiveQuery;
+use luya\testsuite\fixtures\NgRestModelFixture;
 
 class NgRestActiveQueryTest extends AdminModelTestCase
 {
@@ -63,7 +63,7 @@ class NgRestActiveQueryTest extends AdminModelTestCase
         $query = new NgRestActiveQuery(Lang::class);
         $exp = $query->jsonOrderBy('attribute', 'key', 'asc')->orderBy;
 
-        $this->assertSame('attribute->"$.key" asc', $exp[0]->expression);   
+        $this->assertSame('attribute->"$.key" asc', $exp[0]->expression);
     }
 
     public function testInPool()
@@ -111,7 +111,7 @@ class NgRestActiveQueryTest extends AdminModelTestCase
 
         $query = new NgRestActiveQuery(User::class);
         $this->assertSame(['id' => 1], $query->byPrimaryKey(1)->where);
-        
+
         $query = new NgRestActiveQuery(User::class);
         $this->assertSame(['id' => 1], $query->byPrimaryKey([1])->where);
 
@@ -122,7 +122,7 @@ class NgRestActiveQueryTest extends AdminModelTestCase
 
         $query = new NgRestActiveQuery(TagRelation::class);
         $this->assertSame(['tag_id' => 1, 'table_name' => 'name', 'pk_id' => 3], $query->byPrimaryKey("1,name,3")->where);
-        
+
         $query = new NgRestActiveQuery(TagRelation::class);
         $this->assertSame(['tag_id' => 1, 'table_name' => 'name', 'pk_id' => 3], $query->byPrimaryKey([1,'name',3])->where);
     }

@@ -69,7 +69,7 @@ class StorageControllerTest extends AdminModelTestCase
             $scope->createAndAllowRoute(StorageController::PERMISSION_ROUTE);
 
             $ctrl = new StorageController('id', $this->app);
-            
+
             $this->expectException(InvalidArgumentException::class);
             $data = $scope->runControllerAction($ctrl, 'file-crop');
         });
@@ -85,7 +85,7 @@ class StorageControllerTest extends AdminModelTestCase
             $scope->createAndAllowRoute(StorageController::PERMISSION_ROUTE);
 
             $ctrl = new StorageController('id', $this->app);
-            
+
             $this->expectException(ErrorException::class);
             $data = $scope->runControllerAction($ctrl, 'file-replace');
         });

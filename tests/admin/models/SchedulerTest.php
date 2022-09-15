@@ -2,11 +2,11 @@
 
 namespace luya\admin\tests\admin\models;
 
-use luya\Exception;
 use admintests\AdminModelTestCase;
 use luya\admin\models\Config;
 use luya\admin\models\Scheduler;
 use luya\admin\models\Tag;
+use luya\Exception;
 use luya\testsuite\fixtures\ActiveRecordFixture;
 use luya\testsuite\fixtures\NgRestModelFixture;
 

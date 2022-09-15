@@ -46,7 +46,7 @@ class TagTest extends AdminModelTestCase
         $uoModel->save();
 
         $this->assertTrue($m->toggleRelationByModel($uoModel));
-        
+
         // get relations
         $this->assertSame('1', $m->getTagRelations()->count());
 
@@ -59,7 +59,7 @@ class TagTest extends AdminModelTestCase
 
 
         $this->assertTrue($m->toggleRelationByModel($uoModel));
-        
+
         // get relations
         $this->assertSame('1', $m->getTagRelations()->count());
         $count = TagRelation::cleanup($uoModel);

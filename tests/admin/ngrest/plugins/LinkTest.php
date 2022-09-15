@@ -3,10 +3,10 @@
 namespace admintests\admin\ngrest\plugins;
 
 use admintests\AdminTestCase;
-use luya\admin\ngrest\plugins\Link;
-
-use yii\base\Event;
 use admintests\data\fixtures\UserFixture;
+
+use luya\admin\ngrest\plugins\Link;
+use yii\base\Event;
 
 class LinkTest extends AdminTestCase
 {
@@ -29,7 +29,7 @@ class LinkTest extends AdminTestCase
 
         $this->assertInstanceOf('luya\web\WebsiteLink', $user->firstname);
     }
-    
+
     public function testExternalLinkI18n()
     {
         $event = new Event();
@@ -38,15 +38,15 @@ class LinkTest extends AdminTestCase
         $user = $model->getModel('user1');
         $user->firstname = '{"en": {"type": 2, "value": "link"}}';
         $event->sender = $user;
-    
+
         $plugin = new Link([
             'alias' => 'alias',
             'name' => 'firstname',
             'i18n' => true,
         ]);
-    
+
         $plugin->onFind($event);
-    
+
         $this->assertInstanceOf('luya\web\WebsiteLink', $user->firstname);
     }
 }

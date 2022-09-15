@@ -25,7 +25,7 @@ class StorageUploadValidatorTest extends AdminModelTestCase
             'size' => 98174
         ];
         $response = $validator->validateAttribute($model, 'file_id');
-        
+
         $validator->uploadToFiles($model, 'file_id');
 
         $this->assertStringContainsString('myfile', $response);
@@ -49,7 +49,7 @@ class StorageUploadValidatorTest extends AdminModelTestCase
             'size' => 98174
         ];
         $response = $validator->validateAttribute($model, 'file_id');
-        
+
         $this->assertStringContainsString('myfile', $model->file_id);
         $this->assertStringContainsString('["', $model->file_id); // its a json!
     }

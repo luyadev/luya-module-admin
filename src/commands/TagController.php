@@ -33,7 +33,6 @@ class TagController extends Command
                 $i++;
                 $tableName = StorageFile::cleanBaseTableName($relation->table_name);
                 if ($relation->table_name !== $tableName) {
-
                     // if the new name exists already as combination, we can just delete the old one.
                     /*
                     // maybe use configuration option to delete entries by default.

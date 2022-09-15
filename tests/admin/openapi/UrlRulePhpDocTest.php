@@ -35,7 +35,7 @@ class UrlRulePhpDocTest extends AdminModelTestCase
         ];
 
         $generator = new Generator($urlManager);
-        
+
 
         $paths = $generator->getPaths();
 
@@ -64,9 +64,9 @@ class UrlRulePhpDocTest extends AdminModelTestCase
         $status = $save->post->requestBody->content['application/json']->schema->properties['status'];
         $this->assertSame('status', $status->title);
         $this->assertSame('integer', $status->type);
-       
+
         $openapi = new OpenApiGenerator($generator);
-        
+
         $this->assertNotEmpty($openapi->create()->getSerializableData());
     }
 }

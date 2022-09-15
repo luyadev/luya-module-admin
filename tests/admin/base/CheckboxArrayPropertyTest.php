@@ -4,7 +4,6 @@ namespace luya\admin\tests\admin\base;
 
 use admintests\AdminTestCase;
 use luya\admin\base\CheckboxArrayProperty;
-use luya\admin\base\CheckboxProperty;
 
 class CheckboxArrayPropertyTest extends AdminTestCase
 {

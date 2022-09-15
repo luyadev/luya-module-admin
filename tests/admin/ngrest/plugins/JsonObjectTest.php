@@ -5,8 +5,8 @@ namespace admintests\admin\ngrest\plugins;
 use admintests\AdminModelTestCase;
 use luya\admin\models\SearchData;
 use luya\admin\ngrest\plugins\JsonObject;
-use yii\base\ModelEvent;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use yii\base\ModelEvent;
 
 class JsonObjectTest extends AdminModelTestCase
 {
@@ -17,13 +17,13 @@ class JsonObjectTest extends AdminModelTestCase
         $model = new SearchData();
 
         $event = new ModelEvent(['sender' => $model]);
-        
+
         $plugin = new JsonObject([
             'alias' => 'query',
             'name' => 'query',
             'i18n' => false,
         ]);
-        
+
 
         $this->assertNotEmpty($plugin->renderList('id', 'model'));
         $this->assertNotEmpty($plugin->renderCreate('id', 'model'));

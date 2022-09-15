@@ -15,7 +15,7 @@ class SortableTest extends AdminTestCase
             'i18n' => true,
         ]);
 
-        $html = $renderList->renderList(1,'foobar');
+        $html = $renderList->renderList(1, 'foobar');
         $this->assertNotEmpty($html);
     }
 }

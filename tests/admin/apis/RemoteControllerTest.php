@@ -28,7 +28,7 @@ class RemoteControllerTest extends AdminModelTestCase
         $this->assertArrayHasKey('yii_version', $r);
         $this->assertArrayHasKey('packages', $r);
     }
-    
+
     public function testGenerateOpenApi()
     {
         $this->app->remoteToken = 'foobar';

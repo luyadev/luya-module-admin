@@ -2,13 +2,12 @@
 
 namespace admintests\admin\ngrest\actions;
 
-use Yii;
 use admintests\AdminTestCase;
 use luya\admin\ngrest\base\Api;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\testsuite\fixtures\NgRestModelFixture;
-use luya\admin\models\User;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
+use Yii;
 
 class IndexActionTest extends AdminTestCase
 {
@@ -46,7 +45,7 @@ class IndexActionTest extends AdminTestCase
         Yii::$app->controller = $ctrl;
         $ctrl->detachBehavior('authenticator');
         $r = $ctrl->runAction('index');
-        
+
         $this->assertSame([
             ['id' => 1, 'name' => 'barfoo'], // properly type casted since https://github.com/luyadev/luya-module-admin/pull/547
         ], $r);

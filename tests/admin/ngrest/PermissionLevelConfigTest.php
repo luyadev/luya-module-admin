@@ -3,19 +3,19 @@
 namespace admintests\admin\ngrest;
 
 use admintests\AdminModelTestCase;
+use luya\admin\aws\ChangePasswordActiveWindow;
+use luya\admin\aws\UserHistorySummaryActiveWindow;
+use luya\admin\buttons\DuplicateActiveButton;
 use luya\admin\buttons\TimestampActiveButton;
-use \luya\admin\buttons\DuplicateActiveButton;
+use luya\admin\components\Auth;
 use luya\admin\models\User;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
-use luya\admin\aws\ChangePasswordActiveWindow;
-use luya\admin\aws\UserHistorySummaryActiveWindow;
-use luya\admin\components\Auth;
 
 class PermissionLevelConfigTest extends AdminModelTestCase
 {
     use DatabaseTableTrait;
-    
+
     public function testActiveButtonButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
@@ -26,7 +26,7 @@ class PermissionLevelConfigTest extends AdminModelTestCase
         $activeButtons = $ngRestCfg->getActiveButtons();
 
         $this->assertArrayHasKey('permissionLevel', $activeButtons[0]);
-        $this->assertEquals(Auth::CAN_VIEW, $activeButtons[0]['permissionLevel']);        
+        $this->assertEquals(Auth::CAN_VIEW, $activeButtons[0]['permissionLevel']);
 
         // check default value (if not explicitly set)
         $this->assertArrayHasKey('permissionLevel', $activeButtons[1]);
@@ -34,15 +34,15 @@ class PermissionLevelConfigTest extends AdminModelTestCase
 
         $fixture->cleanup();
     }
-    
+
     public function testActiveWindowsButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
             'modelClass' => PermissionLevelUserModel::class,
         ]);
- 
+
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
-        
+
         $activeWindows=$ngRestCfg->getPointer('aw');
 
         $changePasswordActiveWindow = array_shift($activeWindows);
@@ -54,11 +54,11 @@ class PermissionLevelConfigTest extends AdminModelTestCase
         $this->assertEquals('', $userHistoryActiveWindow['objectConfig']['permissionLevel']);
 
         $fixture->cleanup();
-    }   
+    }
 }
 
 class PermissionLevelUserModel extends User
-{    
+{
     /**
      * @inheritdoc
      */
@@ -69,7 +69,7 @@ class PermissionLevelUserModel extends User
             ['class' => DuplicateActiveButton::class]
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

@@ -14,7 +14,7 @@ class UserModelTest extends AdminModelTestCase
     public function testUser()
     {
         $user = $this->createAdminUserFixture();
-        
+
         $this->assertSame(false, $user->newModel->getAuthKey());
 
         $this->app->request->headers->add('User-Agent', 'barfoo');

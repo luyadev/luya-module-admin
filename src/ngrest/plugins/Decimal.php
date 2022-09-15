@@ -55,7 +55,7 @@ class Decimal extends Plugin
         } else {
             $this->writeAttribute($event, (float) $fieldValue);
         }
-        
+
         return true;
     }
 

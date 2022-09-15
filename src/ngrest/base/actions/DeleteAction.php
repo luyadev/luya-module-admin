@@ -32,7 +32,6 @@ class DeleteAction extends \yii\rest\DeleteAction
         }
 
         if ($model->delete() === false) {
-
             // custom implementation of LUYA in order to throw more informations when delete errors happen.
             if ($model->hasErrors()) {
                 Yii::$app->getResponse()->setStatusCode(422);

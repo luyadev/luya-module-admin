@@ -70,7 +70,7 @@ class I18nRequiredValidatorTest extends AdminModelTestCase
                 'is_deleted' => 0,
             ]
         ]);
-        
+
         $model = $fixture->newModel;
 
         $validator = new I18nRequiredValidator();

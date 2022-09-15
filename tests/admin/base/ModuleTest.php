@@ -2,7 +2,6 @@
 
 namespace luya\admin\tests\admin\base;
 
-use Yii;
 use admintests\AdminModelTestCase;
 use luya\admin\components\Auth;
 use luya\admin\importers\AuthImporter;
@@ -10,13 +9,14 @@ use luya\admin\tests\data\modules\ExtendPermissionModule;
 use luya\console\Application;
 use luya\console\commands\ImportController;
 use luya\testsuite\scopes\PermissionScope;
+use Yii;
 
 class ModuleTest extends AdminModelTestCase
 {
     public function getConfigArray()
     {
         $config = parent::getConfigArray();
-    
+
         $config['modules']['extends'] = [
             'class' => ExtendPermissionModule::class,
         ];
@@ -47,7 +47,6 @@ class ModuleTest extends AdminModelTestCase
         // import auths
 
         PermissionScope::run($this->app, function (PermissionScope $scope) use ($module) {
-
             /*
             $console = new Application($this->getConfigArray());
             $importer = new ImportController($console, $module);

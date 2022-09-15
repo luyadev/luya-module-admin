@@ -3,7 +3,6 @@
 namespace admintests\models;
 
 use admintests\AdminModelTestCase;
-use Imagine\Exception\RuntimeException;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Fill\FillInterface;
 use Imagine\Image\ImageInterface;
@@ -32,7 +31,7 @@ class StorageFilterTest extends AdminModelTestCase
             'modelClass' => StorageFilter::class,
         ]);
 
-        $model = new $storage->newModel;
+        $model = new $storage->newModel();
         $this->assertNotNull($model->ngRestActiveWindows());
         $this->assertNotNull($model->ngRestScopes());
 
@@ -87,7 +86,7 @@ class StorageFilterTest extends AdminModelTestCase
         $chain = new NgRestModelFixture([
             'modelClass' => StorageFilterChain::class,
         ]);
-        
+
         $chainModel = $chain->newModel;
         $chainModel->setAttributes([
             'name' => 'Thumbnail',
@@ -137,7 +136,7 @@ class StorageFilterTest extends AdminModelTestCase
         $this->assertTrue($chainModel->save());
         */
 
-        
+
 
         /// APPLY THE CHAIN!
 
@@ -161,7 +160,7 @@ class StorageFilterTest extends AdminModelTestCase
         $chain = new NgRestModelFixture([
             'modelClass' => StorageFilterChain::class,
         ]);
-        
+
         $chainModel = $chain->newModel;
         $chainModel->setAttributes([
             'name' => 'Thumbnail',
@@ -193,7 +192,7 @@ class StorageFilterTest extends AdminModelTestCase
         $chain = new NgRestModelFixture([
             'modelClass' => StorageFilterChain::class,
         ]);
-        
+
         $chainModel = $chain->newModel;
         $chainModel->setAttributes([
             'name' => 'Thumbnail',
@@ -217,7 +216,7 @@ class StorageFilterTest extends AdminModelTestCase
             'modelClass' => StorageFilter::class,
         ]);
 
-        $model = new $storage->newModel;
+        $model = new $storage->newModel();
         $this->assertNotNull($model->ngRestActiveWindows());
         $this->assertNotNull($model->ngRestScopes());
 
@@ -254,7 +253,7 @@ class StorageFilterTest extends AdminModelTestCase
 
         $this->assertTrue($chainModel->save());
 
-        
+
 
         /// APPLY THE CHAIN!
 
@@ -278,7 +277,7 @@ class ImageInterfaceMock implements ImageInterface
          *
          * @return string binary
          */
-    public function get($format, array $options = array())
+    public function get($format, array $options = [])
     {
     }
 
@@ -509,7 +508,7 @@ class ImageInterfaceMock implements ImageInterface
      *
      * @return $this
      */
-    public function save($path = null, array $options = array())
+    public function save($path = null, array $options = [])
     {
     }
 
@@ -523,7 +522,7 @@ class ImageInterfaceMock implements ImageInterface
      *
      * @return $this
      */
-    public function show($format, array $options = array())
+    public function show($format, array $options = [])
     {
     }
 

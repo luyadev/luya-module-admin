@@ -6,8 +6,8 @@ use admintests\AdminModelTestCase;
 use luya\admin\base\TypesInterface;
 use luya\admin\models\SearchData;
 use luya\admin\ngrest\plugins\MultipleInputs;
-use yii\base\ModelEvent;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use yii\base\ModelEvent;
 
 class MultipleInputsTest extends AdminModelTestCase
 {
@@ -18,7 +18,7 @@ class MultipleInputsTest extends AdminModelTestCase
         $model = new SearchData();
 
         $event = new ModelEvent(['sender' => $model]);
-        
+
         $plugin = new MultipleInputs([
             'alias' => 'query',
             'name' => 'query',
@@ -31,7 +31,7 @@ class MultipleInputsTest extends AdminModelTestCase
                 ],
             ]
         ]);
-        
+
         $model->query = '[{"title":"title"}]';
         $plugin->onListFind($event);
         $this->assertSame('[{"title":"title"}]', $model->query);

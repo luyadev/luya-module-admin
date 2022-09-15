@@ -120,7 +120,7 @@ final class StorageFile extends ActiveRecord
      * Override default implementation. Mark as deleted and remove files from file system.
      *
      * Keep file in order to provide all file references.
-     * 
+     *
      * @return int|boolean
      */
     public function delete()

@@ -2,8 +2,8 @@
 
 namespace tests\admin\aws;
 
-use Yii;
 use admintests\AdminTestCase;
+use Yii;
 
 class ChangePasswordActiveWindowTest extends AdminTestCase
 {

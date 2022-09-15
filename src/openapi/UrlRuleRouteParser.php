@@ -235,7 +235,6 @@ class UrlRuleRouteParser extends BasePathParser
                 ]
             ]);
         } elseif (strtoupper($verbName) == 'POST') {
-
             // if its a post request endpoint and @uses is defined use this
             // information as request body.
             $useProperties = [];

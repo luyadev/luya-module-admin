@@ -26,7 +26,7 @@ class NgRestStorageUploadValidatorTest extends AdminModelTestCase
             'size' => 98174
         ];
         $validator->validateAttribute($model, 'file_id');
-        
+
         $this->assertSame(1, $model->file_id);
     }
 
@@ -49,7 +49,7 @@ class NgRestStorageUploadValidatorTest extends AdminModelTestCase
             'size' => 98174
         ];
         $validator->validateAttribute($model, 'file_id');
-        
+
         $this->assertStringContainsString('[{"fileId":1,"caption":null,"hiddenStorageUploadSource":"', $model->file_id);
     }
 }

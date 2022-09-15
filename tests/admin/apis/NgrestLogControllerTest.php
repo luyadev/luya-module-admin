@@ -6,7 +6,6 @@ use admintests\AdminModelTestCase;
 use luya\admin\apis\NgrestLogController;
 use luya\admin\models\NgrestLog;
 use luya\testsuite\scopes\PermissionScope;
-use Yii;
 use yii\base\InvalidConfigException;
 
 class NgrestLogControllerTest extends AdminModelTestCase

@@ -3,7 +3,6 @@
 namespace admintests\admin\ngrest\plugins;
 
 use admintests\AdminTestCase;
-use luya\admin\ngrest\plugins\Raw;
 use luya\admin\ngrest\plugins\SelectAsyncApi;
 
 class SelectAsyncApiTest extends AdminTestCase

@@ -75,7 +75,7 @@ class GeneratorTest extends AdminModelTestCase
     }
 
 
-    
+
     public function testSecuritySchema()
     {
         $this->createAdminLangFixture();
@@ -137,7 +137,7 @@ class GeneratorTest extends AdminModelTestCase
                     'controller' => ['v1/does-not-exsts', 'admin/api-admin-remote'],
                 ]
             ]
-        
+
         ]);
 
         $generator = new Generator($urlManager, []);
@@ -153,7 +153,7 @@ class GeneratorTest extends AdminModelTestCase
                 [
                     'this/is/my/pattern' => 'admin/account/dashboard'
                 ]
-        
+
         ]);
 
         $generator = new Generator($urlManager, []);

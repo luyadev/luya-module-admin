@@ -35,7 +35,7 @@ class LogControllerTest extends AdminConsoleSqLiteTestCase
         $ctrl->years = -1;
         $this->assertFalse($this->invokeMethod($ctrl, 'validateYears'));
     }
-    
+
     public function testValidateRows()
     {
         $ctrl = $this->createCommand();

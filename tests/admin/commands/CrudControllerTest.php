@@ -2,12 +2,12 @@
 
 namespace admintests\admin\commands;
 
-use Yii;
-use luya\admin\commands\CrudController;
 use admintests\AdminConsoleTestCase;
-use luya\testsuite\fixtures\ActiveRecordFixture;
-use luya\admin\models\User;
+use luya\admin\commands\CrudController;
 use luya\admin\models\Lang;
+use luya\admin\models\User;
+use luya\testsuite\fixtures\ActiveRecordFixture;
+use Yii;
 
 class CrudControllerTest extends AdminConsoleTestCase
 {
@@ -20,7 +20,7 @@ class CrudControllerTest extends AdminConsoleTestCase
         ];
         return $array;
     }
-    
+
     private function generateAdminUserSchema()
     {
         return new ActiveRecordFixture([
@@ -43,33 +43,33 @@ class CrudControllerTest extends AdminConsoleTestCase
             ]
         ]);
     }
-    
+
     public function testFindModelFolderIsModelFolderAvailable()
     {
         $ctrl = new CrudController('id', $this->app);
-    
+
         $this->generateAdminUserSchema();
         $testShema = Yii::$app->db->getTableSchema('{{%admin_user}}', true);
         $ctrl->moduleName = 'crudmodulefolderadmin';
-        
-        
+
+
         $ctrl->ensureBasePathAndNamespace();
-        
+
         $this->assertNotEquals($ctrl->basePath, $ctrl->modelBasePath);
         $this->assertNotEquals($ctrl->namespace, $ctrl->modelNamespace);
     }
-    
+
     public function testAssertion()
     {
         $ctrl = new CrudController('id', Yii::$app);
-        
+
         $this->generateAdminUserSchema();
         $testShema = Yii::$app->db->getTableSchema('{{%admin_user}}', true);
-        
+
         $this->assertNotNull($testShema);
         $this->assertSame(3, count($ctrl->generateRules($testShema)));
         $this->assertSame(14, count($ctrl->generateLabels($testShema)));
-        
+
         $tpl = <<<'EOT'
 <?php
 
@@ -88,9 +88,9 @@ class TestModel extends \luya\admin\ngrest\base\Api
     public $modelClass = '\path\to\model';
 }
 EOT;
-        
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $tpl), str_replace(["\r\n", "\r"],"\n", $ctrl->generateApiContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
-        
+
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $tpl), str_replace(["\r\n", "\r"], "\n", $ctrl->generateApiContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
+
         $tpl2 = <<<'EOT'
 <?php
 
@@ -109,9 +109,9 @@ class TestModel extends \luya\admin\ngrest\base\Controller
     public $modelClass = '\path\to\model';
 }
 EOT;
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $tpl2), str_replace(["\r\n", "\r"],"\n", $ctrl->generateControllerContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
-        
-        
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $tpl2), str_replace(["\r\n", "\r"], "\n", $ctrl->generateControllerContent('file\\namespace', 'TestModel', '\\path\\to\\model')));
+
+
         $model = <<<'EOT'
 <?php
 
@@ -241,7 +241,7 @@ EOT;
             Yii::$app->db->getTableSchema('{{%admin_user}}', true),
             true
         );
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $model), str_replace(["\r\n", "\r"],"\n", $c));
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $model), str_replace(["\r\n", "\r"], "\n", $c));
 
 
 
@@ -263,13 +263,13 @@ public function getMenu()
 }
 
 EOT;
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $sum), str_replace(["\r\n", "\r"],"\n", $ctrl->generateBuildSummary('api-endpoint-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $sum), str_replace(["\r\n", "\r"], "\n", $ctrl->generateBuildSummary('api-endpoint-name', '\\path\\to\\api\\Model', 'AdminUser', 'module/admin-user/index')));
     }
-    
+
     public function testModelWithoutI18n()
     {
         $ctrl = new CrudController('id', $this->app);
-        
+
         new ActiveRecordFixture([
             'modelClass' => Lang::class,
             'schema' => [
@@ -279,7 +279,7 @@ EOT;
                 'is_deleted' => 'boolean',
             ]
         ]);
-        
+
         $c = $ctrl->generateModelContent(
             'file\\namespace',
             'TestModel',
@@ -287,7 +287,7 @@ EOT;
             Yii::$app->db->getTableSchema('{{%admin_lang}}', true),
             false
         );
-        
+
         $model = <<<'EOT'
 <?php
 
@@ -378,6 +378,6 @@ class TestModel extends NgRestModel
 }
 
 EOT;
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $model), str_replace(["\r\n", "\r"],"\n", $c));
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $model), str_replace(["\r\n", "\r"], "\n", $c));
     }
 }

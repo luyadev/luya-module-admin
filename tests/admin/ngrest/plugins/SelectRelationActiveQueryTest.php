@@ -2,17 +2,10 @@
 
 namespace admintests\admin\ngrest\plugins;
 
-use Yii;
 use admintests\AdminTestCase;
 use admintests\data\fixtures\UserFixture;
 use admintests\data\fixtures\UserOnlineFixture;
-use admintests\data\fixtures\I18nUserFixture;
-use admintests\data\models\I18nUser;
-use luya\admin\models\UserOnline;
-use luya\admin\components\AdminLanguage;
-use luya\admin\models\Lang;
 use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
-use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\Event;
 
 class SelectRelationActiveQueryTest extends AdminTestCase
@@ -24,7 +17,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $userFixture->load();
         $onlineFixture = new UserOnlineFixture();
         $onlineFixture->load();
-        
+
         $online = $onlineFixture->getModel('userOnline1');
         $event->sender = $online;
         $plugin = new SelectRelationActiveQuery([
@@ -46,7 +39,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $userFixture->load();
         $onlineFixture = new UserOnlineFixture();
         $onlineFixture->load();
-        
+
         $online = $onlineFixture->getModel('userOnline1');
         $event->sender = $online;
         $plugin = new SelectRelationActiveQuery([
@@ -68,7 +61,7 @@ class SelectRelationActiveQueryTest extends AdminTestCase
         $userFixture->load();
         $onlineFixture = new UserOnlineFixture();
         $onlineFixture->load();
-        
+
         $online = $onlineFixture->getModel('userOnline1');
         $event->sender = $online;
         $plugin = new SelectRelationActiveQuery([

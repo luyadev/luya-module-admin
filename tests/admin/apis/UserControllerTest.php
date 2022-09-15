@@ -2,7 +2,6 @@
 
 namespace luya\admin\tests\admin\apis;
 
-use Yii;
 use admintests\AdminModelTestCase;
 use luya\admin\apis\UserController;
 use luya\admin\components\Auth;
@@ -11,6 +10,7 @@ use luya\admin\Module;
 use luya\helpers\FileHelper;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
+use Yii;
 use yii\base\InvalidCallException;
 use yii\web\NotFoundHttpException;
 

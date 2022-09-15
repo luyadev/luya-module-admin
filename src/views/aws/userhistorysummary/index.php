@@ -157,7 +157,10 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			    		</tr>
 			    		<?php endforeach; ?>
 				    <?php elseif ($log->is_update): ?>
-				    	<?php $changes = false; foreach ($log->attributes_json as $key => $value): $oldValue = $log->attributesAttributeDiff($key); if (empty($oldValue)): continue; endif; $changes = true; ?>
+				    	<?php $changes = false;
+				    	foreach ($log->attributes_json as $key => $value): $oldValue = $log->attributesAttributeDiff($key);
+				    	if (empty($oldValue)): continue; endif;
+				    	$changes = true; ?>
 			    		<tr>
 			    			<td><?= $key; ?></td>
 			    			<td><?= is_scalar($oldValue) ? Html::encode($oldValue) : VarDumper::dumpAsString($oldValue); ?></td>

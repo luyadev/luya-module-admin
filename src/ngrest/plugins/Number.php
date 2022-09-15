@@ -68,7 +68,7 @@ class Number extends Plugin
         } else {
             $this->writeAttribute($event, (int) $fieldValue);
         }
-        
+
         return true;
     }
 

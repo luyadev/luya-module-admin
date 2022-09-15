@@ -3,11 +3,7 @@
 namespace admintests\admin\traits;
 
 use admintests\AdminModelTestCase;
-use admintests\AdminTestCase;
-use admintests\data\fixtures\UserFixture;
-use luya\admin\models\Group;
 use luya\admin\models\User;
-use luya\admin\models\UserOnline;
 use luya\admin\traits\SortableTrait;
 use luya\testsuite\fixtures\NgRestModelFixture;
 
@@ -92,8 +88,8 @@ class SortableTraitTest extends AdminModelTestCase
     }
 }
 
-class UserStub extends User {
-    
+class UserStub extends User
+{
     use SortableTrait;
 
     public static function sortableField()

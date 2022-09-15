@@ -6,10 +6,10 @@ use admintests\AdminModelTestCase;
 use admintests\data\models\I18nUser;
 use luya\admin\helpers\I18n;
 use luya\admin\models\Lang;
-use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\User;
-use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
 use luya\admin\ngrest\base\NgRestModel;
+use luya\admin\ngrest\plugins\SelectRelationActiveQuery;
+use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\Event;
 
 class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
@@ -31,7 +31,7 @@ class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
                 ]
             ]
         ]);
-        
+
         $userModel = $user->getModel('user1');
 
         $pluginModel = new NgRestModelFixture([
@@ -119,7 +119,7 @@ class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
                 ],
             ]
         ]);
-        
+
         $online = $onlineFixture->getModel('userOnline1');
 
         $plugin = new SelectRelationActiveQuery([
@@ -129,15 +129,15 @@ class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
             'labelField' => 'firstname',
         ]);
 
-        
+
         $event = new Event();
         $lang1Online = clone $online;
         $event->sender = $lang1Online;
         $plugin->onListFind($event);
-        
+
         $this->assertSame("John", $lang1Online->user_id);
     }
-    
+
     public function testI18nMixedLabelStringOnListFind()
     {
         $this->getAdminLanguageMock(true, false);
@@ -170,7 +170,7 @@ class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
                 ],
             ]
         ]);
-        
+
         $online = $onlineFixture->getModel('userOnline1');
         $plugin = new SelectRelationActiveQuery([
             'name' => 'user_id',
@@ -179,12 +179,12 @@ class SelectRelationActiveQuerySqlLiteTest extends AdminModelTestCase
             'labelField' => 'firstname,email',
         ]);
 
-        
+
         $event = new Event();
         $lang1Online = clone $online;
         $event->sender = $lang1Online;
         $plugin->onListFind($event);
-        
+
         $this->assertSame("John john@luya.io", $lang1Online->user_id);
     }
 }

@@ -38,7 +38,7 @@ class ApiRequestInsightActiveWindowTest extends AdminModelTestCase
         ]);
 
         $this->assertNotEmpty($aw->index());
-        
+
         $this->assertInstanceOf(ActiveDataProvider::class, $aw->callbackData());
     }
 }

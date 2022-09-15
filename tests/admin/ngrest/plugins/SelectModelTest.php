@@ -22,15 +22,15 @@ class SelectModelTest extends AdminTestCase
             'valueField' => 'id',
             'labelField' => 'email',
         ]);
-        
+
         $this->assertSame([
             0 => ['value' => 2, 'label' => 'jane@luya.io'],
             1 => ['value' => 1, 'label' => 'john@luya.io'],
         ], $plugin->getData());
-        
+
         unset($plugin);
     }
-    
+
     public function testArrayLabelConfigGetData()
     {
         $model = new UserFixture();
@@ -43,15 +43,15 @@ class SelectModelTest extends AdminTestCase
             'valueField' => 'id',
             'labelField' => ['lastname', 'firstname'],
         ]);
-    
+
         $this->assertSame([
             0 => ['value' => 2, 'label' => 'Doe Jane'],
             1 => ['value' => 1, 'label' => 'Doe John'],
         ], $plugin->getData());
-        
+
         unset($plugin);
     }
-    
+
     public function testArrayLabelWithTemplateConfigGetData()
     {
         $model = new UserFixture();
@@ -65,15 +65,15 @@ class SelectModelTest extends AdminTestCase
             'labelField' => ['lastname', 'firstname'],
             'labelTemplate' => '%s:%s',
         ]);
-    
+
         $this->assertSame([
             0 => ['value' => 2, 'label' => 'Doe:Jane'],
             1 => ['value' => 1, 'label' => 'Doe:John'],
         ], $plugin->getData());
-        
+
         unset($plugin);
     }
-    
+
     public function testWhereConfigGetData()
     {
         $model = new UserFixture();
@@ -87,14 +87,14 @@ class SelectModelTest extends AdminTestCase
             'labelField' => 'email',
             'where' => ['email' => 'jane@luya.io'],
         ]);
-    
+
         $this->assertSame([
             0 => ['value' => 2, 'label' => 'jane@luya.io'],
         ], $plugin->getData());
-        
+
         unset($plugin);
     }
-    
+
     /**
      * @see https://github.com/luyadev/luya/issues/1133
      */
@@ -110,16 +110,16 @@ class SelectModelTest extends AdminTestCase
             'valueField' => 'id',
             'labelField' => 'titleNamed',
         ]);
-    
-        
+
+
         $this->assertSame([
             0 => ['value' => 1, 'label' => 'Mr.'],
             1 => ['value' => 2, 'label' => 'Ms.'],
         ], $plugin->getData());
-        
+
         unset($plugin);
     }
-    
+
     /**
      * @see https://github.com/luyadev/luya/issues/1133
      */
@@ -137,16 +137,16 @@ class SelectModelTest extends AdminTestCase
                 return $model->firstname . '@' . $model->lastname;
             }
         ]);
-    
-    
+
+
         $this->assertSame([
             0 => ['value' => 2, 'label' => 'Jane@Doe'],
             1 => ['value' => 1, 'label' => 'John@Doe'],
         ], $plugin->getData());
-    
+
         unset($plugin);
     }
-    
+
     /**
      * Test relating with i18n casted select fields:
      *
@@ -157,10 +157,10 @@ class SelectModelTest extends AdminTestCase
         $event = new Event();
         $model = new UserFixture();
         $model->load();
-        
+
         $user = $model->getModel('user1');
         $event->sender = $user;
-        
+
         $plugin = new SelectModel([
             'name' => 'id',
             'alias' => 'test',
@@ -169,14 +169,14 @@ class SelectModelTest extends AdminTestCase
             'valueField' => 'id',
             'labelField' => 'email',
         ]);
-    
+
         $plugin->onFind($event);
-        
+
         $this->assertSame("", $user->id);
-    
+
         unset($plugin);
     }
-    
+
     public function testFindSelfPrimaryKey()
     {
         $model = new UserFixture();
@@ -190,7 +190,7 @@ class SelectModelTest extends AdminTestCase
                 return $model->firstname . '@' . $model->lastname;
             }
         ]);
-        
+
         $this->assertSame('id', $plugin->valueField);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace admintests\admin\ngrest;
 
-use Yii;
 use admintests\AdminTestCase;
-use luya\admin\ngrest\ConfigBuilder;
 use luya\admin\ngrest\Config;
+use luya\admin\ngrest\ConfigBuilder;
+use Yii;
 
 class ConfigBuilderTest extends AdminTestCase
 {
@@ -67,7 +67,7 @@ class ConfigBuilderTest extends AdminTestCase
 
         $this->assertArrayHasKey('aw', $cfg);
         $aw = $cfg['aw'];
-        
+
         $this->assertArrayHasKey('ff21bd877239c16ade6e598df6d2bfa91c127953', $aw);
         $obj = $aw['ff21bd877239c16ade6e598df6d2bfa91c127953'];
 

@@ -2,11 +2,11 @@
 
 namespace luya\admin\tests\data\models;
 
-use yii\base\Model;
-use luya\admin\base\JwtIdentityInterface;
 use Lcobucci\JWT\Token\Plain;
+use luya\admin\base\JwtIdentityInterface;
 use luya\admin\models\ApiUser;
 use luya\testsuite\fixtures\NgRestModelFixture;
+use yii\base\Model;
 
 class JwtModel extends Model implements JwtIdentityInterface
 {

@@ -43,7 +43,7 @@ class UserAccessTokenLoginEventTest extends AdminModelTestCase
             $event->login(new User());
         });
 
-        
+
         $this->assertNotEmpty(User::findIdentityByAccessToken('123123'));
     }
 }

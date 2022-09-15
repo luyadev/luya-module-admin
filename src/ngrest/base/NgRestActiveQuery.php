@@ -75,17 +75,17 @@ class NgRestActiveQuery extends ActiveQuery
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
     }
-    
+
 
     /**
      * Order by a given json key inside a field.
-     * 
+     *
      * ```
      * ->orderBy('title_json', 'de', 'asc')
      * ```
-     * 
+     *
      * Assuming the database content of `title_json` looks like this:
-     * 
+     *
      * ```
      * {'de': 'foobar', 'en' : 'foobar'}
      * ```

@@ -20,7 +20,7 @@ class ControllerTest extends AdminModelTestCase
                 'modelClass' => User::class,
             ]);
 
-    
+
             $scope->createAndAllowApi(User::ngRestApiEndpoint());
             $scope->loginUser();
 

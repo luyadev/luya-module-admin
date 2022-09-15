@@ -2,13 +2,11 @@
 
 namespace admintests\admin\ngrest\base;
 
-use Yii;
 use admintests\AdminModelTestCase;
-use luya\admin\models\Tag;
-use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\admin\models\Lang;
+use luya\admin\models\Tag;
 use luya\admin\models\User;
-use luya\web\Composition;
+use luya\testsuite\fixtures\NgRestModelFixture;
 
 class NgRestModelAdminModelTestCaseTest extends AdminModelTestCase
 {

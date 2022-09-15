@@ -5,13 +5,13 @@ namespace admintests\admin\ngrest;
 use admintests\AdminModelTestCase;
 use luya\admin\apis\UserController;
 use luya\admin\buttons\TimestampActiveButton;
+use luya\admin\components\Auth;
 use luya\admin\models\Group;
 use luya\admin\models\User;
 use luya\admin\ngrest\Config;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\DatabaseTableTrait;
 use yii\base\InvalidConfigException;
-use luya\admin\components\Auth;
 
 class ConfigTest extends AdminModelTestCase
 {
@@ -32,7 +32,7 @@ class ConfigTest extends AdminModelTestCase
         $this->assertEquals(true, $cfg->addField('list', 'foo'));
         $this->assertEquals(false, $cfg->addField('list', 'foo'));
     }
-    
+
     public function testLazyLoadGetters()
     {
         $cfg = new Config(['apiEndpoint' => 'rest-url', 'primaryKey' => ['id']]);
@@ -42,7 +42,7 @@ class ConfigTest extends AdminModelTestCase
         ]);
 
         $cfg->setModel($fixture->newModel);
-        
+
         $this->assertSame([
             [
                 'label' => 'Label',

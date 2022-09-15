@@ -14,7 +14,9 @@ class ListDashboardObjectTest extends AdminTestCase
         $o->variables = [
             'foo' => 'bar',
             'date' => time(),
-            'eval' => function() { return time(); },
+            'eval' => function () {
+                return time();
+            },
             'tt' => ['app', 'Value'],
         ];
         $o->setTemplate('{{foo}} - {{ date }} - {{eval}} - {{tt}} - {{item.user.firstname}}');
@@ -30,7 +32,9 @@ class ListDashboardObjectTest extends AdminTestCase
         $o->variables = [
             'foo' => 'bar',
             'date' => time(),
-            'eval' => function() { return time(); },
+            'eval' => function () {
+                return time();
+            },
             'tt' => ['app', 'Value'],
         ];
         $o->setTemplate('{{foo}} - {{ date }} - {{eval}} - {{tt}} - {{item.user.firstname}}');

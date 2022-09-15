@@ -2,11 +2,11 @@
 
 namespace admintests\admin\ngrest\plugins;
 
-use Yii;
 use admintests\AdminTestCase;
-use yii\base\Event;
 use admintests\data\fixtures\UserFixture;
 use luya\admin\ngrest\plugins\FileArray;
+use Yii;
+use yii\base\Event;
 
 class FileArrayTest extends AdminTestCase
 {
@@ -24,13 +24,13 @@ class FileArrayTest extends AdminTestCase
             'i18n' => true,
             'fileIterator' => true,
         ]);
-        
+
         $plugin->onFind($event);
-        
+
         $this->assertInstanceOf('\luya\admin\file\Iterator', $user->id);
     }
-    
-    
+
+
     public function testNotFileIteratorObject()
     {
         $event = new Event();
@@ -45,13 +45,13 @@ class FileArrayTest extends AdminTestCase
             'i18n' => true,
             'fileIterator' => false,
         ]);
-        
+
         $plugin->onFind($event);
-        
+
         $this->assertTrue(is_array($user->id));
     }
-    
-    
+
+
     public function testFileIteratorObjectNotI18n()
     {
         $event = new Event();
@@ -66,12 +66,12 @@ class FileArrayTest extends AdminTestCase
             'i18n' => false,
             'fileIterator' => true,
         ]);
-    
+
         $plugin->onFind($event);
-        
+
         $this->assertInstanceOf('\luya\admin\file\Iterator', $user->id);
     }
-    
+
     public function testFileIteratorObjectNotI18nEmptyValue()
     {
         $event = new Event();
@@ -86,12 +86,12 @@ class FileArrayTest extends AdminTestCase
             'i18n' => false,
             'fileIterator' => true,
         ]);
-    
+
         $plugin->onFind($event);
-    
+
         $this->assertSame([], $user->id);
     }
-    
+
     public function testNotFileIteratorObjectNotI18n()
     {
         $event = new Event();
@@ -106,18 +106,18 @@ class FileArrayTest extends AdminTestCase
             'i18n' => false,
             'fileIterator' => false,
         ]);
-    
+
         $plugin->onFind($event);
-    
+
         $this->assertTrue(is_array($user->id));
     }
-    
+
     public function testFileIteratorCaptionDirectInputAccessI18n()
     {
         Yii::$app->storage->addDummyFile(['id' => 1, 'name_new' => 'foo.jpg', 'caption' => '{"en":"foobar"}']);
         Yii::$app->storage->insertDummyFiles();
-        
-        
+
+
         $event = new Event();
         $model = new UserFixture();
         $model->load();
@@ -130,26 +130,26 @@ class FileArrayTest extends AdminTestCase
             'i18n' => true,
             'fileIterator' => true,
         ]);
-        
+
         $plugin->onFind($event);
-        
+
         $this->assertSame('foobar', Yii::$app->storage->getFile(1)->caption);
-        
-        
+
+
         foreach ($user->id as $k => $obj) {
             $this->assertSame('bazfoo', $obj->caption);
         }
     }
-    
+
     public function testFileIteratorCaptionDirectInputAccess()
     {
         Yii::$app->storage->addDummyFile(['id' => 1, 'name_new' => 'foo.jpg', 'caption' => 'foobar']);
         Yii::$app->storage->insertDummyFiles();
-        
+
         Yii::$app->storage->addDummyImage(['file_id' => 1, 'id' => 1]);
         Yii::$app->storage->insertDummyImages();
-        
-        
+
+
         $event = new Event();
         $model = new UserFixture();
         $model->load();
@@ -162,11 +162,11 @@ class FileArrayTest extends AdminTestCase
             'i18n' => false,
             'fileIterator' => true,
         ]);
-        
+
         $plugin->onFind($event);
-        
+
         $this->assertSame('foobar', Yii::$app->storage->getFile(1)->caption);
-        
+
         foreach ($user->id as $k => $obj) {
             $this->assertSame('bazfoo', $obj->caption);
         }

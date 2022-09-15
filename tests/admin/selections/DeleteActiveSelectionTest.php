@@ -20,7 +20,7 @@ class DeleteActiveSelectionTest extends AdminModelTestCase
     public function testExternalHandle()
     {
         $obj = new ActiveSelection();
-        $obj->action = function(array $items, ActiveSelection $context) {
+        $obj->action = function (array $items, ActiveSelection $context) {
             $context->sendReloadEvent();
             return true;
         };
@@ -28,14 +28,14 @@ class DeleteActiveSelectionTest extends AdminModelTestCase
 
         $this->assertSame([0 => 'loadList'], $r['events']);
 
-        $obj->action = function(array $items, ActiveSelection $context) {
+        $obj->action = function (array $items, ActiveSelection $context) {
             return false;
         };
         $r = $obj->handle([]);
 
         $this->assertTrue($r['error']);
 
-        $obj->action = function(array $items, ActiveSelection $context) {
+        $obj->action = function (array $items, ActiveSelection $context) {
             return ['foo' => 'bar'];
         };
         $r = $obj->handle([]);

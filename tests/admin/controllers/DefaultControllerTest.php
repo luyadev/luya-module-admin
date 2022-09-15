@@ -4,8 +4,8 @@ namespace luya\admin\tests\admin\controllers;
 
 use admintests\AdminModelTestCase;
 use luya\admin\controllers\DefaultController;
-use luya\admin\models\UserDevice;
 use luya\admin\controllers\DefaultController as ControllersDefaultController;
+use luya\admin\models\UserDevice;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\web\Response;
 

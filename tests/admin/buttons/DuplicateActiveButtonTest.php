@@ -16,7 +16,7 @@ class DuplicateActiveButtonTest extends AdminModelTestCase
     public function testCopyDuplicateMode()
     {
         $btn = new DuplicateActiveButton();
-    
+
         $this->createAdminNgRestLogFixture();
         $fixtureGroup = new NgRestModelFixture([
             'schema' => [
@@ -55,7 +55,7 @@ class DuplicateActiveButtonTest extends AdminModelTestCase
     public function testCopyDuplicateModelError()
     {
         $btn = new DuplicateActiveButton();
-    
+
         $this->createAdminNgRestLogFixture();
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,
@@ -81,7 +81,7 @@ class DuplicateActiveButtonTest extends AdminModelTestCase
     public function testCopyDuplicateModelErrorNotFound()
     {
         $btn = new DuplicateActiveButton();
-    
+
         $this->createAdminNgRestLogFixture();
         $fixture = new NgRestModelFixture([
             'modelClass' => Tag::class,

@@ -34,7 +34,7 @@ class CommonControllerTest extends AdminModelTestCase
                     ]
                 ]
             ]);
-    
+
             $rel = new ActiveRecordFixture([
                 'modelClass' => TagRelation::class,
             ]);
@@ -42,7 +42,7 @@ class CommonControllerTest extends AdminModelTestCase
             $scope->createAndAllowRoute('adminmodeltest/id/tag-relation-toggle');
 
             $ctrl = new CommonController('id', $this->app);
-        
+
             $response = $scope->runControllerAction($ctrl, 'tag-relation-toggle', [
                 'tagId' => 1,
                 'pkId' => 2,
@@ -92,14 +92,14 @@ class CommonControllerTest extends AdminModelTestCase
         $this->createAdminLangFixture();
         $this->createAdminQueueTable();
         $ctrl = new CommonController('id', $this->app->getModule('admin'));
-        
+
         $r = $ctrl->actionQueueJob(0);
 
         $this->assertArrayHasKey('is_waiting', $r);
         $this->assertArrayHasKey('is_reserved', $r);
         $this->assertArrayHasKey('is_done', $r);
     }
-    
+
     public function testDataProperties()
     {
         PermissionScope::run($this->app, function (PermissionScope $scope) {

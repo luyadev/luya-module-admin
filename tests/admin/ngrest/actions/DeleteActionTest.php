@@ -20,7 +20,7 @@ class DeleteActionTest extends AdminModelTestCase
     public function testDeleteObjectNotFound()
     {
         $this->createAdminLangFixture();
-        
+
         $user = new NgRestModelFixture([
             'modelClass' => User::class,
         ]);

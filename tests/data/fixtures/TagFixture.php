@@ -13,7 +13,7 @@ class TagFixture extends ActiveFixture
         parent::resetTable();
         parent::load();
     }
-    
+
     public function getData()
     {
         return [

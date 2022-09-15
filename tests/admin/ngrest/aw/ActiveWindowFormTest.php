@@ -17,7 +17,7 @@ class ActiveWindowFormTest extends AdminTestCase
         echo $form->field('fileupload', 'fileuploadLabel')->fileUpload();
         echo $form->field('datepicker', 'datepickerLabel')->datePicker();
         echo $form->field('datetimePicker', 'datetimepickerLabel')->datetimePicker();
-        
+
         $content = <<<'EOT'
 <script>
 zaa.bootstrap.register('TestController', ['$scope', '$controller', '$injector', function($scope, $controller, $injector) {

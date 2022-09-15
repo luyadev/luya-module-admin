@@ -3,9 +3,9 @@
 namespace luya\admin\tests\admin\models;
 
 use admintests\AdminModelTestCase;
-use luya\testsuite\fixtures\NgRestModelFixture;
-use luya\admin\models\ProxyMachine;
 use luya\admin\models\NgrestLog;
+use luya\admin\models\ProxyMachine;
+use luya\testsuite\fixtures\NgRestModelFixture;
 
 class ProxyMachineTest extends AdminModelTestCase
 {

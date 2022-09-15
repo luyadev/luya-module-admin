@@ -19,9 +19,9 @@ class LoginControllerTest extends AdminModelTestCase
         $reponse = $this->invokeMethod($login, 'sendArray', [
             true, ['foo' => 'bar'], true
         ]);
-        
+
         unset($reponse['time']);
-        
+
         $this->assertSame([
             'refresh' => true,
             'message' => null,
@@ -42,7 +42,7 @@ class LoginControllerTest extends AdminModelTestCase
         $this->createAdminUserFixture();
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         new NgRestModelFixture(['modelClass' => UserLoginLockout::class]);
-        
+
         $module = $this->app->getModule('admin');
         $module->resetPassword = true;
         $login = new LoginController('login', $module);

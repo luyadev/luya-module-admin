@@ -3,35 +3,32 @@
 namespace admintests\admin\ngrest;
 
 use admintests\AdminModelTestCase;
-use luya\admin\buttons\TimestampActiveButton;
-use luya\admin\models\User;
-use luya\admin\ngrest\Config;
-use luya\admin\ngrest\ConfigBuilder;
-use luya\testsuite\fixtures\NgRestModelFixture;
-use luya\testsuite\traits\DatabaseTableTrait;
 use luya\admin\aws\ChangePasswordActiveWindow;
 use luya\admin\aws\UserHistorySummaryActiveWindow;
-use yii\base\InvalidConfigException;
+use luya\admin\buttons\TimestampActiveButton;
+use luya\admin\models\User;
 use luya\admin\ngrest\render\RenderCrud;
+use luya\testsuite\fixtures\NgRestModelFixture;
+use luya\testsuite\traits\DatabaseTableTrait;
 
 class ButtonConditionConfigTest extends AdminModelTestCase
 {
     use DatabaseTableTrait;
-    
+
     public function testActiveWindowsButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
             'modelClass' => ScopeBasedConditionUserModel::class,
         ]);
- 
+
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
-        
+
         $activeWindows=$ngRestCfg->getPointer('aw');
-        
+
         $changePasswordActiveWindow = array_shift($activeWindows);
         $this->assertArrayHasKey('condition', $changePasswordActiveWindow['objectConfig']);
         $this->assertEquals($changePasswordActiveWindow['objectConfig']['condition'], '{firstname}==\'foo\'');
-        
+
         $context = new RenderCrud([
             'config' => $ngRestCfg,
         ]);
@@ -41,24 +38,24 @@ class ButtonConditionConfigTest extends AdminModelTestCase
             $context->listContextVariablize($changePasswordActiveWindow['objectConfig']['condition']),
             'item.firstname==\'foo\''
         );
-          
+
         $fixture->cleanup();
     }
-    
+
     public function testActiveButtonButtonConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
             'modelClass' => ScopeBasedConditionUserModel::class,
         ]);
- 
+
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         $this->assertArrayHasKey('condition', $ngRestCfg->getActiveButtons()[0]);
         $this->assertEquals($ngRestCfg->getActiveButtons()[0]['condition'], '{bar}==0');
-        
+
         $fixture->cleanup();
     }
-    
-    
+
+
     public function testScopeBasedButtonsConditionDefinition()
     {
         $fixture = new NgRestModelFixture([
@@ -77,8 +74,8 @@ class ButtonConditionConfigTest extends AdminModelTestCase
                     [ 'delete', '{title}==2 && {firstname}==\'bar\''],
                 ]
         );
-                
-        
+
+
         $this->assertArrayHasKey('buttonCondition', $ngRestCfg->config['options']);
 
         $this->assertSame(
@@ -88,36 +85,36 @@ class ButtonConditionConfigTest extends AdminModelTestCase
                     [ 'delete', '{title}==2 && {firstname}==\'bar\''],
                 ]
         );
-        
+
         $context = new RenderCrud([
             'config' => $ngRestCfg,
         ]);
 
-        
+
         $deleteCondition = $context->getConfigButtonCondition('delete');
         $this->assertSame(
             $deleteCondition,
             '{title}==2 && {firstname}==\'bar\''
         );
-        
+
         $this->assertSame(
             $context->listContextVariablize($deleteCondition),
             'item.title==2 && item.firstname==\'bar\''
         );
-        
+
         $fixture->cleanup();
     }
- 
-     
+
+
     public function testNgRestConfigBasedButtonsCondition()
     {
         $fixture = new NgRestModelFixture([
             'modelClass' => NgRestConfigBasedConditionUserModel::class,
         ]);
-        
+
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         $this->assertArrayHasKey('buttonCondition', $ngRestCfg->config['options']);
- 
+
         $this->assertSame(
             $ngRestCfg->config['options']['buttonCondition'],
             [
@@ -125,14 +122,13 @@ class ButtonConditionConfigTest extends AdminModelTestCase
                     [ 'delete', '{title}==2'],
                 ]
         );
-        
+
         $fixture->cleanup();
     }
 }
 
 class ScopeBasedConditionUserModel extends User
 {
-    
     /**
      * @inheritdoc
      */
@@ -142,7 +138,7 @@ class ScopeBasedConditionUserModel extends User
             ['class' => TimestampActiveButton::class, 'attribute' => 'foo', 'condition'=> '{bar}==0']
         ];
     }
-        
+
     /**
      * @inheritdoc
      */
@@ -155,7 +151,7 @@ class ScopeBasedConditionUserModel extends User
             ['delete', true, ['buttonCondition'=> ['{title}'=>2, '{firstname}'=>'\'bar\'']] ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

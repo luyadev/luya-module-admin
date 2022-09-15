@@ -1,19 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace luya\admin\tests\admin\base;
 
 error_reporting(E_ALL);
 
-use luya\admin\tests\NgRestTestCase;
-use luya\admin\models\ApiUser;
 use Lcobucci\JWT\Token\DataSet;
 use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Token\Signature;
 use luya\admin\components\Auth;
+use luya\admin\models\ApiUser;
 use luya\admin\tests\data\apis\StubApiUserApiController;
 use luya\admin\tests\data\controllers\StubApiUserControllerController;
 use luya\admin\tests\data\models\JwtModel;
+use luya\admin\tests\NgRestTestCase;
 use yii\helpers\ArrayHelper;
 
 class RestTest extends NgRestTestCase
@@ -50,7 +51,7 @@ class RestTest extends NgRestTestCase
     {
         // as the route of the controller is not in permission system, this is visible to not api users:
         $this->assertSame('adminmodeltest/stubapiuser/foo-bar', $this->runControllerAction($this->controller, 'foo-bar'));
-        
+
         $this->controllerCanAccess('foo-bar', false);
         $this->runControllerAction($this->controller, 'foo-bar');
     }
@@ -119,7 +120,7 @@ class RestTest extends NgRestTestCase
     public function testMisconfiguredJwtUser()
     {
         $validToken = new Plain(new DataSet(['token' => 'valid'], 'token=valid'), new DataSet([], ''), new Signature('', ''));
-        
+
         $this->app->jwt->key = 'xyz';
         $this->app->jwt->apiUserEmail = 'notfound@luya.io';
 

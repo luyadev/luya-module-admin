@@ -2,12 +2,12 @@
 
 namespace luya\admin\tests\admin\aws;
 
-use luya\admin\aws\ApiOverviewActiveWindow;
-use luya\testsuite\cases\NgRestTestCase;
-use luya\admin\models\ApiUser;
 use luya\admin\apis\ApiUserController;
+use luya\admin\aws\ApiOverviewActiveWindow;
 use luya\admin\controllers\ApiUserController as LuyaApiUserController;
+use luya\admin\models\ApiUser;
 use luya\admin\tests\data\controllers\TestController;
+use luya\testsuite\cases\NgRestTestCase;
 
 class ApiOverviewActiveWindowTest extends NgRestTestCase
 {
@@ -22,7 +22,7 @@ class ApiOverviewActiveWindowTest extends NgRestTestCase
             'basePath' => dirname(__FILE__),
         ];
     }
-    
+
     protected function getWindow()
     {
         return new ApiOverviewActiveWindow([

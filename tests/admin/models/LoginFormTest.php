@@ -30,7 +30,7 @@ class LoginFormTest extends AdminModelTestCase
         $login = new LoginForm();
         $login->email = 'test@luya.io';
         $this->assertFalse($login->sendSecureLogin());
-        
+
         $token = 'testtoken';
         $emailBody = User::generateTokenEmail($token, Module::t('login_securetoken_mail_subject'), Module::t('login_securetoken_mail'));
 

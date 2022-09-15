@@ -385,7 +385,6 @@ class StorageController extends RestController
         if ($file = Yii::$app->storage->getFile($fileId)) {
             $newFileSource = $raw['tmp_name'];
             if (is_uploaded_file($newFileSource)) {
-
                 // check for same extension / mimeType
                 $fileData = Yii::$app->storage->ensureFileUpload($raw['tmp_name'], $raw['name']);
 

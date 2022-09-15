@@ -2,8 +2,8 @@
 
 namespace tests\admin\components;
 
-use luya\admin\components\Auth;
 use admintests\AdminTestCase;
+use luya\admin\components\Auth;
 
 class AuthTest extends AdminTestCase
 {
@@ -15,17 +15,17 @@ class AuthTest extends AdminTestCase
 
         $this->auth = new Auth();
     }
-    
+
     public function testGetApiTable()
     {
         $perm = $this->auth->getApiTable(1, 'api-admin-user');
-        
+
         $this->assertTrue(is_array($perm));
         $this->assertSame(1, count($perm));
         $this->assertSame(1, (int) $perm[0]['user_id']);
         $this->assertSame(1, (int) $perm[0]['group_id']);
     }
-    
+
     /*
     public function testGetRouteTable()
     {

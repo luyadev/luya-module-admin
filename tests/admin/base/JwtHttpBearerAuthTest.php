@@ -3,8 +3,8 @@
 namespace luya\admin\tests\admin\base;
 
 use admintests\AdminTestCase;
-use luya\helpers\ArrayHelper;
 use bizley\jwt\JwtHttpBearerAuth;
+use luya\helpers\ArrayHelper;
 
 class JwtHttpBearerAuthTest extends AdminTestCase
 {

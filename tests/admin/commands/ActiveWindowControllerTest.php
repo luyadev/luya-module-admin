@@ -3,18 +3,17 @@
 namespace admintests\admin\commands;
 
 use admintests\AdminConsoleTestCase;
-use Yii;
-use admintests\AdminTestCase;
 use luya\admin\commands\ActiveWindowController;
+use Yii;
 
 class ActiveWindowControllerTest extends AdminConsoleTestCase
 {
     public function testPhpViewRenderContent()
     {
         $ctrl = new ActiveWindowController('id', Yii::$app);
-        
+
         $content = $ctrl->renderWindowClassView('MeinTestActiveWindow', 'path\\to\\aws', 'cmsadmin');
-        
+
         $tpl = <<<'EOT'
 <?php
 
@@ -68,7 +67,7 @@ class MeinTestActiveWindow extends ActiveWindow
     }
 }
 EOT;
-        
-        $this->assertSame(str_replace(["\r\n", "\r"],"\n", $tpl), str_replace(["\r\n", "\r"],"\n", $content));
+
+        $this->assertSame(str_replace(["\r\n", "\r"], "\n", $tpl), str_replace(["\r\n", "\r"], "\n", $content));
     }
 }

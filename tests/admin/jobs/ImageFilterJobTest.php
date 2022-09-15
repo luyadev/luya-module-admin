@@ -5,12 +5,7 @@ namespace luya\admin\tests\admin\jobs;
 use admintests\AdminConsoleSqLiteTestCase;
 use luya\admin\filters\SmallCrop;
 use luya\admin\jobs\ImageFilterJob;
-use luya\admin\jobs\ScheduleJob;
-use luya\admin\models\Scheduler;
-use luya\admin\models\Tag;
-use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\traits\AdminDatabaseTableTrait;
-use yii\base\InvalidCallException;
 
 class ImageFilterJobTest extends AdminConsoleSqLiteTestCase
 {
@@ -24,6 +19,5 @@ class ImageFilterJobTest extends AdminConsoleSqLiteTestCase
         $job->fileId = 1;
         $job->filterIdentifiers = [SmallCrop::identifier()];
         $this->assertEmpty($job->execute($this->app->getModule('admin')->adminqueue));
-
     }
 }

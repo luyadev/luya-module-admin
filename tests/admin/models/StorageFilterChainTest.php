@@ -29,7 +29,7 @@ class StorageFilterChainTest extends AdminModelTestCase
                 ]
             ]
         ]);
-        
+
         // setup storage filter chain
         $fixture = new ActiveRecordFixture([
             'modelClass' => 'luya\admin\models\StorageFilterChain',
@@ -50,7 +50,7 @@ class StorageFilterChainTest extends AdminModelTestCase
                 ]
             ]
         ]);
-        
+
         /* @var \luya\admin\models\StorageFilterChain $model1 */
         $model1 = $fixture->getModel('model1');
         /* @var \luya\admin\models\StorageFilterChain $model2 */
@@ -58,7 +58,7 @@ class StorageFilterChainTest extends AdminModelTestCase
         $this->assertSame(1, $model1->id);
         $this->assertSame('thumbnail', $model1->effect->identifier);
         $this->assertSame('thumbnail', $model1->effect->getImagineEffectName());
-        
+
         // effectDefinition
         $this->assertSame(['width', 'height'], $model1->effectDefinition('crop', 'required'));
 
@@ -67,18 +67,18 @@ class StorageFilterChainTest extends AdminModelTestCase
         $this->assertFalse($model1->hasMissingRequiredEffectDefinition('crop')); // even crop infos are the same and therefore true
         $this->assertTrue($model2->hasMissingRequiredEffectDefinition('thumbnail'));
         $this->assertTrue($model2->hasMissingRequiredEffectDefinition('crop'));
-        
-        
+
+
         // effectChainValue
         $this->assertSame(800, $model1->effectChainValue('thumbnail', 'width'));
         $this->assertSame(700, $model1->effectChainValue('thumbnail', 'height'));
         $this->assertSame(false, $model1->effectChainValue('thumbnail', 'doesnotexists'));
         $this->assertSame(2, $model1->effectChainValue('thumbnail', 'mode')); // call mode option not provided by the effect_json_values
-        
-        
+
+
         // auto encode
         $this->assertSame(['width' => 800, 'height' => 700], $model1->effect_json_values);
-        
+
         // destroy and cleanup
         $effect->cleanup();
         $fixture->cleanup();

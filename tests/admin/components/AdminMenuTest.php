@@ -15,11 +15,11 @@ class AdminMenuTest extends AdminTestCase
     {
         return (new AdminMenu());
     }
-    
+
     public function testGetMenu()
     {
         $menu = $this->getAdminMenuComponent()->getMenu();
-     
+
         foreach ($menu as $item) {
             $this->assertArrayHasKey('id', $item);
             $this->assertArrayHasKey('moduleId', $item);
@@ -32,7 +32,7 @@ class AdminMenuTest extends AdminTestCase
             $this->assertArrayHasKey('searchModelClass', $item);
         }
     }
-    
+
     public function testGetNode()
     {
         $m = $this->getAdminMenuComponent();
@@ -49,15 +49,15 @@ class AdminMenuTest extends AdminTestCase
             $this->assertArrayHasKey('searchModelClass', $item);
         }
     }
-    
+
     public function testGetModules()
     {
         $m = $this->getAdminMenuComponent();
-        
+
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertSame([], $m->getModules());
     }
-    
+
     public function testGetModuleItems()
     {
         $m = $this->getAdminMenuComponent();
@@ -67,7 +67,7 @@ class AdminMenuTest extends AdminTestCase
             $this->assertSame([], $items);
         }
     }
-    
+
     public function testGetItems()
     {
         $m = $this->getAdminMenuComponent();
@@ -75,11 +75,11 @@ class AdminMenuTest extends AdminTestCase
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertSame([], $m->getItems());
     }
-    
+
     public function testApiDetail()
     {
         $m = $this->getAdminMenuComponent();
-        
+
         // As currently there is no user logged in an empty array will be returned. Means no permissions
         $this->assertFalse($m->getApiDetail('api-admin-user'));
     }

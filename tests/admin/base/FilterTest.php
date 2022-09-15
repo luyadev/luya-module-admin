@@ -2,8 +2,8 @@
 
 namespace tests\admin\base;
 
-use luya\admin\base\Filter;
 use admintests\AdminTestCase;
+use luya\admin\base\Filter;
 
 class MyFilter extends Filter
 {

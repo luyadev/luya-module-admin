@@ -3,7 +3,6 @@
 namespace admintests\admin\ngrest\base;
 
 use admintests\AdminModelTestCase;
-use admintests\AdminTestCase;
 use luya\admin\models\User;
 use luya\admin\models\UserAuthNotification;
 use luya\admin\ngrest\base\Api;

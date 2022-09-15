@@ -3,7 +3,6 @@
 namespace admintests\admin\ngrest\render;
 
 use admintests\AdminModelTestCase;
-use admintests\AdminTestCase;
 use luya\admin\models\User;
 use luya\admin\ngrest\Config;
 use luya\admin\ngrest\ConfigBuilder;
@@ -21,14 +20,14 @@ class RenderCrudTest extends AdminModelTestCase
     {
         return new RenderCrud();
     }
-    
+
     public function testSettingButtondefinition()
     {
         $crud = $this->getCrud();
         $crud->setSettingButtonDefinitions([
             ['label' => 'foo', 'tag' => 'span', 'ng-href' => '#click', 'class' => 'foobar'],
         ]);
-        
+
         $this->assertSame([
             '<span class="foobar" label="foo" ng-href="#click"><i class="material-icons">extension</i><span> foo</span></span>',
         ], $crud->getSettingButtonDefinitions());
@@ -37,13 +36,13 @@ class RenderCrudTest extends AdminModelTestCase
     public function testSetView()
     {
         $crud = $this->getCrud();
-        
+
         $crud->view = RenderCrudView::class;
         $this->assertTrue(is_a($crud->view, RenderCrudView::class));
-        
+
         $crud->view = ['class' => RenderCrudView::class];
         $this->assertTrue(is_a($crud->view, RenderCrudView::class));
-        
+
         $crud->view = new RenderCrudView();
         $this->assertTrue(is_a($crud->view, RenderCrudView::class));
     }
@@ -61,14 +60,14 @@ class RenderCrudTest extends AdminModelTestCase
         ]);
 
         $crud = new RenderCrud();
-        $crud->setModel(new User);
+        $crud->setModel(new User());
 
         $configBuilder = new ConfigBuilder(User::class);
         $configBuilder->list->field('fieldname', 'alias', false)->textarea(['readonly' => true]);
         $configBuilder->update->field('fieldname', 'alias', false)->textarea(['readonly' => true]);
 
         $config = new Config();
-        $config->setModel(new User);
+        $config->setModel(new User());
         $config->setConfig($configBuilder->getConfig());
 
         $content = null;

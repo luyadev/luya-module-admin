@@ -186,7 +186,6 @@ class Jwt extends JwtJwt
 
         // validation was success, now return the API user in terms of permissions:
         if ($auth && ObjectHelper::isInstanceOf($auth, JwtIdentityInterface::class, false)) {
-
             // login the api user to the adminuser component.
             $user = ApiUser::find()->andWhere(['email' => $this->apiUserEmail, 'is_api_user' => true])->one();
 

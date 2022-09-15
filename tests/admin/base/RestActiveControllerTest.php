@@ -11,7 +11,7 @@ class RestActiveControllerTest extends AdminModelTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'OPTIONS';
         $this->createAdminLangFixture();
-        $sub = new class('id', $this->app) extends RestActiveController {
+        $sub = new class ('id', $this->app) extends RestActiveController {
             public $modelClass = 'User';
         };
         $sub->enableCors = true;

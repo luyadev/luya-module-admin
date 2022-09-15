@@ -10,12 +10,12 @@ class StubPlugin extends Plugin
     {
         return 'render-list';
     }
-    
+
     public function renderCreate($id, $ngModel)
     {
         return 'render-create';
     }
-    
+
     public function renderUpdate($id, $ngModel)
     {
         return 'render-update';

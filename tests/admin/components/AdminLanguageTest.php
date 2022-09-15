@@ -3,9 +3,9 @@
 namespace luya\admin\tests\admin\components;
 
 use admintests\AdminModelTestCase;
-use luya\testsuite\fixtures\NgRestModelFixture;
-use luya\admin\models\Lang;
 use luya\admin\components\AdminLanguage;
+use luya\admin\models\Lang;
+use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\web\Composition;
 
 class AdminLanguageTest extends AdminModelTestCase
