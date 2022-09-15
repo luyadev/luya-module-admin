@@ -32,7 +32,7 @@ class RestTest extends NgRestTestCase
             'components' => [
                 'jwt' => [
                     'class' => 'luya\admin\components\Jwt',
-                    'key' => 'xyz',
+                    'key' => 'Yws49qwwFNJ..F-JERufEbZPntzK4g9EFvYV.Gg!HfTNTbXmGjWtt2odmzM4bhWJuHV8_Aieyp@UKggPYxQ9.4TDxw4qF2kA2W-b',
                     'apiUserEmail' => 'foo@bar.com',
                     'issuer' => 'foobarhost',
                     'audience' => 'luya.io',
