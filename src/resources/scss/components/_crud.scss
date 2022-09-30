@@ -28,6 +28,20 @@
     text-align: right;
 }
 
+.inline-text-input {
+    width:100%;
+    padding:1px 5px;
+    font-size:14px;
+    border: 0px; 
+    background-color: transparent;
+    border-bottom: 1px dashed color('gray');
+    &:focus {
+        background-color: color('gray-dark');
+        color:white;
+        border: 0px;
+    }
+}
+
 .crud-loader-tag {
     float: right;
     margin-top: 2px;

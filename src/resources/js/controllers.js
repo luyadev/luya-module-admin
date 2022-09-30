@@ -365,7 +365,7 @@
 					$toast.close();
 					AdminToastService.success(i18n['js_ngrest_rm_confirm']);
 				}, function(data) {
-					$scope.printErrors(data);
+					$scope.printErrors(data.data);
 				});
 			}]);
 		};
@@ -563,9 +563,23 @@
 				row[fieldName] = invert;
 				AdminToastService.success(i18nParam('js_ngrest_toggler_success', {field: fieldLabel}));
 			}, function(data) {
-				$scope.printErrors(data);
+				$scope.printErrors(data.data);
 			});
 		};
+
+		/**** INLINE UPDATE ****/
+
+		$scope.inlineEditSubmit = function(row, fieldName, fieldLabel) {
+			var pk = $scope.getRowPrimaryValue(row);
+			var newValue = row[fieldName]
+			var json = {}
+			json[fieldName] = newValue
+			$http.put($scope.config.apiEndpoint + '/' + pk +'?ngrestCallType=update&fields='+fieldName, angular.toJson(json, true)).then(() => {
+				AdminToastService.success(i18nParam('js_ngrest_toggler_success', {field: fieldLabel}));
+			}, function(data) {
+				$scope.printErrors(data.data);
+			})
+		}
 
 		/**** SORTABLE PLUGIN ****/
 

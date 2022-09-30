@@ -75,7 +75,7 @@ final class Tag extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'name' => 'text',
+            'name' => ['text', 'inline' => true],
             'translation' => 'text',
         ];
     }

@@ -80,7 +80,7 @@ final class Group extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'name' => 'text',
+            'name' => ['text', 'inline' => true],
             'text' => 'textarea',
         ];
     }
