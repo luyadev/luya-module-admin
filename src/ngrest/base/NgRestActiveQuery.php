@@ -131,7 +131,7 @@ class NgRestActiveQuery extends ActiveQuery
      * the where condition will not be added. If $exception is enabled an exception will be thrown when the pool identifier
      * is not found in the list of pools.
      *
-     * @param string $pool The name of the pool to lookup in the ngRestPools().
+     * @param string $pool The name of the pool to lookup in the ngRestPools(). Usually provied via Yii::$app->request->get('pool')
      * @param boolean $exception Whether the method should throw an exception if the pool can not be found in the list of model pools. {@since 2.4.0}
      * @return NgRestActiveQuery
      * @since 2.0.0

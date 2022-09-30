@@ -665,7 +665,7 @@ class Api extends RestActiveController
             throw new InvalidCallException("Unable to resolve relation call model.");
         }
 
-        /** @var $relation \luya\admin\ngrest\base\NgRestRelationInterface */
+        /** @var \luya\admin\ngrest\base\NgRestRelationInterface $relation */
         $relation = $model->getNgRestRelationByIndex($arrayIndex);
 
         if (!$relation) {
