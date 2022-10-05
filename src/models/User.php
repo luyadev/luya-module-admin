@@ -151,8 +151,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
     {
         return [
             'title' => ['selectArray', 'data' => static::getTitles()],
-            'firstname' => 'text',
-            'lastname' => 'text',
+            'firstname' => ['text', 'inline' => true],
+            'lastname' => ['text', 'inline' => true],
             'email' => 'text',
             'password' => 'password',
             'login_attempt_lock_expiration' => 'datetime',

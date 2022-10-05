@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\ngrest\base\Plugin;
 use luya\helpers\Html as HtmlHelper;
+use luya\yii\helpers\Html;
 
 /**
  * Create a text input select for a given field.
@@ -29,10 +30,19 @@ class Text extends Plugin
     public $listOptions = [];
 
     /**
+     * @var boolean If inline is enabled, the value can be edited on the CRUD list view directly. This works only for none i18n values.
+     * @since 4.6.0
+     */
+    public $inline = false;
+
+    /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
     {
+        if ($this->inline && !$this->i18n) {
+            return Html::textInput($ngModel, null, ['ng-model' => $ngModel, 'class' => 'inline-text-input', 'type' => 'text', 'ng-model-options' => '{debounce: 900}', 'ng-change' => 'inlineEditSubmit(item, \''.$this->name.'\', \''.$this->alias.'\')']);
+        }
         return $this->createListTag($ngModel, $this->listOptions);
     }
 

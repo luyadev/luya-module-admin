@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.6.0
 
++ [#732](https://github.com/luyadev/luya-module-admin/pull/732) NgRest `Text` Plugins can now be turned into an interactive text field on the list (overview) of the CRUD with option `$inline = true`.
 + [#730](https://github.com/luyadev/luya-module-admin/pull/730) New NgRest Plugin `MultipleInputs` to generate data with different types storing as a json.
 
 ## 4.5.0 (24. August 2022)
