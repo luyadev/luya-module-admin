@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.6.0
+## 4.6.0 (5. October 2022)
 
 + [#732](https://github.com/luyadev/luya-module-admin/pull/732) NgRest `Text` Plugins can now be turned into an interactive text field on the list (overview) of the CRUD with option `$inline = true`.
 + [#730](https://github.com/luyadev/luya-module-admin/pull/730) New NgRest Plugin `MultipleInputs` to generate data with different types storing as a json.
