@@ -5,7 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.7.0 (19. October 2022)
 
-+ Fixed PHP 7.4 as minium version in composer.json, this was prevously done by the `bizley/jwt` dependency. Therefore using `rector` to align functionality with PHP 7.4.
++ Fixed PHP 7.4 as minimum version in composer.json, this was previously done by the `bizley/jwt` dependency. Therefore using `rector` to align functionality with PHP 7.4.
 + [#735](https://github.com/luyadev/luya-module-admin/pull/735) Ensure a none existing filter does not throw an exception. This can be the case when generting dynamic filters and those are stored in the user settings.
 + [#733](https://github.com/luyadev/luya-module-admin/pull/733) Added PT translations.
 + [#734](https://github.com/luyadev/luya-module-admin/pull/734) Added ID (Bahasa Indonesia) translations.
