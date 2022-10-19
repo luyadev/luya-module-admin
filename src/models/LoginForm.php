@@ -223,15 +223,14 @@ final class LoginForm extends Model
         return false;
     }
 
-
-    private $_user = false;
+    private $_user;
 
     /**
      * @return boolean|User
      */
     public function getUser()
     {
-        if ($this->_user === false) {
+        if (!$this->_user) {
             $this->_user = User::findByEmail($this->email);
         }
 
