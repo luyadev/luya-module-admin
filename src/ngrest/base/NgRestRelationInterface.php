@@ -2,6 +2,8 @@
 
 namespace luya\admin\ngrest\base;
 
+use yii\db\QueryInterface;
+
 /**
  * NgRest Relation Interface.
  *
@@ -77,4 +79,9 @@ interface NgRestRelationInterface
      * Get the api endpoint for the relation in order to make the relation data call.
      */
     public function getApiEndpoint();
+
+    /**
+     * @return QueryInterface
+     */
+    public function getDataProvider();
 }
