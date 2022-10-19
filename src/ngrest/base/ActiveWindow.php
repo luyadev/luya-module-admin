@@ -379,7 +379,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
      */
     public function setPermissionLevel($permissionLevel)
     {
-        $this->_permissionLevel = $permissionLevel;
+        $this->_permissionLevel = (int) $permissionLevel;
     }
 
     /**

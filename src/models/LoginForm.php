@@ -224,7 +224,7 @@ final class LoginForm extends Model
     }
 
 
-    private bool $_user = false;
+    private $_user = false;
 
     /**
      * @return boolean|User
