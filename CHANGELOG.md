@@ -6,6 +6,8 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 ## 4.6.1
 
 + [#735](https://github.com/luyadev/luya-module-admin/pull/735) Ensure a none existing filter does not throw an exception. This can be the case when generting dynamic filters and those are stored in the user settings.
++ [#733](https://github.com/luyadev/luya-module-admin/pull/733) Added PT translations.
++ [#734](https://github.com/luyadev/luya-module-admin/pull/734) Added ID (Bahasa Indonesia) translations.
 
 ## 4.6.0 (5. October 2022)
 
