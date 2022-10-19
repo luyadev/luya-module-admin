@@ -28,7 +28,7 @@ final class StorageFilterChain extends ActiveRecord
     /**
      * @var array An array containing all effect definitions with the options and required params.
      */
-    protected $effectDefinitions = [
+    protected array $effectDefinitions = [
         'crop' => [
             'required' => ['width', 'height'],
             'options' => ['start' => [0, 0], 'saveOptions' => []],
@@ -159,7 +159,7 @@ final class StorageFilterChain extends ActiveRecord
      */
     public function effectDefinition($effect, $key = null)
     {
-        $definition = isset($this->effectDefinitions[$effect]) ? $this->effectDefinitions[$effect] : false;
+        $definition = $this->effectDefinitions[$effect] ?? false;
 
         if (!$definition) {
             return false;

@@ -37,11 +37,11 @@ use yii\base\BaseObject;
  */
 class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
 {
-    private static $index = 0;
+    private static int $index = 0;
 
-    private $_menu = [];
+    private array $_menu = [];
 
-    private $_pointers = [];
+    private array $_pointers = [];
 
     /**
      * @var array The available options for itemApi and itemRoute.
@@ -69,7 +69,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     /**
      * @var array List of all permission APIs.
      */
-    private $_permissionApis = [];
+    private array $_permissionApis = [];
 
     public function getPermissionApis()
     {
@@ -79,7 +79,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     /**
      * @var array List of all permission Routes.
      */
-    private $_permissionRoutes = [];
+    private array $_permissionRoutes = [];
 
     public function getPermissionRoutes()
     {
@@ -182,7 +182,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
 
         $this->_menu[$this->_pointers['node']]['groups'][$this->_pointers['group']]['items'][] = $item;
 
-        $this->_permissionApis[] = ['api' => $apiEndpoint, 'alias' => $name, 'pool' => $this->getOptionValue($item, 'pool', null)];
+        $this->_permissionApis[] = ['api' => $apiEndpoint, 'alias' => $name, 'pool' => static::getOptionValue($item, 'pool', null)];
 
         return $this;
     }
@@ -277,6 +277,6 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
             return $defaultValue;
         }
 
-        return isset($item['options'][$optionName]) ? $item['options'][$optionName] : $defaultValue;
+        return $item['options'][$optionName] ?? $defaultValue;
     }
 }

@@ -21,7 +21,7 @@ class PhpDocReturn
 
     public function getDescription()
     {
-        return isset($this->definition[2]) ? $this->definition[2] : '';
+        return $this->definition[2] ?? '';
     }
 
     /**

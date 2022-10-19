@@ -47,10 +47,9 @@ class ClientTable extends BaseObject
     }
 
     /**
-     * @var Connection
      * @since 2.0.0
      */
-    private $_db;
+    private ?\yii\db\Connection $_db = null;
 
     /**
      * @return Connection

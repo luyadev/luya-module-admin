@@ -46,7 +46,7 @@ class PhpDocMethod
      */
     public function getReturnType()
     {
-        return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
+        return new PhpDocType($this->phpDocParser, $this->definition[1] ?? null);
     }
 
     /**
@@ -94,6 +94,6 @@ class PhpDocMethod
      */
     public function getDescription()
     {
-        return isset($this->definition[4]) ? $this->definition[4] : '';
+        return $this->definition[4] ?? '';
     }
 }

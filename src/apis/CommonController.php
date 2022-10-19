@@ -57,7 +57,7 @@ class CommonController extends RestController
         return [
             'response' => $response,
             'button' => $button,
-            'message' => $button->response ? $button->response : Module::t('admin_button_execute', ['label' => $button->originalLabel]),
+            'message' => $button->response ?: Module::t('admin_button_execute', ['label' => $button->originalLabel]),
         ];
     }
 

@@ -2,6 +2,6 @@
     <div class="card-columns">
     <?php foreach ($items as $dashboard): /* @var $dashboard \luya\admin\base\DashboardObjectInterface */ ?>
     	<?= $dashboard->getTemplate(); ?>
-    <?php endforeach; ?>
+<?php endforeach; ?>
     </div>
 </div>

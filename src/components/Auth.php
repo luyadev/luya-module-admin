@@ -39,7 +39,7 @@ class Auth extends \yii\base\Component
      */
     public const CAN_DELETE = 3;
 
-    private $_permissionTable = [];
+    private array $_permissionTable = [];
 
     /**
      * Get all permissions entries for the given User.

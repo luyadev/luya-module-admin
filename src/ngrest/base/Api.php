@@ -455,9 +455,9 @@ class Api extends RestActiveController
     {
         // returns an array with the names of the primary keys
         $keys = $modelClass::primaryKey();
-        if (count($keys) > 1) {
+        if ((is_countable($keys) ? count($keys) : 0) > 1) {
             $values = explode(',', $id);
-            if (count($keys) === count($values)) {
+            if ((is_countable($keys) ? count($keys) : 0) === count($values)) {
                 return $this->findModelFromCondition($values, $keys, $modelClass, $relationContext);
             }
         } elseif ($id !== null) {
@@ -788,6 +788,8 @@ class Api extends RestActiveController
      */
     public function actionExport()
     {
+        $extension = null;
+        $mime = null;
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
         $attributes = Yii::$app->request->getBodyParam('attributes', []);

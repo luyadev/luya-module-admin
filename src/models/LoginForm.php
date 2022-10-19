@@ -49,7 +49,7 @@ final class LoginForm extends Model
     /**
      * @var integer The number of attempts this user has already made.
      */
-    protected $attempts = 0;
+    protected int $attempts = 0;
 
     /**
      * @inheritdoc
@@ -224,7 +224,7 @@ final class LoginForm extends Model
     }
 
 
-    private $_user = false;
+    private bool $_user = false;
 
     /**
      * @return boolean|User

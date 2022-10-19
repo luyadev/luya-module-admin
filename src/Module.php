@@ -442,7 +442,7 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
         return $translations;
     }
 
-    private $_reloadButtons = [];
+    private array $_reloadButtons = [];
 
     /**
      * Set an array of relaod buttons with a callback function to run on click.

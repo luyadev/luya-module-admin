@@ -259,9 +259,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
             [['is_request_logger_enabled'], 'boolean'],
             [['email_verification_token_timestamp', 'login_attempt', 'login_attempt_lock_expiration', 'is_deleted', 'is_api_user', 'password_verification_token', 'password_verification_token_timestamp'], 'integer'],
             [['email_verification_token', 'secure_token', 'password_verification_token'], 'string', 'length' => 40],
-            [['password'], StrengthValidator::class, 'when' => function () {
-                return Module::getInstance()->strongPasswordPolicy;
-            }, 'on' => ['restcreate', 'restupdate', 'default']],
+            [['password'], StrengthValidator::class, 'when' => fn () => Module::getInstance()->strongPasswordPolicy, 'on' => ['restcreate', 'restupdate', 'default']],
             [['login_2fa_enabled'], 'integer'],
         ];
     }

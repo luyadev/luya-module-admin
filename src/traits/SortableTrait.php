@@ -55,10 +55,7 @@ trait SortableTrait
             $pkName = current($event->sender->primaryKey());
             $this->reIndex($event, self::sortableField(), $pkName);
             $transaction->commit();
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        } catch (\Throwable $e) {
+        } catch (\Exception|\Throwable $e) {
             $transaction->rollBack();
             throw $e;
         }
@@ -136,10 +133,7 @@ trait SortableTrait
 
             $this->reIndex($event, $attributeName, $pkName);
             $transaction->commit();
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        } catch (\Throwable $e) {
+        } catch (\Exception|\Throwable $e) {
             $transaction->rollBack();
             throw $e;
         }

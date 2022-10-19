@@ -185,7 +185,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $this->can(Auth::CAN_DELETE);
     }
 
-    private $_relationCall = false;
+    private bool $_relationCall = false;
 
     /**
      * @inheritdoc
@@ -203,7 +203,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         $this->_relationCall = $options;
     }
 
-    private $_isInline = false;
+    private bool $_isInline = false;
 
     /**
      * @inheritdoc
@@ -239,7 +239,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $this->_modelSelection;
     }
 
-    private $_settingButtonDefinitions = [];
+    private array $_settingButtonDefinitions = [];
 
     /**
      * @inheritdoc
@@ -383,7 +383,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
     // generic methods
 
-    private $_canTypes = [];
+    private array $_canTypes = [];
 
     /**
      * Checks whether a given type can or can not.
@@ -546,12 +546,12 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
 
         // get all activeWindows assign to the crud
         foreach ($this->getActiveWindows() as $hash => $config) {
-            if ((isset($config['objectConfig']['permissionLevel']) && $config['objectConfig']['permissionLevel'] == '') || $this->can(isset($config['objectConfig']['permissionLevel']) ? $config['objectConfig']['permissionLevel'] : Auth::CAN_UPDATE)) {
+            if ((isset($config['objectConfig']['permissionLevel']) && $config['objectConfig']['permissionLevel'] == '') || $this->can($config['objectConfig']['permissionLevel'] ?? Auth::CAN_UPDATE)) {
                 $buttons[] = [
-                    'ngShow' => $this->listContextVariablize(isset($config['objectConfig']['condition']) ? $config['objectConfig']['condition'] : ''),
+                    'ngShow' => $this->listContextVariablize($config['objectConfig']['condition'] ?? ''),
                     'ngClick' => 'getActiveWindow(\''.$hash.'\', '.$this->getCompositionKeysForButtonActions('item').')',
-                    'icon' => isset($config['objectConfig']['icon']) ? $config['objectConfig']['icon'] : $config['icon'],
-                    'label' => isset($config['objectConfig']['label']) ? $config['objectConfig']['label'] : $config['label'],
+                    'icon' => $config['objectConfig']['icon'] ?? $config['icon'],
+                    'label' => $config['objectConfig']['label'] ?? $config['label'],
                 ];
             }
         }
@@ -597,7 +597,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     {
         $pools = $this->getModel()->ngRestPools();
         $pool = Yii::$app->request->get('pool');
-        return isset($pools[$pool]) ? $pools[$pool] : [];
+        return $pools[$pool] ?? [];
     }
 
     /**
@@ -622,7 +622,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             }
         }
         // do we have extra fields to expand
-        if (count($this->config->getPointerExtraFields($type)) > 0) {
+        if ((is_countable($this->config->getPointerExtraFields($type)) ? count($this->config->getPointerExtraFields($type)) : 0) > 0) {
             $query['expand'] = implode(',', $this->config->getPointerExtraFields($type));
         }
 
@@ -637,7 +637,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return http_build_query($query, '', '&');
     }
 
-    private $_fields = [];
+    private array $_fields = [];
 
     /**
      * Short hand method to get all fields for a certain type context
@@ -816,6 +816,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     private function evalGroupFields($pointerElements)
     {
+        $groups = [];
         if (!$pointerElements) {
             return [];
         }

@@ -57,7 +57,7 @@ class RenderCrudView extends View
             'orderBy' => $this->context->getOrderBy(),
             'tableName' => $this->context->getConfig()->getTableName(),
             'groupBy' => $this->context->getConfig()->getGroupByField() ? 1 : 0,
-            'groupByField' => $this->context->getConfig()->getGroupByField() ? $this->context->getConfig()->getGroupByField() : '0',
+            'groupByField' => $this->context->getConfig()->getGroupByField() ?: '0',
             'groupByExpanded' => $this->context->getConfig()->getGroupByExpanded(),
             'filter' => '0',
             'filters' => $this->context->getConfig()->getFilters(),

@@ -17,13 +17,13 @@ use yii\helpers\VarDumper;
 zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scope) {
 
 	$scope.pie = false;
-	
+
     $scope.loadPieCharts = function() {
         $scope.$parent.sendActiveWindowCallback('pie').then(function(response) {
             $scope.pie = response.data;
         });
     };    
-    
+
     $scope.loadPieCharts();
 }]);
 </script>
@@ -155,12 +155,12 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			    			<td>-</td>
 			    			<td><?= is_scalar($value) ? Html::encode($value) : VarDumper::dumpAsString($value); /* format data with formatter based on variable type */ ?></td>
 			    		</tr>
-			    		<?php endforeach; ?>
+<?php endforeach; ?>
 				    <?php elseif ($log->is_update): ?>
 				    	<?php $changes = false;
-				    	foreach ($log->attributes_json as $key => $value): $oldValue = $log->attributesAttributeDiff($key);
-				    	if (empty($oldValue)): continue; endif;
-				    	$changes = true; ?>
+				        foreach ($log->attributes_json as $key => $value): $oldValue = $log->attributesAttributeDiff($key);
+				            if (empty($oldValue)): continue; endif;
+				            $changes = true; ?>
 			    		<tr>
 			    			<td><?= $key; ?></td>
 			    			<td><?= is_scalar($oldValue) ? Html::encode($oldValue) : VarDumper::dumpAsString($oldValue); ?></td>

@@ -135,6 +135,7 @@ final class UserSetting extends BaseObject implements \ArrayAccess
      */
     public function remove($key)
     {
+        $lastArray = [];
         if ($this->has($key)) {
             $array = &$this->data;
             foreach (explode(self::SEPERATOR, $key) as $item) {

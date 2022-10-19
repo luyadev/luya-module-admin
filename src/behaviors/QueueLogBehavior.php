@@ -106,7 +106,7 @@ class QueueLogBehavior extends Behavior
      */
     protected function getJobTitle(JobEvent $event)
     {
-        return $event->job instanceof JobInterface ? get_class($event->job) : 'Unknown job Title';
+        return $event->job instanceof JobInterface ? $event->job !== null ? get_class($event->job) : self::class : 'Unknown job Title';
     }
 
     /**

@@ -39,7 +39,7 @@ class Datetime extends Plugin
      */
     public function renderList($id, $ngModel)
     {
-        $format = $this->format ? $this->format : Yii::$app->formatter->datetimeFormat;
+        $format = $this->format ?: Yii::$app->formatter->datetimeFormat;
 
         return [
             $this->createTag('span', null, ['ng-show' => $ngModel, 'ng-bind' => $ngModel."*1000 | date : '$format'"]),

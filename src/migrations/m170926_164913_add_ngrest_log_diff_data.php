@@ -13,8 +13,8 @@ class m170926_164913_add_ngrest_log_diff_data extends Migration
 
     public function safeDown()
     {
-        $this->dropColumn('{{%admin_ngrest_log}}', 'attributes_diff_json', $this->text());
-        $this->dropColumn('{{%admin_ngrest_log}}', 'pk_value', $this->string());
-        $this->dropColumn('{{%admin_ngrest_log}}', 'table_name', $this->string());
+        $this->dropColumn('{{%admin_ngrest_log}}', 'attributes_diff_json');
+        $this->dropColumn('{{%admin_ngrest_log}}', 'pk_value');
+        $this->dropColumn('{{%admin_ngrest_log}}', 'table_name');
     }
 }

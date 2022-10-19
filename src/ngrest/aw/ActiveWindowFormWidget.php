@@ -152,7 +152,7 @@ class ActiveWindowFormWidget extends Widget
         // do we have option params for the button
         $params = (array_key_exists('params', $this->options)) ? $this->options['params'] : [];
         // create the angular controller name
-        $controller = $this->controllerName ? $this->controllerName : 'Controller'.Inflector::camelize($this->id) . Inflector::camelize($this->callback) . time();
+        $controller = $this->controllerName ?: 'Controller'.Inflector::camelize($this->id) . Inflector::camelize($this->callback) . time();
         // render and return the view with the specific params
         return $this->render('@admin/views/aws/base/_callbackForm', [
             'angularCrudControllerName' => $controller,

@@ -26,7 +26,7 @@ class ConfigBuilder implements ConfigBuilderInterface
 
     protected $config = [];
 
-    private $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
+    private array $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
 
     public function __construct($ngRestModelClass)
     {
@@ -92,7 +92,7 @@ class ConfigBuilder implements ConfigBuilderInterface
      */
     public function __call($name, $args)
     {
-        $args = (isset($args[0])) ? $args[0] : [];
+        $args = $args[0] ?? [];
 
         if (!is_array($args)) {
             throw new Exception("Ngrest plugin constructors must be provided as array config. Error in $name: $args");
@@ -197,6 +197,7 @@ class ConfigBuilder implements ConfigBuilderInterface
      */
     public function load($objectType)
     {
+        $config = [];
         if ($this->pointer !== 'aw') {
             throw new Exception('Register method can only be used in a pointer context.');
         }

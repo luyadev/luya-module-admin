@@ -51,7 +51,7 @@ class Storage
     public static function getUploadErrorMessage($errorId)
     {
         $messagesArray = self::getUploadErrorMessages();
-        return isset($messagesArray[$errorId]) ? $messagesArray[$errorId] : 'Unknown upload error.';
+        return $messagesArray[$errorId] ?? 'Unknown upload error.';
     }
 
     /**

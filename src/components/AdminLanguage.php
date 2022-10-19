@@ -144,14 +144,12 @@ class AdminLanguage extends Component
     public function getLanguages()
     {
         if ($this->_languages === null) {
-            $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, function () {
-                return Lang::find()
-                    ->where(['is_deleted' => false])
-                    ->indexBy('short_code')
-                    ->orderBy(['is_default' => SORT_DESC])
-                    ->asArray()
-                    ->all();
-            });
+            $this->_languages = $this->getOrSetHasCache(self::CACHE_KEY_QUERY_ALL, fn () => Lang::find()
+                ->where(['is_deleted' => false])
+                ->indexBy('short_code')
+                ->orderBy(['is_default' => SORT_DESC])
+                ->asArray()
+                ->all());
         }
 
         return $this->_languages;
@@ -165,7 +163,7 @@ class AdminLanguage extends Component
      */
     public function getLanguageByShortCode($shortCode)
     {
-        return isset($this->getLanguages()[$shortCode]) ? $this->getLanguages()[$shortCode] : false;
+        return $this->getLanguages()[$shortCode] ?? false;
     }
 
     /**

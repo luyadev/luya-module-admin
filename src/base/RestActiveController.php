@@ -49,7 +49,7 @@ class RestActiveController extends ActiveController implements UserBehaviorInter
         return [];
     }
 
-    private $_actionPermissions = [];
+    private array $_actionPermissions = [];
 
     /**
      * Add a permission with a function.

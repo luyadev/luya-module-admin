@@ -37,6 +37,6 @@ class PhpDocUses
      */
     public function getType()
     {
-        return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
+        return new PhpDocType($this->phpDocParser, $this->definition[1] ?? null);
     }
 }

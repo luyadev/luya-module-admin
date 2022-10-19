@@ -20,6 +20,6 @@ class m190327_140741_auth_pool_field extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%admin_auth}}', 'pool', $this->string());
+        $this->dropColumn('{{%admin_auth}}', 'pool');
     }
 }

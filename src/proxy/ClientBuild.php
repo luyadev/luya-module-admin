@@ -173,7 +173,7 @@ class ClientBuild extends BaseObject
         return $this->_buildConfig['storageFilesCount'];
     }
 
-    private $_tables = [];
+    private array $_tables = [];
 
     /**
      * @return ClientTable[]

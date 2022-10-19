@@ -131,7 +131,7 @@ final class Tag extends NgRestModel
      */
     public function getRelationsCount()
     {
-        return count($this->tagRelations);
+        return is_countable($this->tagRelations) ? count($this->tagRelations) : 0;
     }
 
     /**

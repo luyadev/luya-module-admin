@@ -52,7 +52,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         parent::init();
 
         if ($this->module === null) {
-            throw new Exception('The ActiveWindow property \'module\' of '.get_called_class().' can not be null. You have to defined the module in where the ActiveWindow is defined. For example `public $module = \'@admin\';`');
+            throw new Exception('The ActiveWindow property \'module\' of '.static::class.' can not be null. You have to defined the module in where the ActiveWindow is defined. For example `public $module = \'@admin\';`');
         }
     }
 
@@ -285,7 +285,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     public function getHashName()
     {
         if ($this->_hashName === null) {
-            $this->_hashName = sha1(get_called_class());
+            $this->_hashName = sha1(static::class);
         }
 
         return $this->_hashName;
@@ -372,7 +372,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
         return empty($this->_condition) ? '' : $this->_condition;
     }
 
-    private $_permissionLevel = Auth::CAN_UPDATE;
+    private int $_permissionLevel = Auth::CAN_UPDATE;
 
     /**
      * @inheritdoc

@@ -98,7 +98,7 @@ class SelectModel extends Select
      */
     public $where;
 
-    private static $_dataInstance = [];
+    private static array $_dataInstance = [];
 
     /**
      * Data DI Container for relation data.

@@ -69,7 +69,7 @@ class Config extends BaseObject implements ConfigInterface
         return $this->_model;
     }
 
-    private $_config = [];
+    private array $_config = [];
 
     /**
      * @inheritdoc
@@ -100,7 +100,7 @@ class Config extends BaseObject implements ConfigInterface
     {
         if ($this->_relations === null) {
             // ensure relations are made not on composite table.
-            if ($this->model->ngRestRelations() && count($this->getPrimaryKey()) > 1) {
+            if ($this->model->ngRestRelations() && (is_countable($this->getPrimaryKey()) ? count($this->getPrimaryKey()) : 0) > 1) {
                 throw new InvalidConfigException("Its not allowed to have ngRestRealtions() on models with composite primary keys.");
             }
 
@@ -133,7 +133,7 @@ class Config extends BaseObject implements ConfigInterface
         $this->_relations[] = $relation;
     }
 
-    private $_activeSelections = [];
+    private array $_activeSelections = [];
 
     /**
      * Set all active selection definitions
@@ -223,7 +223,7 @@ class Config extends BaseObject implements ConfigInterface
         $this->_apiEndpoint = $apiEndpoint;
     }
 
-    private $_attributeGroups = false;
+    private bool $_attributeGroups = false;
 
     /**
      * @inheritdoc
@@ -242,7 +242,7 @@ class Config extends BaseObject implements ConfigInterface
         $this->_attributeGroups = $groups;
     }
 
-    private $_attributeLabels = [];
+    private array $_attributeLabels = [];
 
     /**
      * @inheritdoc

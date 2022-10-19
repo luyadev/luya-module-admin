@@ -186,8 +186,8 @@ class StorageController extends RestController
             throw new InvalidArgumentException("Invalid Params");
         }
 
-        list($type, $data) = explode(';', $data);
-        list(, $data) = explode(',', $data);
+        [$type, $data] = explode(';', $data);
+        [, $data] = explode(',', $data);
         $data = base64_decode($data);
 
         if (!$saveAsCopy && $fileId) {
@@ -499,7 +499,7 @@ class StorageController extends RestController
         $response = Storage::moveFilesToFolder($fileIds, $toFolderId);
         $this->flushApiCache($currentFolderId, $currentPageId);
         $this->flushApiCache($toFolderId, $currentPageId);
-        $this->flushHasCache($toFolderId, 0);
+        $this->flushHasCache();
         return $response;
     }
 

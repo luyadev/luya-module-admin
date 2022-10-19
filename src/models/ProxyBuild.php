@@ -116,7 +116,7 @@ class ProxyBuild extends NgRestModel
      */
     public function getTableConfig($table)
     {
-        return isset($this->arrayConfig['tables'][$table]) ? $this->arrayConfig['tables'][$table] : false;
+        return $this->arrayConfig['tables'][$table] ?? false;
     }
 
     /**

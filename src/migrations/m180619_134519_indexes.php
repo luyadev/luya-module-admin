@@ -24,6 +24,6 @@ class m180619_134519_indexes extends Migration
     {
         $this->dropIndex('admin_storage_image_index1', '{{%admin_storage_image}}');
         $this->dropIndex('admin_storage_file_index1', '{{%admin_storage_file}}');
-        $this->dropIndex('admin_storage_file_index2', '{{%admin_storage_file}}', ['is_deleted', 'id']);
+        $this->dropIndex('admin_storage_file_index2', '{{%admin_storage_file}}');
     }
 }

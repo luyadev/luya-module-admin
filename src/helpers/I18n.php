@@ -158,7 +158,7 @@ class I18n
      */
     public static function findActive(array $fieldValues, $onEmptyValue = '', $lang = null)
     {
-        $langShortCode = $lang ? $lang : Yii::$app->adminLanguage->getActiveShortCode();
+        $langShortCode = $lang ?: Yii::$app->adminLanguage->getActiveShortCode();
 
         return array_key_exists($langShortCode, $fieldValues) ? $fieldValues[$langShortCode] : $onEmptyValue;
     }

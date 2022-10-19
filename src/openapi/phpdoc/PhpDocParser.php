@@ -102,7 +102,7 @@ class PhpDocParser
      */
     public function getMethod($name)
     {
-        return isset($this->getMethods()[$name]) ? $this->getMethods()[$name] : false;
+        return $this->getMethods()[$name] ?? false;
     }
 
     /**

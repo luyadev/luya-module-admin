@@ -73,7 +73,7 @@ $filters = Angular::optionsArrayInput($filters);
             <?php if ($this->context->description): ?>
                 <p class="text-muted"><?= Markdown::processParagraph($this->context->description); ?></p>
             <?php endif; ?>
-        <?php endif; ?>
+<?php endif; ?>
         <ul class="nav nav-tabs nav-tabs-mobile-icons">
             <li class="nav-item">
                 <a class="nav-link" ng-class="{'active':crudSwitchType==0}" ng-click="switchTo(0, true)">
@@ -201,7 +201,7 @@ $filters = Angular::optionsArrayInput($filters);
                     <tbody ng-repeat="(key, items) in data.listArray | groupBy: config.groupByField" ng-init="viewToggler[key]=config.groupByExpanded">
                         <tr ng-if="config.groupBy" class="table-group" ng-click="viewToggler[key]=!viewToggler[key]">
                             <?php foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif; ?>
-                            <td ng-init="item=items[0]" ng-if="config.groupByField=='<?= $item['name']; ?>'" colspan="<?= count($config->getPointer('list')) + 1 ?>">
+                            <td ng-init="item=items[0]" ng-if="config.groupByField=='<?= $item['name']; ?>'" colspan="<?= (is_countable($config->getPointer('list')) ? count($config->getPointer('list')) : 0) + 1 ?>">
                                 <strong><?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?></strong>
                                 <i class="material-icons float-right pt-1" ng-show="!viewToggler[key]">keyboard_arrow_right</i>
                                 <i class="material-icons float-right pt-1" ng-show="viewToggler[key]">keyboard_arrow_down</i>
@@ -223,8 +223,8 @@ $filters = Angular::optionsArrayInput($filters);
                             </td>
                             <?php endif; ?>
                             <?php $i = 0;
-                            foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif;
-                            $i++; ?>
+foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInList($item)): continue; endif;
+    $i++; ?>
                                 <?php $cellColor = ($this->context->getColors($item))['cellColor'];?>
                                 <td ng-class="{'table-info':isRowHighlighted(item)}" <?php if ($isInline && !$relationCall && $modelSelection !== false): ?>ng-click="parentSelectInline(item)" <?php endif; ?> class="<?= $i != 1 ?: 'tab-padding-left'; ?>" <?php if ($cellColor): ?>ng-style='{"background-color": getParsedCellColor(item, <?= Json::HtmlEncode($cellColor)?>)}' <?php endif; ?> >
                                     <?= $this->context->generatePluginHtml($item, RenderCrud::TYPE_LIST); ?>

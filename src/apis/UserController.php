@@ -133,7 +133,7 @@ class UserController extends Api
             return $this->sendArrayError(['verificaton' => Module::t('user_register_2fa_verification_error')]);
         }
 
-        $code = rand(1000000, 9999999);
+        $code = random_int(1_000_000, 9_999_999);
         $backupKey = Yii::$app->security->generatePasswordHash($code);
 
         $user->login_2fa_enabled = 1;

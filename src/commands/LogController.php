@@ -74,7 +74,7 @@ class LogController extends Command
     /**
      * @var array The list of log tables with timestamp field definition.
      */
-    private $_dbLogTables = [
+    private array $_dbLogTables = [
         'admin_ngrest_log' => 'timestamp_create',
         'cms_log' => 'timestamp',
     ];

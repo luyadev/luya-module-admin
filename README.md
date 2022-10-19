@@ -34,6 +34,8 @@ For the installation of modules Composer is required.
 composer require luyadev/luya-module-admin
 ```
 
+> Minum PHP Version 7.4 is required for `luya-module-admin`
+
 ### Configuration 
 
 After installation via Composer include the module to your configuration file within the modules section.

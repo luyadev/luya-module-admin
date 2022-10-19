@@ -27,6 +27,7 @@ class FilterController extends Command
      */
     public function actionIndex()
     {
+        $tempName = null;
         if ($this->identifier === null) {
             $this->identifier = Inflector::variablize($this->prompt('Enter the filter identifier: (e.g. profilePicture)', ['required' => true, 'pattern' => '/^[a-zA-Z0-9]+$/i', 'error' => 'The filter identifer can only contain a-z,A-Z,0-9']));
         }

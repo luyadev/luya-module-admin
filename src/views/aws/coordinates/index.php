@@ -6,7 +6,7 @@ use luya\admin\ngrest\aw\ActiveWindowFormWidget;
 <h1>Maps</h1>
 
 <?php $form = ActiveWindowFormWidget::begin(['callback' => 'get-coordinates', 'buttonValue' => 'Verify', 'angularCallbackFunction' => 'function($response) {
-    
+
     initMap($response.cords);
 
 };']); ?>

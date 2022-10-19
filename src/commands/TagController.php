@@ -99,7 +99,7 @@ class TagController extends Command
         return $this->outputSuccess("{$i} items checked and {$delete} items deleted.");
     }
 
-    private $_schemas = [];
+    private array $_schemas = [];
 
     private function tableSchema($tableName)
     {

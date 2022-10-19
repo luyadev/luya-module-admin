@@ -99,7 +99,7 @@ final class StorageFilter extends NgRestModel
 
         foreach (StorageFilterChain::find()->where(['filter_id' => $this->id])->with(['effect'])->all() as $chain) {
             // apply filter
-            list($image, $saveOptions) = $chain->applyFilter($image, $saveOptions);
+            [$image, $saveOptions] = $chain->applyFilter($image, $saveOptions);
         }
 
         // auto rotate & save

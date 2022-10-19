@@ -107,7 +107,7 @@ class DummyFileSystem extends BaseFileSystemStorage
         return true;
     }
 
-    private $_files = [];
+    private array $_files = [];
 
     /**
      * Add a dummy file.
@@ -135,7 +135,7 @@ class DummyFileSystem extends BaseFileSystemStorage
         $this->setFilesArray($this->_files);
     }
 
-    private $_images = [];
+    private array $_images = [];
 
     /**
      * Add dummy image.

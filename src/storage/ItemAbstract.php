@@ -20,7 +20,7 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
 {
     use ArrayableTrait;
 
-    private $_itemArray = [];
+    private array $_itemArray = [];
 
     /**
      * Setter method for itemArray property.

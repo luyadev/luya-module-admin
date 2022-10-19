@@ -168,7 +168,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config['as ' . $name] = $class;
         }
 
-        return new NgRestActiveQuery(get_called_class(), $config);
+        return new NgRestActiveQuery(static::class, $config);
     }
 
     /**
@@ -198,7 +198,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         return in_array($attributeName, $this->i18n);
     }
 
-    private $_i18nOldValues = [];
+    private array $_i18nOldValues = [];
 
     /**
      * Set the old json value from a i18n database value.
@@ -541,7 +541,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public static function ngRestFind()
     {
-        return new NgRestActiveQuery(get_called_class());
+        return new NgRestActiveQuery(static::class);
     }
 
     /**
@@ -578,7 +578,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public function ngRestFullQuerySearch($query)
     {
-        $find = $this->ngRestFind();
+        $find = static::ngRestFind();
 
         $operand = [];
         foreach ($this->genericSearchFields() as $column) {
@@ -596,7 +596,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     public function genericSearchFields()
     {
         $fields = [];
-        foreach ($this->getTableSchema()->columns as $name => $object) {
+        foreach (static::getTableSchema()->columns as $name => $object) {
             if ($object->phpType == 'string' || $object->phpType == 'integer') {
                 $fields[] = static::tableName() . '.' . $object->name;
             }
@@ -695,7 +695,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
         if ($this->_ngRestPrimaryKey === null) {
             $keys = static::primaryKey();
             if (!isset($keys[0])) {
-                throw new InvalidConfigException("The NgRestModel '".__CLASS__."' requires at least one primaryKey in order to work.");
+                throw new InvalidConfigException("The NgRestModel '".self::class."' requires at least one primaryKey in order to work.");
             }
 
             return (array) $keys;
@@ -1211,7 +1211,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
             $config->setAttributeGroups($this->ngRestAttributeGroups());
             $config->setGroupByField($this->ngRestGroupByField());
             $config->setGroupByExpanded($this->ngRestGroupByExpanded());
-            $config->setTableName($this->tableName());
+            $config->setTableName(static::tableName());
             $config->setAttributeLabels($this->attributeLabels());
             $config->setActiveSelections($this->ngRestActiveSelections());
 
@@ -1260,6 +1260,6 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     {
         $relations = $this->generateNgRestRelations();
 
-        return isset($relations[$index]) ? $relations[$index] : false;
+        return $relations[$index] ?? false;
     }
 }

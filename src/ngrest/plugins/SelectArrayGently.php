@@ -47,7 +47,7 @@ class SelectArrayGently extends Select
     /**
      * @var array Private property to store dropdown values
      */
-    private $_data;
+    private ?array $_data = null;
 
     /**
      * @inheritdoc

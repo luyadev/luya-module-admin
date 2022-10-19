@@ -251,6 +251,7 @@ class SetupController extends \luya\console\Command
      */
     public function actionResetPassword()
     {
+        $email = null;
         /** @var User $user */
         $user = null;
 

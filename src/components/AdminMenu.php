@@ -179,7 +179,7 @@ class AdminMenu extends \yii\base\Component
 
                 // see if the groups has items
                 foreach ($item['groups'] as $groupName => $groupItem) {
-                    if (count($groupItem['items']) > 0) {
+                    if ((is_countable($groupItem['items']) ? count($groupItem['items']) : 0) > 0) {
                         foreach ($groupItem['items'] as $groupItemEntry) {
                             if ($groupItemEntry['permissionIsRoute']) {
                                 // when true, set permissionGranted to true
@@ -232,7 +232,7 @@ class AdminMenu extends \yii\base\Component
     }
 
 
-    private $_nodeItems = [];
+    private array $_nodeItems = [];
 
     /**
      * Returns the node with a groups array where each groups contains an items array with the item.
@@ -292,7 +292,7 @@ class AdminMenu extends \yii\base\Component
                 }
 
                 // if there are no items for this group, unset the group from the data array
-                if (count($data['groups'][$groupName]['items']) == 0) {
+                if ((is_countable($data['groups'][$groupName]['items']) ? count($data['groups'][$groupName]['items']) : 0) == 0) {
                     unset($data['groups'][$groupName]);
                 }
             }

@@ -84,7 +84,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
         $customVars = [];
         foreach ($this->variables as $key => $value) {
             if (is_array($value)) {
-                list($category, $message) = $value;
+                [$category, $message] = $value;
                 $customVars[$key] = Yii::t($category, $message);
             } else {
                 $customVars[$key] = is_callable($value) ? call_user_func($value, $content, $this) : $value;
@@ -133,7 +133,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
     public function setTitle($title)
     {
         if (is_array($title)) {
-            list($category, $message) = $title;
+            [$category, $message] = $title;
             $this->_title =  Yii::t($category, $message);
         } else {
             $this->_title = $title;

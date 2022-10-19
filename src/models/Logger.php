@@ -212,7 +212,7 @@ final class Logger extends NgRestModel
         ];
     }
 
-    private static $identiferIndex = [];
+    private static array $identiferIndex = [];
 
     private static $requestIdentifier;
 

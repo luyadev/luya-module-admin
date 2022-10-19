@@ -117,12 +117,12 @@ class Jwt extends JwtJwt
 
     private function getAudience()
     {
-        return $this->audience ? $this->audience : Yii::$app->request->hostInfo;
+        return $this->audience ?: Yii::$app->request->hostInfo;
     }
 
     private function getIssuer()
     {
-        return $this->issuer ? $this->issuer : Yii::$app->request->hostInfo;
+        return $this->issuer ?: Yii::$app->request->hostInfo;
     }
 
     /**

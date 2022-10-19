@@ -62,7 +62,7 @@ class Image extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-image-upload', $id, $ngModel, ['options' => json_encode(['no_filter' => !$this->filter])]);
+        return $this->createFormTag('zaa-image-upload', $id, $ngModel, ['options' => json_encode(['no_filter' => !$this->filter], JSON_THROW_ON_ERROR)]);
     }
 
     /**

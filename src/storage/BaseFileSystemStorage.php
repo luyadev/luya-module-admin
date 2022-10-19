@@ -361,7 +361,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFilesArrayItem($fileId)
     {
-        return isset($this->filesArray[$fileId]) ? $this->filesArray[$fileId] : false;
+        return $this->filesArray[$fileId] ?? false;
     }
 
     private $_imagesArray;
@@ -402,7 +402,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getImagesArrayItem($imageId)
     {
-        return isset($this->imagesArray[$imageId]) ? $this->imagesArray[$imageId] : false;
+        return $this->imagesArray[$imageId] ?? false;
     }
 
     /**
@@ -818,7 +818,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFoldersArrayItem($folderId)
     {
-        return (isset($this->foldersArray[$folderId])) ? $this->foldersArray[$folderId] : false;
+        return $this->foldersArray[$folderId] ?? false;
     }
 
     /**
@@ -923,7 +923,7 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function getFiltersArrayItem($filterIdentifier)
     {
-        return isset($this->filtersArray[$filterIdentifier]) ? $this->filtersArray[$filterIdentifier] : false;
+        return $this->filtersArray[$filterIdentifier] ?? false;
     }
 
     /**

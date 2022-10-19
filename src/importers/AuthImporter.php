@@ -21,7 +21,7 @@ class AuthImporter extends Importer
             $object = Yii::$app->getModule($id);
             if (method_exists($object, 'getAuthApis')) {
                 foreach ($object->getAuthApis() as $item) {
-                    $ids[] = Yii::$app->auth->addApi($object->id, $item['api'], $item['alias'], isset($item['pool']) ? $item['pool'] : null);
+                    $ids[] = Yii::$app->auth->addApi($object->id, $item['api'], $item['alias'], $item['pool'] ?? null);
                 }
             }
 
@@ -33,7 +33,7 @@ class AuthImporter extends Importer
         }
 
         $toClean = Yii::$app->auth->prepareCleanup($ids);
-        if (count($toClean) > 0) {
+        if ((is_countable($toClean) ? count($toClean) : 0) > 0) {
             foreach ($toClean as $rule) {
                 $this->addLog('Deleted old menu auth rule "'.$rule['alias_name'].'" in module '.$rule['module_name'].'.');
             }

@@ -93,7 +93,7 @@ class ActiveRecordToSchema
 
             if ($object) {
                 $config = $this->baseSpecs->createSchemaFromActiveRecordToSchemaObject($object, $type->getIsArray());
-                $config['title'] = $property->getDescription() ? $property->getDescription() : $type->getClassPhpDocParser()->getShortSummary();
+                $config['title'] = $property->getDescription() ?: $type->getClassPhpDocParser()->getShortSummary();
                 $config['description'] = $type->getClassPhpDocParser()->getLongDescription(); // @TODO veryify if <br> or PHP_EOL (\n) works, redoc seems to work with <br/>
                 return new Schema($config);
             }

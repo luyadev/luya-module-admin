@@ -49,7 +49,7 @@ class PhpDocParam
      */
     public function getDescription()
     {
-        return isset($this->definition[3]) ? $this->definition[3] : '';
+        return $this->definition[3] ?? '';
     }
 
     /**
@@ -59,6 +59,6 @@ class PhpDocParam
      */
     public function getType()
     {
-        return new PhpDocType($this->phpDocParser, isset($this->definition[1]) ? $this->definition[1] : null);
+        return new PhpDocType($this->phpDocParser, $this->definition[1] ?? null);
     }
 }

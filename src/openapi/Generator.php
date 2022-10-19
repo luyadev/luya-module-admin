@@ -96,7 +96,7 @@ class Generator extends Component
         $this->controllerMap = $controllerMap;
     }
 
-    private $_assignedUrlRules = [];
+    private array $_assignedUrlRules = [];
 
     /**
      * Assign an existing Rule to the UrlRules
@@ -201,9 +201,9 @@ class Generator extends Component
         }
     }
 
-    private $_paths = [];
+    private array $_paths = [];
 
-    private $_routes = [];
+    private array $_routes = [];
 
     /**
      * Add a path to the paths array

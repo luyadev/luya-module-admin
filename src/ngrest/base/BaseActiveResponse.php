@@ -18,7 +18,7 @@ abstract class BaseActiveResponse extends BaseObject
      */
     public const EVENT_RELOAD_LIST = 'loadList';
 
-    private $_events = [];
+    private array $_events = [];
 
     /**
      * Send a CRUD reload event.

@@ -62,6 +62,6 @@ final class StorageFilterImagesActiveWindow extends ActiveWindow
 
         Yii::$app->storage->flushArrays();
 
-        return $this->sendSuccess("Removed ".count($log)." images for filter {$this->model->name}");
+        return $this->sendSuccess("Removed ".(is_countable($log) ? count($log) : 0)." images for filter {$this->model->name}");
     }
 }

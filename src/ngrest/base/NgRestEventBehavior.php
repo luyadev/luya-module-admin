@@ -22,7 +22,7 @@ class NgRestEventBehavior extends Behavior
     /**
      * @var \luya\admin\ngrest\base\Plugin[] An array which holds all the plugin objects which are loaded after the active record has been initiliazed.
      */
-    private static $_pluginInstances = [];
+    private static array $_pluginInstances = [];
 
     /**
      * @inheritdoc

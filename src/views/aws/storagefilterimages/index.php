@@ -3,10 +3,10 @@ use luya\admin\ngrest\aw\CallbackButtonWidget;
 
 /* @var $model \luya\admin\models\StorageFilter */
 ?>
-<?php if (count($images) == 0): ?>
+<?php if ((is_countable($images) ? count($images) : 0) == 0): ?>
     <div class="alert alert-warning">No images has been generated for this filter yet.</div>
 <?php else: ?>
-<?= CallbackButtonWidget::widget(['label' => '<i class="material-icons">delete</i><span>Remove '.count($images).' Images</span>', 'callback' => 'remove', 'options' => ['class' => 'btn btn-delete']]); ?>
+<?= CallbackButtonWidget::widget(['label' => '<i class="material-icons">delete</i><span>Remove '.(is_countable($images) ? count($images) : 0).' Images</span>', 'callback' => 'remove', 'options' => ['class' => 'btn btn-delete']]); ?>
     <table class="table table-striped table-bordered mt-3">
         <thead>
             <tr>
@@ -22,7 +22,7 @@ use luya\admin\ngrest\aw\CallbackButtonWidget;
                     <td><a target="_blank" href="<?= $image->source; ?>"><?= $image->source; ?></a></td>
                     <td><?= $image->caption; ?></td>
                 </tr>
-            <?php endforeach; ?>
+<?php endforeach; ?>
         </tbody>
     </table>
 <?php endif; ?>

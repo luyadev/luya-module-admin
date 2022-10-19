@@ -113,7 +113,7 @@ class ToggleStatus extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-checkbox', $id, $ngModel, ['options' => json_encode(['true-value' => $this->trueValue, 'false-value' => $this->falseValue]), 'initvalue' => $this->initValue]);
+        return $this->createFormTag('zaa-checkbox', $id, $ngModel, ['options' => json_encode(['true-value' => $this->trueValue, 'false-value' => $this->falseValue], JSON_THROW_ON_ERROR), 'initvalue' => $this->initValue]);
     }
 
     /**

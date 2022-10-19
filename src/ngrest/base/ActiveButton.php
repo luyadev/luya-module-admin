@@ -146,7 +146,7 @@ abstract class ActiveButton extends BaseActiveResponse implements NgRestButtonCo
         return empty($this->_condition) ? '' : $this->_condition;
     }
 
-    private $_permissionLevel = Auth::CAN_UPDATE;
+    private int $_permissionLevel = Auth::CAN_UPDATE;
 
     /**
      * @inheritdoc

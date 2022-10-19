@@ -127,8 +127,8 @@ class NgrestLog extends NgRestModel
 
     public function attributesAttributeDiff($attribute)
     {
-        $oldValue = isset($this->attributes_diff_json[$attribute]) ? $this->attributes_diff_json[$attribute] : null;
-        $newValue = isset($this->attributes_json[$attribute]) ? $this->attributes_json[$attribute] : null;
+        $oldValue = $this->attributes_diff_json[$attribute] ?? null;
+        $newValue = $this->attributes_json[$attribute] ?? null;
 
         if ($oldValue == $newValue) {
             return false;
@@ -159,24 +159,18 @@ class NgrestLog extends NgRestModel
                 'attributes' => [
                     [
                         'attribute' => 'user_id',
-                        'value' => function ($model) {
-                            return $model->user->email;
-                        }
+                        'value' => fn ($model) => $model->user->email
                     ],
                     'timestamp_create:datetime',
                     'route',
                     'api',
                     [
                         'attribute' => 'attributes_json',
-                        'value' => function ($model) {
-                            return is_array($model->attributes_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json)) : $model->attributes_json;
-                        }
+                        'value' => fn ($model) => is_array($model->attributes_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_json)) : $model->attributes_json
                     ],
                     [
                         'attribute' => 'attributes_diff_json',
-                        'value' => function ($model) {
-                            return is_array($model->attributes_diff_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json)) : $model->attributes_diff_json;
-                        }
+                        'value' => fn ($model) => is_array($model->attributes_diff_json) ? VarDumper::dumpAsString(ArrayHelper::coverSensitiveValues($model->attributes_diff_json)) : $model->attributes_diff_json
                     ],
                     'table_name:raw',
                     'pk_value:raw',

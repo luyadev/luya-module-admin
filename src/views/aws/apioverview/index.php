@@ -22,7 +22,7 @@ zaa.bootstrap.register('ApiOverviewController', ['$scope', '$http', 'AdminToastS
     };
 
     $scope.response;
-    
+
     $scope.runRequest = function() {
         if (!$scope.requestUrl) {
             AdminToastService.error("Request URL can not be empty.");

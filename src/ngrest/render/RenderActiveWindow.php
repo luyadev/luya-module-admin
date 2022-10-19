@@ -101,6 +101,6 @@ class RenderActiveWindow extends Render
     {
         $activeWindows = $this->getConfig()->getPointer('aw');
 
-        return isset($activeWindows[$activeWindowHash]) ? $activeWindows[$activeWindowHash] : false;
+        return $activeWindows[$activeWindowHash] ?? false;
     }
 }

@@ -66,9 +66,7 @@ class LoginController extends Controller
         $behaviors['httpCache'] = [
             'class' => HttpCache::class,
             'cacheControlHeader' => 'no-store, no-cache',
-            'lastModified' => function ($action, $params) {
-                return time();
-            },
+            'lastModified' => fn ($action, $params) => time(),
         ];
 
         return $behaviors;
@@ -101,7 +99,7 @@ class LoginController extends Controller
             'autologout' => $autologout,
             'resetPassword' => $this->module->resetPassword,
             'disableLogin' => $this->module->disableLogin,
-            'disableLoginMessage' => $this->module->disableLoginMessage ? $this->module->disableLoginMessage : Module::t('disabled_login_text'),
+            'disableLoginMessage' => $this->module->disableLoginMessage ?: Module::t('disabled_login_text'),
         ]);
     }
 

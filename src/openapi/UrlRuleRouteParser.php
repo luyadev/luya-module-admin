@@ -140,7 +140,7 @@ class UrlRuleRouteParser extends BasePathParser
         return end($parts);
     }
 
-    private $_coveredRoutes = [];
+    private array $_coveredRoutes = [];
 
     private $_operations;
 

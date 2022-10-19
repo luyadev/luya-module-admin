@@ -534,8 +534,7 @@ class Angular
 
         // get all keys
         $parts = explode(".", $ngModel);
-        end($parts);
-        $key = key($parts);
+        $key = array_key_last($parts);
         // old last $field name
         $oldField = $parts[$key];
         if (StringHelper::endsWith($oldField, ']')) {

@@ -47,7 +47,7 @@ class ProxyMachine extends NgRestModel
     {
         if ($this->isNewRecord) {
             $this->identifier = uniqid('lcp');
-            $this->access_token = str_replace(['-', '_'], rand(1, 9), Yii::$app->security->generateRandomString(32));
+            $this->access_token = str_replace(['-', '_'], random_int(1, 9), Yii::$app->security->generateRandomString(32));
         }
     }
 
@@ -134,9 +134,7 @@ class ProxyMachine extends NgRestModel
                     [
                         'label' => 'cli',
                         'format' => 'html',
-                        'value' => function ($model) {
-                            return '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '</code>';
-                        }
+                        'value' => fn ($model) => '<code>admin/proxy --url='.Url::base(true).' --idf='.$model->identifier.' --token=' . $model->access_token . '</code>'
                     ]
                 ]
             ]
