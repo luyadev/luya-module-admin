@@ -30,7 +30,7 @@ jobs:
       - name: PHPStan tests
         run: composer phpstan
 
-    ## Rector
+  ## Rector
   rector:
     runs-on: ubuntu-latest
     steps:

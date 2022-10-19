@@ -826,7 +826,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             $names[$elmn['name']] = $elmn['name'];
         }
 
-        foreach ($this->getConfig()->getAttributeGroups()as $group) {
+        foreach ($this->getConfig()->getAttributeGroups() as $group) {
             foreach ($group[0] as $item) {
                 if (in_array($item, $names)) {
                     unset($names[$item]);

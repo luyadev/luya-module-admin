@@ -223,7 +223,7 @@ class Config extends BaseObject implements ConfigInterface
         $this->_apiEndpoint = $apiEndpoint;
     }
 
-    private bool $_attributeGroups = false;
+    private array $_attributeGroups = [];
 
     /**
      * @inheritdoc
