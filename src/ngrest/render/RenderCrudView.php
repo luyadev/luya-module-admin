@@ -60,6 +60,7 @@ class RenderCrudView extends View
             'groupByField' => $this->context->getConfig()->getGroupByField() ? $this->context->getConfig()->getGroupByField() : '0',
             'groupByExpanded' => $this->context->getConfig()->getGroupByExpanded(),
             'filter' => '0',
+            'filters' => $this->context->getConfig()->getFilters(),
             'fullSearchContainer' => false,
             'minLengthWarning' => false,
             'saveCallback' => $this->context->getConfig()->getOption('saveCallback') ? new JsExpression($this->context->getConfig()->getOption('saveCallback')) : false,
