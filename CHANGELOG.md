@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.6.1
+
++ [#735](https://github.com/luyadev/luya-module-admin/pull/735) Ensure a none existing filter does not throw an exception. This can be the case when generting dynamic filters and those are stored in the user settings.
+
 ## 4.6.0 (5. October 2022)
 
 + [#732](https://github.com/luyadev/luya-module-admin/pull/732) NgRest `Text` Plugins can now be turned into an interactive text field on the list (overview) of the CRUD with option `$inline = true`.

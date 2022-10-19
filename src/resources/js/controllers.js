@@ -617,7 +617,7 @@
 				$scope.config.orderBy = settings['order'];
 			}
 
-			if (settings.hasOwnProperty('filterName')) {
+			if (settings.hasOwnProperty('filterName') && $scope.config.filters.hasOwnProperty(settings.filterName)) {
 				$scope.config.filter = settings['filterName'];
 			}
 		};
