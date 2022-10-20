@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.7.1 (20. October 2022)
+
++ [#736](https://github.com/luyadev/luya-module-admin/issues/736) Fixed issue with relation calls, introduced in 4.7.0
+
 ## 4.7.0 (19. October 2022)
 
 + Fixed PHP 7.4 as minimum version in composer.json, this was previously done by the `bizley/jwt` dependency. Therefore using `rector` to align functionality with PHP 7.4.
