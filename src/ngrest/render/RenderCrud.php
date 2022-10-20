@@ -185,7 +185,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
         return $this->can(Auth::CAN_DELETE);
     }
 
-    private bool $_relationCall = false;
+    private $_relationCall;
 
     /**
      * @inheritdoc
