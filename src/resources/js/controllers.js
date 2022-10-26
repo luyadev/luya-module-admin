@@ -1242,7 +1242,7 @@
 
 		$scope.searchDetailClick = function(itemConfig, itemData) {
 			if (itemConfig.type === 'custom') {
-				$scope.click(itemConfig.menuItem).then(function() {
+				$scope.click(itemConfig.menuItem, true).then(function() {
 					if (itemConfig.stateProvider) {
 						var params = {};
 						angular.forEach(itemConfig.stateProvider.params, function(value, key) {
@@ -1258,7 +1258,7 @@
 				});
 
 			} else {
-				$scope.click(itemConfig.menuItem.module).then(function() {
+				$scope.click(itemConfig.menuItem.module, true).then(function() {
 					var res = itemConfig.menuItem.route.split("/");
 					$state.go('default.route', { moduleRouteId : res[0], controllerId : res[1], actionId : res[2]}).then(function() {
 						if (itemConfig.stateProvider) {
@@ -1353,7 +1353,7 @@
 			return count;
 		};
 
-		$scope.$watch(function() { return $scope.searchQuery}, function(n, o) {
+		$scope.$watch(function() { return $scope.searchQuery}, function(n, o) {
 			if (n !== o) {
 				if (n.length > 2) {
 					$http.get('admin/api-admin-search', { params : { query : n}}).then(function(response) {
@@ -1371,9 +1371,17 @@
 
 		$scope.isOpen = false;
 
-		$scope.click = function(menuItem) {
+		$scope.click = function(menuItem, stateChange) {
 			$scope.isOpen = false;
 			$scope.$broadcast('topMenuClick', { menuItem : menuItem });
+
+			if (stateChange) {
+				if (menuItem.template) {
+					return $state.go('custom', { 'templateId' : menuItem.template });
+				} else {
+					return $state.go('default', { 'moduleId' : menuItem.id});
+				}
+			}
 		};
 
 		$scope.isActive = function(item) {
