@@ -82,7 +82,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['7.4', '8.0', '8.1']
+        php: ['7.4', '8.0', '8.1', '8.2.']
       
     services:
       mysql:
@@ -121,7 +121,7 @@ jobs:
       - name: PHP Unit tests for 8.0, 8.1
         run: | 
           ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '8.0' || matrix.php == '8.1'
+        if: matrix.php == '8.0' || matrix.php == '8.1' || matrix.php == '8.2'
 
       ## unit test with coverage
       - name: PHP Unit tests for PHP 7.4
