@@ -75,6 +75,12 @@ class MultipleInputs extends Plugin
     public $types = [];
 
     /**
+     * @var boolean Whether the add, remove and sort buttons should be visible or not.
+     * @since 4.8
+     */
+    public $controls = true;
+
+    /**
      * @inheritdoc
      */
     public function renderList($id, $ngModel)
@@ -89,6 +95,7 @@ class MultipleInputs extends Plugin
     {
         return $this->createFormTag('zaa-multiple-inputs', $id, $ngModel, [
             'options' => $this->types,
+            'controls' => (bool) $this->controls,
         ]);
     }
 
