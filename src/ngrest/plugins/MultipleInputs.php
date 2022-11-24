@@ -78,12 +78,12 @@ class MultipleInputs extends Plugin
      * @var boolean Whether the add, remove and sort buttons should be visible or not. This can be helpfull if you like to define the multipe
      * input type values with on before insert and does not allow the user to insert new updates, but update them. Example usage to initialize default
      * values for an multiple input types field:
-     * 
+     *
      * ```php
      * public function init()
      * {
      *     parent::init();
-     * 
+     *
      *     $this->on(self::EVENT_BEFORE_INSERT, function() {
      *         $this->config_json = Json::encode([
      *             [
