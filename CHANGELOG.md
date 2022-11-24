@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 4.8.0
+
++ [#739](https://github.com/luyadev/luya-module-admin/pull/739) Added option to disabled the multiple input type controls (add, remove and sort).
+
 ## 4.7.2 (26. October 2022)
 
 + [#738](https://github.com/luyadev/luya-module-admin/pull/738) Fixed a bug where global search items where not clickable.
