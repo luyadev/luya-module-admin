@@ -11,7 +11,7 @@ use luya\helpers\Json;
  * ```php
  * 'data_json' => [
  *     'class' => MultipleInputs::class,
- *     types' => [
+ *     'types' => [
  *         [
  *             'type' => TypesInterface::TYPE_TEXT,
  *             'var' => 'title',
@@ -63,7 +63,7 @@ class MultipleInputs extends Plugin
      * @var array This option is required, it defines the different fields inside this array. Use {{luya\admin\base\TypesInterface}} for a list of all types.
      *
      * ```php
-     * types' => [
+     * 'types' => [
      *     [
      *         'type' => \luya\admin\base\TypesInterface::TYPE_TEXT,
      *         'var' => 'title',
@@ -75,8 +75,26 @@ class MultipleInputs extends Plugin
     public $types = [];
 
     /**
-     * @var boolean Whether the add, remove and sort buttons should be visible or not.
-     * @since 4.8
+     * @var boolean Whether the add, remove and sort buttons should be visible or not. This can be helpfull if you like to define the multipe
+     * input type values with on before insert and does not allow the user to insert new updates, but update them. Example usage to initialize default
+     * values for an multiple input types field:
+     * 
+     * ```php
+     * public function init()
+     * {
+     *     parent::init();
+     * 
+     *     $this->on(self::EVENT_BEFORE_INSERT, function() {
+     *         $this->config_json = Json::encode([
+     *             [
+     *                 'multiple_input_type_var_name1' => 'Test 1',
+     *                 'multiple_input_type_var_name2' => 'Test 2',
+     *             ]
+     *         ]);
+     *     });
+     * }
+     * ```
+     * @since 4.8.0
      */
     public $controls = true;
 
@@ -95,7 +113,7 @@ class MultipleInputs extends Plugin
     {
         return $this->createFormTag('zaa-multiple-inputs', $id, $ngModel, [
             'options' => $this->types,
-            'controls' => (bool) $this->controls,
+            'controls' => (int) $this->controls,
         ]);
     }
 
