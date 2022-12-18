@@ -5,7 +5,8 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.8.0
 
-+ [#739](https://github.com/luyadev/luya-module-admin/pull/739) Added option to disabled the multiple input type controls (add, remove and sort).
++ [#740](https://github.com/luyadev/luya-module-admin/pull/740) AdminLanguage component will throw an Exception if no default language is found.
++ [#739](https://github.com/luyadev/luya-module-admin/pull/739) Added option to disable the multiple input type controls (add, remove and sort).
 
 ## 4.7.2 (26. October 2022)
 
