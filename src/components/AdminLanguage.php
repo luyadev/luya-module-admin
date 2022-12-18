@@ -85,7 +85,6 @@ class AdminLanguage extends Component
             if (empty($this->_activeLanguage)) {
                 throw new Exception("The system must have a default language set.");
             }
-
         }
 
         return $this->_activeLanguage;
