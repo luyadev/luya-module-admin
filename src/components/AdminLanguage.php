@@ -3,6 +3,7 @@
 namespace luya\admin\components;
 
 use luya\admin\models\Lang;
+use luya\Exception;
 use luya\helpers\ArrayHelper;
 use luya\traits\CacheableTrait;
 use Yii;
@@ -51,7 +52,7 @@ class AdminLanguage extends Component
     private $_activeLanguage;
 
     /**
-     * Get the array of the current active language (its not an AR object!)
+     * Get the array of the current active language (it's not an AR object!)
      *
      * Determines active language by:
      *
@@ -59,6 +60,7 @@ class AdminLanguage extends Component
      * 2. language which has is_default flag enabled.
      *
      * @return array
+     * @throws Exception
      */
     public function getActiveLanguage()
     {
@@ -78,6 +80,12 @@ class AdminLanguage extends Component
             if (empty($this->_activeLanguage)) {
                 $this->_activeLanguage = ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
             }
+
+            // if _activeLanguage is still empty, then the system does not have a default language
+            if (empty($this->_activeLanguage)) {
+                throw new Exception("The system must have a default language set.");
+            }
+
         }
 
         return $this->_activeLanguage;

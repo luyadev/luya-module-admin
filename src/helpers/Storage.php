@@ -128,7 +128,7 @@ class Storage
             $width = (int)$dimensions[0];
             $height = (int)$dimensions[1];
         } elseif ($throwException) {
-            throw new Exception("Unable to determine the resoltuions of the file $filePath.");
+            throw new Exception("Unable to determine the resolutions of the file $filePath.");
         }
 
         return [
