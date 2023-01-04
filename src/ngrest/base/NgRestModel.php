@@ -116,7 +116,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * As behavior methods can be access from the inner class, use full functions can be used inside the active query.
      * It also enables the option to share standardized behaviors with functions (conditions), for example a soft delete condition.
      *
-     * A behavior example
+     * A behavior example:
      *
      * ```php
      * class MySuperBehavioir extends yii\base\Behavior
@@ -130,7 +130,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *
      * After attaching this behavior, it can be used like `MyModel::find()->active()->one()`.
      *
-     * > Whenever possible, directly create a custom Active Query, as it provices full IDE support. The behavior
+     * > Whenever possible, directly create a custom Active Query, as it provides full IDE support. The behavior
      * > does not, the example above will even show an IDE error because the mmethod `andWhere()` does not exsist
      * > in the yii\base\Behavior class.
      *
@@ -139,14 +139,19 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * the behavior class or an array of the following structure:
      *
      * ```php
-     * 'behaviorName' => [
-     *     'class' => 'BehaviorClass',
-     *     'property1' => 'value1',
-     *     'property2' => 'value2',
-     * ]
+     * public static function findActiveQueryBehaviors()
+     * {
+     *     return [
+     *         'behaviorName' => [
+     *             'class' => 'BehaviorClass',
+     *             'property1' => 'value1',
+     *             'property2' => 'value2',
+     *          ]
+     *     ]
+     * }
      * ```
+     * 
      * @see {{\yii\base\Component::behaviors}}
-     *
      * @return array
      * @since 3.4.0
      */
@@ -541,7 +546,13 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      */
     public static function ngRestFind()
     {
-        return new NgRestActiveQuery(static::class);
+        $config = [];
+
+        foreach (static::findActiveQueryBehaviors() as $name => $class) {
+            $config['as ' . $name] = $class;
+        }
+
+        return new NgRestActiveQuery(static::class, $config);
     }
 
     /**
