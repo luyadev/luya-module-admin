@@ -150,7 +150,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      *     ]
      * }
      * ```
-     * 
+     *
      * @see {{\yii\base\Component::behaviors}}
      * @return array
      * @since 3.4.0
