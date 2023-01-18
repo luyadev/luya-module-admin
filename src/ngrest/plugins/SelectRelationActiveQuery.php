@@ -4,6 +4,7 @@ namespace luya\admin\ngrest\plugins;
 
 use luya\admin\helpers\I18n;
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\ngrest\traits\CrudLoaderPluginTrait;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -44,6 +45,8 @@ use yii\helpers\Json;
  */
 class SelectRelationActiveQuery extends Plugin
 {
+    use CrudLoaderPluginTrait;
+
     /**
      * @var string This value will be displayed in the ngrest list overview if the given value is empty().
      */
@@ -149,7 +152,7 @@ class SelectRelationActiveQuery extends Plugin
     public function renderCreate($id, $ngModel)
     {
         return [
-            $this->createCrudLoaderTag($this->_query->modelClass, $ngModel),
+            $this->createCrudLoaderTag($this->_query->modelClass, $ngModel, [], $this->crudLoaderPoolContext),
             $this->createFormTag('zaa-async-value', $id, $ngModel, ['api' => $this->getRelationApiEndpoint(), 'fields' => Json::encode($this->labelField)])
         ];
     }

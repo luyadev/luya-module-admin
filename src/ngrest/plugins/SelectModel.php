@@ -3,6 +3,7 @@
 namespace luya\admin\ngrest\plugins;
 
 use luya\admin\helpers\Angular;
+use luya\admin\ngrest\traits\CrudLoaderPluginTrait;
 use luya\helpers\ArrayHelper;
 use luya\helpers\StringHelper;
 use Yii;
@@ -44,6 +45,8 @@ use yii\db\ActiveRecordInterface;
  */
 class SelectModel extends Select
 {
+    use CrudLoaderPluginTrait;
+
     /**
      * @var string The className of the ActiveRecord or NgRestModel in order to build the ActiveQuery find methods. This is the Model with the related data
      * where the value from the field where you register the plugin with the field {{luya\admin\ngrest\plugins::$valueField}} value.
@@ -238,7 +241,7 @@ class SelectModel extends Select
     public function renderCreate($id, $ngModel)
     {
         return [
-            $this->createCrudLoaderTag($this->modelClass, $ngModel),
+            $this->createCrudLoaderTag($this->modelClass, $ngModel, [], $this->crudLoaderPoolContext),
             $this->createFormTag('zaa-select', $id, $ngModel, Angular::optionsFilter(['initvalue' => $this->initValue, 'options' => $this->getServiceName('selectdata')])),
         ];
     }
