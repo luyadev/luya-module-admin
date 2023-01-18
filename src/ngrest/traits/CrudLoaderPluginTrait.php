@@ -4,7 +4,7 @@ namespace luya\admin\ngrest\traits;
 
 /**
  * NgRest Crud Loader Plugin Trait
- * 
+ *
  * @since 4.9.0
  */
 trait CrudLoaderPluginTrait
