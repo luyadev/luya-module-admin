@@ -480,16 +480,19 @@ abstract class Plugin extends Component implements TypesInterface
     /**
      * Create a tag for relation window toggler with directive crudLoader based on a ngrest model class.
      *
-     * @param string $ngrestModelClass
-     * @return string The generated tag or null if permission does not exists
+     * @param NgRestModel $ngrestModelClass
+     * @param string|null $ngRestModelSelectMode
+     * @param array $options
+     * @param boolean $propagatePoolContext
+     * @return string
      */
-    public function createCrudLoaderTag($ngrestModelClass, $ngRestModelSelectMode = null, array $options = [])
+    public function createCrudLoaderTag($ngrestModelClass, $ngRestModelSelectMode = null, array $options = [], $propagatePoolContext = false)
     {
         if (!method_exists($ngrestModelClass, 'ngRestApiEndpoint')) {
             return null;
         }
 
-        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint(), Yii::$app->request->get('pool'));
+        $menu = Yii::$app->adminmenu->getApiDetail($ngrestModelClass::ngRestApiEndpoint(), $propagatePoolContext ? Yii::$app->request->get('pool') : false);
 
         if ($menu) {
             if ($ngRestModelSelectMode) {

@@ -5,6 +5,7 @@ namespace luya\admin\ngrest\plugins;
 use luya\admin\helpers\I18n;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\base\Plugin;
+use luya\admin\ngrest\traits\CrudLoaderPluginTrait;
 use luya\helpers\ArrayHelper;
 use luya\rest\ActiveController;
 use Yii;
@@ -79,6 +80,8 @@ use Yii;
  */
 class CheckboxRelation extends Plugin
 {
+    use CrudLoaderPluginTrait;
+
     /**
      * @var string The reference table table name e.g. `admin_user_groupadmin_user_group`.
      */
@@ -184,7 +187,7 @@ class CheckboxRelation extends Plugin
     public function renderCreate($id, $ngModel)
     {
         return [
-            $this->createCrudLoaderTag($this->model->className()),
+            $this->createCrudLoaderTag(get_class($this->model), null, [], $this->crudLoaderPoolContext),
             $this->createFormTag('zaa-checkbox-array', $id, $ngModel, ['options' => $this->getServiceName('relationdata')]),
         ];
     }
