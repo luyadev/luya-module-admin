@@ -7,7 +7,6 @@ use luya\admin\components\Auth;
 use luya\admin\Module;
 use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderCrud;
-use luya\helpers\FileHelper;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;

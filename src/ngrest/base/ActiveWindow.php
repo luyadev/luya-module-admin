@@ -6,7 +6,6 @@ use luya\admin\components\Auth;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
 use luya\Exception;
-use luya\helpers\FileHelper;
 use luya\helpers\StringHelper;
 use luya\helpers\Url;
 use Yii;
@@ -148,11 +147,11 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
 
         $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
         $route = str_replace("/index", "/export-download", $menu['route']);
-    
+
         Yii::$app->session->set('tempNgRestFileName', $fileName);
         Yii::$app->session->set('tempNgRestFileKey', $key);
         Yii::$app->session->set('tempNgRestFileMime', $mimeType);
-        
+
         $url = Url::toRoute(['/'.$route], true);
         $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
 
