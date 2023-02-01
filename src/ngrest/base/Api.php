@@ -839,32 +839,28 @@ class Api extends RestActiveController
 
         $key = uniqid('ngrestexport', true);
 
-        $store = FileHelper::writeFile('@runtime/'.$key.'.tmp', $tempData);
-
-        $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
-
-        $route = $menu['route'];
-        $route = str_replace("/index", "/export-download", $route);
-
-        if ($store) {
-            Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.' . $extension);
-            Yii::$app->session->set('tempNgRestFileMime', $mime);
-            Yii::$app->session->set('tempNgRestFileKey', $key);
-
-            $url = Url::toRoute(['/'.$route], true);
-            $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
-
-            if (StringHelper::contains('?', $url)) {
-                $route = $url . "&" . $param;
-            } else {
-                $route = $url . "?" . $param;
-            }
-            return [
-                'url' => $route,
-            ];
+        if (!Yii::$app->cache->set(['download', $key], $tempData, 60*60)) {
+            throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
         }
 
-        throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
+        $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
+        $route = str_replace("/index", "/export-download", $menu['route']);
+
+        Yii::$app->session->set('tempNgRestFileName', Inflector::slug($this->model->tableName())  . '-export-'.date("Y-m-d-H-i").'.' . $extension);
+        Yii::$app->session->set('tempNgRestFileMime', $mime);
+        Yii::$app->session->set('tempNgRestFileKey', $key);
+
+        $url = Url::toRoute(['/'.$route], true);
+        $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
+
+        if (StringHelper::contains('?', $url)) {
+            $route = $url . "&" . $param;
+        } else {
+            $route = $url . "?" . $param;
+        }
+        return [
+            'url' => $route,
+        ];
     }
 
     /**
