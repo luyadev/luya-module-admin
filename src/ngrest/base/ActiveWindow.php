@@ -6,7 +6,6 @@ use luya\admin\components\Auth;
 use luya\admin\ngrest\NgRestButtonConditionInterface;
 use luya\admin\ngrest\NgRestPermissionLevelInterface;
 use luya\Exception;
-use luya\helpers\FileHelper;
 use luya\helpers\StringHelper;
 use luya\helpers\Url;
 use Yii;
@@ -142,28 +141,25 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $key = uniqid(microtime().Inflector::slug($fileName), true);
 
-        $store = FileHelper::writeFile('@runtime/'.$key.'.tmp', $content);
-
-        $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
-
-        $route = $menu['route'];
-        $route = str_replace("/index", "/export-download", $route);
-
-        if ($store) {
-            Yii::$app->session->set('tempNgRestFileName', $fileName);
-            Yii::$app->session->set('tempNgRestFileKey', $key);
-            Yii::$app->session->set('tempNgRestFileMime', $mimeType);
-            $url = Url::toRoute(['/'.$route], true);
-            $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
-
-            if (StringHelper::contains('?', $url)) {
-                return $url . "&" . $param;
-            } else {
-                return $url . "?" . $param;
-            }
+        if (!Yii::$app->cache->set(['download', $key], $content, 60*60)) {
+            return false;
         }
 
-        return false;
+        $menu = Yii::$app->adminmenu->getApiDetail($this->model->ngRestApiEndpoint());
+        $route = str_replace("/index", "/export-download", $menu['route']);
+
+        Yii::$app->session->set('tempNgRestFileName', $fileName);
+        Yii::$app->session->set('tempNgRestFileKey', $key);
+        Yii::$app->session->set('tempNgRestFileMime', $mimeType);
+
+        $url = Url::toRoute(['/'.$route], true);
+        $param = http_build_query(['key' => base64_encode($key), 'time' => time()]);
+
+        if (StringHelper::contains('?', $url)) {
+            return $url . "&" . $param;
+        } else {
+            return $url . "?" . $param;
+        }
     }
 
     /**

@@ -7,10 +7,10 @@ use luya\admin\components\Auth;
 use luya\admin\Module;
 use luya\admin\ngrest\NgRest;
 use luya\admin\ngrest\render\RenderCrud;
-use luya\helpers\FileHelper;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Base Controller for all NgRest Controllers.
@@ -241,12 +241,17 @@ class Controller extends \luya\admin\base\Controller
             throw new ForbiddenHttpException('Invalid download key.');
         }
 
-        $content = FileHelper::getFileContent('@runtime/'.$sessionkey.'.tmp');
+        $content = Yii::$app->cache->get(['download', $sessionkey]);
+
+        if (!$content) {
+            throw new NotFoundHttpException();
+        }
 
         Yii::$app->session->remove('tempNgRestFileKey');
         Yii::$app->session->remove('tempNgRestFileName');
         Yii::$app->session->remove('tempNgRestFileMime');
-        @unlink(Yii::getAlias('@runtime/'.$sessionkey.'.tmp'));
+
+        Yii::$app->cache->delete(['download', $sessionkey]);
 
         return Yii::$app->response->sendContentAsFile($content, $fileName, ['mimeType' => $mimeType]);
     }
