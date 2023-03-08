@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 4.9.0
+## 4.9.0 (8. March 2023)
 
 + [#744](https://github.com/luyadev/luya-module-admin/pull/744) The internal CRUD export system no longer caches data in the @runtime folder, but uses the cache component instead. This could potentially cause problems when exporting large CRUD tables, but it fixes the problem when LUYA Admin is used in a cloud-scaled architecture.
 + [#743](https://github.com/luyadev/luya-module-admin/pull/743) Add option to ignore the pool context inside CRUD relation loader for `CheckboxRelation`, `SelectModel` and `SelectRelationActiveQuery` plugins.
