@@ -202,7 +202,7 @@ class Item extends ItemAbstract
             $this->_file = Yii::$app->storage->getFile($this->getFileId());
 
             if (!$this->_file) {
-                throw new Exception("The file \"$this->getFileId()\" does not exists in the storage system.");
+                throw new Exception("The file \"".$this->getFileId()."\" does not exists in the storage system.");
             }
         }
 
