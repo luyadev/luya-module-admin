@@ -62,7 +62,7 @@ class ButtonConditionConfigTest extends AdminModelTestCase
             'modelClass' => ScopeBasedConditionUserModel::class,
         ]);
 
-//        $fooUser = $fixture->getModel('user1');
+        //        $fooUser = $fixture->getModel('user1');
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
         $ngRestConfigOptions = $fixture->newModel->getNgRestScopeConfigOptions($ngRestCfg);
 
