@@ -3,7 +3,6 @@
 use luya\admin\models\StorageFile;
 use luya\admin\Module;
 use luya\helpers\Html;
-use WhichBrowser\Parser;
 use yii\helpers\VarDumper;
 
 /**
@@ -104,9 +103,6 @@ zaa.bootstrap.register('UserHistorySummaryController', ['$scope', function($scop
 			   	 	<td><?= Yii::$app->formatter->asRelativeTime($login->timestamp_create); ?></td>
 					<td class="text-right">
 						<?= $login->ip; ?>
-						<?php if (!empty($login->user_agent)): ?>
-							<span class="badge badge-secondary"><?= (new Parser($login->user_agent))->toString(); ?></span>
-						<?php endif; ?>
 					</td>
 			    <?php ?>
 					</tr>

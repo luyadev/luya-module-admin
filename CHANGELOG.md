@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 4.9.1
 
++ [#746](https://github.com/luyadev/luya-module-admin/issues/746) Remove WhichBrowser/Parser because of missing PHP 8.2 support.
 + [#745](https://github.com/luyadev/luya-module-admin/pull/745) Fixed bug in exception when image could not find the file.
 
 ## 4.9.0 (8. March 2023)

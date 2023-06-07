@@ -2,7 +2,6 @@
 
 namespace luya\admin\models;
 
-use WhichBrowser\Parser;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -44,7 +43,7 @@ class UserDevice extends \yii\db\ActiveRecord
 
     public function getUserAgentName()
     {
-        return (new Parser($this->user_agent))->toString();
+        return '-';
     }
 
     public function getIsCurrentDevice()

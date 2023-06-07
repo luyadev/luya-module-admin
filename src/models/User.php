@@ -14,7 +14,6 @@ use luya\admin\traits\SoftDeleteTrait;
 use luya\helpers\Html;
 use luya\helpers\Url;
 use luya\validators\StrengthValidator;
-use WhichBrowser\Parser;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
@@ -436,11 +435,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public static function generateTokenEmail($token, $title, $text)
     {
-        $result = new Parser(Yii::$app->request->userAgent);
         return Yii::$app->view->render('@admin/views/mail/_token.php', [
             'url' => Url::domain(Url::base(true)),
             'token' => $token,
-            'browser' => $result->toString(),
+            'browser' => "-",
             'title' => $title,
             'text' => $text,
         ]);
@@ -448,11 +446,10 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
     public static function generateResetEmail($url, $title, $text)
     {
-        $result = new Parser(Yii::$app->request->userAgent);
         return Yii::$app->view->render('@admin/views/mail/_reset.php', [
             'url' => Url::domain(Url::base(true)),
             'token' => Html::a(Module::t('reset_email_btn_label'), $url),
-            'browser' => $result->toString(),
+            'browser' => "-",
             'title' => $title,
             'text' => $text,
         ]);
