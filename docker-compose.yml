@@ -1,0 +1,36 @@
+version: '3'
+services:
+  luyaadmindb:
+    image: mysql:5.7
+    container_name: luyaadmindb
+    volumes:
+      - ./tests/data/sql/latest:/docker-entrypoint-initdb.d
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: luyaadmin
+      MYSQL_DATABASE: luyaadmin
+      MYSQL_USER: luyaadmin
+      MYSQL_PASSWORD: luyaadmin
+
+  luyaadmincomposer:
+    image: composer:latest
+    volumes:
+      - ./:/app
+    command: composer install
+
+  luyaadminphpunit:
+    build: 'tests/'
+    entrypoint: vendor/bin/phpunit
+    volumes:
+      - .:/app
+    working_dir: /app
+
+  luyaadminrector:
+    image: php:8.0-cli
+    entrypoint: vendor/bin/rector
+    volumes:
+      - .:/app
+    working_dir: /app
+

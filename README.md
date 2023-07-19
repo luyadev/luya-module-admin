@@ -76,3 +76,9 @@ You can now login to your Administration Interface by adding the admin module in
 ## Developers
 
 If you want to contribute, make sure to read the [guidelines](https://luya.io/guide/luya-guideline).
+
+## Unit Testing
+
+1. `cp phpunit.xml.dist phpunit.xml`
+2. `docker-compose up`
+3. `docker-compose run luyacmsphpunit tests` to run all tests or `docker-compose run luyacmsphpunit tests/src/helpers/UrlTest.php` to run a specific test.

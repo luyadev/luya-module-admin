@@ -14,8 +14,8 @@
     </testsuite>
   </testsuites>
   <php>
-    <const name="DB_DSN" value="mysql:host=localhost;dbname=luya_env_phpunit"/>
-    <const name="DB_USER" value=""/>
-    <const name="DB_PASS" value=""/>
+    <const name="DB_DSN" value="mysql:host=luyaadmindb;dbname=luyaadmin" />
+    <const name="DB_USER" value="luyaadmin" />
+    <const name="DB_PASS" value="luyaadmin" />
   </php>
 </phpunit>
