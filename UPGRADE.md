@@ -2,6 +2,10 @@
 
 This document will help you upgrading from a LUYA admin module version into another. For more detailed informations about the breaking changes **click the issue detail link**, there you can examples of how to change your code.
 
+## from 4.x to 5.0
+
++ Drop support for 7.x, minimum php version is now 8.0
+
 ## from 4.8 to 4.9
 
 + [#744](https://github.com/luyadev/luya-module-admin/pull/744) Make sure you have a valid cache component registered to use the LUYA admin CRUD export system. If large tables are exported, the caching system must support such data sizes, the `file` or `redis` cache component supports large amounts of data.
