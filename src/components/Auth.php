@@ -243,7 +243,7 @@ class Auth extends \yii\base\Component
      *
      * @param integer|IdentityInterface $userId
      * @param string $apiEndpoint As defined in the Module.php like (api-admin-user) which is a unique identifiere
-     * @param integer|string $typeVerification The CONST number provided from CAN_* or false if none (which is equals: VIEW)
+     * @param integer|string|bool $typeVerification The CONST number provided from CAN_* or false if none (which is equals: VIEW)
      * @return boolean|integer return false or the auth id, if this a can view request also bool is returned
      */
     public function matchApi($userId, $apiEndpoint, $typeVerification = false)
