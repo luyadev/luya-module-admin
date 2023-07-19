@@ -43,7 +43,8 @@ use luya\admin\Module as Admin;
 			<label><?= Admin::t('link_dir_target'); ?></label>
 		</div>
 		<div class="form-side">
-			<select ng-model="data.target">
+			<select ng-model="data.target" class="form-control">
+                <option value="">-</option>
 				<option value="_self"><?= Admin::t('link_dir_target_same'); ?></option>
 				<option value="_blank"><?= Admin::t('link_dir_target_blank'); ?></option>
 			</select>
@@ -75,6 +76,7 @@ use luya\admin\Module as Admin;
         <div class="form-side">
             <div ng-switch on="data.type">
                 <div ng-switch-when="1">
+                    <zaa-text model="data.anchor" label="Anchor" placeholder="Optional text for an anchor position, the anchor must not be prefixed."></zaa-text>
                     <p><?= Admin::t('view_index_redirect_internal_select'); ?></p>
                     <menu-dropdown class="menu-dropdown" nav-id="data.value" />
                 </div>
