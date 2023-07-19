@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 5.x
+
 ## 4.9.1 (7. June 2023)
 
 + [#746](https://github.com/luyadev/luya-module-admin/issues/746) Remove WhichBrowser/Parser because of missing PHP 8.2 support.
