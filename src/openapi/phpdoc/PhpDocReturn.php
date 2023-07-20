@@ -10,8 +10,13 @@ namespace luya\admin\openapi\phpdoc;
  */
 class PhpDocReturn
 {
-    public function __construct(protected PhpDocParser $phpDocParser, protected array $definition)
+    protected $phpDocParser;
+    protected $definition;
+
+    public function __construct(PhpDocParser $phpDocParser, array $definition)
     {
+        $this->phpDocParser = $phpDocParser;
+        $this->definition = $definition;
     }
 
     public function getDescription()
@@ -21,8 +26,10 @@ class PhpDocReturn
 
     /**
      * PhpDocType
+     *
+     * @return PhpDocType|false
      */
-    public function getType(): \luya\admin\openapi\phpdoc\PhpDocType|false
+    public function getType()
     {
         return isset($this->definition[1]) ? new PhpDocType($this->phpDocParser, $this->definition[1]) : false;
     }

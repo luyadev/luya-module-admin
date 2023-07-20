@@ -138,6 +138,7 @@ class Config extends BaseObject implements ConfigInterface
     /**
      * Set all active selection definitions
      *
+     * @param array $buttons
      * @since 4.0.0
      */
     public function setActiveSelections(array $buttons)
@@ -232,6 +233,10 @@ class Config extends BaseObject implements ConfigInterface
         return $this->_attributeGroups;
     }
 
+    /**
+     *
+     * @param array $groups
+     */
     public function setAttributeGroups(array $groups)
     {
         $this->_attributeGroups = $groups;
@@ -263,6 +268,8 @@ class Config extends BaseObject implements ConfigInterface
 
     /**
      * Setter method for filters.
+     *
+     * @param array $filters
      */
     public function setFilters(array $filters)
     {
@@ -429,7 +436,7 @@ class Config extends BaseObject implements ConfigInterface
      * @param boolean $defaultValue
      * @return string|array If default value is an array, an array is returned as default value
      */
-    public function getPointer($pointer, $defaultValue = false): string|array
+    public function getPointer($pointer, $defaultValue = false)
     {
         return $this->hasPointer($pointer) ? $this->_config[$pointer] : $defaultValue;
     }
@@ -459,6 +466,7 @@ class Config extends BaseObject implements ConfigInterface
     /**
      * Create a plugin object cased on a field array config.
      *
+     * @param array $plugin
      * @return \luya\admin\ngrest\base\Plugin
      * @since 2.0.0
      */
@@ -487,6 +495,7 @@ class Config extends BaseObject implements ConfigInterface
     /**
      *
      * @param string $pointer
+     * @param array $fields
      * @return boolean[]
      */
     public function getFields($pointer, array $fields)
@@ -525,6 +534,7 @@ class Config extends BaseObject implements ConfigInterface
      *
      * @param string $pointer
      * @param string $field
+     * @param array $options
      * @return boolean
      */
     public function addField($pointer, $field, array $options = [])

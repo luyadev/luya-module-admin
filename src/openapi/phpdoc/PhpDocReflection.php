@@ -15,11 +15,17 @@ use Reflector;
 class PhpDocReflection
 {
     /**
+     * @var ReflectionMethod|ReflectionClass
+     */
+    protected $reflection;
+
+    /**
      *
      * @param ReflectionMethod|ReflectionClass $reflection
      */
-    public function __construct(protected Reflector $reflection)
+    public function __construct(Reflector $reflection)
     {
+        $this->reflection = $reflection;
     }
 
     public function getDocComment()

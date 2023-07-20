@@ -114,7 +114,7 @@ class ProxyBuild extends NgRestModel
      * @param string $table
      * @return array|false False if the table is not found
      */
-    public function getTableConfig($table): array|false
+    public function getTableConfig($table)
     {
         return $this->arrayConfig['tables'][$table] ?? false;
     }

@@ -71,6 +71,7 @@ final class UserOnline extends ActiveRecord
     }
 
     // static methods
+
     /**
      * Lock the user for an action.
      *
@@ -78,6 +79,7 @@ final class UserOnline extends ActiveRecord
      * @param string $table
      * @param string $pk
      * @param string $translation
+     * @param array $translationArgs
      */
     public static function lock($userId, $table, $pk, $translation, array $translationArgs = [])
     {
@@ -117,6 +119,7 @@ final class UserOnline extends ActiveRecord
     /**
      * Refresh the state of the current user, or add if not exists.
      *
+     * @param User $user
      * @param string $route
      * @return bool
      */

@@ -77,6 +77,7 @@ class FilterController extends Command
      *
      * @param string $identifier
      * @param string $name
+     * @param array $chain
      * @param string $className
      * @return string
      */

@@ -221,10 +221,11 @@ class Auth extends \yii\base\Component
     /**
      * Normalize the given input user id or identity interface to an id.
      *
+     * @param integer|string|IdentityInterface $user
      * @return integer The user id as int value
      * @since 2.2.0
      */
-    protected function normalizeIdentityOrId(int|string|\yii\web\IdentityInterface $user)
+    protected function normalizeIdentityOrId($user)
     {
         if ($user instanceof IdentityInterface) {
             return $user->getId();
@@ -240,11 +241,12 @@ class Auth extends \yii\base\Component
     /**
      * See if a User have rights to access this api.
      *
+     * @param integer|IdentityInterface $userId
      * @param string $apiEndpoint As defined in the Module.php like (api-admin-user) which is a unique identifiere
      * @param integer|string|bool $typeVerification The CONST number provided from CAN_* or false if none (which is equals: VIEW)
      * @return boolean|integer return false or the auth id, if this a can view request also bool is returned
      */
-    public function matchApi(int|\yii\web\IdentityInterface $userId, $apiEndpoint, int|string|bool $typeVerification = false): bool|int
+    public function matchApi($userId, $apiEndpoint, $typeVerification = false)
     {
         $groups = $this->getApiTable($this->normalizeIdentityOrId($userId), $apiEndpoint);
 
@@ -268,7 +270,7 @@ class Auth extends \yii\base\Component
      * @param string $route The route to test.
      * @return boolean|integer returns false or the id of the auth
      */
-    public function matchRoute(int|\yii\web\IdentityInterface $userId, $route): bool|int
+    public function matchRoute($userId, $route)
     {
         $groups = $this->getRouteTable($this->normalizeIdentityOrId($userId), $route);
 
@@ -385,6 +387,7 @@ class Auth extends \yii\base\Component
     /**
      * Execute the data to delete based on an array containing a key 'id' with the corresponding value from the Database.
      *
+     * @param array $data
      * @return bool
      */
     public function executeCleanup(array $data)

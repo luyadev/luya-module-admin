@@ -146,13 +146,18 @@ final class Logger extends NgRestModel
      */
     public function getTypeBadge()
     {
-        return match ($this->type) {
-            self::TYPE_INFO => '<span class="badge badge-info">info</span>',
-            self::TYPE_WARNING => '<span class="badge badge-warning">Warning</span>',
-            self::TYPE_ERROR => '<span class="badge badge-danger">Error</span>',
-            self::TYPE_SUCCESS => '<span class="badge badge-success">success</span>',
-            default => '',
-        };
+        switch ($this->type) {
+            case self::TYPE_INFO:
+                return '<span class="badge badge-info">info</span>';
+            case self::TYPE_WARNING:
+                return '<span class="badge badge-warning">Warning</span>';
+            case self::TYPE_ERROR:
+                return '<span class="badge badge-danger">Error</span>';
+            case self::TYPE_SUCCESS:
+                return '<span class="badge badge-success">success</span>';
+        }
+
+        return '';
     }
 
     public function ngRestGroupByField()

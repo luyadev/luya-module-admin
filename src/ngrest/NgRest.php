@@ -31,18 +31,24 @@ use Yii;
  */
 class NgRest
 {
+    private $config;
+
     private $render;
 
     /**
      * Create new NgRest Object.
+     *
+     * @param \luya\admin\ngrest\ConfigInterface $configObject
      */
-    public function __construct(private ConfigInterface $config)
+    public function __construct(ConfigInterface $configObject)
     {
+        $this->config = $configObject;
     }
 
     /**
      * Renders the Config for the Given Render Interface.
      *
+     * @param \luya\admin\ngrest\render\RenderInterface $render
      * @return string
      */
     public function render(RenderInterface $render)

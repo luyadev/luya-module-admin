@@ -98,7 +98,7 @@ class AdminLanguage extends Component
      * @return array|boolean If default language is not defiend false is returned.
      * @since 3.1
      */
-    public function getDefaultLanguage(): array|bool
+    public function getDefaultLanguage()
     {
         return ArrayHelper::searchColumn($this->getLanguages(), 'is_default', 1);
     }

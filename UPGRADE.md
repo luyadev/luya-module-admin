@@ -116,3 +116,9 @@ public function actionPermissions()
 ## from 1.0 to 1.1
 
 + This release contains the new migrations which are required for the user and file table. Therefore make sure to run the `./vendor/bin/luya migrate` command after `composer update`.
+
+## Unit Testing
+
+1. `cp phpunit.xml.dist phpunit.xml`
+2. `docker-compose up`
+3. `docker-compose run luyaadminphpunit tests` to run all tests or `docker-compose run luyaadminphpunit tests/src/helpers/UrlTest.php` to run a specific test.

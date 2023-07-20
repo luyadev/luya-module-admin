@@ -13,6 +13,7 @@ use luya\admin\openapi\Generator;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use luya\admin\openapi\phpdoc\PhpDocType;
 use luya\helpers\ObjectHelper;
+use ReflectionClass;
 use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;
@@ -35,7 +36,10 @@ use yii\rest\IndexAction;
  */
 abstract class BaseSpecs implements SpecInterface
 {
-    abstract public function getReflection(): \ReflectionClass|\ReflectionMethod;
+    /**
+     * @return ReflectionClass|ReflectionMethod
+     */
+    abstract public function getReflection();
 
     /**
      * Get the context verbname:
@@ -197,8 +201,8 @@ abstract class BaseSpecs implements SpecInterface
 
         $event = new PathParametersEvent([
             'params' => $params,
-            'controllerClass' => $this->getControllerObject()::class,
-            'actionClass' => $this->getActionObject()::class,
+            'controllerClass' => get_class($this->getControllerObject()),
+            'actionClass' => get_class($this->getActionObject()),
             'verbName' => $this->getVerbName(),
             'contextClass' => $this->getReflection()->getName(),
             'sender' => $this,
@@ -441,7 +445,7 @@ abstract class BaseSpecs implements SpecInterface
             if ($object instanceof Model) {
                 return new ActiveRecordToSchema($this, $object, $senderActiveRecordClassName);
             }
-        } catch (\Exception) {
+        } catch (\Exception $e) {
         }
 
         return false;
@@ -461,7 +465,7 @@ abstract class BaseSpecs implements SpecInterface
                 Yii::$container->setSingleton($className);
             }
             return Yii::createObject($className);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             Yii::warning("Error while creating the model class {$className}", __METHOD__);
         }
 
@@ -493,6 +497,7 @@ abstract class BaseSpecs implements SpecInterface
     /**
      * Generate OpenAPI schema structure from ActiveRecordToSchema Object
      *
+     * @param ActiveRecordToSchema $activeRecord
      * @param boolean $isArray
      * @return array
      */

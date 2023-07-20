@@ -26,7 +26,7 @@ class I18n
      * @param string|array $value The value to encode from php to json.
      * @return string Returns the json encoded string.
      */
-    public static function encode(string|array $value)
+    public static function encode($value)
     {
         return is_array($value) ? Json::encode($value) : $value;
     }
@@ -38,7 +38,7 @@ class I18n
      * @param string $onEmptyValue Defines the value if the language could not be found and a value will be returns, this value will be used.
      * @return array Return the decoded php value.
      */
-    public static function decode(string|array $value, $onEmptyValue = '')
+    public static function decode($value, $onEmptyValue = '')
     {
         $languages = Yii::$app->adminLanguage->getLanguages();
 
@@ -46,7 +46,7 @@ class I18n
         if (!is_array($value) && !empty($value)) {
             try {
                 $value = Json::decode($value);
-            } catch (InvalidArgumentException) {
+            } catch (InvalidArgumentException $e) {
                 $value = [];
             }
         }
@@ -136,7 +136,7 @@ class I18n
      * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
      * @return array
      */
-    public static function decodeFindActiveArray(array $input, mixed $onEmptyValue = '', $lang = null)
+    public static function decodeFindActiveArray(array $input, $onEmptyValue = '', $lang = null)
     {
         return static::findActiveArray(static::decodeArray($input, $onEmptyValue), $onEmptyValue, $lang);
     }
@@ -156,7 +156,7 @@ class I18n
      * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
      * @return mixed
      */
-    public static function findActive(array $fieldValues, mixed $onEmptyValue = '', $lang = null)
+    public static function findActive(array $fieldValues, $onEmptyValue = '', $lang = null)
     {
         $langShortCode = $lang ?: Yii::$app->adminLanguage->getActiveShortCode();
 
@@ -181,7 +181,7 @@ class I18n
      * @param string $lang The language to return, if no lang is provided, the language resolved trough the admin ui (or user language) is used by default.
      * @return array
      */
-    public static function findActiveArray(array $array, mixed $onEmptyValue = '', $lang = null)
+    public static function findActiveArray(array $array, $onEmptyValue = '', $lang = null)
     {
         $output = [];
         foreach ($array as $key => $value) {

@@ -71,6 +71,8 @@ class ReloadButton extends BaseObject
 
     /**
      * Setter method for callback.
+     *
+     * @param callable $callback
      */
     public function setCallback(callable $callback)
     {

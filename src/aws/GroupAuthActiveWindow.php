@@ -90,14 +90,18 @@ class GroupAuthActiveWindow extends ActiveWindow
         ];
     }
 
-    private function getAuthData(): string|array
+    /**
+     *
+     * @return string|array
+     */
+    private function getAuthData()
     {
         $data = (new Query())->select(['*'])->from('{{%admin_auth}}')->orderBy(['module_name' => SORT_ASC, 'alias_name' => SORT_ASC])->all();
 
         array_walk($data, function (&$item, $key) {
             try {
                 $item['alias_name'] = Yii::t($item['module_name'], $item['alias_name'], [], Yii::$app->language);
-            } catch (\Exception) {
+            } catch (\Exception $e) {
             }
         });
 

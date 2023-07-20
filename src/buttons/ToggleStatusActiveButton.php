@@ -127,10 +127,13 @@ class ToggleStatusActiveButton extends ActiveButton
      */
     private function toggleValue($value)
     {
-        return match ($value) {
-            $this->disableValue => $this->enableValue,
-            $this->enableValue => $this->disableValue,
-            default => throw new InvalidArgumentException("The value '$value' could not toggled."),
-        };
+        switch ($value) {
+            case $this->disableValue:
+                return $this->enableValue;
+            case $this->enableValue:
+                return $this->disableValue;
+            default:
+                throw new InvalidArgumentException("The value '$value' could not toggled.");
+        }
     }
 }

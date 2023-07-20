@@ -28,23 +28,23 @@ class ConfigBuilder implements ConfigBuilderInterface
 
     private array $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
 
-    /**
-     * @param string $ngRestModelClass
-     */
-    public function __construct(
-        /**
-         * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
-         */
-        public $ngRestModelClass
-    ) {
+    public function __construct($ngRestModelClass)
+    {
+        $this->ngRestModelClass = $ngRestModelClass;
     }
+
+    /**
+     * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
+     */
+    public $ngRestModelClass;
 
     /**
      * Maig setter function, defines whether a pointer exists or not, if not existing it will be created.
      *
      * @param string $key
+     * @param mixed $value
      */
-    public function __set($key, mixed $value)
+    public function __set($key, $value)
     {
         if (!array_key_exists($key, $this->config)) {
             $this->config[$key] = $value;
@@ -117,6 +117,7 @@ class ConfigBuilder implements ConfigBuilderInterface
      * Add a Plugin to the current field pointer plugins array.
      *
      * @param string $name The name of the ngrest\plugin
+     * @param array $args
      * @return \luya\admin\ngrest\ConfigBuilder
      * @since 1.0.0
      */
@@ -194,7 +195,7 @@ class ConfigBuilder implements ConfigBuilderInterface
      * @throws Exception
      * @since 1.0.0
      */
-    public function load(string|array $objectType)
+    public function load($objectType)
     {
         $config = [];
         if ($this->pointer !== 'aw') {

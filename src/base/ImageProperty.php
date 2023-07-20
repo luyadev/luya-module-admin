@@ -54,8 +54,10 @@ abstract class ImageProperty extends Property
      *     return \app\filters\MyFilter::identifier();
      * }
      * ```
+     *
+     * @return boolean|string
      */
-    public function filterName(): bool|string
+    public function filterName()
     {
         return false;
     }
@@ -66,7 +68,7 @@ abstract class ImageProperty extends Property
      * @return string|boolean Returns the path to the file, otherwise false.
      * @see \luya\admin\base\Property::getValue()
      */
-    public function getValue(): string|bool
+    public function getValue()
     {
         $value = parent::getValue();
 
@@ -87,9 +89,10 @@ abstract class ImageProperty extends Property
     /**
      * Get the image property from the property value.
      *
+     * @return \luya\admin\image\Item|boolean
      * @since 1.0.2
      */
-    public function getImage(): \luya\admin\image\Item|bool
+    public function getImage()
     {
         $value = parent::getValue();
 

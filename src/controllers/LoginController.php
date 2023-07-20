@@ -79,8 +79,10 @@ class LoginController extends Controller
      *
      * + Single sign in runs {{luya\admin\controllers\LoginController::actionAsync()}}.
      * + 2FA calls {{luya\admin\controllers\LoginController::actionAsyncToken()}} afterwards.
+     *
+     * @return \yii\web\Response|string
      */
-    public function actionIndex($autologout = null): \yii\web\Response|string
+    public function actionIndex($autologout = null)
     {
         // redirect logged in users
         if (!Yii::$app->adminuser->isGuest) {
@@ -348,6 +350,7 @@ class LoginController extends Controller
      * Change the response format to json and return the array.
      *
      * @param boolean $refresh
+     * @param array $errors
      * @param boolean $enterSecureToken
      * @param string $message
      * @return array
@@ -380,9 +383,10 @@ class LoginController extends Controller
      * Ensure current brute force attempt based on session.
      *
      * @param $userId an user id or empty blocks the whole ip
+     * @return boolean|integer
      * @since 1.2.0
      */
-    private function sessionBruteForceLock($userId): bool|int
+    private function sessionBruteForceLock($userId)
     {
         if (empty($userId)) {
             // block all request from this IP

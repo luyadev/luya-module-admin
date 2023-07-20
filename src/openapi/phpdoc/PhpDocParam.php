@@ -12,8 +12,14 @@ namespace luya\admin\openapi\phpdoc;
  */
 class PhpDocParam
 {
-    public function __construct(protected PhpDocParser $phpDocParser, protected array $definition)
+    protected $phpDocParser;
+
+    protected $definition;
+
+    public function __construct(PhpDocParser $phpDocParser, array $definition)
     {
+        $this->phpDocParser = $phpDocParser;
+        $this->definition = $definition;
     }
 
     /**

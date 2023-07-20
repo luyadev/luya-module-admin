@@ -16,18 +16,30 @@ use yii\base\Model;
 class ActiveRecordToSchema
 {
     /**
+     * @var Model
+     */
+    protected $activeRecord;
+
+    /**
      * @var PhpDocParser
      */
     protected $phpDocParser;
+
+    /**
+     * @var BaseSpecs
+     */
+    protected $baseSpecs;
 
     /**
      * @var string Contains the class which was the origin creator of the active record schema, this can be usused to determine circular references.
      */
     protected $senderActiveRecordClassName = [];
 
-    public function __construct(protected BaseSpecs $baseSpecs, protected Model $activeRecord, $senderActiveRecordClassName = null)
+    public function __construct(BaseSpecs $baseSpecs, Model $activeRecord, $senderActiveRecordClassName = null)
     {
-        $this->phpDocParser = new PhpDocParser(new ReflectionClass($activeRecord::class));
+        $this->activeRecord = $activeRecord;
+        $this->baseSpecs = $baseSpecs;
+        $this->phpDocParser = new PhpDocParser(new ReflectionClass(get_class($activeRecord)));
         $this->senderActiveRecordClassName = (array) $senderActiveRecordClassName;
     }
 
@@ -77,7 +89,7 @@ class ActiveRecordToSchema
         $type = $property->getType();
         // handle php object type
         if ($type->getIsClass() && !$this->isCircularReference($type->getClassName())) {
-            $object = $this->baseSpecs->createActiveRecordSchemaObjectFromClassName($type->getClassName(), array_merge([$this->activeRecord::class], $this->senderActiveRecordClassName));
+            $object = $this->baseSpecs->createActiveRecordSchemaObjectFromClassName($type->getClassName(), array_merge([get_class($this->activeRecord)], $this->senderActiveRecordClassName));
 
             if ($object) {
                 $config = $this->baseSpecs->createSchemaFromActiveRecordToSchemaObject($object, $type->getIsArray());
@@ -112,6 +124,6 @@ class ActiveRecordToSchema
             return true;
         }
 
-        return trim($this->activeRecord::class, '\\') == trim($class, '\\');
+        return trim(get_class($this->activeRecord), '\\') == trim($class, '\\');
     }
 }

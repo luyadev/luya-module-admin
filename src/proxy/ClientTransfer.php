@@ -173,7 +173,7 @@ class ClientTransfer extends BaseObject
      * @return string|false Either returns the md5 hash of the uploaded file or false if something went wrong
      * @since 3.6.0
      */
-    public function storageUpload($fileName, $content): string|false
+    public function storageUpload($fileName, $content)
     {
         try {
             $fromTempFile = @tempnam(sys_get_temp_dir(), 'clientTransferUpload');
@@ -190,7 +190,7 @@ class ClientTransfer extends BaseObject
             FileHelper::unlink($fromTempFile);
 
             return $md5;
-        } catch (Exception) {
+        } catch (Exception $e) {
             return false;
         }
     }

@@ -44,7 +44,7 @@ class CommonController extends RestController
      * @return array Returns an array with response, button and message
      * @since 2.0.0
      */
-    public function actionReloadButtonCall(int|string $key)
+    public function actionReloadButtonCall($key)
     {
         $button = array_key_exists($key, $this->module->reloadButtons) ? $this->module->reloadButtons[$key] : false;
 

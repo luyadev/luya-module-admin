@@ -79,6 +79,8 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
 
     /**
      * Setter method for ActiveQuery.
+     *
+     * @param ActiveQuery $query
      */
     public function setQuery(ActiveQuery $query)
     {

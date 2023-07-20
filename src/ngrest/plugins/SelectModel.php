@@ -143,6 +143,7 @@ class SelectModel extends Select
 
     /**
      *
+     * @param ActiveRecordInterface $model
      * @return string
      */
     private function generateLabelField(ActiveRecordInterface $model)

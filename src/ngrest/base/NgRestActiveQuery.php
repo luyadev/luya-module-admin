@@ -71,7 +71,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @return NgRestActiveQuery
      * @since 2.0.0
      */
-    public function jsonWhere($operator, $field, $key, string|int $value)
+    public function jsonWhere($operator, $field, $key, $value)
     {
         return $this->andWhere([$operator, "JSON_EXTRACT({$field}, \"$.{$key}\")", $value]);
     }
@@ -119,7 +119,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @return NgRestActiveQuery
      * @since 2.1.0
      */
-    public function jsonArrayWhere($field, $key, string|int $value)
+    public function jsonArrayWhere($field, $key, $value)
     {
         return $this->andWhere(['>', "JSON_CONTAINS(JSON_EXTRACT({$field}, \"$[*].{$key}\"), \"{$value}\")", 0]);
     }
@@ -181,7 +181,7 @@ class NgRestActiveQuery extends ActiveQuery
      * @return NgRestActiveQuery
      * @since 2.0.1
      */
-    public function byPrimaryKey(string|array $condition)
+    public function byPrimaryKey($condition)
     {
         $modelClass = $this->modelClass;
         $keys = $modelClass::primaryKey();

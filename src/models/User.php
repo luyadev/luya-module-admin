@@ -102,6 +102,8 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
 
     /**
      * Setter method for user settings which encodes the json.
+     *
+     * @param array $data
      */
     public function updateSettings(array $data)
     {

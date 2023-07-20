@@ -83,6 +83,7 @@ final class TagRelation extends ActiveRecord
     /**
      * Save multiple tags for a given pk and table name.
      *
+     * @param array $tagIds
      * @param integer $tableName
      * @param integer $pkId
      * @return integer Returns the number of relations successful added.
@@ -137,6 +138,7 @@ final class TagRelation extends ActiveRecord
     /**
      * Delete (cleanup) all relations for a given model.
      *
+     * @param ActiveRecord $model
      * @return integer
      * @since 4.2.0
      */

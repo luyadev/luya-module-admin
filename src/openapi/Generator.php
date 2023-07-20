@@ -29,6 +29,16 @@ class Generator extends Component
     public const EVENT_PATH_PARAMETERS = 'pathParameters';
 
     /**
+     * @var UrlManager
+     */
+    protected $urlManager;
+
+    /**
+     * @var array
+     */
+    protected $controllerMap;
+
+    /**
      * @var string Prefix all controllers with this key `admin/` or `v1/`.
      */
     public $controllerMapEndpointPrefix;
@@ -80,8 +90,10 @@ class Generator extends Component
      * + The key is the endpointName to resolve, lets say the url.
      * + Value is an array containing `class` and `module`
      */
-    public function __construct(protected UrlManager $urlManager, protected array $controllerMap = [])
+    public function __construct(UrlManager $urlManager, array $controllerMap = [])
     {
+        $this->urlManager = $urlManager;
+        $this->controllerMap = $controllerMap;
     }
 
     private array $_assignedUrlRules = [];
@@ -98,7 +110,7 @@ class Generator extends Component
      * @param string $endpointName An additional name for the endpoint, this name will be taken for groupping the rule. If not defined the rule pattern will be taken
      * @since 3.3.0
      */
-    public function assignUrlRule($route, string|array $verb = 'GET', $endpointName = null)
+    public function assignUrlRule($route, $verb = 'GET', $endpointName = null)
     {
         $this->_assignedUrlRules[$route] = ['route' => $route, 'verb' => (array) $verb, 'endpointName' => $endpointName];
     }
@@ -195,6 +207,8 @@ class Generator extends Component
 
     /**
      * Add a path to the paths array
+     *
+     * @param BasePathParser $pathParser
      */
     private function addPath(BasePathParser $pathParser)
     {

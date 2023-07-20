@@ -42,6 +42,8 @@ class SelectArray extends Select
 
     /**
      * Setter method for Data.
+     *
+     * @param array $data
      */
     public function setData(array $data)
     {

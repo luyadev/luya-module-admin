@@ -304,6 +304,7 @@ class CrudController extends BaseCrudController
      * @param string $fileNamepsace
      * @param string $className
      * @param string $apiEndpoint
+     * @param \yii\db\TableSchema $schema
      * @param boolean $i18nFields
      * @return string
      */

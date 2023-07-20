@@ -24,6 +24,7 @@ abstract class ItemAbstract extends BaseObject implements Arrayable
 
     /**
      * Setter method for itemArray property.
+     * @param array $item
      */
     public function setItemArray(array $item)
     {

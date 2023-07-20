@@ -289,7 +289,7 @@ class PhpDocParser
     public function getUseClasses()
     {
         $file = $this->reflection->getFileName();
-        $tokens = \PhpToken::tokenize(file_get_contents($file));
+        $tokens = token_get_all(file_get_contents($file));
 
         $parts = [];
         $startCapture = 0;
@@ -305,7 +305,7 @@ class PhpDocParser
                 }
 
                 if ($startCapture > 0) {
-                    $parts[$startCapture][] = $token->text;
+                    $parts[$startCapture][] = $token[1];
                 }
             }
         }

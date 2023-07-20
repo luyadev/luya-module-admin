@@ -52,11 +52,17 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     ];
 
     /**
-     * @param \luya\base\AdminModuleInterface $moduleContext
+     * @var \luya\base\AdminModuleInterface The context on what the menu is running.
+     */
+    protected $moduleContext;
+
+    /**
+     * @param \luya\base\AdminModuleInterface $module
      * @param array $config
      */
-    public function __construct(protected AdminModuleInterface $moduleContext, array $config = [])
+    public function __construct(AdminModuleInterface $module, array $config = [])
     {
+        $this->moduleContext = $module;
         parent::__construct($config);
     }
 
@@ -189,6 +195,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
      * @param string $icon
      * @param string $apiEndpoint
      * @param string $pool
+     * @param array $options
      * @return AdminMenuBuilder
      * @since 2.0.0
      */
@@ -264,7 +271,7 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
      * @param mixed $defaultValue The default value if the option is not available for this item.
      * @return mixed
      */
-    public static function getOptionValue(array $item, $optionName, mixed $defaultValue = false)
+    public static function getOptionValue(array $item, $optionName, $defaultValue = false)
     {
         if (!isset($item['options'])) {
             return $defaultValue;

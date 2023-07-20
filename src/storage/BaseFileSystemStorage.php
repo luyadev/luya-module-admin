@@ -279,6 +279,11 @@ abstract class BaseFileSystemStorage extends Component
     public $whitelistExtensions = [];
 
     /**
+     * @var \luya\web\Request Request object resolved by the Dependency Injector.
+     */
+    public $request;
+
+    /**
      * @var boolean When enabled the storage component will try to recreated missing images when {{luya\admin\image\Item::getSource()}} of an
      * image is called but the `getFileExists()` does return false, which means that the source file has been deleted.
      * So in those cases the storage component will automatiaccly try to recreated this image based on the filterId and
@@ -312,8 +317,9 @@ abstract class BaseFileSystemStorage extends Component
      * @param \luya\web\Request $request The request component class resolved by the Dependency Injector.
      * @param array $config
      */
-    public function __construct(public Request $request, array $config = [])
+    public function __construct(Request $request, array $config = [])
     {
+        $this->request = $request;
         parent::__construct($config);
     }
 
@@ -938,6 +944,7 @@ abstract class BaseFileSystemStorage extends Component
     /**
      * Caching helper method.
      *
+     * @param \yii\db\Query $query
      * @param string|array $key
      * @return mixed|boolean
      */

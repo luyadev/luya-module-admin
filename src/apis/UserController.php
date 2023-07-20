@@ -74,6 +74,7 @@ class UserController extends Api
     /**
      * Generate an array with package infos
      *
+     * @param PackageInstaller $installer
      * @return array
      * @since 2.2.0
      */

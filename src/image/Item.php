@@ -100,8 +100,9 @@ class Item extends ItemAbstract
      * Get the source path to the image location on the webserver.
      *
      * @param string $scheme Whether the source path should be absolute or not.
+     * @return string|boolean
      */
-    public function getSource($scheme = false): string|bool
+    public function getSource($scheme = false)
     {
         if (!$this->getFileExists()) {
             if (Yii::$app->storage->autoFixMissingImageSources === false) {
@@ -120,16 +121,20 @@ class Item extends ItemAbstract
 
     /**
      * Absolute url to the image source.
+     *
+     * @return string|boolean
      */
-    public function getSourceAbsolute(): string|bool
+    public function getSourceAbsolute()
     {
         return $this->getSource(true);
     }
 
     /**
      * The source to the image internal used on the Server.
+     *
+     * @return string|boolean
      */
-    public function getServerSource(): string|bool
+    public function getServerSource()
     {
         return $this->getFile() ? Yii::$app->storage->fileServerPath($this->systemFileName) : false;
     }
@@ -210,7 +215,7 @@ class Item extends ItemAbstract
      * @param string $filterName The name of a filter like `tiny-thumbnail` or a custom filter you have defined in your filters list.
      * @return boolean|\luya\admin\image\Item Returns boolean or image item object if its found.
      */
-    public function applyFilter($filterName): bool|\luya\admin\image\Item
+    public function applyFilter($filterName)
     {
         return ($filterItem = Yii::$app->storage->getFiltersArrayItem($filterName)) ? Yii::$app->storage->addImage($this->getFileId(), $filterItem['id'], !YII_ENV_PROD) : false;
     }

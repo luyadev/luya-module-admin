@@ -95,8 +95,9 @@ class RenderActiveWindow extends Render
      * Find the active window in the config based on a given Hash.
      *
      * @param string $activeWindowHash
+     * @return array|boolean
      */
-    public function findActiveWindow($activeWindowHash): array|bool
+    public function findActiveWindow($activeWindowHash)
     {
         $activeWindows = $this->getConfig()->getPointer('aw');
 

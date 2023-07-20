@@ -141,9 +141,10 @@ class Property extends NgRestModel
     /**
      * Create the property object with a given value.
      *
+     * @param mixed $value
      * @return \luya\admin\base\Property
      */
-    public function createObject(mixed $value)
+    public function createObject($value)
     {
         return static::getObject($this->class_name, $value);
     }
@@ -152,9 +153,10 @@ class Property extends NgRestModel
      * Generate the Property Object.
      *
      * @param string $className
+     * @param mixed $value
      * @return \luya\admin\base\Property
      */
-    public static function getObject($className, mixed $value = null)
+    public static function getObject($className, $value = null)
     {
         return Yii::createObject(['class' => $className, 'value' => $value]);
     }

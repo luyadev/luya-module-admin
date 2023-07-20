@@ -35,13 +35,22 @@ use yii\base\InvalidConfigException;
 class OpenApiGenerator
 {
     /**
-     * Constructor with Generator Object
+     * @var Generator
      */
-    public function __construct(public Generator $generator)
+    public $generator;
+
+    /**
+     * Constructor with Generator Object
+     *
+     * @param Generator $generator
+     */
+    public function __construct(Generator $generator)
     {
         if (!class_exists(OpenApi::class)) {
             throw new InvalidConfigException("The composer package `cebe/php-openapi` must be installed to generate the OpenAPI file.");
         }
+
+        $this->generator = $generator;
     }
 
     /**

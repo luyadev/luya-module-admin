@@ -39,6 +39,9 @@ class QueueLogBehavior extends Behavior
         ];
     }
 
+    /**
+     * @param PushEvent $event
+     */
     public function afterPush(PushEvent $event)
     {
         $log = new QueueLog();
@@ -48,6 +51,9 @@ class QueueLogBehavior extends Behavior
         $log->save();
     }
 
+    /**
+     * @param ExecEvent $event
+     */
     public function beforeExec(ExecEvent $event)
     {
         $log = QueueLog::findOne(['queue_id' => $event->id]);
@@ -57,6 +63,9 @@ class QueueLogBehavior extends Behavior
         }
     }
 
+    /**
+     * @param ExecEvent $event
+     */
     public function afterExec(ExecEvent $event)
     {
         $log = QueueLog::findOne(['queue_id' => $event->id]);
@@ -66,6 +75,9 @@ class QueueLogBehavior extends Behavior
         }
     }
 
+    /**
+     * @param ExecEvent $event
+     */
     public function afterError(ExecEvent $event)
     {
         $log = QueueLog::findOne(['queue_id' => $event->id]);
@@ -89,14 +101,16 @@ class QueueLogBehavior extends Behavior
         Yii::$app->errorHandler->transferMessage($event->error->getMessage(), $event->error->getFile(), $event->error->getLine());
     }
     /**
+     * @param JobEvent $event
      * @return string
      */
     protected function getJobTitle(JobEvent $event)
     {
-        return $event->job instanceof JobInterface ? $event->job !== null ? $event->job::class : self::class : 'Unknown job Title';
+        return $event->job instanceof JobInterface ? $event->job !== null ? get_class($event->job) : self::class : 'Unknown job Title';
     }
 
     /**
+     * @param ExecEvent $event
      * @return string
      */
     protected function getExecTitle(ExecEvent $event)
