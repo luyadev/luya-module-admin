@@ -28,15 +28,17 @@ class ConfigBuilder implements ConfigBuilderInterface
 
     private array $_pointersMap = ['list', 'create', 'update', 'delete', 'aw', 'options'];
 
-    public function __construct($ngRestModelClass)
-    {
-        $this->ngRestModelClass = $ngRestModelClass;
-    }
-
     /**
-     * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
+     * @param string $ngRestModelClass
      */
-    public $ngRestModelClass;
+    public function __construct(
+        /**
+         * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
+         */
+        public $ngRestModelClass
+    )
+    {
+    }
 
     /**
      * Maig setter function, defines whether a pointer exists or not, if not existing it will be created.

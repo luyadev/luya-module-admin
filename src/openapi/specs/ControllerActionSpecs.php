@@ -15,17 +15,8 @@ use yii\base\InlineAction;
  */
 class ControllerActionSpecs extends BaseSpecs
 {
-    protected $controller;
-
-    protected $actioName;
-
-    protected $verbName;
-
-    public function __construct(Controller $controller, $actionName, $verbName)
+    public function __construct(protected Controller $controller, protected $actioName, protected $verbName)
     {
-        $this->controller = $controller;
-        $this->actioName = $actionName;
-        $this->verbName = $verbName;
     }
 
     /**
@@ -77,10 +68,10 @@ class ControllerActionSpecs extends BaseSpecs
     {
         if ($this->getActionObject() instanceof InlineAction) {
             // read data from: actionMethodName()
-            $reflector = new ReflectionClass(get_class($this->getControllerObject()));
+            $reflector = new ReflectionClass($this->getControllerObject()::class);
             return $reflector->getMethod($this->getActionName());
         }
 
-        return new ReflectionClass(get_class($this->getActionObject()));
+        return new ReflectionClass($this->getActionObject()::class);
     }
 }

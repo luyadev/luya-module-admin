@@ -10,13 +10,8 @@ namespace luya\admin\openapi\phpdoc;
  */
 class PhpDocReturn
 {
-    protected $phpDocParser;
-    protected $definition;
-
-    public function __construct(PhpDocParser $phpDocParser, array $definition)
+    public function __construct(protected PhpDocParser $phpDocParser, protected array $definition)
     {
-        $this->phpDocParser = $phpDocParser;
-        $this->definition = $definition;
     }
 
     public function getDescription()

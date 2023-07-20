@@ -27,22 +27,13 @@ class ClientTable extends BaseObject
 {
     public const LARGE_TABLE_PROMPT = 10000;
 
-    private $_data;
-
-    /**
-     * @var \luya\admin\proxy\ClientBuild
-     */
-    public $build;
-
     /**
      * @param ClientBuild $build
-     * @param array $data
+     * @param array $_data
      * @param array $config
      */
-    public function __construct(ClientBuild $build, array $data, array $config = [])
+    public function __construct(public ClientBuild $build, private array $_data, array $config = [])
     {
-        $this->build = $build;
-        $this->_data = $data;
         parent::__construct($config);
     }
 

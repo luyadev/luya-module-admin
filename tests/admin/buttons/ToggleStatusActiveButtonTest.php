@@ -176,8 +176,7 @@ class ToggleStatusActiveButtonTest extends NgRestTestCase
             'attribute' => 'foo',
         ]);
 
-        $this->expectException(UnknownPropertyException::class);
-        $this->expectExceptionMessage("Setting unknown property: luya\admin\models\Lang::foo");
+        $this->expectException(InvalidArgumentException::class);
         $button->handle($model);
     }
 

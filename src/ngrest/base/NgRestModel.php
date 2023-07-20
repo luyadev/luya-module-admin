@@ -1245,7 +1245,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 }
                 $item = Yii::createObject($item);
             }
-            $item->setModelClass(get_class($this)); // former: $item->setModelClass($this->className());
+            $item->setModelClass($this::class); // former: $item->setModelClass($this->className());
             $item->setArrayIndex($key);
 
             $relations[$key] = $item;

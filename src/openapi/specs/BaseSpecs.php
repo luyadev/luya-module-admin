@@ -201,8 +201,8 @@ abstract class BaseSpecs implements SpecInterface
 
         $event = new PathParametersEvent([
             'params' => $params,
-            'controllerClass' => get_class($this->getControllerObject()),
-            'actionClass' => get_class($this->getActionObject()),
+            'controllerClass' => $this->getControllerObject()::class,
+            'actionClass' => $this->getActionObject()::class,
             'verbName' => $this->getVerbName(),
             'contextClass' => $this->getReflection()->getName(),
             'sender' => $this,

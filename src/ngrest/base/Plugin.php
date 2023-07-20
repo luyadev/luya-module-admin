@@ -522,7 +522,7 @@ abstract class Plugin extends Component implements TypesInterface
      */
     public function createSchedulerListTag($ngModel, array $values, $dataRow, array $options = [])
     {
-        return Angular::schedule($ngModel, $this->alias, 'getRowPrimaryValue('.$dataRow.')', $values, get_class($this->renderContext->getModel()), $this->name, $options)->render();
+        return Angular::schedule($ngModel, $this->alias, 'getRowPrimaryValue('.$dataRow.')', $values, $this->renderContext->getModel()::class, $this->name, $options)->render();
     }
 
     // EVENTS

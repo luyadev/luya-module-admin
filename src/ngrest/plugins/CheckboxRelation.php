@@ -187,7 +187,7 @@ class CheckboxRelation extends Plugin
     public function renderCreate($id, $ngModel)
     {
         return [
-            $this->createCrudLoaderTag(get_class($this->model), null, [], $this->crudLoaderPoolContext),
+            $this->createCrudLoaderTag($this->model::class, null, [], $this->crudLoaderPoolContext),
             $this->createFormTag('zaa-checkbox-array', $id, $ngModel, ['options' => $this->getServiceName('relationdata')]),
         ];
     }

@@ -52,17 +52,11 @@ class AdminMenuBuilder extends BaseObject implements AdminMenuBuilderInterface
     ];
 
     /**
-     * @var \luya\base\AdminModuleInterface The context on what the menu is running.
-     */
-    protected $moduleContext;
-
-    /**
-     * @param \luya\base\AdminModuleInterface $module
+     * @param \luya\base\AdminModuleInterface $moduleContext
      * @param array $config
      */
-    public function __construct(AdminModuleInterface $module, array $config = [])
+    public function __construct(protected AdminModuleInterface $moduleContext, array $config = [])
     {
-        $this->moduleContext = $module;
         parent::__construct($config);
     }
 

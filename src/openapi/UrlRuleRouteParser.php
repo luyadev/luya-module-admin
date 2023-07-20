@@ -29,29 +29,9 @@ use yii\web\UrlRule;
 class UrlRuleRouteParser extends BasePathParser
 {
     /**
-     * @var string
-     */
-    protected $patternRoute;
-
-    /**
-     * @var string
-     */
-    protected $controllerMapRoute;
-
-    /**
-     * @var array An array with {{yii\web\UrlRule}} objects
-     */
-    protected $rules;
-
-    /**
      * @var Controller The created controller object from {{$controllerMapRoute}}.
      */
     protected $controller;
-
-    /**
-     * @var string The endpoint name to categorzied operations together under the same tag.
-     */
-    protected $endpointName;
 
     /**
      * @var ControllerSpecs
@@ -66,12 +46,8 @@ class UrlRuleRouteParser extends BasePathParser
      * @param array $rules An array with {{yii\web\UrlRule}} objects f.e `[new UrlRule(['pattern' => 'my-users', 'route' => 'user/index', 'verb' => 'GET'])]`
      * @param string $endpointName The endpoint name is used to categorize all operations together into this tag f.e. `v1/my-users`.
      */
-    public function __construct($patternRoute, $controllerMapRoute, array $rules, $endpointName)
+    public function __construct(protected $patternRoute, protected $controllerMapRoute, protected array $rules, protected $endpointName)
     {
-        $this->patternRoute = $patternRoute;
-        $this->controllerMapRoute = $controllerMapRoute;
-        $this->rules = $rules;
-
         $createController = Yii::$app->createController($controllerMapRoute);
 
         if ($createController) {
@@ -81,7 +57,6 @@ class UrlRuleRouteParser extends BasePathParser
         if ($this->controller) {
             $this->controllerSpecs = new ControllerSpecs($this->controller);
         }
-        $this->endpointName = $endpointName;
     }
 
     /**

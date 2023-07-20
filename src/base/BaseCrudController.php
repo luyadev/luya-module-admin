@@ -178,7 +178,7 @@ abstract class BaseCrudController extends Command
         $patterns = [];
         $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
         $patterns[] = "/^(.*?){$db->tablePrefix}$/";
-        if (strpos($this->tableName, '*') !== false) {
+        if (str_contains($this->tableName, '*')) {
             $pattern = $this->tableName;
             if (($pos = strrpos($pattern, '.')) !== false) {
                 $pattern = substr($pattern, $pos + 1);
@@ -226,7 +226,7 @@ abstract class BaseCrudController extends Command
                 $labels[$column->name] = 'ID';
             } else {
                 $label = Inflector::camel2words($column->name);
-                if (!empty($label) && substr_compare($label, ' id', -3, 3, true) === 0) {
+                if (!empty($label) && str_ends_with($label, ' id')) {
                     $label = substr($label, 0, -3) . ' ID';
                 }
                 $labels[$column->name] = $label;
