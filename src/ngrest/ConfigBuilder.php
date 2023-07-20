@@ -36,8 +36,7 @@ class ConfigBuilder implements ConfigBuilderInterface
          * @var string When the ConfigBuilder is created, this property must be fulfilled by the constructor:
          */
         public $ngRestModelClass
-    )
-    {
+    ) {
     }
 
     /**

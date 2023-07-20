@@ -13,7 +13,6 @@ use luya\admin\openapi\Generator;
 use luya\admin\openapi\phpdoc\PhpDocParser;
 use luya\admin\openapi\phpdoc\PhpDocType;
 use luya\helpers\ObjectHelper;
-use ReflectionClass;
 use ReflectionMethod;
 use Yii;
 use yii\base\Action as BaseAction;

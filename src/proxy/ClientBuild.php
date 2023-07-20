@@ -64,11 +64,12 @@ class ClientBuild extends BaseObject
     public function __construct(/**
      * @var \luya\console\Command $command object
      */
-    public Command $command, /**
+        public Command $command, /**
      * @since 2.0.0
      */
-    public Connection $db, array $config = [])
-    {
+        public Connection $db,
+        array $config = []
+    ) {
         parent::__construct($config);
     }
 
