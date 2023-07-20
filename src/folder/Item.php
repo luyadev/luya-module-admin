@@ -75,7 +75,7 @@ class Item extends ItemAbstract
      *
      * @return boolean|\luya\admin\folder\Item The item object or false if not found.
      */
-    public function getParent()
+    public function getParent(): bool|\luya\admin\folder\Item
     {
         return (!empty($this->getParentId())) ? Yii::$app->storage->getFolder($this->getParentId()) : false;
     }

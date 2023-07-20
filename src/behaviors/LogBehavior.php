@@ -36,10 +36,9 @@ class LogBehavior extends Behavior
     /**
      * The value to transform to json.
      *
-     * @param string|array $array
      * @return string
      */
-    private function toJson($array)
+    private function toJson(string|array $array)
     {
         $array = (array) $array;
 

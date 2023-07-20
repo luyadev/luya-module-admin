@@ -52,10 +52,8 @@ interface FlowActiveWindowInterface
 {
     /**
      * Active Record findOne method to retrieve the model row by the itemId.
-     *
-     * @param mixed $condition
      */
-    public static function findOne($condition);
+    public static function findOne(mixed $condition);
 
     /**
      * This method will be called when the storage item is created, so you can perform the database save action

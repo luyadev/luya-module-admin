@@ -121,9 +121,8 @@ class AdminMenu extends \yii\base\Component
      * Get the node for a given array key.
      *
      * @param integer $id
-     * @return boolean|array
      */
-    public function getNodeData($id)
+    public function getNodeData($id): bool|array
     {
         if (!isset($this->getMenu()[$id])) {
             return false;
@@ -209,7 +208,7 @@ class AdminMenu extends \yii\base\Component
             try {
                 // check if a translation exists, otherwise use alias instead.
                 $alias = Yii::t($item['moduleId'], $item['alias'], [], Yii::$app->language);
-            } catch (\Exception $err) {
+            } catch (\Exception) {
                 $alias = $item['alias'];
             }
 
@@ -254,7 +253,7 @@ class AdminMenu extends \yii\base\Component
                 // translate the group names
                 try {
                     $data['groups'][$groupName]['name'] = Yii::t($data['moduleId'], $groupItem['name'], [], Yii::$app->language);
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     // do nothing and keep the current name inside the array
                 }
                 foreach ($groupItem['items'] as $groupItemKey => $groupItemEntry) {
@@ -275,7 +274,7 @@ class AdminMenu extends \yii\base\Component
                     }
                     try {
                         $alias = Yii::t($data['moduleId'], $data['groups'][$groupName]['items'][$groupItemKey]['alias'], [], Yii::$app->language);
-                    } catch (\Exception $err) {
+                    } catch (\Exception) {
                         $alias = $data['groups'][$groupName]['items'][$groupItemKey]['alias'];
                     }
 
@@ -343,9 +342,8 @@ class AdminMenu extends \yii\base\Component
      * Return all informations about a menu point based on the api endpoint name.
      *
      * @param string $api The Api Endpoint
-     * @return array|boolean
      */
-    public function getApiDetail($api, $pool = null)
+    public function getApiDetail($api, $pool = null): array|bool
     {
         $items = $this->getItems();
 

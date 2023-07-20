@@ -18,17 +18,6 @@ use yii\db\Connection;
  */
 class ClientBuild extends BaseObject
 {
-    /**
-     * @var \yii\db\Connection
-     * @since 2.0.0
-     */
-    public $db;
-
-    /**
-     * @var \luya\console\Command $command object
-     */
-    public $command;
-
     public $buildToken;
 
     public $requestUrl;
@@ -72,10 +61,15 @@ class ClientBuild extends BaseObject
         return $this->_optionTable;
     }
 
-    public function __construct(Command $command, Connection $db, array $config = [])
-    {
-        $this->command = $command;
-        $this->db = $db;
+    public function __construct(/**
+     * @var \luya\console\Command $command object
+     */
+        public Command $command, /**
+     * @since 2.0.0
+     */
+        public Connection $db,
+        array $config = []
+    ) {
         parent::__construct($config);
     }
 

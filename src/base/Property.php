@@ -16,7 +16,7 @@ use yii\base\Component;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.0.0
  */
-abstract class Property extends Component implements TypesInterface
+abstract class Property extends Component implements TypesInterface, \Stringable
 {
     /**
      * @var string The name of the event will be triggered before rendering. Triggers an {{luya\cms\frontend\events\BeforeRenderEvent}} event.
@@ -119,9 +119,9 @@ abstract class Property extends Component implements TypesInterface
      *
      * @return mixed
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return empty($this->getValue()) ? '' : $this->getValue();
+        return (string) (empty($this->getValue()) ? '' : $this->getValue());
     }
 
     /**

@@ -50,9 +50,8 @@ class Query extends BaseObject
      * Get a specific images from the storage system.
      *
      * @param integer $id
-     * @return boolean|array
      */
-    public function getItemDataProvider($id)
+    public function getItemDataProvider($id): bool|array
     {
         return $this->storage->getImagesArrayItem($id);
     }
@@ -60,7 +59,6 @@ class Query extends BaseObject
     /**
      * Create the image object based on the array.
      *
-     * @param array $itemArray
      * @return \luya\admin\image\Item
      */
     public function createItem(array $itemArray)
@@ -71,7 +69,6 @@ class Query extends BaseObject
     /**
      * Create iterator object from a given data array.
      *
-     * @param array $data
      * @return \luya\admin\image\Iterator
      */
     public function createIteratorObject(array $data)

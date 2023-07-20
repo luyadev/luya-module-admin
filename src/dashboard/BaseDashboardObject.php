@@ -130,7 +130,7 @@ abstract class BaseDashboardObject extends BaseObject implements DashboardObject
      *
      * @param string|array $title The title of the dashboard object item, if an array is given the first element is the translation category the second element the message.
      */
-    public function setTitle($title)
+    public function setTitle(string|array $title)
     {
         if (is_array($title)) {
             [$category, $message] = $title;

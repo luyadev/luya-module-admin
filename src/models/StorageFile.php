@@ -120,10 +120,8 @@ final class StorageFile extends ActiveRecord
      * Override default implementation. Mark as deleted and remove files from file system.
      *
      * Keep file in order to provide all file references.
-     *
-     * @return int|boolean
      */
-    public function delete()
+    public function delete(): int|bool
     {
         if ($this->beforeDelete()) {
             if (!Yii::$app->storage->fileSystemDeleteFile($this->name_new_compound)) {
@@ -162,10 +160,9 @@ final class StorageFile extends ActiveRecord
     /**
      * Get the file for the corresponding model.
      *
-     * @return \luya\admin\file\Item|boolean
      * @since 1.2.0
      */
-    public function getFile()
+    public function getFile(): \luya\admin\file\Item|bool
     {
         return Yii::$app->storage->getFile($this->id);
     }
@@ -274,7 +271,7 @@ final class StorageFile extends ActiveRecord
      * @return array|boolean Returns an array with the key source which contains the source to the thumbnail.
      * @since 1.2.2.1
      */
-    public function getCreateThumbnail()
+    public function getCreateThumbnail(): array|bool
     {
         if (!$this->isImage) {
             return false;
@@ -304,7 +301,7 @@ final class StorageFile extends ActiveRecord
      * @return array|boolean Returns an array with the key source which contains the source to the thumbnail medium.
      * @since 1.2.2.1
      */
-    public function getCreateThumbnailMedium()
+    public function getCreateThumbnailMedium(): array|bool
     {
         if (!$this->isImage) {
             return false;

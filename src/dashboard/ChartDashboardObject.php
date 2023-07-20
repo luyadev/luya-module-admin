@@ -135,6 +135,6 @@ class ChartDashboardObject extends BaseDashboardObject
      */
     protected function generateUniqueId()
     {
-        return md5(get_class($this) . $this->getTitle() . uniqid());
+        return md5($this::class . $this->getTitle() . uniqid());
     }
 }

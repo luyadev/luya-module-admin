@@ -80,7 +80,7 @@ class SelectRelationActiveQuery extends Plugin
      *
      * @param string|array $labelField The fields to display based on the sql table seperated by commas or as array.
      */
-    public function setLabelField($labelField)
+    public function setLabelField(string|array $labelField)
     {
         if (is_string($labelField)) {
             $labelField = explode(",", $labelField);
@@ -99,15 +99,8 @@ class SelectRelationActiveQuery extends Plugin
         return $this->_labelField;
     }
 
-    /**
-     * @var \yii\db\ActiveQuery
-     */
-    private $_query;
+    private ?\yii\db\ActiveQuery $_query = null;
 
-    /**
-     *
-     * @param yii\db\ActiveQuery $query
-     */
     public function setQuery(ActiveQuery $query)
     {
         $this->_query = $query;

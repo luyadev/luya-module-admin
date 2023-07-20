@@ -23,8 +23,6 @@ class UserChangePassword extends Model
 
     /**
      * Setter method for user.
-     *
-     * @param User $user
      */
     public function setUser(User $user)
     {

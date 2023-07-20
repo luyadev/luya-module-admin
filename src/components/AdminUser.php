@@ -74,7 +74,6 @@ class AdminUser extends User
 
     /**
      * After the login process of the user, set the admin interface language based on the user settings.
-     * @param UserEvent $event
      */
     public function onAfterLogin(UserEvent $event)
     {

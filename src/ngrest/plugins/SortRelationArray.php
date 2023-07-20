@@ -51,8 +51,6 @@ class SortRelationArray extends SortRelation
 
     /**
      * Setter method for the data.
-     *
-     * @param array $data
      */
     public function setData(array $data)
     {

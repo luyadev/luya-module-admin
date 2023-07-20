@@ -16,8 +16,6 @@ interface RenderInterface
 {
     /**
      * Setter method for the NgRestConfig.
-     *
-     * @param ConfigInterface $config
      */
     public function setConfig(ConfigInterface $config);
 
