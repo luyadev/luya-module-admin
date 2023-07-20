@@ -116,7 +116,7 @@ jobs:
       - name: Setup database
         run: |
           sudo /etc/init.d/mysql start
-          mysql -h 127.0.0.1 --port 33306 -u root -proot myapp_test < tests/data/sql/1.0.0.sql 
+          mysql -h 127.0.0.1 --port 33306 -u root -proot myapp_test < tests/data/sql/latest/5.0.0.sql 
 
       - name: PHP Unit tests for 8.0, 8.1, 8.2, 8.3
         run: | 
