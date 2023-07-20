@@ -12,7 +12,7 @@ use yii\base\BaseObject;
  * @author Basil Suter <basil@nadar.io>
  * @since 1.2.2
  */
-class ActiveWindowFormField extends BaseObject
+class ActiveWindowFormField extends BaseObject implements \Stringable
 {
     /**
      * @var \luya\admin\ngrest\aw\ActiveWindowFormWidget The form widget object
@@ -72,11 +72,10 @@ class ActiveWindowFormField extends BaseObject
     /**
      * Add a default value when initializing.
      *
-     * @param string|integer $value
      * @return \luya\admin\ngrest\aw\ActiveField
      * @since 1.2.2
      */
-    public function initValue($value)
+    public function initValue(string|int $value)
     {
         if (empty($value)) {
             $this->parts['{initValue}'] = '';
@@ -147,8 +146,6 @@ class ActiveWindowFormField extends BaseObject
     /**
      * Generate a select dropdown with data as array.
      *
-     * @param array $data
-     * @param array $options
      * @return \luya\admin\ngrest\aw\ActiveField
      * @since 1.2.2
      */
@@ -320,7 +317,7 @@ class ActiveWindowFormField extends BaseObject
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }

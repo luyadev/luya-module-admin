@@ -33,7 +33,7 @@ class Angular
      * @return mixed
      * @since 4.0.0
      */
-    public static function typeCast($value)
+    public static function typeCast(mixed $value)
     {
         if (is_bool($value)) {
             $value = (int) $value;
@@ -306,7 +306,7 @@ class Angular
      * @param array $options An array with optional properties for the tag creation, where key is the property name and value its content.
      * @return AngularObject
      */
-    public static function select($ngModel, $label, $data, array $options = [])
+    public static function select($ngModel, $label, array|string $data, array $options = [])
     {
         return self::injector(TypesInterface::TYPE_SELECT, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
@@ -328,7 +328,7 @@ class Angular
      * @param array $options Additonal arguments to create the tag.
      * @return AngularObject
      */
-    public static function radio($ngModel, $label, array $data, array $options = [])
+    public static function radio($ngModel, $label, array|string $data, array $options = [])
     {
         return self::injector(TypesInterface::TYPE_RADIO, $ngModel, $label, is_scalar($data) ? $data : self::optionsArrayInput($data), $options);
     }
@@ -368,7 +368,7 @@ class Angular
      * + preselect: If true all entires from the checkbox will be preselect by default whether its update or add.
      * @return AngularObject
      */
-    public static function checkboxArray($ngModel, $label, $data, array $options = [])
+    public static function checkboxArray($ngModel, $label, array|string $data, array $options = [])
     {
         return self::injector(TypesInterface::TYPE_CHECKBOX_ARRAY, $ngModel, $label, ['items' => is_scalar($data) ? $data : self::optionsArrayInput($data)], $options);
     }

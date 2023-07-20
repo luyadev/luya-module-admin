@@ -30,8 +30,6 @@ abstract class Render extends BaseObject implements RenderInterface
 
     /**
      * Set current config Context.
-     *
-     * @param \luya\admin\ngrest\ConfigInterface $config
      */
     public function setConfig(ConfigInterface $config)
     {

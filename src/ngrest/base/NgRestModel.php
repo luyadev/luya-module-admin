@@ -289,7 +289,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @return mixed
      * @since 2.3.0
      */
-    protected function runI18nContextOnFindPlugin($attributeName, $value)
+    protected function runI18nContextOnFindPlugin($attributeName, mixed $value)
     {
         // create the plugin without i18n context as the plugin can handle whether its i18n or not
         $plugin = clone $this->getPluginObject($attributeName);
@@ -722,9 +722,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
     /**
      *
      * @param string $field
-     * @param mixed $data
      */
-    public function addNgRestServiceData($field, $data)
+    public function addNgRestServiceData($field, mixed $data)
     {
         $this->ngRestServiceArray[$field] = $data;
     }
@@ -1038,7 +1037,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
      * @throws \yii\base\InvalidConfigException
      * @since 1.0.0
      */
-    public function ngRestConfigDefine(ConfigBuilder $config, $assignedType, array $fields)
+    public function ngRestConfigDefine(ConfigBuilder $config, string|array $assignedType, array $fields)
     {
         $types = $this->ngRestAttributeTypes();
         $extraTypes = $this->ngRestExtraAttributeTypes();
@@ -1245,7 +1244,7 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 }
                 $item = Yii::createObject($item);
             }
-            $item->setModelClass(get_class($this)); // former: $item->setModelClass($this->className());
+            $item->setModelClass($this::class); // former: $item->setModelClass($this->className());
             $item->setArrayIndex($key);
 
             $relations[$key] = $item;

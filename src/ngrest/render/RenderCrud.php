@@ -265,7 +265,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Indicates whether the current plugin config is sortable or not.
      *
-     * @param array $item
      * @return boolean
      * @since 2.0.0
      */
@@ -279,7 +278,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Indicates whether the field should be hidden from the list.
      *
-     * @param array $item
      * @return boolean
      * @since 2.0.0
      */
@@ -321,7 +319,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Returns the icon name of the ngRest field
      *
-     * @param array $item
      * @return mixed Returns the icon name based on https://material.io/icons or false if no icon is specified  for this field.
      * @since 4.2.0
      */
@@ -694,7 +691,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * Generate the HTML code for the plugin element based on the current context.
      *
-     * @param array $element
      * @param string $configContext
      * @return string
      * @since 2.0
@@ -793,7 +789,6 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
     /**
      * generate the field help button which is placed next to the element.
      *
-     * @param array $element
      * @param string $configContext
      * @return string
      */

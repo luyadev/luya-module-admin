@@ -45,7 +45,6 @@ trait SortableTrait
     /**
      * Update the index when deleting an item
      *
-     * @param Event $event
      * @since 4.4.0
      */
     protected function deleteItemIndex(Event $event)
@@ -64,7 +63,6 @@ trait SortableTrait
     /**
      * Update the index for a new item
      *
-     * @param AfterSaveEvent $event
      * @since 4.4.0
      */
     protected function newItemIndex(AfterSaveEvent $event)
@@ -142,7 +140,6 @@ trait SortableTrait
     /**
      * ReIndex the all items to ensure consistent numbers
      *
-     * @param Event $event
      * @param string $attributeName
      * @param string $pkName
      * @since 4.4.0

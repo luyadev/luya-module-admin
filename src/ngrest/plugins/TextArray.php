@@ -45,10 +45,9 @@ class TextArray extends Plugin
     /**
      * Transform the array into the internal array notation with a key named `value`.
      *
-     * @param mixed $listArrayValue
      * @return array
      */
-    private function transformList($listArrayValue)
+    private function transformList(mixed $listArrayValue)
     {
         if (empty($listArrayValue)) {
             return [];

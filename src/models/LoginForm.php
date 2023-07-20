@@ -103,7 +103,6 @@ final class LoginForm extends Model
     /**
      * Check if the given user has a lockout, otherwise upcount the attempts.
      *
-     * @param User $user
      * @return boolean
      * @since 1.2.0
      */
@@ -127,7 +126,6 @@ final class LoginForm extends Model
     /**
      * Check if lockout has expired or not.
      *
-     * @param User $user
      * @return boolean
      * @since 1.2.0
      */
@@ -163,9 +161,8 @@ final class LoginForm extends Model
      *
      * @param string $token
      * @param integer $userId
-     * @return boolean|User
      */
-    public function validateSecureToken($token, $userId)
+    public function validateSecureToken($token, $userId): bool|\luya\admin\models\User
     {
         $user = User::findOne($userId);
 
@@ -186,10 +183,8 @@ final class LoginForm extends Model
 
     /**
      * Login the current user if valid.
-     *
-     * @return User|boolean
      */
-    public function login()
+    public function login(): \luya\admin\models\User|bool
     {
         if ($this->validate()) {
             $user = $this->getUser();
@@ -225,10 +220,7 @@ final class LoginForm extends Model
 
     private $_user;
 
-    /**
-     * @return boolean|User
-     */
-    public function getUser()
+    public function getUser(): bool|\luya\admin\models\User
     {
         if (!$this->_user) {
             $this->_user = User::findByEmail($this->email);

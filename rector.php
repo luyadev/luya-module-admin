@@ -16,6 +16,14 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_74
+        LevelSetList::UP_TO_PHP_80
+    ]);
+
+    $rectorConfig->skip([
+        __DIR__ . '/src/base/GenericSearchInterface.php',
+        __DIR__ . '/src/base/JwtIdentityInterface.php',
+        __DIR__ . '/src/ngrest/base/ActiveWindowInterface.php',
+        __DIR__ . '/src/ngrest/base/NgRestRelationInterface.php',
+        __DIR__ . '/src/ngrest/base/Plugin.php',
     ]);
 };

@@ -140,7 +140,6 @@ class Storage
     /**
      * Move an array of storage fileIds to another folder.
      *
-     * @param array $fileIds
      * @param integer $folderId
      */
     public static function moveFilesToFolder(array $fileIds, $folderId)
@@ -153,11 +152,9 @@ class Storage
     /**
      * Move a storage file to another folder.
      *
-     * @param string|int $fileId
-     * @param string|int $folderId
      * @return boolean
      */
-    public static function moveFileToFolder($fileId, $folderId)
+    public static function moveFileToFolder(string|int $fileId, string|int $folderId)
     {
         $file = StorageFile::findOne($fileId);
 
@@ -184,7 +181,7 @@ class Storage
     {
         try {
             Yii::$app->storage->ensureFileUpload($newFileSource, $newFileName);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 
@@ -239,7 +236,7 @@ class Storage
 
         try {
             Yii::$app->storage->ensureFileUpload($newFileSource, $fileName);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 
@@ -429,7 +426,6 @@ class Storage
     /**
      * Extract $_FILES array.
      *
-     * @param array $file
      * @return array
      */
     public static function extractFilesDataFromFilesArray(array $file)

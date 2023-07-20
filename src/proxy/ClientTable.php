@@ -27,22 +27,13 @@ class ClientTable extends BaseObject
 {
     public const LARGE_TABLE_PROMPT = 10000;
 
-    private $_data;
-
-    /**
-     * @var \luya\admin\proxy\ClientBuild
-     */
-    public $build;
-
     /**
      * @param ClientBuild $build
-     * @param array $data
+     * @param array $_data
      * @param array $config
      */
-    public function __construct(ClientBuild $build, array $data, array $config = [])
+    public function __construct(public ClientBuild $build, private array $_data, array $config = [])
     {
-        $this->build = $build;
-        $this->_data = $data;
         parent::__construct($config);
     }
 
@@ -65,8 +56,6 @@ class ClientTable extends BaseObject
     }
 
     /**
-     * @param Connection $db
-     *
      * @since 2.0.0
      */
     public function setDb(Connection $db)
@@ -106,10 +95,7 @@ class ClientTable extends BaseObject
         return $this->_data['name'];
     }
 
-    /**
-     * @return string|integer
-     */
-    public function getRows()
+    public function getRows(): string|int
     {
         return $this->_data['rows'];
     }
@@ -213,7 +199,7 @@ class ClientTable extends BaseObject
         if ($this->getDb()->schema instanceof \yii\db\mysql\Schema) {
             try {
                 $this->getDb()->createCommand('SELECT CONNECTION_ID()')->execute();
-            } catch (Exception $ex) {
+            } catch (Exception) {
                 throw new \luya\Exception('Connection lost. Server has gone away?');
             }
 
@@ -299,7 +285,6 @@ class ClientTable extends BaseObject
     /**
      * Write the given data to the database.
      *
-     * @param array $data
      * @throws \yii\db\Exception
      * @return int
      */
@@ -317,7 +302,6 @@ class ClientTable extends BaseObject
     /**
      * Clean Up matching Rows
      *
-     * @param array $row
      * @return array
      */
     protected function cleanUpMatchRow(array $row)
@@ -337,7 +321,6 @@ class ClientTable extends BaseObject
     /**
      * Clean Up Batch Insert Fields
      *
-     * @param array $fields
      * @return array
      */
     protected function cleanUpBatchInsertFields(array $fields)

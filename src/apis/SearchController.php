@@ -21,11 +21,10 @@ class SearchController extends RestController
     /**
      * Transform the different generic search response into an array.
      *
-     * @param array|\yii\db\QueryInterface|\yii\db\ActiveQueryInterface $response
      * @return array
      * @since 1.2.2
      */
-    private function transformGenericSearchToData($response)
+    private function transformGenericSearchToData(array|\yii\db\QueryInterface|\yii\db\ActiveQueryInterface $response)
     {
         if ($response instanceof ActiveQueryInterface) {
             return $response->asArray(true)->all();

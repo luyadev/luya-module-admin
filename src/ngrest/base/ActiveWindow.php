@@ -297,7 +297,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $module = $this->module;
 
-        if (substr($module, 0, 1) !== '@') {
+        if (!str_starts_with($module, '@')) {
             $module = '@'.$module;
         }
 

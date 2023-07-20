@@ -59,7 +59,7 @@ class MenuController extends RestController
                 if ($row['permissionIsApi']) {
                     try {
                         $row['alias'] = Yii::t($data['moduleId'], $row['alias'], [], Yii::$app->language);
-                    } catch (\Exception $e) {
+                    } catch (\Exception) {
                         // not translation found, use original alias name
                     }
                     $accessList[$row['permissionApiEndpoint']] = $row;

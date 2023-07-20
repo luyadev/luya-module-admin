@@ -34,8 +34,6 @@ class UserAccessTokenLoginEvent extends Event
 
     /**
      * Login a given User.
-     *
-     * @param User $user
      */
     public function login(User $user)
     {

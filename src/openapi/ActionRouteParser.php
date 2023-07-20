@@ -27,16 +27,12 @@ class ActionRouteParser extends BasePathParser
      * @var ControllerSpecs
      */
     protected $controllerSpecs;
-    protected $absoluteRoute;
-    protected $controllerMapRoute;
     protected $actionName;
 
-    public function __construct(Controller $controller, $actionName, $absoluteRoute, $controllerMapRoute)
+    public function __construct(Controller $controller, $actionName, protected $absoluteRoute, protected $controllerMapRoute)
     {
         $this->controllerSpecs = new ControllerSpecs($controller);
         $this->actionSpecs = new ControllerActionSpecs($controller, $actionName, 'get');
-        $this->absoluteRoute = $absoluteRoute;
-        $this->controllerMapRoute = $controllerMapRoute;
         $this->actionName = $actionName;
     }
 

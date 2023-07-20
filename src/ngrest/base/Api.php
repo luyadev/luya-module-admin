@@ -313,7 +313,7 @@ class Api extends RestActiveController
      * @param NgRestActiveQuery|ActiveQuery $query
      * @since 2.0.0
      */
-    private function appendPoolWhereCondition($query)
+    private function appendPoolWhereCondition(\luya\admin\ngrest\base\NgRestActiveQuery|\yii\db\ActiveQuery $query)
     {
         if ($query instanceof NgRestActiveQuery) {
             $query->inPool(Yii::$app->request->get('pool'));
@@ -642,14 +642,12 @@ class Api extends RestActiveController
     /**
      * Get Relation Data
      *
-     * @param mixed $arrayIndex
-     * @param mixed $id
      * @param string $modelClass The name of the model where the ngRestRelation is defined.
      * @param string $query An optional query to filter the response for the given search term (since 2.0.0)
      * @throws InvalidCallException
      * @return \yii\data\ActiveDataProvider
      */
-    public function actionRelationCall($arrayIndex, $id, $modelClass, $query = null)
+    public function actionRelationCall(mixed $arrayIndex, mixed $id, $modelClass, $query = null)
     {
         $modelClass = base64_decode($modelClass);
 
@@ -865,8 +863,6 @@ class Api extends RestActiveController
     /**
      * Format the ActiveQuery values based on formatter array definition see {{luya\admin\ngrest\base\NgRestModel::ngRestExport()}}.
      *
-     * @param ActiveQuery $query
-     * @param array $formatter
      * @return array
      * @since 3.9.0
      */

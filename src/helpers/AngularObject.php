@@ -12,7 +12,7 @@ use yii\base\BaseObject;
  * @since 2.0.0
  * @author Basil Suter <basil@nadar.io>
  */
-class AngularObject extends BaseObject
+class AngularObject extends BaseObject implements \Stringable
 {
     public $type;
 
@@ -49,10 +49,9 @@ class AngularObject extends BaseObject
     /**
      * Set init value
      *
-     * @param mixed $initvalue
      * @return static
      */
-    public function initvalue($initvalue)
+    public function initvalue(mixed $initvalue)
     {
         $this->options['initvalue'] = $initvalue;
 
@@ -62,7 +61,6 @@ class AngularObject extends BaseObject
     /**
      * Set options valuess
      *
-     * @param array $options
      * @return static
      */
     public function options(array $options)
@@ -76,10 +74,9 @@ class AngularObject extends BaseObject
      * Set a given option key with a value
      *
      * @param string $key
-     * @param mixed $value
      * @return static
      */
-    public function optionValue($key, $value)
+    public function optionValue($key, mixed $value)
     {
         $this->options['options'][$key] = $value;
 
@@ -109,7 +106,7 @@ class AngularObject extends BaseObject
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }

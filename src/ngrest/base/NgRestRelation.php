@@ -133,10 +133,6 @@ class NgRestRelation extends BaseObject implements NgRestRelationInterface
 
     private $_dataProvider;
 
-    /**
-     *
-     * @param QueryInterface $query
-     */
     public function setDataProvider(QueryInterface $query)
     {
         $this->_dataProvider = $query;

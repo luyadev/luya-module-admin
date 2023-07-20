@@ -78,12 +78,11 @@ trait QueryTrait
      * @param integer $id The requested key identifier.
      * @return array|boolean Returns the item array or false if not found.
      */
-    abstract public function getItemDataProvider($id);
+    abstract public function getItemDataProvider($id): array|bool;
 
     /**
      * Create an item object which implements {{\luya\admin\storage\ItemTrait}}.
      *
-     * @param array $itemArray
      * @return \luya\admin\storage\ItemAbstract The item object implementing the ItemTrait.
      */
     abstract public function createItem(array $itemArray);
@@ -411,10 +410,8 @@ trait QueryTrait
      * Find One based on the where condition.
      *
      * If there are several items, it just takes the first one and does not throw an exception.
-     *
-     * @return \luya\admin\image\Item|\luya\admin\file\Item|\luya\admin\folder\Item
      */
-    public function one()
+    public function one(): \luya\admin\image\Item|\luya\admin\file\Item|\luya\admin\folder\Item
     {
         $data = $this->filter();
 
@@ -425,9 +422,8 @@ trait QueryTrait
      * FindOne with the specific ID.
      *
      * @param integer $id The specific item id
-     * @return \luya\admin\image\Item|\luya\admin\file\Item|\luya\admin\folder\Item
      */
-    public function findOne($id)
+    public function findOne($id): \luya\admin\image\Item|\luya\admin\file\Item|\luya\admin\folder\Item
     {
         return ($itemArray = $this->getItemDataProvider($id)) ? $this->createItem($itemArray) : false;
     }

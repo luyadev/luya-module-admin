@@ -23,15 +23,12 @@ interface RenderCrudInterface
 
     /**
      * Set an array with relations.
-     *
-     * @param array $options
      */
     public function setRelationCall(array $options);
 
     /**
      * Set the current ngrest model for the crud.
      *
-     * @param \luya\admin\ngrest\base\NgRestModelInterface $model
      * @since 1.2.2
      */
     public function setModel(NgRestModelInterface $model);
@@ -66,15 +63,11 @@ interface RenderCrudInterface
 
     /**
      * Model selection value from setter method.
-     *
-     * @return string|boolean
      */
-    public function getModelSelection();
+    public function getModelSelection(): string|bool;
 
     /**
      * Optional definitions for settings button. Those definitions are made in the ngrest crud controller.
-     *
-     * @param array $buttons
      */
     public function setSettingButtonDefinitions(array $buttons);
 

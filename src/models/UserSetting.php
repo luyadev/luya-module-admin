@@ -160,10 +160,9 @@ final class UserSetting extends BaseObject implements \ArrayAccess
      * Add a new element to the user settings array.
      *
      * @param string $key
-     * @param array|string|boolean $value
      * @return bool
      */
-    public function set($key, $value)
+    public function set($key, array|string|bool $value)
     {
         $array = &$this->data;
         $keys = explode(self::SEPERATOR, $key);
