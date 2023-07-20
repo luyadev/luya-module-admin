@@ -76,9 +76,13 @@ use luya\admin\Module as Admin;
         <div class="form-side">
             <div ng-switch on="data.type">
                 <div ng-switch-when="1">
-                    <zaa-text model="data.anchor" label="Anchor" placeholder="Optional text for an anchor position, the anchor must not be prefixed."></zaa-text>
                     <p><?= Admin::t('view_index_redirect_internal_select'); ?></p>
-                    <menu-dropdown class="menu-dropdown" nav-id="data.value" />
+                    <div>
+                        <menu-dropdown class="menu-dropdown" nav-id="data.value"></menu-dropdown>
+                    </div>
+                    <div class="pt-3">
+                        <zaa-text model="data.anchor" label="<?= Admin::t('view_index_redirect_anchor_label'); ?>" placeholder="<?= Admin::t('view_index_redirect_anchor_hint'); ?>"></zaa-text>
+                    </div>
                 </div>
                 <div ng-switch-when="2">
                     <div class="form-group">

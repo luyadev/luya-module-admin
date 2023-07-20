@@ -102,6 +102,8 @@ return [
     'view_index_redirect_internal' => 'Внутреняя страница',
     'view_index_redirect_external' => 'Внешний URL',
     'view_index_redirect_internal_select' => 'Выберите внутреннюю страницу на которую следует направить пользователя.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Внешняя ссылка',
     'view_index_redirect_external_link_help' => 'Внешние ссылки начинаются с http:// или https://',
 

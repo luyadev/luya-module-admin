@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'iç sayfa',
     'view_index_redirect_external' => 'dış URL',
     'view_index_redirect_internal_select' => 'Yönlendirilmesi gereken iç sayfayı seçin.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Dış bağlantı',
     'view_index_redirect_external_link_help' => 'Dış bağlantılar http:// veya https:// ile başlar (mutlak iç bağlantılar için, // kullanın)',
 

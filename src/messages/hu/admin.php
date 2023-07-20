@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'belső oldal',
     'view_index_redirect_external' => 'külső URL',
     'view_index_redirect_internal_select' => 'Válassza ki azt a belső oldalt, amelybe továbbítani kell.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Külső link',
     'view_index_redirect_external_link_help' => 'A külső hivatkozások http://vagy https://karakterrel kezdődnek (abszolút belső linkekhez használja a//értéket)',
 

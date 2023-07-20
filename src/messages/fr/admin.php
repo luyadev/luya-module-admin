@@ -101,6 +101,8 @@ return [
     'aws_changepassword_new_pass' => 'Nouveau mot de passe',
     'aws_changepassword_new_pass_retry' => 'Répétition du nouveau mot de passe',
     'view_index_redirect_type' => 'Type de renvoi',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_internal' => 'Page interne',
     'view_index_redirect_external' => 'Page externe',
     'view_index_redirect_internal_select' => 'Choisissez la page interne pour la redirection',

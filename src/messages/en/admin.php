@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'internal page',
     'view_index_redirect_external' => 'external URL',
     'view_index_redirect_internal_select' => 'Choose the internal page that should be forwarded to.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'External link',
     'view_index_redirect_external_link_help' => 'External links start with http:// or https:// (for absolute internal links, use // instead)',
 
