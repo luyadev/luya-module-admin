@@ -8,7 +8,6 @@ use luya\admin\tests\NgRestTestCase;
 use luya\testsuite\fixtures\NgRestModelFixture;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
-use yii\base\UnknownPropertyException;
 
 class ToggleStatusActiveButtonTest extends NgRestTestCase
 {

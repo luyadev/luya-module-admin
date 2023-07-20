@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\CodeQuality\Rector\ClassMethod\OptionalParametersAfterRequiredRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
@@ -21,7 +20,6 @@ use Rector\Php80\Rector\Identical\StrStartsWithRector;
 use Rector\Php80\Rector\NotIdentical\StrContainsRector;
 use Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector;
 use Rector\Php80\Rector\Ternary\GetDebugTypeRector;
-use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
@@ -34,7 +32,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(StrEndsWithRector::class);
     //$rectorConfig->ruleWithConfiguration(StaticCallToFuncCallRector::class, [new StaticCallToFuncCall('Nette\\Utils\\Strings', 'startsWith', 'str_starts_with'), new StaticCallToFuncCall('Nette\\Utils\\Strings', 'endsWith', 'str_ends_with'), new StaticCallToFuncCall('Nette\\Utils\\Strings', 'contains', 'str_contains')]);
     //$rectorConfig->rule(StringableForToStringRector::class);
-    
+
     $rectorConfig->rule(ClassOnObjectRector::class);
     $rectorConfig->rule(GetDebugTypeRector::class);
     $rectorConfig->rule(TokenGetAllToObjectRector::class);
