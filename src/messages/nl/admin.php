@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'interne pagina',
     'view_index_redirect_external' => 'externe URL',
     'view_index_redirect_internal_select' => 'Kies de interne pagina waarnaar moet worden doorgestuurd.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Externe link',
     'view_index_redirect_external_link_help' => 'Externe links beginnen met http:// of https:// (voor absolute interne links, gebruik // in plaats daarvan)',
 

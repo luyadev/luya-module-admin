@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'Внутрішня сторінка',
     'view_index_redirect_external' => 'Зовнішній URL',
     'view_index_redirect_internal_select' => 'Виберіть внутрішню сторінку, на яку буде спрямована людина.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Зовнішне посилання',
     'view_index_redirect_external_link_help' => 'Зовнішне посилання починаеться http:// чи https://',
 

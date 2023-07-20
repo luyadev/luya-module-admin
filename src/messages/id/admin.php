@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'Halaman internal',
     'view_index_redirect_external' => 'URL external',
     'view_index_redirect_internal_select' => 'Pilih halaman internal yang akan diteruskan.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Tautan External',
     'view_index_redirect_external_link_help' => 'Tautan eksternal dimulai dengan http: // atau https: // (untuk tautan internal absolut, gunakan // sebagai gantinya).',
 

@@ -43,7 +43,8 @@ use luya\admin\Module as Admin;
 			<label><?= Admin::t('link_dir_target'); ?></label>
 		</div>
 		<div class="form-side">
-			<select ng-model="data.target">
+			<select ng-model="data.target" class="form-control">
+                <option value="">-</option>
 				<option value="_self"><?= Admin::t('link_dir_target_same'); ?></option>
 				<option value="_blank"><?= Admin::t('link_dir_target_blank'); ?></option>
 			</select>
@@ -76,7 +77,12 @@ use luya\admin\Module as Admin;
             <div ng-switch on="data.type">
                 <div ng-switch-when="1">
                     <p><?= Admin::t('view_index_redirect_internal_select'); ?></p>
-                    <menu-dropdown class="menu-dropdown" nav-id="data.value" />
+                    <div>
+                        <menu-dropdown class="menu-dropdown" nav-id="data.value"></menu-dropdown>
+                    </div>
+                    <div class="pt-3">
+                        <zaa-text model="data.anchor" label="<?= Admin::t('view_index_redirect_anchor_label'); ?>" placeholder="<?= Admin::t('view_index_redirect_anchor_hint'); ?>"></zaa-text>
+                    </div>
                 </div>
                 <div ng-switch-when="2">
                     <div class="form-group">

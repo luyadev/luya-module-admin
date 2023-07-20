@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'wewnętrzna strona',
     'view_index_redirect_external' => 'zewnętrzny URL',
     'view_index_redirect_internal_select' => 'Wybierz stronę wewnętrzną, która ma być przekierowana.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Link zewnętrzny',
     'view_index_redirect_external_link_help' => 'Linki zewnętrzne zaczynają się od http:// lub https:// (bezwzględne linki wewnętrzne, użyj //)',
 

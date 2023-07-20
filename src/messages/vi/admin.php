@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'Trang chỉ định',
     'view_index_redirect_external' => 'URL chỉ định',
     'view_index_redirect_internal_select' => 'Chọn trang cụ thể để chuyển tiếp.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Đường dẫn',
     'view_index_redirect_external_link_help' => 'Đường dẫn bắt đầu với http:// hoặc https://',
 

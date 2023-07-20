@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'صفحه داخلی',
     'view_index_redirect_external' => 'یوآر ال های خارجی',
     'view_index_redirect_internal_select' => 'صفحه داخلی که می خواهید به آن ریدارکت شوید وارد نمایید',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'لینک های خارجی',
     'view_index_redirect_external_link_help' => 'External links start with http:// or https:// (for absolute internal links, use // instead)',
 

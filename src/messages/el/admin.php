@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'Internal page',
     'view_index_redirect_external' => 'External URL',
     'view_index_redirect_internal_select' => 'Choose the internal page that should be forwarded to.',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'Εξωτερικός Σύνδεσμος',
     'view_index_redirect_external_link_help' => 'Οι εξωτερικοί σύνδεσμοι ξεκινούν με http:// ή https://',
 

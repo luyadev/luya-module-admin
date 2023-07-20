@@ -101,6 +101,8 @@ return [
     'view_index_redirect_internal' => 'หน้าภายใน',
     'view_index_redirect_external' => 'ลิ้งค์ภายนอก',
     'view_index_redirect_internal_select' => 'เลือกหน้าภายในที่จะถูกเชื่อมไปหา',
+    'view_index_redirect_anchor_label' => 'Anchor',
+    'view_index_redirect_anchor_hint' => 'Optional anchor name (without the # prefix).',
     'view_index_redirect_external_link' => 'ลิ้งค์ภายนอก',
     'view_index_redirect_external_link_help' => 'ลิ้งค์ภายนอกขึ้นต้นด้วย http:// หรือ https:// (สำหรับลิ้งค์ภายในให้ใช้ // แทน)',
 
