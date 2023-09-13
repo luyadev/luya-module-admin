@@ -26,7 +26,7 @@ class CmsPage extends Plugin
      */
     public function renderCreate($id, $ngModel)
     {
-        return $this->createFormTag('zaa-cms-page', $id, $ngModel);
+        return $this->createFormTag('zaa-cms-page', $id, $ngModel, ['clearable' => 1]);
     }
 
     /**
