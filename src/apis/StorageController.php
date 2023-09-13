@@ -378,11 +378,9 @@ class StorageController extends RestController
     public function actionFileReplace()
     {
         $fileId = Yii::$app->request->post('fileId', false);
-        $pageId = Yii::$app->request->post('pageId', 0);
-        Yii::warning('replace request for file id' . $fileId, __METHOD__);
-        $raw = $_FILES['file'];
+        $raw = $_FILES['file'] ?? false;
         /** @var $file \luya\admin\file\Item */
-        if ($file = Yii::$app->storage->getFile($fileId)) {
+        if ($raw && $file = Yii::$app->storage->getFile($fileId)) {
             $newFileSource = $raw['tmp_name'];
             if (is_uploaded_file($newFileSource)) {
                 // check for same extension / mimeType
