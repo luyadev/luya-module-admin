@@ -86,8 +86,9 @@ class StorageControllerTest extends AdminModelTestCase
 
             $ctrl = new StorageController('id', $this->app);
 
-            $this->expectException(ErrorException::class);
             $data = $scope->runControllerAction($ctrl, 'file-replace');
+
+            $this->assertFalse($data);
         });
     }
 }
