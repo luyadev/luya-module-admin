@@ -23,7 +23,7 @@ class ButtonConditionConfigTest extends AdminModelTestCase
 
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
 
-        $activeWindows=$ngRestCfg->getPointer('aw');
+        $activeWindows = $ngRestCfg->getPointer('aw');
 
         $changePasswordActiveWindow = array_shift($activeWindows);
         $this->assertArrayHasKey('condition', $changePasswordActiveWindow['objectConfig']);
@@ -135,7 +135,7 @@ class ScopeBasedConditionUserModel extends User
     public function ngRestActiveButtons()
     {
         return [
-            ['class' => TimestampActiveButton::class, 'attribute' => 'foo', 'condition'=> '{bar}==0']
+            ['class' => TimestampActiveButton::class, 'attribute' => 'foo', 'condition' => '{bar}==0']
         ];
     }
 
@@ -147,8 +147,8 @@ class ScopeBasedConditionUserModel extends User
         return [
             ['list', ['title', 'firstname', 'lastname', 'email']],
             ['create', ['title', 'firstname', 'lastname', 'email', 'password']],
-            ['update', ['title', 'firstname', 'lastname', 'email'], ['buttonCondition'=> '{title}>1']],
-            ['delete', true, ['buttonCondition'=> ['{title}'=>2, '{firstname}'=>'\'bar\'']] ],
+            ['update', ['title', 'firstname', 'lastname', 'email'], ['buttonCondition' => '{title}>1']],
+            ['delete', true, ['buttonCondition' => ['{title}' => 2, '{firstname}' => '\'bar\'']] ],
         ];
     }
 

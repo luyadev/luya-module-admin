@@ -178,7 +178,7 @@ final class UserOnline extends ActiveRecord
                 'lastname' => $item->user->lastname,
                 'email' => $item->user->email,
                 'last_timestamp' => $item->last_timestamp,
-                'is_active' => ($inactiveSince >= (3*60)) ? false : true,
+                'is_active' => ($inactiveSince >= (3 * 60)) ? false : true,
                 'inactive_since' => round(($inactiveSince / 60)).' min',
                 'lock_description' => Module::t($item->lock_translation, empty($item->lock_translation_args) ? [] : Json::decode($item->lock_translation_args)),
             ];

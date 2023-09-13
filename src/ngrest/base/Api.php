@@ -838,7 +838,7 @@ class Api extends RestActiveController
 
         $key = uniqid('ngrestexport', true);
 
-        if (!Yii::$app->cache->set(['download', $key], $tempData, 60*60)) {
+        if (!Yii::$app->cache->set(['download', $key], $tempData, 60 * 60)) {
             throw new ErrorException("Unable to write the temporary file. Make sure the runtime folder is writeable.");
         }
 

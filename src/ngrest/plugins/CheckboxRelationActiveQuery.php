@@ -70,7 +70,7 @@ class CheckboxRelationActiveQuery extends CheckboxRelation
             $this->refModelPkId = $base;
         }
         // find link between reference field and primary model
-        foreach ($this->query->link as $base=> $on) {
+        foreach ($this->query->link as $base => $on) {
             $this->refJoinPkId = $on;
         }
     }

@@ -52,7 +52,7 @@ class FilterController extends Command
 
 
             $tempName = $select == Filter::EFFECT_THUMBNAIL ? 'Thumbnail '. $dimension : 'Crop '.$dimension;
-            $tempName.= ' ' . Inflector::camel2words($this->identifier);
+            $tempName .= ' ' . Inflector::camel2words($this->identifier);
         }
 
         if ($this->name === null) {

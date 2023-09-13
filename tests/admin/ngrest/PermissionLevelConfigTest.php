@@ -43,7 +43,7 @@ class PermissionLevelConfigTest extends AdminModelTestCase
 
         $ngRestCfg = $fixture->newModel->getNgRestConfig();
 
-        $activeWindows=$ngRestCfg->getPointer('aw');
+        $activeWindows = $ngRestCfg->getPointer('aw');
 
         $changePasswordActiveWindow = array_shift($activeWindows);
         $this->assertArrayHasKey('permissionLevel', $changePasswordActiveWindow['objectConfig']);

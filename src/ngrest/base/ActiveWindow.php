@@ -141,7 +141,7 @@ abstract class ActiveWindow extends BaseActiveResponse implements ViewContextInt
     {
         $key = uniqid(microtime().Inflector::slug($fileName), true);
 
-        if (!Yii::$app->cache->set(['download', $key], $content, 60*60)) {
+        if (!Yii::$app->cache->set(['download', $key], $content, 60 * 60)) {
             return false;
         }
 

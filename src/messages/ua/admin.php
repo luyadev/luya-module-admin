@@ -152,7 +152,7 @@ return [
     'login_securetoken_mail_subject' => 'LUYA код безпеки',
     'login_securetoken_mail' => 'Використовуйте наступний код для входу в свій інтерфейс адміністрування на:',
     'login_async_token_error' => 'Наданий код безпеки невірний.',
-    'login_async_token_globalerror' =>'Сталася помилка сервера, будь ласка, зверніться до адміністратора сайту.',
+    'login_async_token_globalerror' => 'Сталася помилка сервера, будь ласка, зверніться до адміністратора сайту.',
     'ngrest_crud_csv_export_btn' => 'Вивантажити до CSV',
     'ngrest_crud_csv_export_btn_dl' => 'Завантажити в CSV',
     'layout_filemanager_search_text' => 'Введіть слово для пошуку...',

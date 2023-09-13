@@ -410,7 +410,7 @@ class Storage
     public static function extractFilesDataFromMultipleFiles(array $files)
     {
         $data = [];
-        $i=0;
+        $i = 0;
         foreach ($files as $type => $field) {
             foreach ($field as $fieldName => $values) {
                 if (is_array($values)) {

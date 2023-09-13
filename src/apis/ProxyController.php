@@ -96,7 +96,7 @@ class ProxyController extends Controller
                 'name' => $table,
                 'rows' => $rows,
                 'fields' => $schema->columnNames,
-                'offset_total' => ceil($rows/$rowsPerRequest),
+                'offset_total' => ceil($rows / $rowsPerRequest),
             ];
         }
 

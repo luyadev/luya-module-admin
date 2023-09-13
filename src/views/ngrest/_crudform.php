@@ -10,7 +10,7 @@ use luya\admin\Module;
 <div class="ml-3 mr-3">
 <?php endif; ?>
 <div class="tab-pane tab-padded" role="tabpanel" ng-if="crudSwitchType==<?= $type; ?>" ng-class="{'active' : crudSwitchType==<?= $type; ?>}" <?php if (!$isInline): ?>zaa-esc="closeUpdate()"<?php endif; ?>>
-    <form name="formCreate" class="js-form-side-by-side" ng-submit="<?php if ($type==2):?>submitUpdate(true)<?php else: ?>submitCreate(true)<?php endif; ?>">
+    <form name="formCreate" class="js-form-side-by-side" ng-submit="<?php if ($type == 2):?>submitUpdate(true)<?php else: ?>submitCreate(true)<?php endif; ?>">
         <?php foreach ($this->context->forEachGroups($renderer) as $key => $group): ?>
             <?php if (!$group['is_default'] && !empty($group['fields'])): ?>
                 <div class="card crud-card" ng-init="groupToggler[<?= $key; ?>] = <?= (int) !$group['collapsed']; ?>" ng-class="{'card-closed': !groupToggler[<?= $key; ?>]}">

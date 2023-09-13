@@ -47,14 +47,14 @@ final class Bootstrap implements BootstrapInterface
             $this->getOrSetHasCache(['admin', 'bootstrap', 'queue'], function () {
                 $timestamp = Config::get(Config::CONFIG_QUEUE_TIMESTAMP);
                 // if last execution has NOT been done previously (maybe trough a cronjob)
-                if ((time() - $timestamp) > (60*25)) {
+                if ((time() - $timestamp) > (60 * 25)) {
                     Yii::debug('"Fake-Cronjob" queue run execution.');
                     Yii::$app->adminqueue->run(false);
                     Config::set(Config::CONFIG_QUEUE_TIMESTAMP, time());
                 }
 
                 return $timestamp;
-            }, 60*30);
+            }, 60 * 30);
         }
     }
 }

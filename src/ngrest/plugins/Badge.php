@@ -60,10 +60,10 @@ class Badge extends Plugin
         $pillClass = $this->pill ? 'badge-pill' : '';
         $content = '<span ng-switch="'.$ngModel.'">';
         foreach ($this->variations as $value => $variation) {
-            $content.= "<span ng-switch-when=\"$value\" class=\"badge {$pillClass} badge-{$variation}\" ng-bind=\"{$ngModel}\"></span>";
+            $content .= "<span ng-switch-when=\"$value\" class=\"badge {$pillClass} badge-{$variation}\" ng-bind=\"{$ngModel}\"></span>";
         }
-        $content.= "<span ng-switch-default class=\"badge {$pillClass} badge-secondary\" ng-bind=\"{$ngModel}\"></span>";
-        $content.= '</span>';
+        $content .= "<span ng-switch-default class=\"badge {$pillClass} badge-secondary\" ng-bind=\"{$ngModel}\"></span>";
+        $content .= '</span>';
         return $this->createTag('div', $content);
     }
 

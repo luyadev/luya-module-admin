@@ -259,7 +259,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             $elements[] = Html::tag($tagName, $innerContent, $config);
         }
 
-        $this->_settingButtonDefinitions= $elements;
+        $this->_settingButtonDefinitions = $elements;
     }
 
     /**
