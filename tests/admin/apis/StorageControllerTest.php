@@ -3,7 +3,6 @@
 namespace luya\admin\tests\admin\apis;
 
 use admintests\AdminModelTestCase;
-use ErrorException;
 use InvalidArgumentException;
 use luya\admin\apis\StorageController;
 use luya\admin\models\StorageFile;
