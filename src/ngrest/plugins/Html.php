@@ -51,7 +51,7 @@ class Html extends Plugin
     public function onAfterFind($event)
     {
         if ($this->nl2br) {
-            $this->writeAttribute($event, nl2br($event->sender->getAttribute($this->name)));
+            $this->writeAttribute($event, nl2br((string) $event->sender->getAttribute($this->name)));
         }
 
         return true;
