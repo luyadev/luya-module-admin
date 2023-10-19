@@ -28,7 +28,7 @@ services:
     working_dir: /app
 
   luyaadminrector:
-    image: php:8.0-cli
+    image: php:8.2-cli
     entrypoint: vendor/bin/rector
     volumes:
       - .:/app

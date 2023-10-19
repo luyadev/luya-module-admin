@@ -77,6 +77,7 @@ class LogController extends Command
     private array $_dbLogTables = [
         'admin_ngrest_log' => 'timestamp_create',
         'cms_log' => 'timestamp',
+        'admin_user_login' => 'timestamp_create',
     ];
 
     /**

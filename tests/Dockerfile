@@ -1,4 +1,4 @@
-FROM php:8.0-cli
+FROM php:8.2-cli
 ENV PHP_MEMORY_LIMIT=2048M
 RUN echo 'memory_limit = 2048M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 RUN apt-get update -yqq \
