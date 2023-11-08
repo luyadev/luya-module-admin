@@ -107,6 +107,12 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
      */
     public function render()
     {
+        $currentMenu = Yii::$app->adminmenu->getApiDetail($this->getConfig()->getApiEndpoint(), Yii::$app->request->get('pool'));
+
+        if (!$currentMenu) {
+            throw new InvalidConfigException("The current menu item does not exists or you have no permissions to access this area.");
+        }
+
         return $this->view->render('crud', [
             'canCreate' => $this->can(Auth::CAN_CREATE),
             'canUpdate' => $this->can(Auth::CAN_UPDATE),
@@ -116,7 +122,7 @@ class RenderCrud extends Render implements ViewContextInterface, RenderCrudInter
             'modelSelection' => $this->getModelSelection(),
             'hasActiveSelections' => count($this->config->getActiveSelections()),
             'relationCall' => $this->getRelationCall(), // this is currently only used for the crud relation view file, there for split the RenderCrud into two sepeare renderes.
-            'currentMenu' => Yii::$app->adminmenu->getApiDetail($this->getConfig()->getApiEndpoint(), Yii::$app->request->get('pool')),
+            'currentMenu' => $currentMenu,
             'downloadAttributes' => $this->generateDownloadAttributes(),
         ], $this);
     }
