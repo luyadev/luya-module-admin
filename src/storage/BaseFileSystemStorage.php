@@ -19,6 +19,7 @@ use luya\traits\CacheableTrait;
 use luya\web\Request;
 use Yii;
 use yii\base\Component;
+use yii\base\UserException;
 use yii\db\Query;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
@@ -307,6 +308,14 @@ abstract class BaseFileSystemStorage extends Component
     public $queueJobIds = [];
 
     /**
+     * @var integer|boolean If enabled (integer) the storage system will check whether the total pixel size of the image is not bigger then the given value.
+     * For the default value we have calculated 2560x2560 which is 6553600 pixels. If the image is bigger then this value, the image will not be stored.
+     * If $maxTotalPixel is false, the check will be disabled.
+     * @since 5.0.0
+     */
+    public $maxTotalPixel = 6553600;
+
+    /**
      * Consturctor resolveds Request component from DI container
      *
      * @param \luya\web\Request $request The request component class resolved by the Dependency Injector.
@@ -540,16 +549,13 @@ abstract class BaseFileSystemStorage extends Component
      */
     public function addFile($fileSource, $fileName, $folderId = 0, $isHidden = false)
     {
+        // ensure the file upload
         $fileData = $this->ensureFileUpload($fileSource, $fileName);
-
+        // generate md5 hash from file source
         $fileHash = FileHelper::md5sum($fileSource);
-
+        // generate new file name for the target file system
         $newName = implode('.', [$fileData['secureFileName'].'_'.$fileData['hashName'], $fileData['extension']]);
-
-        if (!$this->fileSystemSaveFile($fileSource, $newName)) {
-            return false;
-        }
-
+        // prefill the storage file model attributes
         $model = new StorageFile();
         $model->setAttributes([
             'name_original' => $fileName,
@@ -566,6 +572,18 @@ abstract class BaseFileSystemStorage extends Component
             'caption' => null,
             'inline_disposition' => (int) Module::getInstance()->fileDefaultInlineDisposition,
         ]);
+
+        if ($this->maxTotalPixel && $model->getIsImage()) {
+            ['width' => $width, 'height' => $height] = Storage::getImageResolution($fileSource);
+
+            if (($width * $height) > $this->maxTotalPixel) {
+                throw new UserException("The provided image is too big. The maximum allowed pixel size is {$this->maxTotalPixel} pixels.");
+            }
+        }
+
+        if (!$this->fileSystemSaveFile($fileSource, $newName)) {
+            return false;
+        }
 
         if ($model->validate()) {
             if ($model->save()) {
