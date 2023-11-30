@@ -567,7 +567,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         }
 
         // if the given user can be found, udpate the api last activity timestamp.
-        if ($user) {
+        if ($user && Module::getInstance()->apiUserTrackLastActivity) {
             $user->updateAttributes(['api_last_activity' => time()]);
         }
 
