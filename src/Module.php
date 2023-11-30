@@ -338,6 +338,13 @@ final class Module extends \luya\admin\base\Module implements CoreModuleInterfac
     public $filterOpenApiPaths = [];
 
     /**
+     * @var boolean This property, when enabled, triggers the update of the api_last_activity timestamp with each API request made by the specified API user. However, in systems
+     * that experience a high volume of API requests, this feature can potentially impact system performance.
+     * @since 5.0.1
+     */
+    public $apiUserTrackLastActivity = true;
+
+    /**
      * @inheritDoc
      */
     public static function onLoad()
