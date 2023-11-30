@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 5.0.1
+
++ [#748](https://github.com/luyadev/luya-module-admin/pull/748) Do not clean up user lockouts when the user is an API-based user. This will enhance the performance for API user requests.
+
 ## 5.0.0 (30. November 2023)
 
 > **Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.**
