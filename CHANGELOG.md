@@ -3,7 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 5.x
+## 5.0.0 (30. November 2023)
+
+> **Check the [UPGRADE document](UPGRADE.md) to read more about breaking changes.**
+
++ Support for PHP 7.x has been discontinued. The minimum required PHP version is now **8.0**.
++ The file upload is now restricted by default to a max total of pixels 6553600. This can be changed by setting the `maxTotalPixels` property of the `luya\admin\storage\BaseFileSystemStorage` class. In order to restore the old behavior turn off the `maxTotalPixels` property by setting it to `false`.
 
 ## 4.9.1 (7. June 2023)
 

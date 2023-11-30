@@ -4,7 +4,7 @@ This document will help you upgrading from a LUYA admin module version into anot
 
 ## from 4.x to 5.0
 
-+ Drop support for 7.x, minimum php version is now 8.0
++ Support for PHP 7.x has been discontinued. The minimum required PHP version is now 8.0.
 
 ## from 4.8 to 4.9
 
