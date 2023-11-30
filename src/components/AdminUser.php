@@ -80,10 +80,9 @@ class AdminUser extends User
     {
         if (!$this->identity->is_api_user) {
             Yii::$app->language = $this->getInterfaceLanguage();
+            // remove all lockout entrys for the given ip
+            UserLoginLockout::deleteAll(['ip' => Yii::$app->request->userIP]);
         }
-
-        // remove all lockout entrys for the given ip
-        UserLoginLockout::deleteAll(['ip' => Yii::$app->request->userIP]);
     }
 
     /**
