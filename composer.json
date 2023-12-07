@@ -31,7 +31,7 @@
         "php": ">=8.0",
         "luyadev/luya-core": "^2.2",
         "yiisoft/yii2-imagine": "^2.1",
-        "yiisoft/yii2-queue": "^2.0",
+        "yiisoft/yii2-queue": "^2.3.6",
         "flowjs/flow-php-server": "^1.0",
         "bizley/jwt": "^3.3",
         "robthree/twofactorauth": "^1.7"
