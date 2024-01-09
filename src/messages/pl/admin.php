@@ -318,9 +318,9 @@ return [
 // added translations in version 1.2.0:
     'account_changeemail_body' => 'Wpisz następujący kod weryfikacyjny, aby zmienić adres e-mail dla witryny:',
     'account_changeemail_enterverificationtoken' => 'Wprowadź kod weryfikacyjny wysłany do <b>{{profile.email}}</b> aby potwierdzić żądanie zmiany <b>{{settings.newUserEmail}}</b> change request.',
-    'login_async_submission_limit_reached' => 'Osiągnięto maksymalną liczbę zgłoszeń, spróbuj ponownie {czas}.',
-    'model_loginform_max_user_attempts' => 'Osiągnięto maksymalną liczbę prób logowania, spróbuj ponownie {czas}.',
-    'model_loginform_wrong_user_or_password_attempts' => 'Zły adres e-mail lub hasło. Próba # {próba} z {allowedAttempts}. ',
+    'login_async_submission_limit_reached' => 'Osiągnięto maksymalną liczbę zgłoszeń, spróbuj ponownie {time}.',
+    'model_loginform_max_user_attempts' => 'Osiągnięto maksymalną liczbę prób logowania, spróbuj ponownie {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Zły adres e-mail lub hasło. Próba # {attempt} z {allowedAttempts}. ',
     'model_user_login_attempt_lock_expiration' => 'Czas blokady logowania',
     'account_changeemail_subject' => 'Zweryfikuj aktualizację swojego adresu e-mail',
     'account_changeemail_tokensenterror' => 'Nie można wysłać kodu weryfikacyjnego do {email}. Upewnij się, że komponent poczty jest poprawnie skonfigurowany. ',

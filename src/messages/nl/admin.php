@@ -316,9 +316,9 @@ return [
     'ngrest_crud_total_count' => '{{data.listArray.length}} van {{totalRows}}',
 
 // added translations in version 1.2.0:
-    'login_async_submission_limit_reached' => 'Het maximale aantal formulierinzendingen is bereikt, probeer het opnieuw {tijd}.',
-    'model_loginform_max_user_attempts' => 'Het maximum aantal inlogpogingen is bereikt, probeer het opnieuw {tijd}.',
-    'model_loginform_wrong_user_or_password_attempts' => 'Verkeerde e-mail of wachtwoord.  Poging # {poging} van {allowedAttempts}.',
+    'login_async_submission_limit_reached' => 'Het maximale aantal formulierinzendingen is bereikt, probeer het opnieuw {time}.',
+    'model_loginform_max_user_attempts' => 'Het maximum aantal inlogpogingen is bereikt, probeer het opnieuw {time}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Verkeerde e-mail of wachtwoord.  Poging # {attempt} van {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Vergrendelingstijd voor inloggen',
     'account_changeemail_subject' => 'Controleer update van uw e-mailadres',
     'account_changeemail_body' => 'Voer de volgende verificatiecode in om uw e-mailadres voor de website te wijzigen:',
@@ -336,7 +336,7 @@ return [
     'mode_user_personal_info' => 'Persoonlijke info',
     'settings_general' => 'Algemeen',
     'settings_developer_mode' => 'Ontwikkelaarsmodus',
-    'layout_logout_minutes' => '{{IdleTimeRelative}} minuten',
+    'layout_logout_minutes' => '{{idleTimeRelative}} minuten',
     'view_index_redirect_telephone' => 'telefoonnummer',
     'view_index_redirect_telephone_help' => 'Voer een geldig telefoonnummer in (voor het teken "+" is een leidende "\" vereist).',
     'missing_file_upload_permission' => 'Onvoldoende rechten voor bestandsuploads.',
