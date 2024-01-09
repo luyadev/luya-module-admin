@@ -313,12 +313,12 @@ return [
     'aw_apioverview_no_access_token' => 'Az API-felhasználónak hozzáférési jogkivonattal kell rendelkeznie az API eléréséhez.',
 
 // added translations in version 1.1.1:
-    'ngrest_crud_total_count' => '{{data.Listarray.length}} {{totalrows}}}',
+    'ngrest_crud_total_count' => '{{data.listArray.length}} {{totalRows}}}',
 
 // added translations in version 1.2.0:
     'login_async_submission_limit_reached' => 'Az űrlapküldések maximális száma elérte, próbálkozzon újra {time}.',
     'model_loginform_max_user_attempts' => 'A bejelentkezési kísérletek maximális számát elérte, próbálkozzon újra {time}.',
-    'model_loginform_wrong_user_or_password_attempts' => 'Hibás e-mail vagy jelszó. Kísérlet # {kísérlet} a {AllowedAttempts}.',
+    'model_loginform_wrong_user_or_password_attempts' => 'Hibás e-mail vagy jelszó. Kísérlet # {attempt} a {allowedAttempts}.',
     'model_user_login_attempt_lock_expiration' => 'Bejelentkezés lezárási ideje',
     'account_changeemail_subject' => 'E-mail cím frissítésének ellenőrzése',
     'account_changeemail_body' => 'Adja meg a következő ellenőrző kódot a webhely e-mail címének módosításához:',
@@ -336,7 +336,7 @@ return [
     'mode_user_personal_info' => 'Személyes adatok',
     'settings_general' => 'Általános',
     'settings_developer_mode' => 'Fejlesztői mód',
-    'layout_logout_minutes' => '{{idleTimereLative}} perc',
+    'layout_logout_minutes' => '{{idleTimeRelative}} perc',
     'view_index_redirect_telephone' => 'telefonszám',
     'view_index_redirect_telephone_help' => 'Kérjük, adjon meg egy érvényes telefonszámot (a „+” feliratnál a vezető „\\” szükséges).',
     'missing_file_upload_permission' => 'Nem elegendő jogosultság a fájlok feltöltéséhez.',
@@ -375,7 +375,7 @@ return [
     'js_scheduler_table_newvalue' => 'Új érték',
     'js_scheduler_table_timestamp' => 'Kivitelezési idő',
     'js_dir_manager_rename_success' => 'A mappa átnevezése sikeresen megtörtént.',
-    'layout_filemanager_search_no_results' => 'Nem található fájl a <strong>(z) {{SearchQuery}}</strong>mappához.',
+    'layout_filemanager_search_no_results' => 'Nem található fájl a <strong>(z) {{searchQuery}}</strong>mappához.',
     'layout_filemanager_empty_folder' => 'Ez a könyvtár nem tartalmaz fájlokat.',
     'aw_requestinsight_warning' => 'Ezt a funkciót elsősorban egy adott API-ba való betekintésre használják. Nem ajánlott hosszú ideig engedélyezni, mivel sok adatot gyűjthet és lelassíthatja az alkalmazást.',
     'aw_requestinsight_logger_active' => 'A lekérdezés Insight jelenleg aktív!',
@@ -391,7 +391,7 @@ return [
     'aw_requestinsight_col_count' => 'Count',
     'aw_requestinsight_top_request_label' => 'Legnépszerűbb URL-ek',
     'aw_requestinsight_longest_response_label' => 'A leghosszabb válaszidővel rendelkező URL-ek',
-    'aw_requestinsight_data_pagination' => '{{{data.length}}} kérések {{DataCount}}',
+    'aw_requestinsight_data_pagination' => '{{data.length}} kérések {{dataCount}}',
     'aw_requestinsight_toggle_logger_enabled' => 'Az Insight engedélyezve van.',
     'aw_requestinsight_toggle_logger_disabled' => 'Az Insight le van tiltva.',
     'aw_requestinsight_toggle_error' => 'Hiba történt a Request Insight engedélyezése közben.',
@@ -416,8 +416,8 @@ return [
 // added translations in version 2.2.0:
     'active_button_togglestatus_label' => 'Állapot be-',
     'active_button_togglestatus_error' => 'Nem sikerült aktiválni',
-    'active_button_togglestatus_enabled' => '{ModelName} engedélyezve',
-    'active_button_togglestatus_disabled' => '{ModelName} letiltva',
+    'active_button_togglestatus_enabled' => '{modelName} engedélyezve',
+    'active_button_togglestatus_disabled' => '{modelName} letiltva',
     'layout_filemanager_detail_details' => 'Fájl részletei',
 
 // added translations in version 2.3.0:
@@ -450,7 +450,7 @@ return [
     'settings_devices_this' => 'Ez az eszköz',
     'settings_2fa' => 'Kétlépéses hitelesítés (2FA)',
     'settings_2fa_intro' => 'A kétlépéses hitelesítés biztosítja, hogy csak a jelszóval és a második tényezős eszközhöz hozzáféréssel rendelkező személyek tudjanak bejelentkezni. Minden alkalommal, amikor bejelentkezik, a rendszer kéri a kéttényezős kód megadását.',
-    'settings_2fa_backup_code_hint' => 'Tárolja a {{TwoFabackupCode}} biztonsági kódot biztonságos helyen, nem jelenik meg újra.',
+    'settings_2fa_backup_code_hint' => 'Tárolja a {{twoFaBackupCode}} biztonsági kódot biztonságos helyen, nem jelenik meg újra.',
     'settings_2fa_success' => 'A kétlépéses hitelesítés sikeresen lett beállítva.',
     'settings_2fa_step1' => 'A QR-kód beolvasása',
     'settings_2fa_step2' => 'Írja be a kódot az alkalmazásból',
@@ -513,7 +513,7 @@ return [
     'user_model_email_deleted_account_exists' => 'A megadott e-mail címet egy törölt fiók már használja.',
 
 // added translations in version 3.6.0:
-    'i18n_required_validator_invalid_format' => 'A megadott (z)\\ "{attribútum}\\” attribútumnak tömbtípusnak kell lennie.',
+    'i18n_required_validator_invalid_format' => 'A megadott (z)\\ "{attribute}\\” attribútumnak tömbtípusnak kell lennie.',
     'i18n_required_validator_missing_key' => 'A (z)\\ "{lang}\\” nyelvi kulcs hiányzik, és szükséges.',
     'i18n_required_validator_invalid_empty_value' => 'A (z)\\ "{lang}\\” nyelv értéke nem lehet üres.',
     'crud_exportdata_col_filter' => 'Filter',
