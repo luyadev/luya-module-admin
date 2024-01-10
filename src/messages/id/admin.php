@@ -500,13 +500,13 @@ return [
     'ngrestlog_controller_description' => 'Entri Model Event Log ditangkap saat membuat, memperbarui atau menghapus catatan di tampilan CRUD dari admin.',
     'logger_controller_description' => 'Entri Log Aplikasi dipicu oleh [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
     'config_controller_description' => 'Buat kunci konfigurasi dan tetapkan nilai menggunakan [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Mencantumkan semua pekerjaan antrian yang belum diproses, baca [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'queuelog_controller_description' => 'Mencantumkan semua pekerjaan antrian yang belum diproses, baca [Queue Guide](https://luya.io/guide/app/queue) for a proper setup.',
     'ngrest_delete_all_button_label' => 'Hapus semua data',
     'ngrest_delete_all_button_confirm_message' => 'Apakah anda yakin menghapus semua data? Ini tidak dapat dikembalikan!',
-    'storageimage_controller_description' => 'Menampilkan semua gambar yang dibuat oleh [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
+    'storageimage_controller_description' => 'Menampilkan semua gambar yang dibuat oleh [Storage System](https://luya.io/guide/app/storage). Every image is associated with a file.',
     'menu_group_log' => 'Logs',
     'menu_images_item_images' => 'Gambar',
-    'filter_controller_description' => 'Filter digunakan untuk menghasilkan versi gambar yang berbeda (mis. berskala atau dipotong). Baca [Panduan Filter Gambar] (https://luya.io/guide/app-filters) untuk mengetahui petunjuk tentang cara membuat filter Anda sendiri.',
+    'filter_controller_description' => 'Filter digunakan untuk menghasilkan versi gambar yang berbeda (mis. berskala atau dipotong). Baca [Panduan Filter Gambar] (https://luya.io/guide/app/filters) untuk mengetahui petunjuk tentang cara membuat filter Anda sendiri.',
     'menu_group_storage' => 'Penyimpanan',
 
 // added translations in version 3.4.0:
@@ -520,7 +520,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Properti',
-    'property_controller_description' => 'Menampilkan semua properti yang terdaftar. Properti biasa digunakan sebagai [CMS Properties](https://luya.io/guide/app-cmsproperties) tetapi dapat digunakan sebagai use cases lainya seperti properti terkait perekaman.',
+    'property_controller_description' => 'Menampilkan semua properti yang terdaftar. Properti biasa digunakan sebagai [CMS Properties](https://luya.io/guide/cms/properties) tetapi dapat digunakan sebagai use cases lainya seperti properti terkait perekaman.',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'Formulir login ini dimatikan karena ada perbaikan. Tolong coba kembali nanti.',

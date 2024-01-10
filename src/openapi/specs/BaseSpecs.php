@@ -176,7 +176,7 @@ abstract class BaseSpecs implements SpecInterface
                     'name' => 'filter',
                     'in' => 'query',
                     'required' => false,
-                    'description' => 'It allows validating and building a filter condition passed via request. See https://luya.io/guide/ngrest-api#filtering',
+                    'description' => 'It allows validating and building a filter condition passed via request. See https://luya.io/guide/ngrest/api.html#filtering',
                     'example' => 'filter[from][gt]=123456&filter[to][lt]=123456',
                     /* Multiple example are not yet rendered by redoc: */
                     /* https://github.com/Redocly/redoc/issues/858 */

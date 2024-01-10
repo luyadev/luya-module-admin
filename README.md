@@ -75,7 +75,7 @@ You can now login to your Administration Interface by adding the admin module in
 
 ## Developers
 
-If you want to contribute, make sure to read the [guidelines](https://luya.io/guide/luya-guideline).
+If you want to contribute, make sure to read the [guidelines](https://luya.io/guide/dev/guideline).
 
 ## Unit Testing
 

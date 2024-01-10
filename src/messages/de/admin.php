@@ -501,13 +501,13 @@ return [
     'ngrestlog_controller_description' => 'Einträge des Model Event Logs werden beim Erstellen, Aktualisieren und Löschen von Datensätzen in CRUD Views der Administration erzeugt.',
     'logger_controller_description' => 'Einträge des Application Logs werden vom [Logger Model](https://luya.io/api/luya-admin-models-Logger) veranlasst.',
     'config_controller_description' => 'Erstellen Sie einen Konfigurations-Key und weisen diesem einen Wert zu mittels [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Listet alle Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app-queue).',
+    'queuelog_controller_description' => 'Listet alle Jobs in der Warteschlange auf. Informationen zum korrekten Einrichten finden Sie im [Queue Guide](https://luya.io/guide/app/queue).',
     'ngrest_delete_all_button_label' => 'Alle Daten löschen',
     'ngrest_delete_all_button_confirm_message' => 'Wollen Sie wirklich alle Daten löschen? Dies kann nicht widerrufen werden!',
-    'storageimage_controller_description' => 'Zeigt alle Bilder an, die über das [Storage System](https://luya.io/guide/app-storage) erstellt wurden. Jedes Bild ist verknüpft mit einer Datei.',
+    'storageimage_controller_description' => 'Zeigt alle Bilder an, die über das [Storage System](https://luya.io/guide/app/storage) erstellt wurden. Jedes Bild ist verknüpft mit einer Datei.',
     'menu_group_log' => 'Protokolle',
     'menu_images_item_images' => 'Bilder',
-    'filter_controller_description' => 'Filter kommen zum Einsatz, um verschiedene (z.B. skalierte oder beschnittene) Versionen eines Bildes zu erzeugen. Lesen Sie den [Image Filter Guide](https://luya.io/guide/app-filters), um zu erfahren, wie Sie eigene Filter erstellen können.',
+    'filter_controller_description' => 'Filter kommen zum Einsatz, um verschiedene (z.B. skalierte oder beschnittene) Versionen eines Bildes zu erzeugen. Lesen Sie den [Image Filter Guide](https://luya.io/guide/app/filters), um zu erfahren, wie Sie eigene Filter erstellen können.',
     'menu_group_storage' => 'Speicher',
 
 // added translations in version 3.4.0:
@@ -521,7 +521,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
-    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/cms/properties) but can also be used for other use cases such as record-related properties.',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'Das Anmeldeformular ist derzeit aufgrund von Wartungsarbeiten deaktiviert. Bitte versuchen Sie es später erneut.',
