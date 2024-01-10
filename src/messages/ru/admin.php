@@ -501,13 +501,13 @@ return [
     'ngrestlog_controller_description' => 'Фиксирует создание, обновление или удаление записей CRUD в админке.',
     'logger_controller_description' => 'Добавляет записи в журнал приложения через [модель журнала](https://luya.io/api/luya-admin-models-Logger).',
     'config_controller_description' => 'Создает конфигурационные пары ключ-значение с помощью [модели конфигурации](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Перечисляет все необработанные задания очереди. Для правильной настройки обратитейсь к [описанию очереди](https://luya.io/guide/app-queue).',
+    'queuelog_controller_description' => 'Перечисляет все необработанные задания очереди. Для правильной настройки обратитейсь к [описанию очереди](https://luya.io/guide/app/queue).',
     'ngrest_delete_all_button_label' => 'Удалить все данные',
     'ngrest_delete_all_button_confirm_message' => 'Вы уверены, что хотите стереть все данные? Это действие не может быть отменено!',
-    'storageimage_controller_description' => 'Показывает все изображения, созданные [системным хранилищем](https://luya.io/guide/app-storage). Каждое изображение связано с файлом.',
+    'storageimage_controller_description' => 'Показывает все изображения, созданные [системным хранилищем](https://luya.io/guide/app/storage). Каждое изображение связано с файлом.',
     'menu_group_log' => 'Журналы',
     'menu_images_item_images' => 'Изображения',
-    'filter_controller_description' => 'Фильтры используются для создания разных (например, масштабированных или кадрированных) версий изображения. Прочтите [руководство по фильтрам изображений](https://luya.io/guide/app-filters), чтобы узнать, как создавать свои собственные фильтры.',
+    'filter_controller_description' => 'Фильтры используются для создания разных (например, масштабированных или кадрированных) версий изображения. Прочтите [руководство по фильтрам изображений](https://luya.io/guide/app/filters), чтобы узнать, как создавать свои собственные фильтры.',
     'menu_group_storage' => 'Хранилище',
 
 // added translations in version 3.4.0:
@@ -521,7 +521,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Свойства',
-    'property_controller_description' => 'Таблица с указанием всех зарегистрированных свойств. В основном они используются как [свойства CMS](https://luya.io/guide/app-cmsproperties), но также могут использоваться и для другого, например, как свойства, связанные с записями.',
+    'property_controller_description' => 'Таблица с указанием всех зарегистрированных свойств. В основном они используются как [свойства CMS](https://luya.io/guide/cms/properties), но также могут использоваться и для другого, например, как свойства, связанные с записями.',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'Форма входа в настоящее время отключена из-за технических работ. Пожалуйста, попробуйте позже.',

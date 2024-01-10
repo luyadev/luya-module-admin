@@ -61,7 +61,7 @@ class Api extends RestActiveController
 
     /**
      * @var string When a filter model is provided filter is enabled trough json request body, works only for index and list.
-     * @see https://luya.io/guide/ngrest-api#filtering
+     * @see https://luya.io/guide/ngrest/api.html#filtering
      * @see https://www.yiiframework.com/doc/guide/2.0/en/output-data-providers#filtering-data-providers-using-data-filters
      * @since 1.2.2
      */

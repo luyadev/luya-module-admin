@@ -500,13 +500,13 @@ return [
     'ngrestlog_controller_description' => 'Model Event Log entries are captured when creating, updating or deleting records in CRUD views of the admin.',
     'logger_controller_description' => 'Application Log entries are triggered by [Logger Model](https://luya.io/api/luya-admin-models-Logger).',
     'config_controller_description' => 'Create configuration keys and assign a value using [Config Model](https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Lists all queue jobs, read [Queue Guide](https://luya.io/guide/app-queue) for a proper setup.',
+    'queuelog_controller_description' => 'Lists all queue jobs, read [Queue Guide](https://luya.io/guide/app/queue) for a proper setup.',
     'ngrest_delete_all_button_label' => 'Delete all data',
     'ngrest_delete_all_button_confirm_message' => 'Are you sure to delete all data? This can not be undone!',
-    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app-storage). Every image is associated with a file.',
+    'storageimage_controller_description' => 'Displays all images created by the [Storage System](https://luya.io/guide/app/storage). Every image is associated with a file.',
     'menu_group_log' => 'Logs',
     'menu_images_item_images' => 'Images',
-    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app-filters) for instructions on how to create your own filters.',
+    'filter_controller_description' => 'Filters are used to generate different (e.g. scaled or cropped) versions of an image. Read the [Image Filter Guide](https://luya.io/guide/app/filters) for instructions on how to create your own filters.',
     'menu_group_storage' => 'Storage',
 
 // added translations in version 3.4.0:
@@ -520,7 +520,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
-    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/cms/properties) but can also be used for other use cases such as record-related properties.',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',

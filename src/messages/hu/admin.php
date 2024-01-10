@@ -500,13 +500,13 @@ return [
     'ngrestlog_controller_description' => 'A Modell Eseménynapló bejegyzéseket a rendszergazda CRUD nézeteiben rekordok létrehozásakor, frissítésekor vagy törlésekor rögzíti.',
     'logger_controller_description' => 'Az alkalmazásnapló bejegyzéseket a [Logger Model] (https://luya.io/api/luya-admin-models-Logger) indítja el.',
     'config_controller_description' => 'Hozzon létre konfigurációs kulcsokat, és rendeljen hozzá egy értéket a [Config Model] (https://luya.io/api/luya-admin-models-Config) segítségével.',
-    'queuelog_controller_description' => 'Felsorolja az összes feldolgozatlan várólista feladatok, olvassa el [Queue Guide] (https://luya.io/guide/app-queue) a megfelelő beállítás.',
+    'queuelog_controller_description' => 'Felsorolja az összes feldolgozatlan várólista feladatok, olvassa el [Queue Guide] (https://luya.io/guide/app/queue) a megfelelő beállítás.',
     'ngrest_delete_all_button_label' => 'Az összes adat törlése',
     'ngrest_delete_all_button_confirm_message' => 'Biztosan törli az összes adatot? Ezt nem lehet visszavonni!',
-    'storageimage_controller_description' => 'Megjeleníti a [Storage System] (https://luya.io/guide/app-storage) által létrehozott összes képet. Minden kép egy fájlhoz van társítva.',
+    'storageimage_controller_description' => 'Megjeleníti a [Storage System] (https://luya.io/guide/app/storage) által létrehozott összes képet. Minden kép egy fájlhoz van társítva.',
     'menu_group_log' => 'naplók',
     'menu_images_item_images' => 'Képek',
-    'filter_controller_description' => 'A szűrők a kép különböző (pl. méretezett vagy vágott) verzióinak generálására szolgálnak. Olvassa el a [Image Filter Guide] (https://luya.io/guide/app-filters) útmutatót a saját szűrők létrehozásával kapcsolatban.',
+    'filter_controller_description' => 'A szűrők a kép különböző (pl. méretezett vagy vágott) verzióinak generálására szolgálnak. Olvassa el a [Image Filter Guide] (https://luya.io/guide/app/filters) útmutatót a saját szűrők létrehozásával kapcsolatban.',
     'menu_group_storage' => 'Tárhely',
 
 // added translations in version 3.4.0:
@@ -520,7 +520,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Properties',
-    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/app-cmsproperties) but can also be used for other use cases such as record-related properties.',
+    'property_controller_description' => 'Provides a list of all registered properties. Properties are mainly used as [CMS Properties](https://luya.io/guide/cms/properties) but can also be used for other use cases such as record-related properties.',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'The login form is currently disabled due to maintenance work. Please try again later.',

@@ -500,13 +500,13 @@ return [
     'ngrestlog_controller_description' => 'Записите в регистъра на събитията на модела се улавят при създаване, актуализиране или изтриване на записи в CRUD изгледи на администратора.',
     'logger_controller_description' => 'Записите в регистрационния файл на приложението се задействат от [Модел на регистратора] (https://luya.io/api/luya-admin-models-Logger).',
     'config_controller_description' => 'Създаване на конфигурационни ключове и присвояване на стойност с помощта на [Config Model] (https://luya.io/api/luya-admin-models-Config).',
-    'queuelog_controller_description' => 'Изброява всички необработени задачи на опашката, прочетете [Ръководство за опашки] (https://luya.io/guide/app-queue) за правилна настройка.',
+    'queuelog_controller_description' => 'Изброява всички необработени задачи на опашката, прочетете [Ръководство за опашки] (https://luya.io/guide/app/queue) за правилна настройка.',
     'ngrest_delete_all_button_label' => 'Изтриване на всички данни',
     'ngrest_delete_all_button_confirm_message' => 'Сигурни ли сте да изтриете всички данни? Това не може да бъде отменено!',
-    'storageimage_controller_description' => 'Показва всички изображения, създадени от [Системата за съхранение] (https://luya.io/guide/app-storage). Всяко изображение е свързано с файл. ',
+    'storageimage_controller_description' => 'Показва всички изображения, създадени от [Системата за съхранение] (https://luya.io/guide/app/storage). Всяко изображение е свързано с файл. ',
     'menu_group_log' => 'Дневници',
     'menu_images_item_images' => 'Изображения',
-    'filter_controller_description' => 'Филтрите се използват за генериране на различни (например мащабирани или изрязани) версии на изображение. Прочетете [Ръководство за филтри на изображения] (https://luya.io/guide/app-filters) за инструкции как да създадете свои собствени филтри. ',
+    'filter_controller_description' => 'Филтрите се използват за генериране на различни (например мащабирани или изрязани) версии на изображение. Прочетете [Ръководство за филтри на изображения] (https://luya.io/guide/app/filters) за инструкции как да създадете свои собствени филтри. ',
     'menu_group_storage' => 'Съхранение',
 
 // added translations in version 3.4.0:
@@ -520,7 +520,7 @@ return [
 
 // added translations in version 3.7.0:
     'menu_system_item_property' => 'Свойства',
-    'property_controller_description' => 'Предоставя списък на всички регистрирани свойства. Свойствата се използват главно като [CMS Properties] (https://luya.io/guide/app-cmsproperties), но могат да се използват и за други случаи на употреба, като например свойства, свързани със записа. ',
+    'property_controller_description' => 'Предоставя списък на всички регистрирани свойства. Свойствата се използват главно като [CMS Properties] (https://luya.io/guide/cms/properties), но могат да се използват и за други случаи на употреба, като например свойства, свързани със записа. ',
 
 // added translations in version 4.0.0:
     'disabled_login_text' => 'Понастоящем формулярът за вход е деактивиран поради поддръжка. Моля, опитайте отново по-късно.',
