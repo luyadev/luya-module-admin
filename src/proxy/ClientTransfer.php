@@ -135,7 +135,7 @@ class ClientTransfer extends BaseObject
                     gc_collect_cycles();
                 }
             } catch (Exception $e) {
-                $this->build->command->outputError('[!] Unable to download image ' . $image->source . ' due to error: ' . $e->getMessage());
+                $this->build->command->outputError('[!] Unable to download image due to error: ' . $e->getMessage());
             }
         }
 
