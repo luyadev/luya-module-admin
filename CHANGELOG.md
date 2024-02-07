@@ -9,6 +9,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 + [#749](https://github.com/luyadev/luya-module-admin/pull/749) Added a new property, `luya\admin\Module::$apiUserTrackLastActivity`, which controls the update of the last activity timestamp for API users. By default, this feature is enabled to maintain backward compatibility. For larger systems, disabling this property can prevent unnecessary database writes.
 + [#751](https://github.com/luyadev/luya-module-admin/pull/751) Fixed parameter placeholders in translations (hu, nl, pl).
 + [#752](https://github.com/luyadev/luya-module-admin/pull/752) Updated links to new guide.
++ [#]() Catch error when proxy command is trying to sync a file which does not exist anymore.
 
 ## 5.0.0 (30. November 2023)
 
