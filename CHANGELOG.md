@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 5.0.1
+## 5.0.1 (7. February 2024)
 
 + [#748](https://github.com/luyadev/luya-module-admin/pull/748) Do not clean up user lockouts when the user is an API-based user. This will enhance the performance for API user requests.
 + [#749](https://github.com/luyadev/luya-module-admin/pull/749) Added a new property, `luya\admin\Module::$apiUserTrackLastActivity`, which controls the update of the last activity timestamp for API users. By default, this feature is enabled to maintain backward compatibility. For larger systems, disabling this property can prevent unnecessary database writes.
