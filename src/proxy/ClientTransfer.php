@@ -112,26 +112,30 @@ class ClientTransfer extends BaseObject
         $imageCount = 0;
         // sync images
         foreach ((new \luya\admin\image\Query())->all() as $image) {
-            /** @var Item $image */
-            if (!$image->fileExists) {
-                $curl = new Curl();
-                $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-                $curl->get($this->build->imageProviderUrl, [
-                    'buildToken' => $this->build->buildToken,
-                    'machine' => $this->build->machineIdentifier,
-                    'imageId' => $image->id,
-                ]);
+            try {
+                /** @var Item $image */
+                if (!$image->fileExists) {
+                    $curl = new Curl();
+                    $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+                    $curl->get($this->build->imageProviderUrl, [
+                        'buildToken' => $this->build->buildToken,
+                        'machine' => $this->build->machineIdentifier,
+                        'imageId' => $image->id,
+                    ]);
 
-                if (!$curl->error) {
-                    if ($this->storageUpload($image->systemFileName, $curl->response)) {
-                        $imageCount++;
-                        $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
+                    if (!$curl->error) {
+                        if ($this->storageUpload($image->systemFileName, $curl->response)) {
+                            $imageCount++;
+                            $this->build->command->outputInfo('[+] Image ' . $image->source.' downloaded.');
+                        }
                     }
-                }
 
-                $curl->close();
-                unset($curl);
-                gc_collect_cycles();
+                    $curl->close();
+                    unset($curl);
+                    gc_collect_cycles();
+                }
+            } catch (Exception $e) {
+                $this->build->command->outputError('[!] Unable to download image due to error: ' . $e->getMessage());
             }
         }
 

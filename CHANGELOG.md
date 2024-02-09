@@ -7,12 +7,13 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 + [#754](https://github.com/luyadev/luya-module-admin/pull/754) Improved setup outputs.
 
-## 5.0.1
+## 5.0.1 (7. February 2024)
 
 + [#748](https://github.com/luyadev/luya-module-admin/pull/748) Do not clean up user lockouts when the user is an API-based user. This will enhance the performance for API user requests.
 + [#749](https://github.com/luyadev/luya-module-admin/pull/749) Added a new property, `luya\admin\Module::$apiUserTrackLastActivity`, which controls the update of the last activity timestamp for API users. By default, this feature is enabled to maintain backward compatibility. For larger systems, disabling this property can prevent unnecessary database writes.
 + [#751](https://github.com/luyadev/luya-module-admin/pull/751) Fixed parameter placeholders in translations (hu, nl, pl).
 + [#752](https://github.com/luyadev/luya-module-admin/pull/752) Updated links to new guide.
++ [#753](https://github.com/luyadev/luya-module-admin/pull/753) Enhanced error handling for scenarios where the proxy command attempts to synchronize a non-existent file.
 
 ## 5.0.0 (30. November 2023)
 
