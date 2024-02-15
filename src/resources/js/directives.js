@@ -126,7 +126,7 @@ zaa.directive("linkObjectToString", function () {
 });
 
 /**
- * Generate a Tool Tip – usage:
+ * Generate a Tooltip – usage:
  *
  * The default tooltip is positioned on the right side of the element:
  *
@@ -162,13 +162,20 @@ zaa.directive("linkObjectToString", function () {
  * ```
  *
  *
+ * Display a tooltip with delay in milliseconds:
+ *
+ * ```html
+ * <span tooltip tooltip-text="Tooltip" tooltip-popup-delay="500">...</span>
+ * ```
+ *
+ *
  * Disable tooltip based on variable (two way binding):
  *
  * ```html
  * <span tooltip tooltip-text="Tooltip" tooltip-disabled="variableMightBeTrueMightBeFalseMightChange">Span Text</span>
  * ```
  */
-zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
+zaa.directive("tooltip", ['$document', '$http', '$timeout', function ($document, $http, $timeout) {
     return {
         restrict: 'A',
         scope: {
@@ -177,6 +184,7 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
             'tooltipPosition': '@',
             'tooltipOffsetTop': '@',
             'tooltipOffsetLeft': '@',
+            'tooltipPopupDelay': '@',
             'tooltipImageUrl': '@',
             'tooltipPreviewUrl': '@',
             'tooltipDisabled': '='
@@ -184,7 +192,9 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
         link: function (scope, element, attr) {
             var defaultPosition = 'right';
 
-            var lastValue = null
+            var lastValue = null;
+
+            var popupTimeout = null;
 
             var positions = {
                 top: function () {
@@ -238,6 +248,13 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
                 scope.pop.css(offset);
             };
 
+            var cancelPopupTimeout = function () {
+                if (popupTimeout) {
+                    $timeout.cancel(popupTimeout);
+                    popupTimeout = null;
+                }
+            };
+
             element.on('mouseenter', function () {
 
                 if (scope.tooltipExpression) {
@@ -279,23 +296,34 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
                     scope.pop.hide();
                 }
 
-                // If tooltip shall be display...
+                // Should the tooltip be displayed?
                 if (scope.pop && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
 
-                    // ..check position
+                    // check position
                     onScroll();
 
                     // todo: Improve performance ...? x)
-                    // ..register scroll listener
+                    // register scroll listener
                     element.parents().on('scroll', onScroll);
 
-                    // ..show popup
-                    scope.pop.show();
+                    // show popup...
+                    if (!isNaN(scope.tooltipPopupDelay)) {
+                        // ...with delay
+                        popupTimeout = $timeout(function () {
+                            scope.pop.show();
+                        }, scope.tooltipPopupDelay);
+                    }
+                    else {
+                        // ...instantly
+                        scope.pop.show();
+                    }
                 }
             });
 
             element.on('mouseleave', function () {
                 element.parents().off('scroll', onScroll);
+
+                cancelPopupTimeout();
 
                 if (scope.pop) {
                     scope.pop.hide();
@@ -303,6 +331,8 @@ zaa.directive("tooltip", ['$document', '$http', function ($document, $http) {
             });
 
             scope.$on('$destroy', function () {
+                cancelPopupTimeout();
+
                 if (scope.pop) {
                     scope.pop.remove();
                 }
