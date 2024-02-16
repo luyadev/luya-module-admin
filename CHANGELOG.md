@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 5.0.2
 
++ [#755](https://github.com/luyadev/luya-module-admin/pull/755) Provided popup delay `tooltip-popup-delay` for tooltip directive.
 + [#754](https://github.com/luyadev/luya-module-admin/pull/754) Improved setup outputs.
 
 ## 5.0.1 (7. February 2024)
