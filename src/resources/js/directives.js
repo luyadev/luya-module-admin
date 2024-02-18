@@ -135,12 +135,13 @@ zaa.directive("linkObjectToString", function () {
  * ```
  *
  *
- * You can provide an Image URL beside or instead of text.
+ * In order to trigger an expression call instead of a static text use:
  *
  * ```html
- * <span tooltip tooltip-image-url="http://image.url">...</span>
+ * <span tooltip tooltip-expression="scopeFunction(fooBar)">Span Text</span>
  * ```
- *
+ * 
+ * 
  * Change the position (`top`, `right`, `bottom` or `left`):
  *
  * ```html
@@ -155,20 +156,20 @@ zaa.directive("linkObjectToString", function () {
  * ```
  *
  *
- * In order to trigger an expression call instead of a static text use:
- *
- * ```html
- * <span tooltip tooltip-expression="scopeFunction(fooBar)">Span Text</span>
- * ```
- *
- *
  * Display a tooltip with delay in milliseconds:
  *
  * ```html
  * <span tooltip tooltip-text="Tooltip" tooltip-popup-delay="500">...</span>
  * ```
+ * 
+ * 
+ * You can provide an Image URL beside or instead of text.
  *
- *
+ * ```html
+ * <span tooltip tooltip-image-url="http://image.url">...</span>
+ * ```
+ * 
+ * 
  * Disable tooltip based on variable (two way binding):
  *
  * ```html
@@ -262,8 +263,10 @@ zaa.directive("tooltip", ['$document', '$http', '$timeout', function ($document,
                 }
 
                 // Generate tooltip HTML for the first time
-                if ((!scope.pop || lastValue != scope.tooltipText) && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)) {
-                    
+                if ( (!scope.pop || lastValue != scope.tooltipText)
+                  && (typeof scope.tooltipDisabled === 'undefined' || scope.tooltipDisabled === false)
+                  && (scope.tooltipText || scope.tooltipImageUrl || scope.tooltipPreviewUrl) ) {
+
                     lastValue = scope.tooltipText
 
                     var html = '<div class="tooltip tooltip-' + (scope.tooltipPosition || defaultPosition) + (scope.tooltipImageUrl ? ' tooltip-image' : '') + '" role="tooltip">' +
