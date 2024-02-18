@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 5.0.2
 
++ [#756](https://github.com/luyadev/luya-module-admin/pull/756) Fixed collapsing tooltips.
 + [#755](https://github.com/luyadev/luya-module-admin/pull/755) Provided popup delay `tooltip-popup-delay` for tooltip directive.
 + [#754](https://github.com/luyadev/luya-module-admin/pull/754) Improved setup outputs.
 
