@@ -199,27 +199,41 @@ use luya\admin\Module as Admin;
                     <i class="material-icons" ng-if="currentFolderId == folder.id">folder</i>
                     <i class="material-icons" ng-if="currentFolderId != folder.id">folder_open</i>
                 </div>
-                <div class="folder-label" ng-class="{'is-active' : hasFolderActiveChild(folder.id)}">{{folder.name }}</div>
+                <div class="folder-label" ng-class="{'is-active' : hasFolderActiveChild(folder.id)}">{{ folder.name }}</div>
             </span>
             <div class="folder-edit">
                 <input class="folder-edit-input" ng-model="folder.name" type="text" />
             </div>
         </div>
         <div class="folder-right folder-action-default">
-            <button class="folder-button folder-button--edit" ng-click="editFolderLabel=!editFolderLabel;"><i class="material-icons">edit</i></button>
+            <button class="folder-button folder-button--edit" ng-click="editFolderLabel=!editFolderLabel; currentEditFolder=folder"><i class="material-icons">edit</i></button>
             <button class="folder-button folder-button--delete" ng-hide="folder.subfolder || folder.filesCount > 0" ng-click="deleteFolder(folder)"><i class="material-icons">delete</i></button>
         </div>
         <div class="folder-right folder-action-edit">
             <button class="folder-button folder-button--save" ng-click="updateFolder(folder); editFolderLabel=!editFolderLabel"><i class="material-icons">check</i></button>
+            <button class="folder-button" ng-click="isFolderMoveModalHidden=!isFolderMoveModalHidden"><i class="material-icons">subdirectory_arrow_right</i></button>
             <button class="folder-button folder-button--abort" ng-click="cancelFolderEdit(folder, oldFolder); editFolderLabel=!editFolderLabel;"><i class="material-icons">cancel</i></button>
         </div>
         <div class="folder-right folder-action-move-to">
             <button class="folder-button folder-button--move-to" ng-click="moveFilesTo(folder.id)"><i class="material-icons">subdirectory_arrow_left</i></button>
         </div>
+        <modal is-modal-hidden="isFolderMoveModalHidden" modal-title="{{ folder.name }}">
+            <div ng-if="!isFolderMoveModalHidden">
+                <button type="button" class="btn my-1 btn-icon btn-outline-folder" ng-click="moveFolderTo(currentEditFolder, 0)"><?= Admin::t('layout_filemanager_root_dir'); ?></button>
+                <div ng-repeat="folderlist in getFolderData(0) track by folderlist.id" ng-include="'folderMoveTemplate'"></div>
+            </div>
+        </modal>
     </div>
     <ul class="folders" ng-if="folder.subfolder === true && folder.toggle_open==1">
         <li class="folders-folder-item" ng-class="{'is-movable' : showFoldersToMove}" ng-repeat="folder in getFolderData(folder.id) track by folder.id" ng-include="'reverseFolders'"></li>
     </ul>
+</script>
+
+<script type="text/ng-template" id="folderMoveTemplate">
+    <div>
+        <button type="button" class="btn my-1 btn-icon btn-outline-folder" ng-click="moveFolderTo(currentEditFolder, folderlist.id)" ng-disabled="folderlist.id == currentEditFolder.id || folderlist.id == currentEditFolder.parentId">{{ folderlist.name }}</button>
+        <div style="margin-left:20px;" ng-repeat="folderlist in getFolderData(folderlist.id) track by folderlist.id" ng-include="'folderMoveTemplate'"></div>
+    </div>
 </script>
 
 <!-- FILEMANAGER -->
