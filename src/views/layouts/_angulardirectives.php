@@ -186,7 +186,7 @@ use luya\admin\Module as Admin;
 </script>
 
 <script type="text/ng-template" id="reverseFolders">
-    <div class="folders-folder" ng-init="editFolderLabel = false; oldFolder = folder.name" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove, 'folders-folder--undeletable': folder.subfolder}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
+    <div class="folders-folder" ng-init="editFolderLabel = false; oldFolder = folder.name" ng-class="{'folders-folder--edit': editFolderLabel && !showFoldersToMove, 'folders-folder--move-to': showFoldersToMove}" tooltip tooltip-expression="folderCountMessage(folder)" tooltip-position="right">
         <div class="folder-left">
             <button class="folder-toggler" ng-click="toggleFolderItem(folder)" ng-if="folder.subfolder == true">
                 <i class="material-icons" ng-if="folder.toggle_open">keyboard_arrow_down</i>

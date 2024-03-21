@@ -1456,11 +1456,13 @@ zaa.directive("storageFileManager", function () {
 
                 $scope.cancelFolderEdit = function (folder, oldName) {
                     folder.name = oldName;
+                    $scope.isFolderMoveModalHidden = true
                 };
 
                 $scope.moveFolderTo = function(targetFolder, toFolderId) {
                     $http.post('admin/api-admin-storage/folder-update?folderId=' + targetFolder.id, { parent_id: toFolderId }).then(function (transport) {
                         AdminToastService.success(i18nParam('js_ngrest_toggler_success', {field: targetFolder.name}));
+                        $scope.isFolderMoveModalHidden = true
                         $scope.foldersDataReload()
                     });
                 }
