@@ -24,12 +24,8 @@ $icon-line-height: $icon-font-size + 5px;
 
 .folders-folder {
     display: block;
-    padding: 2px 75px 2px 20px;
+    padding: 2px 100px 2px 20px;
     position: relative;
-
-    &--undeletable {
-        padding-right: 40px;
-    }
 
     &-main {
         padding: 0;

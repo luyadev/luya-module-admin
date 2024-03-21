@@ -587,7 +587,9 @@ class StorageController extends RestController
 
         $this->flushApiCache();
 
-        return $model->update();
+        $model->update();
+
+        return $model;
     }
 
     /**

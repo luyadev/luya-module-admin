@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 5.0.2
 
++ [#758](https://github.com/luyadev/luya-module-admin/pull/758) Enhanced the functionality to reorganize folders within the folder hierarchy, allowing for movement to the root or placement into a different subfolder.
 + [#756](https://github.com/luyadev/luya-module-admin/pull/756) Fixed collapsing tooltips due empty content in this case the tooltip is no longer displayed
 + [#755](https://github.com/luyadev/luya-module-admin/pull/755) Provided popup delay `tooltip-popup-delay` for tooltip directive.
 + [#754](https://github.com/luyadev/luya-module-admin/pull/754) Improved `admin/setup` command outputs.
