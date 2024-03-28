@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 5.0.2
+## 5.0.2 (28. March 2024)
 
 + [#758](https://github.com/luyadev/luya-module-admin/pull/758) Enhanced the functionality to reorganize folders within the folder hierarchy, allowing for movement to the root or placement into a different subfolder.
 + [#756](https://github.com/luyadev/luya-module-admin/pull/756) Fixed collapsing tooltips due empty content in this case the tooltip is no longer displayed
