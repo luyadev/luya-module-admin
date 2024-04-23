@@ -254,8 +254,8 @@ foreach ($config->getPointer('list') as $item): if ($this->context->isHiddenInLi
                                     </div>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-right" ng-show="isLocked(config.tableName, item[config.pk])">
-                                <small><i class="material-icons btn-symbol">lock_outline</i><?= Module::t('locked_info'); ?></small>
+                            <td class="text-right" style="min-width: 100px;" ng-show="isLocked(config.tableName, item[config.pk])">
+                                <small><i class="material-icons btn-symbol">lock_outline</i> {{ getLockedName(config.tableName, item[config.pk]) }}</small>
                             </td>
                         </tr>
                     </tbody>
