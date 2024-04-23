@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 5.0.3 ()
+
++ [#759](https://github.com/luyadev/luya-module-admin/pull/759) Prevent `Bcrypt password must not contain null character` errors by using generateRandomString for auth_key encryption.
+
 ## 5.0.2 (28. March 2024)
 
 + [#758](https://github.com/luyadev/luya-module-admin/pull/758) Enhanced the functionality to reorganize folders within the folder hierarchy, allowing for movement to the root or placement into a different subfolder.
