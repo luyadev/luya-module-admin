@@ -84,6 +84,8 @@ abstract class NgRestModel extends ActiveRecord implements GenericSearchInterfac
                 'api' => static::ngRestApiEndpoint(),
             ],
         ]);
+
+
         parent::__construct($config);
     }
 
