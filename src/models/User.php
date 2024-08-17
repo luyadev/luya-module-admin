@@ -589,14 +589,16 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
      */
     public function getAuthKey()
     {
+        // find user agent, if empty disable auto login
         $userAgent = Yii::$app->request->userAgent;
-
-        // no user agent, dissable auto login
         if (empty($userAgent)) {
             return false;
         }
 
         $checksum = UserDevice::generateUserAgentChecksum($userAgent);
+        if (empty($checksum)) {
+            return false;
+        }
 
         $model = UserDevice::find()->where(['user_id' => $this->id, 'user_agent_checksum' => $checksum])->one();
 
@@ -610,7 +612,7 @@ class User extends NgRestModel implements IdentityInterface, ChangePasswordInter
         $model->user_id = $this->id;
         $model->user_agent = $userAgent;
         $model->user_agent_checksum = $checksum;
-        $model->auth_key = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomKey() . $checksum);
+        $model->auth_key = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString() . $checksum);
 
         if ($model->save()) {
             return $model->auth_key;

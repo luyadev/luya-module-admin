@@ -1313,8 +1313,10 @@
 
 		$scope.getLockedName = function(table, pk) {
 			var response = $scope.isLocked(table, pk);
-
-			return response.firstname + ' ' + response.lastname;
+			if (!response) {
+				return '';
+			}
+			return response.firstname;
 		};
 
 		$scope.searchQuery = null;

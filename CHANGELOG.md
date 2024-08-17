@@ -3,12 +3,28 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
-## 5.0.1
+## 5.0.4 (23. April 2024)
+
++ [#760](https://github.com/luyadev/luya-module-admin/issues/760) To enhance collaboration, we now display the name of the user who locks a row.
+
+## 5.0.3 (23. April 2024)
+
++ [#759](https://github.com/luyadev/luya-module-admin/pull/759) Prevent `Bcrypt password must not contain null character` errors by using generateRandomString for auth_key encryption.
+
+## 5.0.2 (28. March 2024)
+
++ [#758](https://github.com/luyadev/luya-module-admin/pull/758) Enhanced the functionality to reorganize folders within the folder hierarchy, allowing for movement to the root or placement into a different subfolder.
++ [#756](https://github.com/luyadev/luya-module-admin/pull/756) Fixed collapsing tooltips due empty content in this case the tooltip is no longer displayed
++ [#755](https://github.com/luyadev/luya-module-admin/pull/755) Provided popup delay `tooltip-popup-delay` for tooltip directive.
++ [#754](https://github.com/luyadev/luya-module-admin/pull/754) Improved `admin/setup` command outputs.
+
+## 5.0.1 (7. February 2024)
 
 + [#748](https://github.com/luyadev/luya-module-admin/pull/748) Do not clean up user lockouts when the user is an API-based user. This will enhance the performance for API user requests.
 + [#749](https://github.com/luyadev/luya-module-admin/pull/749) Added a new property, `luya\admin\Module::$apiUserTrackLastActivity`, which controls the update of the last activity timestamp for API users. By default, this feature is enabled to maintain backward compatibility. For larger systems, disabling this property can prevent unnecessary database writes.
 + [#751](https://github.com/luyadev/luya-module-admin/pull/751) Fixed parameter placeholders in translations (hu, nl, pl).
 + [#752](https://github.com/luyadev/luya-module-admin/pull/752) Updated links to new guide.
++ [#753](https://github.com/luyadev/luya-module-admin/pull/753) Enhanced error handling for scenarios where the proxy command attempts to synchronize a non-existent file.
 
 ## 5.0.0 (30. November 2023)
 
