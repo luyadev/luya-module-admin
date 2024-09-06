@@ -167,7 +167,7 @@ use luya\admin\Module as Admin;
         <div class="imageupload-preview" ng-show="imageinfo != null">
             <div class="imageupload-preview-sizer"></div>
             <img ng-src="{{thumb.source}}" ng-show="imageinfo != null" class="imageupload-preview-image" />
-            <div class="imageupload-infos">
+            <div class="imageupload-infos" ng-if="imageinfo != null && imageinfo.resolution_width && imageinfo.resolution_height">
                 <div class="imageupload-size" ng-show="!imageLoading">{{ imageinfo.resolution_width }} x {{ imageinfo.resolution_height }}</div>
             </div>
         </div>
@@ -175,7 +175,7 @@ use luya\admin\Module as Admin;
             <storage-file-upload ng-model="fileId"></storage-file-upload>
         </div>
         <?php if (Yii::$app->adminuser->canRoute('admin/storage/index')): ?>
-        <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null">
+        <div class="imageupload-filter" ng-show="!noFilters() && imageinfo != null && imageinfo.resolution_width && imageinfo.resolution_height">
             <select name="filterId" ng-model="filterId" ng-change="changeFilter()" convert-to-number>
                 <option value="0"><?= Admin::t('layout_no_filter'); ?></option>
                 <option ng-repeat="item in filtersData" value="{{ item.id }}">{{ item.name }} ({{ item.identifier }})</option>

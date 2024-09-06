@@ -4,7 +4,6 @@ namespace admintests\admin\ngrest\plugins;
 
 use admintests\AdminTestCase;
 use admintests\data\fixtures\UserFixture;
-
 use luya\admin\ngrest\plugins\File;
 use yii\base\Event;
 
