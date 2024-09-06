@@ -253,6 +253,10 @@ class StorageController extends RestController
             throw new NotFoundHttpException("Unable to find the given storage image.");
         }
 
+        if (!$model->file->isImage) {
+            return $model->toArray(['id', 'source', 'file_id', 'filter_id', 'resolution_width', 'resolution_height', 'file'], ['source']);
+        }
+
         // try to create thumbnail on view if not done
         if (empty($model->tinyCropImage)) {
             // there are very rare cases where the thumbnail does not exists, therefore generate the thumbnail and reload the model.
