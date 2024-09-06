@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 5.0.5 (6. September 2024)
+
++ [#763](https://github.com/luyadev/luya-module-admin/pull/763) Ensure that images which are for example svg's do not try to generate a thumbnail.
+
 ## 5.0.4 (23. April 2024)
 
 + [#760](https://github.com/luyadev/luya-module-admin/issues/760) To enhance collaboration, we now display the name of the user who locks a row.
