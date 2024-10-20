@@ -67,7 +67,7 @@ class MeinTestActiveWindow extends ActiveWindow
     }
 }
 EOT;
-
         $this->assertSame(str_replace(["\r\n", "\r"], "\n", $tpl), str_replace(["\r\n", "\r"], "\n", $content));
+
     }
 }

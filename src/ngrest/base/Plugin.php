@@ -655,7 +655,7 @@ abstract class Plugin extends Component implements TypesInterface
             if ($this->i18n) {
                 $event->sender->setAttribute(
                     $this->name,
-                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue, Yii::$app->adminLanguage->defaultLanguageShortCode)
+                    I18n::decodeFindActive($event->sender->getAttribute($this->name), $this->i18nEmptyValue, Yii::$app->adminLanguage->activeShortCode)
                 );
             }
             $this->onAfterListFind($event);
