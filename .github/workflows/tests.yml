@@ -17,7 +17,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@2.21.0
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: mbstring, intl
           coverage: none
         env:
@@ -40,7 +40,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@2.21.0
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           extensions: mbstring, intl
           coverage: none
         env:
@@ -82,7 +82,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['8.0', '8.1', '8.2', '8.3']
+        php: ['8.1', '8.2', '8.3']
       
     services:
       mysql:
@@ -115,18 +115,18 @@ jobs:
       ## inject database
       - name: Setup database
         run: |
-          sudo /etc/init.d/mysql start
-          mysql -h 127.0.0.1 --port 33306 -u root -proot myapp_test < tests/data/sql/latest/5.0.0.sql 
+          # the runner image has no mysql, import through the mysql service container
+          docker exec -i ${{ job.services.mysql.id }} mysql -uroot -proot myapp_test < tests/data/sql/latest/5.0.0.sql
 
-      - name: PHP Unit tests for 8.0, 8.1, 8.2, 8.3
+      - name: PHP Unit tests for 8.2, 8.3
         run: | 
           ./vendor/bin/phpunit --verbose --configuration actions.phpunit.xml
-        if: matrix.php == '8.1' || matrix.php == '8.2' || matrix.php == '8.3'
+        if: matrix.php == '8.2' || matrix.php == '8.3'
 
       ## unit test with coverage
-      - name: PHP Unit tests for PHP 8.0
+      - name: PHP Unit tests for PHP 8.1
         run: vendor/bin/phpunit --verbose --coverage-clover=clover.xml --configuration actions.phpunit.xml
-        if: matrix.php == '8.0'
+        if: matrix.php == '8.1'
 
       ## coverage
       - name: Code coverage
@@ -134,5 +134,5 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter after-build -t clover
-        if: matrix.php == '8.0'
+        if: matrix.php == '8.1'
         continue-on-error: true # if is fork

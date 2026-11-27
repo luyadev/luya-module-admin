@@ -37,7 +37,8 @@
         "robthree/twofactorauth": "^1.7"
     },
     "require-dev": {
-        "luyadev/luya-testsuite": "^2.0",
+        "luyadev/luya-testsuite": "^3.1",
+        "luyadev/luya-module-cms": "^5.0",
         "twbs/bootstrap": "^4.5",
         "bower-asset/angular": "^1.8.2",
         "bower-asset/angular-loading-bar": "^0.9.0",
@@ -82,12 +83,7 @@
             "enabled": false
         },
         "platform": {
-            "php": "8.0"
-        },
-        "policy": {
-            "advisories": {
-                "ignore": ["twig/twig"]
-            }
+            "php": "8.1"
         },
         "allow-plugins": {
             "yiisoft/yii2-composer": true,
