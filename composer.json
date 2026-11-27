@@ -84,6 +84,11 @@
         "platform": {
             "php": "8.0"
         },
+        "policy": {
+            "advisories": {
+                "ignore": ["twig/twig"]
+            }
+        },
         "allow-plugins": {
             "yiisoft/yii2-composer": true,
             "luyadev/luya-composer": true
