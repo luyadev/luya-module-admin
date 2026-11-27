@@ -80,12 +80,15 @@ class OpenApiGenerator
     /**
      * Get Security Array
      *
+     * A list of security requirement objects, as defined by the OpenAPI specification. Each item
+     * maps a security scheme name from {@see getComponents()} to its scopes.
+     *
      * @return array
      */
     public function getSecurity()
     {
         return [
-            'BearerAuth' => [],
+            ['BearerAuth' => []],
         ];
     }
 

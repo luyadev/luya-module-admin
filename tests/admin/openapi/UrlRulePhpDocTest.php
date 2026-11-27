@@ -67,6 +67,8 @@ class UrlRulePhpDocTest extends AdminModelTestCase
 
         $openapi = new OpenApiGenerator($generator);
 
-        $this->assertNotEmpty($openapi->create()->getSerializableData());
+        $data = $openapi->create()->getSerializableData();
+        $this->assertNotEmpty($data);
+        $this->assertEquals([['BearerAuth' => []]], json_decode(json_encode($data->security), true));
     }
 }

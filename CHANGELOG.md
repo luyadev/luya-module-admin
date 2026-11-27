@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 In order to read more about upgrading and BC breaks have a look at the [UPGRADE Document](UPGRADE.md).
 
+## 5.0.6 (in progress)
+
++ Fixed the OpenAPI `security` definition, which is now a list of security requirement objects. With `cebe/php-openapi` 1.8 the generator crashed, older versions silently dropped the `BearerAuth` requirement.
+
 ## 5.0.5 (6. September 2024)
 
 + [#763](https://github.com/luyadev/luya-module-admin/pull/763) Ensure that images which are for example svg's do not try to generate a thumbnail.
