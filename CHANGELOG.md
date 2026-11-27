@@ -5,6 +5,7 @@ In order to read more about upgrading and BC breaks have a look at the [UPGRADE 
 
 ## 5.0.6 (in progress)
 
++ Fixed an SQL injection in the NgRest export action (`luya\admin\ngrest\base\Api::actionExport()`): the requested `attributes` were passed unchecked into the SELECT of the export query. Only the attributes the export dialog offers (`ngRestExport()` or the model attributes) are now accepted, other requests are rejected with a `400 Bad Request`. The export `type` is compared strictly.
 + Fixed the OpenAPI `security` definition, which is now a list of security requirement objects. With `cebe/php-openapi` 1.8 the generator crashed, older versions silently dropped the `BearerAuth` requirement.
 
 ## 5.0.5 (6. September 2024)

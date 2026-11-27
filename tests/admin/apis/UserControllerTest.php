@@ -12,6 +12,7 @@ use luya\testsuite\fixtures\NgRestModelFixture;
 use luya\testsuite\scopes\PermissionScope;
 use Yii;
 use yii\base\InvalidCallException;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
 class UserControllerTest extends AdminModelTestCase
@@ -146,6 +147,56 @@ class UserControllerTest extends AdminModelTestCase
 
             $this->expectException(InvalidCallException::class);
             $response = $scope->runControllerAction($ctrl, 'export');
+        });
+    }
+
+    public function testExportWithAttributes()
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) {
+            $scope->createAndAllowApi('api-admin-user');
+            FileHelper::createDirectory(Yii::getAlias('@runtime'));
+
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                // the keys must be dropped, otherwise they would end up as raw column alias in the select.
+                'attributes' => [['value' => 'id'], '(SELECT 1) AS x, firstname' => ['value' => 'email']],
+            ]);
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
+
+            $response = $scope->runControllerAction($ctrl, 'export');
+
+            $this->assertArrayHasKey('url', $response);
+        });
+    }
+
+    public function invalidExportAttributesProvider()
+    {
+        return [
+            'sql in value' => [[['value' => 'id, (SELECT password_hash FROM admin_user LIMIT 1) AS x']]],
+            'unknown attribute' => [[['value' => 'password_hash']]],
+            'missing value' => [[['label' => 'id']]],
+            'value not a string' => [[['value' => ['id']]]],
+            'entry not an array' => [['id']],
+            'attributes not an array' => ['id'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidExportAttributesProvider
+     */
+    public function testExportRejectsInvalidAttributes($attributes)
+    {
+        PermissionScope::run($this->app, function (PermissionScope $scope) use ($attributes) {
+            $scope->createAndAllowApi('api-admin-user');
+
+            Yii::$app->request->setBodyParams([
+                'type' => 'csv',
+                'attributes' => $attributes,
+            ]);
+            $ctrl = new UserController('api-admin-user', $this->app->getModule('admin'));
+
+            $this->expectException(BadRequestHttpException::class);
+            $scope->runControllerAction($ctrl, 'export');
         });
     }
 

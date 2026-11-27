@@ -27,6 +27,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveQueryInterface;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -791,11 +792,10 @@ class Api extends RestActiveController
         $mime = null;
         $header = Yii::$app->request->getBodyParam('header', 1);
         $type = Yii::$app->request->getBodyParam('type');
-        $attributes = Yii::$app->request->getBodyParam('attributes', []);
         $filter = Yii::$app->request->getBodyParam('filter', null);
-        $fields = ArrayHelper::getColumn($attributes, 'value');
+        $fields = $this->getExportFields(Yii::$app->request->getBodyParam('attributes', []));
 
-        if (!in_array($type, ['xlsx', 'csv'])) {
+        if (!in_array($type, ['xlsx', 'csv'], true)) {
             throw new InvalidConfigException("Invalid export type");
         }
 
@@ -860,6 +860,41 @@ class Api extends RestActiveController
         return [
             'url' => $route,
         ];
+    }
+
+    /**
+     * Validate the requested export attributes and return them as a list of field names.
+     *
+     * The field names are used as columns in the SELECT of the export query, therefore only the attributes which the
+     * export dialog offers are allowed, see {{luya\admin\ngrest\render\RenderCrud::generateDownloadAttributes()}}.
+     * The keys of the request array are dropped, as Yii would otherwise use them as column aliases.
+     *
+     * @param mixed $attributes The `attributes` body param, a list of arrays with a `value` key, e.g. `[['value' => 'id']]`.
+     * @return string[] A list of field names.
+     * @throws BadRequestHttpException If the attributes are not an array or contain an attribute which is not exportable.
+     * @since 5.0.6
+     */
+    protected function getExportFields($attributes)
+    {
+        if (!is_array($attributes)) {
+            throw new BadRequestHttpException("Invalid export attributes.");
+        }
+
+        $exportFormatter = $this->model->ngRestExport();
+        $allowed = array_map('strval', empty($exportFormatter) ? $this->model->attributes() : array_keys($exportFormatter));
+
+        $fields = [];
+        foreach ($attributes as $attribute) {
+            $value = is_array($attribute) ? ($attribute['value'] ?? null) : null;
+
+            if (!is_string($value) || !in_array($value, $allowed, true)) {
+                throw new BadRequestHttpException("Invalid export attributes.");
+            }
+
+            $fields[] = $value;
+        }
+
+        return $fields;
     }
 
     /**
